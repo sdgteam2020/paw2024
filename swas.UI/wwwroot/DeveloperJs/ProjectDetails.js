@@ -6,7 +6,7 @@
     initializeDataTable("#Remainders");
  
 
-    var param = sessionStorage.getItem("spntabType");
+    let param = sessionStorage.getItem("spntabType");
 
     if (param != null) {
         if (param == "XR12") {
@@ -46,19 +46,20 @@
     }
 
 
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
     })
 
 
     $(".processDetail").click(function () {
-        ;
-        var $row = $(this).closest('tr');
-        var ProjId = $row.find("#SpnCurrentProjId").text().trim();
-        var date_type = $row.find("#SpnDate_type").text().trim();
-        var psmId = $row.find("#SpnCurrentpsmId").text().trim();
-        var actiontype = $row.find("#LatestActionType").text().trim();
+        
+        let $row = $(this).closest('tr');
+        let ProjId = $row.find(".SpnCurrentProjId").text().trim();
+        let Encriptedprojdid = $row.find(".SpnEncryptedProjId").text().trim();
+        let date_type = $row.find("#SpnDate_type").text().trim();
+        let psmId = $row.find(".SpnCurrentpsmId").text().trim();
+        let actiontype = $row.find("#LatestActionType").text().trim();
         fetchServerDate().then(function (S) {
 
             if (parseInt(actiontype) == 2 && ((actiontype) != 1 || actiontype != "")) {
@@ -67,20 +68,20 @@
                 $("#datepickerContainer").hide();
             }
             $('#confirmationModal').modal('show');
-            var pad = "00"
-            var datef2 = new Date();
-            var months = "" + `${(datef2.getMonth() + 1)}`;
-            var days = "" + `${(datef2.getDate())}`;
-            var monthsans = pad.substring(0, pad.length - months.length) + months
-            var dayans = pad.substring(0, pad.length - days.length) + days
-            var year = `${datef2.getFullYear()}`;
-            var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-            var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-            var ss = `${datef2.getSeconds()}`;
+            let pad = "00"
+            let datef2 = new Date();
+            let months = "" + `${(datef2.getMonth() + 1)}`;
+            let days = "" + `${(datef2.getDate())}`;
+            let monthsans = pad.substring(0, pad.length - months.length) + months
+            let dayans = pad.substring(0, pad.length - days.length) + days
+            let year = `${datef2.getFullYear()}`;
+            let hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+            let mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+            let ss = `${datef2.getSeconds()}`;
 
-            var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+            let todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
 
-            var claValue = parseInt(actiontype);
+            let claValue = parseInt(actiontype);
 
             if (claValue == 2) {
                 $('#datepicker').attr('type', 'datetime-local');
@@ -95,9 +96,9 @@
             $('#confirmSend').off('click').on('click', function () {
 
 
-                var dateValue = $('#datepicker').val();
-                var currentDate = new Date();
-                var FwdDateForComment = '';
+                let dateValue = $('#datepicker').val();
+                let currentDate = new Date();
+                let FwdDateForComment = '';
                 if ($('#datepicker').attr('type') === 'date') {
 
                     const formattedDate = S.todayDateTime;
@@ -113,7 +114,7 @@
                 $('#confirmationModal').modal('hide');
                 SentForComment(ProjId, psmId, 0, FwdDateForComment);
                 
-                ProcessProjConfirm(ProjId);
+                ProcessProjConfirm(Encriptedprojdid);
                 IsReadInbox(psmId);
                 InboxNotificationCount();
             });
@@ -136,56 +137,65 @@
 
 
 
-function GetForCommentStakeHolder(ProjId, psmId) {
-
-    $.ajax({
-        url: '/UnitDtls/GetAllStakeHolderComment',
-        type: 'POST',
-        data: { "Id": 0 },
-        success: function (response) {
-
-
-            if (response != null) {
-
-                for (var i = 0; i < response.length; i++) {
-                    SentForComment(ProjId, psmId, response[i].unitid)
-
-                }
-
-                ProcessProjConfirm(ProjId)
-            }
-
-        }
-    });
-}
-
 function SentForComment(ProjId, psmId, unitid, FwdDateForComment) {
+
+
+    let userdata = {
+        ProjId: ProjId,
+        FwdDateForComment: FwdDateForComment,
+        unitid: unitid
+    };
+
+    let encrypted_data = encryptData(userdata);
+
     $.ajax({
         url: '/Projects/ProcessMail',
         type: 'POST',
         data: {
-            "ProjId": ProjId,
-            "FwdDateForComment": FwdDateForComment,
-            "unitid": unitid, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+            encrypted_data: encrypted_data,
+            __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
         },
         success: function (response) {
-            if (response && response === 1) {
+
+            if (response && response.success) {
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
-                    title: 'Project Processed successfully',
+                    title: response.message || 'Project processed successfully',
                     showConfirmButton: false,
-                    timer: 700
+                    timer: 1000
+                }).then(() => {
+                    window.location.reload();
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: response?.message || 'Something went wrong'
                 });
             }
-
-            window.location.reload();
         },
-        error: function (error) {
-            console.error('Error occurred:', error);
+        error: function (xhr) {
+
+            let msg = "Something went wrong";
+
+            if (xhr.responseJSON && xhr.responseJSON.message) {
+                msg = xhr.responseJSON.message;
+            }
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: msg
+            });
+
+            console.error('Error occurred:', xhr);
         }
     });
+
+
 }
+
 function SentForNotification(ProjId, psmId, unitid, FwdDateForComment) {
     $.ajax({
         url: '/Projects/ProcessNotification',
@@ -214,6 +224,8 @@ function SentForNotification(ProjId, psmId, unitid, FwdDateForComment) {
     });
 }
 function ProcessProjConfirm(ProjId) {
+
+   
     $.ajax({
         url: '/Projects/IsProcessProjConfirm',
         type: 'POST',
@@ -234,34 +246,33 @@ function ProcessProjConfirm(ProjId) {
 }
 
 function GetProjectMovHistory(ProjId) {
-
-    var listitem = "";
+    let encrypted = encryptData(ProjId)
+    let listitem = "";
 
     $.ajax({
         url: '/Projects/ProjectMovHistory',
         type: 'POST',
-        data: { "ProjectId": ProjId },
+        data: { "ProjectId": encrypted },
         success: function (response) {
             
-            if (response.dtoProjectMovHistorypsmlst.length) {
+            if (!response || !response.data) return;
 
-                listitem += '<div class="timeline-month">';
+            let data = response.data;
 
-                DTOProjectMovHistorypsmlst = response.dtoProjectMovHistorypsmlst;
-                DTOProjectMovHistorycmdlst = response.dtoProjectMovHistorycmdlst;
-                DTOProjectCCHistorylst = response.dtoProjectCCHistorylst;
+            let DTOProjectMovHistorypsmlst = data.dtoProjectMovHistorypsmlst || [];
+            let DTOProjectMovHistorycmdlst = data.dtoProjectMovHistorycmdlst || [];
+            let DTOProjectCCHistorylst = data.dtoProjectCCHistorylst || [];
 
-                listitem += '<span>' + DTOProjectMovHistorypsmlst.length + ' Entries</span>';
-                listitem += '</div>';
+            if (DTOProjectMovHistorypsmlst.length) {
 
-                for (var i = 0; i < DTOProjectMovHistorypsmlst.length; i++) {
+                for (let i = 0; i < DTOProjectMovHistorypsmlst.length; i++) {
 
                     listitem += '<div class="timeline-section"><div class="timeline-date">' +
                         DateTimeFormatedd_mm_yyyy(DTOProjectMovHistorypsmlst[i].date) + '</div>';
 
                     listitem += '<div class="row"><div class="col-sm-4">';
                     listitem += '<div class="timeline-box">';
-
+                    let fromlist1 = DTOProjectMovHistorypsmlst[i].fromUnitName.split('(');
                     if (DTOProjectMovHistorypsmlst[i].isComment == false) {
 
                         if (DTOProjectMovHistorypsmlst[i].actions == "FWD" &&
@@ -278,7 +289,7 @@ function GetProjectMovHistory(ProjId) {
                             listitem += '<div class="box-title bg-danger text-white"><i class="fa-solid fa-rotate-left fa-xl icon-white"></i> ' + DTOProjectMovHistorypsmlst[i].actions + '</div>';
 
                         listitem += '<div class="box-content">';
-
+                            
                         listitem += '<div class="row"><div class="col-md-4"><div class="box-item"><strong>Stage</strong>:</div></div>';
                         listitem += '<div class="col-md-8"><div class="box-item"><span class="badge rounded-pill bg-primary">' +
                             DTOProjectMovHistorypsmlst[i].stages + '</span></div></div></div>';
@@ -310,7 +321,7 @@ function GetProjectMovHistory(ProjId) {
                         if (DTOProjectMovHistorypsmlst[i].isPulledBack == 0)
                             listitem += '<div class="box-footer">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
                         else {
-                            var fromlist1 = DTOProjectMovHistorypsmlst[i].fromUnitName.split('(');
+                         
                             listitem += '<div class="box-footer">' + fromlist1[1].replace(')', '') + '</div>';
                         }
 
@@ -329,10 +340,10 @@ function GetProjectMovHistory(ProjId) {
                         listitem += '<div class="box-footer">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
                         listitem += '</div></div>';
 
-                        var DTODashboardCount = DTOProjectMovHistorycmdlst.filter(function (element) { return element.psmId == DTOProjectMovHistorypsmlst[i].psmId; });
+                        let DTODashboardCount = DTOProjectMovHistorycmdlst.filter(function (element) { return element.psmId == DTOProjectMovHistorypsmlst[i].psmId; });
 
 
-                        for (var c = 0; c < DTODashboardCount.length; c++) {
+                        for (let c = 0; c < DTODashboardCount.length; c++) {
                             listitem += '<div class="col-sm-4">';
                             listitem += '<div class="timeline-box">';
                             listitem += '<div class="box-title">';
@@ -380,7 +391,7 @@ function GetProjectMovHistory(ProjId) {
                         }
                         listitem += '</div></div>';
                     }
-                    var DTOProjectCCHistorycccpsmid = DTOProjectCCHistorylst.filter(function (element) { return element.psmId == DTOProjectMovHistorypsmlst[i].psmId; });
+                    let DTOProjectCCHistorycccpsmid = DTOProjectCCHistorylst.filter(function (element) { return element.psmId == DTOProjectMovHistorypsmlst[i].psmId; });
 
                     if (DTOProjectCCHistorycccpsmid.length > 0) {
                         for (let cc = 0; cc < DTOProjectCCHistorycccpsmid.length; cc++) {
@@ -414,8 +425,14 @@ function GetProjectMovHistory(ProjId) {
                 
 
                 $("#projectmovfistory").html(listitem);
+            
             }
+        },
+          error: function (xhr) {
+            console.error("Error fetching Project Movement History", xhr);
+            $("#projectmovfistory").html("<div class='text-danger'>Failed to load data</div>");
         }
+   
     });
 }
 
@@ -524,8 +541,8 @@ function GetCCProject() {
 
                 $(document).on('click', ".btn-FwdHistoryCcc", function () {
 
-                    var projName = $(this).closest("tr").find("#projNamecc").html();
-                    var finalTitle = "Mov History: " + projName;
+                    let projName = $(this).closest("tr").find("#projNamecc").html();
+                    let finalTitle = "Mov History: " + projName;
 
                     $('#ProjFwdHistory').modal('show');
                     $('.lblHistory').text(finalTitle);
@@ -546,8 +563,8 @@ function truncateText(text, maxWords) {
         return '';
     }
 
-    var words = text.trim().split(/\s+/); // split by whitespace
-    var truncated = words.slice(0, maxWords).join(' ');
+    let words = text.trim().split(/\s+/); // split by whitespace
+    let truncated = words.slice(0, maxWords).join(' ');
     return truncated;
 }
 
@@ -560,7 +577,7 @@ $(document).on("click", ".date-action", function (e) {
     const userReq = (action === "back"); // true for 'back', false otherwise
 
     const $row = $(this).closest("tr");
-    const projId = $row.find("#SpnCurrentProjId").text().trim();
+    const projId = $row.find(".SpnCurrentProjId").text().trim();
     const actiontype = $(this).data("actiontype");
 
     if (!projId) {
@@ -598,7 +615,7 @@ $(document).on("click", ".date-action", function (e) {
         ;
         if (result.isConfirmed && result.value) {
             ;
-            var remarks = result.value;
+            let remarks = result.value;
 
             $.ajax({
                 url: "/Projects/LogDateApprovalWithRemarks",
@@ -640,9 +657,10 @@ $(document).on("click", ".date-action", function (e) {
 
 
 
-$(document).on('click', '#btnRemainder', function () {
-    var projid = $(this).data('projid');
-    var projname = $(this).data('projname');
+$(document).on('click', '.btnRemainder', function () {
+    let projid = $(this).data('projid');
+    alert(projid);
+    let projname = $(this).data('projname');
     Swal.fire({
         title: `Project:${projname}`,
         html: `Please Enter Remarks for Reminder`,
@@ -711,15 +729,16 @@ function SendRemainder(projid, remarks) {
 
 
 $(document).on('click', '#btnRemMove', function () {
-    ;
+    
 
 
-    var ProjId = parseInt($(this).data("action"));
-
-    var projName = $(this).data('proj-name');
-    var words = projName.split(" ");
-    var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
-    var finalTitle = "Reminder History: " + projName;
+    let ProjId = $(this).data("action");
+   
+   
+    let projName = $(this).data('proj-name');
+    let words = projName.split(" ");
+    let shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
+    let finalTitle = "Reminder History: " + projName;
     $('#RemProjName').text(finalTitle);
 
 
@@ -729,7 +748,7 @@ $(document).on('click', '#btnRemMove', function () {
 
 
 function GetProjRemainderMov(ProjId) {
-    ;
+    
     $('#ProjRemainderMov').modal('show');
 
     $.ajax({
@@ -824,10 +843,10 @@ $(document).on("click", "#ReadRemainderNoti", function (e) {
    
     ;
 
-    var $this = $(this);
-    var projId = parseInt($this.data("projid"));
+    let $this = $(this);
+    let projId = parseInt($this.data("projid"));
     $this.closest("tr").removeClass("bold-text");
-    var psmId = $this.closest("tr").find("#SpnCurrentpsmId").text();
+    let psmId = $this.closest("tr").find(".SpnCurrentpsmId").text();
     IsReadInbox(psmId);
     $("#Remainderbedge").text("0").hide();
     updateReadDateForRemainder(projId);
@@ -877,7 +896,7 @@ $("#tabParked").click(function () {
 
 
 function GetParkedProject() {
-    ;
+    
     $.ajax({
         url: '/Projects/GetActParkedProject',
         type: 'GET',
@@ -887,7 +906,7 @@ function GetParkedProject() {
             if (response != null && response.length > 0) {
                 let listitem = "";
                 let count = 0;
-                var prjname = response[0].projName;
+                let prjname = response[0].projName;
               
                 response.forEach(function (project) {
                    
@@ -949,14 +968,15 @@ function GetParkedProject() {
             initializeDataTable("#parkedtable");
             $(".btn-FwdHistoryParked").off('click').on('click', function () {
               
-                var projName = $(this).closest("tr").find("#projNamecc").html();
+                let projName = $(this).closest("tr").find("#projNamecc").html();
                 $('.lblHistory').text(`Mov History: ${projName}`);
                 $('#ProjFwdHistory').modal('show');
 
                 GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentParkedProjId").html());
             });
             $(".btn_unparked").off('click').on('click', function () {
-                var psmid = $(this).closest("tr").find("#spnCurrentPsmid").text();
+                let psmid = $(this).closest("tr").find('#spnCurrentPsmid').text();
+            
                 Swal.fire({
                     title: "Are you sure?",
                     text: "Do you want to send this project to Inbox.",
@@ -993,8 +1013,9 @@ function GetParkedProject() {
 
 
 
-function Unparkedbypsmid(psmid) {
-
+function Unparkedbypsmid(id) {
+    let psmid = encryptData(id);
+ 
     $.ajax({
         url: '/Projects/ParkedProject',
         type: 'POST',
@@ -1022,7 +1043,8 @@ function Unparkedbypsmid(psmid) {
 }
 $(".parkedProj").on('click', function () {
 
-    var psmid = $(this).closest("tr").find("#SpnCurrentpsmId").text();
+    const psmid = $(this).closest("tr").find(".SpnCurrentpsmId").text();
+    
     Swal.fire({
         title: "Are you sure?",
         text: "Do you want to Park this project.",

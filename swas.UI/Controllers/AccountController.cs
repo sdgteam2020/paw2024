@@ -11,24 +11,14 @@ using swas.DAL;
 using swas.BAL.Helpers;
 using swas.BAL.DTO;
 using swas.BAL.Interfaces;
-using swas.BAL;
-using Newtonsoft.Json;
-
-
-using swas.BAL.Repository;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using iText.Commons.Actions.Contexts;
-using iText.Layout.Renderer;
-using OneLogin.Saml;
+using OneLogin.Saml;    
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
-using Microsoft.Extensions.Options;
-using System.Configuration;
 using Newtonsoft.Json;
+
+
 
 namespace swas.UI.Controllers
 {
@@ -146,7 +136,7 @@ namespace swas.UI.Controllers
         }
         public async Task<IActionResult> SetValue(string selectedValue)
         {
-            TempData["SelectedValue"] = selectedValue; // Store the value in TempData or ViewBag as per your requirement
+            //TempData["SelectedValue"] = selectedValue; // Store the value in TempData or ViewBag as per your requirement
             await signInManager.SignOutAsync();
             await HttpContext.SignOutAsync();
             string psskey = _configuration.GetValue<string>("TestCredentials")??"";
@@ -222,146 +212,155 @@ namespace swas.UI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login()
         {
-            String EncryptedResponse = "";
-            EncryptedResponse = Request.Form["SAMLResponse"];
-            var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-            var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
-            var watermarkText = $" {ipAddress}\n  {currentDatetime}";
-            if (!string.IsNullOrEmpty(EncryptedResponse))
-
+            try
             {
-                 string psskey = _configuration.GetValue<string>("CertCredentials") ?? "";
+                String EncryptedResponse = "";
+                EncryptedResponse = Request.Form["SAMLResponse"];
+                var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+                var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
+                var watermarkText = $" {ipAddress}\n  {currentDatetime}";
+                if (!string.IsNullOrEmpty(EncryptedResponse))
 
-                string decryptedsamlresponse = DecryptSAmlResponseNew(EncryptedResponse, "C:\\Cert\\App Certificate\\applwhitelisting.army.mil.p12", psskey);
-
-                AccountSettings accountSettings = new AccountSettings();
-                OneLogin.Saml.Response samlResponse = new Response(accountSettings);
-
-                samlResponse.LoadXmlFromBase64(decryptedsamlresponse);
-
-                if (samlResponse.IsValid_sign())
                 {
-                    Log log = new Log();
-                    log.NameId = samlResponse.GetNameID();
-                    log.SAMLRole = samlResponse.GetSAMLRole();
+                    string psskey = _configuration.GetValue<string>("CertCredentials") ?? "";
 
-                    if (log.NameId != null)
+                    string decryptedsamlresponse = DecryptSAmlResponseNew(EncryptedResponse, "C:\\Cert\\App Certificate\\applwhitelisting.army.mil.p12", psskey);
+
+                    AccountSettings accountSettings = new AccountSettings();
+                    OneLogin.Saml.Response samlResponse = new Response(accountSettings);
+
+                    samlResponse.LoadXmlFromBase64(decryptedsamlresponse);
+
+                    if (samlResponse.IsValid_sign())
                     {
-                        HttpContext.Session.SetString("NameId", log.NameId);
-                        HttpContext.Session.SetString("SAMLRole", log.SAMLRole);
+                        Log log = new Log();
+                        log.NameId = samlResponse.GetNameID();
+                        log.SAMLRole = samlResponse.GetSAMLRole();
 
-                        TempData["NameId"] = log.NameId;
-                        TempData["RoleId"] = log.SAMLRole;
-                       
-                        var result = await signInManager.PasswordSignInAsync(log.NameId.ToLower(), psskey, false, lockoutOnFailure: true);
-                        if (result.Succeeded)  ///   registered user
+                        if (log.NameId != null)
                         {
-                            ApplicationUser userdet = new ApplicationUser();
-                            IdentityRole ss = new IdentityRole();
-                            _logger.LogInformation("User logged in.");
+                            HttpContext.Session.SetString("NameId", log.NameId);
+                            HttpContext.Session.SetString("SAMLRole", log.SAMLRole);
 
-                            userdet = await userManager.FindByNameAsync(log.NameId);
-                            var unitdetl = await _unitRepository.GetUnitDtl(userdet.unitid);
-                            CommonHelper commonHelper = new CommonHelper(_context);
-                            var userRank = commonHelper.UserRankDetail(userdet);
+                            TempData["NameId"] = log.NameId;
+                            TempData["RoleId"] = log.SAMLRole;
 
-                            Login Db = new Login();
-                            if (userdet.domain_iam != null)   //   domain_iam available after registration
+                            var result = await signInManager.PasswordSignInAsync(log.NameId.ToLower(), psskey, false, lockoutOnFailure: true);
+                            if (result.Succeeded)  ///   registered user
                             {
-                                Db.UserName = userdet.UserName;
-                                Db.Comdid = unitdetl.unitid;
-                                Db.Corpsid = unitdetl.CorpsId;
-                                Db.Iamuserid = userdet.domain_iam;
-                                Db.Unit = unitdetl.UnitName;
-                                Db.unitid = userdet.unitid;
-                                Db.UserIntId = userdet.UserIntId;
-                                Db.Rank = userRank;
-                                Db.IcNo = userdet.Icno;
-                                Db.Offr_Name = userdet.Offr_Name;
-                                Db.IpAddress = watermarkText;
-                                var usrole = await userManager.GetRolesAsync(userdet);
-                                Db.Role = usrole[0].ToString();
+                                ApplicationUser userdet = new ApplicationUser();
+                                IdentityRole ss = new IdentityRole();
+                                _logger.LogInformation("User logged in.");
 
-                                if (Db.ActualUserName == null)
+                                userdet = await userManager.FindByNameAsync(log.NameId);
+                                var unitdetl = await _unitRepository.GetUnitDtl(userdet.unitid);
+                                CommonHelper commonHelper = new CommonHelper(_context);
+                                var userRank = commonHelper.UserRankDetail(userdet);
+
+                                Login Db = new Login();
+                                if (userdet.domain_iam != null)   //   domain_iam available after registration
                                 {
-                                    Db.ActualUserName = log.NameId;
+                                    Db.UserName = userdet.UserName;
+                                    Db.Comdid = unitdetl.unitid;
+                                    Db.Corpsid = unitdetl.CorpsId;
+                                    Db.Iamuserid = userdet.domain_iam;
+                                    Db.Unit = unitdetl.UnitName;
+                                    Db.unitid = userdet.unitid;
+                                    Db.UserIntId = userdet.UserIntId;
+                                    Db.Rank = userRank;
+                                    Db.IcNo = userdet.Icno;
+                                    Db.Offr_Name = userdet.Offr_Name;
+                                    Db.IpAddress = watermarkText;
+                                    var usrole = await userManager.GetRolesAsync(userdet);
+                                    Db.Role = usrole[0].ToString();
+
+                                    if (Db.ActualUserName == null)
+                                    {
+                                        Db.ActualUserName = log.NameId;
+                                    }
+
+                                    try
+                                    {
+                                        tbl_LoginLog logs = new tbl_LoginLog();
+                                        var Role = await userManager.GetRolesAsync(userdet);
+                                        logs.UserId = userdet.UserIntId;
+                                        logs.IP = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+                                        logs.IsActive = true;
+                                        logs.Updatedby = userdet.unitid;
+                                        logs.UpdatedOn = DateTime.Now;
+                                        logs.logindate = DateTime.Now;
+                                        logs.userName = userdet.UserName;
+                                        logs.unitid = userdet.unitid;
+                                        await _userRepository.Add(logs);
+                                    }
+
+                                    catch (Exception ex)
+                                    {
+                                        Console.WriteLine("THE Print is 1");
+                                    }
+
+
                                 }
 
-                                try
+
+                                else  //   without registration users
                                 {
-                                    tbl_LoginLog logs = new tbl_LoginLog();
-                                    var Role = await userManager.GetRolesAsync(userdet);
-                                    logs.UserId = userdet.UserIntId;
-                                    logs.IP = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-                                    logs.IsActive = true;
-                                    logs.Updatedby = userdet.unitid;
-                                    logs.UpdatedOn = DateTime.Now;
-                                    logs.logindate = DateTime.Now;
-                                    logs.userName = userdet.UserName;
-                                    logs.unitid = userdet.unitid;
-                                    await _userRepository.Add(logs);
-                                }
 
-                                catch (Exception ex)
+                                    Db.UserName = log.NameId;   // IAM ID
+                                    Db.ActualUserName = log.NameId; //  IAM ID
+                                    Db.Role = "Guest";
+
+                                }
+                                int cla = await _unitRepository.GetIdCalendar();
+                                Db.cla = cla;
+                                SessionHelper.SetObjectAsJson(HttpContext.Session, "User", Db);
+
+
+
+                                if (Db.Role == "Dte")
                                 {
-                                    Console.WriteLine("THE Print is 1");
+                                    return RedirectToAction("NewProject", "Home");
                                 }
-
-
-                            }
-
-
-                            else  //   without registration users
-                            {
-
-                                Db.UserName = log.NameId;   // IAM ID
-                                Db.ActualUserName = log.NameId; //  IAM ID
-                                Db.Role = "Guest";
-
-                            }
-                            int cla = await _unitRepository.GetIdCalendar();
-                            Db.cla = cla;
-                            SessionHelper.SetObjectAsJson(HttpContext.Session, "User", Db);
-
-
-
-                            if (Db.Role == "Dte")
-                            {
-                                return RedirectToAction("NewProject", "Home");
+                                else
+                                {
+                                    return RedirectToAction("NewProject", "Home");
+                                }
                             }
                             else
                             {
-                                return RedirectToAction("NewProject", "Home");
+                                if (log.NameId != null)
+                                {
+                                    TempData["UserName"] = log.NameId;
+                                    HttpContext.Session.SetString("UserName", log.NameId);
+                                    return RedirectToAction("NewProject", "Home");
+                                }
+
                             }
                         }
                         else
                         {
-                            if (log.NameId != null)
-                            {
-                                TempData["UserName"] = log.NameId;
-                                HttpContext.Session.SetString("UserName", log.NameId);
-                                return RedirectToAction("NewProject", "Home");
-                            }
 
+                            return RedirectToAction("NewProject", "Home");
                         }
                     }
                     else
                     {
-
-                        return RedirectToAction("NewProject", "Home");
+                        Response.Redirect("https://iam2.army.mil/IAM/User", true);
                     }
                 }
                 else
                 {
                     Response.Redirect("https://iam2.army.mil/IAM/User", true);
                 }
+                return RedirectToAction("UnAuthUser", "Account");
             }
-            else
+            catch (Exception ex)
             {
-                Response.Redirect("https://iam2.army.mil/IAM/User", true);
+                Console.WriteLine("Error While Login : " + ex.Message);
             }
-            return RedirectToAction("UnAuthUser", "Account");
+            return RedirectToAction("Login", "Account");
         }
+
 
 
 
@@ -789,8 +788,28 @@ namespace swas.UI.Controllers
 
 
 
-        public async Task<IActionResult> GetUserEditPartial(string UserName, string RoleName, int RankId)
+        public async Task<IActionResult> GetUserEditPartial(string payload)
          {
+            var cryptoKey = _configuration["CryptoSettings:LoginKey"];
+            var UserName = "";
+            int RankId = 0;
+            var RoleName = "";
+            try
+            {
+                var decryptedJson = CryptoHelper.SafeDecrypt(payload, cryptoKey);
+                dynamic data = JsonConvert.DeserializeObject<dynamic>(decryptedJson);
+
+                UserName = data.UserName;
+                RankId = data.RankId;
+                RoleName = data.RoleName;
+                // use model.UserName, model.RankId, model.RoleName
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Decryption failed");
+                return BadRequest();
+            }
+            
             var user = userManager.Users.FirstOrDefault(u => u.UserName == UserName);
             if (user == null)
             {
@@ -799,10 +818,10 @@ namespace swas.UI.Controllers
 
             List<mRank> ranks = (List<mRank>)await _rankRepository.GetAll();
             ViewData["Rank"] = ranks.ToList();
-
+          
             var UserRank = ranks.FirstOrDefault(r => r.Id == RankId);
             var UserUnitRank = UserRank?.RankName;
-
+            
             ViewData["ty"] = RoleName;
             ViewBag.Type = _context.tbl_Type.ToList();
             ViewBag.SelectedType = _context.tbl_Type
@@ -834,20 +853,22 @@ namespace swas.UI.Controllers
           
             Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
 
-            input.UserName = input.UserName.Trim();
-            input.OfficerName = input.OfficerName.Trim();
-            input.appointment = input.appointment.Trim();
-            input.Tele_Army = input.Tele_Army.Trim();
-
+            input.UserName = input.UserName?.Trim();
+            input.OfficerName = input.OfficerName?.Trim();
+            input.appointment = input.appointment?.Trim();
+            input.Tele_Army = input.Tele_Army?.Trim();
+            var userName = _configuration["CommonUserNamePass:userName"];
+            var userName1 = _configuration["CommonUserNamePass:userName1"];
+            var pass = _configuration["CommonUserNamePass:Pass"];
             if (input.RoleName == "1")
             {
-                input.RoleName = "bc74ba2f-6cee-4936-800d-337b6e39d01a";
-                input.Password = "Dte@123";
+                input.RoleName = userName1;
+                input.Password = pass;
             }
             else
             {
-                input.RoleName = "1789a675-9951-42a7-b064-8d7da156521f";
-                input.Password = "Dte@123";
+                input.RoleName = userName;
+                input.Password = pass;
             }
 
             List<mRank> ranks = new List<mRank>();

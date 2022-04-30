@@ -47,6 +47,10 @@ using static swas.DAL.Models.LegacyHistory;
 using System.Threading.Tasks;
 using swas.BAL.Utility;
 using Path = System.IO.Path;
+using System.Security.Cryptography;
+using Newtonsoft.Json.Linq;
+using static swas.UI.Helpers.Helper;
+using swas.UI.Models;
 
 namespace swas.UI.Controllers
 {
@@ -212,7 +216,7 @@ public async Task<IActionResult> Details(int id)
                     TempData["ipadd"] = watermarkText;
                     ViewBag.SubmitCde = "0";
 
-                    ViewBag.remainder = _dbContext.TrnRemainders.ToList();
+                    
                     ViewBag.tbl_mUnitBranch = _dbContext.tbl_mUnitBranch.ToList();
                     MailBox mbx = new MailBox();
                     mbx.Remainder = await _Remainder.GetAllAsync();
@@ -278,6 +282,10 @@ public async Task<IActionResult> Details(int id)
                 options?.Insert(0, new SelectListItem { Text = "--Select--", Value = "", Disabled = true, Selected = true });
                 ViewBag.WhitelistOptions = options;
 
+                var IsAI_ML = _configuration.GetSection("IsAI/MLProj").Get<List<SelectListItem>>();
+                IsAI_ML?.Insert(0, new SelectListItem { Text = "--Select--", Value = "", Disabled = true, Selected = true });
+                ViewBag.IsAI_ML = IsAI_ML;
+
 
                 var securityclassification = _configuration.GetSection("SecurityClassification").Get<List<SelectListItem>>();
                 securityclassification?.Insert(0, new SelectListItem { Text = "--Select--", Value = "", Disabled = true, Selected = true });
@@ -322,7 +330,7 @@ public async Task<IActionResult> Details(int id)
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
                 if (Logins != null)
                 {
-                    var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+                    var ipAddress = HttpContext?.Connection?.RemoteIpAddress?.MapToIPv4().ToString();
                     var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
                     var watermarkText = $" {ipAddress}\n  {currentDatetime}";
                     ViewBag.Projects = await _projectsRepository.GetMyProjects();
@@ -718,12 +726,15 @@ public async Task<IActionResult> Details(int id)
      
 
         [HttpPost]
-        public async Task<IActionResult> IsProcessProjConfirm(int ProjId)
+        public async Task<IActionResult> IsProcessProjConfirm(string ProjId)
         {
             try
             {
+
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
+                var UnprotectedValue = _dataProtector.Unprotect(ProjId.ToString() ?? "");
+                int Projid = Convert.ToInt32(UnprotectedValue);
                 var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
                 var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
                 var watermarkText = $" {ipAddress}\n  {currentDatetime}";
@@ -734,7 +745,7 @@ public async Task<IActionResult> Details(int id)
                     try
                     {
                         tbl_Projects proj = new tbl_Projects();
-                        proj = await _projectsRepository.GetProjectByIdAsync(ProjId);
+                        proj = await _projectsRepository.GetProjectByIdAsync(Projid);
                         proj.DateTimeOfUpdate = DateTime.Now;
                         proj.IsProcess = true;
 
@@ -839,18 +850,71 @@ public async Task<IActionResult> Details(int id)
         }
 
         #region Project Movment For PROcess For Comment
+      
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ProcessMail(int ProjId, int unitid, DateTime FwdDateForComment)
+        public async Task<IActionResult> ProcessMail(string encrypted_data)
         {
+            if (string.IsNullOrWhiteSpace(encrypted_data))
+            {
+                _logger.LogWarning("ProcessMail called with empty encrypted_data");
+                return BadRequest(new { success = false, message = "Invalid request." });
+            }
+
+            int ProjId = 0;
+            DateTime FwdDateForComment;
+            int unitid = 0;
+
+            string cryptoKey = _configuration["CryptoSettings:LoginKey"];
+
+            if (string.IsNullOrWhiteSpace(cryptoKey))
+            {
+                _logger.LogError("Crypto key not configured");
+                return StatusCode(500, new { success = false, message = "Server configuration error." });
+            }
+
+            try
+            {
+                // 🔐 Decrypt
+                var decryptedJson = CryptoHelper.SafeDecrypt(encrypted_data, cryptoKey);
+
+                if (string.IsNullOrWhiteSpace(decryptedJson))
+                {
+                    _logger.LogWarning("Decryption returned empty result");
+                    return BadRequest(new { success = false, message = "Invalid request data." });
+                }
+
+                // ✅ Safe parsing (NO dynamic)
+                var json = JObject.Parse(decryptedJson);
+
+                if (!int.TryParse(json["ProjId"]?.ToString(), out ProjId) ||
+                    !DateTime.TryParse(json["FwdDateForComment"]?.ToString(), out FwdDateForComment) ||
+                    !int.TryParse(json["unitid"]?.ToString(), out unitid))
+                {
+                    _logger.LogWarning("Invalid decrypted payload: {Payload}", decryptedJson);
+                    return BadRequest(new { success = false, message = "Invalid identifier." });
+                }
+            }
+            catch (JsonReaderException ex)
+            {
+                _logger.LogError(ex, "JSON parsing failed in ProcessMail");
+                return BadRequest(new { success = false, message = "Invalid data format." });
+            }
+            catch (CryptographicException ex)
+            {
+                _logger.LogError(ex, "Decryption failed in ProcessMail");
+                return BadRequest(new { success = false, message = "Decryption failed." });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Unexpected error during decryption in ProcessMail");
+                return StatusCode(500, new { success = false, message = "Error processing request." });
+            }
+
             if (ProjId <= 0)
             {
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Invalid project id."
-                });
+                return BadRequest(new { success = false, message = "Invalid project id." });
             }
 
             try
@@ -878,7 +942,7 @@ public async Task<IActionResult> Details(int id)
                     });
                 }
 
-                // 🔒 Prevent IDOR (Burp changing project id)
+                // 🔒 IDOR protection
                 if (1 != login.unitid)
                 {
                     return Forbid();
@@ -924,7 +988,7 @@ public async Task<IActionResult> Details(int id)
             }
             catch (Exception ex)
             {
-                var eventId = new EventId(DateTime.UtcNow.Ticks.GetHashCode(), "ProcessMail");
+                var eventId = new EventId(Guid.NewGuid().GetHashCode(), "ProcessMail");
 
                 _logger.LogError(eventId, ex, "Error occurred in ProjectsController.ProcessMail");
 
@@ -935,8 +999,6 @@ public async Task<IActionResult> Details(int id)
                 });
             }
         }
-
-
         public async Task<IActionResult> CheckFwdCondition(int ProjId, int StatusId,string Actionsname)
         {
             var Ret = await _psmRepository.CheckFwdCondition(ProjId, StatusId, Actionsname);
@@ -945,34 +1007,59 @@ public async Task<IActionResult> Details(int id)
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> FwdToProject([FromForm] tbl_ProjStakeHolderMov psmove, [FromForm] string currentpsmid)
+       
+        public async Task<IActionResult> FwdToProject([FromForm] tbl_ProjStakeHolderMov psmove, [FromForm] string encryptedData, [FromForm] string currentpsmid)
         {
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            // 🔐 Decryption (ADDED ONLY THIS BLOCK)
+            var cryptoKey = _configuration["CryptoSettings:LoginKey"];
 
-            // SECURITY: Early exit if session/user is missing
-            if (Logins == null)
+            if (!string.IsNullOrEmpty(encryptedData))
             {
-                return Json(-401); // or return Unauthorized();
+                try
+                {
+                    var decryptedJson = CryptoHelper.SafeDecrypt(encryptedData, cryptoKey);
+
+                    if (!string.IsNullOrEmpty(decryptedJson))
+                    {
+                        var decryptedModel = JsonConvert.DeserializeObject<tbl_ProjStakeHolderMov>(decryptedJson);
+
+                        // Override only required fields
+                        psmove.ProjId = decryptedModel.ProjId;
+                        psmove.StatusActionsMappingId = decryptedModel.StatusActionsMappingId;
+                        psmove.Remarks = decryptedModel.Remarks;
+                        psmove.ToUnitId = decryptedModel.ToUnitId;
+                        psmove.TimeStamp = decryptedModel.TimeStamp;
+                        psmove.CcId = decryptedModel.CcId;
+                    }
+                }
+                catch
+                {
+                    return Json(-500); // decryption failed
+                }
             }
 
-            // SECURITY: Basic parameter validation
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+
+            if (Logins == null)
+            {
+                return Json(-401);
+            }
+
             if (string.IsNullOrWhiteSpace(currentpsmid) || !int.TryParse(currentpsmid, out int currentPsmId))
             {
-                return Json(-999); // invalid currentpsmid format
+                return Json(-999);
             }
 
             if (psmove.ToUnitId == 0)
             {
                 return Json(-7);
             }
-            ;
 
-            // SECURITY: File upload restrictions (add these checks before processing attachments)
-            const long MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB – change as needed
+            const long MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024;
+
             var allowedExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
     {
         ".pdf"
-        // ← add/remove types YOUR application really needs
     };
 
             if (psmove.Attachments != null && psmove.Attachments.Count > 0)
@@ -981,23 +1068,20 @@ public async Task<IActionResult> Details(int id)
                 {
                     if (attachment.File == null || attachment.File.Length == 0) continue;
 
-                    // SECURITY: Size check
                     if (attachment.File.Length > MAX_FILE_SIZE_BYTES)
                     {
-                        return Json(-10); // file too large
+                        return Json(-10);
                     }
 
-                    // SECURITY: Extension check (server-side – client can be bypassed)
                     var fileExt = Path.GetExtension(attachment.File.FileName)?.ToLowerInvariant();
                     if (string.IsNullOrEmpty(fileExt) || !allowedExtensions.Contains(fileExt))
                     {
-                        return Json(-11); // invalid file type
+                        return Json(-11);
                     }
 
-                    // SECURITY: Basic content/magic number check (very important)
                     if (!await HasValidFileSignatureAsync(attachment.File, fileExt))
                     {
-                        return Json(-12); // suspicious file content
+                        return Json(-12);
                     }
                 }
             }
@@ -1028,32 +1112,48 @@ public async Task<IActionResult> Details(int id)
                     _dbContext.SaveChanges();
                 }
             }
+
             bool ret = false;
             if (psmove.CcId != null)
             {
                 ret = psmove.CcId.Contains(psmove.ToUnitId);
             }
+
             int psmid = Convert.ToInt32(currentpsmid);
+
             var getprojidbypsmid = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == psmid).ProjId;
-            var latst = _dbContext.ProjStakeHolderMov.Where(r => r.PsmId == psmid && r.ToUnitId == Logins.unitid && r.IsComplete == false && r.IsComment == false).FirstOrDefault();
+
+            var latst = _dbContext.ProjStakeHolderMov
+                .Where(r => r.PsmId == psmid && r.ToUnitId == Logins.unitid && r.IsComplete == false && r.IsComment == false)
+                .FirstOrDefault();
+
             if (latst == null)
             {
                 return Json(-4);
             }
+
             if (!ret)
             {
-                var legacy_approval = _dbContext.LegacyHistory.Where(x => x.ProjectId == getprojidbypsmid).OrderByDescending(x => x.HistoryId).FirstOrDefault();
+                var legacy_approval = _dbContext.LegacyHistory
+                    .Where(x => x.ProjectId == getprojidbypsmid)
+                    .OrderByDescending(x => x.HistoryId)
+                    .FirstOrDefault();
+
                 psmove.ProjId = getprojidbypsmid;
                 psmove.StatusActionsMappingId = psmove.StatusActionsMappingId;
                 psmove.Remarks = psmove.Remarks;
                 psmove.FromUnitId = Logins.unitid ?? 0;
-                psmove.ToUnitId = psmove.ToUnitId; //
+                psmove.ToUnitId = psmove.ToUnitId;
+
                 int oldpsmid = Convert.ToInt32(currentpsmid);
+
                 var updateiscomplete = await _projectsRepository.GettXNByPsmIdAsync(oldpsmid);
                 updateiscomplete.IsComplete = true;
                 await _projectsRepository.UpdateTxnAsync(updateiscomplete);
+
                 psmove.UserDetails = Helper.LoginDetails(Logins);
-                psmove.UpdatedByUserId = Logins.UserIntId; // change with userid
+                psmove.UpdatedByUserId = Logins.UserIntId;
+
                 if (legacy_approval != null && legacy_approval.ActionType == ActionTypeEnum.Approved)
                 {
                     psmove.DateTimeOfUpdate = psmove.TimeStamp;
@@ -1066,59 +1166,74 @@ public async Task<IActionResult> Details(int id)
                     psmove.EditDeleteDate = DateTime.Now;
                     psmove.TimeStamp = DateTime.Now;
                 }
+
                 psmove.IsActive = true;
                 psmove.EditDeleteBy = Logins.UserIntId;
-
                 psmove.IsComplete = false;
                 psmove.IsComment = false;
                 psmove.IsPullBack = false;
+
                 if (psmove.FromUnitId == psmove.ToUnitId)
                 {
                     psmove.IsRead = true;
                 }
+
                 if (psmove.CcId != null && psmove.CcId.Length > 0)
                 {
                     psmove.IsCc = true;
                 }
+
                 _dbContext.SaveChanges();
+
                 var remainders = await _dbContext.TrnRemainders
                     .Where(r => r.Projid == getprojidbypsmid && r.ReadDate == null && r.ToUserDetails == null && r.Tounitid == Logins.unitid)
                     .ToListAsync();
+
                 if (remainders.Count > 0)
                 {
                     await _Remainder.UpdateReaminderRead(getprojidbypsmid, 0);
                 }
+
                 var projectMovements = await _dbContext.ProjStakeHolderMov
                     .Where(x => x.ProjId == getprojidbypsmid && x.IsRead == true && x.IsComment == true)
                     .ToListAsync();
+
                 foreach (var item in projectMovements)
                 {
                     item.IsRead = false;
                 }
+
                 _dbContext.ProjStakeHolderMov.UpdateRange(projectMovements);
                 await _dbContext.SaveChangesAsync();
+
                 var Ret = await _psmRepository.AddWithReturn(psmove);
+
                 var latestpsmid = _projStakeHolderMovRepository.GetLastRecProjectMov(getprojidbypsmid);
-                var errors = new List<int>(); // List to collect errors
+
+                var errors = new List<int>();
+
                 if (psmove.Attachments != null && psmove.Attachments.Count > 0)
                 {
                     foreach (var attachment in psmove.Attachments)
                     {
                         var saveResult = await SaveAttachmentAsync(attachment.File, attachment.Remarks, latestpsmid, Logins, psmove.TimeStamp);
+
                         if (saveResult is JsonResult jsonResult)
                         {
                             var resultValue = jsonResult.Value as int?;
-                            if (resultValue != 1) // If not successful, collect the error code
+                            if (resultValue != 1)
                             {
                                 errors.Add(resultValue.GetValueOrDefault());
                             }
                         }
                     }
                 }
+
                 if (errors.Any())
                 {
                     return Json(errors);
                 }
+
                 if (Ret != null)
                 {
                     if (psmove.CcId != null && psmove.CcId.Length > 0)
@@ -1134,6 +1249,7 @@ public async Task<IActionResult> Details(int id)
                             ccMov.IsRead = false;
                             ccMov.UserDetails = "";
                             ccMov.ReadDate = DateTime.Now;
+
                             var Retcc = await _projStakeHolderCcMovRepository.AddWithReturn(ccMov);
                         }
                     }
@@ -1148,8 +1264,7 @@ public async Task<IActionResult> Details(int id)
             {
                 return Json(nmum.TounitEqualsCCUnitID);
             }
-        }
-        // SECURITY: Basic file signature validation to detect fake extensions
+        }   // SECURITY: Basic file signature validation to detect fake extensions
         private async Task<bool> HasValidFileSignatureAsync(IFormFile file, string extension)
         {
             if (file == null || file.Length == 0) return false;
@@ -1218,10 +1333,69 @@ public async Task<IActionResult> Details(int id)
 
 
 
-        public async Task<IActionResult> ProjectMovHistory(int ProjectId)
+        [HttpPost]
+        [ValidateAntiForgeryToken] // important for security
+        public async Task<IActionResult> ProjectMovHistory(string ProjectId)
         {
-            var Ret = await _psmRepository.ProjectMovHistory(ProjectId);
-            return Json(Ret);
+            if (string.IsNullOrWhiteSpace(ProjectId))
+            {
+                _logger.LogWarning("ProjectMovHistory called with empty ProjectId");
+                return BadRequest(new { success = false, message = "Invalid request." });
+            }
+
+            int projectId;
+            string cryptoKey = _configuration["CryptoSettings:LoginKey"];
+
+            if (string.IsNullOrWhiteSpace(cryptoKey))
+            {
+                _logger.LogError("Crypto key is missing from configuration");
+                return StatusCode(500, new { success = false, message = "Server configuration error." });
+            }
+
+            try
+            {
+                string decrypted = CryptoHelper.SafeDecrypt(ProjectId, cryptoKey);
+
+                if (string.IsNullOrWhiteSpace(decrypted))
+                {
+                    _logger.LogWarning("Decryption returned empty result for ProjectId");
+                    return BadRequest(new { success = false, message = "Invalid request data." });
+                }
+
+                decrypted = decrypted.Trim().Trim('"');
+
+                if (!int.TryParse(decrypted, out projectId) || projectId <= 0)
+                {
+                    _logger.LogWarning("Invalid decrypted ProjectId: {Value}", decrypted);
+                    return BadRequest(new { success = false, message = "Invalid identifier." });
+                }
+            }
+            catch (CryptographicException ex)
+            {
+                _logger.LogError(ex, "Cryptographic error while decrypting ProjectId");
+                return BadRequest(new { success = false, message = "Invalid encrypted data." });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Unexpected error in ProjectMovHistory");
+                return StatusCode(500, new { success = false, message = "Internal server error." });
+            }
+
+            try
+            {
+                var result = await _psmRepository.ProjectMovHistory(projectId);
+
+                return Json(new
+                {
+                    success = true,
+                    data = result 
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Database error while fetching ProjectMovHistory for ProjectId: {ProjectId}", projectId);
+                return StatusCode(500, new { success = false, message = "Failed to fetch data." });
+            }
         }
         public async Task<IActionResult> UndoProject(int ProjectId, int PsmId, string Remarks, int StageId)
         {
@@ -1266,111 +1440,138 @@ public async Task<IActionResult> Details(int id)
         #endregion
         #region PullBack
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> PullBAckProject(int ProjectId, int PsmId, string Remarks, int StageId)
+        public async Task<IActionResult> PullBAckProject(string encrypted_data)
         {
+            string cryptoKey = _configuration["CryptoSettings:LoginKey"] ?? string.Empty;
+
+            // Fix 1: Use non-generic DecryptionHelper and cast result.Data to DecryptedRequest
+            var result = DecryptionHelper.DecryptRequest(encrypted_data, cryptoKey, _logger);
+            if (!result.Success)
+            {
+                return BadRequest(new { success = false, message = result.ErrorMessage });
+            }
+
+            // Fix 2: Use safe cast and null checks
+            var data = result.Data as DecryptedRequest;
+            if (data == null)
+            {
+                return BadRequest(new { success = false, message = "Invalid decrypted data." });
+            }
+
+            int projid = data.ProjectId;
+            int psmId = data.PsmId;
+            int stageId = data.StageId;
+            string remarks = data.Remarks ?? "";
+
             try
             {
-                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+                // Fix 3: Null check for HttpContext and Session
+                var httpContext = _httpContextAccessor.HttpContext;
+                if (httpContext == null || httpContext.Session == null)
+                {
+                    return Unauthorized(new { success = false, message = "Session expired." });
+                }
+                Login Logins = SessionHelper.GetObjectFromJson<Login>(httpContext.Session, "User");
+                if (Logins == null)
+                {
+                    return Unauthorized(new { success = false, message = "Session expired." });
+                }
+
                 var movent = new tbl_ProjStakeHolderMov();
 
-					var remainders = await _dbContext.TrnRemainders
-			  .Where(r => r.Projid == ProjectId && r.ReadDate == null && r.ToUserDetails == null)
-			  .ToListAsync();
+                var remainders = await _dbContext.TrnRemainders
+                    .Where(r => r.Projid == projid && r.ReadDate == null && r.ToUserDetails == null)
+                    .ToListAsync();
 
-					if (remainders.Count > 0)
-					{
+                if (remainders.Count > 0)
+                {
+                    await _Remainder.UpdateReaminderRead(projid, 1);
+                }
 
-					await _Remainder.UpdateReaminderRead(ProjectId,1);
+                await _dbContext.SaveChangesAsync();
 
-					}
-
-
-					await _dbContext.SaveChangesAsync();
-
-					int psmData = _psmRepository.GetLastRecProjectMov(ProjectId);
-                    if (psmData != 0)
+                int psmData = _psmRepository.GetLastRecProjectMov(projid);
+                if (psmData != 0)
+                {
+                    if (psmData == psmId)
                     {
-                        if (psmData == PsmId)
-                        {
-                            movent = await _psmRepository.GetByByte(psmData);
-                            movent.IsRead = true;
-                            movent.UndoRemarks = Remarks;
-                            movent.IsComplete = true;
-                            movent.DateTimeOfUpdate = DateTime.Now;
-                            var Ret = await _psmRepository.UpdateWithReturn(movent);
-                        }
-                        else
-                        {
-                            movent = await _psmRepository.GetByByte(psmData);
-                            movent.IsComplete = true;
-                            await _psmRepository.UpdateWithReturn(movent);
-
-                            movent = await _psmRepository.GetByByte(PsmId);
-                            movent.IsRead = true;
-                            movent.UndoRemarks = Remarks;
-                            movent.IsComplete = true;
-                            movent.DateTimeOfUpdate = DateTime.Now;
-                            var Ret = await _psmRepository.UpdateWithReturn(movent);
-                        }
-
-
-                        UnitDtl unitDetail = new UnitDtl();
-                        if (psmData != PsmId)
-                        {
-                            movent = await _psmRepository.GetByByte(psmData);
-                            unitDetail = await _unitRepository.GetUnitDtl(movent.ToUnitId);
-                        }
-                        else
-                        {
-                            unitDetail = await _unitRepository.GetUnitDtl(movent.ToUnitId);
-                        }
-                        if (unitDetail != null)
-                        {
-                            ApplicationUser userdet = await _projectsRepository.GetUserByUnitId(unitDetail.unitid);
-                            if (userdet != null)
-                            {
-                                var rankName = _dbContext.mRank.FirstOrDefault(x => x.Id == userdet.Rank);
-                                if (rankName != null)
-                                {
-                                    movent.UserDetails = rankName.RankName + " " + userdet.Offr_Name.Trim() + " / " + userdet.UserName.Trim() + "";
-                                }
-                            }
-                            else
-                            {
-                                movent.UserDetails = "";
-                            }
-                        }
-                        if (psmData != PsmId)
-                        {
-                            movent = await _psmRepository.GetByByte(psmData);
-                            movent.FromUnitId = movent.ToUnitId;
-                        }
-                        else
-                        {
-                            movent.FromUnitId = movent.ToUnitId;
-                        }
-                        movent.PsmId = 0;
-                        movent.ToUnitId = Convert.ToInt32(Logins.unitid);
-                        movent.IsComplete = false;
-                        movent.IsRead = false;
-                        movent.IsPullBack = true;
-                        movent.UndoRemarks = null;
-                        movent.Remarks = Helper.LoginDetails(Logins) + "("+(Logins.Unit)+ ") 𝐑𝐞𝐦𝐚𝐫𝐤𝐬: " + Remarks; 
-                        movent.UpdatedByUserId = Logins.UserIntId;
+                        movent = await _psmRepository.GetByByte(psmData);
+                        movent.IsRead = true;
+                        movent.UndoRemarks = remarks;
+                        movent.IsComplete = true;
                         movent.DateTimeOfUpdate = DateTime.Now;
-
-
-                        movent.EditDeleteDate = DateTime.Now;
-                        movent.EditDeleteBy = Logins.UserIntId;
-                        movent.TimeStamp = DateTime.Now;
-                        movent.IsComplete = false;
-                        movent.IsComment = false;
-
-                        movent.IsCc = false;
-                        var Ret1 = await _psmRepository.AddWithReturn(movent);
-                        return Json(nmum.Update);
+                        var Ret = await _psmRepository.UpdateWithReturn(movent);
                     }
-                    return Json(nmum.NotSave);
+                    else
+                    {
+                        movent = await _psmRepository.GetByByte(psmData);
+                        movent.IsComplete = true;
+                        await _psmRepository.UpdateWithReturn(movent);
+
+                        movent = await _psmRepository.GetByByte(psmId);
+                        movent.IsRead = true;
+                        movent.UndoRemarks = remarks;
+                        movent.IsComplete = true;
+                        movent.DateTimeOfUpdate = DateTime.Now;
+                        var Ret = await _psmRepository.UpdateWithReturn(movent);
+                    }
+
+                    UnitDtl? unitDetail = null;
+                    if (psmData != psmId)
+                    {
+                        movent = await _psmRepository.GetByByte(psmData);
+                        unitDetail = await _unitRepository.GetUnitDtl(movent.ToUnitId);
+                    }
+                    else
+                    {
+                        unitDetail = await _unitRepository.GetUnitDtl(movent.ToUnitId);
+                    }
+                    if (unitDetail != null)
+                    {
+                        ApplicationUser? userdet = await _projectsRepository.GetUserByUnitId(unitDetail.unitid);
+                        if (userdet != null)
+                        {
+                            var rankName = _dbContext.mRank.FirstOrDefault(x => x.Id == userdet.Rank);
+                            // Fix 4/5: Null checks for rankName, userdet.Offr_Name, userdet.UserName
+                            string rankStr = rankName?.RankName ?? "";
+                            string offrName = userdet.Offr_Name?.Trim() ?? "";
+                            string userName = userdet.UserName?.Trim() ?? "";
+                            movent.UserDetails = $"{rankStr} {offrName} / {userName}";
+                        }
+                        else
+                        {
+                            movent.UserDetails = "";
+                        }
+                    }
+                    if (psmData != psmId)
+                    {
+                        movent = await _psmRepository.GetByByte(psmData);
+                        movent.FromUnitId = movent.ToUnitId;
+                    }
+                    else
+                    {
+                        movent.FromUnitId = movent.ToUnitId;
+                    }
+                    movent.PsmId = 0;
+                    movent.ToUnitId = Convert.ToInt32(Logins.unitid);
+                    movent.IsComplete = false;
+                    movent.IsRead = false;
+                    movent.IsPullBack = true;
+                    movent.UndoRemarks = null;
+                    movent.Remarks = Helper.LoginDetails(Logins) + "(" + (Logins.Unit ?? "") + ") 𝐑𝐞𝐦𝐚𝐫𝐤𝐬: " + remarks;
+                    movent.UpdatedByUserId = Logins.UserIntId;
+                    movent.DateTimeOfUpdate = DateTime.Now;
+
+                    movent.EditDeleteDate = DateTime.Now;
+                    movent.EditDeleteBy = Logins.UserIntId;
+                    movent.TimeStamp = DateTime.Now;
+                    movent.IsComplete = false;
+                    movent.IsComment = false;
+                    movent.IsCc = false;
+                    var Ret1 = await _psmRepository.AddWithReturn(movent);
+                    return Json(nmum.Update);
+                }
+                return Json(nmum.NotSave);
             }
             catch (Exception ex)
             {
@@ -1405,34 +1606,74 @@ public async Task<IActionResult> Details(int id)
 
         [HttpPost]
         [RequestFormLimits(MultipartBodyLengthLimit = 26214400)]
-        public async Task<IActionResult> SendCommentonProject(IFormFile uploadfile, string Comments, int StkStatusId, int ProjectId, int psmid, DateTime CommentDate)
+        public async Task<IActionResult> SendCommentonProject(
+     IFormFile uploadfile,
+     string Comments,
+     string StkStatusId,
+     string ProjectId,
+     string psmid,
+     string CommentDate)
         {
-            int count = 0;
-            count++;
-            var count1 = count;
+            var cryptoKey = _configuration["CryptoSettings:LoginKey"];
+
+            try
+            {
+                // 🔐 SAFE DECRYPTION
+                Comments = string.IsNullOrEmpty(Comments) ? "" : CryptoHelper.SafeDecrypt(Comments, cryptoKey);
+                StkStatusId = string.IsNullOrEmpty(StkStatusId) ? "0" : CryptoHelper.SafeDecrypt(StkStatusId, cryptoKey);
+                ProjectId = string.IsNullOrEmpty(ProjectId) ? "0" : CryptoHelper.SafeDecrypt(ProjectId, cryptoKey);
+                psmid = string.IsNullOrEmpty(psmid) ? "0" : CryptoHelper.SafeDecrypt(psmid, cryptoKey);
+                CommentDate = string.IsNullOrEmpty(CommentDate) ? DateTime.Now.ToString() : CryptoHelper.SafeDecrypt(CommentDate, cryptoKey);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Decryption failed in SendCommentonProject");
+                return Json(-500);
+            }
+
+            // 🔄 SAFE CONVERSION
+            if (!int.TryParse(StkStatusId.Trim('"'), out int stkStatusId) ||
+                !int.TryParse(ProjectId.Trim('"'), out int projectId) ||
+                !int.TryParse(psmid.Trim('"'), out int psmIdInt) ||
+                !DateTime.TryParse(CommentDate.Trim('"'), out DateTime commentDateTime))
+            {
+                _logger.LogWarning("Invalid decrypted input values in SendCommentonProject");
+                return Json(-400); // bad request
+            }
+
             try
             {
                 StkComment cmmets = new StkComment();
                 string uniqueFileName = "";
-                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-                int psmove = await _stkCommentRepository.GetCommentStatusByPsmiId(psmid);
-                int allowForInfo = _stkCommentRepository.IsAllowForCommentByStkStatusId(StkStatusId);
+
+                Login Logins = SessionHelper.GetObjectFromJson<Login>(
+                    _httpContextAccessor.HttpContext.Session, "User");
+
+                if (Logins == null)
+                {
+                    _logger.LogWarning("Session expired in SendCommentonProject");
+                    return Json(-401);
+                }
+
+                int psmove = await _stkCommentRepository.GetCommentStatusByPsmiId(psmIdInt);
+                int allowForInfo = _stkCommentRepository.IsAllowForCommentByStkStatusId(stkStatusId);
+
                 if (psmove != 1 || allowForInfo == 1)
                 {
+                    // 📁 FILE UPLOAD
                     if (uploadfile != null)
                     {
                         if (uploadfile.Length <= 10485760)
                         {
-                            uniqueFileName = $"{"Swas"}_{Guid.NewGuid()}{System.IO.Path.GetExtension(uploadfile.FileName)}";
+                            uniqueFileName = $"Swas_{Guid.NewGuid()}{Path.GetExtension(uploadfile.FileName)}";
 
-                            string filePath = System.IO.Path.Combine(_environment.ContentRootPath, "wwwroot/Uploads/", uniqueFileName);
-
+                            string filePath = Path.Combine(
+                                _environment.ContentRootPath, "wwwroot/Uploads/", uniqueFileName);
 
                             using (var stream = new FileStream(filePath, FileMode.Create))
                             {
-                                uploadfile.CopyTo(stream);
+                                await uploadfile.CopyToAsync(stream);
                             }
-
 
                             cmmets.ActFileName = uploadfile.FileName;
                         }
@@ -1441,145 +1682,144 @@ public async Task<IActionResult> Details(int id)
                             return Json(nmum.PdfSizeEx);
                         }
                     }
-                    var approval_legacy = _dbContext.LegacyHistory.Where(x =>x.ProjectId==ProjectId).OrderByDescending(x=>x.HistoryId).FirstOrDefault();
+
+                    var approval_legacy = _dbContext.LegacyHistory
+                        .Where(x => x.ProjectId == projectId)
+                        .OrderByDescending(x => x.HistoryId)
+                        .FirstOrDefault();
+
+                    // 🧾 ASSIGN DATA
                     cmmets.Attpath = uniqueFileName;
-                    cmmets.Comments = Comments;
-                    cmmets.PsmId = psmid;
-                    cmmets.ProjId = ProjectId;
+                    cmmets.Comments = Comments.Trim('"');
+                    cmmets.PsmId = psmIdInt;
+                    cmmets.ProjId = projectId;
                     cmmets.UpdatedByUserId = Logins.UserIntId;
-                    if(approval_legacy !=null && approval_legacy.ActionType ==ActionTypeEnum.Approved)
-                    {
-                    cmmets.DateTimeOfUpdate = CommentDate;
+                    cmmets.DateTimeOfUpdate = (approval_legacy != null && approval_legacy.ActionType == ActionTypeEnum.Approved)
+                                                ? commentDateTime
+                                                : DateTime.Now;
 
-                    cmmets.EditDeleteDate = DateTime.Now; 
-                    }
-                    else
-                    {
-                        cmmets.DateTimeOfUpdate = DateTime.Now;
-
-                        cmmets.EditDeleteDate = DateTime.Now; 
-                    }
+                    cmmets.EditDeleteDate = DateTime.Now;
                     cmmets.IsDeleted = false;
                     cmmets.IsActive = true;
                     cmmets.EditDeleteBy = Logins.unitid;
-                    cmmets.StkStatusId = StkStatusId;
+                    cmmets.StkStatusId = stkStatusId;
                     cmmets.UserDetails = Helper.LoginDetails(Logins);
-                    cmmets.StakeHolderId = Logins.unitid; 
+                    cmmets.StakeHolderId = Logins.unitid;
 
-                    var projectStkHolderMovementData = await _projectsRepository.GetProjStkHolderMovmentByPsmiId(cmmets.PsmId);
+                    var projectStkHolderMovementData =
+                        await _projectsRepository.GetProjStkHolderMovmentByPsmiId(cmmets.PsmId);
+
                     if (projectStkHolderMovementData != null)
                     {
                         var projectMovements = await _dbContext.ProjStakeHolderMov
-                               .Where(x => x.ProjId == projectStkHolderMovementData.ProjId && x.PsmId != psmid && x.IsComment == true) // Exclude the current record
-                               .ToListAsync();
-
+                            .Where(x => x.ProjId == projectStkHolderMovementData.ProjId &&
+                                        x.PsmId != psmIdInt &&
+                                        x.IsComment == true)
+                            .ToListAsync();
 
                         foreach (var item in projectMovements)
                         {
                             item.IsRead = false;
-                            if (item.PsmId == 5434)
-                            {
-                                break;
-                            }
                         }
+
                         var latestPsmId = await _dbContext.ProjStakeHolderMov
-         .Where(x => x.ProjId == projectStkHolderMovementData.ProjId && x.IsComplete == false)
-         .OrderByDescending(x => x.PsmId)
-         .Select(x => x.PsmId)
-         .FirstOrDefaultAsync();
+                            .Where(x => x.ProjId == projectStkHolderMovementData.ProjId && x.IsComplete == false)
+                            .OrderByDescending(x => x.PsmId)
+                            .Select(x => x.PsmId)
+                            .FirstOrDefaultAsync();
 
                         if (latestPsmId != 0)
                         {
-                            if (latestPsmId == 5434)
-                            {
-                                Console.WriteLine("id");
-                            }
-
                             var latestMovement = await _dbContext.ProjStakeHolderMov
                                 .FirstOrDefaultAsync(x => x.PsmId == latestPsmId);
-                            if (latestMovement.PsmId == 5434)
-                            {
-                                Console.WriteLine("id");
-                            }
+
                             if (latestMovement != null)
                             {
                                 latestMovement.IsRead = false;
-
-                                await _dbContext.SaveChangesAsync();
                             }
                         }
-
-
 
                         _dbContext.ProjStakeHolderMov.UpdateRange(projectMovements);
                         await _dbContext.SaveChangesAsync();
 
+                        projectStkHolderMovementData.DateTimeOfUpdate = commentDateTime;
 
-
-
-                        
-                        projectStkHolderMovementData.DateTimeOfUpdate = CommentDate; // To show the comment date on the dashboard btnGetsummay 
-
-                       
-                        var rets = await _projectsRepository.UpdateProjectStkMovementAsync(projectStkHolderMovementData);
+                        var rets = await _projectsRepository
+                            .UpdateProjectStkMovementAsync(projectStkHolderMovementData);
 
                         if (rets != null)
                         {
-                            if (cmmets.PsmId == 5434)
-                            {
-                                Console.WriteLine("Break");
-                            }
                             var ret = await _stkCommentRepository.AddWithReturn(cmmets);
 
-                            if (ret != null)
-                                return Json(nmum.Save);
-                            else
-                                return Json(0);
+                            return ret != null ? Json(nmum.Save) : Json(0);
                         }
                         else
                         {
                             return Json(0);
                         }
                     }
+
                     return Json(0);
-
-                  
                 }
-
                 else
                 {
                     return Json(nmum.NotSave);
                 }
-
             }
             catch (Exception ex)
             {
                 int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
                 var eventId = new EventId(dynamicEventId, "SendCommentonProject");
-                _logger.Log(LogLevel.Error, eventId, "An error occurred while Send Comment on Project in ProjectsController.", ex, (s, e) => $"{s} - {e?.Message}");
+
+                _logger.Log(LogLevel.Error, eventId,
+                    "An error occurred while Send Comment on Project in ProjectsController.",
+                    ex,
+                    (s, e) => $"{s} - {e?.Message}");
 
                 return Json(nmum.Exception);
             }
         }
 
-
-        public async Task<IActionResult> GetAllCommentBypsmId_UnitId(int psmId, int stakeholderId, int projId)
+        public async Task<IActionResult> GetAllCommentBypsmId_UnitId(string encrypted_ids)
         {
+            string cryptoKey = _configuration["CryptoSettings:LoginKey"] ?? string.Empty;
+
+            var result = DecryptionHelper.DecryptRequest(encrypted_ids, cryptoKey, _logger);
+
+            if (!result.Success)
+            {
+                return BadRequest(new { success = false, message = result.ErrorMessage });
+            }
+
+            if (result.Data == null)
+            {
+                return BadRequest(new { success = false, message = "Invalid decrypted data." });
+            }
+
+            int projid = result.Data.ProjId;
+            int psmId = result.Data.PsmId;
+
+           
+
             try
             {
-                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+                Login logins = SessionHelper.GetObjectFromJson<Login>(
+                    _httpContextAccessor.HttpContext.Session, "User");
 
-                StkComment stkComment = new StkComment();
-                stkComment.ProjId = projId;
-                stkComment.PsmId = psmId;
+                StkComment stkComment = new StkComment
+                {
+                    ProjId = projid,
+                    PsmId = psmId
+                };
+
                 var ret = await _stkCommentRepository.GetAllCommentBypsmId_UnitId(stkComment);
 
                 return Json(ret);
-
             }
             catch (Exception ex)
             {
-                return Json(nmum.Exception);
+                _logger.LogError(ex, "Error in GetAllCommentBypsmId_UnitId");
+                return StatusCode(500, new { success = false, message = "Something went wrong." });
             }
         }
         public async Task<IActionResult> GetCommentStatus(int UnitId)
@@ -1631,19 +1871,19 @@ public async Task<IActionResult> Details(int id)
                     }
                 }
 
-                if (encryModel.EncryItem != null)
+                if (encryModel?.EncryItem != null)
                 {
                     var UnprotectedValue = _dataProtector.Unprotect(encryModel.EncryItem.ToString() ?? "");
                     var originalData = JsonConvert.DeserializeObject<MyRequestModel>(UnprotectedValue);
-                    dtaProjID = originalData.DtaProjID;
+                    dtaProjID = originalData?.DtaProjID;
                     if (dtaProjID == 0)
                     {
                         dtaProjID = null;
                     }
 
-                    AttPath = originalData.AttPath;
-                    Projpin = originalData.Projpin;
-                    psmid = originalData.PsmId;
+                    AttPath = originalData?.AttPath;
+                    Projpin = originalData?.Projpin;
+                    psmid = originalData?.PsmId;
                     actufilename = originalData.ActFileName;
                     AttDocuDescs = originalData.AttDocuDesc;
 
@@ -1713,7 +1953,7 @@ public async Task<IActionResult> Details(int id)
                 var getcurrentpsmid = _dbContext.Projects.Find(dataProjId).CurrentPslmId;
 
                 ViewBag.documenttype = _dbContext.AttHistory
-    .Any(x => x.PsmId == getcurrentpsmid && x.DocumentTypeId == 3);
+               .Any(x => x.PsmId == getcurrentpsmid && x.DocumentTypeId == 3);
                 ViewBag.PsmId = psmid ?? 0;
                 ViewBag.PjIR = Projpin;
 
@@ -1744,7 +1984,6 @@ public async Task<IActionResult> Details(int id)
                     
                     return View(prohis);
                 }
-
 
                 ViewBag.DataProjId = dataProjId;
                 List<ProjHistory> projHistory = await _projectsRepository.GetProjectHistorybyID(Logins.unitid);
@@ -2482,13 +2721,15 @@ public async Task<IActionResult> Details(int id)
             return Ok(result);
         }
         [HttpPost]
-        public async Task<IActionResult> SendRemainder(int ProjId, string Remarks)
+        public async Task<IActionResult> SendRemainder(string ProjId, string Remarks)
         {
+            string decryptedValue = _dataProtector.Unprotect(ProjId);
+           var  dataProjId = int.Parse(decryptedValue);
             var user = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext?.Session, "User");
             if (user == null)
                 return Json(0); // or return Unauthorized();
 
-            var latestpsmid = _projStakeHolderMovRepository.GetLastRecProjectMov(ProjId);
+            var latestpsmid = _projStakeHolderMovRepository.GetLastRecProjectMov(dataProjId);
             var latestpsmiddata = _dbContext.ProjStakeHolderMov.Find(latestpsmid);
 
             latestpsmiddata.IsRead = false;
@@ -2502,21 +2743,23 @@ public async Task<IActionResult> Details(int id)
             int fromUnitId = user.unitid ?? 0;
             int toUnitId = latestpsmiddata.ToUnitId;
             string userDetails = Helper1.LoginDetails(user);
-            int result = await _Remainder.AddRemainder(ProjId, Psmid, fromUnitId, toUnitId, Remarks, userDetails);
+            int result = await _Remainder.AddRemainder(dataProjId, Psmid, fromUnitId, toUnitId, Remarks, userDetails);
 
             return Json(result); // 1 if success
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProjectRemainderHistory(int ProjectId)
+        public async Task<IActionResult> GetProjectRemainderHistory(string ProjectId)
         {
             try
             {
+                string decryptedValue = _dataProtector.Unprotect(ProjectId);
+                int dataProjId = int.Parse(decryptedValue);
                 _logger.LogInformation("Fetching history for ProjectId: {ProjectId}", ProjectId);
-                if (ProjectId <= 0)
+                if (dataProjId <= 0)
                     return BadRequest(new { success = false, message = "Invalid project ID." });
 
-                var history = await _Remainder.ProjectRemainderMovHistory(ProjectId);
+                var history = await _Remainder.ProjectRemainderMovHistory(dataProjId);
 
                 if (history == null || !history.Any())
                     return Json(new { success = false, message = "No legacy history found." });
@@ -2599,23 +2842,61 @@ public async Task<IActionResult> Details(int id)
 
 
 
-		[HttpPost]
-		public IActionResult CheckPreviousApprovals(int ProjId, int StatusId, int Actionsid)
-		{
+				
+        [HttpPost]
+        public IActionResult CheckPreviousApprovals(string encryptdata)
+        {
+            if (string.IsNullOrWhiteSpace(encryptdata))
+            {
+                _logger.LogWarning("CheckPreviousApprovals called with empty encryptdata");
+                return BadRequest(new { success = false, message = "Invalid request." });
+            }
 
-			try
-			{
-				var notapproved = _projStakeHolderMovRepository.CheckPreviousApprovals(StatusId, ProjId, Actionsid);
-				return Json(new { message = notapproved });
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
+            int projid = 0;
+            int statusId = 0;
+            int actionsId = 0;
+            string cryptoKey = _configuration["CryptoSettings:LoginKey"] ?? string.Empty;
 
-		}
-        
-        
+            try
+            {
+                // Decrypt
+                string decryptedJson = CryptoHelper.SafeDecrypt(encryptdata, cryptoKey);
+                if (string.IsNullOrWhiteSpace(decryptedJson))
+                {
+                    _logger.LogWarning("Decryption returned empty result");
+                    return BadRequest(new { success = false, message = "Invalid request data." });
+                }
+
+                // Parse JSON
+                var obj = JsonConvert.DeserializeObject<dynamic>(decryptedJson.Trim('"'));
+                if (obj == null ||
+                    !int.TryParse((string?)obj.ProjId, out projid) ||
+                    !int.TryParse((string?)obj.StatusId, out statusId) ||
+                    !int.TryParse((string?)obj.Actionsid, out actionsId))
+                {
+                    _logger.LogWarning("Invalid decrypted Projid, StatusId, Actionsid: {Value}", decryptedJson);
+                    return BadRequest(new { success = false, message = "Invalid identifier." });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error decrypting encryptdata");
+                return StatusCode(500, new { success = false, message = "Error processing request." });
+            }
+
+            try
+            {
+                var notapproved = _projStakeHolderMovRepository.CheckPreviousApprovals(statusId, projid, actionsId);
+                return Json(new { message = notapproved });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in CheckPreviousApprovals repository call");
+                return StatusCode(500, new { success = false, message = "Error processing request." });
+            }
+        }
+
+
         [HttpGet]
 		public async Task<IActionResult> GetActParkedProject()
 		{
@@ -2631,48 +2912,92 @@ public async Task<IActionResult> Details(int id)
 			}
 
 		}
-		[HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult ParkedProject(int psmid)
+        public async Task<IActionResult> ParkedProject(string psmid)
         {
+            if (string.IsNullOrWhiteSpace(psmid))
+            {
+                _logger.LogWarning("ParkedProject called with empty psmid");
+                return BadRequest(new { success = false, message = "Invalid request." });
+            }
+
+            int parsedPsmId;
+            string cryptoKey = _configuration["CryptoSettings:LoginKey"];
+
             try
             {
-                var unpack = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == psmid);
+                // Decrypt
+                string decrypted = CryptoHelper.SafeDecrypt(psmid, cryptoKey);
 
-                if (unpack == null)
-                    return Json(new { message = "Project not found!" });
-
-                string parkmsg;
-
-                if (!unpack.IsParked)
+                if (string.IsNullOrWhiteSpace(decrypted))
                 {
-                    unpack.IsParked = true;
-                    parkmsg = "Project Successfully Parked";
-                }
-                else
-                {
-                    unpack.IsParked = false;
-                    parkmsg = "Project Successfully Unparked";
+                    _logger.LogWarning("Decryption returned empty result");
+                    return BadRequest(new { success = false, message = "Invalid request data." });
                 }
 
-                _dbContext.ProjStakeHolderMov.Update(unpack);
-                _dbContext.SaveChanges();
+                // Clean & parse
+                decrypted = decrypted.Trim('"');
 
-                return Json(new { message = parkmsg });
+                if (!int.TryParse(decrypted, out parsedPsmId))
+                {
+                    _logger.LogWarning("Invalid decrypted psmid: {Value}", decrypted);
+                    return BadRequest(new { success = false, message = "Invalid identifier." });
+                }
             }
-            // add via DI: ILogger<YourController> _logger;
-
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unhandled error in {Action}", nameof(ParkedProject));
-
-                return Json(new
-                {
-                    success = false,
-                    message = "Something went wrong. Please try again or contact admin."
-                });
+                _logger.LogError(ex, "Error decrypting psmid");
+                return StatusCode(500, new { success = false, message = "Error processing request." });
             }
 
+            try
+            {
+                var project = await _dbContext.ProjStakeHolderMov
+                    .FirstOrDefaultAsync(x => x.PsmId == parsedPsmId);
+
+                if (project == null)
+                {
+                    _logger.LogInformation("Project not found for PsmId: {PsmId}", parsedPsmId);
+                    return NotFound(new { success = false, message = "Project not found." });
+                }
+
+                // Toggle state
+                project.IsParked = !project.IsParked;
+
+                _dbContext.ProjStakeHolderMov.Update(project);
+                await _dbContext.SaveChangesAsync();
+
+                string message = project.IsParked
+                    ? "Project successfully parked"
+                    : "Project successfully unparked";
+
+                return Ok(new
+                {
+                    success = true,
+                    message
+                });
+            }
+            catch (DbUpdateException dbEx)
+            {
+                _logger.LogError(dbEx, "Database error while updating project {PsmId}", parsedPsmId);
+
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Database error occurred. Please try again."
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Unhandled error in ParkedProject for PsmId {PsmId}", parsedPsmId);
+
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Something went wrong. Please contact support."
+                });
+            }
         }
         [HttpGet]
         public async Task<IActionResult> GetDocumentTypes()

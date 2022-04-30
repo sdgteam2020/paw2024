@@ -166,7 +166,8 @@
 
 
 
-    function PrintDiv() {
+function PrintDiv() {
+ 
         var divToPrint = document.getElementById('widget-content');
     var popupWin = window.open('', '_blank', 'width=800,height=800,location=Center,Center=20px');
     popupWin.document.open();

@@ -21,7 +21,7 @@ function closeForm() {
     document.getElementById("myForm").style.display = "none";
 }
 function getAppConfig() {
-    var configElement = document.getElementById('app-config');
+    let configElement = document.getElementById('app-config');
 
     if (!configElement) {
         console.warn('App config element not found');

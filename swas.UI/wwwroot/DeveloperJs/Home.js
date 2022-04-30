@@ -1,15 +1,15 @@
 ﻿
 $(document).on('ready', function () {
     $('.table-button').on('click', function () {
-        var $button = $(this);
-        var stakeHolderId = $button.data('stakeholder-id');
-        var projId = $button.data('proj-id');
-        var psmId = $button.data('psm-id');
+        let $button = $(this);
+        let stakeHolderId = $button.data('stakeholder-id');
+        let projId = $button.data('proj-id');
+        let psmId = $button.data('psm-id');
         aler("Sanal");
         $('#StakeholdertextId').val(stakeHolderId);
         $('#ProjtextId').val(projId);
         $('#PsmToProj').val(psmId);
-        var status = $button.closest('td').attr('class');
+        let status = $button.closest('td').attr('class');
         $button.removeClass('green red yellow'); // Remove existing color classes
         $button.addClass(status); // Add the new color class
     });
@@ -21,9 +21,9 @@ $(document).on('ready', function () {
 
 document.onreadystatechange = function () {
     if (document.readyState === 'interactive') {
-        var popupTriggers = document.getElementById("preDev");
-        var popupOverlay = document.getElementById("popupOverlay");
-        var closeButton = document.getElementById("closeButton");
+        let popupTriggers = document.getElementById("preDev");
+        let popupOverlay = document.getElementById("popupOverlay");
+        let closeButton = document.getElementById("closeButton");
 
         popupTriggers.onclick = function () {
             popupOverlay.style.display = "block";
@@ -48,8 +48,8 @@ document.onreadystatechange = function () {
 
 document.onreadystatechange = function () {
     if (document.readyState === 'interactive') {
-        var popupTrigger = document.getElementById("popupTrigger");
-        var popupContent = document.getElementById("popupContent");
+        let popupTrigger = document.getElementById("popupTrigger");
+        let popupContent = document.getElementById("popupContent");
 
         popupTrigger.onclick = function () {
             if (popupContent.style.display === "none" || popupContent.style.display === "") {
@@ -64,13 +64,13 @@ document.onreadystatechange = function () {
 
 
 
-var TeamDetailPostBackURL = '/Projects/AttDetails';
+let TeamDetailPostBackURL = '/Projects/AttDetails';
 $(function () {
     $(".anchorDetail").click(function () {
 
-        var $buttonClicked = $(this);
-        var id = $buttonClicked.attr('data-id');
-        var options = { "backdrop": "static", keyboard: true };
+        let $buttonClicked = $(this);
+        let id = $buttonClicked.attr('data-id');
+        let options = { "backdrop": "static", keyboard: true };
         $.ajax({
             type: "GET",
             url: TeamDetailPostBackURL,
@@ -98,7 +98,7 @@ $(function () {
 
 
 
-var myChart1;
+let myChart1;
 
 $(document).ready(function () {
 
@@ -112,15 +112,15 @@ $(document).ready(function () {
                 return;
             }
 
-            var monthNames = [...new Set(data.map(item => item.MonthNameYr))];
-            var unitNames = [...new Set(data.map(item => item.unitname))];
+            let monthNames = [...new Set(data.map(item => item.MonthNameYr))];
+            let unitNames = [...new Set(data.map(item => item.unitname))];
 
-            var datasets = unitNames.map(unitName => {
-                var totalInData = [];
-                var totalOutData = [];
+            let datasets = unitNames.map(unitName => {
+                let totalInData = [];
+                let totalOutData = [];
 
                 monthNames.forEach(month => {
-                    var monthData = data.find(item => item.MonthNameYr === month && item.unitname === unitName);
+                    let monthData = data.find(item => item.MonthNameYr === month && item.unitname === unitName);
                     if (monthData) {
                         totalInData.push(monthData.TotalIn);
                         totalOutData.push(monthData.TotalOut);
@@ -130,15 +130,15 @@ $(document).ready(function () {
                     }
                 });
 
-                var unitNames = [...new Set(data.map(item => item.unitname))];
+                let unitNames = [...new Set(data.map(item => item.unitname))];
 
-                var colors = []; // Store unique colors for each unit
+                let colors = []; // Store unique colors for each unit
 
-                var totalInColor = getRandomColorss(); // Get a random color for TotalIn bars
-                var totalOutColor = getRandomColorss(); // Get a random color for TotalOut bars
+                let totalInColor = getRandomColorss(); // Get a random color for TotalIn bars
+                let totalOutColor = getRandomColorss(); // Get a random color for TotalOut bars
 
 
-                var colors = []; // Store unique colors for each unit
+                let colors = []; // Store unique colors for each unit
                 unitNames.forEach(unitName => {
                     colors.push(getRandomColorss()); // One color for TotalIn
                     colors.push(getRandomColorss()); // Another color for TotalOut
@@ -159,8 +159,8 @@ $(document).ready(function () {
             }).flat(); // Use flat() to flatten the array of arrays into a single array
 
 
-            var ctx = document.getElementById('myChart').getContext('2d');
-            var myChart = new Chart(ctx, {
+            let ctx = document.getElementById('myChart').getContext('2d');
+            let myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: monthNames,
@@ -188,7 +188,7 @@ $(document).ready(function () {
         }
     });
     function lightenColor(color, percent) {
-        var num = parseInt(color.replace("#", ""), 16),
+        let num = parseInt(color.replace("#", ""), 16),
             amt = Math.round(2.55 * percent),
             R = (num >> 16) + amt,
             B = (num >> 8 & 0x00FF) + amt,
@@ -196,9 +196,9 @@ $(document).ready(function () {
         return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (B < 255 ? B < 1 ? 0 : B : 255) * 0x100 + (G < 255 ? G < 1 ? 0 : G : 255)).toString(16).slice(1);
     }
     function getRandomColorss() {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
+        let letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
             color += letters[Math.floor(Math.random() * 16)];
         }
         return color;
@@ -283,7 +283,7 @@ $(document).ready(function () {
 });
 
 function openPopup(id, status) {
-    var newUrl = "/Projects/ProjStatDashBdView?id=" + encodeURIComponent(id) + "&status=" + encodeURIComponent(status);
+    let newUrl = "/Projects/ProjStatDashBdView?id=" + encodeURIComponent(id) + "&status=" + encodeURIComponent(status);
 
     window.location.href = newUrl;
 
@@ -300,12 +300,12 @@ function openPopup(id) {
 
 $(document).ready(function () {
     $("#ddlUnitId").change(function () {
-        var selectedMode = $(this).val();
+        let selectedMode = $(this).val();
     });
 });
 
 function ValInData(input) {
-    var regex = /[^a-zA-Z0-9/ ]/g;
+    let regex = /[^a-zA-Z0-9/ ]/g;
     input.value = input.value.replace(regex, "");
 }
 
@@ -326,7 +326,7 @@ $(document).ready(function () {
 });
 
 function processButtonClick() {
-    var buttonColor = "@(ViewBag.ProcessButtonColor)";
+    let buttonColor = "@(ViewBag.ProcessButtonColor)";
 
     Swal.fire({
         title: 'Are you sure?',
@@ -341,10 +341,10 @@ function processButtonClick() {
     }).then((result) => {
         if (result.isConfirmed) {
             if (buttonColor === 'green') {
-                var signInUrl = '/Home/Index';
+                let signInUrl = '/Home/Index';
                 window.location.href = signInUrl;
             } else if (buttonColor === 'red') {
-                var signUpUrl = '/Identity/Account/Register';
+                let signUpUrl = '/Identity/Account/Register';
                 window.open(signUpUrl, '_blank');
             }
         }
@@ -356,7 +356,7 @@ $(document).ready(function () {
 });
 
 function openPopup(id, status) {
-    var newUrl = "/Projects/ProjStatDashBdView?id=" + encodeURIComponent(id) + "&status=" + encodeURIComponent(status);
+    let newUrl = "/Projects/ProjStatDashBdView?id=" + encodeURIComponent(id) + "&status=" + encodeURIComponent(status);
 
     window.location.href = newUrl;
 

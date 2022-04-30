@@ -1,5 +1,5 @@
 $(function() {
-var options = {
+let options = {
     series: [{
         name: "Total Earnings",
         data: [0, 160, 671, 414, 555, 414, 555, 257, 300, 0]
@@ -86,9 +86,9 @@ var options = {
     }
   };
 
-  var chart = new ApexCharts(document.querySelector("#chart1"), options);
+  let chart = new ApexCharts(document.querySelector("#chart1"), options);
   chart.render();
-var options = {
+let options = {
     series: [{
         name: "Total Expense",
         data: [0, 160, 671, 414, 555, 414, 555, 257, 300, 0]
@@ -175,9 +175,9 @@ var options = {
     }
   };
 
-  var chart = new ApexCharts(document.querySelector("#chart2"), options);
+  let chart = new ApexCharts(document.querySelector("#chart2"), options);
   chart.render();
-var options = {
+let options = {
     series: [{
         name: "Total Orders",
         data: [0, 160, 671, 414, 555, 414, 555, 257, 300, 0]
@@ -264,9 +264,9 @@ var options = {
     }
   };
 
-  var chart = new ApexCharts(document.querySelector("#chart3"), options);
+  let chart = new ApexCharts(document.querySelector("#chart3"), options);
   chart.render();
-var options = {
+let options = {
     series: [{
         name: "Total Orders",
         data: [0, 160, 671, 414, 555, 0]
@@ -354,9 +354,9 @@ var options = {
     }
   };
 
-  var chart = new ApexCharts(document.querySelector("#chart4"), options);
+  let chart = new ApexCharts(document.querySelector("#chart4"), options);
   chart.render();
-var options = {
+let options = {
     series: [{
         name: "Total Orders",
         data: [0, 160, 671, 414, 555, 0]
@@ -444,9 +444,9 @@ var options = {
     }
   };
 
-  var chart = new ApexCharts(document.querySelector("#chart5"), options);
+  let chart = new ApexCharts(document.querySelector("#chart5"), options);
   chart.render();
-var options = {
+let options = {
     series: [{
         name: "Total Orders",
         data: [0, 160, 671, 414, 555, 0]
@@ -534,9 +534,9 @@ var options = {
     }
   };
 
-  var chart = new ApexCharts(document.querySelector("#chart6"), options);
+  let chart = new ApexCharts(document.querySelector("#chart6"), options);
   chart.render();
-var options = {
+let options = {
     series: [{
         name: "Total Orders",
         data: [180, 160, 671, 414, 555, 240, 350, 146]
@@ -613,7 +613,7 @@ var options = {
     }
   };
 
-  var chart = new ApexCharts(document.querySelector("#chart7"), options);
+  let chart = new ApexCharts(document.querySelector("#chart7"), options);
   chart.render();
 
   $('#chart8').easyPieChart({
@@ -655,7 +655,7 @@ onStep: function(from, to, percent) {
 
 });
 
-   var options = {
+   let options = {
 	chart: {
 	  height: 200,
 	  type: 'radialBar',
@@ -746,14 +746,14 @@ onStep: function(from, to, percent) {
 
   }
 
-  var chart = new ApexCharts(
+  let chart = new ApexCharts(
 	document.querySelector("#chart11"),
 	options
   );
 
   chart.render();
 
-   var options = {
+   let options = {
 	chart: {
 	  height: 200,
 	  type: 'radialBar',
@@ -844,14 +844,14 @@ onStep: function(from, to, percent) {
 
   }
 
-  var chart = new ApexCharts(
+  let chart = new ApexCharts(
 	document.querySelector("#chart12"),
 	options
   );
 
   chart.render();
 
-   var options = {
+   let options = {
 	chart: {
 	  height: 200,
 	  type: 'radialBar',
@@ -942,14 +942,14 @@ onStep: function(from, to, percent) {
 
   }
 
-  var chart = new ApexCharts(
+  let chart = new ApexCharts(
 	document.querySelector("#chart13"),
 	options
   );
 
   chart.render();
 
-   var options = {
+   let options = {
 	chart: {
 	  height: 200,
 	  type: 'radialBar',
@@ -1040,13 +1040,13 @@ onStep: function(from, to, percent) {
 
   }
 
-  var chart = new ApexCharts(
+  let chart = new ApexCharts(
 	document.querySelector("#chart14"),
 	options
   );
 
   chart.render();
-var options = {
+let options = {
     series: [{
         name: "Total Earnings",
         data: [180, 380, 671, 414, 555, 257, 901, 613, 420]
@@ -1133,7 +1133,7 @@ var options = {
     }
   };
 
-  var chart = new ApexCharts(document.querySelector("#chart15"), options);
+  let chart = new ApexCharts(document.querySelector("#chart15"), options);
   chart.render();
 
 

@@ -14,7 +14,7 @@
 
 @{
 	Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor.HttpContext.Session, "User");
-	Layout = "~/Views/Shared/_Layout.cshtml";
+	// Layout = "~/Views/Shared/_Layout.cshtml";
 	int snoinbox = 0;
 	int snosent = 0;
 	int snodraft = 0;
@@ -35,44 +35,44 @@
 
 <!-- Include jQuery UI CSS -->
 
-<link rel="stylesheet" href="~/content/jquery-ui.css" rel="stylesheet" />
+@* <link rel="stylesheet" href="~/content/jquery-ui.css" rel="stylesheet" /> *@
  
 <link href="~/css/projdetails.css" rel="stylesheet" />
 
-<script src="~/content/jquery-ui.min.js"></script>
+@* <script src="~/content/jquery-ui.min.js"></script> *@
 <script src="~/developerjs/commandatatable.js"></script>
 <body>
 	@Html.AntiForgeryToken()
 	<div class="tabs mt-5" id="tabs">
 		<ul class="tabs__head d-flex flex-wrap align-items-center">
-			<li class="me-2 mb-1">
-				<a class="active-link d-flex align-items-center header-container text-center text-white" href="#" data-tab="inbox" id="tabinbox">
+			<li class="me-2  mb-1">
+				<a class="bodradi active-link d-flex align-items-center header-container text-center text-white" href="#" data-tab="inbox" id="tabinbox">
 					<img src="~/assets/images/inbox.png" width="20" height="20" class="me-1" /> Inbox
 				</a>
 			</li>
-			<li class="me-2 mb-1">
-				<a href="#" class="d-flex align-items-center header-container text-center text-white" data-tab="sent" id="tabsent">
+			<li class="me-2  mb-1">
+				<a href="#" class="d-flex bodradi align-items-center header-container text-center text-white" data-tab="sent" id="tabsent">
 					<img src="~/assets/images/sentmail.png" width="20" height="20" class="me-1" /> Sent
 				</a>
 			</li>
-			<li class="me-2 mb-1">
-				<a href="#" data-tab="completed" id="tabcompleted" class="d-flex align-items-center tab-minw-230 header-container text-center text-white">
+			<li class="me-2  mb-1">
+				<a href="#" data-tab="completed" id="tabcompleted" class="bodradi d-flex align-items-center tab-minw-230 header-container text-center text-white">
 
 					<img src="~/assets/images/completed.png" width="20" height="20" class="me-1" /> Whitelist Completed
 				</a>
 			</li>
-			<li class="me-2 mb-1">
-				<a href="#" data-tab="Remainder" id="tabRemainder" class="d-flex align-items-center header-container text-center text-white">
+			<li class="me-2  mb-1">
+				<a href="#" data-tab="Remainder" id="tabRemainder" class="d-flex bodradi align-items-center header-container text-center text-white">
 					<img src="~/assets/images/bell.png" width="25" height="25" class="me-1" /> Reminder
 				</a>
 			</li>
-			<li class="me-2 mb-1">
-				<a href="#" data-tab="ToCc" id="tabCC" class="d-flex align-items-center header-container text-center text-white">
+			<li class="me-2 bodradi mb-1">
+				<a href="#" data-tab="ToCc" id="tabCC" class="d-flex align-items-center bodradi header-container text-center text-white">
 					<img src="~/assets/images/draft.png" width="20" height="20" class="me-1" /> Cc Projects
 				</a>
 			</li>
-			<li class="me-2 mb-1">
-				<a href="#" data-tab="ToParked" id="tabParked" class="d-flex align-items-center header-container text-center text-white">
+			<li class="me-2 bodradi mb-1">
+				<a href="#" data-tab="ToParked" id="tabParked" class="d-flex bodradi align-items-center header-container text-center text-white">
 					<img src="~/assets/images/draft.png" width="20" height="20" class="me-1" /> Parked
 				</a>
 			</li>
@@ -191,16 +191,17 @@
 
 												<td class="f-12">
 
-													<span class="d-none noExport" id="SpnCurrentProjId">@project.ProjId</span>
-													<span class="d-none noExport" id="SpnCurrentpsmId">@project.PsmIds</span>
-													<span class="d-none noExport" id="SpnStakeHolderId">@project.StakeHolderId</span>
+													<span class="d-none noExport SpnCurrentProjId" >@project.ProjId</span>
+													<span class="d-none noExport SpnEncryptedProjId" >@project.EncyID</span>
+													<span class="d-none noExport SpnCurrentpsmId" >@project.PsmIds</span>
+													<span class="d-none noExport SpnStakeHolderId" >@project.StakeHolderId</span>
 													<span class="d-none noExport" id="LatestActionType">@project.LatestActionType</span>
-													 
-													<span class="d-none noExport" id="SpnTimeStampId">@project.TimeStamp</span>
+
+													<span class="d-none noExport SpnTimeStampId" >@project.TimeStamp</span>
 													<span class="d-none noExport" id="SpnStageId">@project.StageId</span>
 													<span class="d-none noExport" id="SpnTimeStatusId">@project.StatusId</span>
 
-													<span class="d-none noExport" id="SpnprojectIsProcess">@project.IsProcess</span>
+													<span class="d-none noExport SpnprojectIsProcess" >@project.IsProcess</span>
 													<span class="d-none noExport" id="SpnTimeActionId">@project.ActionId</span>
 													<span class="d-none noExport" id="SpnTimeToUnitId">@project.ToUnitId</span>
 													<span class="d-none noExport" id="SpnTimeFromUnitId">@project.FromUnitId</span>
@@ -251,7 +252,7 @@
 																	<div class="tooltip-container" data-tooltip="@project.CCUnitName">
 																		@if (project.IsCc == true)
 																		{
-																			<span class="short-text" id="IsccForRemoveRow">Cc</span>
+																			<span class="short-text IsccForRemoveRow" >Cc</span>
 																		}
 																		else
 																		{
@@ -485,14 +486,14 @@
 														}
 														@if (project.HasRemainder == true && project.HideReminderIcon == true)
 														{
-															<img src="/assets/images/icons/greenRemainder.png" id="btnRemainder" alt="Reminder Sent" title="UnRead Reminder" data-projid="@project.ProjId" data-projname="@project.ProjName"/>
+															<img src="/assets/images/icons/greenRemainder.png" class="btnRemainder" alt="Reminder Sent" title="UnRead Reminder" data-projid="@project.EncyID" data-projname="@project.ProjName"/>
 														}
 														else if (project.HideReminderIcon == true)
 
 
 
 														{
-															<img src="/assets/images/icons/add-reminder1.png" id="btnRemainder" alt="Reminder" title="Send Reminder" data-projid="@project.ProjId" data-projname="@project.ProjName" />
+															<img src="/assets/images/icons/add-reminder1.png" class="btnRemainder" alt="Reminder" title="Send Reminder" data-projid="@project.EncyID" data-projname="@project.ProjName" />
 														}
 
 													</div>
@@ -503,12 +504,13 @@
 												</td>
 
 												<td class="f-12">
-													<span class="d-none noExport" id="SpnCurrentProjId">@project.ProjId</span>
-													<span class="d-none noExport" id="SpnCurrentpsmId">@project.PsmIds</span>
-													<span class="d-none noExport" id="SpnStakeHolderId">@project.StakeHolderId</span>
-													 
-													<span class="d-none noExport" id="SpnTimeStampId">@project.TimeStamp</span>
-													<span class="d-none noExport" id="SpnprojectIsProcess">@project.IsProcess</span>
+													<span class="d-none noExport SpnCurrentProjId" >@project.ProjId</span>
+													<span class="d-none noExport SpnEncProjId" >@project.EncyID</span>
+													<span class="d-none noExport SpnCurrentpsmId" >@project.PsmIds</span>
+													<span class="d-none noExport SpnStakeHolderId" >@project.StakeHolderId</span>
+
+													<span class="d-none noExport SpnTimeStampId" >@project.TimeStamp</span>
+													<span class="d-none noExport SpnprojectIsProcess" >@project.IsProcess</span>
 													<span class="d-none noExport" id="SpnprojectStageId">@project.StageId</span>
 													<span class="d-none noExport" id="SpnprojectToUnitId">@project.ToUnitId</span>
 
@@ -559,7 +561,7 @@
 																<div class="tooltip-container" data-tooltip="@project.CCUnitName">
 																	@if (project.IsCc == true)
 																	{
-																		<span class="short-text" id="IsccForRemoveRow">Cc</span>
+																		<span class="short-text IsccForRemoveRow" id="">Cc</span>
 																	}
 																	else
 																	{
@@ -672,7 +674,7 @@
 													}
 													@snocompleted
 												</td>
-												<span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
+												<span class="d-none SpnCurrentProjId" id="">@project.ProjId</span>
 												<td>
 													<a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XR">
 														<div class="tooltip-container" data-tooltip="@project.ProjName">
@@ -710,115 +712,9 @@
 
 
 			<!-- end completed items -->
-			<!----Draft---->
-
-			<div class="tabs__content__item" id="draft" >
-				<div class="content" >
-					<div class="card radius-10 w-100" >
-						<div class="card-body">
-
-							<table id="Draft" class="table table-striped table-bordered">
-								<thead>
-									<tr>
-										<th class="s-no-column">Ser No</th>
-										 
-										<th>Proj Name</th>
-
-										<th>Recd From</th>
-										@*
-										<th>Recd On</th>
-
-										<th>Fwd To</th>
-										<th>Fwd On</th>
-
-										<th>Stage</th>
-										<th>Status</th>
-										<th>Action</th> *@
-										 
-										<th>Remarks</th>
-										 
-										<th>Att</th>
-										<th>Edit</th>
-									</tr>
-								</thead>
-
-								<tbody>
-									@foreach (var project in Model.Draft)
-									{
-										<tr>
-
-											<td>
-												@{
-													snodraft++;
-												}
-												@snodraft
-											</td>
-											 
-											<td>
-
-												@project.ProjName
-											</td>
-											<td>@project.RecdFmUser</td>
-										
-											<td>
-												@project.AdRemarks
-
-											</td>
-										
-											<td>
-
-												@if (project.AttCnt > 0)
-												{
-
-													<a href="javascript:void(0);" class="anchorDetail" data-id="@project.CurrentPslmId">
-														<img src="/assets/images/icons/attachemnts_clip.png" alt="Icon" class="attach-clip-icon">
-
-													</a>
-
-
-												}
-												else
-												{
-
-												}
-											</td>
-											<td>
-												@if (project.IsSubmited == false)
-												{
-
-													<center>
-
-
-														<a href="@Url.Action("Create", "Projects", new { id = project.EncyID })">
-															<div data-project-id="@project.EncyID" id="ProjDetailId-@project.ProjId">
-																<img src="/assets/images/icons/edit.png" alt="Icon" class="edit-icon">
-
-															</div>
-														</a>
-
-
-													</center>
-												}
-											
-
-											</td>
-										</tr>
-
-									}
-								</tbody>
-
-							</table>
-
-
-						</div>
-					</div>
-				</div>
-			</div>
-			<!---END-DRAFT-->
+	
 			<!---Start-Remainder-->
-			@{
-				snosent = 0;
-			}
+		
 			<div class="table-responsive">
 				<div class="tabs__content__item h-100p" id="Remainder">
 					<div class="content h-100p">
@@ -842,7 +738,7 @@
 										</tr>
 									</thead>
 									@{
-										int serNo = 0;
+										int snoReminder = 0;
 									}
 									<tbody class="FontSize">
 										@{
@@ -852,13 +748,13 @@
 												<tr>
 													<td class="sorting">
 														@{
-															serNo++;
+															snoReminder++;
 														}
-														@serNo
+														@snoReminder
 													</td>
 
 													<td>
-														<a data-proj-name="@project.ProjName" id="ProjectName" class="ProjName" data-proj-id="@project.projid" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XRDC">
+														<a data-proj-name="@project.ProjName"  class="ProjName" data-proj-id="@project.projid" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XRDC">
 															<div class="tooltip-container" data-tooltip="@project.ProjName">
 																<span class="short-text">
 																	@(project.ProjName.Length > 17 ? project.ProjName.Substring(0, 17) + "..." : project.ProjName)
@@ -903,7 +799,7 @@
 
 													<td>
 
-														<a href="#" id="btnRemMove" data-proj-name="@project.ProjName" data-action="@project.projid">
+														<a href="#" id="btnRemMove" data-proj-name="@project.ProjName" data-action="@project.EncyID">
 															<img src="/assets/images/icons/Legacyhistory.png" alt="Icon" class="ico-h-27">
 														</a>
 													</td>
@@ -1160,11 +1056,11 @@
 <script src="~/developerjs/Tooltip.js"></script>
 
 <script src="~/developerjs/mtable.js"></script>
- 
+
 
 <script src="~/developerjs/projectdetails.js"></script>
-<script src="~/developerjs/projectstckholdercommentforprojhistory.js"></script>
-<script src="~/developerjs/comman.js"></script>
+@* <script src="~/developerjs/projectstckholdercommentforprojhistory.js"></script> *@
+@* <script src="~/developerjs/comman.js"></script> *@
 <script src="~/developerjs/ProjectDetailDatatable.js"></script>
 <script src="~/developerjs/CommanDatatable.js"></script>
 

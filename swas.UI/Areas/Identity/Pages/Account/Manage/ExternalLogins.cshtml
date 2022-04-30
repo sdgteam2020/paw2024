@@ -19,7 +19,7 @@
                     <td>
                         @if (Model.ShowRemoveButton)
                         {
-                            <form id="@($"remove-login-{login.LoginProvider}")" asp-page-handler="RemoveLogin" method="post">
+                            <form id="@($"remove-login-{login.LoginProvider}-{login.ProviderKey}")" asp-page-handler="RemoveLogin" method="post">
                                 <div>
                                     <input asp-for="@login.LoginProvider" name="LoginProvider" type="hidden" />
                                     <input asp-for="@login.ProviderKey" name="ProviderKey" type="hidden" />
@@ -44,9 +44,17 @@
     <form id="link-login-form" asp-page-handler="LinkLogin" method="post" class="form-horizontal">
         <div id="socialLoginList">
             <p>
-                @foreach (var provider in Model.OtherLogins)
+                @for (int i = 0; i < Model.OtherLogins.Count; i++)
                 {
-                    <button id="@($"link-login-button-{provider.Name}")" type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                    var provider = Model.OtherLogins[i];
+                    <button id="link-login-button-@i"
+                            type="submit"
+                            class="btn btn-primary"
+                            name="provider"
+                            value="@provider.Name"
+                            title="Log in using your @provider.DisplayName account">
+                        @provider.DisplayName
+                    </button>
                 }
             </p>
         </div>

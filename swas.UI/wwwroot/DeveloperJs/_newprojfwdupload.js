@@ -77,14 +77,14 @@ $(document).ready(function () {
 
 function trackerIndex() {
    
-    var $activeStep = $(".stepsforatt .step.active");
+    let $activeStep = $(".stepsforatt .step.active");
 
     if ($activeStep.length === 0) {
         setProgress(1);
         return;
     }
 
-    var currentStep = $activeStep.index() + 1;
+    let currentStep = $activeStep.index() + 1;
     setProgress(currentStep + 1);
 }
 
@@ -92,8 +92,8 @@ function trackerIndex() {
 
 function setProgress(stepNumber) {
    
-    var $steps = $(".stepsforatt .step");
-    var totalSteps = $steps.length;
+    let $steps = $(".stepsforatt .step");
+    let totalSteps = $steps.length;
 
     // ✅ Safety boundary
     stepNumber = Math.max(1, Math.min(stepNumber, totalSteps));
@@ -103,8 +103,8 @@ function setProgress(stepNumber) {
 
     $steps.each(function (index) {
 
-        var stepIndex = index + 1;
-        var $circle = $(this).find(".step-circle");
+        let stepIndex = index + 1;
+        let $circle = $(this).find(".step-circle");
 
         if (stepIndex < stepNumber) {
             $(this).addClass("completed");
@@ -121,11 +121,11 @@ function setProgress(stepNumber) {
     });
 
     // ✅ Update Progress Bar
-    var progressPercent = ((stepNumber - 1) / (totalSteps - 1)) * 100;
+    let progressPercent = ((stepNumber - 1) / (totalSteps - 1)) * 100;
     $(".progress").css("width", progressPercent + "%");
 
     // ✅ Update Textbox (ONLY ONCE)
-    var currentLabel = $steps
+    let currentLabel = $steps
         .eq(stepNumber - 1)
         .find(".tracker-label")
         .text()
@@ -137,13 +137,13 @@ function setProgress(stepNumber) {
 
 function syncTrackerWithResponse(response) {
 
-    var $steps = $(".stepsforatt .step");
-    var totalSteps = $steps.length;
+    let $steps = $(".stepsforatt .step");
+    let totalSteps = $steps.length;
 
-    var uploadedDocs = [];
+    let uploadedDocs = [];
 
     if (response && response.length > 0) {
-        for (var i = 0; i < response.length; i++) {
+        for (let i = 0; i < response.length; i++) {
             if (response[i].reamarks) {
                 uploadedDocs.push(response[i].reamarks.trim());
             }
@@ -152,14 +152,14 @@ function syncTrackerWithResponse(response) {
 
     $steps.removeClass("active completed");
 
-    var firstIncompleteIndex = -1;
-    var completedCount = 0;
+    let firstIncompleteIndex = -1;
+    let completedCount = 0;
 
     $steps.each(function (index) {
 
-        var $step = $(this);
-        var $circle = $step.find(".step-circle");
-        var label = $step.find(".tracker-label").text().trim();
+        let $step = $(this);
+        let $circle = $step.find(".step-circle");
+        let label = $step.find(".tracker-label").text().trim();
 
         if (uploadedDocs.includes(label)) {
             $step.addClass("completed");
@@ -185,14 +185,14 @@ function syncTrackerWithResponse(response) {
     }
 
     // ✅ Progress calculation (based on completed steps)
-    var progressPercent = totalSteps > 1
+    let progressPercent = totalSteps > 1
         ? (completedCount / (totalSteps - 1)) * 100
         : 0;
 
     $(".progress").css("width", progressPercent + "%");
 
     // ✅ Update textbox with active step label
-    var activeLabel = $(".stepsforatt .step.active .tracker-label")
+    let activeLabel = $(".stepsforatt .step.active .tracker-label")
         .text()
         .trim();
 
@@ -203,9 +203,9 @@ function loadTracker() {
 
     $.get("/Projects/GetDocumentTypes", function (data) {
 
-        var html = "";
+        let html = "";
 
-        for (var i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.length; i++) {
 
             html += `
                 <div class="step" data-document-id="${data[i].id}">

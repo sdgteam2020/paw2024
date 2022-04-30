@@ -5082,6 +5082,7 @@ fieldset:disabled .btn {
     color: var(--bs-accordion-color);
     background-color: var(--bs-accordion-bg);
     
+    
 }
 
     .accordion-item:first-of-type {

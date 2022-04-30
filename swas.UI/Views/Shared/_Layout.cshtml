@@ -26,49 +26,60 @@
 <title>@ViewData["Title"] - PAW</title>
 
 
+@* <link href="~/css/promo.css" rel="stylesheet" /> *@
 
-
-    <link href="~/css/all.min.css" rel="stylesheet" />
 <link href="~/font-awesome/css/all.min.css" rel="stylesheet" />
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+ 
+
 
 
     <!-- CSS Files -->
     <link href="~/css/select2.min.css" rel="stylesheet" />
 
 <link href="~/css/layout.css" rel="stylesheet" />
-    <link href="~/assets/css/icons.css" rel="stylesheet">
-    <link href="~/assets/css/font-awesome.min.css" rel="stylesheet">
+    @* <link href="~/assets/css/icons.css" rel="stylesheet"> *@
+  
 
     <!--data Table-->
     <link rel="stylesheet" href="~/assets/dataTable/css/bootstrap.css">
+      <link href="~/assets/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="~/assets/dataTable/css/dataTables.bootstrap4.min.css">
+
+
     <link rel="stylesheet" href="~/assets/dataTable/css/buttons.bootstrap4.min.css">
     <link href="~/css/animated.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/assets/dataTable/css/all.min.css">
+
     <link href="~/assets/dataTable/css/searchbuilder.datatables.min.css" rel="stylesheet" />
-    <link href="~/assets/dataTable/css/all.min.css" rel="stylesheet" />
+
      
-    <link href="~/assets/dataTable/css/jquery.datatables.min.css" rel="stylesheet" />
-    <link href="~/assets/dataTable/css/responsive.bootstrap4.min.css" rel="stylesheet" />
-    <link href="~/assets/dataTable/css/datatables.bootstrap4.min.css" rel="stylesheet" />
+    @* <link href="~/assets/dataTable/css/jquery.datatables.min.css" rel="stylesheet" /> *@
+   
     <link href="~/assets/dataTable/css/datatables.datetime.min.css" rel="stylesheet" />
-    <link href="~/font-awesome/css/all.min.css" rel="stylesheet" />
-    <link href="~/font-awesome/css/fontawesome.min.css" rel="stylesheet" />
-    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet">
+ 
+    @* <link href="~/font-awesome/css/fontawesome.min.css" rel="stylesheet" /> *@
+  
     <link href="~/assets/css/bootstrap-extended.css" rel="stylesheet">
     <link href="~/assets/css/style.css" rel="stylesheet">
     <link href="~/css/main.css" rel="stylesheet" />
 
-    <script language="JavaScript" type="text/javascript" src="~/assets/js/jquery.min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="~/assets/js/bootstrap.bundle.min.js"></script>
 
+<script src="~/assets/js/jquery.min.js"></script>
+<script src="~/lib/pdfjs/pdf.js"></script>
+<script src="~/lib/pdfjs/pdf.worker.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+
+<!-- Bootstrap Icons (Add this in your layout if not already included) -->
+
+
+    <script language="JavaScript" type="text/javascript" src="~/assets/js/bootstrap.bundle.min.js"></script>
+        
     <!--plugins-->
-    <link href="~/assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
+    @* <link href="~/assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" /> *@
     <script language="JavaScript" type="text/javascript" src="~/assets/plugins/chartjs/chart.min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="~/assets/plugins/metismenu/js/metisMenu.min.js"></script>
+    @* <script language="JavaScript" type="text/javascript" src="~/assets/plugins/metismenu/js/metisMenu.min.js"></script> *@
 
     <!-- Main JS-->
     <script language="JavaScript" type="text/javascript" src="~/assets/js/main.js"></script>
@@ -77,9 +88,9 @@
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/jquery.dataTables.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/dataTables.bootstrap4.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/dataTables.buttons.min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/buttons.bootstrap4.min.js"></script>
+   
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/jszip.min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/pdfmake.min.js"></script>
+  
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/vfs_fonts.js"></script>
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/buttons.html5.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/buttons.print.min.js"></script>
@@ -87,7 +98,7 @@
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/dataTables.responsive.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/responsive.bootstrap4.min.js"></script>
     <script src="~/assets/dataTable/js/buttons.bootstrap4.min.js"></script>
-    <script src="~/assets/dataTable/js/pdfmake.min.js"></script>
+    @* <script src="~/assets/dataTable/js/pdfmake.min.js"></script> *@
     <script src="~/assets/dataTable/js/datatables.datetime.min.js"></script>
     <script src="~/assets/dataTable/js/datatables.searchbuilder.min.js"></script>
     <script src="~/assets/dataTable/js/fnmultifilter.js"></script>
@@ -142,10 +153,11 @@
         <div class="text-capitalize d-none divRank_id">@Logins.Rank_id</div>
         <div class="text-capitalize d-none divRole_name">@Logins.Role</div>
 
-        @if (Logins != null && Logins.Role == "Dte")
+        @if (Logins != null && Logins?.Role == "Dte")
         {
             <!--start sidebar -->
-            <aside class="sidebar-wrapper" data-simplebar="true">
+            <aside class=" sidebar-wrapper" data-simplebar="true">
+                <div class="particles"></div>
                 <div class="sidebar-header paw-sidebar-header-blue">
                     <div>
                         <img src="~/assets/images/icons/armylogo.png" class="logo-icon" alt="logo icon">
@@ -154,25 +166,25 @@
                         <h4 class="logo-text">PAW</h4>
                     </div>
                     <div class="toggle-icon ms-auto">
-                        <ion-icon name="menu-sharp" id="menusharp"></ion-icon>
+                        <ion-icon name="menu-sharp" class="menusharp"></ion-icon>
                         <img src="~/assets/images/menu-sharp.256x172.png" class="paw-menu-icon" />
                     </div>
                 </div>
 
                 <!--navigation-->
-                <ul class="metismenu sidebar-menu paw-sidebar-bold" id="menu">
+                <ul class="metismenu  sidebar-menu paw-sidebar-bold menu">
+                   
 
                     <li>
                         <div class="parent-icon">
                             <ion-icon name="home-sharp" id="iconname"></ion-icon>
                         </div>
                         <a href="/Home/Index">
-                            <div class="menu-title paw-menu-title-left0">
+                            <div class="menu-title icon-name paw-menu-title-left0">
                                 Dashboard :  @Logins.Unit
                             </div>
                         </a>
                     </li>
-
                     <li>
                         <a href="/Projects/Create">
                             <div class="icon-container">
@@ -253,12 +265,13 @@
                     @if (Logins != null && Logins.Role == "Dte" && Logins.unitid == 1)
                     {
                         <li class="menu-items">
-                            <a href="#"> User Setting</a>
+                            <a href="#"><span class="icon-name">User Setting</span></a>
+                            
                             <div class="submenu">
                                 <a href="/Actions/Index">View Actions</a>
                                 <a href="/UnitDtls/AddOrEdit">Actions by Stage</a>
                                 <a href="/Stages/Create">View Stage</a>
-                                <a href="/ActionException/Index">View Action Exceptions</a>
+                                <a href="/ActionException/Index">Approving Auth</a>
                                 <a href="/Identity/Account/Register" target="_new">Register New User</a>
                                 <a href="/Account/GetsAllUsers">View Users</a>
                             </div>
@@ -279,8 +292,9 @@
                         </li>
                     }
 
-                    <li class="menu-items">
-                        <a href="#">Policy Corner</a>
+                    <li class="menu-items ">
+
+                        <a href="#"><span class="icon-name">Policy Corner</span></a>
                         <div class="submenu">
                             <a href="#" id="WLProjList">Whitelisted Appl</a>
                             <a href="#">Minutes of Mtgs</a>
@@ -295,8 +309,8 @@
             </aside>
 
             <!--start top header-->
-            <header class="top-header py-2 mb-5 paw-topheader-text-blue paw-topheader-noinline">
-                <div class="toggle-icon ms-auto d-none" id="menusharp1">
+            <header class="top-header py-2 mb-5 header-container  paw-topheader-noinline">
+                <div class="toggle-icon ms-auto d-none menusharp1" >
                     <ion-icon name="menu-sharp"></ion-icon>
                     <img src="~/assets/images/menu-sharp.256x172.png" class="paw-menu-icon" />
                 </div>
@@ -307,10 +321,13 @@
                     </div>
 
                     <div class="flex-grow-1 text-center nowrap">
-                        <h1 class="h2 h4-sm h3-md text-white mb-0" id="mainheading">
+                        <h1 class="h2 h4-sm h3-md text-white mb-0 mainheading">
                             Portal for Application Whitelisting (PAW)
                         </h1>
                     </div>
+                    <a href="/Home/Promo" class="mr-2 paw-edituser-link-white">
+                        <i class="fa-solid fa-house paw-home-icon" title="Sleep"></i>
+                    </a>
 
                     <a href="javascript:void(0);"
                        class="mr-2 edit-user-btn paw-edituser-link-white"
@@ -323,24 +340,32 @@
 
                     <div class="top-navbar-right ms-auto d-flex align-items-center flex-column flex-md-row text-center text-md-start">
                         <div class="text-white me-md-3 paw-font-small">
-                            <div> Welcome : <span id="spnUsername"> @Logins.UserName.ToLower()</span></div>
+                            <div> Welcome : <span class="spnUsername"> @Logins.UserName.ToLower()</span></div>
                             <div class="text-capitalize divoffr_name">@Logins.Rank @Logins.Offr_Name</div>
 
-                            <span class="d-none" id="IpAddress">@Logins.IpAddress</span>
-                            <span class="d-none" id="SpnCurrentUserStackholderID">@Logins.unitid</span>
+                            <span class="d-none IpAddress" >@Logins.IpAddress</span>
+                            <span class="d-none SpnCurrentUserStackholderID" >@Logins.unitid</span>
                             <span class="spnOffr_Name d-none">@Logins.Offr_Name</span>
                         </div>
-
+                            
                         <div class="user-setting ms-md-3 mt-2 mt-md-0">
                             <a href="/Account/Logout">
-                                <img src="~/assets/images/icons/logout.png" class="user-img paw-logout-img" alt="Logout">
+                            <ul class="action-list">
+                                <li class="action-btn logout-btn">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                    <span class="title">Logout</span>
+                                </li>
+                            </ul>
                             </a>
+                           @*  <a href="/Account/Logout">
+                                <img src="~/assets/images/icons/logout.png" class="user-img paw-logout-img" alt="Logout">
+                            </a> *@
                         </div>
                     </div>
                 </nav>
 
                 <div class="bar bg-white paw-bar-mt-62"></div>
-                <div class="bar py-1 px-3 paw-bar-mt-70">
+                <div class="bar py-1 px-3 header-container paw-bar-mt-70">
                     <span class="bar_content">
                         @SiteSettings.Value.BannerMessage
                         <span class="bar_space"></span>
@@ -361,20 +386,20 @@
                     <div>
                         <h4 class="logo-text">PAW</h4>
                     </div>
-                    <div class="toggle-icon ms-auto" id="menusharp">
+                    <div class="toggle-icon ms-auto menusharp" >
                         <ion-icon name="menu-sharp"></ion-icon>
                         <img src="~/assets/images/menu-sharp.256x172.png" class="paw-menu-icon" />
                     </div>
                 </div>
-
-                <ul class="metismenu sidebar-menu" id="menu">
+                <div class="particles"></div>
+                <ul class="metismenu sidebar-menu menu" >
 
                     <li>
                         <div class="parent-icon">
                             <ion-icon name="home-sharp"></ion-icon>
                         </div>
                         <a href="/Home/Index">
-                            <div class="menu-title paw-menu-title-left0">
+                            <div class="menu-title icon-name paw-menu-title-left0">
                                 Dashboard : @Logins.Unit
                             </div>
                         </a>
@@ -421,7 +446,7 @@
                                 <div class="icon-container">
                                     <ion-icon name="ellipse-outline"></ion-icon>
                                     <span class="icon-name">Stakeholder Comments</span>
-                                    <span id="ProjectCommentCount" class="badge5 d-none ProjectCommentCount">0</span>
+                                    <span id="ProjectCommentCount1" class="badge5 d-none ProjectCommentCount">0</span>
                                 </div>
                             </a>
                         </li>
@@ -462,7 +487,7 @@
                                 <div class="icon-container paw-inbox-ml--43">
                                     <ion-icon name="ellipse-outline"></ion-icon>
                                     <span class="icon-name mr-3">Chat</span>
-                                    <span id="InterUserMsgCount" class="badge3 d-none InterUserMsgCount mt-1">
+                                    <span id="InterUserMsgCount1" class="badge3 d-none InterUserMsgCount mt-1">
                                         <ion-icon name="ellipse" class="new-badge-icon"></ion-icon>
                                         <span class="new-text">new</span>
                                     </span>
@@ -475,22 +500,25 @@
                 <div class="sidebar-footer"></div>
             </aside>
 
-            <header class="top-header mb-5">
-                <div class="toggle-icon ms-auto d-none" id="menusharp1">
+            <header class="top-header py-2 mb-5 header-container  paw-topheader-noinline">
+                <div class="toggle-icon ms-auto d-none menusharp1" >
                     <ion-icon name="menu-sharp"></ion-icon>
                     <img src="~/assets/images/menu-sharp.256x172.png" class="paw-menu-icon" />
                 </div>
 
-                <nav class="navbar navbar-expand gap-3">
+                <nav class="navbar navbar-expand-lg navbar-dark px-3">
                     <div class="mobile-menu-button">
                         <ion-icon name="menu-sharp"></ion-icon>
                     </div>
 
                     <div class="flex-grow-1 text-center">
-                        <h1 class="h2 h4-sm h3-md text-white mb-0 nowrap" id="mainheading">
+                        <h1 class="h2 h4-sm h3-md text-white mb-0 nowrap mainheading" >
                             Portal for Application Whitelisting (PAW)
                         </h1>
                     </div>
+                    <a href="/Home/Promo" class="mr-2 paw-edituser-link-white">
+                        <i class="fa-solid fa-house paw-home-icon" title="Sleep"></i>
+                    </a>
 
                     <a href="javascript:void(0);"
                        class="mr-2 edit-user-btn paw-edituser-link-white"
@@ -498,17 +526,14 @@
                        data-rankid="@Logins.Rank_id"
                        data-rolename="@Logins.Role">
                         <i class="fa-solid fa-user-pen paw-userpen-icon" title="Edit user"></i>
-
-
                     </a>
-
                     <div class="top-navbar-right ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <li class="nav-item dropdown paw-font-small">
-                                <span class="d-none" id="IpAddress">@Logins.IpAddress</span>
-                                <span class="d-none" id="SpnCurrentUserStackholderID">@Logins.unitid</span>
+                                <span class="d-none IpAddress" >@Logins.IpAddress</span>
+                                <span class="d-none SpnCurrentUserStackholderID">@Logins.unitid</span>
                                 <div class="text-white mr-2">
-                                    Welcome : <span id="spnUsername"> @Logins.UserName.ToLower()</span>
+                                    Welcome : <span class="spnUsername"> @Logins.UserName.ToLower()</span>
                                     <div class="text-white mr-2 text-capitalize">@Logins.Rank @Logins.Offr_Name</div>
                                     <span class="spnOffr_Name d-none">@Logins.Offr_Name</span>
                                     <span class="spnuserid d-none">@Logins.Iamuserid</span>
@@ -519,13 +544,21 @@
 
                     <div class="user-setting paw-user-setting-mr-100">
                         <a href="/Account/Logout">
-                            <img src="~/assets/images/icons/logout.png" class="user-img" alt="">
+                        <ul class="action-list">
+                            <li class="action-btn logout-btn">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                                <span class="title">Logout</span>
+                            </li>
+                        </ul>
                         </a>
+                       @*  <a href="/Account/Logout">
+                            <img src="~/assets/images/icons/logout.png" class="user-img" alt="">
+                        </a> *@
                     </div>
                 </nav>
 
                 <div class="bar bg-white paw-bar-mt-62"></div>
-                <div class="bar py-1 px-3 paw-bar-mt-70">
+                <div class="bar py-1 px-3 header-container paw-bar-mt-70">
                     <span class="bar_content">
                         @SiteSettings.Value.BannerMessage
                         <span class="bar_space"></span>
@@ -616,7 +649,7 @@
         <div class="overlay nav-toggle-icon"></div>
     </div>
 
-    <button id="btnid" class="hidden">@Logins?.unitid</button>
+    <button id="btnid" class="hidden d-none">@Logins?.unitid</button>
 
     <div class="modal fade" id="ProjCommentModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-xl custom-modal">
@@ -687,7 +720,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            @Html.Partial("_ProjectComments");
+                            @Html.Partial("_ProjectComments")
                         </div>
                     </div>
                 </div>
@@ -737,6 +770,13 @@
     <script src="~/DeveloperJs/ProjectstkholderComments.js"></script>
     <script src="~/DeveloperJs/layout.js"></script>
     <script src="~/developerjs/ProjectstckholdercommentforProjHistory.js"></script>
+	<script src="~/developerjs/promo.js"></script>
+    <script src="~/lib/cryptojs/core.js"></script>
+    <script src="~/lib/cryptojs/enc-base64.js"></script>
+    <script src="~/lib/cryptojs/md5.js"></script>
+    <script src="~/lib/cryptojs/evpkdf.js"></script>
+    <script src="~/lib/cryptojs/cipher-core.js"></script>
+    <script src="~/lib/cryptojs/aes.js"></script>
 </body>
 </html>
 

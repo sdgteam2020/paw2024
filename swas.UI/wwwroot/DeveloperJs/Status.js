@@ -1,8 +1,8 @@
 ﻿$('.delete-btn').click(function () {
 
-    var statusId = $(this).data('id');
+    let statusId = $(this).data('id');
 
-    var url = $(this).data('url');
+    let url = $(this).data('url');
 
     $.ajax({
         url: '/Status/Delete',
@@ -35,9 +35,9 @@
 $(document).ready(function () {
     $("#statseq").on("input", function () {
 
-        var inputValue = $(this).val();
+        let inputValue = $(this).val();
 
-        var numericValue = parseFloat(inputValue);
+        let numericValue = parseFloat(inputValue);
 
         if (numericValue < 0) {
 

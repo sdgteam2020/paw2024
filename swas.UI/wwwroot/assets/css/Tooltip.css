@@ -129,3 +129,8 @@
     visibility: visible;
     opacity: 1;
 }
+
+.dvradius{
+    border-radius:20px !important;
+   
+}

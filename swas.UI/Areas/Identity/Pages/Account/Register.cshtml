@@ -85,9 +85,16 @@
                                     <td colspan="2">
                                         <select asp-for="Input.Rank" class="form-control dropdownsearch">
                                             <option value="">--- Select ---</option>
-                                            @foreach (var rank in Rank)
+                                            @if (Rank != null && Rank.Any())
                                             {
-                                                <option value="@rank.RankName">@rank.RankName</option>
+                                                foreach (var rank in Rank)
+                                                {
+                                                    <option value="@rank.RankName">@rank.RankName</option>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <option value="">No ranks available</option>
                                             }
                                         </select>
                                         <span asp-validation-for="Input.Rank" class="text-danger"></span>
@@ -111,7 +118,7 @@
                                         <label asp-for="Input.appointment" class="label control-label reg-label-m5">Appointment</label>
                                     </td>
                                     <td colspan="2">
-                                        <input asp-for="Input.appointment" class="form-control char-limit" data-maxlength="20"
+                                        <input asp-for="Input.appointment"  class="form-control char-limit" data-maxlength="20"
                                                required placeholder="Appointment" />
                                         <span class="charErrorMsg d-none paw-red-font">Cannot exceed more than 20 characters!</span>
                                         <span asp-validation-for="Input.appointment" class="text-danger"></span>
@@ -123,7 +130,7 @@
                                         <label asp-for="Input.Tele_Army" class="label control-label reg-label-m5">Tele No (Army)</label>
                                     </td>
                                     <td colspan="2">
-                                        <input asp-for="Input.Tele_Army" class="form-control char-limit" data-maxlength="20"
+                                        <input asp-for="Input.Tele_Army" type="number" class="form-control char-limit" data-maxlength="20"
                                                required placeholder="Tele No (Army)" />
                                         <span class="charErrorMsg d-none paw-red-font">Cannot exceed more than 20 characters!</span>
                                         <span asp-validation-for="Input.Tele_Army" class="text-danger"></span>
@@ -137,15 +144,23 @@
                                     <td>
                                         <select asp-for="Input.unitId" class="form-control dropdownsearch">
                                             <option value="">Select Unit</option>
-                                            @foreach (var unit in units)
+                                            @if (units != null && units.Any())
                                             {
-                                                <option value="@unit.unitid">@unit.UnitName</option>
+                                                @foreach (var unit in units)
+                                                {
+                                                    <option value="@unit.unitid">@unit.UnitName</option>
+                                                }
                                             }
+                                            else
+                                            {
+                                                <option value="">No unit available</option>
+                                            }
+                                           
                                         </select>
                                         <span asp-validation-for="Input.unitId" class="text-danger"></span>
                                     </td>
 
-                                    <td style="width:50px">
+                                    <td class="unitreg">
                                         <div class="plus reg-plus-circle" id="UnitRegister">+</div>
                                     </td>
                                 </tr>
@@ -182,7 +197,7 @@
                                         <div class="input-group" id="show_hide_password">
                                             <input asp-for="Input.ConfirmPassword" hidden="hidden" maxlength="15"
                                                    class="ms form-control inputs" readonly="readonly"
-                                                   autocomplete="new-password" aria-required="true" id="myCnfInput"
+                                                   autocomplete="new-password" aria-required="true"
                                                    placeholder="Confirm Password" />
                                             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                                         </div>
@@ -195,9 +210,12 @@
                                     </td>
                                 </tr>
 
+                                
                                 <tr class="reg-row-center">
                                     <td colspan="2">
-                                        <div class="col-12 reg-msg-red">@TempData["msg"]</div>
+                                        <div class="col-12 reg-msg-red">
+                                            @TempData["msg"]
+                                        </div>
                                     </td>
                                 </tr>
                             </table>

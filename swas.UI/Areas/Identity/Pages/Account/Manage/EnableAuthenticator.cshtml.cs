@@ -138,12 +138,13 @@ namespace swas.Areas.Identity.Pages.Account.Manage
 
         private string GenerateQrCodeUri(string email, string unformattedKey)
         {
-            return string.Format(
-                CultureInfo.InvariantCulture,
-                AuthenticatorUriFormat,
-                _urlEncoder.Encode("Microsoft.AspNetCore.Identity.UI"),
-                _urlEncoder.Encode(email),
-                unformattedKey);
+            if (string.IsNullOrWhiteSpace(email))
+                throw new ArgumentException("Invalid email");
+
+            var issuer = _urlEncoder.Encode("Microsoft.AspNetCore.Identity.UI");
+            var encodedEmail = _urlEncoder.Encode(email);
+
+            return $"otpauth://totp/{issuer}:{encodedEmail}?secret={unformattedKey}&issuer={issuer}&digits=6";
         }
     }
 }

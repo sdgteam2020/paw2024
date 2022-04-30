@@ -1,4 +1,5 @@
-﻿using iText.IO.Font.Constants;
+﻿using System.Configuration;
+using iText.IO.Font.Constants;
 using iText.IO.Image;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf;
@@ -6,6 +7,7 @@ using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using swas.BAL.DTO;
 using swas.BAL.Helpers;
 using swas.BAL.Interfaces;
@@ -22,8 +24,9 @@ namespace swas.UI.Controllers
         private readonly ApplicationDbContext _dbContext;
         private readonly ICertificateService _certificateService;
         private readonly PdfCertificateBuilder _pdfBuilder;
+        private readonly IConfiguration _configuration;
 
-        public CertificateController(ICertificateService certService, PdfCertificateBuilder builder, ApplicationDbContext context, IWatermarkRepository watermarkRepo, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment webHostEnvironment)
+        public CertificateController(ICertificateService certService, PdfCertificateBuilder builder, IConfiguration configuration, ApplicationDbContext context, IWatermarkRepository watermarkRepo, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment webHostEnvironment)
         {
             _httpContextAccessor = httpContextAccessor;
             _webHostEnvironment = webHostEnvironment;
@@ -31,21 +34,64 @@ namespace swas.UI.Controllers
             _dbContext = context;
             _certificateService = certService;
             _pdfBuilder = builder;
+            _configuration = configuration;
         }
 
       
         [HttpGet]
-        public IActionResult GenerateCertificate(int substage, string ddlaction, string ddlRemarks, int Projid)
+        public IActionResult GenerateCertificate(string encryptdata)
         {
 
-            var data = _certificateService.GetCertificateData(Projid, substage);
+
+
+            if (string.IsNullOrWhiteSpace(encryptdata))
+            {
+                return BadRequest(new { success = false, message = "Invalid request." });
+            }
+
+            int projid = 0;
+         
+            int substage = 0;
+            var ddlaction = "";
+            var ddlRemarks = "";
+            string cryptoKey = _configuration["CryptoSettings:LoginKey"] ?? string.Empty;
+
+            try
+            {
+                // Decrypt
+                string decryptedJson = CryptoHelper.SafeDecrypt(encryptdata, cryptoKey);
+                if (string.IsNullOrWhiteSpace(decryptedJson))
+                {
+                 
+                    return BadRequest(new { success = false, message = "Invalid request data." });
+                }
+
+                // Parse JSON
+                var obj = JsonConvert.DeserializeObject<dynamic>(decryptedJson.Trim('"'));
+               ddlaction = obj.ddlaction;
+               ddlRemarks = obj.ddlRemarks;
+                if (obj == null ||
+                    !int.TryParse((string?)obj.substage, out substage) ||
+                    !int.TryParse((string?)obj.Projid, out projid ))
+                {
+                 
+                    return BadRequest(new { success = false, message = "Invalid identifier." });
+                }
+            }
+            catch (Exception ex)
+            {
+ 
+                return StatusCode(500, new { success = false, message = "Error processing request." });
+            }
+
+            var data = _certificateService.GetCertificateData(projid, substage);
 
             string ip = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
             string watermark = $"{ip} {DateTime.Now:dd-MM-yyyy HH:mm:ss}";
             Login login = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
             byte[] pdfBytes = _pdfBuilder.BuildCertificate(data, ip, ddlRemarks, watermark, login, substage);
             HttpContext.Session.Set("UnsignedPDF", pdfBytes);
-
+            //return File(pdfBytes, "application/pdf");
             return Content(Convert.ToBase64String(pdfBytes), "text/plain");
         }
 

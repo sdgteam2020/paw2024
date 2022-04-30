@@ -1,7 +1,7 @@
 ﻿$(document).on("click", ".open-doc", function () {
 
-    var documentTypeId = $(this).data("document-id");
-    var projid = $(this).data("projid");
+    let documentTypeId = $(this).data("document-id");
+    let projid = $(this).data("projid");
 
    
     $.ajax({
@@ -24,5 +24,10 @@
     });
 
 });
+$(document).ready(function () {
 
+    GetAllComments2();
+
+    GetAllComments1();
+})
 

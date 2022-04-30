@@ -2,7 +2,7 @@
 
 
 function populateCorpsDropdown(selectElement) {
-    var selectedCommandId = $(selectElement).val();
+    let selectedCommandId = $(selectElement).val();
 
     $.ajax({
         url: "/Ddl/ddlCorps",
@@ -12,12 +12,12 @@ function populateCorpsDropdown(selectElement) {
         success: function (result) {
 
             if (result.length > 0) {
-                var list = "";
+                let list = "";
 
 
                 list = '<option value="0">---- Select  ----</option>';
 
-                for (var j = 0; j < result.length; j++) {
+                for (let j = 0; j < result.length; j++) {
 
 
                     list += '<option value=' + result[j].corpsid + '>' + result[j].corpsname + '</option>';
@@ -32,7 +32,7 @@ function populateCorpsDropdown(selectElement) {
 
             }
             else {
-                var list = "";
+                let list = "";
                 list = '<option value="0" selected="true">---- Select ----</option>';
 
                 $('#CorpsId').html(list).selectedCommandId;
@@ -52,7 +52,7 @@ $('.unit-name').on('keyup', function () {
 
 })
 function ValInData(input) {
-    var regex = /[^a-zA-Z0-9/ ]/g;
+    let regex = /[^a-zA-Z0-9/ ]/g;
     input.value = input.value.replace(regex, "");
 }
 

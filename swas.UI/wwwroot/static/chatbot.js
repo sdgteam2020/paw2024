@@ -86,11 +86,11 @@
     const spaceAbove = rect.top;
     const spaceBelow = window.innerHeight - rect.bottom;
 
-    if (spaceAbove < 60 && spaceBelow > spaceAbove) {
-        tooltip.setAttribute("data-position", "bottom");
-    } else {
-        tooltip.setAttribute("data-position", "top");
-    }
+        if (spaceAbove < 60 && spaceBelow > spaceAbove) {
+            tooltip.dataset.position = "bottom";
+        } else {
+            tooltip.dataset.position = "top";
+        }
   });
 });
 

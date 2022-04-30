@@ -29,7 +29,7 @@ namespace swas.DAL.Models
         [ForeignKey("tbl_ProjStakeHolderMov")]
         public int CurrentPslmId { get; set; }
 
-        [Display(Name = "Initiated On")]
+        [Display(Name = "Start Date")]
         public DateTime? InitiatedDate { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
@@ -166,12 +166,16 @@ namespace swas.DAL.Models
         public string? Security_Classification { get; set; } 
         
         [Display(Name = "Development Language")]
-        [MaxLength(100)]
+        [MaxLength(201)]
         public string? Devlopment_Language { get; set; }
 
-        [Display(Name = "operation system of hosting env")]
-        [MaxLength(100)]
+        [Display(Name = "Operation system of hosting env")]
+        [MaxLength(201)]
         public string? operation_system_hosting_env { get; set; }
+        
+        [Display(Name = "Is AI/ML Project")]
+        [Required]
+        public bool Is_AI_ML { get; set; }
 
 
         [NotMapped]

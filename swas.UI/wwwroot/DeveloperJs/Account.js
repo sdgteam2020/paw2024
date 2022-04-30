@@ -2,7 +2,7 @@
   
     initializeDataTable("#SoftwareXXx");
     if ($('.toolbar').find('.dt-buttons').length === 0) {
-        var buttonContainer = table.buttons().container();
+        let buttonContainer = table.buttons().container();
         $('.toolbar').append(buttonContainer); // Append buttons to toolbar
     }
     $('#searchBox').on('keyup', function () {
@@ -22,9 +22,9 @@
 
 $(document).on('click', '.flag-toggle-btn', function () {
 
-    var username = $(this).data('username');
-    var rolename = $(this).data('rolename');
-    var flag = $(this).data('flag');
+    let username = $(this).data('username');
+    let rolename = $(this).data('rolename');
+    let flag = $(this).data('flag');
     flag = !flag;
     if (flag) {
         $(this).html('<span class="flag-pill flag-on">ON</span>');
@@ -56,7 +56,7 @@ $(document).on('click', '.flag-toggle-btn', function () {
 $('.delete-user').click(function (e) {
     e.preventDefault();
 
-    var url = $(this).attr('href');
+    let url = $(this).attr('href');
 
     Swal.fire({
         title: "Are you sure?",

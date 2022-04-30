@@ -69,12 +69,13 @@ ion-icon {
 
 
 .sidebar-wrapper {
+    background: radial-gradient(circle at 20% 30%, #1e3a8a, transparent), radial-gradient(circle at 80% 70%, #7c3aed, transparent);
     position: fixed;
     top: 0;
     left: 0;
     width: 260px;
     height: 100%;
-    background-color: #ffffff;
+    /*background-color: #ffffff;*/
     background-clip: padding-box;
     border-right: 1px solid #e2e3e4;
     transition: all .2s;
@@ -162,7 +163,7 @@ ion-icon {
     text-align: center;
     margin-top: -14px;
     margin-left: -15px;
-    width: 104%;
+    width: 102%;
     color: white;
     font-size: 16px;
     height: 35px;
@@ -470,7 +471,7 @@ ion-icon {
     z-index: 5;
     transition: 0.3s all;
     box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 50%);
-    background: #044c92;
+    /*background: #044c92;*/
     
 }
 
@@ -1487,15 +1488,19 @@ ul.categories-list li {
 }
 
 .tabs__head {
-    
-    
+    position: sticky;
+    border-radius: 10px;
+    overflow: hidden;
     display: flex;
+    height: 42px;
     align-items: center;
+    width:fit-content;
     list-style: none;
     overflow-x: auto;
-    /*    background: rgb(247,248,250);
-    background: linear-gradient(90deg, rgba(247,248,250,1) 0%, rgba(235,231,236,1) 35%, rgba(217,239,244,1) 100%);
-*/
+    /*background: radial-gradient(circle at 20% 30%, rgba(30,64,175,0.25), transparent 60%), radial-gradient(circle at 80% 70%, rgba(96,165,250,0.25), transparent 60%) !important;*/
+    /* THIS is the real fix */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 @media screen and (min-width: 768px) and (max-width: 960px) {
@@ -1508,7 +1513,7 @@ ul.categories-list li {
 @media screen and (min-width: 960px) {
     .tabs__head {
         
-        background: rgb(247,248,250);
+        /*background: rgb(247,248,250);*/
         background: linear-gradient(90deg, #044c920%,#044c92 35%, #3F51B5 100%);
         
     }
@@ -1548,8 +1553,7 @@ ul.categories-list li {
 }
 
 .tabs__head li a:hover {
-    background: rgba(255, 255, 255, 0.9);
-    color: #000;
+    background: rgba(79, 173, 215, 0.8);
 }
 
     .tabs__head li a:hover span {
@@ -2683,6 +2687,6 @@ ul.categories-list li {
 }
  #msform  .mergeprojnamewithrevet {
     margin-bottom: 0px;
-    width: 100px;
+    /*width: 280px;*/
     margin-right: 0px
 }

@@ -3,9 +3,9 @@
     
     $('.delete-btn').click(function () {
          
-        var stageId = $(this).data('id');
+        let stageId = $(this).data('id');
 
-        var url = $(this).data('url');
+        let url = $(this).data('url');
 
         $.ajax({
             url: '/Stages/DeleteConfirmed',
@@ -37,10 +37,10 @@
 
     $('.btnupdate').click(function () {
          
-        var stageId = $(this).data('id');
-        var Stages = $(this).data('name');
+        let stageId = $(this).data('id');
+        let Stages = $(this).data('name');
 
-        var url = $(this).data('url');
+        let url = $(this).data('url');
 
         $.ajax({
             url: '/Stages/EditFrom',
@@ -77,7 +77,7 @@
 });
 
     function validateForm() {
-        var form = document.querySelector('form.needs-validation');
+        let form = document.querySelector('form.needs-validation');
     if (form.checkValidity() === false) {
         event.preventDefault();
     event.stopPropagation();

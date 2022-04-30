@@ -1,4 +1,4 @@
-﻿var current = 1;
+﻿let current = 1;
 $(document).ready(function () {
     $(function () {
         $(".datepicker1").datepicker({ dateFormat: 'dd-mm-yy' });
@@ -11,19 +11,19 @@ $(document).ready(function () {
     mMsater($("#HostTypeID").val(), "ddlHostTypeID", 2, 0)
     mMsater($("#Apptype").val(), "ddlApptype", 3, 0)
 
-    var current_fs, next_fs, previous_fs; //fieldsets
-    var opacity;
+    let current_fs, next_fs, previous_fs; //fieldsets
+    let opacity;
 
 
     $("#uploadButton").click(function () {
 
         // Example logic — replace with your actual validation
       
-        var requiredFields = $('#fwduploaditems').find('.requiredField');
-        var allFieldsComplete = true;
+        let requiredFields = $('#fwduploaditems').find('.requiredField');
+        let allFieldsComplete = true;
 
-        var maxlength = 200;
-        var attRemarks = $("#Reamarks").val().trim(); // fixed ID
+        let maxlength = 200;
+        let attRemarks = $("#Reamarks").val().trim(); // fixed ID
 
 
 
@@ -39,6 +39,7 @@ $(document).ready(function () {
         }
         requiredFields.each(function (index) {
             if (this.value.length == 0) {
+                
                 $(this).addClass('is-invalid');
                 allFieldsComplete = false;
             } else {
@@ -49,7 +50,7 @@ $(document).ready(function () {
 
             Swal.fire({
                 title: 'Error!',
-                text: 'Please complete all required fields',
+                text: 'Please Upload All Required Doc',
                 icon: 'error',
                 showConfirmButton: false,
                 timer: 1000
@@ -72,32 +73,89 @@ $(document).ready(function () {
         ProjectSaveAsDraft($(this));
     });
     $("#submitUpload").click(function () {
+        debugger;
 
-        var requiredFields = $('#tablebasic2').find('.requiredField');
-        var allFieldsComplete = true;
+        let requiredFields = $('#tablebasic').find('.requiredField');
+        let allFieldsComplete = true;
         requiredFields.each(function (index) {
             if (this.value.length == 0) {
+                
                 $(this).addClass('is-invalid');
                 allFieldsComplete = false;
             } else {
                 $(this).removeClass('is-invalid');
             }
         });
-        $('.char-limit').each(function () {
-            var inputField = $(this);
-            var maxLength = inputField.data('maxlength'); // Get max length from data-maxlength attribute
-            var currentLength = inputField.val().length;
-            var errorMsg = inputField.closest('td').find('.charErrorMsg');
 
-            if (currentLength > maxLength) {
-                inputField.addClass('is-invalid');
-                errorMsg.removeClass('d-none');  // Show error message
-                allFieldsComplete = false; // Mark form as invalid
-            } else {
-                inputField.removeClass('is-invalid');
-                errorMsg.addClass('d-none');  // Hide error message if within limit
-            }
+        //const required = [
+        //    "#ProjName",
+        //    "#InitiatedDate",
+        //    "#CompletionDate",
+        //    "#IsWhitelisted",
+
+        //    "#AimScope",
+
+
+
+
+
+        //];
+
+
+
+        //required.forEach(function (selector) {
+        //    let inputField = $(selector);
+        //    let maxLength = inputField.data('maxlength'); // Get max length from data-maxlength attribute
+        //    let len = inputField.val();
+        //    let currentLength = len.length;
+        //    let errorMsg = inputField.closest('div').find('.charErrorMsg');
+
+        //    if (currentLength > maxLength) {
+        //        debugger;
+        //        inputField.addClass('is-invalid');
+        //        errorMsg.removeClass('d-none');  // Show error message
+        //        allFieldsComplete = false; // Mark form as invalid
+        //    } else {
+        //        inputField.removeClass('is-invalid');
+        //        errorMsg.addClass('d-none');  // Hide error message if within limit
+        //    }
+        //});
+
+
+        let lengtherr = true;
+        $('.char-limit').each(function () {
+
+            let inputField = $(this);
+            let maxLength = parseInt(inputField.data('maxlength'));
+            let errorMsg = inputField.closest('div').find('.charErrorMsg');
+
+           
+                let value = inputField.val();
+
+                // Stop typing after max length
+                if (value.length > maxLength) {
+                    inputField.val(value.substring(0, maxLength + 1));
+                    errorMsg.removeClass('d-none');
+                    lengtherr = false;
+                } else {
+                    errorMsg.addClass('d-none');
+                }
+
+           
+
         });
+
+        if (!lengtherr) {
+
+            Swal.fire({
+                title: 'Error!',
+                text: 'Please Check the Length',
+                icon: 'error',
+                showConfirmButton: true,
+                
+            })
+            return false;
+        }
 
         if (!allFieldsComplete) {
 
@@ -120,14 +178,14 @@ $(document).ready(function () {
         const fieldset = $("#0");  // jQuery object
         fieldset.removeClass('d-none'); // hides the fieldset
 
-        current_fs = $(this).parent();
-        prev_fs = $(this).parent().prev();
+       let  current_fs = $(this).parent();
+        let prev_fs = $(this).parent().prev();
         $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
         $("#progressbar li").eq($("fieldset").index(prev_fs)).addClass("active");
         prev_fs.show();
         current_fs.animate({ opacity: 0 }, {
             step: function (now) {
-                opacity = 1 - now;
+              let   opacity = 1 - now;
 
                 current_fs.css({
                     'display': 'none',
@@ -142,7 +200,7 @@ $(document).ready(function () {
     });
 
     $("#tempBasicDetails").click(function () {
-        var number = 1 + Math.floor(Math.random() * 15000);
+        let number = 1 + Math.floor(Math.random() * 15000);
         const predate = DateFormateyyy_mm_dd(new Date() - 1);
         const todaydate = DateFormateyyy_mm_dd(new Date());
 
@@ -197,8 +255,8 @@ $(document).ready(function () {
     $("#btnbasic").click(function () {
         
        
-        requiredFields = $('#tablebasic').find('.requiredField');
-        var allFieldsComplete = true;
+        let requiredFields = $('#tablebasic').find('.requiredField');
+        let  allFieldsComplete = true;
         requiredFields.each(function (index) {
             if (this.value.length == 0) {
                 $(this).addClass('is-invalid');
@@ -225,12 +283,13 @@ $(document).ready(function () {
 
 
         required.forEach(function (selector) {
-            var inputField = $(selector);
-            var maxLength = inputField.data('maxlength'); // Get max length from data-maxlength attribute
-            var currentLength = inputField.val().length;
-            var errorMsg = inputField.closest('td').find('.charErrorMsg');
+            let inputField = $(selector);
+            let maxLength = inputField.data('maxlength'); // Get max length from data-maxlength attribute
+            let currentLength = inputField.val().length;
+            let errorMsg = inputField.closest('td').find('.charErrorMsg');
 
             if (currentLength > maxLength) {
+                debugger;
                 inputField.addClass('is-invalid');
                 errorMsg.removeClass('d-none');  // Show error message
                 allFieldsComplete = false; // Mark form as invalid
@@ -251,35 +310,39 @@ $(document).ready(function () {
             })
         }
         else {
+
+            $('#collapseBasic').removeClass('show')
+            $('#collapseAdditional').addClass('show')
+
             
-            const fieldset = $("#0");  // jQuery object
-            fieldset.addClass('d-none'); // hides the fieldset
+            //const fieldset = $("#0");  // jQuery object
+            //fieldset.addClass('d-none'); // hides the fieldset
 
 
-            current_fs = $(this).parent();
+            //current_fs = $(this).parent();
 
-            next_fs = $(this).parent().next();
-            $('#IngestionRemarksandToggle').addClass('d-none');
+            //next_fs = $(this).parent().next();
+            //$('#IngestionRemarksandToggle').addClass('d-none');
 
-            //Add Class Active
-            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+            ////Add Class Active
+            //$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
 
-            //show the next fieldset
-            next_fs.show();
-            //hide the current fieldset with style
-            current_fs.animate({ opacity: 0 }, {
-                step: function (now) {
-                    // for making fielset appear animation
-                    opacity = 1 - now;
+            ////show the next fieldset
+            //next_fs.show();
+            ////hide the current fieldset with style
+            //current_fs.animate({ opacity: 0 }, {
+            //    step: function (now) {
+            //        // for making fielset appear animation
+            //        opacity = 1 - now;
 
-                    current_fs.css({
-                        'display': 'none',
-                        'position': 'relative'
-                    });
-                    next_fs.css({ 'opacity': opacity });
-                },
-                duration: 600
-            });
+            //        current_fs.css({
+            //            'display': 'none',
+            //            'position': 'relative'
+            //        });
+            //        next_fs.css({ 'opacity': opacity });
+            //    },
+            //    duration: 600
+            //});
 
         }
         return allFieldsComplete;
@@ -315,16 +378,18 @@ $(document).ready(function () {
 
     $("#ProjName").on("keyup", function () {
         
-        var query = $(this).val();
-        if ($("#IsWhitelisted").val() === "Re-Vetted" && query.length>=3) {
+        let query = $(this).val();
+        if ($("#IsWhitelisted").val() === "Re-Vetted" && query.length >= 3) {
+          
             filterProjectNames(query);
         }
+       
     });
 
 
     $(document).on("click", "#projectNameDropdown li", function () {
-        var projectId = $(this).data("id");
-        var projectName = $(this).data("name");
+        let projectId = $(this).data("id");
+        let projectName = $(this).data("name");
 
 
         $("#ProjName").val(projectName);
@@ -396,8 +461,11 @@ $(document).ready(function () {
 
 
     $("#IsWhitelisted").change(function () {
-        var selectedStatus = $(this).val();
+        debugger;
+        let selectedStatus = $(this).val();
         if (selectedStatus === "Re-Vetted") {
+            
+            $('#ProjName').addClass('col-md-8');
             Swal.fire({
                 title: 'Re-Vetting Project will be added as per details of Appx C to SOP , Also before filling the form, ensure that you have all the docus(PDF) ready as per SOP on Whitelisting of Sw Appl in IA',
                 html: `
@@ -416,10 +484,10 @@ $(document).ready(function () {
             $("#projectNameDropdown").show();
             $("#reVettedTag").removeClass("d-none");
         } else {
-            var currentval = $("#ProjName").val();
-            var cleanval = currentval.replace(/\s*Re-Vetted\s*\d+/i, "").trim();
+            let currentval = $("#ProjName").val();
+            let cleanval = currentval.replace(/\s*Re-Vetted\s*\d+/i, "").trim();
             $("#ProjName").val(cleanval)
-
+            $('#ProjName').removeClass('col-md-8');
             $("#projectNameDropdown").hide();
             $("#reVettedTag").addClass("d-none");
         }
@@ -458,17 +526,17 @@ function AddProject(thistag) {
     
     fetchServerDate().then(function (S) {
 
-        var token = $('input[name="__RequestVerificationToken"]').val();
+        let token = $('input[name="__RequestVerificationToken"]').val();
         
-        var initialDate = $('#InitiatedDate').val();
-        var completionDate = $('#CompletionDate').val();
-        var currentDate = new Date(S.todayDateTime);
-        var currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false });
+        let initialDate = $('#InitiatedDate').val();
+        let completionDate = $('#CompletionDate').val();
+        let currentDate = new Date(S.todayDateTime);
+        let currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false });
 
-       
-       
-        var InitiatedDate = initialDate + ' ' + currentTime;
-        var CompletionDate = completionDate + ' ' + currentTime;
+        
+
+        let InitiatedDate = initialDate + ' ' + currentTime;
+        let CompletionDate = completionDate + ' ' + currentTime;
         console.log("Inititated date:", initialDate + ", Complition Date: ", InitiatedDate)
         $.ajax({
             url: '/Projects/AddProject',
@@ -476,6 +544,7 @@ function AddProject(thistag) {
             data: {
                 "ProjId": $("#ProjId").val(),
                 "ProjName": $("#ProjName").val(),
+                "Is_AI_ML": $("#Is_AI_ML").val(),
                 "InitiatedDate": InitiatedDate,
                 "CompletionDate": CompletionDate,
                 "IsWhitelisted": $("#IsWhitelisted").val(),
@@ -563,23 +632,23 @@ function AddProject(thistag) {
                 }
                 else if (result != null) {
 
-                    var projid = result.projId;
+                    let projid = result.projId;
                     $("#spanProjectId").html(projid);
                     $("#spanCurrentPslmId").html(result.currentPslmId);
-                    var creatid = "PROJECT ID :" + projid
+                    let creatid = "PROJECT ID :" + projid
                     $("#projectId").html(creatid)
 
 
 
 
                     AttechHistory();
-                    current_fs = $(thistag).parent();
-                    next_fs = $(thistag).parent().next();
+                   let current_fs = $(thistag).parent();
+                  let  next_fs = $(thistag).parent().next();
                     $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
                     next_fs.show();
                     current_fs.animate({ opacity: 0 }, {
                         step: function (now) {
-                            opacity = 1 - now;
+                          let  opacity = 1 - now;
 
                             current_fs.css({
                                 'display': 'none',
@@ -644,7 +713,7 @@ function FwdProjConfirm(thisdata) {
 
 
 function ProjectSubmited(thisdata) {
-    var Remarks = $("#RequestRemarks").val();
+    let Remarks = $("#RequestRemarks").val();
     $.ajax({
         url: '/Projects/ProjectSubmited',
         type: 'POST',
@@ -726,7 +795,7 @@ function ProjectSaveAsDraft(thisdata) {
     });
 }
 function validationIsSuccessful() {
-    var inputVal = $("#ProjEdit_DetlsofUserBase").val();
+    let inputVal = $("#ProjEdit_DetlsofUserBase").val();
     if (inputVal === "") {
         return false;
     }
@@ -735,16 +804,16 @@ function validationIsSuccessful() {
 function DateFormateyyy_mm_dd(date) {
 
 
-    var datef2 = new Date(date);
-    var months = "" + `${(datef2.getMonth() + 1)}`;
-    var days = "" + `${(datef2.getDate())}`;
-    var pad = "00"
-    var monthsans = pad.substring(0, pad.length - months.length) + months
-    var dayans = pad.substring(0, pad.length - days.length) + days
-    var year = `${datef2.getFullYear()}`;
+    let datef2 = new Date(date);
+    let months = "" + `${(datef2.getMonth() + 1)}`;
+    let days = "" + `${(datef2.getDate())}`;
+    let pad = "00"
+    let monthsans = pad.substring(0, pad.length - months.length) + months
+    let dayans = pad.substring(0, pad.length - days.length) + days
+    let year = `${datef2.getFullYear()}`;
     if (year > 1902) {
 
-        var datemmddyyyy = year + `-` + monthsans + `-` + dayans
+        let datemmddyyyy = year + `-` + monthsans + `-` + dayans
         return datemmddyyyy;
     }
     else {
@@ -773,9 +842,9 @@ function DeleteProject(ProjectId) {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    var notificationDiv = document.getElementById('notificationData');
-    var notificationTitle = notificationDiv.getAttribute('data-title');
-    var notificationHtml = notificationDiv.getAttribute('data-html');
+    let notificationDiv = document.getElementById('notificationData');
+    let notificationTitle = notificationDiv.getAttribute('data-title');
+    let notificationHtml = notificationDiv.getAttribute('data-html');
 
     notificationTitle = notificationTitle.replace(/'/g, "\\'");
     notificationHtml = notificationHtml.replace(/'/g, "\\'").replace(/\n/g, '\\n').replace(/\r/g, '');
@@ -836,30 +905,30 @@ document.addEventListener('DOMContentLoaded', function () {
         });
   
  
-        $(document).ready(function () {
-            $('.char-limit').each(function () {
+        //$(document).ready(function () {
+        //    $('.char-limit').each(function () {
 
-                var inputField = $(this);
-                var maxLength = parseInt(inputField.data('maxlength'));
-                var errorMsg = inputField.closest('div').find('.charErrorMsg');
+        //        let inputField = $(this);
+        //        let maxLength = parseInt(inputField.data('maxlength'));
+        //        let errorMsg = inputField.closest('span').find('.charErrorMsg');
 
-                inputField.on('input', function () {
+        //        inputField.on('input', function () {
+                  
+        //            let value = inputField.val();
 
-                    var value = inputField.val();
+        //            // Stop typing after max length
+        //            if (value.length > maxLength) {
+        //                inputField.val(value.substring(0, maxLength));
+        //                errorMsg.removeClass('d-none');
+        //            } else {
+        //                errorMsg.addClass('d-none');
+        //            }
 
-                    // Stop typing after max length
-                    if (value.length > maxLength) {
-                        inputField.val(value.substring(0, maxLength));
-                        errorMsg.removeClass('d-none');
-                    } else {
-                        errorMsg.addClass('d-none');
-                    }
+        //        });
 
-                });
+        //    });
 
-            });
-
-        });
+        //});
 
 $('#RequestRemarks').on('input', function () {
 
@@ -867,7 +936,7 @@ $('#RequestRemarks').on('input', function () {
     const errorMsg = $(this).siblings('.charErrorMsg');
 
     if (this.value.length > maxLength) {
-        this.value = this.value.slice(0, maxLength);
+        this.value = this.value.slice(0, maxLength+1);
         errorMsg.removeClass('d-none');
         $(this).addClass('is-invalid');
     } else {

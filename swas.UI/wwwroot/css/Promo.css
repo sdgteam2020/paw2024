@@ -1,0 +1,243 @@
+﻿
+/*@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');*/
+
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+    background: #0f172a;
+    color: white;
+}
+
+/* 🌌 BACKGROUND */
+.bg {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 20% 30%, #1e3a8a, transparent), radial-gradient(circle at 80% 70%, #7c3aed, transparent);
+    animation: moveBg 12s infinite alternate ease-in-out;
+}
+
+@keyframes moveBg {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.2);
+    }
+}
+
+/* 💡 FLOATING CARDS */
+
+/* 💡 FLOATING CARDS (BACKGROUND ONLY) */
+.card {
+    position: absolute;
+    top: 0; /* important */
+    transform: translateY(100vh); /* start from bottom */
+
+    width: 180px;
+    height: 110px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(10px);
+    padding: 10px;
+    font-size: 12px;
+    animation: float 10s linear infinite;
+    animation-fill-mode: both; /* prevents jump */
+
+    z-index: -1;
+}
+
+@keyframes float {
+    from {
+        transform: translateY(100vh);
+    }
+
+    to {
+        transform: translateY(-20vh);
+    }
+}
+
+/* ✨ CENTER CONTENT */
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+/* 🚀 BRAND */
+.brand {
+    font-size: 4.5rem;
+    font-weight: 700;
+    letter-spacing: -2px;
+    opacity: 0;
+    animation: fadeUp 1.5s forwards;
+}
+
+
+/* 📊 TAGLINE */
+.tagline {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: #cbd5f5;
+    opacity: 0;
+    animation: fadeUp 1.5s forwards 0.7s;
+}
+/* 🔐 BUTTON */
+.btn-enter {
+    display: inline-block;
+    margin-top: 40px;
+    padding: 14px 40px;
+    border-radius: 30px;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    color: white;
+    font-size: 0.95rem;
+    cursor: pointer;
+    letter-spacing: 2px;
+    text-decoration: none;
+    opacity: 0;
+    animation: fadeUp 1.5s forwards 1.4s;
+    transition: 0.3s;
+}
+
+.btn-enter:hover {
+    transform: scale(1.08);
+    box-shadow: 0 10px 25px rgba(99,102,241,0.4);
+}
+/* 🎬 ANIMATION */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 📥 LOGIN SCREEN */
+.login {
+    display: none;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    background: rgba(255,255,255,0.08);
+    padding: 30px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+input {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    width: 200px;
+    border: none;
+    border-radius: 6px;
+}
+
+
+
+/* ✨ STRIP LIGHTS */
+.bg::before,
+.bg::after {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #6366f1, #8b5cf6, transparent);
+    opacity: 0.6;
+    animation: moveStrip 6s linear infinite;
+}
+
+.bg::before {
+    top: 30%;
+    left: -50%;
+}
+
+.bg::after {
+    top: 70%;
+    left: -50%;
+    animation-delay: 3s;
+}
+
+@keyframes moveStrip {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(50%);
+    }
+}
+.bg span {
+    position: absolute;
+    width: 2px;
+    height: 200%;
+    background: linear-gradient(to bottom, transparent, #8b5cf6, transparent);
+    left: 20%;
+    animation: verticalStrip 8s linear infinite;
+    opacity: 0.4;
+}
+
+    .bg span:nth-child(2) {
+        left: 80%;
+        animation-delay: 4s;
+    }
+
+@keyframes verticalStrip {
+    from {
+        transform: translateY(-50%);
+    }
+
+    to {
+        transform: translateY(50%);
+    }
+}
+
+
+/* ✨ PARTICLES */
+.particles {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+    .particles span {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: rgba(255,255,255,0.6);
+        border-radius: 50%;
+        animation: floatParticle linear infinite;
+    }
+
+@keyframes floatParticle {
+    from {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(-10vh) scale(1);
+        opacity: 0;
+    }
+}
+
+.paw-logo1
+{
+    height:140px
+}
+

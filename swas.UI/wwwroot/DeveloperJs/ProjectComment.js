@@ -1,10 +1,10 @@
 ﻿
 function handleStatusChange() {
 
-    var selectedStatus = document.getElementById("ddlStatus").value;
+    let selectedStatus = document.getElementById("ddlStatus").value;
 
 
-    var fileInput = document.getElementById("uploadfile");
+    let fileInput = document.getElementById("uploadfile");
 }
 
 

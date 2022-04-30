@@ -127,85 +127,139 @@ $(document).on('click', '.LegacyHistory', function () {
 
 
 
-
 function GetProjectLegacyHistory(ProjId) {
-   
-
-    var listitem = "";
 
     $.ajax({
         url: '/Projects/GetProjectLegacyHistory',
         type: 'POST',
         data: { ProjectId: ProjId },
-        success: function (response) {
-            console.log(response);
-           
-          
-
-            if (response.length > 0) {
-                let listitem = '<div class="timeline-month">';
-                listitem += '<span>' + response.length + ' Entries</span>';
-                listitem += '</div>';
-
-                for (let i = 0; i < response.length; i++) {
-                    if (response[0])
-                    {
-                        $("#lblHistory").text("Project Name: " + response[0].projectName + " History");
-                    }
-                    const item = response[i];
-
-                    listitem += '<div class="timeline-section">';
-                    listitem += '<div class="timeline-date">' + DateFormateddMMyyyyhhmmss(item.actionDate) + '</div>';
-                    listitem += '<div class="row g-3">';
-                    listitem += '<div class="col-md-6">';
-                    listitem += '<div class="timeline-box">';
-                    if (item.actionType === 1) {
-                        listitem += '<div class="box-title bg-warning text-white"><i class="fa-solid fa-forward"></i> ' + item.actionTypeText + '</div>';
-                    } else if (item.actionType === 2) {
-                        listitem += '<div class="box-title bg-success text-white"><i class="fa-solid fa-circle-check"></i> ' + item.actionTypeText + '</div>';
-                    } else if (item.actionType === 3 || item.actionType === 4) {
-                        listitem += '<div class="box-title bg-danger text-white"><i class="fa-solid fa-rotate-left"></i> ' + item.actionTypeText + '</div>';
-                    } else {
-                        listitem += '<div class="box-title bg-secondary text-white">' + item.actionTypeText + '</div>';
-                    }
-                    listitem += '<div class="box-content">';
-                    if (item.actionType === 1) {
-                        listitem += '<div class="row mb-1"><div class="col-4"><strong> Request By</strong>:</div><div class="col-8"><span class="badge bg-secondary">' + (item.fromunitName || 'N/A') + '</span></div></div>';
-                    }
-
-                    if (item.actionType === 3 || item.actionType === 4 || item.actionType === 2) {
-                        listitem += '<div class="row mb-1"><div class="col-4"><strong>' + item.actionTypeText + ' By</strong>:</div><div class="col-8"><span class="badge bg-secondary">' + (item.fromunitName || 'N/A') + '</span></div></div>';
-
-                    }
-                    listitem += '</div>'; // box-content
-
-                    listitem += '<div class="box-footer">' + (item.userdetails || 'Unknown User') + '</div>';
-                    listitem += '</div></div>'; // End Action Box
-                    if (item.remarks) {
-                        listitem += '<div class="col-md-6">';
-                        listitem += '<div class="timeline-box">';
-                        listitem += '<div class="box-title"><i class="fa fa-pencil text-info"></i> Remarks On ' + DateFormateddMMyyyyhhmmss(item.actionDate) + '</div>';
-                        listitem += '<div class="box-content">';
-                        listitem += '<div class="box-item">' + item.remarks + '</div>';
-                        listitem += '</div>';
-                        listitem += '<div class="box-footer">' + (item.userdetails || 'Unknown User') + '</div>';
-                        listitem += '</div></div>';
-                    }
-
-                    listitem += '</div>'; // End row
-                    listitem += '</div>'; // End timeline-section
-                }
-               
-                $("#projectLegacyhistory").html(listitem);
-            } else {
-                $("#projectLegacyhistory").html('<div class="alert alert-info">No history available.</div>');
-            }
-
-        }
+        success: handleLegacySuccess
     });
-
 }
 
+// 🔹 SUCCESS HANDLER
+function handleLegacySuccess(response) {
+
+    console.log(response);
+
+    if (!response || response.length === 0) {
+        $("#projectLegacyhistory").html('<div class="alert alert-info">No history available.</div>');
+        return;
+    }
+
+    $(".lblHistory").text("Project Name: " + response[0].projectName + " History");
+
+    let html = buildTimelineHeader(response.length);
+
+    html += response.map(buildTimelineSection).join('');
+
+    $("#projectLegacyhistory").html(html);
+}
+
+// 🔹 HEADER
+function buildTimelineHeader(count) {
+    return `
+        <div class="timeline-month">
+            <span>${count} Entries</span>
+        </div>`;
+}
+
+// 🔹 SECTION
+function buildTimelineSection(item) {
+
+    return `
+    <div class="timeline-section">
+        <div class="timeline-date">${DateFormateddMMyyyyhhmmss(item.actionDate)}</div>
+        <div class="row g-3">
+            ${buildActionBox(item)}
+            ${buildRemarksBox(item)}
+        </div>
+    </div>`;
+}
+
+// 🔹 ACTION BOX
+function buildActionBox(item) {
+
+    return `
+    <div class="col-md-6">
+        <div class="timeline-box">
+            ${getActionTitle(item)}
+            <div class="box-content">
+                ${getActionContent(item)}
+            </div>
+            <div class="box-footer">${item.userdetails || 'Unknown User'}</div>
+        </div>
+    </div>`;
+}
+
+// 🔹 ACTION TITLE
+function getActionTitle(item) {
+
+    if (item.actionType === 1) {
+        return `<div class="box-title bg-warning text-white">
+                    <i class="fa-solid fa-forward"></i> ${item.actionTypeText}
+                </div>`;
+    }
+
+    if (item.actionType === 2) {
+        return `<div class="box-title bg-success text-white">
+                    <i class="fa-solid fa-circle-check"></i> ${item.actionTypeText}
+                </div>`;
+    }
+
+    if (item.actionType === 3 || item.actionType === 4) {
+        return `<div class="box-title bg-danger text-white">
+                    <i class="fa-solid fa-rotate-left"></i> ${item.actionTypeText}
+                </div>`;
+    }
+
+    return `<div class="box-title bg-secondary text-white">${item.actionTypeText}</div>`;
+}
+
+// 🔹 ACTION CONTENT
+function getActionContent(item) {
+
+    if (item.actionType === 1) {
+        return buildRow("Request By", item.fromunitName);
+    }
+
+    if ([2, 3, 4].includes(item.actionType)) {
+        return buildRow(item.actionTypeText + " By", item.fromunitName);
+    }
+
+    return '';
+}
+
+// 🔹 REMARKS BOX
+function buildRemarksBox(item) {
+
+    if (!item.remarks) return '';
+
+    return `
+    <div class="col-md-6">
+        <div class="timeline-box">
+            <div class="box-title">
+                <i class="fa fa-pencil text-info"></i>
+                Remarks On ${DateFormateddMMyyyyhhmmss(item.actionDate)}
+            </div>
+            <div class="box-content">
+                <div class="box-item">${item.remarks}</div>
+            </div>
+            <div class="box-footer">${item.userdetails || 'Unknown User'}</div>
+        </div>
+    </div>`;
+}
+
+// 🔹 COMMON ROW
+function buildRow(label, value) {
+    return `
+    <div class="row mb-1">
+        <div class="col-4"><strong>${label}</strong>:</div>
+        <div class="col-8">
+            <span class="badge bg-secondary">${value || 'N/A'}</span>
+        </div>
+    </div>`;
+}
 
 function loadDateApprovalTable() {
     $.ajax({
@@ -336,112 +390,142 @@ function getProjectDetails(projId, remarks) {
             requestType: 2,
             remarks: remarks
         },
-        success: function (response) {
-
-            
-            if (response.success === false) {
-                Swal.fire({
-                    title: 'Error',
-                    text: response.message,
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-                return;
-            }
-
-            let listItem = '';
-            let count = 0;
-            const badge = document.getElementById("IngestionReqforother");
-
-            for (let i = 0; i < response.length; i++) {
-
-                let item = response[i];
-
-                if (response[i].isRead == false) {
-                    count++;
-                    listItem += "<tr class='bold-text'>";
-                } else {
-                    listItem += "<tr>";
-                }
-
-                var projName = item.projName;
-                var words = projName.split(" ");
-                var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
-
-                listItem += "<td class='align-middle'>" + (i + 1) + "</td>";
-
-                listItem += "<td class='align-middle'>";
-                listItem += "<a  href='/Projects/ProjHistory?EncyID=" + encodeURIComponent(item.encyID) + "'>";
-                listItem += "<span id='projectName' class='projNameDetail' >" + shortProjName + "</span>";
-                listItem += "</a>";
-                listItem += "</td>";
-
-                listItem += "<td class='align-middle'>" + item.user + "</td>";
-                listItem += "<td class='align-middle'>" + item.unitName + "</td>";
-                listItem += "<td class='align-middle'>" + DateFormateddMMyyyyhhmmss(item.request_Date) + "</td>";
-                listItem += "<td class='da-td-mid-center'>" + (item.ddgiT_Approval_dat ? DateFormateddMMyyyyhhmmss(item.ddgiT_Approval_dat) : "-") + "</td>";
-
-                listItem += "<td class='align-middle text-start'>" + formatRemarks(item.remarks) + "</td>";
-
-                let isApproved = item.ddgiT_approval === true || item.ddgiT_approval === "true";
-
-                if (isApproved) {
-                    listItem += `<td class='align-middle d-flex'>
-				<button class='btn btn-success btn-sm approve-btn'
-					data-bold="${item.isRead}"
-					data-id="${item.id}"
-					data-project-name="${item.projName}"
-					data-actiontype="4" disabled>Approved</button>
-
-				<button class='btn btn-warning btn-sm ml-2 approve-btn'
-					data-id="${item.id}"
-					data-project-name="${item.projName}"
-					data-actiontype="3" title="Request Reject">Reject</button>
-
-				<a href="#" class="ml-2 LegacyHistory" data-action="LegacyHistory" data-ids="${item.projId}" title="History of the Legacy">
-					<img src="/assets/images/icons/Legacyhistory.png" alt="Icon" class="da-ico-27">
-				</a>
-			</td>`;
-                } else {
-                    listItem += `<td class='align-middle d-flex'>
-				<button class='btn btn-danger btn-sm approve-btn'
-					data-bold="${item.isRead}"
-					data-id="${item.id}"
-					data-project-name="${item.projName}"
-					data-actiontype="2">Approve</button>
-
-				<button class='btn btn-warning btn-sm ml-2 approve-btn'
-					data-id="${item.id}"
-					data-project-name="${item.projName}"
-					data-actiontype="3" title="Request Reject">Reject</button>
-
-				<a href="#" class="ml-2 LegacyHistory" data-action="LegacyHistory" data-ids="${item.projId}" title="History of the Legacy">
-					<img src="/assets/images/icons/Legacyhistory.png" alt="Icon" class="da-ico-27">
-				</a>
-			</td>`;
-                }
-
-                listItem += "</tr>";
-            }
-
-            if (badge) {
-                if (count > 0) {
-                    badge.textContent = count;
-                    badge.classList.remove("d-none");
-                } else {
-                    badge.textContent = '';
-                    badge.classList.add("d-none");
-                }
-            }
-
-            $('#DateApproval1').html(listItem);
-            initializeDataTable('#TableType2');
-            fetchProjectCommentsUnreadCount();
-        },
-        error: function (error) {
-            console.error('Error fetching project details:', error);
-        }
+        success: handleProjectDetailsSuccess,
+        error: handleProjectDetailsError
     });
+}
+
+// 🔹 SUCCESS HANDLER
+function handleProjectDetailsSuccess(response) {
+
+    if (response.success === false) {
+        showError(response.message);
+        return;
+    }
+
+    let count = 0;
+
+    const rows = response.map((item, i) => {
+        if (!item.isRead) count++;
+        return buildProjectRow(item, i);
+    }).join('');
+
+    updateBadge(count);
+
+    $('#DateApproval1').html(rows);
+    initializeDataTable('#TableType2');
+    fetchProjectCommentsUnreadCount();
+}
+
+// 🔹 ROW BUILDER
+function buildProjectRow(item, index) {
+
+    const rowClass = item.isRead ? "" : "bold-text";
+    const shortProjName = getShortName(item.projName);
+    const isApproved = item.ddgiT_approval === true || item.ddgiT_approval === "true";
+
+    return `
+    <tr class="${rowClass}">
+        <td class='align-middle'>${index + 1}</td>
+
+        <td class='align-middle'>
+            <a href='/Projects/ProjHistory?EncyID=${encodeURIComponent(item.encyID)}'>
+                <span id='projectName' class='projNameDetail'>${shortProjName}</span>
+            </a>
+        </td>
+
+        <td class='align-middle'>${item.user}</td>
+        <td class='align-middle'>${item.unitName}</td>
+        <td class='align-middle'>${DateFormateddMMyyyyhhmmss(item.request_Date)}</td>
+        <td class='da-td-mid-center'>
+            ${item.ddgiT_Approval_dat ? DateFormateddMMyyyyhhmmss(item.ddgiT_Approval_dat) : "-"}
+        </td>
+
+        <td class='align-middle text-start'>${formatRemarks(item.remarks)}</td>
+
+        ${buildActionButtons(item, isApproved)}
+    </tr>`;
+}
+
+// 🔹 SHORT NAME
+function getShortName(name) {
+    const words = name.split(" ");
+    return words.length > 6 ? words.slice(0, 6).join(" ") + "..." : name;
+}
+
+// 🔹 ACTION BUTTONS
+function buildActionButtons(item, isApproved) {
+
+    if (isApproved) {
+        return `
+        <td class='align-middle d-flex'>
+            <button class='btn btn-success btn-sm approve-btn'
+                data-bold="${item.isRead}"
+                data-id="${item.id}"
+                data-project-name="${item.projName}"
+                data-actiontype="4" disabled>Approved</button>
+
+            <button class='btn btn-warning btn-sm ml-2 approve-btn'
+                data-id="${item.id}"
+                data-project-name="${item.projName}"
+                data-actiontype="3" title="Request Reject">Reject</button>
+
+            ${buildHistoryIcon(item.projId)}
+        </td>`;
+    }
+
+    return `
+    <td class='align-middle d-flex'>
+        <button class='btn btn-danger btn-sm approve-btn'
+            data-bold="${item.isRead}"
+            data-id="${item.id}"
+            data-project-name="${item.projName}"
+            data-actiontype="2">Approve</button>
+
+        <button class='btn btn-warning btn-sm ml-2 approve-btn'
+            data-id="${item.id}"
+            data-project-name="${item.projName}"
+            data-actiontype="3" title="Request Reject">Reject</button>
+
+        ${buildHistoryIcon(item.projId)}
+    </td>`;
+}
+
+// 🔹 HISTORY ICON
+function buildHistoryIcon(projId) {
+    return `
+    <a href="#" class="ml-2 LegacyHistory" data-action="LegacyHistory" data-ids="${projId}" title="History of the Legacy">
+        <img src="/assets/images/icons/Legacyhistory.png" alt="Icon" class="da-ico-27">
+    </a>`;
+}
+
+// 🔹 BADGE UPDATE
+function updateBadge(count) {
+    const badge = document.getElementById("IngestionReqforother");
+
+    if (!badge) return;
+
+    if (count > 0) {
+        badge.textContent = count;
+        badge.classList.remove("d-none");
+    } else {
+        badge.textContent = '';
+        badge.classList.add("d-none");
+    }
+}
+
+// 🔹 ERROR HANDLER
+function showError(message) {
+    Swal.fire({
+        title: 'Error',
+        text: message,
+        icon: 'error',
+        confirmButtonText: 'OK'
+    });
+}
+
+function handleProjectDetailsError(error) {
+    console.error('Error fetching project details:', error);
 }
 
 

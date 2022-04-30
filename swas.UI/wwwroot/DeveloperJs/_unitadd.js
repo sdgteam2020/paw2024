@@ -5,6 +5,6 @@ $('.controlvalidation').on('keyup', function () {
 
 
     function ValInData(input) {
-        var regex = /[^a-zA-Z0-9/ ]/g;
+        let regex = /[^a-zA-Z0-9/ ]/g;
         input.value = input.value.replace(regex, "");
     }

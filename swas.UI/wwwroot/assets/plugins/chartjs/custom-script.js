@@ -1,6 +1,6 @@
 $(function() {
-    var ctx = document.getElementById('chart1').getContext('2d');
-    var myChart = new Chart(ctx, {
+    let ctx = document.getElementById('chart1').getContext('2d');
+    let myChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
@@ -38,8 +38,8 @@ $(function() {
             }
         }
     });
-    var ctx = document.getElementById('chart2').getContext('2d');
-    var myChart = new Chart(ctx, {
+    let ctx = document.getElementById('chart2').getContext('2d');
+    let myChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
@@ -77,8 +77,8 @@ $(function() {
             }
         }
     });
-     var ctx = document.getElementById('chart3').getContext('2d');
-     var myChart = new Chart(ctx, {
+     let ctx = document.getElementById('chart3').getContext('2d');
+     let myChart = new Chart(ctx, {
          type: 'pie',
          data: {
              labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -100,8 +100,8 @@ $(function() {
             
          }
      });
-      var ctx = document.getElementById('chart4').getContext('2d');
-      var myChart = new Chart(ctx, {
+      let ctx = document.getElementById('chart4').getContext('2d');
+      let myChart = new Chart(ctx, {
           type: 'doughnut',
           data: {
               labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -123,8 +123,8 @@ $(function() {
              
           }
       });
-      var ctx = document.getElementById('chart5').getContext('2d');
-      var myChart = new Chart(ctx, {
+      let ctx = document.getElementById('chart5').getContext('2d');
+      let myChart = new Chart(ctx, {
           type: 'radar',
           data: {
             labels: [
@@ -167,8 +167,8 @@ $(function() {
             }
           },
       });
-      var ctx = document.getElementById('chart6').getContext('2d');
-      var myChart = new Chart(ctx, {
+      let ctx = document.getElementById('chart6').getContext('2d');
+      let myChart = new Chart(ctx, {
           type: 'polarArea',
           data: {
             labels: [

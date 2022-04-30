@@ -14,7 +14,7 @@
     });
     function applyDateLogic(today) {
    
-        var selectedMode = $('input[name="mcalender_dates"]:checked').val();
+        let selectedMode = $('input[name="mcalender_dates"]:checked').val();
 
 
         if (selectedMode == "0") {
@@ -50,14 +50,14 @@
 
     $('#InitiatedDate').on('change', function () {
 
-        var initiatedDate = $(this).val();
+        let initiatedDate = $(this).val();
         $('#CompletionDate').attr('min', initiatedDate);
 
     });
 
     $('input[name="mcalender_dates"]').change(function () {
 
-        var selectedValue = $('input[name="mcalender_dates"]:checked').val();
+        let selectedValue = $('input[name="mcalender_dates"]:checked').val();
         $.ajax({
             url: '/Projects/SetCalendarModeInSession', // controller endpoint
             type: 'POST',
@@ -73,7 +73,8 @@
 
 
     $('.form-control').keypress(function (e) {
-        var keyCode = e.which;
+        let keyCode = e.which;
+       
         if ((keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (keyCode >= 48 && keyCode <= 57) || (keyCode == 32)) {
             return true; // Allow the keypress
         } else {
@@ -81,6 +82,7 @@
             if (keyCode == 46 || keyCode == 44 || keyCode == 40 || keyCode == 41 || keyCode == 45 || keyCode == 58 || keyCode == 47 || keyCode == 13 || keyCode==38)
                 return true; // Allow the keypress
             else {
+                
                 alert('Only Alphabets and Numbers allowed');
                 return false; // Block the keypress
             }
@@ -90,24 +92,24 @@
 });
 function DateFormateyyy_mm_dd(date) {
 
-    var todaysDate = new Date();
-    var datef1 = new Date(date);
-    var datef2 = new Date(date);
-    var months = "" + `${(datef2.getMonth() + 1)}`;
-    var days = "" + `${(datef2.getDate())}`;
-    var pad = "00"
-    var monthsans = pad.substring(0, pad.length - months.length) + months
-    var dayans = pad.substring(0, pad.length - days.length) + days
-    var year = `${datef2.getFullYear()}`;
-    var hh = `${datef2.getHours()}`;
-    var mm = `${datef2.getMinutes()}`;
-    var ss = `${datef2.getSeconds()}`;
+    let todaysDate = new Date();
+    let datef1 = new Date(date);
+    let datef2 = new Date(date);
+    let months = "" + `${(datef2.getMonth() + 1)}`;
+    let days = "" + `${(datef2.getDate())}`;
+    let pad = "00"
+    let monthsans = pad.substring(0, pad.length - months.length) + months
+    let dayans = pad.substring(0, pad.length - days.length) + days
+    let year = `${datef2.getFullYear()}`;
+    let hh = `${datef2.getHours()}`;
+    let mm = `${datef2.getMinutes()}`;
+    let ss = `${datef2.getSeconds()}`;
     if (hh < 10) hh = "0" + hh;
     if (mm < 10) mm = "0" + mm;
     if (ss < 10) ss = "0" + ss;
     if (year > 1902) {
 
-        var datemmddyyyy = year + `-` + monthsans + `-` + dayans
+        let datemmddyyyy = year + `-` + monthsans + `-` + dayans
         return datemmddyyyy;
     }
     else {
@@ -116,24 +118,24 @@ function DateFormateyyy_mm_dd(date) {
 }
 function DateFormateddMMyyyyhhmmss(date) {
 
-    var todaysDate = new Date();
-    var datef1 = new Date(date);
-    var datef2 = date ? new Date(date) : new Date();
-    var months = "" + `${(datef2.getMonth() + 1)}`;
-    var days = "" + `${(datef2.getDate())}`;
-    var pad = "00"
-    var monthsans = pad.substring(0, pad.length - months.length) + months
-    var dayans = pad.substring(0, pad.length - days.length) + days
-    var year = `${datef2.getFullYear()}`;
-    var hh = `${datef2.getHours()}`;
-    var mm = `${datef2.getMinutes()}`;
-    var ss = `${datef2.getSeconds()}`;
+    let todaysDate = new Date();
+    let datef1 = new Date(date);
+    let datef2 = date ? new Date(date) : new Date();
+    let months = "" + `${(datef2.getMonth() + 1)}`;
+    let days = "" + `${(datef2.getDate())}`;
+    let pad = "00"
+    let monthsans = pad.substring(0, pad.length - months.length) + months
+    let dayans = pad.substring(0, pad.length - days.length) + days
+    let year = `${datef2.getFullYear()}`;
+    let hh = `${datef2.getHours()}`;
+    let mm = `${datef2.getMinutes()}`;
+    let ss = `${datef2.getSeconds()}`;
     if (hh < 10) hh = "0" + hh;
     if (mm < 10) mm = "0" + mm;
     if (ss < 10) ss = "0" + ss;
     if (year > 1902) {
 
-        var datemmddyyyy = dayans + `-` + monthsans + `-` + year + ` ` + hh + `:` + mm + `:` + ss
+        let datemmddyyyy = dayans + `-` + monthsans + `-` + year + ` ` + hh + `:` + mm + `:` + ss
         return datemmddyyyy;
     }
     else {
@@ -148,24 +150,25 @@ function DateFormated(date) {
         return '-';
     }
 
-    var todaysDate = new Date();
-    var datef1 = new Date(date);
-    var datef2 = new Date(date);
-    var months = "" + `${(datef2.getMonth() + 1)}`;
-    var days = "" + `${(datef2.getDate())}`;
-    var pad = "00"
-    var monthsans = pad.substring(0, pad.length - months.length) + months
-    var dayans = pad.substring(0, pad.length - days.length) + days
-    var year = `${datef2.getFullYear()}`;
-    var hh = `${datef2.getHours()}`;
-    var mm = `${datef2.getMinutes()}`;
-    var ss = `${datef2.getSeconds()}`;
+    let todaysDate = new Date();
+    let datef1 = new Date(date);
+    let datef2 = new Date(date);
+    let hhmmss;
+    let months = "" + `${(datef2.getMonth() + 1)}`;
+    let days = "" + `${(datef2.getDate())}`;
+    let pad = "00"
+    let monthsans = pad.substring(0, pad.length - months.length) + months
+    let dayans = pad.substring(0, pad.length - days.length) + days
+    let year = `${datef2.getFullYear()}`;
+    let hh = `${datef2.getHours()}`;
+    let mm = `${datef2.getMinutes()}`;
+    let ss = `${datef2.getSeconds()}`;
     if (hh < 10) hh = "0" + hh;
     if (mm < 10) mm = "0" + mm;
     if (ss < 10) ss = "0" + ss;
 
     if (hh && mm && ss != 0) {
-        var hhmmss = ":"+ hh + `:` + mm + `:` + ss
+         hhmmss = ":"+ hh + `:` + mm + `:` + ss
     }
     else {
         hhmmss = "";
@@ -173,7 +176,7 @@ function DateFormated(date) {
   
     if (year > 1902) {
 
-        var datemmddyyyy = dayans + `-` + monthsans + `-` + year +  hhmmss
+        let datemmddyyyy = dayans + `-` + monthsans + `-` + year +  hhmmss
         return datemmddyyyy;
     }
     else {
@@ -184,22 +187,22 @@ function DateFormated(date) {
 function DateCalculateago(fmDate, end_actual_time) {
     
    
-    var ago = "";
-    var start_actual_time = new Date(fmDate);  // Start time
-    var end_actual_time = end_actual_time ? new Date(end_actual_time) : new Date();  // End time
-    var diff = end_actual_time - start_actual_time;
-    var diffSeconds = diff / 1000;
-    var diffMinutes = diffSeconds / 60;
-    var diffHours = diffMinutes / 60;
-    var diffDays = diffHours / 24;
-    var diffMonths = diffDays / 30;
-    var diffYears = diffDays / 365;
-    var HH = Math.floor(diffHours);  // Total hours
-    var MM = Math.floor(diffMinutes % 60);  // Remaining minutes after calculating hours
-    var formatted = (HH < 10 ? "0" + HH : HH) + ":" + (MM < 10 ? "0" + MM : MM);
+    let ago = "";
+    let start_actual_time = new Date(fmDate);  // Start time
+     end_actual_time = end_actual_time ? new Date(end_actual_time) : new Date();  // End time
+    let diff = end_actual_time - start_actual_time;
+    let diffSeconds = diff / 1000;
+    let diffMinutes = diffSeconds / 60;
+    let diffHours = diffMinutes / 60;
+    let diffDays = diffHours / 24;
+    let diffMonths = diffDays / 30;
+    let diffYears = diffDays / 365;
+    let HH = Math.floor(diffHours);  // Total hours
+    let MM = Math.floor(diffMinutes % 60);  // Remaining minutes after calculating hours
+    let formatted = (HH < 10 ? "0" + HH : HH) + ":" + (MM < 10 ? "0" + MM : MM);
      const wholedays = Math.floor(diffDays);
      const Remainderhours = diffHours - (wholedays *24);
-     var Rounddays = Remainderhours >=12 ? (wholedays +1): wholedays;
+     let Rounddays = Remainderhours >=12 ? (wholedays +1): wholedays;
     if (diffHours < 24) {
         ago = formatted + ' Min';
     } else if (diffHours < 730) {  // Less than 730 hours (~30 days)
@@ -223,13 +226,13 @@ function DateCalculateagoForChart(fmDate, end_actual_time) {
 
 }
 function formatDateToDDMMYYYY(date) {
-    var dateObj = new Date(date);
+    let dateObj = new Date(date);
     if (isNaN(dateObj.getTime())) {
         return ''; // Return an empty string if the date is invalid
     }
-    var day = dateObj.getDate().toString().padStart(2, '0'); // Ensure 2 digits
-    var month = (dateObj.getMonth() + 1).toString().padStart(2, '0'); // Ensure 2 digits
-    var year = dateObj.getFullYear();
+    let day = dateObj.getDate().toString().padStart(2, '0'); // Ensure 2 digits
+    let month = (dateObj.getMonth() + 1).toString().padStart(2, '0'); // Ensure 2 digits
+    let year = dateObj.getFullYear();
     return `${day}-${month}-${year}`;
 }
 
@@ -334,7 +337,7 @@ function bindLiveProjectSearch(inputSelector, dropdownSelector, endpointUrl, onI
 
 function trimByWords(text, wordLimit) {
     if (!text) return "";
-    var words = text.split(" ");
+    let words = text.split(" ");
     if (words.length > wordLimit) {
         return words.slice(0, wordLimit).join(" ") + ".....";
     }
@@ -349,10 +352,10 @@ function trimByChars(text, charLimit) {
 }
 function breakLinesByWords(text, wordLimit) {
     if (!text) return "";
-    var words = text.split(" ");
-    var result = [];
+    let words = text.split(" ");
+    let result = [];
 
-    for (var i = 0; i < words.length; i += wordLimit) {
+    for (let i = 0; i < words.length; i += wordLimit) {
         result.push(words.slice(i, i + wordLimit).join(" "));
     }
 
@@ -398,7 +401,7 @@ function fetchServerDate() {
     });
 }
 $(document).ready(function () {
-    var token = $('input[name="__RequestVerificationToken"]').val();
+    let token = $('input[name="__RequestVerificationToken"]').val();
 
     if (token) {
         $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
@@ -412,19 +415,17 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('.char-limit').each(function () {
 
-        var inputField = $(this);
-        var maxLength = $(this).data('maxlength');
-      
-        var errorMsg = inputField.closest('div').find('.charErrorMsg');
+        let inputField = $(this);
+        let maxLength = parseInt(inputField.data('maxlength'));
+        let errorMsg = inputField.closest('div').find('.charErrorMsg');
 
         inputField.on('input', function () {
-
-           
-            var value = inputField.val();
+            debugger;
+            let value = inputField.val();
 
             // Stop typing after max length
             if (value.length > maxLength) {
-                inputField.val(value.substring(0, maxLength));
+                inputField.val(value.substring(0, maxLength+1));
                 errorMsg.removeClass('d-none');
             } else {
                 errorMsg.addClass('d-none');
@@ -435,3 +436,33 @@ $(document).ready(function () {
     });
 
 });
+
+function encryptData(data) {
+    const key = "DGIS-Login-AES-256-Key-Change-Me";
+
+    // 🔥 Convert object → string
+    const text = JSON.stringify(data);
+
+    return CryptoJS.AES.encrypt(text, key).toString();
+}
+
+
+function encryptPayloadData(plainText) {
+    const secretKey = $("#hiddenSa").val();
+    if (!secretKey) return "";
+
+    // 🔥 convert int → string
+    const text = plainText.toString();
+
+    const key = CryptoJS.enc.Utf8.parse(secretKey);
+    const iv = CryptoJS.enc.Utf8.parse(secretKey.padEnd(16, '0').substring(0, 16));
+
+    const encrypted = CryptoJS.AES.encrypt(text, key, {
+        iv: iv,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7
+    });
+
+    return encrypted.toString();
+}
+

@@ -37,8 +37,7 @@ namespace swas.BAL.Repository
             }
             catch(Exception ex)
             {
-              Console.WriteLine("the error is "+  ex.Message );
-
+                throw ex;
             }
             List<T> list = new List<T>();
             return list;

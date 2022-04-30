@@ -8,20 +8,25 @@ async function getGeneratedPdfLogSignFromPreview() {
                 responseType: 'blob'
             },
             success: function (pdfBlob) {
+
+
+
+
                 const blobUrl = URL.createObjectURL(pdfBlob);
-                $("#Certificatepreview").html(`
-                    <iframe id="pdfFrame"
-                            src="${blobUrl}"
-                            width="100%"
-                            height="600px"
-                            style="border:none;">
-                    </iframe>
-                `);
+                window._currentPdfBlobUrl = blobUrl; // store for download
+
+                // Convert Blob → ArrayBuffer → pass to renderPdfToCanvases
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    renderPdfToCanvases(e.target.result); // e.target.result is ArrayBuffer
+                };
+                reader.readAsArrayBuffer(pdfBlob);
 
                 $('#btnDigitalsign').prop('disabled', true);
                 const file = new File([pdfBlob], "GeneratedCertificate.pdf", {
                     type: "application/pdf"
                 });
+               
                 resolve(file);
             },
             error: function () {
@@ -49,7 +54,7 @@ async function getGeneratedPdfFromPreview() {
 function AttOnFWD() {
     $('.uploadLoader').addClass('d-none')
     
-    var listItem = "";
+    let listItem = "";
     if ($.trim($("#AttBody").text()) === "No Record Found") {
         $("#AttBody").empty(); // remove placeholder row
     }
@@ -172,29 +177,47 @@ function sendPDFToServer(pdfpath, thumbprint) {
 
                         });
                     }
-                    const base64String = response.Message.replace(/\s/g, '').replace(/-/g, '+').replace(/_/g, '/');
-                    const byteCharacters = atob(base64String);
-                    const byteNumbers = new Array(byteCharacters.length);
-
-                    for (let i = 0; i < byteCharacters.length; i++) {
-                        byteNumbers[i] = byteCharacters.charCodeAt(i);
+               
+                    if (!response) {
+                        Swal.fire({ icon: "error", title: "Oops...", text: "Certificate not Generated" });
+                        return;
                     }
 
-                    const pdfBytes = new Uint8Array(byteNumbers);
-                    generatedPdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
+                    try {
 
-                    const blobUrl = URL.createObjectURL(generatedPdfBlob);
+
+                        const base64String = response.Message.replace(/\s/g, '').replace(/-/g, '+').replace(/_/g, '/');
+                      
+
+
+
+                        const byteCharacters = atob(base64String);
+                        const byteNumbers = new Uint8Array(byteCharacters.length);
+
+                        for (let i = 0; i < byteCharacters.length; i++) {
+                            byteNumbers[i] = byteCharacters.charCodeAt(i);
+                        }
+
+                        //const pdfBlob = new Blob([byteNumbers], { type: "application/pdf" });
+                        generatedPdfBlob = new Blob([byteNumbers], { type: "application/pdf" });
+                        window._currentPdfBlobUrl = URL.createObjectURL(generatedPdfBlob);
+
+                        // ✅ Ensure container exists before rendering
+                        if (!$('#Certificatepreview').length) {
+                            console.error("Container not found");
+                            return;
+                        }
+
+                        renderPdfToCanvases(byteNumbers.buffer);
+
+                    } catch (err) {
+                        console.error("PDF render error:", err);
+                        Swal.fire({ icon: "error", title: "Error", text: "Failed to render PDF" });
+                    }
+
                     $('#btnLogSign').attr('disabled', true);
                     $('#btnDigitalsign').attr('disabled', true);
-
-                    $("#Certificatepreview").html(`
-                <iframe id="pdfFrame"
-                        src="${blobUrl}"
-                        width="100%"
-                        height="600px"
-                        style="border:none;">
-                </iframe>
-            `);
+                 
                     const urlParams = new URLSearchParams(window.location.search);
                     let psmid;
                    
@@ -210,7 +233,7 @@ function sendPDFToServer(pdfpath, thumbprint) {
                     if (ddlaction === "Approved / Completed" && $('#ddlfwdStage').val() == 3) {
                         generatedPdf = await getGeneratedPdfFromPreview(); // now works
                     }
-                   
+                 
                     SaveFwdTo(psmid, generatedPdf, allAttachments);
                 });
             } else {
@@ -241,7 +264,7 @@ $(document).on("click", ".att-btnDelete", function () {
         confirmButtonText: 'Yes, Delete It!'
     }).then((result) => {
         if (result.value) {
-            var rowIndex = $(this).closest("tr").index();
+            let rowIndex = $(this).closest("tr").index();
             allAttachments.splice(rowIndex, 1);
             $(this).closest("tr").remove();
 
@@ -251,17 +274,17 @@ $(document).on("click", ".att-btnDelete", function () {
 });
 
 function UploadFiles() {
-    var formData = new FormData();
-    var totalFiles = document.getElementById("pdfFileInput").files.length;
+    let formData = new FormData();
+    let totalFiles = document.getElementById("pdfFileInput").files.length;
     // 🔥 Get DocumentTypeId from active tracker step
-    var documentTypeId = $(".stepsforatt .step.active").data("document-id");
+    let documentTypeId = $(".stepsforatt .step.active").data("document-id");
 
     if (!documentTypeId) {
         alert("Invalid document step.");
         return;
     }
-    for (var i = 0; i < totalFiles; i++) {
-        var file = document.getElementById("pdfFileInput").files[i];
+    for (let i = 0; i < totalFiles; i++) {
+        let file = document.getElementById("pdfFileInput").files[i];
         formData.append("uploadfile", file);
         formData.append("Reamarks", $("#Reamarks").val());
         formData.append("PsmId", $("#spanCurrentPslmId").html());
@@ -328,8 +351,8 @@ function UploadFiles() {
 }
 
 function AttechHistory() {
-    var listItem = "";
-    var userdata =
+    let listItem = "";
+    let userdata =
     {
         "PslmId": $("#spanCurrentPslmId").html(),
 
@@ -358,7 +381,7 @@ function AttechHistory() {
                 }
 
                 else {
-                    for (var i = 0; i < response.length; i++) {
+                    for (let i = 0; i < response.length; i++) {
 
                         listItem += "<tr>";
                         listItem += "<td class='d-none'>" +
@@ -372,8 +395,8 @@ function AttechHistory() {
                             "</button>" +
                             "</span>" +
                             "</td>";
-                        var breakRemarks = response[i].reamarks || "";
-                        var formatedName = trimByWords(breakRemarks, 4);
+                        let breakRemarks = response[i].reamarks || "";
+                        let formatedName = trimByWords(breakRemarks, 4);
 
                         listItem += "<td class='align-middle RefLetter-container'>" +
                             "<span id='comdName'>" + formatedName + "</span>" +

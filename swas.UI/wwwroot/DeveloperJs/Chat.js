@@ -35,6 +35,7 @@
     });
 
     $("#send_btn").click(function () {
+       
         if ($("textarea#type_msg").val().trim() === "") {
             $("textarea#type_msg").addClass('is-invalid');
         } else {
@@ -44,12 +45,18 @@
 });
 
 function SaveChat(Msg) {
+
+    var userdata = {
+        UserMapChatId: $("#spnUserMapChatId").html(),
+        Msg: Msg
+    }
+    var encrypted_data = encryptData(userdata);
+  
     $.ajax({
         url: '/Chat/SaveChat',
         type: 'POST',
         data: {
-            "UserMapChatId": $("#spnUserMapChatId").html(),
-            "Msg": Msg
+            encrypted_data: encrypted_data
         },
         success: function (response) {
             if (response != null) {
@@ -74,9 +81,9 @@ function GetAllUsers() {
 
             if (!response || !response.length) return;
 
-            var listitem = "";
+            let listitem = "";
 
-            for (var i = 0; i < response.length; i++) {
+            for (let i = 0; i < response.length; i++) {
                 const letter = response[i].offr_Name.trim().charAt(0).toUpperCase();
                 const colorClass = displayFixedColorAlphabet(letter);
 
@@ -112,7 +119,7 @@ function GetAllUsers() {
             $("body")
                 .off("click", ".chatrequest")
                 .on("click", ".chatrequest", function () {
-
+                   
                     $(".chatrequest").removeClass('active');
                     $(this).addClass("active");
 
@@ -132,6 +139,7 @@ function GetAllUsers() {
 }
 
 function UserMapChat(ToUserId, profName, sortname) {
+
     $.ajax({
         url: '/Chat/SaveUserMapChat',
         type: 'POST',
@@ -163,10 +171,10 @@ function UserChat(userMapChatId, FromUserId, sortname) {
         data: { "UserMapChatId": userMapChatId, "FromUserId": FromUserId },
         success: function (response) {
 
-            var listitem = "";
+            let listitem = "";
 
             if (response && response.length > 0) {
-                for (var i = 0; i < response.length; i++) {
+                for (let i = 0; i < response.length; i++) {
                     const name = $(".spnOffr_Name").text().trim();
                     const letter = name.charAt(0).toUpperCase();
                     const colorClass = displayFixedColorAlphabet(letter);

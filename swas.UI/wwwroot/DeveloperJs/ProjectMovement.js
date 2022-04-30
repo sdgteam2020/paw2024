@@ -17,8 +17,8 @@
     $("#txtProjectName").autocomplete({
         source: function (request, response) {
             if (request.term.length > 1) {
-                var projName = request.term;
-                var param = { "ProjName": projName };
+                let projName = request.term;
+                let param = { "ProjName": projName };
                 $.ajax({
                     url: '/Projects/GetALLByProjectName',
                     contentType: 'application/x-www-form-urlencoded',
@@ -57,8 +57,8 @@
 
     $("#btnFwdNext").click(function () {
        
-        requiredFields = $('#ProjFwd').find('.requiredField');
-        var allFieldsComplete = true;
+         let requiredFields = $('#ProjFwd').find('.requiredField');
+        let  allFieldsComplete = true;
         requiredFields.each(function (index) {
             if (this.value.length == 0) {
                 $(this).addClass('is-invalid');
@@ -77,15 +77,15 @@
 
 
     function SaveFwdTo(CurrentPslmId) {
-        var dateValue = $("#TimeStampToProjfwd").val();
-        var currentDate = new Date();
-        var TimeStamps = '';
+        let dateValue = $("#TimeStampToProjfwd").val();
+        let currentDate = new Date();
+        let TimeStamps = '';
         if ($('#TimeStampToProjfwd').attr('type') === 'date') {
             if (!dateValue) {
                 alert('Please select a date .');
                 return;
             }
-            var currentTime = currentDate.toTimeString().split(' ')[0]; // Get current time in HH:mm:ss
+            let currentTime = currentDate.toTimeString().split(' ')[0]; // Get current time in HH:mm:ss
             TimeStamps = dateValue + ' ' + currentTime;
         } else if ($('#TimeStampToProjfwd').attr('type') === 'datetime-local') {
             if (!dateValue) {
@@ -95,7 +95,7 @@
             TimeStamps = dateValue.replace('T', ' '); // Format datetime-local to space-separated
         }
 
-        var userdata =
+        let userdata =
         {
             "ProjId": $("#spanProjectId").html(),
             "PsmId": $("#spanEditPslmId").html(),
@@ -124,7 +124,7 @@
     $("#btnAttchMultiforpsmid").click(function () {
 
         requiredFields = $('#ProjFwd').find('.requiredFieldAttch');
-        var allFieldsComplete = true;
+        let allFieldsComplete = true;
         requiredFields.each(function (index) {
             if (this.value.length == 0) {
                 $(this).addClass('is-invalid');
@@ -163,10 +163,10 @@
 
 
 function UploadFiles() {
-    var formData = new FormData();
-    var totalFiles = document.getElementById("pdfFileInput").files.length;
-    for (var i = 0; i < totalFiles; i++) {
-        var file = document.getElementById("pdfFileInput").files[i];
+    let formData = new FormData();
+    let totalFiles = document.getElementById("pdfFileInput").files.length;
+    for (let i = 0; i < totalFiles; i++) {
+        let file = document.getElementById("pdfFileInput").files[i];
         formData.append("uploadfile", file);
         formData.append("Reamarks", $("#Reamarks").val());
         formData.append("PsmId", $("#spanEditPslmId").html());
@@ -213,8 +213,8 @@ function UploadFiles() {
 
 function AttechHistory() {
 
-    var listItem = "";
-    var userdata =
+    let listItem = "";
+    let userdata =
     {
         "PslmId": $("#spanEditPslmId").html(),
 
@@ -240,7 +240,7 @@ function AttechHistory() {
                 }
 
                 else {
-                    for (var i = 0; i < response.length; i++) {
+                    for (let i = 0; i < response.length; i++) {
 
                         listItem += "<tr>";
                         listItem += "<td class='d-none'><span id='spnattId'>" + response[i].attId + "</span><span id='spnpsmId'>" + response[i].psmId + "</span></td>";
@@ -256,7 +256,7 @@ function AttechHistory() {
                     $("#DetailBody3").html(listItem);
                     $("#lblTotal").html(response.length);
 
-                    var rows;
+                    let rows;
 
                     $("body").on("click", ".cls-btnDelete", function () {
 
@@ -313,221 +313,171 @@ function Deleteattechment(AttechId) {
 }
 function GetProjectMovement(ProjectId) {
 
-    var listItem = "";
-
     $.ajax({
         url: '/Projects/GetProjectMov',
-        type: 'Post',
-        data: {
-            "Id": ProjectId
-        },
+        type: 'POST',
+        data: { "Id": ProjectId },
         success: function (response) {
-            
-            var projname = response[0].projName;
-            if (response != "null" && response != null) {
 
-                if (response == -1) {
-                    Swal.fire({
-                        text: ""
-                    });
-                }
-                else if (response == 0) {
+            if (!isValidResponse(response)) return;
 
-                    listItem += "<tr><td class='text-center' colspan=5>No Record Found</td></tr>";
-
-                    $("#DetailBody").html(listItem);
-                    $("#lblTotal").html(0);
-                }
-
-                else {
-                    var count = 1;
-                    for (var i = 0; i < response.length; i++) {
-
-                        listItem += "<tr>";
-                        listItem += "<td class='d-none'><span id='spnpsmId' class='d-none'>" + response[i].psmIds + "</span><span id='spneditstakeHolderId' class='d-none'>" + response[i].stakeHolderId + "</span>";
-                        listItem += "<span id='spnStageId' class='d-none'>" + response[i].stageId + "</span>";
-                        listItem += "<span id='spanProjId' class='d-none'>" + response[i].projId + "</span>";
-                        listItem += "<span id='spnStatusId' class='d-none'>" + response[i].statusId + "</span>";
-                        listItem += "<span id='spnActionId' class='d-none'>" + response[i].actionId + "</span>";
-                        listItem += "<span id='spnToUnitId' class='d-none'>" + response[i].toUnitId + "</span>";
-
-                        listItem += "</td>";
-                        listItem += "<td>" + count + "</td>";
-                        listItem += "<td class=''><span id='spnDate' class='d-none'>" + response[i].dateTimeOfUpdate + "</span><span id=''>" + DateFormateddMMyyyyhhmmss(response[i].dateTimeOfUpdate) + "</span></td>";
-                        listItem += "<td class='align-middle'><span id='FromUnitName'>" + response[i].fromUnitName + "</span></td>";
-                        listItem += "<td class='align-middle'><span id='ToUnitName'>" + response[i].toUnitName + "</span></td>";
-
-                        listItem += "<td class='align-middle'><span id='FromUnitName'>" + response[i].stage + "</span></td>";
-                        if (response[i].isComment == true) {
-
-                            listItem += "<td class='align-middle'><span id='FromUnitName'>" + response[i].stautsForComment + "</span></td>";
-                        } else {
-
-                            listItem += "<td class='align-middle'><span id='FromUnitName'>" + response[i].status + "</span></td>";
-                        }
-                        listItem += "<td class='align-middle'><span id='FromUnitName'>" + response[i].action + "</span></td>";
-                        if (response[i].isComment == true) {
-                            listItem += "<td class='align-middle'><span id='spnremarks'>" + "--For Comments--" + "</span></td>";
-                        } else {
-
-                            listItem += "<td class='align-middle'><span id='spnremarks'>" + response[i].remarks + "</span></td>";
-                        }
-
-
-                        if (response[i].attCnt > 0) {
-                            listItem += "<td><a href='javascript:void(0);' class='anchorDetail' data-id='" + response[i].psmIds + "'>" +
-                                "<img src='/assets/images/icons/attachemnts_clip.png' alt='Icon' class='attach-clip-icon'>" +
-                                "</a></td>";
-                        } else {
-                            listItem += "<td></td>"; // Add an empty cell when there's no attachment
-                        }
-
-                        if (response[i].isComment == true) {
-                            listItem += "<td class='align-middle'>" +
-                                "<span id='ToUnitName'>" +
-                                "<button class='btn btn-primary cls-editCmt' data-psmid='" + response[i].psmIds + "'>" +
-                                "<i class='fas fa-edit'></i> EditCmt" +
-                                "</button>" +
-                                "</span></td>";
-
-
-
-                        } else {
-
-                            listItem += "<td class='align-middle'><span id='FromUnitName'><span class='btn btn-primary cls-btnedit'>Edit</span></td>";
-                        }
-
-
-                        listItem += "</tr>";
-                        count++;
-                    }
-
-
-                    $("#ProjectMovement").html(listItem);
-
-                    var table = $('#moventdata').DataTable({
-                        lengthChange: true,
-                        retrieve: true,
-                        Destroy: true,
-
-                        searching: true,
-                        stateSave: true,
-                        "order": [[10, "asc"]],
-                        "ordering": true,
-                        "paging": true,
-                        dom: 'lBfrtip',
-                        buttons: [
-                            {
-                                extend: 'copy',
-                                exportOptions: {
-                                    columns: ':not(:first-child):not(:nth-last-child(2))' // Excludes "Ser No" (first column) and "#Att" (second last column)
-                                }
-                            },
-                            {
-                                extend: 'excel',
-                                exportOptions: {
-                                    columns: ':not(:first-child):not(:nth-last-child(2))' // Excludes "Ser No" and "#Att"
-                                }
-                            },
-                            {
-                                extend: 'csv',
-                                exportOptions: {
-                                    columns: ':not(:first-child):not(:nth-last-child(2))' // Excludes "Ser No" and "#Att"
-                                }
-                            }
-                        ],
-                        searchBuilder: {
-                            conditions: {
-                                num: {
-                                    'MultipleOf': {
-                                        conditionName: 'Multiple Of',
-                                        init: function (that, fn, preDefined = null) {
-                                            var el = $('<input/>').on('input', function () { fn(that, this) });
-
-                                            if (preDefined !== null) {
-                                                $(el).val(preDefined[0]);
-                                            }
-
-                                            return el;
-                                        },
-                                        inputValue: function (el) {
-                                            return $(el[0]).val();
-                                        },
-                                        isInputValid: function (el, that) {
-                                            return $(el[0]).val().length !== 0;
-                                        },
-                                        search: function (value, comparison) {
-                                            return value % comparison === 0;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-
-
-                    $("body").unbind().on("click", ".cls-btnedit", function () {
-                        $('#ProjFwdEdit').modal('show');
-
-                        var date = $(this).closest("tr").find("#spnDate").html()
-                        var currentTime = date.slice(0, 19);
-                      
-                        $(".ProjectsFwd").removeClass("d-none");
-                        $(".Attmenthistory").addClass("d-none");
-                        $("#spanProjectId").html($(this).closest("tr").find("#spanProjId").html());
-                        $("#spanEditPslmId").html($(this).closest("tr").find("#spnpsmId").html());
-                        $("#txtRemarksfwd").val($(this).closest("tr").find("#spnremarks").html());
-                        $("#TimeStampToProjfwd").val(currentTime);
-                        $("#SpnFwdStakeHolderId").html($(this).closest("tr").find("#spneditstakeHolderId").html());
-
-                        mMsaterfwdStage($(this).closest("tr").find("#spnStageId").html(), "ddlfwdStage", 5, 0, 1)
-                        mMsaterStage($(this).closest("tr").find("#spnStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#spnStageId").html(), 0)
-                        
-                        mMsater($(this).closest("tr").find("#spnActionId").html(), "ddlfwdAction", 11, $(this).closest("tr").find("#spnStatusId").html())
-                        mMsaterFwdTo($(this).closest("tr").find("#spnToUnitId").html(), "ddlfwdFwdTo", 8, 0, $(this).closest("tr").find("#spnToUnitId").html(), 0, "edit");
-                    });
-
-                 
-                    $(document).on("click", ".cls-editCmt", function (e) {
-                        e.preventDefault(); // Prevent default behavior (replaces return false)
-
-                        
-
-                        var psmid = $(this).data("psmid");
-
-
-                        mMsater(0, "ddlStatus", 4, 0);
-
-
-                        $('#EditComments').modal('show');
-                        var words = projname.split(" ");
-                        var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projname;
-                        var finalTitle = "Edit Comments for: " + shortProjName;
-
-                        $('#Projname').text(finalTitle);
-
-
-
-                        GetAllCommentsForEdit(psmid, 0);
-
-
-
-                    });
-                }
+            if (response == -1) {
+                Swal.fire({ text: "" });
+                return;
             }
-        }
-    }
-    );
 
+            if (response == 0) {
+                renderNoRecord();
+                return;
+            }
+
+            renderProjectMovement(response);
+            initializeMovementTable();
+            bindMovementEvents(response[0].projName);
+        }
+    });
+}
+function isValidResponse(response) {
+    return response !== "null" && response !== null;
+}
+function renderNoRecord() {
+    $("#DetailBody").html("<tr><td class='text-center' colspan=5>No Record Found</td></tr>");
+    $("#lblTotal").html(0);
+}
+
+function renderProjectMovement(response) {
+
+    let count = 1;
+
+    const html = response.map(item => {
+        const row = buildRow(item, count);
+        count++;
+        return row;
+    }).join('');
+
+    $("#ProjectMovement").html(html);
+}
+
+function buildRow(item, count) {
+
+    return `
+    <tr>
+        <td class='d-none'>
+            <span id='spnpsmId' class='d-none'>${item.psmIds}</span>
+            <span id='spneditstakeHolderId' class='d-none'>${item.stakeHolderId}</span>
+            <span id='spnStageId' class='d-none'>${item.stageId}</span>
+            <span id='spanProjId' class='d-none'>${item.projId}</span>
+            <span id='spnStatusId' class='d-none'>${item.statusId}</span>
+            <span id='spnActionId' class='d-none'>${item.actionId}</span>
+            <span id='spnToUnitId' class='d-none'>${item.toUnitId}</span>
+        </td>
+
+        <td>${count}</td>
+
+        <td>
+            <span id='spnDate' class='d-none'>${item.dateTimeOfUpdate}</span>
+            ${DateFormateddMMyyyyhhmmss(item.dateTimeOfUpdate)}
+        </td>
+
+        <td>${item.fromUnitName}</td>
+        <td>${item.toUnitName}</td>
+        <td>${item.stage}</td>
+
+        <td>${item.isComment ? item.stautsForComment : item.status}</td>
+
+        <td>${item.action}</td>
+
+        <td>
+            <span id='spnremarks'>
+                ${item.isComment ? "--For Comments--" : item.remarks}
+            </span>
+        </td>
+
+        <td>
+            ${item.attCnt > 0 ? `
+                <a href='javascript:void(0);' class='anchorDetail' data-id='${item.psmIds}'>
+                    <img src='/assets/images/icons/attachemnts_clip.png' class='attach-clip-icon'>
+                </a>` : ''}
+        </td>
+
+        <td>
+            ${item.isComment
+            ? `<button class='btn btn-primary cls-editCmt' data-psmid='${item.psmIds}'>
+                        <i class='fas fa-edit'></i> EditCmt
+                   </button>`
+            : `<span class='btn btn-primary cls-btnedit'>Edit</span>`
+        }
+        </td>
+    </tr>`;
+}
+
+function initializeMovementTable() {
+    $('#moventdata').DataTable({
+        lengthChange: true,
+        retrieve: true,
+        destroy: true,
+        searching: true,
+        stateSave: true,
+        order: [[10, "asc"]],
+        paging: true,
+        dom: 'lBfrtip',
+        buttons: ['copy', 'excel', 'csv']
+    });
+}
+
+function bindMovementEvents(projname) {
+
+    // REMOVE duplicate binding issue
+    $("body").off("click", ".cls-btnedit").on("click", ".cls-btnedit", function () {
+
+        $('#ProjFwdEdit').modal('show');
+
+        let row = $(this).closest("tr");
+
+        let date = row.find("#spnDate").html();
+        let currentTime = date.slice(0, 19);
+
+        $(".ProjectsFwd").removeClass("d-none");
+        $(".Attmenthistory").addClass("d-none");
+
+        $("#spanProjectId").html(row.find("#spanProjId").html());
+        $("#spanEditPslmId").html(row.find("#spnpsmId").html());
+        $("#txtRemarksfwd").val(row.find("#spnremarks").html());
+        $("#TimeStampToProjfwd").val(currentTime);
+        $("#SpnFwdStakeHolderId").html(row.find("#spneditstakeHolderId").html());
+
+        mMsaterfwdStage(row.find("#spnStageId").html(), "ddlfwdStage", 5, 0, 1);
+        mMsaterStage(row.find("#spnStatusId").html(), "ddlfwdSubStage", 6, row.find("#spnStageId").html(), 0);
+        mMsater(row.find("#spnActionId").html(), "ddlfwdAction", 11, row.find("#spnStatusId").html());
+        mMsaterFwdTo(row.find("#spnToUnitId").html(), "ddlfwdFwdTo", 8, 0, row.find("#spnToUnitId").html(), 0, "edit");
+    });
+
+    $(document).off("click", ".cls-editCmt").on("click", ".cls-editCmt", function (e) {
+
+        e.preventDefault();
+
+        let psmid = $(this).data("psmid");
+
+        mMsater(0, "ddlStatus", 4, 0);
+
+        $('#EditComments').modal('show');
+
+        let words = projname.split(" ");
+        let shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projname;
+
+        $('#Projname').text("Edit Comments for: " + shortProjName);
+
+        GetAllCommentsForEdit(psmid, 0);
+    });
 }
 
 $(document).ready(function () {
     
 
-    var TeamDetailPostBackURL = '/Projects/AttDetails';
+    let TeamDetailPostBackURL = '/Projects/AttDetails';
     $(document).on('click', '.anchorDetail', function () {
-        var $buttonClicked = $(this);
-        var id = $buttonClicked.attr('data-id');
+        let $buttonClicked = $(this);
+        let id = $buttonClicked.attr('data-id');
 
         if (!id) {
             alert("No PsmId found.");
@@ -556,18 +506,18 @@ $(document).ready(function () {
 });
 
 
-var TeamDetailPostBackURL = '/Projects/AttDetails';
+let TeamDetailPostBackURL = '/Projects/AttDetails';
 $(document).on('click', '.anchorDetail', function () {
 
 
-    var $buttonClicked = $(this);
-    var id = $buttonClicked.attr('data-id');
+    let $buttonClicked = $(this);
+    let id = $buttonClicked.attr('data-id');
 
     if (!id) {
         alert("No PsmId found.");
         return;
     }
-    var options = { "backdrop": "static", keyboard: true };
+    let options = { "backdrop": "static", keyboard: true };
     $.ajax({
         type: "GET",
         url: TeamDetailPostBackURL,
@@ -589,21 +539,27 @@ $(document).on('click', '.anchorDetail', function () {
 
 
 function GetAllCommentsForEdit(PsmId, projId) {
+    let user_ids =
+    {
+        "PsmId": PsmId,
+
+        "ProjId": projId
+    }
+
+    let encrypted_ids = encryptData(user_ids)
     $.ajax({
         type: "POST",
         url: '/Projects/GetAllCommentBypsmId_UnitId',
         data: {
-            "PsmId": PsmId,
-            "stakeholderId": 1,
-            "ProjId": projId
+            encrypted_ids: encrypted_ids
         },
         success: function (data) {
 
-            var commentContainer = '';
-            var userDetails = '';
+            let commentContainer = '';
+            let userDetails = '';
 
             if (data != null) {
-                for (var i = 0; i < data.length; i++) {
+                for (let i = 0; i < data.length; i++) {
 
                     if (data[i].userDetails == null)
                         userDetails = '';
@@ -666,7 +622,7 @@ function GetAllCommentsForEdit(PsmId, projId) {
 
 
 $(document).on("click", ".editComments", function () {
-    var stkcommentid = $(this).data("stkcommentid"); // get the id from button
+    let stkcommentid = $(this).data("stkcommentid"); // get the id from button
 
     $.ajax({
         url: '/Projects/GetStkCommentBystkId',
@@ -689,7 +645,7 @@ $(document).on("click", ".editComments", function () {
 });
 $(document).on("click", "#btnCommentUpdate", function () {
 
-    var stkcomment = {
+    let stkcomment = {
         comments: $("#edtCmts").val(),
         ddlstatus: $("#ddlStatus").val(),
         CommentDateFwd: $("#CommentDateFwd").val(),

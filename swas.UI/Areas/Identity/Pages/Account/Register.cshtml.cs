@@ -23,6 +23,7 @@ using swas.BAL;
 using System.Text;
 using System.Security.Cryptography;
 using Org.BouncyCastle.Utilities;
+using System.Configuration;
 
 
 namespace swas.Areas.Identity.Pages.Account
@@ -42,6 +43,7 @@ namespace swas.Areas.Identity.Pages.Account
         private readonly IUnitRepository _unitRepository;
         private readonly IDdlRepository _DdlRepostory;
         private readonly IUnitStatusMapping _unitStatusMapping;
+        private readonly IConfiguration _configuration;
 
         public RegisterModel(
             Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager,
@@ -51,7 +53,7 @@ namespace swas.Areas.Identity.Pages.Account
             ApplicationDbContext context,
              Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager,
             IHttpContextAccessor httpContextAccessor,
-            IUnitRepository unitRepository, IDdlRepository ddlRepository, IUnitStatusMapping unitStatusMapping)
+            IUnitRepository unitRepository, IDdlRepository ddlRepository, IUnitStatusMapping unitStatusMapping, IConfiguration configuration)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -64,6 +66,7 @@ namespace swas.Areas.Identity.Pages.Account
             _unitRepository = unitRepository;
             _DdlRepostory = ddlRepository;
             _unitStatusMapping = unitStatusMapping;
+            _configuration = configuration;
         }
 
         [BindProperty]
@@ -121,7 +124,7 @@ namespace swas.Areas.Identity.Pages.Account
 
             [RegularExpression(@"^[a-zA-Z0-9\s]*$", ErrorMessage = "Appointment should contain only letters and numbers.")]
             [Display(Name = "Appointment")]
-            public string? appointment { get; set; }
+            public string appointment { get; set; }
 
 
             [Required(ErrorMessage = "Rank is required.")]
@@ -131,7 +134,7 @@ namespace swas.Areas.Identity.Pages.Account
 
 
             [Display(Name = "Tele No (Army)")]
-            public string? Tele_Army { get; set; }
+            public string Tele_Army { get; set; }
 
             [NotMapped]
             [Display(Name = "Existing Regn Id of the unit(If already Regd)")]
@@ -278,6 +281,9 @@ namespace swas.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+
+            // ✅ Model validation
+          
             TempData["Tabshift"] = 0;
             ViewData["unitdtl"] = _context.tbl_mUnitBranch.ToList();
             ViewData["Command"] = _context.mCommand.ToList();
@@ -288,17 +294,25 @@ namespace swas.Areas.Identity.Pages.Account
                 .Select(a => a)
                 .ToList();
 
+            if (!ModelState.IsValid)
+            {
+                TempData["FailureMessage"] = "Invalid input! Please check fields (max 20 chars).";
+                return Page();
+            }
             returnUrl ??= Url.Content("~/Identity/Account/Register");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
+            var userName = _configuration["CommonUserNamePass:userName"];
+          
+            var pass = _configuration["CommonUserNamePass:Pass"];
             if (Input.RoleName == null)
             {
-                Input.RoleName = "1789a675-9951-42a7-b064-8d7da156521f";
-                Input.Password = "Dte@123";
+                Input.RoleName = userName;
+                Input.Password = pass;
             }
             else
             {
-                Input.Password = "Dte@123";
+                Input.Password = pass;
             }
 
             var role = await _roleManager.FindByIdAsync(Input.RoleName);

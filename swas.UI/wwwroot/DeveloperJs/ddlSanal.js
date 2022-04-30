@@ -7,13 +7,13 @@ function populateddlStakeHolder(paramValue) {
         method: 'GET',
         success: function (data) {
             const odc = document.getElementById('ddlStakeHolderId');
-            var option = document.createElement("option");
+            let option = document.createElement("option");
             option.value = "-1";
             option.text = "---- Select ----";
             odc.appendChild(option);
-            for (var i = 0; i < data.length; i++) {
-                var item = data[i];
-                var opt1 = document.createElement("option");
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
+                let opt1 = document.createElement("option");
                 opt1.value = item.stakeHolderId;
                 opt1.text = item.stakeHolder;
                 odc.appendChild(opt1);
@@ -30,13 +30,13 @@ function populateddlActions(paramValue) {
         method: 'GET',
         success: function (data) {
             const odc = document.getElementById('ddlActions');
-            var option = document.createElement("option");
+            let option = document.createElement("option");
             option.value = "-1";
             option.text = "---- Select ----";
             odc.appendChild(option);
-            for (var i = 0; i < data.length; i++) {
-                var item = data[i];
-                var opt1 = document.createElement("option");
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
+                let opt1 = document.createElement("option");
                 opt1.value = item.actionsId;
                 opt1.text = item.actions;
                 odc.appendChild(opt1);
@@ -57,14 +57,14 @@ function ddlActionsNew(paramValue) {
         method: 'GET',
         success: function (data) {
             const odc = document.getElementById('ddlActionsID');
-            var option = document.createElement("option");
+            let option = document.createElement("option");
             option.value = "-1";
             option.text = "---- Select ----";
             odc.appendChild(option);
            
-            for (var i = 0; i < data.length; i++) {
-                var item = data[i];
-                var opt1 = document.createElement("option");
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
+                let opt1 = document.createElement("option");
                 opt1.value = item.actionsId;
                 opt1.text = item.actions;
                 odc.appendChild(opt1);
@@ -87,13 +87,13 @@ function populateddlUnitedit(paramValue) {
         method: 'GET',
         success: function (data) {
             const odc = document.getElementById('ddlUnitId');
-            var option = document.createElement("option");
+            let option = document.createElement("option");
             option.value = "-1";
             option.text = "---- Select ----";
             odc.appendChild(option);
-            for (var i = 0; i < data.length; i++) {
-                var item = data[i];
-                var opt1 = document.createElement("option");
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
+                let opt1 = document.createElement("option");
                 opt1.value = item.unitid;
                 opt1.text = item.unitName;
                 odc.appendChild(opt1);
@@ -116,7 +116,7 @@ function populateddlUnit(paramValue) {
         method: 'GET',
         success: function (data) {
             const odc = document.getElementById('ddlUnitId');
-            var option = document.createElement("option");
+            let option = document.createElement("option");
             option.value = "-1";
             option.text = "---- Select ----";
 
@@ -124,9 +124,9 @@ function populateddlUnit(paramValue) {
 
             odc.appendChild(option);
             }
-            for (var i = 0; i < data.length; i++) {
-                var item = data[i];
-                var opt1 = document.createElement("option");
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
+                let opt1 = document.createElement("option");
                 opt1.value = item.unitid;
                 opt1.text = item.unitName;
                 odc.appendChild(opt1);
@@ -152,14 +152,14 @@ function populatfwdUnits(paramValue) {
         method: 'GET',
         success: function (data) {
             const odc = document.getElementById('ddlUnitId');
-            var option = document.createElement("option");
+            let option = document.createElement("option");
             option.value = "-1";
             option.text = "---- Select ----";
             odc.appendChild(option);
           
-            for (var i = 0; i < data.length; i++) {
-                var item = data[i];
-                var opt1 = document.createElement("option");
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
+                let opt1 = document.createElement("option");
                 opt1.value = item.unitid;
                 opt1.text = item.unitName;
                 odc.appendChild(opt1);
@@ -183,14 +183,14 @@ function XpopulatfwdUnits(paramValue) {
         success: function (data) {
            
             const odc = document.getElementById('XddlUnitIds');
-            var option = document.createElement("option");
+            let option = document.createElement("option");
             option.value = "-1";
             option.text = "---- Select ----";
             odc.appendChild(option);
 
-            for (var i = 0; i < data.length; i++) {
-                var item = data[i];
-                var opt1 = document.createElement("option");
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
+                let opt1 = document.createElement("option");
                 opt1.value = item.unitid;
                 opt1.text = item.unitName;
                 odc.appendChild(opt1);
@@ -213,12 +213,12 @@ function populateddlAppType(paramValue) {
         method: 'GET',
         success: function (data) {
             const odc = document.getElementById('ddlAppType');
-            var option = document.createElement("option");
+            let option = document.createElement("option");
             option.value = "-1";
             option.text = "---- Select ----";
             odc.appendChild(option);
-            for (var i = 0; i < data.length; i++) {
-                var item = data[i];
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
                
                 const opt1 = document.createElement('option')
                 opt1.value = item.apptype;
@@ -243,15 +243,15 @@ function populateddlAppTypeEdit(paramValue) {
         method: 'GET',
         success: function (data) {
             const odc = document.getElementById('ddlAppTypeEdit');
-            var optionK = document.createElement("option");
+            let optionK = document.createElement("option");
             optionK.value = "-1";
             optionK.text = "---- Select ----";
             odc.appendChild(optionK);
            
-            for (var i = 0; i < data.length; i++) {
-                var item = data[i];
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
                 
-                var opt1 = document.createElement("option");
+                let opt1 = document.createElement("option");
                 opt1.value = item.apptype;
                 opt1.text = item.appDesc;
                 odc.appendChild(opt1);
@@ -274,15 +274,15 @@ function populateddlfwdUnit(paramValue) {
         method: 'GET',
         success: function (data) {
             const odc = document.getElementById('ddlUnitId');
-            var optionG = document.createElement("option");
+            let optionG = document.createElement("option");
             optionG.value = "-1";
             optionG.text = "---- Select ----";
             odc.appendChild(optionG);
            
-            for (var i = 0; i < data.length; i++) {
-                var item = data[i];
-                var itemValues = Object.values(item);
-                var option = document.createElement("option");
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
+                let itemValues = Object.values(item);
+                let option = document.createElement("option");
                 option.value = item.unitid;
                 option.text = item.unitName;
                 odc.appendChild(option);
@@ -307,15 +307,15 @@ function popRestddlfwdUnit(projIds) {
         method: 'GET',
         success: function (data) {
             const odc = document.getElementById('ddlUnitId');
-            var optionG = document.createElement("option");
+            let optionG = document.createElement("option");
             optionG.value = "";
             optionG.text = "---- Select ----";
             odc.appendChild(optionG);
 
-            for (var i = 0; i < data.length; i++) {
-                var item = data[i];
-                var itemValues = Object.values(item);
-                var option = document.createElement("option");
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
+                let itemValues = Object.values(item);
+                let option = document.createElement("option");
                 option.value = item.unitid;
                 option.text = item.unitName;
                 odc.appendChild(option);
@@ -338,15 +338,15 @@ function populateddlStatus(paramValue) {
         method: 'GET',
         success: function (data) {
             const odc = document.getElementById('ddlStatusId');
-            var optionF = document.createElement("option");
+            let optionF = document.createElement("option");
             optionF.value = "-1";
             optionF.text = "---- Select ----";
             odc.appendChild(optionF);
            
-            for (var i = 0; i < data.length; i++) {
-                var item = data[i];
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
                
-                var option = document.createElement("option");
+                let option = document.createElement("option");
                 option.value = item.StatusId;
                 option.text = item.Status;
                 odc.appendChild(option);
@@ -372,15 +372,15 @@ function populateStages(paramValue, laststagesId, projIds) {
             success: function (data) {
 
                 const odc = document.getElementById('ddlStages');
-                var optionS = document.createElement("option");
+                let optionS = document.createElement("option");
                 optionS.value = "";
                 optionS.text = "---- Select ----";
                 odc.appendChild(optionS);
 
-                for (var i = 0; i < data.length; i++) {
-                    var item = data[i];
+                for (let i = 0; i < data.length; i++) {
+                    let item = data[i];
 
-                    var option = document.createElement("option");
+                    let option = document.createElement("option");
                     option.value = item.stagesId;
                     option.text = item.stages;
                     odc.appendChild(option);
@@ -410,15 +410,15 @@ function getStatusByStage(stageIds, currentstakeholderid)
         success: function (data) {
 
             const odc = document.getElementById('ddlStatus');
-            var optionX = document.createElement("option");
+            let optionX = document.createElement("option");
             optionX.value = "";
             optionX.text = "---- Select ----";
             odc.appendChild(optionX);
 
-            for (var i = 0; i < data.length; i++) {
-                var item = data[i];
-                var itemValues = Object.values(item);
-                var option = document.createElement("option");
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
+                let itemValues = Object.values(item);
+                let option = document.createElement("option");
                 option.value = item.statusId;
                 option.text = item.status;
                 odc.appendChild(option);
@@ -445,15 +445,15 @@ function getActionsByStatus(selectedStatusId) {
         success: function (data) {
 
             const odc = document.getElementById('ddlActionsID');
-            var optionA = document.createElement("option");
+            let optionA = document.createElement("option");
             optionA.value = "-1";
             optionA.text = "---- Select ----";
             odc.appendChild(optionA);
 
-            for (var i = 0; i < data.length; i++) {
-                var item = data[i];
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
                
-                var option = document.createElement("option");
+                let option = document.createElement("option");
                 option.value = item.actionsId;
                 option.text = item.actions;
                 odc.appendChild(option);
@@ -482,15 +482,15 @@ function EditActionsByStatus(selectedStatusId, selectedStageId, projIds) {
         success: function (data) {
 
             const odc = document.getElementById('ddlActions');
-            var optionA = document.createElement("option");
+            let optionA = document.createElement("option");
             optionA.value = "";
             optionA.text = "---- Select ----";
             odc.appendChild(optionA);
 
-            for (var i = 0; i < data.length; i++) {
-                var item = data[i];
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
 
-                var option = document.createElement("option");
+                let option = document.createElement("option");
                 option.value = item.actionsId;
                 option.text = item.actions;
                 odc.appendChild(option);
@@ -515,15 +515,15 @@ function GActionsByStatusNew(selectedStatusId) {
         success: function (data) {
 
             const odc = document.getElementById('ddlActions');
-            var optionB = document.createElement("option");
+            let optionB = document.createElement("option");
             optionB.value = "-1";
             optionB.text = "---- Select ----";
             odc.appendChild(optionB);
 
-            for (var i = 0; i < data.length; i++) {
-                var item = data[i];
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
                 
-                var option = document.createElement("option");
+                let option = document.createElement("option");
                 option.value = item.actionsId;
                 option.text = item.actions;
                 odc.appendChild(option);

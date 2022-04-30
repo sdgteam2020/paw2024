@@ -3,11 +3,11 @@
     initializeDataTable('#SoftwareType7');
     initializeDataTable('#mapunit');
 
-    var UnitId = $("#Spnmodalunitid").html();
+    let UnitId = $("#Spnmodalunitid").html();
 
     $(document).on('click', '.btn-editmapping', function () {
-        var closestRow = $(this).closest("tr");
-        var hiddenData = closestRow.find(".hiddenData");
+        let closestRow = $(this).closest("tr");
+        let hiddenData = closestRow.find(".hiddenData");
         $('#SpnmodalStageid').val(hiddenData.find(".spanMappingStageId").text());
         $('#spanmodalStatusActionsMappingId').text(hiddenData.find(".spanStatusActionsMappingId").text());
         mMsater(hiddenData.find(".spanMappingStages").text(), "ddlStage", 5, 0);
@@ -23,8 +23,8 @@
             data: { StageId: StageId, StatusId: StatusId },
             dataType: "json",
             success: function (data) {
-                var tableRows = '';
-                for (var i = 0; i < data.length; i++) {
+                let tableRows = '';
+                for (let i = 0; i < data.length; i++) {
                     tableRows += '<tr>';
                     tableRows += '<td>' + data[i].stagesName + '</td>';
                     tableRows += '<td>' + data[i].subStagesName + '</td>';
@@ -55,8 +55,8 @@
         $("#SpnmodalStageid").html($(this).closest("tr").find("#CurrentStageId").html());
         $("#SpnmodalStatusId").html($(this).closest("tr").find("#CurrentStatusId").html());
 
-        var StageId = $("#SpnmodalStageid").html();
-        var StatusId = $("#SpnmodalStatusId").html();
+        let StageId = $("#SpnmodalStageid").html();
+        let StatusId = $("#SpnmodalStatusId").html();
 
         mMsater(0, "ddlStage", 5, 0);
 
@@ -77,13 +77,13 @@
     $('#ddlSubStageedit').select2();
 
     $('#btnsave').click(function () {
-        var StageId = $('#SpnmodalStageid').html();
-        var StagesId = $('#ddlStage').val();
-        var SubStagesId = $('#ddlSubStage1').val();
-        var ActionsId = $('#ddlAction1').val();
-        var StatusActionsMappingId = $("#spanmodalStatusActionsMappingId").html();
+        let StageId = $('#SpnmodalStageid').html();
+        let StagesId = $('#ddlStage').val();
+        let SubStagesId = $('#ddlSubStage1').val();
+        let ActionsId = $('#ddlAction1').val();
+        let StatusActionsMappingId = $("#spanmodalStatusActionsMappingId").html();
 
-        var data = {
+        let data = {
             StatusActionsMappingId: StatusActionsMappingId,
             StageId: StageId,
             StagesId: StagesId,
@@ -111,8 +111,8 @@
                         showConfirmButton: true
                     });
 
-                    var StageId = $('#ddlStage').val();
-                    var StatusId = $('#ddlAction1').val();
+                    let StageId = $('#ddlStage').val();
+                    let StatusId = $('#ddlAction1').val();
                     fetchAndUpdateTable(StageId, StatusId); // Refresh table data
                 }
             },
@@ -123,11 +123,11 @@
     });
 
     $(document).on('click', '.btn-deletemapping', function () {
-        var closestRow = $(this).closest("tr");
-        var hiddenData = closestRow.find(".hiddenData");
-        var StatusActionsMappingId = hiddenData.find(".spanStatusActionsMappingId").text();
+        let closestRow = $(this).closest("tr");
+        let hiddenData = closestRow.find(".hiddenData");
+        let StatusActionsMappingId = hiddenData.find(".spanStatusActionsMappingId").text();
 
-        var data = {
+        let data = {
             StatusActionsMappingId: StatusActionsMappingId
         };
 
@@ -144,8 +144,8 @@
                         showConfirmButton: true
                     });
 
-                    var StageId = $('#SpnmodalStageid').html();
-                    var StatusId = $('#SpnmodalStatusId').html();
+                    let StageId = $('#SpnmodalStageid').html();
+                    let StatusId = $('#SpnmodalStatusId').html();
                     fetchAndUpdateTable(StageId, StatusId); // Refresh table data
                 } else {
                     Swal.fire({
@@ -163,13 +163,13 @@
     });
     $(document).on('click', '.btn-editmapping', function () {
 
-        var closestRow = $(this).closest("tr");
-        var hiddenData = closestRow.find(".hiddenData");
+        let closestRow = $(this).closest("tr");
+        let hiddenData = closestRow.find(".hiddenData");
 
-        var stageId = hiddenData.find(".spanMappingStageId").text();
-        var subStageId = hiddenData.find(".spanMappingSubStages").text();
-        var actionId = hiddenData.find(".spanMappingActions").text();
-        var mappingId = hiddenData.find(".spanStatusActionsMappingId").text();
+        let stageId = hiddenData.find(".spanMappingStageId").text();
+        let subStageId = hiddenData.find(".spanMappingSubStages").text();
+        let actionId = hiddenData.find(".spanMappingActions").text();
+        let mappingId = hiddenData.find(".spanStatusActionsMappingId").text();
 
         $('#SpnmodalStageid').text(stageId);
         $('#spanmodalStatusActionsMappingId').text(mappingId);
@@ -183,7 +183,7 @@
     $('#ddlAction1').select2();
     $('#btnsave').on('click', function () {
 
-        var data = {
+        let data = {
             StatusActionsMappingId: $('#spanmodalStatusActionsMappingId').text(),
             StageId: $('#SpnmodalStageid').text(),
             StagesId: $('#ddlStage').val(),
@@ -211,8 +211,8 @@
                         confirmButtonText: "OK"
                     });
 
-                    var StageId = $('#SpnmodalStageid').text();
-                    var StatusId = $('#SpnmodalStatusId').text();
+                    let StageId = $('#SpnmodalStageid').text();
+                    let StatusId = $('#SpnmodalStatusId').text();
 
                     fetchAndUpdateTable(StageId, StatusId);
                 }
@@ -228,7 +228,7 @@
     });
     $(document).on('click', '.btn-deletemapping', function () {
 
-        var mappingId = $(this)
+        let mappingId = $(this)
             .closest("tr")
             .find(".spanStatusActionsMappingId")
             .text();
@@ -247,8 +247,8 @@
                         confirmButtonText: "OK"
                     });
 
-                    var StageId = $('#SpnmodalStageid').text();
-                    var StatusId = $('#SpnmodalStatusId').text();
+                    let StageId = $('#SpnmodalStageid').text();
+                    let StatusId = $('#SpnmodalStatusId').text();
 
                     fetchAndUpdateTable(StageId, StatusId);
                 } else {
@@ -277,8 +277,8 @@
 });
 document.addEventListener('DOMContentLoaded', function () {
 
-    var selectElement = document.getElementById('ddlSubStage');
-    var hiddenInput = document.getElementById('hiddenFwdoffrs');
+    let selectElement = document.getElementById('ddlSubStage');
+    let hiddenInput = document.getElementById('hiddenFwdoffrs');
 
     if (selectElement && hiddenInput) {
         hiddenInput.value = selectElement.value;

@@ -6,9 +6,9 @@
     initializeDataTable('#SoftwareType');
     sessionStorage.setItem("spntabType", $("#spntabType").html());
 
-    GetAllComments2();
+    //GetAllComments2();
     getProjWiseStatus();
-    GetAllComments1();
+    //GetAllComments1();
 
     $("#btnAnalytics").click(function () {
        
@@ -43,7 +43,7 @@ $('#uploadfile').on('change', function () {
 });
 
 function getProjWiseStatus() {
-    var projectId = $(".ProjectcommentprojId").html();
+    let projectId = $(".ProjectcommentprojId").html();
     if (projectId != null) {
 
     ProjectWiseStatusByProjid(projectId);
@@ -51,19 +51,26 @@ function getProjWiseStatus() {
 }
 
 function GetAllComments2() {
+    let user_ids =
+    {
+        "PsmId": 0,
+
+        "ProjId": $(".ProjectcommentprojId").html()
+    }
+   
+    let encrypted_ids = encryptData(user_ids)
     $.ajax({
         type: "POST",
         url: '/Projects/GetAllCommentBypsmId_UnitId',
         data: {
-            "PsmId": 0,
-            "stakeholderId": 1,
-            "ProjId": $(".ProjectcommentprojId").html()
+            encrypted_ids: encrypted_ids
         },
+ 
         success: function (data) {
-            var projectName = data?.[0]?.projectName || "";
-            var adminap = data?.[0]?.adminApprovalStatus || "";
+            let projectName = data?.[0]?.projectName || "";
+            let adminap = data?.[0]?.adminApprovalStatus || "";
 
-            var tableHTML = '<table class="table custom-table">';
+            let tableHTML = '<table class="table custom-table">';
             tableHTML += '<thead>';
             tableHTML += '<tr>';
             tableHTML += '<th class="table-header">Ser No</th>';
@@ -78,14 +85,14 @@ function GetAllComments2() {
             tableHTML += '<tbody>';
 
             if (data != null) {
-                for (var i = 0; i < data.length; i++) {
+                for (let i = 0; i < data.length; i++) {
                     tableHTML += '<tr>';
                     tableHTML += '<td class="table-cell">' + (i + 1) + '</td>';
                     tableHTML += '<td class="table-cell">' + data[i].stakeholder + ' (' + data[i].userDetails + ')</td>';
                     tableHTML += '<td class="table-cell">' + DateFormateddMMyyyyhhmmss(data[i].date) + '</td>';
                     tableHTML += '<td class="table-cell">' + data[i].comments + '</td>';
 
-                    var statusClass = data[i].status === "Accepted" ? "badge-success" :
+                    let statusClass = data[i].status === "Accepted" ? "badge-success" :
                         (data[i].status === "Obsn" ? "badge-warning" :
                             (data[i].status === "Info" ? "badge-info" : "badge-danger"));
                     tableHTML += '<td class="table-cell"><span class="badge ' + statusClass + '">' + data[i].status + '</span></td>';
@@ -115,19 +122,19 @@ function GetAllComments2() {
                         $(this).attr("addminaproval", adminap);
 
                        
-                        var approval = $(this).attr("addminaproval");
+                        let approval = $(this).attr("addminaproval");
 
                         fetchServerDate().then(function (S) {
                             
-                            var projId = $(".ProjectcommentprojId").html().trim();
+                            let projId = $(".ProjectcommentprojId").html().trim();
                             $("#ProjectcommentForStackHolderprojId").html($(".ProjectcommentprojId").html())
                             $("#ProjectcommentForStackHolderPsmId").html($("#IsCommentPsmiId").html())
                             mMsater(0, "ddlStatus", 4, 0)
                             $("#ProjCommentModal").modal('show');
                             GetAllComments($("#IsCommentPsmiId").html(), $(".ProjectcommentprojId").html());
-                            var words = projectName.split(" ");
-                            var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projectName;
-                            var finalTitle = "Project Name: " + shortProjName;
+                            let words = projectName.split(" ");
+                            let shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projectName;
+                            let finalTitle = "Project Name: " + shortProjName;
                             $('#addComment').text(finalTitle);
 
 
@@ -153,24 +160,29 @@ function GetAllComments2() {
            
         },
         error: function () {
-            alert('Error fetching comments.');
+            alert('Error fetching comments.4');
         }
     });
 }
 
 function GetAllComments1() {
+    let user_ids =
+    {
+        "PsmId": 0,
 
+        "ProjId": $(".ProjectcommentprojId").html()
+    }
+
+    let encrypted_ids = encryptData(user_ids)
     $.ajax({
         type: "POST",
         url: '/Projects/GetAllCommentBypsmId_UnitId',
         data: {
-            "PsmId": 0,
-            "stakeholderId": 1,
-            "ProjId": $(".ProjectcommentprojId").html()
+            encrypted_ids: encrypted_ids
         },
         success: function (data) {
 
-            var tableHTML = '<table class="comments-table">';
+            let tableHTML = '<table class="comments-table">';
             tableHTML += '<thead>';
             tableHTML += '<tr>';
             tableHTML += '<th class="ser-no">Ser No</th>';
@@ -183,10 +195,10 @@ function GetAllComments1() {
             tableHTML += '<tbody>';
 
             if (data != null) {
-                for (var i = 0; i < data.length; i++) {
+                for (let i = 0; i < data.length; i++) {
 
-                    var date = new Date(data[i].date);
-                    var formattedDate =
+                    let date = new Date(data[i].date);
+                    let formattedDate =
                         ("0" + date.getDate()).slice(-2) + '-' +
                         ("0" + (date.getMonth() + 1)).slice(-2) + '-' +
                         date.getFullYear() + ' ' +
@@ -221,7 +233,7 @@ function GetAllComments1() {
             });
         },
         error: function () {
-            alert('Error fetching comments.');
+            alert('Error fetching comments.5');
         }
     });
 }
@@ -230,14 +242,14 @@ function GetAllComments1() {
 
 $(document).ready(function () {
 
-    var TeamDetailPostBackURL = '/Projects/AttDetails';
+    let TeamDetailPostBackURL = '/Projects/AttDetails';
     $(function () {
         
         $(".anchorDetail").on("click", function () {
           
-            var $buttonClicked = $(this);
-            var id = $buttonClicked.attr('data-id');
-            var options = { "backdrop": "static", keyboard: true };
+            let $buttonClicked = $(this);
+            let id = $buttonClicked.attr('data-id');
+            let options = { "backdrop": "static", keyboard: true };
             $.ajax({
                 type: "GET",
                 url: TeamDetailPostBackURL,
@@ -419,6 +431,7 @@ $('.PrintDiv').on('click', function () {
 })
 
 function PrintDiv() {
+  
     const projectName =
         document.getElementById('projectNameCell')?.innerText.trim() || 'Print';
 
@@ -456,7 +469,7 @@ function PrintDiv() {
 }
 
 
-    var projectid = $(".ProjectcommentprojId").html();
+    //let projectid = $(".ProjectcommentprojId").html();
   
 
             

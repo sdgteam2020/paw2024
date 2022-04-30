@@ -2,11 +2,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using swas.BAL.DTO;
 using swas.BAL.Helpers;
 using swas.BAL.Interfaces;
 using swas.DAL.Models;
+using System.Configuration;
 using System.Security.Claims;
+using System.Security.Cryptography;
 
 namespace swas.UI.Controllers
 {
@@ -17,12 +20,13 @@ namespace swas.UI.Controllers
         private readonly ITrnChatMsgRepository _trnChatMsg;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IConfiguration _configuration;
         private readonly ILogger<ChatController> _logger;
         public ChatController(
             UserManager<ApplicationUser> userManager,
             IUserMapChatRepository userMapChatRepository,
             IHttpContextAccessor httpContextAccessor,
-            ITrnChatMsgRepository trnChatMsg,
+            ITrnChatMsgRepository trnChatMsg, IConfiguration configuration,
             ILogger<ChatController> logger
             )
         {
@@ -32,6 +36,7 @@ namespace swas.UI.Controllers
             _httpContextAccessor = httpContextAccessor;
             _trnChatMsg = trnChatMsg;
             _logger = logger;
+            _configuration = configuration;
         }
         public async Task<IActionResult> Index()
         {
@@ -113,12 +118,67 @@ namespace swas.UI.Controllers
                 return Json(nmum.Exception);
             }
         }
-        public async Task<IActionResult> SaveChat(TrnChatMsg trnChatMsg)
+        public async Task<IActionResult> SaveChat(
+     TrnChatMsg trnChatMsg,
+     [FromForm] string encrypted_data)
         {
-            trnChatMsg.ChatId = 0;
-            trnChatMsg.CreatedOn = DateTime.Now;
-            trnChatMsg.IsRead = false;
-            return Json(await _trnChatMsg.AddWithReturn(trnChatMsg));
+            if (string.IsNullOrWhiteSpace(encrypted_data))
+                return BadRequest(new { message = "Encrypted data is required." });
+
+            var cryptoKey = _configuration["CryptoSettings:LoginKey"];
+
+            if (string.IsNullOrWhiteSpace(cryptoKey))
+                return StatusCode(500, new { message = "Encryption key not configured." });
+
+            try
+            {
+                // 🔐 Decrypt
+                var decryptedJson = CryptoHelper.SafeDecrypt(encrypted_data, cryptoKey);
+
+                if (string.IsNullOrWhiteSpace(decryptedJson))
+                    return BadRequest(new { message = "Invalid encrypted payload." });
+
+                var decryptedModel = JsonConvert.DeserializeObject<TrnChatMsg>(decryptedJson);
+
+                if (decryptedModel == null)
+                    return BadRequest(new { message = "Failed to parse decrypted data." });
+
+                // ✅ Validate required fields
+                if (string.IsNullOrWhiteSpace(decryptedModel.Msg) || decryptedModel.UserMapChatId <= 0)
+                    return BadRequest(new { message = "Invalid chat data." });
+
+                // ✅ Map only allowed fields (avoid overposting)
+                var chat = new TrnChatMsg
+                {
+                    ChatId = 0,
+                    CreatedOn = DateTime.UtcNow,
+                    IsRead = false,
+                    Msg = decryptedModel.Msg.Trim(),
+                    UserMapChatId = decryptedModel.UserMapChatId
+                };
+
+                var result = await _trnChatMsg.AddWithReturn(chat);
+
+                return Ok(new { success = true, data = result });
+            }
+            catch (JsonException ex)
+            {
+                // JSON parsing error
+                // TODO: log ex
+                return BadRequest(new { message = "Invalid data format." });
+            }
+            catch (CryptographicException ex)
+            {
+                // Decryption error
+                // TODO: log ex
+                return BadRequest(new { message = "Decryption failed." });
+            }
+            catch (Exception ex)
+            {
+                // Unexpected error
+                // TODO: log ex properly using ILogger
+                return StatusCode(500, new { message = "Something went wrong." });
+            }
         }
         public async Task<IActionResult> GetUserMapChat(int UserMapChatId, string FromUserId)
         {

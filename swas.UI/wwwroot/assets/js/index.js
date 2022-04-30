@@ -89,7 +89,7 @@ var options = {
 
   var chart = new ApexCharts(document.querySelector("#chart1"), options);
   chart.render();
-var options = {
+const options = {
     series: [{
         name: "Total Orders",
         data: [0, 160, 671, 414, 555, 0]
@@ -177,9 +177,9 @@ var options = {
     }
   };
 
-  var chart = new ApexCharts(document.querySelector("#chart2"), options);
+  const chart = new ApexCharts(document.querySelector("#chart2"), options);
   chart.render();
-var options = {
+const options = {
     series: [{
         name: "Total Orders",
         data: [0, 160, 671, 414, 555, 0]
@@ -267,9 +267,9 @@ var options = {
     }
   };
 
-  var chart = new ApexCharts(document.querySelector("#chart3"), options);
+  const chart = new ApexCharts(document.querySelector("#chart3"), options);
   chart.render();
-var options = {
+const options = {
     series: [{
         name: "Total Orders",
         data: [0, 160, 671, 414, 555, 0]
@@ -357,10 +357,10 @@ var options = {
     }
   };
 
-  var chart = new ApexCharts(document.querySelector("#chart4"), options);
+  const chart = new ApexCharts(document.querySelector("#chart4"), options);
   chart.render();
-    var ctx = document.getElementById('chart5').getContext('2d');
-    var myChart = new Chart(ctx, {
+    const ctx = document.getElementById('chart5').getContext('2d');
+    const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
@@ -425,8 +425,8 @@ var options = {
               }
         }
     });
-      var ctx = document.getElementById('chart6').getContext('2d');
-      var myChart = new Chart(ctx, {
+      const ctx = document.getElementById('chart6').getContext('2d');
+      const myChart = new Chart(ctx, {
           type: 'pie',
           data: {
               labels: ['Clothing', 'Electronics', 'Furniture'],
@@ -451,21 +451,21 @@ var options = {
              
           }
       });
-var ctx = document.getElementById('chart7').getContext('2d');
+const ctx = document.getElementById('chart7').getContext('2d');
 
-var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
+const gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
     gradientStroke1.addColorStop(0, '#005bea');
     gradientStroke1.addColorStop(1, '#00c6fb');
 
-var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
+const gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
     gradientStroke2.addColorStop(0, '#ff6a00');  
     gradientStroke2.addColorStop(1, '#ee0979'); 
 
-var gradientStroke3 = ctx.createLinearGradient(0, 0, 0, 300);
+const gradientStroke3 = ctx.createLinearGradient(0, 0, 0, 300);
     gradientStroke3.addColorStop(0, '#17ad37');  
     gradientStroke3.addColorStop(1, '#98ec2d'); 
 
-var myChart = new Chart(ctx, {
+const myChart = new Chart(ctx, {
     type: 'pie',
     data: {
         labels: ['Current Customers', 'New Customers', 'Retargeted Customers'],
@@ -490,8 +490,8 @@ var myChart = new Chart(ctx, {
         
     }
 });
-    var ctx = document.getElementById('chart8').getContext('2d');
-    var myChart = new Chart(ctx, {
+    const ctx = document.getElementById('chart8').getContext('2d');
+    const myChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
@@ -541,7 +541,7 @@ var myChart = new Chart(ctx, {
               }
         }
     });
-var options = {
+const options = {
     series: [{
         name: "Total Expense",
         data: [0, 160, 671, 414, 555, 414, 555, 257, 300, 0]
@@ -628,9 +628,9 @@ var options = {
     }
   };
 
-  var chart = new ApexCharts(document.querySelector("#chart9"), options);
+  const chart = new ApexCharts(document.querySelector("#chart9"), options);
   chart.render();
-var options = {
+const options = {
     series: [{
         name: "Total Orders",
         data: [0, 160, 671, 414, 555, 414, 555, 257, 300, 0]

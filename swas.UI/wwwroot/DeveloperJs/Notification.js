@@ -124,7 +124,7 @@ function updateNotificationCountForChat(type, elementId) {
         },
         error: function () {
             console.error(`Could not retrieve ${elementId} count.`);
-            $(`#${elementId}`).text(0).hide();
+            $(`.${elementId}`).text(0).hide();
         }
     });
 }

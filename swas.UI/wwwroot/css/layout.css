@@ -195,6 +195,7 @@ body {
 .paw-footer-fixed {
     position: fixed;
     margin-bottom: 0;
+    background: linear-gradient(90deg, #1e3a8a, #2563eb) !important;
 }
 
 
@@ -311,6 +312,11 @@ body {
     color: #fff;
 }
 
+.paw-home-icon {
+    color: #fff !important;
+ 
+    font-size: x-large;
+}
 
 .paw-userpen-icon {
     font-size: x-large;
@@ -532,6 +538,13 @@ body {
     margin-bottom: 10px;
 }
 
+.header-container-light {
+    background: linear-gradient(90deg, #1e3a8a, #278AFF);
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
 .shadow-container {
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
@@ -543,3 +556,169 @@ body {
 .loader {
     background: transparent;
 }
+
+
+/* ✨ PARTICLES */
+.particles {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    width:inherit
+}
+
+    .particles span {
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        background: rgba(255,255,255,0.6);
+        border-radius: 50%;
+        animation: floatParticle linear infinite;
+    }
+
+@keyframes floatParticle {
+    from {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(10vh) scale(-10);
+        opacity: 0;
+    }
+}
+.icon-name{
+    color:white
+}
+body {
+    position: relative;
+}
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        /* Softer gradient */
+        /*background: radial-gradient(circle at 20% 30%, rgba(30,64,175,0.25), transparent 60%), radial-gradient(circle at 80% 70%, rgba(96,165,250,0.25), transparent 60%);*/
+        background: radial-gradient(circle at 20% 30%, rgba(30,64,175,0.25), transparent 60%), radial-gradient(circle at 80% 70%, rgba(96,165,250,0.25), transparent 60%);
+        /* THIS is the real fix */
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        /* IMPORTANT */
+        z-index: -1;
+    }
+/*
+    body > * {
+        position: relative;
+        z-index: 1;
+    }*/
+
+.bodradi {
+    border-radius: 20px !important;
+}
+
+
+
+/* Container */
+.action-list {
+    display: flex;
+    gap: 10px;
+}
+
+/* Base Button */
+.action-btn {
+    margin-top:10px;
+    position: relative;
+    list-style: none;
+    width: 37px;
+    height: 30px;
+    background: red;
+    border-radius: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.4s ease;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+/* Logout Gradient Layer */
+.logout-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 60px;
+    background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    opacity: 0;
+    transition: 0.4s ease;
+}
+
+/* Glow Effect */
+.logout-btn::after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    width: 100%;
+    height: 50%;
+    border-radius: 60px;
+    background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    filter: blur(15px);
+    opacity: 0;
+    z-index: -1;
+    transition: 0.4s ease;
+}
+
+/* Hover Expand */
+.action-btn:hover {
+    width: 80px;
+    box-shadow: none;
+}
+
+    /* Show Gradient + Glow */
+    .action-btn:hover::before {
+        opacity: 1;
+    }
+
+    .action-btn:hover::after {
+        opacity: 0.6;
+    }
+
+/* Icon */
+.action-btn i {
+    font-size: 1.5rem;
+    color: #777;
+    transition: 0.4s ease;
+    transition-delay: 0.15s;
+}
+
+/* Hide icon on hover */
+.action-btn:hover i {
+    transform: scale(0);
+    color: #fff;
+    transition-delay: 0s;
+}
+
+/* Text */
+.action-btn .title {
+    position: absolute;
+    color: #fff;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transform: scale(0);
+    transition: 0.4s ease;
+    white-space: nowrap;
+}
+
+/* Show text */
+.action-btn:hover .title {
+    transform: scale(1);
+    transition-delay: 0.15s;
+}
+
+

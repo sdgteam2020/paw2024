@@ -1,12 +1,12 @@
 ﻿
     $(document).ready(function () {
-        var fdsetid = '@tabshift';
+        let fdsetid = '@tabshift';
 
-    var current_fs, next_fs, previous_fs;
-    var opacity;
-    var steps = $("fieldset").length;
+    let current_fs, next_fs, previous_fs;
+    let opacity;
+    let steps = $("fieldset").length;
     if (fdsetid == 3) {
-            var fdset = "fieldset#" + "upload";
+            let fdset = "fieldset#" + "upload";
     editFormContainer.style.display = 'none';
     addFormContainer.style.display = 'block';
     $("#1").hide();
@@ -15,7 +15,7 @@
 
         }
     else if (fdsetid == 12) {
-            var fdset = "fieldset#" + "uploaded";
+            let fdset = "fieldset#" + "uploaded";
     editFormContainer.style.display = 'block';
 
     $("#5").hide();
@@ -23,7 +23,7 @@
     $(fdset).show();
         }
     else {
-            var fdset = "fieldset#" + fdsetid + "";
+            let fdset = "fieldset#" + fdsetid + "";
 
         }
 
@@ -36,7 +36,7 @@
         $("#1").toggle();
         });
 
-    current = $(fdset).index() + 1;
+    let current = $(fdset).index() + 1;
     setProgressBar(current);
 
 
@@ -56,7 +56,7 @@
             } else if (fdsetid == 8) {
         $("#confirmed").addClass("active");
             }
-    var isValid = true;
+    let isValid = true;
     current_fs.find("input[required]").each(function () {
                 if ($(this).val() === "") {
         isValid = false;
@@ -70,11 +70,11 @@
 
 
 
-    var selectedValueX = $("#ProjEdit_Apptype").val();
-    var ProjEdit_HostTypeX = $("#ProjEdit_HostTypeID").val();
+    let selectedValueX = $("#ProjEdit_Apptype").val();
+    let ProjEdit_HostTypeX = $("#ProjEdit_HostTypeID").val();
 
-    var ProjEdit_HostTypeXE = $("#Hostedtype").val();
-    var ddlAppTypeEditXE = $("#ddlAppTypeEdit").val();
+    let ProjEdit_HostTypeXE = $("#Hostedtype").val();
+    let ddlAppTypeEditXE = $("#ddlAppTypeEdit").val();
 
 
 
@@ -189,7 +189,7 @@
 
     $("#finaluploaded").click(function () {
 
-            var fdset = "fieldset#" + "9";
+            let fdset = "fieldset#" + "9";
     editFormContainer.style.display = 'block';
     addFormContainer.style.display = 'none';
     $("fieldset#6").hide();
@@ -204,7 +204,7 @@
         });
 
     function setProgressBar(curStep) {
-            var percent = parseFloat(100 / steps) * curStep;
+            let percent = parseFloat(100 / steps) * curStep;
     percent = percent.toFixed();
     $(".progress-bar")
     .css("width", percent + "%")
@@ -223,7 +223,7 @@
         function submitFormnew() {
 
 
-            var curPSMid = 0;
+            let curPSMid = 0;
 
             if ((Model.ProjMov != null ? "true" : "false")) {
                 curPSMid = Model.ProjMov.PsmId ?? 0;
@@ -254,8 +254,8 @@
 
     $(document).ready(function () {
         $("#next").click(function (e) {
-            var selectedValuess = $("#ProjEdit_Apptype").val();
-            var ProjEdit_HostTypess = $("#ProjEdit_HostTypeID").val();
+            let selectedValuess = $("#ProjEdit_Apptype").val();
+            let ProjEdit_HostTypess = $("#ProjEdit_HostTypeID").val();
 
 
             if (selectedValuess === "0" || ProjEdit_HostTypess === "0") {

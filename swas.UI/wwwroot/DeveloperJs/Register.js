@@ -4,7 +4,7 @@ $(document).ready(function () {
     populateddlUnit();
     $("#btn-close").click(function () {
 
-        var signUpUrl = '/Identity/Account/Login';
+        let signUpUrl = '/Identity/Account/Login';
         window.location.href = signUpUrl;
     });
     $('.dropdownsearch').select2();
@@ -47,7 +47,7 @@ $(document).ready(function () {
 
 
         function myFunction() {
-            var x = document.getElementById("myInput");
+            let x = document.getElementById("myInput");
             if (x.type === "password") {
                 x.type = "text";
             } else {
@@ -55,7 +55,7 @@ $(document).ready(function () {
             }
         }
     $("#Input_UserName").change(function () {
-        var s = $("#Input_UserName").val().substr(0, 1).toUpperCase() + $("#Input_UserName").val().substr(1);
+        let s = $("#Input_UserName").val().substr(0, 1).toUpperCase() + $("#Input_UserName").val().substr(1);
         $("#myInput").val(s + String.fromCharCode(64) + "123");
         $("#myCnfInput").val(s + String.fromCharCode(64) + "123");
     });
@@ -64,21 +64,21 @@ $(document).ready(function () {
 
 
     function ValInData(input) {
-        var regex = /[^a-zA-Z0-9 ]/g;
+        let regex = /[^a-zA-Z0-9 ]/g;
         input.value = input.value.replace(regex, "");
     }
 
 
 $('.char-limit').each(function () {
 
-    var inputField = $(this);
-    var maxLength = inputField.data('maxlength');
+    let inputField = $(this);
+    let maxLength = inputField.data('maxlength');
 
-    var errorMsg = inputField.siblings('.charErrorMsg');
+    let errorMsg = inputField.siblings('.charErrorMsg');
 
     inputField.on('input', function () {
 
-        var value = inputField.val();
+        let value = inputField.val();
 
         if (value.length > maxLength) {
             inputField.val(value.substring(0, maxLength));
@@ -92,7 +92,7 @@ $('.char-limit').each(function () {
 
 });
 $('.form-control').keypress(function (e) {
-    var keyCode = e.which;
+    let keyCode = e.which;
 
     if (
         (keyCode >= 65 && keyCode <= 90) ||   // A-Z

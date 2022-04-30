@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function redirectToNewPage() {
 }
-<script>
+
 
 
     $(document).ready(function () {
@@ -271,7 +271,7 @@ function redirectToNewPage() {
                     $('#IndexTableContainer').hide();
                 },
                 error: function () {
-                    alert('Error fetching comments.');
+                    alert('Error fetching comments.7');
                 }
             });
         });
@@ -283,4 +283,4 @@ function redirectToNewPage() {
     $('#IndexTableContainer').show();
         });
     });
-</script>
+

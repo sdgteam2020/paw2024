@@ -1,7 +1,7 @@
 ﻿(function () {
     "use strict";
     function getWatermarkText() {
-        var el = document.getElementById("IpAddress");
+        const el = document.getElementById("IpAddress");
         return el ? (el.textContent || "").trim() : "";
     }
 
@@ -9,7 +9,7 @@
         if (!window.jQuery) return null;
         if (!$.fn || !$.fn.DataTable) return null;
 
-        var $el = $(selector);
+        const $el = $(selector);
         if (!$el.length) return null;
         if ($.fn.dataTable.isDataTable($el)) {
             $el.DataTable().clear().destroy();
@@ -40,7 +40,7 @@
                         MultipleOf: {
                             conditionName: "Multiple Of",
                             init: function (that, fn, preDefined) {
-                                var el = $("<input/>").on("input", function () { fn(that, this); });
+                                let el = $("<input/>").on("input", function () { fn(that, this); });
                                 if (preDefined != null) $(el).val(preDefined[0]);
                                 return el;
                             },
@@ -55,13 +55,13 @@
     }
 
     function pdfPopupFromDataTable(tableSelector, watermarkProvider) {
-        var popupWin = window.open("", "_blank", "top=100,width=900,height=500,location=no");
+        let popupWin = window.open("", "_blank", "top=100,width=900,height=500,location=no");
         if (!popupWin) return;
 
-        var dt = $(tableSelector).DataTable();
-        var filteredData = dt.rows({ search: "applied" }).data().toArray();
+        let dt = $(tableSelector).DataTable();
+        let filteredData = dt.rows({ search: "applied" }).data().toArray();
 
-        var tableHTML = "<table>";
+        let tableHTML = "<table>";
         tableHTML += "<thead><tr>";
         dt.columns().header().each(function (header) {
             tableHTML += "<th>" + header.innerHTML + "</th>";
@@ -69,19 +69,19 @@
         tableHTML += "</tr></thead>";
 
         tableHTML += "<tbody>";
-        for (var i = 0; i < filteredData.length; i++) {
+        for (let i = 0; i < filteredData.length; i++) {
             tableHTML += "<tr>";
-            for (var j = 0; j < filteredData[i].length; j++) {
+            for (let j = 0; j < filteredData[i].length; j++) {
                 tableHTML += "<td>" + filteredData[i][j] + "</td>";
             }
             tableHTML += "</tr>";
         }
         tableHTML += "</tbody></table>";
 
-        var watermarkText = (typeof watermarkProvider === "function")
+        let watermarkText = (typeof watermarkProvider === "function")
             ? (watermarkProvider() || "")
             : "";
-        var styles = `
+        let styles = `
       <style type="text/css">
         table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
         th, td { padding: 8px; border: 1px solid #ddd; text-align: center; }
@@ -111,14 +111,21 @@
     }
     function bindEditUserModal() {
         $(document).on("click", ".edit-user-btn", function () {
-            var username = $(this).data("username");
-            var rankid = $(this).data("rankid");
-            var rolename = $(this).data("rolename");
+            let username = $(this).data("username");
+            let rankid = $(this).data("rankid");
+            let rolename = $(this).data("rolename");
 
+            const payload = {
+                UserName: username,
+                RankId: rankid,
+                RoleName: rolename
+            };
             $.ajax({
                 url: "/Account/GetUserEditPartial",
                 type: "GET",
-                data: { UserName: username, RankId: rankid, RoleName: rolename },
+                data: {
+                    payload: encryptData(payload)
+                },
                 success: function (result) {
                     $("#editUserModalBody").html(result);
                     $("#editUserModal").modal("show");
@@ -145,17 +152,17 @@
 
     function checksize() {
         if ($(window).width() < 1000) {
-            $("#menusharp1").removeClass("d-none");
-            $("#menusharp").addClass("d-none");
+            $(".menusharp1").removeClass("d-none");
+            $(".menusharp").addClass("d-none");
         } else {
-            $("#menusharp").removeClass("d-none");
-            $("#menusharp1").addClass("d-none");
+            $(".menusharp").removeClass("d-none");
+            $(".menusharp1").addClass("d-none");
         }
 
         if ($(window).width() < 765) {
-            $("#mainheading").css("margin-top", "7rem");
+            $(".mainheading").css("margin-top", "7rem");
         } else {
-            $("#mainheading").css("margin-top", "");
+            $(".mainheading").css("margin-top", "");
         }
     }
 
@@ -168,7 +175,7 @@
     }
 
     function ajaxLoader() {
-        var $loading = $("#loading1, #loading");
+        let $loading = $("#loading1, #loading");
         $loading.addClass("d-none"); // keep hidden by default if you use bootstrap d-none
 
         $(document)
@@ -178,14 +185,14 @@
     }
 
     function sidebarEvents() {
-        var menuBtn = document.getElementById("menusharp");
+        let menuBtn = document.getElementById("menusharp");
         if (menuBtn) {
             menuBtn.onclick = function () {
                 document.body.classList.toggle("sidebar-collapsed");
             };
         }
 
-        var sidebar = document.querySelector(".sidebar-wrapper");
+        let sidebar = document.querySelector(".sidebar-wrapper");
         if (sidebar) {
             sidebar.onmouseenter = function () { document.body.classList.add("sidebar-hover"); };
             sidebar.onmouseleave = function () { document.body.classList.remove("sidebar-hover"); };
@@ -193,7 +200,7 @@
     }
 
     function dropdownHover() {
-        var hideTimeout;
+        let hideTimeout;
 
         $(".dropdown").hover(
             function () {
@@ -201,7 +208,7 @@
                 $(this).children(".dropdown-menu").stop(true, true).slideDown(200);
             },
             function () {
-                var $menu = $(this).children(".dropdown-menu");
+                let $menu = $(this).children(".dropdown-menu");
                 hideTimeout = setTimeout(function () {
                     $menu.stop(true, true).slideUp(200);
                 }, 200);
@@ -210,14 +217,14 @@
     }
 
     function highlightCurrentMenu() {
-        var currentPageUrl = window.location.pathname;
+        let currentPageUrl = window.location.pathname;
         $(".dropdown-menu li").removeClass("selected");
         $(".dropdown-menu li a[href='" + currentPageUrl + "']").parent().addClass("selected");
         $(".dropdown-menu.selected").addClass("visible");
     }
     window.createNotification = function (event) {
         event.preventDefault();
-        var stakeHolderId = document.getElementById("btnid")?.innerText;
+        let stakeHolderId = document.getElementById("btnid")?.innerText;
 
         fetch(`/Home/GetNotification?stakeHolderId=${stakeHolderId}`, {
             method: "POST",
@@ -236,7 +243,7 @@
     };
 
     window.ValInData = function (input) {
-        var regex = /[^a-zA-Z0-9 ]/g;
+        let regex = /[^a-zA-Z0-9 ]/g;
         input.value = input.value.replace(regex, "");
     };
     $(function () {
@@ -249,7 +256,7 @@
         safeCallInitializeDataTable("#SoftwareType5");
         safeCallInitializeDataTable("#Soft");
         if ($("#SentProjDetails").length && $.fn.DataTable) {
-            var t = safeInitDataTable("#SentProjDetails", {});
+            let t = safeInitDataTable("#SentProjDetails", {});
             if (t && t.buttons && t.buttons().container) {
                 t.buttons().container().insertBefore(t.table().container());
             }

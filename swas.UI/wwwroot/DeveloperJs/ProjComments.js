@@ -3,10 +3,10 @@
 
     $(document).ready(function () {
         $('.table-button').on('click', function () {
-            var $button = $(this);
-            var stakeHolderId = $button.data('stakeholder-id');
-            var projId = $button.data('proj-id');
-            var psmId = $button.data('psm-id');
+            let $button = $(this);
+            let stakeHolderId = $button.data('stakeholder-id');
+            let projId = $button.data('proj-id');
+            let psmId = $button.data('psm-id');
 
             $('#StakeholdertextId').val(stakeHolderId);
             $('#ProjtextId').val(projId);
@@ -22,11 +22,11 @@
                 },
                 success: function (data) {
 
-                    var commentContainer = '';
+                    let commentContainer = '';
 
-                    for (var i = 0; i < data.length; i++) {
-                        var date = new Date(data[i].date);
-                        var formattedDate = ("0" + date.getDate()).slice(-2) + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
+                    for (let i = 0; i < data.length; i++) {
+                        let date = new Date(data[i].date);
+                        let formattedDate = ("0" + date.getDate()).slice(-2) + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
 
                         commentContainer += '<div class="comment-box">'; // Use text-align: justify for justified text
                         commentContainer += '<div class="comment-header">';
@@ -57,7 +57,7 @@
                     $('#IndexTableContainer').hide();
                 },
                 error: function () {
-                    alert('Error fetching comments.');
+                    alert('Error fetching comments.2');
                 }
             });
         });
@@ -78,10 +78,10 @@
 
 $(document).ready(function () {
     $('.table-readonly').on('click', function () {
-        var $button = $(this);
-        var stakeHolderId = $button.data('stakeholder-id');
-        var projId = $button.data('proj-id');
-        var psmId = $button.data('psm-id');
+        let $button = $(this);
+        let stakeHolderId = $button.data('stakeholder-id');
+        let projId = $button.data('proj-id');
+        let psmId = $button.data('psm-id');
 
         $('#StakeholdertextId').val(stakeHolderId);
         $('#ProjtextId').val(projId);
@@ -96,11 +96,11 @@ $(document).ready(function () {
                 "ProjId": projId
             },
             success: function (data) {
-                var commentContainer = '';
+                let commentContainer = '';
 
-                for (var i = 0; i < data.length; i++) {
-                    var date = new Date(data[i].date);
-                    var formattedDate = ("0" + date.getDate()).slice(-2) + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
+                for (let i = 0; i < data.length; i++) {
+                    let date = new Date(data[i].date);
+                    let formattedDate = ("0" + date.getDate()).slice(-2) + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
 
                     commentContainer += '<div class="comment-box">'; // Justified text is controlled in CSS
                     commentContainer += '<div class="comment-header">';
@@ -131,7 +131,7 @@ $(document).ready(function () {
 
             },
             error: function () {
-                alert('Error fetching comments.');
+                alert('Error fetching comments.3');
             }
         });
     });
@@ -153,94 +153,62 @@ $(document).ready(function () {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    var projectDetailsBtns = document.querySelectorAll('.project-details-btn');
+    let projectDetailsBtns = document.querySelectorAll('.project-details-btn');
 
     projectDetailsBtns.forEach(function (btn) {
         btn.addEventListener('click', function () {
-            var projectDetailsDiv = document.getElementById('projectDetails');
-            var projectDetailsDiv1 = document.getElementById('ProjDetails1');
-            var projectDetailsDiv2 = document.getElementById('ProjDetails2');
-            var projectreadDeatilsDiv = document.getElementById('projectreadDetails');
-            var projectreadDetailsDiv1 = document.getElementById('ProjreadDetails1');
-            var projectreadDetailsDiv2 = document.getElementById('ProjreadDetails2');
-            var projName = btn.getAttribute('data-proj-namess') || '';
-            var aimScope = btn.getAttribute('data-aim-scope') || '';
-            var Initiateddate = btn.getAttribute('data-initiated-date') || '';
-            var newbandwidth = btn.getAttribute('data-band-with') || '';
-            var hostingtype = btn.getAttribute('data-hosting-type') || '';
-            var reqjustification = btn.getAttribute('data-req-justi') || '';
-            var conceptofsw = btn.getAttribute('data-concept-sw') || '';
-            var initiatedBy = btn.getAttribute('data-initiated-by') || '';
-            var hosttype = btn.getAttribute('data-hosttype') || '';
+
+            let projectDetailsDiv = document.getElementById('projectDetails');
+            let projectDetailsDiv1 = document.getElementById('ProjDetails1');
+            let projectDetailsDiv2 = document.getElementById('ProjDetails2');
+            let projectreadDeatilsDiv = document.getElementById('projectreadDetails');
+            let projectreadDetailsDiv1 = document.getElementById('ProjreadDetails1');
+            let projectreadDetailsDiv2 = document.getElementById('ProjreadDetails2');
+
+            // ✅ Using dataset instead of getAttribute
+            let projName = btn.dataset.projNamess || '';
+            let aimScope = btn.dataset.aimScope || '';
+            let Initiateddate = btn.dataset.initiatedDate || '';
+            let newbandwidth = btn.dataset.bandWith || '';
+            let hostingtype = btn.dataset.hostingType || '';
+            let reqjustification = btn.dataset.reqJusti || '';
+            let conceptofsw = btn.dataset.conceptSw || '';
+            let initiatedBy = btn.dataset.initiatedBy || '';
+            let hosttype = btn.dataset.hosttype || '';
+
             projectDetailsDiv.innerHTML = `
                 Proj Details
                 <table class="new-proj-table">
-                    <tr>
-                        <td>Proj Name</td>
-                        <td>${projName}</td>
-                    </tr>
-                    <tr>
-                        <td>Aim & Scope</td>
-                        <td class="long-text">${aimScope}</td>
-                    </tr>
-                    <tr>
-                        <td>Initiated Date</td>
-                        <td>${Initiateddate}</td>
-                    </tr>
+                    <tr><td>Proj Name</td><td>${projName}</td></tr>
+                    <tr><td>Aim & Scope</td><td class="long-text">${aimScope}</td></tr>
+                    <tr><td>Initiated Date</td><td>${Initiateddate}</td></tr>
                 </table>
             `;
 
             projectDetailsDiv1.innerHTML = `
                 Tech Details
                 <table class="new-proj-table">
-                    <tr>
-                        <td>New Band With</td>
-                        <td>${newbandwidth}</td>
-                    </tr>
-                    <tr>
-                        <td>Hosting Type</td>
-                        <td>${hostingtype}</td>
-                    </tr>
-                    <tr>
-                        <td>Request Justification</td>
-                        <td class="long-text">${reqjustification}</td>
-                    </tr>
+                    <tr><td>New Band With</td><td>${newbandwidth}</td></tr>
+                    <tr><td>Hosting Type</td><td>${hostingtype}</td></tr>
+                    <tr><td>Request Justification</td><td class="long-text">${reqjustification}</td></tr>
                 </table>
             `;
 
             projectDetailsDiv2.innerHTML = `
                 Other Details
                 <table class="new-proj-table">
-                    <tr>
-                        <td>Concept Of S/W</td>
-                        <td>${conceptofsw}</td>
-                    </tr>
-                    <tr>
-                        <td>Initiated By</td>
-                        <td>${initiatedBy}</td>
-                    </tr>
-                    <tr>
-                        <td>Host Type</td>
-                        <td>${hosttype}</td>
-                    </tr>
+                    <tr><td>Concept Of S/W</td><td>${conceptofsw}</td></tr>
+                    <tr><td>Initiated By</td><td>${initiatedBy}</td></tr>
+                    <tr><td>Host Type</td><td>${hosttype}</td></tr>
                 </table>
             `;
 
             projectreadDeatilsDiv.innerHTML = `
                 Proj Details
                 <table class="new-proj-table">
-                    <tr>
-                        <td>Proj Name</td>
-                        <td>${projName}</td>
-                    </tr>
-                    <tr>
-                        <td>Aim & Scope</td>
-                        <td class="long-text">${aimScope}</td>
-                    </tr>
-                    <tr>
-                        <td>Initiated Date</td>
-                        <td>${Initiateddate}</td>
-                    </tr>
+                    <tr><td>Proj Name</td><td>${projName}</td></tr>
+                    <tr><td>Aim & Scope</td><td class="long-text">${aimScope}</td></tr>
+                    <tr><td>Initiated Date</td><td>${Initiateddate}</td></tr>
                 </table>
             `;
 
@@ -248,18 +216,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 Tech Details
                 <div id="testforscroll">
                     <table class="new-proj-table">
-                        <tr>
-                            <td>New Band With</td>
-                            <td>${newbandwidth}</td>
-                        </tr>
-                        <tr>
-                            <td>Hosting Type</td>
-                            <td>${hostingtype}</td>
-                        </tr>
-                        <tr>
-                            <td>Request Justification</td>
-                            <td class="long-text">${reqjustification}</td>
-                        </tr>
+                        <tr><td>New Band With</td><td>${newbandwidth}</td></tr>
+                        <tr><td>Hosting Type</td><td>${hostingtype}</td></tr>
+                        <tr><td>Request Justification</td><td class="long-text">${reqjustification}</td></tr>
                     </table>
                 </div>
             `;
@@ -267,18 +226,9 @@ document.addEventListener('DOMContentLoaded', function () {
             projectreadDetailsDiv2.innerHTML = `
                 Other Details
                 <table class="new-proj-table">
-                    <tr>
-                        <td>Concept Of S/W</td>
-                        <td>${conceptofsw}</td>
-                    </tr>
-                    <tr>
-                        <td>Initiated By</td>
-                        <td>${initiatedBy}</td>
-                    </tr>
-                    <tr>
-                        <td>Host Type</td>
-                        <td>${hosttype}</td>
-                    </tr>
+                    <tr><td>Concept Of S/W</td><td>${conceptofsw}</td></tr>
+                    <tr><td>Initiated By</td><td>${initiatedBy}</td></tr>
+                    <tr><td>Host Type</td><td>${hosttype}</td></tr>
                 </table>
             `;
         });
@@ -297,10 +247,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function handleStatusChange() {
 
-        var selectedStatus = document.getElementById("ddlStatus").value;
+        let selectedStatus = document.getElementById("ddlStatus").value;
 
 
-        var fileInput = document.getElementById("uploadfile");
+        let fileInput = document.getElementById("uploadfile");
         }
     
 

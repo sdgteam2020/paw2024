@@ -17,6 +17,7 @@ namespace swas.BAL.Helpers
         }
         public static string SafeDecrypt(string value, string passphrase)
         {
+
             if (!IsCryptoJs(value) || string.IsNullOrEmpty(passphrase))
                 return value;
 

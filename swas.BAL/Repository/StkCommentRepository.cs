@@ -121,7 +121,7 @@ namespace swas.BAL.Repository
                                    StkCommentId = comment.StkCommentId,
                                    UnitId = comment.StakeHolderId,
                                    Attpath = comment.Attpath,
-                                   UserDetails = comment.UserDetails != null ? comment.UserDetails.ToString() : "____",
+                                   //UserDetails = comment.UserDetails != null ? comment.UserDetails.ToString() : "____",
                                    ProjectName = project.ProjName,
                                    AdminApprovalStatus = subLegacy != null && subLegacy.DDGIT_approval == true
                                }).FirstOrDefaultAsync();

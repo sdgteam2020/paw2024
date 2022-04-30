@@ -4,15 +4,15 @@ $(document).on('ready', function () {
         ValInData(this);
     });
     $(document).on('click', '.btn-delete', function () {
-        var actionId = $(this).data('action-id');
+        let actionId = $(this).data('action-id');
         functionConfirm1(actionId);
     });
 
     $("#LimitimeInputa").on("input", function () {
 
-        var inputValue = $(this).val();
+        let inputValue = $(this).val();
 
-        var numericValue = parseFloat(inputValue);
+        let numericValue = parseFloat(inputValue);
 
         if (numericValue < 0) {
 
@@ -114,10 +114,10 @@ $(".btn-Mapping").click(function () {
 $('#btnsave').click(function () {
 
 
-    var Actions = $("#ActionName").val();
-    var ActionsId = $("#ActionsId").val();
+    let Actions = $("#ActionName").val();
+    let ActionsId = $("#ActionsId").val();
 
-    var model = {
+    let model = {
  
         Actions: Actions,
         ActionsId: ActionsId
@@ -160,8 +160,8 @@ $('#btnsave').click(function () {
 
 $(document).on('click', '.btn-edit', function () {
    
-    var closestRow = $(this).closest("tr").find("#ActionNames").html();
-    var closestRow1 = $(this).closest("tr").find("#spnActionsId").html();
+    let closestRow = $(this).closest("tr").find("#ActionNames").html();
+    let closestRow1 = $(this).closest("tr").find("#spnActionsId").html();
     
     $('#ActionsId').val(closestRow1);
     $('#ActionName').val(closestRow);

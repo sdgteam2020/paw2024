@@ -94,11 +94,22 @@ namespace swas.Areas.Identity.Pages.Account
                 }
 
                 var cryptoKey = _configuration["CryptoSettings:LoginKey"];
-
+                if (string.IsNullOrWhiteSpace(Input?.UserName) || string.IsNullOrWhiteSpace(Input?.Password))
+                {
+                    ModelState.AddModelError("", "Username and Password are required.");
+                    return Page();
+                }
                 if (!string.IsNullOrEmpty(cryptoKey))
                 {
                     Input.UserName = CryptoHelper.SafeDecrypt(Input.UserName, cryptoKey)?.Trim();
                     Input.Password = CryptoHelper.SafeDecrypt(Input.Password, cryptoKey)?.Trim();
+                }
+
+                // ❗ Validate again after decrypt
+                if (string.IsNullOrWhiteSpace(Input?.UserName) || string.IsNullOrWhiteSpace(Input?.Password))
+                {
+                    ModelState.AddModelError("", "Invalid credentials format.");
+                    return Page();
                 }
 
                 // Try login with ASP.NET Identity
@@ -165,7 +176,7 @@ namespace swas.Areas.Identity.Pages.Account
                             SessionHelper.SetObjectAsJson(HttpContext.Session, "User", Db);
                             HttpContext.Session.SetString("UserName", Input.UserName);
 
-                            return RedirectToAction("NewProject", "Home");
+                            return RedirectToAction("Promo", "Home");
                         }
                     }
                 }
@@ -200,7 +211,7 @@ namespace swas.Areas.Identity.Pages.Account
                 }
 
                 // Invalid password
-                ModelState.AddModelError("", "Invalid username or password.");
+                ModelState.AddModelError("", "Invalid login attempt.");
                 return Page();
             }
             catch (Exception ex)

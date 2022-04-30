@@ -1,8 +1,8 @@
 ﻿$('.delete-btn').click(function () {
 
-    var rankId = $(this).data('id');
+    let rankId = $(this).data('id');
 
-    var url = $(this).data('url');
+    let url = $(this).data('url');
 
     $.ajax({
         url: '/Rank/Delete',

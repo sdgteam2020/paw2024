@@ -3,7 +3,7 @@
         ValInDataEdit(this);
     });
         $('.dropdownsearch').select2();
-        var isRestricted = '@isRestricted' === 'True';
+        let isRestricted = '@isRestricted' === 'True';
 
         if (isRestricted) {
             $('a[href="/Account/GetsAllUsers"]').closest('button').hide();
@@ -11,6 +11,6 @@
 
     });
 function ValInDataEdit(input) {
-    var regex = /[^a-zA-Z0-9 ]/g;
+    let regex = /[^a-zA-Z0-9 ]/g;
     input.value = input.value.replace(regex, "");
 }

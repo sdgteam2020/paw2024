@@ -1,8 +1,8 @@
 ﻿
 document.addEventListener('DOMContentLoaded', function () {
     $('#downloadButton').click(function () {
-        var selectedItems = document.querySelectorAll('.checklist-item:checked');
-        var selectedDetails = [];
+        let selectedItems = document.querySelectorAll('.checklist-item:checked');
+        let selectedDetails = [];
 
         selectedItems.forEach(function (checkbox) {
             selectedDetails.push(checkbox.getAttribute('data-att-path'));
@@ -87,8 +87,8 @@ document.addEventListener('DOMContentLoaded', function () {
         $('#Soft').on('click', '.MargeButton', function (e) {
             e.preventDefault();
 
-            var projId = $(this).data('proj-id');
-            var projName = $(this).data('proj-name');
+            let projId = $(this).data('proj-id');
+            let projName = $(this).data('proj-name');
 
             window.location.href = '/Documents/DocumentHistory?projId=' + projId + '&projName=' + projName;
         });

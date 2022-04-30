@@ -1,9 +1,9 @@
-var todos = [{
+let todos = [{
     text: "take out the trash",
     done: false,
     id: 0
 }];
-var currentTodo = {
+let currentTodo = {
     text: "",
     done: false,
     id: 0
@@ -17,7 +17,7 @@ document.getElementById("todo-input").oninput = function (e) {
        });
     */
 function DrawTodo(todo) {
-    var newTodoHTML = `
+    let newTodoHTML = `
     <div class="pb-3 todo-item" todo-id="${todo.id}">
         <div class="input-group">
             
@@ -32,7 +32,7 @@ function DrawTodo(todo) {
         </div>
     </div>
       `;
-    var dummy = document.createElement("DIV");
+    let dummy = document.createElement("DIV");
     dummy.innerHTML = newTodoHTML;
     document.getElementById("todo-container").appendChild(dummy.children[0]);
     /*
@@ -42,21 +42,21 @@ function DrawTodo(todo) {
 }
 
 function RenderAllTodos() {
-    var container = document.getElementById("todo-container");
+    let container = document.getElementById("todo-container");
     while (container.firstChild) {
         container.removeChild(container.firstChild);
     }
     /*
           $("todo-container").empty();
         */
-    for (var i = 0; i < todos.length; i++) {
+    for (let i = 0; i < todos.length; i++) {
         DrawTodo(todos[i]);
     }
 }
 RenderAllTodos();
 
 function DeleteTodo(button) {
-    var deleteID = parseInt(button.getAttribute("todo-id"));
+    let deleteID = parseInt(button.getAttribute("todo-id"));
     /*
           var deleteID = parseInt($(button).attr("todo-id"));
         */
@@ -71,16 +71,6 @@ function DeleteTodo(button) {
 
 function TodoChecked(id) {
     todos[id].done = !todos[id].done;
-    RenderAllTodos();
-}
-
-function CreateTodo() {
-    newtodo = {
-        text: currentTodo.text,
-        done: false,
-        id: todos.length
-    }
-    todos.push(newtodo);
     RenderAllTodos();
 }
 

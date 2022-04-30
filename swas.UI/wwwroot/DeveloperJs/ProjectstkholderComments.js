@@ -1,4 +1,4 @@
-﻿var memberTable = "";
+﻿//let memberTable = "";
 
 $(document).ready(function () {
 
@@ -11,7 +11,7 @@ $(document).ready(function () {
     $(".cmtbtn").unbind().click(function () {
         $(".cmtbtn").removeClass("border border-dark bold-border btn-small-large");
         $(this).addClass("border border-dark bold-border btn-small-large");
-        var unitId = 0;
+        let unitId = 0;
         switch ($(this).attr('id')) {
             case 'btnAccepted':
                 unitId = 1;
@@ -35,7 +35,7 @@ $(document).ready(function () {
     $("#btnStatusUpdate").unbind().click(function () {
     
         requiredFields = $('#projectcommentforstackholder').find('.requiredField');
-        var allFieldsComplete = true;
+        let allFieldsComplete = true;
         requiredFields.each(function (index) {
             if (this.value.length == 0) {
                 $(this).addClass('is-invalid');
@@ -91,7 +91,7 @@ function GetCommentBadgeCount(id) {
 
 
 function GetProjCommentsByUnitId(Id) {
-    var listItem = "";
+    let listItem = "";
 
     $("#DetailBody").html(listItem);
     
@@ -124,11 +124,11 @@ function GetProjCommentsByUnitId(Id) {
 
             else {
 
-                    var count = 0;
-                    var commentFalseCount = 0;
-                    for (var i = 0; i < response.length; i++) {
-                        var date = new Date(response[i].timeStamp);
-                        var TimeStamp =
+                    let count = 0;
+                    let commentFalseCount = 0;
+                    for (let i = 0; i < response.length; i++) {
+                        let date = new Date(response[i].timeStamp);
+                        let TimeStamp =
                             ("0" + date.getDate()).slice(-2) + '-' +
                             ("0" + (date.getMonth() + 1)).slice(-2) + '-' +
                             date.getFullYear() + ' ' +
@@ -216,11 +216,11 @@ function GetProjCommentsByUnitId(Id) {
                     
 
                     $("body").off("click").on("click", ".cls-btncomment", function () {
-                        
+                        debugger;
                         $(".custom-modal").addClass("custom-modal-size")
-                        var self = this;
+                        let self = this;
 
-                            var action = $(self).closest("tr").find("#status").html();
+                            let action = $(self).closest("tr").find("#status").html();
                         fetchServerDate().then(function (S) {
                             
                             let stkid = 0;
@@ -256,29 +256,29 @@ function GetProjCommentsByUnitId(Id) {
                             mMsater(0, "ddlStatus", 4, 0);
                             $("#ProjCommentModal").modal('show');
                             GetAllComments($("#ProjectcommentForStackHolderPsmId").html(), $("#ProjectcommentForStackHolderprojId").html());
-                            var projName = $(self).closest("tr").find("#projectNameforcomment").html();
-                            var words = projName.split(" ");
-                            var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
-                            var finalTitle = "Project Name: " + projName;
+                            let projName = $(self).closest("tr").find("#projectNameforcomment").html();
+                            let words = projName.split(" ");
+                            let shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
+                            let finalTitle = "Project Name: " + projName;
                             $('#addComment').text(finalTitle);
 
                             const dateTypeText = $(self).closest("tr").find("#DateType").text().trim().toLowerCase();
                             const dateType = (dateTypeText === "true");
 
                             $("#ProjectcommentForStackHolderDate_type").text(dateType);
-                            var pad = "00";
-                            var datef2 = new Date();
-                            var months = "" + (datef2.getMonth() + 1);
-                            var days = "" + datef2.getDate();
-                            var monthsans = pad.substring(0, pad.length - months.length) + months;
-                            var dayans = pad.substring(0, pad.length - days.length) + days;
-                            var year = datef2.getFullYear();
-                            var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-                            var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-                            var ss = `${datef2.getSeconds()}`;
+                            let pad = "00";
+                            let datef2 = new Date();
+                            let months = "" + (datef2.getMonth() + 1);
+                            let days = "" + datef2.getDate();
+                            let monthsans = pad.substring(0, pad.length - months.length) + months;
+                            let dayans = pad.substring(0, pad.length - days.length) + days;
+                            let year = datef2.getFullYear();
+                            let hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+                            let mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+                            let ss = `${datef2.getSeconds()}`;
 
-                            var todayDate = `${year}-${monthsans}-${dayans}`;
-                            var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+                            let todayDate = `${year}-${monthsans}-${dayans}`;
+                            let todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
 
                             const formattedDateTime = new Date(S.todayDateTime).toISOString().slice(0, 16);  // Convert to YYYY-MM-DDTHH:MM
                             if (dateType) {
@@ -325,26 +325,25 @@ function GetProjCommentsByUnitId(Id) {
 
 
 
-
 function SendMsg() {
 
-    var formData = new FormData();
-    var totalFiles = document.getElementById("uploadfile").files.length;
-    for (var i = 0; i < totalFiles; i++) {
-        var file = document.getElementById("uploadfile").files[i];
+    let formData = new FormData();
+    let totalFiles = document.getElementById("uploadfile").files.length;
+    for (let i = 0; i < totalFiles; i++) {
+        let file = document.getElementById("uploadfile").files[i];
         formData.append("uploadfile", file);
 
     }
 
-    var dateValue = $('#CommentDateFwd').val();
-    var currentDate = new Date();
-    var commentDateTime = '';
+    let dateValue = $('#CommentDateFwd').val();
+    let currentDate = new Date();
+    let commentDateTime = '';
     if ($('#CommentDateFwd').attr('type') === 'date') {
         if (!dateValue) {
             alert('Please select a date .');
             return;
         }
-        var currentTime = currentDate.toTimeString().split(' ')[0]; // Get current time in HH:mm:ss
+        let currentTime = currentDate.toTimeString().split(' ')[0]; // Get current time in HH:mm:ss
         commentDateTime = dateValue + ' ' + currentTime;
     } else if ($('#CommentDateFwd').attr('type') === 'datetime-local') {
         if (!dateValue) {
@@ -356,98 +355,195 @@ function SendMsg() {
 
 
 
-    formData.append("Comments", $("#Comments").val());
-    formData.append("StkStatusId", $("#ddlStatus").val());
-    formData.append("ProjectId", $("#ProjectcommentForStackHolderprojId").html());
-    formData.append("psmid", $("#ProjectcommentForStackHolderPsmId").html());
-    formData.append("CommentDate", commentDateTime);
+    formData.append("Comments", encryptData($("#Comments").val()));
+    formData.append("StkStatusId", encryptData($("#ddlStatus").val()));
+    formData.append("ProjectId", encryptData($("#ProjectcommentForStackHolderprojId").html()));
+    formData.append("psmid", encryptData($("#ProjectcommentForStackHolderPsmId").html()));
+    formData.append("CommentDate", encryptData(commentDateTime));
+
+
     $.ajax({
         type: "POST",
         url: '/Projects/SendCommentonProject',
         data: formData,
         contentType: false,
         processData: false,
+
+        beforeSend: function () {
+            $('#uploadLoader').show();
+        },
+
         success: function (response) {
-            
             $('#uploadLoader').hide();
-            if (response == 0) {
 
-            }
-            if (response == 1) {
-                $('#uploadLoader').hide();
+            try {
+                if (response == 0) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Something went wrong!',
+                        text: 'Unable to save comment.',
+                    });
+                }
+
+                else if (response == 1) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Comment Sent successfully',
+                        showConfirmButton: false,
+                        timer: 3000
+                    }).then(() => {
+
+                        if ($("#ddlStatus").val() == 1) {
+                            FwdProjConfirm($("#ProjectcommentForStackHolderPsmId").html());
+                        }
+
+                        GetAllComments(
+                            $("#ProjectcommentForStackHolderPsmId").html(),
+                            $("#ProjectcommentForStackHolderprojId").html()
+                        );
+
+                        UnReadNotification($("#ProjectcommentForStackHolderprojId").html(), 2);
+
+                        IsUnReadComment(
+                            $("#ProjectcommentForStackHolderprojId").html(),
+                            $("#ProjectcommentForStackHolderPsmId").html()
+                        );
+
+                        reset();
+                    });
+                }
+
+                else if (response == 6) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: 'Action Not Allowed',
+                        html: `
+                        <div style="text-align:left;">
+                            <ol>
+                                <li>No Amdts Allowed as the Project is Already Accepted By You!</li>
+                                <li>Only info is allowed after acceptance.</li>
+                            </ol>
+                        </div>
+                    `,
+                        showConfirmButton: true
+                    });
+                }
+
+                else if (response == 8) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: 'File too large',
+                        text: 'PDF size must be less than 10 MB',
+                        showConfirmButton: true
+                    });
+                }
+
+                // 🔥 HANDLE CUSTOM BACKEND ERRORS
+                else if (response == -400) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Invalid Data',
+                        text: 'Bad request or invalid input.'
+                    });
+                }
+
+                else if (response == -401) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Session Expired',
+                        text: 'Please login again.'
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                }
+
+                else if (response == -500) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Security Error',
+                        text: 'Decryption failed or data tampered.'
+                    });
+                }
+
+                else {
+                    // 🔥 UNKNOWN RESPONSE
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Unexpected Error',
+                        text: 'Unknown response from server.'
+                    });
+                }
+
+            } catch (e) {
+                console.error("UI handling error:", e);
+
                 Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Comment Sent successfully',
-                    showConfirmButton: false,
-                    timer: 3000
-                
-                }).then(() => {
-                    
-                      if ($("#ddlStatus").val() == 1) {
-                    FwdProjConfirm($("#ProjectcommentForStackHolderPsmId").html());
-                     }
-
-
-                    GetAllComments($("#ProjectcommentForStackHolderPsmId").html(), $("#ProjectcommentForStackHolderprojId").html());
-                    UnReadNotification($("#ProjectcommentForStackHolderprojId").html(), 2);
-                    IsUnReadComment($("#ProjectcommentForStackHolderprojId").html(), $("#ProjectcommentForStackHolderPsmId").html());
-                    reset();
-                })
-
-
-            }
-            else if (response == 6) {
-                Swal.fire({
-    position: 'top-end',
-    icon: 'error',
-    title: 'Action Not Allowed',
-    html: `
-        <div class="swal-html-content">
-            <ol style="text-align:left;">
-                <li>No Amdts Allowed as the Project is Already Accepted By You!</li>
-                <li>However, only info is allowed after the project is accepted.</li>
-            </ol>
-        </div>
-    `,
-    showConfirmButton: true
-});
-
-            }
-            else if (response == 8) {
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'Error',
-                    title: 'Pdf Size allow less then 10 Mb !',
-                    showConfirmButton: true,
-
+                    icon: 'error',
+                    title: 'UI Error',
+                    text: 'Something went wrong while processing response.'
                 });
             }
         },
-        error: function (error) {
 
+        error: function (xhr, status, error) {
             $('#uploadLoader').hide();
+
+            console.error("AJAX ERROR:", {
+                status: status,
+                error: error,
+                responseText: xhr.responseText
+            });
+
+            let message = "Something went wrong. Please try again.";
+
+            if (xhr.status === 0) {
+                message = "Network error. Check your internet connection.";
+            }
+            else if (xhr.status === 404) {
+                message = "API not found (404).";
+            }
+            else if (xhr.status === 500) {
+                message = "Server error (500). Please contact admin.";
+            }
+            else if (xhr.responseText) {
+                message = xhr.responseText;
+            }
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Request Failed',
+                text: message
+            });
         }
     });
 }
 function GetAllComments(PsmId, projId) {
 
+    let user_ids =
+    {
+        "PsmId": PsmId,
+
+        "ProjId": projId
+        }
+
+    let encrypted_ids = encryptData(user_ids)
     $.ajax({
         type: "POST",
         url: '/Projects/GetAllCommentBypsmId_UnitId',
         data: {
-            "PsmId": PsmId,
-            "stakeholderId": 1,
-            "ProjId": projId
+            encrypted_ids: encrypted_ids
         },
         success: function (data) {
-            console.log(data);
-            var commentContainer = '';
-            var userDetails = '';
+           
+            let commentContainer = '';
+            let userDetails = '';
             if (data != null) {
-                for (var i = 0; i < data.length; i++) {
-                    var date = new Date(data[i].date);
-                    var formattedDate =
+                for (let i = 0; i < data.length; i++) {
+                    let date = new Date(data[i].date);
+                    let formattedDate =
                         ("0" + date.getDate()).slice(-2) + '-' +
                         ("0" + (date.getMonth() + 1)).slice(-2) + '-' +
                         date.getFullYear() + ' ' +
@@ -493,7 +589,7 @@ function GetAllComments(PsmId, projId) {
 
         },
         error: function () {
-            alert('Error fetching comments.');
+            alert('Error fetching comments.6');
         }
     });
 }
@@ -637,3 +733,5 @@ document.addEventListener('DOMContentLoaded', function () {
 $('#ProjCommentModal').on('hidden.bs.modal', function (e) {
     $('#CommentDateFwd').val('');
 });
+
+            

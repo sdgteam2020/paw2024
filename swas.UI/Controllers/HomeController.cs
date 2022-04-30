@@ -53,6 +53,9 @@ using iText.IO.Image;
 using iText.Layout.Borders;
 using System.Net;
 using System.Text.RegularExpressions;
+using Microsoft.CodeAnalysis;
+using System.Xml.Linq;
+using System.Configuration;
 
 namespace swas.UI.Controllers
 {
@@ -81,9 +84,10 @@ namespace swas.UI.Controllers
         private readonly IDateApprovalRepository _repo;
         private readonly ILegacyHistoryRepository _legacyHistoryRepository;
         private readonly IWatermarkRepository _watermarkRepo;
-
-        public HomeController(IWatermarkRepository watermark,IProjectsRepository projectsRepository, ICommentRepository commentRepository, SignInManager<ApplicationUser> signInManager, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IDdlRepository dlRepository, ApplicationDbContext context, IUnitRepository unitRepository, IProjStakeHolderMovRepository stkholdmove, IChartService chartService, IWebHostEnvironment _webHostEnvironment, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, IDataProtectionProvider dataProtector, IActionsRepository actionsRepository, IAttHistoryRepository attHistoryRepository, ILogger<HomeController> logger, IDateApprovalRepository repo, ILegacyHistoryRepository legacyHistoryRepository)
+        private readonly IConfiguration _configuration;
+        public HomeController(IWatermarkRepository watermark, IConfiguration configuration, IProjectsRepository projectsRepository, ICommentRepository commentRepository, SignInManager<ApplicationUser> signInManager, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IDdlRepository dlRepository, ApplicationDbContext context, IUnitRepository unitRepository, IProjStakeHolderMovRepository stkholdmove, IChartService chartService, IWebHostEnvironment _webHostEnvironment, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, IDataProtectionProvider dataProtector, IActionsRepository actionsRepository, IAttHistoryRepository attHistoryRepository, ILogger<HomeController> logger, IDateApprovalRepository repo, ILegacyHistoryRepository legacyHistoryRepository)
         {
+            _configuration = configuration;
             _projectsRepository = projectsRepository;
             _commentRepository = commentRepository;
             _signInManager = signInManager;
@@ -127,7 +131,11 @@ namespace swas.UI.Controllers
         }
 
 
-
+        [HttpGet]
+        public async Task<IActionResult> Promo()
+        {
+            return View();
+        }
 
         public async Task<IActionResult> GetDashboardStatusDetails(int StatusId, bool IsDuplicate)
         {
@@ -138,10 +146,32 @@ namespace swas.UI.Controllers
 
         }
 
-        public async Task<IActionResult> GetDashboardApproved(int StatusId, int statusActionsMappingId)
+        public async Task<IActionResult> GetDashboardApproved(string StatusId, string statusActionsMappingId)
         {
+            var cryptoKey = _configuration["CryptoSettings:LoginKey"];
+
+            try
+            {
+                // 🔐 SAFE DECRYPTION
+                StatusId = string.IsNullOrEmpty(StatusId) ? "" : CryptoHelper.SafeDecrypt(StatusId, cryptoKey);
+                statusActionsMappingId = string.IsNullOrEmpty(StatusId) ? "" : CryptoHelper.SafeDecrypt(statusActionsMappingId, cryptoKey);
+             
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Decryption failed in SendCommentonProject");
+                return Json(-500);
+            }
+            // 🔄 SAFE CONVERSION
+            if (!int.TryParse(StatusId.Trim('"'), out int statusId) ||
+                !int.TryParse(statusActionsMappingId.Trim('"'), out int StatusActionsMappingId) )
+            {
+                _logger.LogWarning("Invalid decrypted input values in SendCommentonProject");
+                return Json(-400); // bad request
+            }
+           
             Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
-            var ss = await _projectsRepository.GetDashboardApproved(StatusId, statusActionsMappingId);
+            var ss = await _projectsRepository.GetDashboardApproved(statusId, StatusActionsMappingId);
 
             return Json(ss);
 

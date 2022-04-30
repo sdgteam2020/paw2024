@@ -208,11 +208,13 @@ app.Use(async (ctx, next) =>
     string csp =
         "default-src 'self'; " +
         "script-src 'self'; " +
+        "object-src 'self' blob:; " +   // ✅ keep this
         $"style-src 'self' 'unsafe-hashes' {styleHashes}; " +
         "img-src 'self' data: blob:; " +
         "font-src 'self' data:; " +
         "frame-src 'self' blob:; " +
-        "object-src 'none'; " +
+        // ❌ REMOVE THIS LINE
+        // "object-src 'none'; " 
         "base-uri 'self'; " +
         "form-action 'self'; " +
         "frame-ancestors 'none'; " +

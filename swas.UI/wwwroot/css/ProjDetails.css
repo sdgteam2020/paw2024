@@ -841,7 +841,7 @@ body {
 }
 
 
-#btnRemainder {
+.btnRemainder {
     width: 20px;
     height: 20px;
     
@@ -884,9 +884,6 @@ body {
 
 
 
-.projfwd-modal-content-w80 {
-    width: 80%;
-}
 
 
 .projfwd-preview-body-bg {
@@ -998,3 +995,6 @@ body {
     letter-spacing: normal !important;
     white-space: normal !important;
 }
+
+
+

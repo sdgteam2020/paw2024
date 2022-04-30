@@ -5,195 +5,348 @@ $(function () {
 });
 
 function ProjectWiseStatus() {
- 
-    var listItem = "";
 
-    var userdata = { "Id": 0 };
+    const userdata = { "Id": 0 };
 
     $.ajax({
         url: '/Home/GetProjectWiseStatus',
         contentType: 'application/x-www-form-urlencoded',
         data: userdata,
         type: 'POST',
+
         success: function (response) {
-            
-            if (response != "null" && response != null) {
 
-                if (response == -1) {
-                    Swal.fire({ text: "" });
-                } else if (response == 0) {
+            if (!isValidResponse(response)) return;
 
-                } else {
-                    var count = 1;
+            const { statusProjectlst, movProjectlst } = response;
 
-                    var StatusProjectlst = response.statusProjectlst;
-                    var MovProjectlst = response.movProjectlst;
+            const headerHtml = buildTableHeader(statusProjectlst);
+            const bodyHtml = buildTableBody(statusProjectlst, movProjectlst);
 
-                    listItem += '<thead>';
-                    listItem += '<tr>';
-                    listItem += '<th class="d-none noExport"></th>';
-                    listItem += '<th class="text-center">Ser No</th>';
-                    listItem += '<th>Project Name</th>';
+            $("#tblProjectWiseStatus").html(headerHtml + bodyHtml);
 
-                    for (var i = 0; i < StatusProjectlst.length; i++) {
-                        if (StatusProjectlst[i].status !== "BISAG-N" && StatusProjectlst[i].status !== "Re-Vetting") {
-                            listItem += '<th>' + StatusProjectlst[i].status + '</th>';
-                        }
-                    }
+            bindProjectClick();
 
-                    listItem += '</tr>';
-                    listItem += '</thead>';
-                    listItem += '<tbody id="bodyProjectWiseStatus">';
-
-                    count = 1;
-                    var ProjId = 0;
-
-                    for (var j = 0; j < MovProjectlst.length; j++) {
-                        if (ProjId != MovProjectlst[j].projId) {
-
-                            ProjId = MovProjectlst[j].projId;
-
-                            listItem += '<tr>';
-                            listItem += '<td class="clsspnprojId d-none noExport">' + MovProjectlst[j].projId + '</td>';
-                            listItem += '<td class="align-middle text-center">' + count + '</td>';
-                            listItem += '<td class="RefLetter-container btn-clsprojName"><div class="tooltip-container noExport">' +
-                                trimByWords(MovProjectlst[j].projName, 5) +
-                                '</div><div class="RefLetter projnameforlabel">' +
-                                MovProjectlst[j].projName +
-                                '</div></td>';
-
-                            for (var i = 0; i < StatusProjectlst.length; i++) {
-                                if (StatusProjectlst[i].status !== "BISAG-N" && StatusProjectlst[i].status !== "Re-Vetting") {
-
-                                    var isstatus = MovProjectlst.filter(function (element) {
-                                        return element.statusId == StatusProjectlst[i].statusId && element.projId == MovProjectlst[j].projId;
-                                    });
-
-                                    if (isstatus.length != 0) {
-                                        listItem += '<td class="align-middle text-center" data-toggle="tooltip" data-placement="top" title="' +
-                                            DateFormateddMMyyyyhhmmss(isstatus[0].timeStamp) +
-                                            '"><div class="pws-ok-dot">✔</div><span class="d-none">' + DateFormateddMMyyyyhhmmss(isstatus[0].timeStamp) +'</span></td>';
-                                    } else {
-                                        listItem += '<td class="align-middle text-center"><img src="/assets/images/icons/Cross_red_circle.png" width="22" height="22" alt="Readed"></td>';
-                                    }
-                                }
-                            }
-
-                            listItem += '</tr>';
-                            count++;
-                        }
-                    }
-
-                    listItem += '</tbody>';
-
-                    $("#tblProjectWiseStatus").html(listItem);
-                    $(document).off("click", ".btn-clsprojName").on("click", ".btn-clsprojName", function () {
-                     
-                        $('#ProjHoldHistory').modal('show');
-                        $(".lblProjHoldHistory").html($(this).closest("tr").find(".projnameforlabel").html());
-                        $("#cardforProjHoldHistory").removeClass("d-none");
-                        GetProjHold($(this).closest("tr").find(".clsspnprojId").html());
-                        ProjectWiseStatusByProjid($(this).closest("tr").find(".clsspnprojId").html());
-                    });
-
-                    initializeDataTable('#tblProjectWiseStatus');
-                }
-            }
+            initializeDataTable('#tblProjectWiseStatus');
         },
-        error: function (result) {
+
+        error: function () {
             Swal.fire({ text: "" });
         }
     });
+}
+function isValidResponse(response) {
+    if (response === "null" || response === null) return false;
+
+    if (response === -1) {
+        Swal.fire({ text: "" });
+        return false;
+    }
+
+    return response !== 0;
+}
+function buildTableHeader(StatusProjectlst) {
+
+    let html = `
+        <thead>
+            <tr>
+                <th class="d-none noExport"></th>
+                <th class="text-center">Ser No</th>
+                <th>Project Name</th>
+    `;
+
+    StatusProjectlst.forEach(item => {
+        if (!isValidStatus(item.status)) return;
+        html += `<th>${item.status}</th>`;
+    });
+
+    html += `
+            </tr>
+        </thead>
+    `;
+
+    return html;
+}
+function buildTableBody(StatusProjectlst, MovProjectlst) {
+
+    let html = '<tbody id="bodyProjectWiseStatus">';
+    let count = 1;
+    let projIdTracker = 0;
+
+    MovProjectlst.forEach(item => {
+
+        if (projIdTracker === item.projId) return;
+
+        projIdTracker = item.projId;
+
+        html += buildProjectRow(item, StatusProjectlst, MovProjectlst, count);
+        count++;
+    });
+
+    html += '</tbody>';
+    return html;
+}
+function buildProjectRow(project, StatusProjectlst, MovProjectlst, count) {
+
+    let html = `
+        <tr>
+            <td class="clsspnprojId d-none noExport">${project.projId}</td>
+            <td class="align-middle text-center">${count}</td>
+            <td class="RefLetter-container btn-clsprojName">
+                <div class="tooltip-container noExport">
+                    ${trimByWords(project.projName, 5)}
+                </div>
+                <div class="RefLetter projnameforlabel">
+                    ${project.projName}
+                </div>
+            </td>
+    `;
+
+    StatusProjectlst.forEach(statusItem => {
+
+        if (!isValidStatus(statusItem.status)) return;
+
+        html += buildStatusCell(project, statusItem, MovProjectlst);
+    });
+
+    html += '</tr>';
+
+    return html;
+}
+function buildStatusCell(project, statusItem, MovProjectlst) {
+
+    const match = MovProjectlst.filter(function (element) {
+        return element.statusId == statusItem.statusId &&
+            element.projId == project.projId;
+    });
+
+    if (match.length != 0) {
+
+        const time = DateFormateddMMyyyyhhmmss(match[0].timeStamp);
+
+        return '<td class="align-middle text-center" data-toggle="tooltip" data-placement="top" title="' + time + '">' +
+            '<div class="pws-ok-dot">✔</div>' +
+            '<span class="d-none">' + time + '</span>' +
+            '</td>';
+    }
+    else {
+
+        return '<td class="align-middle text-center">' +
+            '<img src="/assets/images/icons/Cross_red_circle.png" width="22" height="22" alt="Readed">' +
+            '</td>';
+    }
+}
+function buildProjectRow(project, StatusProjectlst, MovProjectlst, count) {
+
+    let html = `
+        <tr>
+            <td class="clsspnprojId d-none noExport">${project.projId}</td>
+            <td class="align-middle text-center">${count}</td>
+            <td class="RefLetter-container btn-clsprojName">
+                <div class="tooltip-container noExport">
+                    ${trimByWords(project.projName, 5)}
+                </div>
+                <div class="RefLetter projnameforlabel">
+                    ${project.projName}
+                </div>
+            </td>
+    `;
+
+    StatusProjectlst.forEach(statusItem => {
+
+        if (!isValidStatus(statusItem.status)) return;
+
+        html += buildStatusCell(project, statusItem, MovProjectlst);
+    });
+
+    html += '</tr>';
+
+    return html;
+}
+function isValidStatus(status) {
+    return status !== "BISAG-N" && status !== "Re-Vetting";
+}
+function bindProjectClick() {
+
+    $(document)
+        .off("click", ".btn-clsprojName")
+        .on("click", ".btn-clsprojName", function () {
+
+            const row = $(this).closest("tr");
+            const projId = row.find(".clsspnprojId").html();
+            const projName = row.find(".projnameforlabel").html();
+
+            $('#ProjHoldHistory').modal('show');
+            $(".lblProjHoldHistory").html(projName);
+            $("#cardforProjHoldHistory").removeClass("d-none");
+
+            GetProjHold(projId);
+            ProjectWiseStatusByProjid(projId);
+        });
 }
 
 
 
 function ProjectWiseStatusByProjid(projid) {
-  
-    
-    var listItem = "";
 
-    var userdata = {
-        "Projid": projid
-    };
+    const userdata = { "Projid": projid };
 
     $.ajax({
         url: '/Home/GetProjectWiseStatus',
         contentType: 'application/x-www-form-urlencoded',
         data: userdata,
         type: 'POST',
+
         success: function (response) {
-            
-            if (response != "null" && response != null) {
 
-                if (response == -1) {
-                    Swal.fire({ text: "Error fetching data!" });
-                } else if (response == 0) {
-                    Swal.fire({ text: "No data found for the given project ID." });
-                } else {
-                    var StatusProjectlst = response.statusProjectlst;
-                    var MovProjectlst = response.movProjectlst;
+            if (!validateProjResponse(response)) return;
 
-                    listItem += '<thead>';
-                    listItem += '<tr class="theadfontsize">';
-                    listItem += '<th class="d-none noExport"></th>';
+            const { statusProjectlst, movProjectlst } = response;
 
-                    for (var i = 0; i < StatusProjectlst.length; i++) {
-                        if (StatusProjectlst[i].status !== "BISAG-N" && StatusProjectlst[i].status !== "Re-Vetting") {
-                            listItem += '<th class="text-white">' + StatusProjectlst[i].status + '</th>';
-                        }
-                    }
+            const header = buildProjHeader(statusProjectlst);
+            const body = buildProjBody(statusProjectlst, movProjectlst);
 
-                    listItem += '</tr>';
-                    listItem += '</thead>';
-                    listItem += '<tbody id="bodyProjectWiseStatusByprojid table-responsive">';
-
-                    var count = 1;
-                    var ProjId = 0;
-
-                    for (var j = 0; j < MovProjectlst.length; j++) {
-
-                        if (ProjId != MovProjectlst[j].projId) {
-                            ProjId = MovProjectlst[j].projId;
-                            listItem += '<tr>';
-                            listItem += '<td class="clsspnprojId d-none noExport">' + MovProjectlst[j].projId + '</td>';
-
-                            for (var i = 0; i < StatusProjectlst.length; i++) {
-                                if (StatusProjectlst[i].status !== "BISAG-N" && StatusProjectlst[i].status !== "Re-Vetting") {
-
-                                    var isstatus = MovProjectlst.filter(function (element) {
-                                        return element.statusId == StatusProjectlst[i].statusId && element.projId == MovProjectlst[j].projId;
-                                    });
-
-                                    if (isstatus.length != 0) {
-                                        listItem += '<td class="" data-toggle="tooltip" data-placement="top" title="'
-                                            + DateFormateddMMyyyyhhmmss(isstatus[0].timeStamp)
-                                            + '"><div class="d-flex d-flex justify-content-between"><span class="pws-ok-dot d-flex ">✔</span><span class="nowrap">'
-                                            + DateFormateddMMyyyyhhmmss(isstatus[0].timeStamp)
-                                            + '</span></div></td>';
-
-                                    } else {
-                                        listItem += '<td class="align-middle text-center"><img src="/assets/images/icons/Cross_red_circle.png" width="22" height="22" alt="Readed"></td>';
-                                    }
-                                }
-                            }
-
-                            listItem += '</tr>';
-                            count++;
-                        }
-                    }
-
-                    listItem += '</tbody>';
-
-                    $(".tblProjectWiseStatusByprojid").html(listItem);
-                }
-            }
+            $(".tblProjectWiseStatusByprojid").html(header + body);
         },
+
         error: function (error) {
             console.log('Error:', error);
             Swal.fire({ text: 'An error occurred while fetching data.' });
         }
     });
+}
+function ProjectWiseStatusByProjid(projid) {
+
+    const userdata = { "Projid": projid };
+
+    $.ajax({
+        url: '/Home/GetProjectWiseStatus',
+        contentType: 'application/x-www-form-urlencoded',
+        data: userdata,
+        type: 'POST',
+
+        success: function (response) {
+
+            if (!validateProjResponse(response)) return;
+
+            const { statusProjectlst, movProjectlst } = response;
+
+            const header = buildProjHeader(statusProjectlst);
+            const body = buildProjBody(statusProjectlst, movProjectlst);
+
+            $(".tblProjectWiseStatusByprojid").html(header + body);
+        },
+
+        error: function (error) {
+            console.log('Error:', error);
+            Swal.fire({ text: 'An error occurred while fetching data.' });
+        }
+    });
+}
+function validateProjResponse(response) {
+
+    if (response == "null" || response == null) {
+        return false;
+    }
+
+    if (response == -1) {
+        Swal.fire({ text: "Error fetching data!" });
+        return false;
+    }
+
+    if (response == 0) {
+        Swal.fire({ text: "No data found for the given project ID." });
+        return false;
+    }
+
+    return true;
+}
+function buildProjHeader(StatusProjectlst) {
+
+    let html = `
+        <thead>
+            <tr class="theadfontsize">
+                <th class="d-none noExport"></th>
+    `;
+
+    StatusProjectlst.forEach(item => {
+        if (!isValidStatus(item.status)) return;
+        html += `<th class="text-white">${item.status}</th>`;
+    });
+
+    html += `
+            </tr>
+        </thead>
+    `;
+
+    return html;
+}
+function buildProjBody(StatusProjectlst, MovProjectlst) {
+
+    let html = '<tbody id="bodyProjectWiseStatusByprojid table-responsive">';
+    let projTracker = 0;
+
+    MovProjectlst.forEach(item => {
+
+        if (projTracker === item.projId) return;
+
+        projTracker = item.projId;
+
+        html += buildProjRow(item, StatusProjectlst, MovProjectlst);
+    });
+
+    html += '</tbody>';
+
+    return html;
+}
+function buildProjRow(project, StatusProjectlst, MovProjectlst) {
+
+    let html = `
+        <tr>
+            <td class="clsspnprojId d-none noExport">${project.projId}</td>
+    `;
+
+    StatusProjectlst.forEach(statusItem => {
+        if (!isValidStatus(statusItem.status)) return;
+
+        html += buildProjStatusCell(project, statusItem, MovProjectlst);
+    });
+
+    html += '</tr>';
+
+    return html;
+}
+
+function buildProjStatusCell(project, statusItem, MovProjectlst) {
+
+    const match = MovProjectlst.filter(el =>
+        el.statusId === statusItem.statusId &&
+        el.projId === project.projId
+    );
+
+    if (match.length) {
+        const time = DateFormateddMMyyyyhhmmss(match[0].timeStamp);
+
+        return `
+            <td data-toggle="tooltip" data-placement="top" title="${time}">
+                <div class="d-flex d-flex justify-content-between">
+                    <span class="pws-ok-dot d-flex">✔</span>
+                    <span class="nowrap">${time}</span>
+                </div>
+            </td>
+        `;
+    }
+
+    return `
+        <td class="align-middle text-center">
+            <img src="/assets/images/icons/Cross_red_circle.png"
+                 width="22" height="22" alt="Readed">
+        </td>
+    `;
+}
+
+function isValidStatus(status) {
+    return status !== "BISAG-N" && status !== "Re-Vetting" && status !== "AI/ML";
 }
 
 

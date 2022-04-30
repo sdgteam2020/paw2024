@@ -5,9 +5,9 @@ $(document).ready(function () {
 
     $("#LimitimeInputa").on("input", function () {
 
-        var inputValue = $(this).val();
+        let inputValue = $(this).val();
 
-        var numericValue = parseFloat(inputValue);
+        let numericValue = parseFloat(inputValue);
 
         if (numericValue < 0) {
 
@@ -106,14 +106,14 @@ $(".btn-Mapping").click(function () {
 });
 
 $('#btnsave').click(function () {
-    var Status = $("#StatusNames").val();
+    let Status = $("#StatusNames").val();
     alert(Status);
-    var StatusId = $("#StatusId").val();
+    let StatusId = $("#StatusId").val();
     alert(StatusId);
 
   
 
-    var model = {
+    let model = {
 
         Status: Status,
         StatusId: StatusId
@@ -156,8 +156,8 @@ $('#btnsave').click(function () {
 
 $(document).on('click', '.btn-edit', function () {
 
-    var closestRow = $(this).closest("tr").find("#StatusNames").html();
-    var closestRow1 = $(this).closest("tr").find("#spnStatusId").html();
+    let closestRow = $(this).closest("tr").find("#StatusNames").html();
+    let closestRow1 = $(this).closest("tr").find("#spnStatusId").html();
 
     $('#StatusId').val(closestRow1);
     $('#StatusNames').val(closestRow);

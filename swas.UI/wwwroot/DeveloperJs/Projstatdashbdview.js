@@ -4,8 +4,8 @@
     $(function () {
         $(".processDetail").click(function () {
 
-            var $buttonClicked = $(this);
-            var ProjectId = $buttonClicked.attr('data-id');
+            let $buttonClicked = $(this);
+            let ProjectId = $buttonClicked.attr('data-id');
 
             Swal.fire({
                 title: 'Are you sure?',
@@ -56,8 +56,8 @@
     $(function () {
         $(".RetDuplicate").click(function () {
 
-            var $buttonClicked = $(this);
-            var ProjectId = $buttonClicked.attr('data-id');
+            let $buttonClicked = $(this);
+            let ProjectId = $buttonClicked.attr('data-id');
 
             Swal.fire({
                 title: 'Are you sure?',
@@ -98,8 +98,8 @@
 
     $(function () {
         $(".RetObsn").click(function () {
-            var $buttonClicked = $(this);
-            var ProjectId = $buttonClicked.attr('data-id');
+            let $buttonClicked = $(this);
+            let ProjectId = $buttonClicked.attr('data-id');
 
             Swal.fire({
                 title: 'Are you sure?',
@@ -110,7 +110,7 @@
                 input: 'text', // Add an input field for comments
                 inputPlaceholder: 'Enter your observation comments...',
                 inputValidator: (value) => {
-                    var cleanedValue = value.replace(/[^a-zA-Z0-9/ ]/g, "");
+                    let cleanedValue = value.replace(/[^a-zA-Z0-9/ ]/g, "");
                     Swal.getInput().value = cleanedValue;
                     if (!cleanedValue) {
                         return 'Please enter your observation comments!';
@@ -118,7 +118,7 @@
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    var observationComments = Swal.getInput().value;
+                    let observationComments = Swal.getInput().value;
 
                     $.ajax({
                         url: '/ProjStakeHolderMov/RetwithObsn',
@@ -148,12 +148,12 @@
                 }
             });
             Swal.getInput().addEventListener('keyup', function () {
-                var cleanedValue = this.value.replace(/[^a-zA-Z0-9/ ]/g, "");
+                let cleanedValue = this.value.replace(/[^a-zA-Z0-9/ ]/g, "");
                 this.value = cleanedValue;
             });
 
             Swal.getInput().addEventListener('input', function () {
-                var cleanedValue = this.value.replace(/[^a-zA-Z0-9/ ]/g, "");
+                let cleanedValue = this.value.replace(/[^a-zA-Z0-9/ ]/g, "");
                 this.value = cleanedValue;
             });
         });

@@ -14,7 +14,7 @@ $(document).ready(function () {
 
   
     $("#ddlUnitId").change(function () {
-        var selectedMode = $(this).val();
+        let selectedMode = $(this).val();
     });
     $("#projunderprocess").click(function () {
 
@@ -31,7 +31,7 @@ $(document).ready(function () {
 
     $('#WhitelistedTable tbody').on('click', '.EditWhiteListedProj', function (e) {
         e.preventDefault();
-        var id = $(this).data('id');
+        let id = $(this).data('id');
         $('#WhiteListedProjectDetail').modal('hide');
 
         $.ajax({
@@ -43,14 +43,14 @@ $(document).ready(function () {
                     $('#edit_Id').val(data.id);
                     $('#edit_ProjName').val(data.projName);
 
-                    var hostedOnMap = {
+                    let hostedOnMap = {
                         "1": "LAN",
                         "2": "ADN",
                         "3": "Internet",
                         "4": "Standalone"
                     };
 
-                    var hostedOnVal = data.mHostTypeId ? data.mHostTypeId.toString() : "";
+                    let hostedOnVal = data.mHostTypeId ? data.mHostTypeId.toString() : "";
                     $('#edit_HostedOn').val(hostedOnVal);
 
                     if ($('#edit_HostedOn').val() != hostedOnVal) {
@@ -83,7 +83,7 @@ $(document).ready(function () {
         $.ajax({
             url: '/Home/UpdateWhiteListedProject', 
             type: 'POST',
-            data: $('#editWhiteListedForm').serialize(),
+            data: encryptData(('#editWhiteListedForm').serialize()),
             success: function (data) {
                 if (data == 1) {
                     
@@ -126,7 +126,7 @@ $(document).ready(function () {
 
 
 function ValInData(input) {
-    var regex = /[^a-zA-Z0-9/ ]/g;
+    let regex = /[^a-zA-Z0-9/ ]/g;
     input.value = input.value.replace(regex, "");
 }
 
@@ -137,17 +137,17 @@ $('#ProcessId').on('click', function(){
 
 function ButtonClick() {
     
-    var ButtonText = $('#ProcessId').data('button-text');
-    var flag = $('#ProcessId').data('flag');
+    let ButtonText = $('#ProcessId').data('button-text');
+    let flag = $('#ProcessId').data('flag');
    
 
     if (ButtonText === 'Sign In' &&flag === 'True') {
-        var signInUrl = '/Home/Index';
+        let signInUrl = '/Home/Index';
         window.location.href = signInUrl;
     }
     else {
         if (ButtonText === 'Sign Up') {
-            var signUpUrl = '/Identity/Account/Register';
+            let signUpUrl = '/Identity/Account/Register';
             window.open(signUpUrl, '_blank');
         }
         else {
@@ -164,7 +164,7 @@ function ButtonClick() {
                         url: '/Home/ClearSession', // The server-side action to clear the session
                         type: 'POST',
                         success: function () {
-                            var signUpUrl = '/Identity/Account/Login';
+                            let signUpUrl = '/Identity/Account/Login';
                             window.open(signUpUrl, '_self'); // Open login in the same window or tab
                         },
                         error: function () {
@@ -185,7 +185,7 @@ function ButtonClick() {
 }
 
 $("#telNo").on("keypress", function () {
-    var input = $(this).val();
+    let input = $(this).val();
     input = input.replace(/\D/g, '');
     if (input.length > 10) {
         input = input.substring(0, 10);
@@ -194,7 +194,7 @@ $("#telNo").on("keypress", function () {
     $(this).val(input);
 });
 $("#telNo").on("keypress", function (e) {
-    var charCode = e.which ? e.which : e.keyCode;
+    let charCode = e.which ? e.which : e.keyCode;
     if (charCode < 48 || charCode > 57) {
         e.preventDefault();
         $(this).siblings(".invalid-feedback")
@@ -208,14 +208,14 @@ $("#telNo").on("keypress", function (e) {
             .hide();
     }
 });
-var validPattern = /^[a-zA-Z0-9 ]*$/;
+let validPattern = /^[a-zA-Z0-9 ]*$/;
 
 
 
 
 $('.form-control').keypress(function (e) {
   
-    var keyCode = e.which;
+    let keyCode = e.which;
     if ((keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (keyCode >= 48 && keyCode <= 57) || (keyCode == 32)) {
         $(this).siblings(".invalid-feedback").hide();
         return true; // Allow the keypress
@@ -236,8 +236,8 @@ $('.form-control').keypress(function (e) {
 });
 
 $("#hostedOn,  #certNo, #remarks, #appt").on("input", function () {
-    var currentVal = $(this).val();
-    var maxLength = 200;
+    let currentVal = $(this).val();
+    let maxLength = 200;
     if ($(this).attr('id') === 'remarks') {
         maxLength = 500;
     }
@@ -249,7 +249,7 @@ $("#hostedOn,  #certNo, #remarks, #appt").on("input", function () {
             .show();
     }
     else if (currentVal.length > maxLength) {
-        isValid = false;
+      let  isValid = false;
 
         $(this).addClass("is-invalid");
         $(this).siblings(".invalid-feedback")
@@ -262,12 +262,12 @@ $("#hostedOn,  #certNo, #remarks, #appt").on("input", function () {
         $(this).siblings(".invalid-feedback").hide();
     }
     $("input[required], textarea[required]").on("input", function () {
-        var maxLength = 200;
+        let maxLength = 200;
         if ($(this).attr('id') === 'remarks') {
             maxLength = 500;
         }
 
-        var value = $(this).val();
+        let value = $(this).val();
 
         if (value && value.trim() !== "" && value.length <= maxLength) {
             $(this).removeClass("is-invalid");
@@ -279,7 +279,7 @@ $("#hostedOn,  #certNo, #remarks, #appt").on("input", function () {
 
 $("#btn_Save").on('click', function (e) {
     e.preventDefault();
-    var formData = {
+    let formData = {
         ProjName: $('#swName').val(),
         mHostTypeId: $('#hostedOn').val(),
         appt: $('#appt').val(),
@@ -290,12 +290,12 @@ $("#btn_Save").on('click', function (e) {
         ValidUpto: $('#validUpto').val(),
         Remarks: $('#remarks').val(),
     };
-    var isValid = true;
+    let isValid = true;
    
     $("input[required], select[required], textarea[required]").each(function () {
         
-        var value = $(this).val();
-        var maxLength = 200;
+        let value = $(this).val();
+        let maxLength = 200;
         if ($(this).attr('id') === 'remarks') {
             maxLength = 500;
         }
@@ -321,12 +321,12 @@ $("#btn_Save").on('click', function (e) {
         }
     });
     $("input[required], textarea[required]").on("input", function () {
-        var maxLength = 200;
+        let maxLength = 200;
         if ($(this).attr('id') === 'remarks') {
             maxLength = 500;
         }
 
-        var value = $(this).val();
+        let value = $(this).val();
 
         if (value && value.trim() !== "" && value.length <= maxLength) {
             $(this).removeClass("is-invalid");
@@ -334,7 +334,7 @@ $("#btn_Save").on('click', function (e) {
         }
     });
     $("select[required]").on("change", function () {
-        var value = $(this).val();
+        let value = $(this).val();
         if (value && value.trim() !== "") {
             $(this).removeClass("is-invalid");
             $(this).siblings(".invalid-feedback").hide();
@@ -396,7 +396,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     $("#CommentProject").autocomplete({
         source: function (request, response) {
-            var query = request.term;   
+            let query = request.term;   
          
             if (query.length > 2) { // Only trigger search when length > 3
                 $.ajax({
@@ -433,8 +433,8 @@ $(document).ready(function () {
         select: function (event, ui) {
             let selectedOption = ui.item;
 
-            var date = new Date(selectedOption.timeStamp);
-            var formattedDate =
+            let date = new Date(selectedOption.timeStamp);
+            let formattedDate =
                 ("0" + date.getDate()).slice(-2) + '-' +
                 ("0" + (date.getMonth() + 1)).slice(-2) + '-' +
                 date.getFullYear() + ' ' +
@@ -466,7 +466,7 @@ $(document).ready(function () {
                 <td class="s-no-column">${1}</td>
                 <td class='align-middle'>
                     <a href='/Projects/ProjHistory?EncyID=${encodeURIComponent(selectedOption.encyId)}'>
-                        <span id='projectName' class='projNameDetail'>${selectedOption.value}</span>
+                        <span id='projectNameforcomment' class='projNameDetail'>${selectedOption.value}</span>
                     </a>
                 </td>
                 <td>${selectedOption.stkholder}</td>
@@ -494,3 +494,14 @@ $(document).ready(function () {
 
 })
 
+
+
+window.addEventListener("load", () => {
+    const cards = document.querySelectorAll(".fade-card");
+
+    cards.forEach((card, index) => {
+        setTimeout(() => {
+            card.classList.add("show");
+        }, index * 300); // stagger effect
+    });
+});

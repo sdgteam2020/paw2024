@@ -1,8 +1,8 @@
-﻿var UnitStatusMappingId = 0;
+﻿let UnitStatusMappingId = 0;
 $(document).ready(function () {
 
 
-    var table = $('#tblactionEx').DataTable({
+    let table = $('#tblactionEx').DataTable({
         lengthChange: true,
         dom: 'lBfrtip',
         buttons: [
@@ -18,7 +18,7 @@ $(document).ready(function () {
                     'MultipleOf': {
                         conditionName: 'Multiple Of',
                         init: function (that, fn, preDefined = null) {
-                            var el = $('<input/>').on('input', function () { fn(that, this) });
+                            const el = $('<input/>').on('input', function () { fn(that, this) });
 
                             if (preDefined !== null) {
                                 $(el).val(preDefined[0]);
@@ -43,7 +43,7 @@ $(document).ready(function () {
 
         mMsaterfwdStage(0, "ddlfwdStage", 5, 0);
         $("#ddlfwdStage").change(function () {
-            mMsaterStage(0, "ddlfwdSubStage", 6, $("#ddlfwdStage").val(), $("#SpnStakeHolderId").html());
+            mMsaterStage(0, "ddlfwdSubStage", 6, $("#ddlfwdStage").val(), $(".SpnStakeHolderId").html());
         });
 
         $("#ddlfwdSubStage").change(function () {
@@ -99,7 +99,7 @@ $('#unitMapping').on('hidden.bs.modal', function () {
 
 function CheckProjectExists(Type) {
 
-    var userdata =
+    let userdata =
     {
         "UnitId": $("#ddlfwdFwdTo").val(),
         "ActionId": $("#ddlfwdAction").val(),
@@ -140,7 +140,7 @@ function CheckProjectExists(Type) {
 
 function SaveActionException() {
 
-    var userdata =
+    let userdata =
     {
         "UnitStatusMappingId": UnitStatusMappingId,
         "UnitId": $("#ddlfwdFwdTo").val(),
@@ -169,7 +169,7 @@ function SaveActionException() {
 
 function UpdateActionException() {
    
-    var userdata =
+    let userdata =
     {
         "UnitStatusMappingId": UnitStatusMappingId,
         "UnitId": $("#ddlfwdFwdTo").val(),

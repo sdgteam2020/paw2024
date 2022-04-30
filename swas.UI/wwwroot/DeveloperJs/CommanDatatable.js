@@ -28,7 +28,7 @@ function initializeDataTable(tableSelector) {
                         body: function (data, row, column, node) {
                             console.log(data);
                             if (typeof data === 'string' && data.indexOf('<') >= 0) {
-                                var el = $('<div>' + data + '</div>'); // ✅ ADDED
+                                let el = $('<div>' + data + '</div>'); // ✅ ADDED
                                 el.find('.noExport').remove();        // ✅ ADDED
                                 return column === 0 ? row + 1 : el.text().trim(); // ✅ ADDED
                             }
@@ -44,7 +44,7 @@ function initializeDataTable(tableSelector) {
                     format: {
                         body: function (data, row, column, node) {
                             if (typeof data === 'string' && data.indexOf('<') >= 0) {
-                                var el = $('<div>' + data + '</div>'); // ✅ ADDED
+                                let el = $('<div>' + data + '</div>'); // ✅ ADDED
                                 el.find('.noExport').remove();        // ✅ ADDED
                                 return column === 0 ? row + 1 : el.text().trim(); // ✅ ADDED
                             }
@@ -76,7 +76,7 @@ function initializeDataTable(tableSelector) {
                     'MultipleOf': {
                         conditionName: 'Multiple Of',
                         init: function (that, fn, preDefined = null) {
-                            var el = $('<input>').on('input', function () { fn(that, this); });
+                            let el = $('<input>').on('input', function () { fn(that, this); });
                             if (preDefined !== null) {
                                 $(el).val(preDefined[0]);
                             }
@@ -97,7 +97,7 @@ function initializeDataTable(tableSelector) {
         }
     });
 }
-function PdfDiv(tableSelector, watermarkSelector = "#IpAddress") {
+function PdfDiv(tableSelector, watermarkSelector = ".IpAddress") {
  
     const table = $(tableSelector).DataTable();
     (tableSelector === "#SoftwareType")

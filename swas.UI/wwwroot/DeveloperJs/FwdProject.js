@@ -1,4 +1,5 @@
-﻿var TimeStampForcheckdate = new Date();
+﻿/// <reference path="../lib/pdfjs/pdf.worker.js" />
+let TimeStampForcheckdate = new Date();
 $(document).ready(function () {
 
     $("#searchBox").select2({
@@ -19,7 +20,7 @@ $(document).ready(function () {
 
     $("#ddlfwdStage").change(function () {
 
-        mMsaterStage(0, "ddlfwdSubStage", 6, $("#ddlfwdStage").val(), $("#SpnStakeHolderId").html())
+        mMsaterStage(0, "ddlfwdSubStage", 6, $("#ddlfwdStage").val(), $("SpnStakeHolderId").html())
     });
 
 
@@ -39,7 +40,7 @@ $(document).ready(function () {
     });
 
     $("select[name='fwdoffrs']").change(function () {
-        var selectedText = $(this).find("option:selected").text().trim();
+        let selectedText = $(this).find("option:selected").text().trim();
 
         if ($("select[name='fwdoffrs']").val() === "More") {
             $('.FwdDropdown').removeClass('col-md-6');
@@ -63,11 +64,11 @@ $(document).ready(function () {
     });
     $(".btn-Undo").click(function () {
         
-        var projectName = $(this).closest("tr").find("a").data("proj-name");
-        IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
+        let projectName = $(this).closest("tr").find("a").data("proj-name");
+        IsReadInbox($(this).closest("tr").find(".SpnCurrentpsmId").html());
 
-        var words = projectName.split(" ");
-        var shortProjName = words.length > 6 ? words.slice(0, 4).join(" ") + "..." : projectName;
+        let words = projectName.split(" ");
+        let shortProjName = words.length > 6 ? words.slice(0, 4).join(" ") + "..." : projectName;
 
      
 
@@ -79,13 +80,7 @@ $(document).ready(function () {
             cancelButtonText: 'Cancel',
 
             
-            customClass: {
-                popup: 'custom-swal-popup',
-                confirmButton: 'custom-confirm-button',
-                cancelButton: 'custom-cancel-button',
-                input: 'custom-input-field',
-                title: 'pullback-title'
-            },
+           
 
             preConfirm: (login) => {
                 if (!login) {
@@ -97,8 +92,8 @@ $(document).ready(function () {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                PullBAckProject($(this).closest("tr").find("#SpnCurrentProjId").html(), $(this).closest("tr").find("#SpnCurrentpsmId").html(), result.value, $(this).closest("tr").find("#SpnprojectStageId").html());
-                UndoNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2, $(this).closest("tr").find("#SpnprojectToUnitId").html());
+                PullBAckProject($(this).closest("tr").find(".SpnCurrentProjId").html(), $(this).closest("tr").find(".SpnCurrentpsmId").html(), result.value, $(this).closest("tr").find("#SpnprojectStageId").html());
+                UndoNotification($(this).closest("tr").find(".SpnCurrentProjId").html(), 2, $(this).closest("tr").find("#SpnprojectToUnitId").html());
 
              
 
@@ -107,31 +102,32 @@ $(document).ready(function () {
     });
     $(document).on('click', ".btn-FwdHistorySent",function () {
 
-        var projName = $(this).data('proj-name');
-        var words = projName.split(" ");
-        var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
-        var finalTitle = "Proj Name: " + projName;
+        let projName = $(this).data('proj-name');
+        let words = projName.split(" ");
+        let shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
+        let finalTitle = "Proj Name: " + projName;
         $('.lblHistory').text(finalTitle);
         $('#ProjFwdHistory').modal('show');
 
-        GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentProjId").html());
+        GetProjectMovHistory($(this).closest("tr").find(".SpnCurrentProjId").html());
 
 
 
     });
     $(document).on('click', ".btn-FwdHistory",function () {
        
-        var projName = $(this).data('proj-name');
-        var words = projName.split(" ");
-        var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
-        var finalTitle = "Proj Name: " + projName;
+        let projName = $(this).data('proj-name');
+        let words = projName.split(" ");
+        let shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
+        let finalTitle = "Proj Name: " + projName;
      
-        $('.lblHistory').text(finalTitle);
-        $('#ProjFwdHistory').modal('show');
+        $('.lblHistory').text(finalTitle);  
 
-        GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentProjId").html());
-        IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
-        if ($(this).closest("tr").find("#IsccForRemoveRow").html() == "Cc") {
+        $('#ProjFwdHistory').modal('show');
+        GetProjectMovHistory($(this).closest("tr").find(".SpnCurrentProjId").html());
+        
+        IsReadInbox($(this).closest("tr").find(".SpnCurrentpsmId").html());
+        if ($(this).closest("tr").find(".IsccForRemoveRow").html() == "Cc") {
             $(this).closest('tr').remove();
         }
         $(this).closest("tr").removeClass("bold-text")
@@ -141,27 +137,31 @@ $(document).ready(function () {
         }, 500)
 
     });
+    $(document).on('hidden.bs.modal', '.modal', function () {
+        $('.modal-backdrop').remove();
+        $('body').removeClass('modal-open');
+    });
 
     $(".btn-Obsn").click(function () {
 
-        var projNameDetail = $(this).data('proj-name') + " " + "Move Details"
-        var projName = $(this).data('proj-name');
-        var words = projName.split(" ");
-        var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
-        var finalTitle = "Proj Name: " + projNameDetail;
+        let projNameDetail = $(this).data('proj-name') + " " + "Move Details"
+        let projName = $(this).data('proj-name');
+        let words = projName.split(" ");
+        let shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
+        let finalTitle = "Proj Name: " + projNameDetail;
         $('#fwdModal').text(finalTitle);
         $('.fwdtitle').text(projNameDetail);
 
         mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 2,1)
-        mMsaterStage($(this).closest("tr").find("#SpnTimeStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#SpnStageId").html(), $("#SpnStakeHolderId").html())
+        mMsaterStage($(this).closest("tr").find("#SpnTimeStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#SpnStageId").html(), $(".SpnStakeHolderId").html())
 
         
         mMsater($(this).closest("tr").find("#SpnTimeActionId").html(), "ddlfwdAction", 7, $(this).closest("tr").find("#SpnTimeStatusId").html())
-        mMsaterFwdTo($(this).closest("tr").find("#SpnTimeToUnitId").html(), "ddlfwdFwdTo", 8, 0, $(this).closest("tr").find("#SpnStakeHolderId").html(), 0, "");
-        mMsaterFwdTo(0, "ddlfwdCCTo", 8, 0, $(this).closest("tr").find("#SpnStakeHolderId").html(), 0, "");
-        $("#spanFwdCurrentPslmId").html($(this).closest("tr").find("#SpnCurrentpsmId").html())
-        $("#spanFwdProjectId").html($(this).closest("tr").find("#SpnCurrentProjId").html())
-        $("#SpnFwdStakeHolderId").html($(this).closest("tr").find("#SpnStakeHolderId").html())
+        mMsaterFwdTo($(this).closest("tr").find("#SpnTimeToUnitId").html(), "ddlfwdFwdTo", 8, 0, $(this).closest("tr").find(".SpnStakeHolderId").html(), 0, "");
+        mMsaterFwdTo(0, "ddlfwdCCTo", 8, 0, $(this).closest("tr").find(".SpnStakeHolderId").html(), 0, "");
+        $("#spanFwdCurrentPslmId").html($(this).closest("tr").find(".SpnCurrentpsmId").html())
+        $("#spanFwdProjectId").html($(this).closest("tr").find(".SpnCurrentProjId").html())
+        $("#SpnFwdStakeHolderId").html($(this).closest("tr").find(".SpnStakeHolderId").html())
 
 
         $('#ProjFwd').modal('show');
@@ -172,17 +172,17 @@ $(document).ready(function () {
         $(".Attmenthistory").addClass("d-none");
 
 
-        var pad = "00";
-        var datef2 = new Date();
+        let pad = "00";
+        let datef2 = new Date();
 
-        var months = "" + (datef2.getMonth() + 1);
-        var days = "" + datef2.getDate();
-        var monthsans = pad.substring(0, pad.length - months.length) + months;
-        var dayans = pad.substring(0, pad.length - days.length) + days;
-        var year = datef2.getFullYear();
-        var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-        var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-        var todayDate = `${year}-${monthsans}-${dayans}`;
+        let months = "" + (datef2.getMonth() + 1);
+        let days = "" + datef2.getDate();
+        let monthsans = pad.substring(0, pad.length - months.length) + months;
+        let dayans = pad.substring(0, pad.length - days.length) + days;
+        let year = datef2.getFullYear();
+        let hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+        let mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+        let todayDate = `${year}-${monthsans}-${dayans}`;
 
         fetchServerDate().then(function (S) {
 
@@ -196,7 +196,7 @@ $(document).ready(function () {
     });
 
     $(".ProjName").click(function () {
-        IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
+        IsReadInbox($(this).closest("tr").find(".SpnCurrentpsmId").html());
         InboxNotificationCount()
         $(this).closest("tr").removeClass("bold-text")
         location.reload();
@@ -211,8 +211,8 @@ $(document).ready(function () {
             alert("Please Select Send Unit To");
             return false;
         }
-        var remarkslength = $("#Reamarks").val().length;       // length of text
-        var attCount = $("#pdfFileInput")[0].files.length;
+        let remarkslength = $("#Reamarks").val().length;       // length of text
+        let attCount = $("#pdfFileInput")[0].files.length;
 
         if (remarkslength != 0 && attCount != 0) {
             Swal.fire({
@@ -227,8 +227,8 @@ $(document).ready(function () {
             return false;
         }
 
-        requiredFields = $('#ProjFwd').find('.requiredField');
-        var allFieldsComplete = true;
+        let requiredFields = $('#ProjFwd').find('.requiredField');
+        let allFieldsComplete = true;
         requiredFields.each(function (index) {
             if (this.value.length == 0) {
                 $(this).addClass('is-invalid');
@@ -247,12 +247,12 @@ $(document).ready(function () {
     });
     $(document).on('click', '#btnAttchMultiforpsmid', function () {
 
-        
+       
 
         requiredFields = $('#ProjFwd').find('.requiredFieldAttch');
 
 
-        var allFieldsComplete = true;
+        let allFieldsComplete = true;
         requiredFields.each(function (index) {
             if (this.value.length == 0) {
                 $(this).addClass('is-invalid');
@@ -291,9 +291,12 @@ $(document).ready(function () {
 
 
 
+
+
 $(".btnFwdConfirm").off().on("click", async function (e) {
     e.preventDefault(); // stop default click
-   
+
+
     const result = await Swal.fire({
         icon: 'warning',
         title: 'Confirmation',
@@ -331,143 +334,249 @@ let generatedPdfBlob = null;
 
 
 function CheckFwdCondition(CurrentPslmId) {
-  
-    var userdata =
-    {
+
+    const userdata = {
         "ProjId": $("#spanFwdProjectId").html(),
         "StatusId": $("#ddlfwdSubStage").val(),
-        "Actionsname": $("#ddlfwdAction").find("option:selected").text(),
+        "Actionsname": $("#ddlfwdAction option:selected").text(),
     };
 
     $.ajax({
         url: '/Projects/CheckFwdCondition',
         type: 'POST',
         data: userdata,
-        success: function (response) {
-            $('.FwdDropdown').addClass('col-md-6');
-         $('.ProjectsFwdUnit').addClass('d-none');
+        success: handleFwdConditionSuccess
+    });
+}
+
+// 🔹 MAIN HANDLER
+function handleFwdConditionSuccess(response) {
+
+    initFwdUI();
+
+    if (response == null) return;
+
+    if (response === true) {
+        handleAlreadyProcessed();
+        return;
+    }
+
+    handleValidForwardFlow();
+}
+
+// 🔹 INIT UI
+function initFwdUI() {
+    $('.FwdDropdown').addClass('col-md-6');
+    $('.ProjectsFwdUnit').addClass('d-none');
+    $("#searchBox").hide();
+}
+
+// 🔹 ALREADY PROCESSED CASE
+function handleAlreadyProcessed() {
+    const subStage = $("#ddlfwdSubStage").val();
+
+    const msg = subStage != 1
+        ? "Sub Stage Already Approved / Completed!"
+        : "Project Already Sent For Comments!";
+
+    Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: msg
+    });
+}
+
+// 🔹 MAIN FLOW
+function handleValidForwardFlow() {
+
+    const substage = $("#ddlfwdSubStage").val();
+    const ddlaction = $("#ddlfwdAction option:selected").text();
+    const ddlRemarks = $("#txtRemarksfwd").val();
+    const Projid = parseInt($("#spanFwdProjectId").html());
+
+    setupAttachmentUI();
+
+    if (shouldGenerateCertificate(ddlaction)) {
+        generateCertificate(substage, ddlaction, ddlRemarks, Projid);
+    } else {
+        hideCertificatePreview();
+    }
+
+    buildPreviewGrid();
+    CheckforPreviousapprovals();
+}
+
+// 🔹 UI SETUP
+function setupAttachmentUI() {
+    $(".Fwdtitle").html("Projects Attch Details");
+    $(".ProjectsFwd").addClass("d-none");
+    $(".Attmenthistory").removeClass("d-none");
+}
+
+// 🔹 CERTIFICATE CONDITION
+function shouldGenerateCertificate(ddlaction) {
+    return ddlaction === "Approved / Completed"
+        && $('#ddlfwdStage').val() == 3
+        && parseInt($('#ddlfwdSubStage').val()) != 33;
+}
+
+// 🔹 GENERATE CERTIFICATE
+function generateCertificate(substage, ddlaction, ddlRemarks, Projid) {
+
+    $('.uploadLoader').removeClass('d-none');
+    $("#btnlogsign, #btnDigitalsign").removeClass("d-none");
+    $("#btnconfirm").addClass("d-none");
+
+    $(".previewcertificateAttment").removeClass("d-none");
+    adjustPreviewLayout();
+    let Certdetails =
+    {
+        substage: substage,
+        ddlaction: ddlaction,
+        ddlRemarks: ddlRemarks,
+        Projid: Projid
+    }
+
+  
+    let encryptedpayload = encryptData(Certdetails);
+
+    console.log(encryptedpayload);
+    $.ajax({
+        url: "/Certificate/GenerateCertificate",
+        type: "GET",
+      data: { encryptdata: encryptedpayload }, // ✅ important
+        success: handleCertificateResponse
+    });
+}
+
+// 🔹 CERTIFICATE RESPONSEE:
+// 🔹 CERTIFICATE RESPONSE
+pdfjsLib.GlobalWorkerOptions.workerSrc = "/lib/pdfjs/pdf.worker.js";
+function handleCertificateResponse(response) {
+    $('.uploadLoader').addClass('d-none');
+
+    if (!response) {
+        Swal.fire({ icon: "error", title: "Oops...", text: "Certificate not Generated" });
+        return;
+    }
+
+    try {
+        const byteCharacters = atob(response);
+        const byteNumbers = new Uint8Array(byteCharacters.length);
+
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+
+        //const pdfBlob = new Blob([byteNumbers], { type: "application/pdf" });
+        generatedPdfBlob = new Blob([byteNumbers], { type: "application/pdf" });
+        window._currentPdfBlobUrl = URL.createObjectURL(generatedPdfBlob);
+
+        // ✅ Ensure container exists before rendering
+        if (!$('#Certificatepreview').length) {
+            console.error("Container not found");
+            return;
+        }
+
+        renderPdfToCanvases(byteNumbers.buffer);
+
+    } catch (err) {
+        console.error("PDF render error:", err);
+        Swal.fire({ icon: "error", title: "Error", text: "Failed to render PDF" });
+    }
+}
+
+// 🔹 RENDER PDF PAGES AS CANVASES (no inline styles)
+
+async function renderPdfToCanvases(arrayBuffer) {
+
+    const $container = $("#Certificatepreview");
+    $container.html('<div id="pdfPagesWrap"></div>');
+
+    const wrap = document.getElementById("pdfPagesWrap");
+
+    try {
+        const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+
+            const page = await pdf.getPage(pageNum);
+
+            const containerWidth = $container.width() - 32;
+
+            const baseViewport = page.getViewport({ scale: 1 });
+            const scale = containerWidth / baseViewport.width;
+
+            const viewport = page.getViewport({ scale });
+
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
+
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+
+            wrap.appendChild(canvas);
+
+            await page.render({
+                canvasContext: context,
+                viewport: viewport
+            }).promise;
+        }
+
+    } catch (error) {
+        console.error("Render error:", error);
+    }
+}
+
+// 🔹 DOWNLOAD PDF
+function downloadPdf() {
+    if (!window._currentPdfBlobUrl) return;
+    const a = document.createElement("a");
+    a.href = window._currentPdfBlobUrl;
+    a.download = "Certificate.pdf";
+    a.click();
+}
 
 
-            $("#searchBox").hide()
-            if (response != null) {
+// 🔹 HIDE CERT
+function hideCertificatePreview() {
+    $(".previewcertificateAttment").addClass("d-none");
+    $('.uploadLoader').addClass('d-none');
+    adjustPreviewLayout();
+}
 
-                if (response == true) {
-                    if ($("#ddlfwdSubStage").val() != 1) {
-                        Swal.fire({
-                            icon: "error",
-                            title: "Oops...",
-                            text: "Sub Stage Already Approved / Completed!",
+// 🔹 PREVIEW GRID
+function buildPreviewGrid() {
 
-                        });
-                    }
-                    else {
-                        Swal.fire({
-                            icon: "error",
-                            title: "Oops...",
-                            text: "Project Already Sent For Comments!",
+    const legapproval = $("#spanLegacyApproval").html();
 
-                        });
-                    }
-                }
-                else if (response == false) {
-           
-                    let substage = $("#ddlfwdSubStage").val();
-                    let ddlaction = $("#ddlfwdAction option:selected").text();
-                    let ddlRemarks = $("#txtRemarksfwd").val();
-                    let Projid = parseInt($("#spanFwdProjectId").html());
-                   
-                    $(".Fwdtitle").html("Projects Attch Details");
-                    $(".ProjectsFwd").addClass("d-none");
-                    $(".Attmenthistory").removeClass("d-none");
-                   
-                    if (ddlaction === "Approved / Completed" && $('#ddlfwdStage').val() == 3 && parseInt($('#ddlfwdSubStage').val())!=33 ) {
-                       
-                        $('.uploadLoader').remove('d-none')
-                        $("#btnlogsign").removeClass("d-none");
-                        $("#btnDigitalsign").removeClass("d-none");
+    const rows = [
+        { label: "To", value: projectMoveData.fwdTo.id != "More" ? projectMoveData.fwdTo.text : projectMoveData.sentToUnit.text, icon: "fa-user" },
+        { label: "CC", value: projectMoveData.ccList.map(c => c.text).join(", ") || "-", icon: "fa-users" },
+        { label: "Stage", value: projectMoveData.stage.text || "-", icon: "fa-project-diagram" },
+        { label: "Sub Stage", value: projectMoveData.subStage.text || "-", icon: "fa-layer-group" },
+        { label: "Action", value: projectMoveData.action.text || "-", icon: "fa-tasks" },
+        { label: "Remarks", value: projectMoveData.remarks || "-", icon: "fa-comment-dots" }
+    ];
 
-                        $("#btnconfirm").addClass("d-none");
+    if (legapproval === "True") {
+        rows.push({
+            label: "Date Of FWD",
+            value: projectMoveData.fwdDate || "-",
+            icon: "fa-calendar-alt"
+        });
+    }
 
-                        $(".previewcertificateAttment").removeClass("d-none");
-                        adjustPreviewLayout();
-                        $.ajax({
-                            url: "/Certificate/GenerateCertificate",
-                            type: "GET",
-                            data: {
-                                substage: substage,
-                                ddlaction: ddlaction,
-                                ddlRemarks: ddlRemarks,
-                                Projid: Projid
-                            },
-                            success: function (response) {
-                                    $('.uploadLoader').addClass('d-none')
-                                if (response != null) {
-                                    const byteCharacters = atob(response);
-                                    const byteNumbers = new Array(byteCharacters.length);
+    const html = rows.map(buildPreviewCard).join('');
+    $("#previewGrid").html(html);
+}
 
-                                    for (let i = 0; i < byteCharacters.length; i++) {
-                                        byteNumbers[i] = byteCharacters.charCodeAt(i);
-                                    }
-
-                                    const pdfBytes = new Uint8Array(byteNumbers);
-                                    generatedPdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
-
-                                    const blobUrl = URL.createObjectURL(generatedPdfBlob);
-                                    $("#Certificatepreview").html(`
-        <iframe id="pdfFrame"
-                src="${blobUrl}"
-                class="pdf-frame"
-                >
-        </iframe>
-    `);
-
-
-                                }
-                                else {
-                                    Swal.fire({
-                                        icon: "error",
-                                        title: "Oops...",
-                                        text: "Certificate not Genrated",
-
-                                    });
-                                }
-                                }
-                              
-                        });
-                    }
-                    else {
-                        $(".previewcertificateAttment").addClass("d-none");
-                        $('.uploadLoader').addClass('d-none')
-                        adjustPreviewLayout();
-                    }
-
-
-
-
-
-
-                    var legapproval = $("#spanLegacyApproval").html();
-                    const rows = [
-                        { label: "To", value: projectMoveData.fwdTo.id != "More" ? projectMoveData.fwdTo.text : projectMoveData.sentToUnit.text, icon: "fa-user" },
-                        { label: "CC", value: projectMoveData.ccList.map(c => c.text).join(", ") || "-", icon: "fa-users" },
-                        { label: "Stage", value: projectMoveData.stage.text || "-", icon: "fa-project-diagram" },
-                        { label: "Sub Stage", value: projectMoveData.subStage.text || "-", icon: "fa-layer-group" },
-                        { label: "Action", value: projectMoveData.action.text || "-", icon: "fa-tasks" },
-                        { label: "Remarks", value: projectMoveData.remarks || "-", icon: "fa-comment-dots" }
-                    ];
-
-                    if (legapproval === "True") {
-                        rows.push({
-                            label: "Date Of FWD",
-                            value: projectMoveData.fwdDate || "-",
-                            icon: "fa-calendar-alt"
-                        });
-                    }
-
-                    const html = rows.map(row => `
+// 🔹 CARD
+function buildPreviewCard(row) {
+    return `
     <div class="col-md-6 col-lg-4">
         <div class="glass-card h-100 p-4">
-            <div class="d-flex align-items-start">
+            <div class=" align-items-start">
                 <div class="me-4 flex-shrink-0">
                     <div class="icon-circle d-flex align-items-center justify-content-center shadow-sm">
                         <i class="fas ${row.icon}"></i>
@@ -481,21 +590,16 @@ function CheckFwdCondition(CurrentPslmId) {
                 </div>
             </div>
         </div>
-    </div>
-`).join('');
+    </div>`;
+}
 
-                    $("#previewGrid").html(html);
-                    CheckforPreviousapprovals()
-
-                    
-
-                }
-            }
-
-        }
+// 🔹 ERROR
+function showError(msg) {
+    Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: msg
     });
-
-
 }
 
 
@@ -519,36 +623,53 @@ function adjustPreviewLayout() {
 
 function SaveFwdTo(CurrentPslmId, generatedPdf, allAttachments) {
 
-    var psmdi = CurrentPslmId;
-    var dateValue = $("#TimeStampToProjfwd").val();
-    var get_substage = $('#ddlfwdSubStage option:selected').text();
-    var currentDate = new Date();
-    var TimeStamps = '';
-    if ($('#TimeStampToProjfwd').attr('type') === 'date') {
-        if (!dateValue) {
-            alert('Please select a date .');
-            return;
-        }
-        var currentTime = currentDate.toTimeString().split(' ')[0]; // Get current time in HH:mm:ss
-        TimeStamps = dateValue + ' ' + currentTime;
-    } else if ($('#TimeStampToProjfwd').attr('type') === 'datetime-local') {
-        if (!dateValue) {
-            alert('Please select date and time.');
-            return;
-        }
-        TimeStamps = dateValue.replace('T', ' '); // Format datetime-local to space-separated
+    const TimeStamps = getTimeStamp();
+    if (!TimeStamps) return;
+
+    const fwdunitid = getForwardUnitId();
+    const tocc = $("#ddlfwdCCTo").val();
+
+    if (isSameUnit(fwdunitid, tocc)) return;
+
+    const formData = buildFormData(CurrentPslmId, TimeStamps, fwdunitid, generatedPdf, allAttachments);
+   
+    if (!validateFileSize(allAttachments)) return;
+
+    sendAjax(formData);
+}
+
+// 🔹 TIME HANDLING
+function getTimeStamp() {
+    let dateValue = $("#TimeStampToProjfwd").val();
+    let type = $('#TimeStampToProjfwd').attr('type');
+    let currentDate = new Date();
+
+    if (!dateValue) {
+        alert(type === 'date' ? 'Please select a date .' : 'Please select date and time.');
+        return null;
     }
-    var fromDate = new Date(TimeStampForcheckdate);
-    var toDate = new Date(TimeStamps);
-    console.log("FromDate: ", fromDate, "Todate: ", toDate);
-    let fwdunitid = 0;
-    if ($("#ddlfwdFwdTo").val() != 'More') {
-        fwdunitid = $("#ddlfwdFwdTo").val()
+
+    if (type === 'date') {
+        let currentTime = currentDate.toTimeString().split(' ')[0];
+        return dateValue + ' ' + currentTime;
     }
-    else if ($("#ddlfwdFwdTo").val() == 'More') {
-        fwdunitid = $("#searchBox").val()
+
+    if (type === 'datetime-local') {
+        return dateValue.replace('T', ' ');
     }
-    var tocc = $("#ddlfwdCCTo").val();
+
+    return null;
+}
+
+// 🔹 UNIT
+function getForwardUnitId() {
+    return $("#ddlfwdFwdTo").val() !== 'More'
+        ? $("#ddlfwdFwdTo").val()
+        : $("#searchBox").val();
+}
+
+// 🔹 VALIDATION
+function isSameUnit(fwdunitid, tocc) {
     for (let i = 0; i < tocc.length; i++) {
         if (fwdunitid === tocc[i]) {
             Swal.fire({
@@ -556,89 +677,111 @@ function SaveFwdTo(CurrentPslmId, generatedPdf, allAttachments) {
                 title: "Oops...",
                 text: "The 'To' Unit and 'CC' Unit must not be the same!",
             });
-            return false;
+            return true;
         }
     }
+    return false;
+}
 
-    // SECURITY ADDITION: Basic client-side filename sanitization (helps against reflected XSS via filename)
-    // This is defense-in-depth — server must still sanitize/ignore/rename filenames
-    function sanitizeFilename(name) {
-        if (!name) return "safe_file";
-        // Remove dangerous chars: < > " ' ; ( ) [ ] { } \ / .. etc.
-        return name
-            .replace(/[<>:"'|?*{}()[\]\\\/]/g, '_')     // most dangerous chars → _
-            .replace(/\.\./g, '_')                       // prevent path traversal patterns
-            .replace(/^\.+/, '')                         // no leading dots
-            .substring(0, 120);                          // limit length
-    }
+// 🔹 SANITIZE
+function sanitizeFilename(name) {
+    if (!name) return "safe_file";
+    return name
+        .replace(/[<>:"'|?*{}()[\]\\\/]/g, '_')
+        .replace(/\.\./g, '_')
+        .replace(/^\.+/, '')
+        .substring(0, 120);
+}
 
-    var formData = new FormData();
-    var PsmId = $("#spanFwdCurrentPslmId").html()
-    var ccidvalue = $("#ddlfwdCCTo").val();
-    var userdata =
-    {
+// 🔹 FORM DATA
+function buildFormData(CurrentPslmId, TimeStamps, fwdunitid, generatedPdf, allAttachments) {
+
+    let formData = new FormData();
+
+    let userdata = {
         "ProjId": $("#spanFwdProjectId").html(),
-
         "StatusActionsMappingId": $("#ddlfwdAction").val(),
         "Remarks": $("#txtRemarksfwd").val(),
         "ToUnitId": fwdunitid,
         "TimeStamp": TimeStamps,
     };
-    for (var key in userdata) {
-        formData.append(key, userdata[key]);
-    }
 
-    var currentpsmid = CurrentPslmId;
-    formData.append("currentpsmid", currentpsmid);
+    // 🔐 Encrypt full payload
+    const encryptedData = encryptData(userdata);
+   
+    // ✅ Send ONLY encrypted data
+    formData.append("encryptedData", encryptedData);
+
+
+    formData.append("currentpsmid", CurrentPslmId);
+
+    // 📎 Files (unchanged)
+    appendGeneratedPdf(generatedPdf, allAttachments);
+    appendAttachments(formData, allAttachments);
+
+    return formData;
+}
+
+
+// 🔹 CC
+function appendCC(formData) {
+    let ccidvalue = $("#ddlfwdCCTo").val();
+
     if (Array.isArray(ccidvalue)) {
-        ccidvalue.forEach((value, index) => {
-            formData.append(`Ccid[${index}]`, value);
-        });
+        ccidvalue.forEach((v, i) => formData.append(`Ccid[${i}]`, v));
     } else {
         formData.append("Ccid", ccidvalue);
     }
+}
 
-    // SECURITY ADDITION: Give generated PDF a safe name (prevents XSS if filename is reflected somewhere)
+// 🔹 GENERATED PDF
+function appendGeneratedPdf(generatedPdf, allAttachments) {
     if (generatedPdf) {
-        let safePdfName = sanitizeFilename(generatedPdf.name || `generated_${get_substage || 'doc'}.pdf`);
+        let name = sanitizeFilename(generatedPdf.name || "generated.pdf");
         allAttachments.unshift({
             file: generatedPdf,
-            remarks: get_substage,
-            safeName: safePdfName   // we'll use this below
+            remarks: $('#ddlfwdSubStage option:selected').text(),
+            safeName: name
         });
     }
+}
 
-    // SECURITY ADDITION: Sanitize all attachment filenames before sending
-    if (allAttachments != null) {
-        allAttachments.forEach((attachment, index) => {
-            let originalFile = attachment.file;
-            let safeFileName = sanitizeFilename(originalFile.name || `attachment_${index + 1}`);
+// 🔹 ATTACHMENTS
+function appendAttachments(formData, allAttachments) {
+    if (!allAttachments) return;
 
-            // Use the sanitized name when appending (important!)
-            formData.append(`attachments[${index}].file`, originalFile, safeFileName);
-            formData.append(`attachments[${index}].remarks`, attachment.remarks || "");
-        });
-    };
+    allAttachments.forEach((att, i) => {
+        let safeName = sanitizeFilename(att.file.name || `attachment_${i + 1}`);
+        formData.append(`attachments[${i}].file`, att.file, safeName);
+        formData.append(`attachments[${i}].remarks`, att.remarks || "");
+    });
+}
 
-    // Optional SECURITY ADDITION: Add a small client-side size check (e.g. max 10MB per file)
-    // Helps UX + prevents very large files from even starting upload
-    const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
-    let sizeError = false;
-    if (allAttachments) {
-        allAttachments.forEach(att => {
-            if (att.file && att.file.size > MAX_FILE_SIZE) {
-                sizeError = true;
-            }
-        });
+// 🔹 FILE SIZE
+function validateFileSize(allAttachments) {
+    const MAX = 10 * 1024 * 1024;
+
+    if (!allAttachments) return true;
+
+    for (let att of allAttachments) {
+        if (att.file && att.file.size > MAX) {
+            Swal.fire({
+                icon: "error",
+                title: "File too large",
+                text: "Maximum file size is 10 MB per attachment."
+            });
+            return false;
+        }
     }
-    if (sizeError) {
-        Swal.fire({
-            icon: "error",
-            title: "File too large",
-            text: "Maximum file size is 10 MB per attachment."
-        });
-        return;
-    }
+    return true;
+}
+
+// 🔹 AJAX
+function sendAjax(formData) {
+    debugger;
+    formData.forEach((value, key) => {
+        console.log(key, value);
+    });
 
     $.ajax({
         url: '/Projects/FwdToProject',
@@ -649,91 +792,73 @@ function SaveFwdTo(CurrentPslmId, generatedPdf, allAttachments) {
         headers: {
             'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
         },
-        // SECURITY ADDITION: Better error handling (inform user on 400/403 etc.)
-        error: function (xhr, status, error) {
-            let msg = "An error occurred while submitting.";
-            if (xhr.status === 400) {
-                msg = "Invalid request (validation failed). Please check inputs.";
-            } else if (xhr.status === 403) {
-                msg = "Session expired or unauthorized. Please login again.";
-            } else if (xhr.status === 413) {
-                msg = "File(s) too large – server rejected the upload.";
-            }
-            Swal.fire({
-                icon: "error",
-                title: "Submission failed",
-                text: msg
-            });
-        },
-        success: function (response) {
-            if (response != null) {
-                if (response == 9) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "The 'To' Unit and 'CC' Unit must not be the same!",
-                    });
-                } else if (response == 6) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Record Not Save!",
-                    });
-                }
+        success: handleSuccess,
+        error: handleError
+    });
+}
 
-                if (response == -4) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Another user from this unit has forwarded the project.",
-                        confirmButtonText: "OK"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.reload();
-                        }
-                    });
-                }
-                if (response == -5) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "You cannot WL Project Before (ACG)Remote Test",
-                    });
-                } if (response == -6) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "You cannot change the Stage before DDGIT Process ",
-                    });
-                }
-                if (response == -7) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Please select Send to Unit",
-                    });
-                    return false;
-                }
-                else {
-                    $("#spanCurrentPslmId").html(response.psmId);
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Project Successfully Submitted..!",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                    $('#ProjFwd').modal('hide');
-                    setTimeout(function () {
-                        window.location.reload();
-                    }, 1500)
-                }
-            }
-        }
+// 🔹 SUCCESS
+function handleSuccess(response) {
+
+    if (!response) return;
+
+    if (response == 9) return showError("The 'To' Unit and 'CC' Unit must not be the same!");
+    if (response == 6) return showError("Record Not Save!");
+    if (response == -7) return showError("Please select Send to Unit");
+
+    if (response == -4) {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Another user from this unit has forwarded the project."
+        }).then(() => location.reload());
+        return;
+    }
+
+    if (response == -5) return showError("You cannot WL Project Before (ACG)Remote Test");
+    if (response == -6) return showError("You cannot change the Stage before DDGIT Process ");
+
+    $("#spanCurrentPslmId").html(response.psmId);
+
+    Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Project Successfully Submitted..!",
+        showConfirmButton: false,
+        timer: 1500
+    });
+
+    $('#ProjFwd').modal('hide');
+    setTimeout(() => location.reload(), 1500);
+}
+
+// 🔹 ERROR
+function handleError(xhr) {
+   
+    let msg = "An error occurred while submitting.";
+
+    if (xhr.status === 400) msg = "Invalid request.";
+    else if (xhr.status === 403) msg = "Unauthorized.";
+    else if (xhr.status === 413) msg = "File too large.";
+    else if (xhr.status === -500) msg = "decryption failed";
+
+    Swal.fire({
+        icon: "error",
+        title: "Submission failed",
+        text: msg
+    });
+}
+
+// 🔹 COMMON ERROR
+function showError(msg) {
+    Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: msg
     });
 }
 function PullBAckProject(ProjId, PslmId, UndoRemarks, StageId) {
-    var userdata =
+    let userdata =
     {
         "ProjectId": ProjId,
         "PsmId": PslmId,
@@ -742,10 +867,13 @@ function PullBAckProject(ProjId, PslmId, UndoRemarks, StageId) {
 
 
     };
+    let encrypted_data = encryptData(userdata)
+    console.log(encrypted_data);
+    
     $.ajax({
         url: '/Projects/PullBAckProject',
         type: 'POST',
-        data: userdata,
+        data: { encrypted_data: encrypted_data },
         headers: {
             'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
         },
@@ -784,7 +912,7 @@ function IsReadInbox(psmId) {
 
 
 
-var projectMoveData = {
+let projectMoveData = {
     fwdTo: { id: "", text: "" },
     sentToUnit: { id: "", text: "" },
     ccList: [],
@@ -847,19 +975,20 @@ $('#btnEditMove').on('click', function () {
 
 
 function CheckforPreviousapprovals() {
-    var userdata = {
+    let userdata = {
         "ProjId": $("#spanFwdProjectId").html(),
         "StatusId": $("#ddlfwdSubStage").val(),
         "Actionsid": $("#ddlfwdAction").val(),
     };
 
+    let encryptdata = encryptData(userdata);
+   
     $.ajax({
         url: '/Projects/CheckPreviousApprovals',
         type: 'POST',
-        data: userdata,
+        data: { encryptdata: encryptdata }, // ✅ FIX
         success: function (response) {
             
-            console.log(response);
             if (response.message.result !== "OK") {
 
                 Swal.fire({
@@ -895,7 +1024,7 @@ function openForwardModal(btn, isFromMov) {
     let $btn = $(btn);
     let Isprocess = isFromMov
         ? $("#IsProcess").html().trim().toLowerCase() === "false"
-        : $btn.closest("tr").find("#SpnprojectIsProcess").html().trim().toLowerCase() === "false";
+        : $btn.closest("tr").find(".SpnprojectIsProcess").html().trim().toLowerCase() === "false";
     let date_type_raw = isFromMov
         ? $('#spnLatestActiontype').html()
         : $btn.data('date_type');
@@ -918,6 +1047,32 @@ function openForwardModal(btn, isFromMov) {
         }
 
         $('#TimeStampToProjfwd').focus();
+
+        // ✅ ADD THIS ONLY (browser display fix)
+        formatAndShowDate($('#TimeStampToProjfwd').val());
+    });
+
+
+    // ✅ Format function (dd-mm-yyyy HH:mm)
+    function formatAndShowDate(val) {
+
+        if (!val) return;
+
+        let parts = val.split('T');
+        if (parts.length < 2) return;
+
+        let [y, m, d] = parts[0].split('-');
+        let time = parts[1].substring(0, 5);
+
+        let formatted = `${d}-${m}-${y} ${time}`;
+
+        $('#TimeStampDisplay').text(formatted);
+    }
+
+
+    // ✅ Update display when user changes date
+    $('#TimeStampToProjfwd').on('change', function () {
+        formatAndShowDate(this.value);
     });
     $('.FwdDropdown').addClass('col-md-3 col-md-6');
     $('.ProjectsFwdUnit').addClass('d-none');
@@ -950,8 +1105,8 @@ function openForwardModal(btn, isFromMov) {
         : $btn.closest("tr").find("#SpnTimeStatusId").html();
 
     let stakeholderId = isFromMov
-        ? $('#spnStakeholderid').html()
-        : $btn.closest("tr").find("#SpnStakeHolderId").html();
+        ? $('.SpnStakeHolderId').html()
+        : $btn.closest("tr").find(".SpnStakeHolderId").html();
 
     mMsaterStage(statusId, "ddlfwdSubStage", 6, stageId, stakeholderId);
 
@@ -969,17 +1124,17 @@ function openForwardModal(btn, isFromMov) {
     mMsaterFwdTo(0, "ddlfwdCCTo", 8, 0, stakeholderId, 0, "");
 
 
-    var btntype = isFromMov == false ? true : false;
-    var projid = isFromMov == true ? $('.ProjectcommentprojId').text() : $btn.closest("tr").find("#SpnCurrentProjId").html()
+    let btntype = isFromMov == false ? true : false;
+    let projid = isFromMov == true ? $('.ProjectcommentprojId').text() : $btn.closest("tr").find(".SpnCurrentProjId").html()
    
     $("#spanFwdProjectId").html(projid)
 
     if (btntype == true) {
 
-        $("#spanFwdCurrentPslmId").html($btn.closest("tr").find("#SpnCurrentpsmId").html())
-        $("#SpnFwdStakeHolderId").html($btn.closest("tr").find("#SpnStakeHolderId").html())
+        $("#spanFwdCurrentPslmId").html($btn.closest("tr").find(".SpnCurrentpsmId").html())
+        $("#SpnFwdStakeHolderId").html($btn.closest("tr").find(".SpnStakeHolderId").html())
         $("#spanLegacyApproval").html($btn.closest("tr").find("#SpnApprove").html())
-        IsReadInbox($btn.closest("tr").find("#SpnCurrentpsmId").html());
+        IsReadInbox($btn.closest("tr").find(".SpnCurrentpsmId").html());
         $btn.closest("tr").removeClass("bold-text")
         setTimeout(function () {
 
@@ -994,6 +1149,9 @@ function openForwardModal(btn, isFromMov) {
     $(".Attmenthistory").addClass("d-none");
     adjustPreviewLayout()
 }
+
+
+
 $('#btnDigitalsign').on('click', function (e) {
     e.preventDefault(); // stop default click
   
@@ -1017,6 +1175,7 @@ $('#btnDigitalsign').on('click', function (e) {
 
 
 function SaveDocumentForTemp() {
+    debugger;
     if (!generatedPdfBlob) {
         alert("PDF not generated");
         return;
@@ -1032,7 +1191,7 @@ function SaveDocumentForTemp() {
         processData: false,
         contentType: false,
         success: function (res) {
-            var pdfpath = res.tempPath
+            let pdfpath = res.tempPath
             DigitalSignByAPI(pdfpath);
            
         },

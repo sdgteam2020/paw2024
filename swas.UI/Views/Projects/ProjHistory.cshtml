@@ -13,13 +13,10 @@
 @{
     int projIdFromViewBag = Convert.ToInt32(ViewBag.Projid);
 }
- 
 
- 
 
 <link href="~/css/projhistory.css" rel="stylesheet" />
 <link href="~/css/ProjectwiseReport.css" rel="stylesheet" />
-
 
 <div class="row d-flex justify-content-center mt-5">
     <span id="spnstageid" class="d-none">@ViewBag.stageid</span>
@@ -35,23 +32,23 @@
                     <table class="table table-striped table-bordered tblProjectWiseStatusByprojid">
                     </table>
                 </div>
-                
+
 
 
             </div>
         </div>
     </div>
     <div class="col-12 col-lg-12 col-xl-4 d-flex">
-        
+
 
         <div class="card-border cursor-box  help card radius-10 w-100">
             <div class=" card-body">
                 <div class="mb-3 header-container text-center text-white">
-                    Proj Details   
+                    Proj Details
 
                 </div>
                 <div class="table-responsive">
-                    <table >
+                    <table>
                         <tr>
                             <td class="new-proj-table">Project Id</td>
                             <td class="long-text">@Model[0].ProjectDetl[1].ProjId</td>
@@ -61,7 +58,7 @@
 
                         <tr>
                             <td class="new-proj-table">Proj Name</td>
-                         
+
                             <td id="projectNameCell" class="long-text">
                                 <span id="spnprojname">@Model.FirstOrDefault()?.ProjName</span>
                                 <span class="ProjectcommentprojId d-none">
@@ -70,14 +67,6 @@
                             </td>
 
                         </tr>
-                        <tr>
-                            <td class="new-proj-table">Aim & Scope</td>
-                            <td class="long-text">@Model[0].ProjectDetl[1].AimScope</td>
-
-                        </tr>
-                        
-
-                        
                        
                         <tr>
                             <td class="new-proj-table">Name of Sponsor</td>
@@ -85,13 +74,11 @@
 
 
                         </tr>
-
                         <tr>
                             <td class="new-proj-table">Mobile No</td>
                             <td>@Model[0].ProjectDetl[1].MobileNo</td>
 
                         </tr>
-
                         <tr>
                             <td class="new-proj-table">Ascon No</td>
                             <td>@Model[0].ProjectDetl[1].AsconNo</td>
@@ -117,12 +104,12 @@
                     Tech Details
                 </div>
                 <div class="table-responsive">
-                    <table  >
+                    <table>
                         <tr>
                             <td class="new-proj-table">Tech Stack</td>
-                             
 
-                         
+
+
                             <td class="tooltip-container">
                                 <span class="short-text">@truncateText(Model[0].ProjectDetl[1].TechStackProposed, 6)</span>
                                 <span class="tooltip tooltip-text">@Model[0].ProjectDetl[1].TechStackProposed</span>
@@ -130,9 +117,9 @@
 
                         </tr>
 
-                       @*  <tr>
+                        @*  <tr>
                             <td class="new-proj-table">Usage</td>
-                             
+
                             <td class="tooltip-container">
                                 <span class="short-text">@truncateText(Model[0].ProjectDetl[1].UsabilityofProposedAppln, 6)</span>
                                 <span class="tooltip tooltip-text">@Model[0].ProjectDetl[1].UsabilityofProposedAppln</span>
@@ -140,9 +127,9 @@
 
 						</tr> *@
                         <tr>
-							<td class="new-proj-table">Type of SW</td>
-							<td>@Model[0].ProjectDetl[1].TypeofSW</td>
-						</tr>
+                            <td class="new-proj-table">Type of SW</td>
+                            <td>@Model[0].ProjectDetl[1].TypeofSW</td>
+                        </tr>
                         @* <tr>
                             <td class="new-proj-table">Bandwidth</td>
                             <td>@Model[0].ProjectDetl[1].NWBandWidthReqmt</td>
@@ -150,12 +137,12 @@
                         </tr> *@
                         <tr>
                             <td class="new-proj-table">Hosted On</td>
-                            <td>@Model[0].HostedOn</td>
+                            <td>@Model[0].HostedOn</td> 
 
                         </tr>
 
                         <tr>
-                            <td class="new-proj-table">Envisaged(Rs)</td>
+                            <td class="new-proj-table">Likely Cost(Rs)</td>
                             <td>@Model[0].ProjectDetl[1].EnvisagedCost</td>
 
                         </tr>
@@ -165,11 +152,7 @@
                             <td>@Model[0].AppDesc</td>
 
                         </tr>
-                        <tr>
-                            <td class="new-proj-table">Devp</td>
-                            <td>@Model[0].ProjectDetl[1].BeingDevpInhouse</td>
-
-                        </tr>
+                     
 
 
 
@@ -183,26 +166,56 @@
     </div>
 
 
-   @*  <!--Tech Details-->
     <div class="col-12 col-lg-12 col-xl-4 d-flex">
 
-        <div class="card-border cursor-box  help card-border card radius-10 w-100">
-            <div class="card-body">
 
+        <div class="card-border cursor-box  help card radius-10 w-100">
+            <div class=" card-body">
                 <div class="mb-3 header-container text-center text-white">
                     Other Details
+
                 </div>
-                <table>
-                
-                </table>
+                <div class="table-responsive">
+                    <table>
+                        <tr>
+                            <td class="new-proj-table">Aim & Scope</td>
+                            <td class="long-text">@Model[0].ProjectDetl[1].AimScope</td>
+
+                        </tr>
+                        <tr>
+                            <td class="new-proj-table"></td>
+                            <td class="long-text"></td>
+
+                        </tr>
+                        <tr>
+                            <td class="new-proj-table">Devp</td>
+                            <td>@Model[0].ProjectDetl[1].BeingDevpInhouse</td>
+
+                        </tr>
+                        <tr>
+                            <td class="new-proj-table">Security Classification</td>
+                            <td class="long-text">@Model[0].ProjectDetl[1].Security_Classification</td>
+
+                        </tr>
+
+                        <tr>
+                            <td class="new-proj-table">Development Language</td>
+                            <td class="long-text">@Model[0].ProjectDetl[1].Devlopment_Language</td>
+
+                        </tr>
+                     
+
+                    </table>
+
+                </div>
             </div>
         </div>
 
-    </div> *@
+    </div>
+
 
 
 </div>
-
 
 <div class="modal fade" id="myModalPagehistoryAttechment" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg custom-modal-sizes">
@@ -224,16 +237,13 @@
 
 <!--  PDF START -->
 
-
-
-
-<div >
+<div>
     @{
         Projmove pmove = new Projmove();
         pmove.DataProjId = Model[0].ProjId;
         pmove.Atthistory = Model[0].Atthistory;
         pmove.tounitid = ViewBag.lasttounit;
-        
+
 
 
     }
@@ -242,14 +252,11 @@
     {
         ["DataProjId"] = pmove.DataProjId,
         ["Tounitid"] = ViewBag.lasttounit,
-        ["Documenttype"] =ViewBag.documenttype
+        ["Documenttype"] = ViewBag.documenttype
 
     }
             )
 </div>
-
-
-
 <div class="container" hidden="hidden">
     <div id="myPDF" data-page-number="1" role="region" aria-label="Page 1" data-loaded="true">
         <div class="card-body">
@@ -514,7 +521,7 @@
 
 <!-- PDF END -->
 @{
-    snoa = ViewBag.ProjMovementHist?.Count+1 ?? 0;
+    snoa = ViewBag.ProjMovementHist?.Count + 1 ?? 0;
 }
 <div class="card bi-ui-radios-30 w-100" id="PopUpHide">
     <div class="card-body">
@@ -686,15 +693,9 @@
     </div>
 </div>
 
-
-
-
 @await Html.PartialAsync("_ProjectPendingStatus")
 <script src="~/developerjs/mtable.js"></script>
-
- 
-<script src="~/developerjs/FwdProject.js"> </script>
-
+@* <script src="~/developerjs/FwdProject.js"> </script> *@
 @functions {
     public string truncateText(string text, int maxWords)
     {
@@ -708,6 +709,14 @@
         return truncatedText;
     }
 }
+
+
+
+
+
+
+ 
+
 
 
 

@@ -22,6 +22,7 @@
     });
 
     $("#send_btn").click(function () {
+     
         if ($("textarea#type_msg").val() == "") {
             $("textarea#type_msg").addClass('is-invalid');
         } else {
@@ -30,7 +31,7 @@
     });
 
     $('#type_msg').keypress(function (e) {
-        var key = e.which;
+        let key = e.which;
         if (key == 13 && !e.shiftKey) {
             if ($("textarea#type_msg").val() == "") {
                 $("textarea#type_msg").addClass('is-invalid');
@@ -50,10 +51,10 @@
             data: { "Id": 0 },
             success: function (response) {
                 if (response.length) {
-                    var listitem = "";
+                    let listitem = "";
                     response.forEach(user => {
                         listitem += '<li class="">';
-                        listitem += '<div class="d-flex bd-highlight chatrequest " style="padding: 5px 5px 0px 5px;">';
+                        listitem += '<div class="d-flex bd-highlight chatrequest ">';
                         listitem += ' <div class="img_cont">';
                         listitem += '<div class="circleimg" style="background-color:' + displayFixedColorAlphabet(user.offr_Name[0].toUpperCase()) + ';color:#ffff">' + user.offr_Name.substr(0, 2).toUpperCase() + '</div>';
                         if (user.total > 0) listitem += ' <span class="online_icon"></span>';
@@ -78,7 +79,7 @@
             type: 'POST',
             data: { "UserMapChatId": userMapChatId, "FromUserId": FromUserId },
             success: function (response) {
-                var listitem = response.map(chat => {
+                let listitem = response.map(chat => {
                     return `<div class="${chat.type == 1 ? "d-flex justify-content-start mb-4" : "d-flex justify-content-end mb-4"}">
                                 <div class="msg_cotainer">
                                     ${chat.msg}

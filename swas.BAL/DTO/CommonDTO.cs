@@ -41,34 +41,34 @@ namespace swas.BAL.DTO
     }
     public class MailBox
     {
-        public List<DTOProjectsFwd> InBox { get; set; }
-        public List<DTOProjectsFwd> SendItems { get; set; }
-        public List<tbl_Projects> CompletedItems { get; set; }
+        public List<DTOProjectsFwd>? InBox { get; set; }
+        public List<DTOProjectsFwd>? SendItems { get; set; }
+        public List<tbl_Projects>? CompletedItems { get; set; }
 
-        public List<tbl_Projects> Draft { get; set; }
-        public List<DTOProjectsFwd> CcItems { get; set; }
-        public List<RemainderDisplayDto> Remainder { get; set; }
+        public List<tbl_Projects>? Draft { get; set; }
+        public List<DTOProjectsFwd>? CcItems { get; set; }
+        public List<RemainderDisplayDto>? Remainder { get; set; }
 
     }
         
     public class DTOViews
     {
 
-        public string ProjName { get; set; }
-        public string Comment { get; set; }
-        public string Actions { get; set; }
-        public string Stages { get; set; }
-        public string StakeHolder { get; set; }
-        public string Status { get; set; }
-        public string CurrentStakeHolder { get; set; }
-        public string FromStakeHolder { get; set; }
-        public string ToStakeHolder { get; set; }
-        public string AttachDocuments { get; set; }
-        public string AddRemarks { get; set; }
+        public string? ProjName { get; set; }
+        public string? Comment { get; set; }
+        public string? Actions { get; set; }
+        public string? Stages { get; set; }
+        public string? StakeHolder { get; set; }
+        public string? Status { get; set; }
+        public string? CurrentStakeHolder { get; set; }
+        public string? FromStakeHolder { get; set; }
+        public string? ToStakeHolder { get; set; }
+        public string? AttachDocuments { get; set; }
+        public string? AddRemarks { get; set; }
         public DateTime TimeStamp { get; set; }
-        public string EditDeleteBy { get; set; }
+        public string? EditDeleteBy { get; set; }
         public DateTime EditDeleteDate { get; set; }
-        public string UpdatedByUserId { get; set; }
+        public string? UpdatedByUserId { get; set; }
         public DateTime DateTimeOfUpdate { get; set; }
         public DateTime TostackholderDt { get; set; }
 
@@ -195,9 +195,9 @@ namespace swas.BAL.DTO
 
     public class ProjIDRes
     {
-        public string ProjWdOne { get; set; }
-        public string ProjWdTwo { get; set; }
-        public string PorjPin { get; set; }
+        public string? ProjWdOne { get; set; }
+        public string? ProjWdTwo { get; set; }
+        public string? PorjPin { get; set; }
 
     }
 
@@ -272,11 +272,11 @@ namespace swas.BAL.DTO
     public class MyRequestModel
     {
         public int DtaProjID { get; set; }
-        public string AttPath { get; set; }
+        public string? AttPath { get; set; }
         public int PsmId { get; set; }
-        public string Projpin { get; set; }
-        public string ActFileName { get; set; }
-        public string AttDocuDesc { get; set; }
+        public string? Projpin { get; set; }
+        public string? ActFileName { get; set; }
+        public string? AttDocuDesc { get; set; }
     }
 
 
@@ -359,7 +359,7 @@ namespace swas.BAL.DTO
     }
     public class InputModel
     {
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
 
         [Display(Name = "UserName")]
@@ -405,7 +405,7 @@ namespace swas.BAL.DTO
         public int? RankId { get; set; }
 
 
-        public string RankName { get; set; }
+        public string? RankName { get; set; }
 
        [Display(Name = "Tele No (Army)")]
         public string? Tele_Army { get; set; }
@@ -415,7 +415,7 @@ namespace swas.BAL.DTO
 
     public class EncryModel
     {
-        public string EncryItem { get; set; }
+        public string? EncryItem { get; set; }
 
     }
 
@@ -450,38 +450,38 @@ namespace swas.BAL.DTO
     {
         public int ActionsId { get; set; }
         public int StatusId { get; set; }
-        public string Stages { get; set; }
-        public string Actions { get; set; }
-        public string NextAction { get; set; }
+        public string? Stages { get; set; }
+        public string? Actions { get; set; }
+        public string? NextAction { get; set; }
     }
 
     public class ActionsSeq
     {
-        public string Stages { get; set; }
-        public string Status { get; set; }
-        public string Actions { get; set; }
-        public string UnitName { get; set; }
-        public string ActionDesc { get; set; }
+        public string? Stages { get; set; }
+        public string? Status { get; set; }
+        public string? Actions { get; set; }
+        public string? UnitName { get; set; }
+        public string? ActionDesc { get; set; }
     }
 
     public class ProjLogView
     {
         public int PsmId { get; set; }
         public int ProjId { get; set; }
-        public string ProjName { get; set; }
-        public string UnitName { get; set; }
-        public string Stages { get; set; }
-        public string Status { get; set; }
-        public string Actions { get; set; }
+        public string? ProjName { get; set; }
+        public string? UnitName { get; set; }
+        public string? Stages { get; set; }
+        public string? Status { get; set; }
+        public string? Actions { get; set; }
         public DateTime? TimeStamp { get; set; }
-        public string FwdBy { get; set; }
-        public string FwdTo { get; set; }
-        public string Comment { get; set; }
-        public string AttDocu { get; set; }
-        public string Comments { get; set; }
-        public string AddRemarks { get; set; }
+        public string? FwdBy { get; set; }
+        public string? FwdTo { get; set; }
+        public string? Comment { get; set; }
+        public string? AttDocu { get; set; }
+        public string? Comments { get; set; }
+        public string? AddRemarks { get; set; }
         public int ActionByUser { get; set; }
-        public string EncyId { get; set; }
+        public string? EncyId { get; set; }
     }
     public class IdObj
     {
@@ -494,7 +494,7 @@ namespace swas.BAL.DTO
 
     public class SearObj
     {
-        public string[] searchStakename { get; set; }
+        public string[]? searchStakename { get; set; }
         public string? TimeStampFrom { get; set; }
 
         public string? TimeStampTo { get; set; }
@@ -513,18 +513,18 @@ namespace swas.BAL.DTO
     {
         public int StatusId { get; set; }
         public int StageId { get; set; }
-        public string Status { get; set; }
-        public string Stages { get; set; }
+        public string? Status { get; set; }
+        public string? Stages { get; set; }
     }
 
 
     public class ActionExceptionDTO
     {
         public int UnitStatusMappingId { get; set; }
-        public string UnitName  { get; set; }
-        public string Stage { get; set; }
-        public string SubStage  { get; set; }
-        public string Action  { get; set; }
+        public string? UnitName  { get; set; }
+        public string? Stage { get; set; }
+        public string? SubStage  { get; set; }
+        public string? Action  { get; set; }
 
         public int StageId { get; set; }
         public int SubStageId  { get; set; }
@@ -535,8 +535,8 @@ namespace swas.BAL.DTO
 
     public class NotificationContent
     {
-        public string Title { get; set; }
-        public string Html { get; set; }
+        public string? Title { get; set; }
+        public string? Html { get; set; }
     }
     public class SiteSettings
     {

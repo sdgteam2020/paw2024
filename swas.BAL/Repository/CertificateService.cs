@@ -24,12 +24,7 @@ namespace swas.BAL.Repository
 				.Where(x => x.Statusid == substage)
 				.Select(x => x.CertificateName)
 				.FirstOrDefault();
-			//var remotetestvalidationdate = substage == 29
-			//	? _db.ProjStakeHolderMov
-			//		.Where(x => x.ProjId == projId && x.StatusActionsMappingId == 78)
-			//		.Select(x => (DateTime?)x.TimeStamp) // make nullable
-			//		.FirstOrDefault() ?? DateTime.Now      // fallback to now if null
-			//	: DateTime.Now;
+		
 			var remoteTestNext3Years = DateTime.Now.AddYears(3);
 			var result = (from p in _db.Projects
 						  join h in _db.mHostType

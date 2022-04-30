@@ -28,7 +28,7 @@ namespace swas.BAL.Helpers
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Middleware Error: " + ex.Message);
+                throw ex;
             }
 
             await _next(context); // Continue processing the request
