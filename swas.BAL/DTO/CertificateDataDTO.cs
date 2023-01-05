@@ -13,6 +13,7 @@ namespace swas.BAL.DTO
         public string? HostType { get; set; }
         public string? CertificateName { get; set; }
 		public string? Sponsor { get; set; }
+		public int? CertificateId { get; set; }
 		public DateTime? RemoteTestNext3Years { get; set; }
 	}
 

@@ -164,7 +164,7 @@ function GetProjCommentsByUnitId(Id) {
                         listItem += "<a  href='/Projects/ProjHistory?EncyID=" + encodeURIComponent(response[i].encyID) + "'>";
 
                          
-                        listItem += "<span id='projectName' class='projNameDetail noExport' >" + trimByChars(response[i].projectName, 20) + "</span>";
+                        listItem += "<span id='projectName' class='projNameDetail noExport' >" + trimByChars(response[i].projectName, 40) + "</span>";
                         listItem += "</a>";
                             listItem += ' <div class="RefLetter">' + response[i].projectName + '</div>';
 

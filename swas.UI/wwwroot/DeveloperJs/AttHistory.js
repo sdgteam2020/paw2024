@@ -136,7 +136,7 @@ function AttOnFWD() {
     $("#AttBody").append(listItem);
 
     // When the confirm button is clicked, send all attachments and remarks
-    $("#btnFwdConfirm").off().on("click", async function () {
+    $(".btnFwdConfirm").off().on("click", async function () {
         debugger;
 
         const urlParams = new URLSearchParams(window.location.search);
@@ -147,9 +147,11 @@ function AttOnFWD() {
         } else {
             psmid = $("#spanFwdCurrentPslmId").html();
         }
-
-        // 🔹 GET GENERATED PDF FROM IFRAME
-        const generatedPdf = await getGeneratedPdfFromPreview();
+        let ddlaction = $("#ddlfwdAction option:selected").text();
+        let generatedPdf = null;
+        if (ddlaction === "Approved / Completed" && $('#ddlfwdStage').val() == 3) {
+            generatedPdf = await getGeneratedPdfLogSignFromPreview();
+        }
 
         // 🔹 PASS allAttachments ALSO
         SaveFwdTo(psmid, generatedPdf, allAttachments);

@@ -932,7 +932,11 @@ function SaveFwdTo(CurrentPslmId, generatedPdf, allAttachments) {
                   //FwdProjConfirmtounit(CurrentPslmId);
 
                     $('#ProjFwd').modal('hide');
+
+                    setTimeout(function(){
+
                     window.location.reload();
+                    },1500)
 
                     // AddNotification($("#spanFwdProjectId").html(), 2,fwdunitid);
                     //IsReadNotification($("#spanFwdProjectId").html(), 2);
@@ -1097,12 +1101,19 @@ function CheckforPreviousapprovals() {
             debugger;
             console.log(response);
             if (response.message.result !== "OK") {
+
                 Swal.fire({
                     icon: 'warning',
-                    title: 'Approval Required!',
-                    html: response.message.result,
-                    confirmButtonText: 'OK'
+                    title: '<strong>Approval Pending!</strong>',
+                    html: `
+    <p>It is Recommended that approval Certificate be obtained from the following authorities prior to proceeding:</p>
+   ${response.message.result}
+  `,
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#6f42c1'
                 });
+               
+
             }
             else {
                 // All good — continue your normal logic here
@@ -1290,6 +1301,7 @@ function SaveDocumentForTemp() {
 
 
 function DigitalSignByAPI(pdfpath) {
+    debugger;
     GetThumbprint().then(function (tprint) {
 
         if (tprint == null) {
@@ -1318,6 +1330,7 @@ function DigitalSignByAPI(pdfpath) {
 
 
 function GetThumbprint() {
+    debugger;
     return $.ajax({
         url: 'https://dgisapp.army.mil:55102/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
         type: 'GET'
@@ -1353,6 +1366,8 @@ function sendPDFToServer(pdfpath, thumbprint) {
             CustomText: "Digital Signature"
         }]),
         success: function (response) {
+            debugger;
+            console.log(response);
             if (response) {
                 Swal.fire({
                     title: "Application Approved",

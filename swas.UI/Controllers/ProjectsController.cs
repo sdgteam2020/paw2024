@@ -425,7 +425,7 @@ namespace swas.UI.Controllers
                 Data.Comments = Data.InitialRemark;
                 Data.InitiatedDate = Data.InitiatedDate;
                 Data.MobileNo = Data.MobileNo;
-                Data.ArmyNo = Data.ArmyNo;
+                Data.AsconNo = Data.AsconNo;
 
 
                 bool isEdit = Data.ProjId != 0;
@@ -762,8 +762,8 @@ namespace swas.UI.Controllers
                         tbl_Projects proj = new tbl_Projects();
                         // var project = await _projectsRepository.GetProjectByIdAsync(projid);
                         proj = await _projectsRepository.GetProjectByIdAsync(ProjId);
-                        //proj.DateTimeOfUpdate = DateTime.Now;
-                        //proj.IsProcess = true;
+                        proj.DateTimeOfUpdate = DateTime.Now;
+                        proj.IsProcess = true;
 
                         await _projectsRepository.UpdateProjectAsync(proj, "1");
                         return Json(ProjId);

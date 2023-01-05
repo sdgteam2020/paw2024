@@ -249,9 +249,9 @@ namespace swas.DAL.Models
 
         [Display(Name = "Date Type")]
         public int Date_type { get; set; }
-        [Display(Name = "Army Number")]
+        [Display(Name = "Ascon Number")]
         [MaxLength(5)]
-        public string? ArmyNo { get; set; }
+        public string? AsconNo { get; set; }
 
 
         [Display(Name = "Mobile Number")]

@@ -13,5 +13,7 @@ namespace swas.DAL.Models
         public int CertificateId { get; set; }
         public string? CertificateName { get; set; }
         public int? Statusid { get; set; }
+        public ICollection<tbl_mCertificateContent> CertificateContents { get; set; }
+      = new List<tbl_mCertificateContent>();
     }
 }

@@ -1619,6 +1619,20 @@
 </script>
 
 <body class="sidebar-collapsed sidebar-hover">
+    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content" style="width:65%">
+                <div class="modal-header" style="background-color:#044c92; color:white">
+                    <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="editUserModalBody">
+                    <!-- Partial view will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="wrapper">
         <div id="loading1" class="loader d-none">
             <div class="loader-container">
@@ -1632,7 +1646,7 @@
         </div>
        @*  <span id="isclaneder">@Logins.cla</span>
         *@
-        <form id="frmEditUser" method="post" action="/Account/AllUsersEdit">
+        <form id="frmEditUser" method="post" title="Edit User" action="/Account/AllUsersEdit">
             <input type="hidden" name="UserName" id="hfUserName" />
             <input type="hidden" name="RankId" id="hfRankId" />
             <input type="hidden" name="RoleName" id="hfRoleName" />
@@ -1678,15 +1692,7 @@
                         </a>
                     </li>
 
-                    @* <li>
-                <a href="/Home/UnitDashbard">
-                <div class="icon-container">
-                <img src="/assets/images/icons/backtounit.jpg" alt="Icon">
-                <ion-icon name="ellipse-outline"></ion-icon>
-                <span class="icon-name">My DashBoard</span>
-                </div>
-                </a>
-                </li>*@
+                
 
                     <li>
                         <a href="/Projects/Create">
@@ -1751,41 +1757,13 @@
 
                         </a>
                     </li>
-                    @* <li>
-                        <a href="/Home/AllProjectDetails">
-                            <div class="icon-container">
-
-                                <ion-icon name="ellipse-outline"></ion-icon>
-                                <span class="icon-name">Project Details</span>
-                            </div>
-
-                        </a>
-                    </li> *@
-
-
-                    @* <a href="/Chat/Index" @*onclick="createNotification(event)"*@
-                    @*  <li>
-                <a href="/Chat/Index">
-                <div class="icon-container">
-
-                <ion-icon name="ellipse-outline"></ion-icon>
-                <span class="icon-name">Inter-User Msg</span>
-                <span id="InterUserMsgCount" class="badge3 d-none InterUserMsgCount">0</span>
-                </div>
-                </a>
-                </li> *@
+                   
 
                     <li>
                         <a href="/Chat/Index">
                             <div class="inbox-container" style="margin-left : 46px !important">
 
-                                @*  <div class="icon-container" style="margin-left:-43px;">
-                            <ion-icon name="ellipse-outline"></ion-icon>
-                            <span class="icon-name">Inter-User Msg</span>
-                            <span id="InterUserMsgCount" class="badge3 d-none InterUserMsgCount">
-                            <ion-icon name="ellipse" class="new-badge-icon"></ion-icon>
-                            </span>
-                            </div> *@
+                            
 
                                 <div class="icon-container" style="margin-left: -43px;">
                                     <ion-icon name="ellipse-outline"></ion-icon>
@@ -1800,34 +1778,7 @@
                         </a>
                     </li>
 
-                    @* <li>
-                <a href="/Chat/Index">
-                <div class="inbox-container" style="margin-left: 46px; position: relative;">
-                <div class="icon-container" style="margin-left: -43px; display: flex; align-items: center;">
-                <ion-icon name="ellipse-outline" style="font-size: 24px; color: #007bff;"></ion-icon>
-                <span class="icon-name" style="margin-left: 10px; font-weight: bold; font-size: 16px;">Inter-User Msg</span>
-
-                <!-- New Badge -->
-                <span class="new-badge" style="margin-left: 10px; padding: 5px 10px; background-color: #ff4757; color: white; border-radius: 12px; font-size: 14px; font-weight: bold; text-transform: uppercase; animation: bounce 1s infinite;">
-                New
-                </span>
-                </div>
-                </div>
-                </a>
-                </li> *@
-                    @*  <li>
-                <a href="/Chat/Index">
-                <div class="inbox-container" style="margin-left : 46px !important">
-
-                <div class="icon-container" style="margin-left:-43px;">
-
-                <ion-icon name="ellipse-outline"></ion-icon>
-                <span class="icon-name">Inter-User Msg</span>
-                <span id="InterUserMsgCount" class="new-badge d-none InterUserMsgCount" style="margin-left: 10px; padding: 5px 10px; background-color: #ff4757; color: white; border-radius: 12px; font-size: 14px; font-weight: bold; text-transform: uppercase; animation: bounce 1s infinite;" >0</span>
-                </div>
-                </div>
-                </a>
-                </li> *@
+               
                     @if (Logins != null && Logins?.UserName == "gso1semg_asdc_ihqa" && Logins?.unitid == 4)
                     {
                         <li>
@@ -1925,11 +1876,15 @@
                             Portal for Application Whitelisting (PAW)
                         </h1>
                     </div>
-                    <a href="/Account/AllUsersEdit?UserName=@Logins.UserName&RankId=@Logins.Rank_id&RoleName=@Logins.Role"
-                       class="mr-2"
+                    <a href="javascript:void(0);"
+                       class="mr-2 edit-user-btn"
+                       data-username="@Logins.UserName"
+                       data-rankid="@Logins.Rank_id"
+                       data-rolename="@Logins.Role"
                        style="color:white">
-                        <i class="fa-solid fa-user-pen" style="font-size:x-large"></i>
+                        <i class="fa-solid fa-user-pen" style="font-size:x-large" title="Edit user"></i>
                     </a>
+
                     <!-- Right side user info -->
                     <div class="top-navbar-right ms-auto d-flex align-items-center flex-column flex-md-row text-center text-md-start">
                         <!-- User info -->
@@ -2146,11 +2101,15 @@
                             Portal for Application Whitelisting (PAW)
                         </h1>
                     </div>
-                    <a href="/Account/AllUsersEdit?UserName=@Logins.UserName&RankId=@Logins.Rank_id&RoleName=@Logins.Role"
-                       class="mr-2"
+                    <a href="javascript:void(0);"
+                       class="mr-2 edit-user-btn"
+                       data-username="@Logins.UserName"
+                       data-rankid="@Logins.Rank_id"
+                       data-rolename="@Logins.Role"
                        style="color:white">
-                        <i class="fa-solid fa-user-pen" style="font-size:x-large"></i>
+                        <i class="fa-solid fa-user-pen" style="font-size:x-large" title="Edit user"></i>
                     </a>
+
 
                     <div class="top-navbar-right ms-auto">
 
@@ -2256,6 +2215,7 @@
                     </div>
                 </div>
             }
+          
 
             <!-- start page content-->
             
@@ -2397,7 +2357,7 @@
             </div>
         </div>
     </div>
-
+   
     @await Html.PartialAsync("_whitelistdProjectView")
     <!-- Floating Chat Toggle -->
   @*   <div class="asdc-body">
@@ -2472,12 +2432,41 @@
             </div><!-- modal-content -->
         </div><!-- modal-dialog -->
     </div>
+
+  
 </body>
 </html>
     <!-- JavaScript code -->
 
    
     <script>
+          $(document).ready(function () {
+          
+        $('.edit-user-btn').on('click', function () {
+          
+            var username = $(this).data('username');
+            var rankid = $(this).data('rankid');
+            var rolename = $(this).data('rolename');
+
+            $.ajax({
+                url: '/Account/GetUserEditPartial',
+                type: 'GET',
+                data: { UserName: username, RankId: rankid, RoleName: rolename },
+                success: function (result) {
+                    $('#editUserModalBody').html(result);
+                    $('#editUserModal').modal('show');
+
+                    // Initialize select2 inside modal
+                    $('.dropdownsearch').select2({ dropdownParent: $('#editUserModal') });
+                },
+                error: function () {
+                    alert('Error loading form.');
+                }
+            });
+        });
+    });
+
+
         $("#FlowPng").on('click', function () {
 
         $('#iProjibutton').modal('show');

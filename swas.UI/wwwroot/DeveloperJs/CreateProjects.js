@@ -478,7 +478,7 @@ function AddProject(thistag) {
         var currentDate = new Date(S.todayDateTime);
         var currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false });
 
-       
+      
        /* var InitiatedDate = initialDate;*/
         var InitiatedDate = initialDate + ' ' + currentTime;
         //var CompletionDate = completionDate;
@@ -496,7 +496,7 @@ function AddProject(thistag) {
                 "CompletionDate": CompletionDate,
                 "IsWhitelisted": $("#IsWhitelisted").val(),
                 "MobileNo": $("#MobileNo").val(),
-                "ArmyNo": $("#ArmyNo").val(),
+                "AsconNo": $("#AsconNo").val(),
                 "InitialRemark": $("#InitialRemark").val(),
                 "StakeHolderId": $("#ddlStakeHolderId").val(),
                 "AimScope": $("#AimScope").val(),
@@ -588,7 +588,7 @@ function AddProject(thistag) {
                     var projid = result.projId;
                     $("#spanProjectId").html(projid);
                     $("#spanCurrentPslmId").html(result.currentPslmId);
-                    var creatid = "Application ID :" + projid
+                    var creatid = "PROJECT ID :" + projid
                     $("#projectId").html(creatid)
 
 

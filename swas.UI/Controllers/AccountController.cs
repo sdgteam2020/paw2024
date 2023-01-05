@@ -942,8 +942,52 @@ namespace swas.UI.Controllers
             return View(users);
         }
 
+
+
+        public async Task<IActionResult> GetUserEditPartial(string UserName, string RoleName, int RankId)
+         {
+            var user = userManager.Users.FirstOrDefault(u => u.UserName == UserName);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            List<mRank> ranks = (List<mRank>)await _rankRepository.GetAll();
+            ViewData["Rank"] = ranks.ToList();
+
+            var UserRank = ranks.FirstOrDefault(r => r.Id == RankId);
+            var UserUnitRank = UserRank?.RankName;
+
+            ViewData["ty"] = RoleName;
+            ViewBag.Type = _context.tbl_Type.ToList();
+            ViewBag.SelectedType = _context.tbl_Type
+    .Select(t => new { t.Id, t.Name })
+    .ToList();
+            List<UnitDtl> udtl = await _unitRepository.GetAllUnitAsync();
+            ViewData["Unit"] = udtl.ToList();
+
+            var users = new InputModel
+            {
+                Id = user.Id,
+                UserName = user.UserName.Trim(),
+                OfficerName = user.Offr_Name.Trim(),
+                appointment = user.appointment.Trim(),
+                RoleName = user.RoleName,
+                Tele_Army = user.Tele_Army.Trim(),
+                RankId = RankId,
+                unitId = user.unitid,
+                RankName = UserUnitRank,
+              
+            };
+
+            return PartialView("_AllUsersEditPartial", users);
+        }
+
+
         public async Task<IActionResult> UpdateUserEdit(InputModel input)
+        
         {
+          
             Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
 
             input.UserName = input.UserName.Trim();

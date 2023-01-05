@@ -71,6 +71,7 @@ namespace swas.DAL
         public DbSet<LegacyHistory> LegacyHistory { get; set; }
         public virtual DbSet<trnRemainder> TrnRemainders { get; set; } = null!;
         public DbSet<tbl_mCertificate> tbl_mCertificate { get; set; }
+        public DbSet<tbl_mCertificateContent>tbl_mCertificateContent { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -109,6 +110,7 @@ namespace swas.DAL
             modelBuilder.Entity<DateApproval>().ToTable("DateApproval");
             modelBuilder.Entity<LegacyHistory>().ToTable("LegacyHistory");
             modelBuilder.Entity<trnRemainder>().ToTable("trnRemainder");
+            modelBuilder.Entity<tbl_mCertificateContent>().ToTable("tbl_mCertificateContent");
 
             modelBuilder.Entity<AddNewProject>().HasNoKey(); // Mark as keyless entity
 
