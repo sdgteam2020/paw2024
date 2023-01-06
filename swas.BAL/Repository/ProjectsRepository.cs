@@ -335,6 +335,8 @@ namespace swas.BAL.Repository
                 {
                     await conn.OpenAsync();
 
+
+
                     using (var cmd = conn.CreateCommand())
                     {
                         cmd.CommandText = "dbo.usp_GetDashboardApproved";
@@ -350,20 +352,28 @@ namespace swas.BAL.Repository
                         paramStatusActionId.Value = statusActionsMappingId;
                         cmd.Parameters.Add(paramStatusActionId);
 
+                        DataTable dt = new DataTable();
 
-                        using (var reader = await cmd.ExecuteReaderAsync())
+                        using (var da = new SqlDataAdapter((SqlCommand)cmd))
                         {
+                            da.Fill(dt);
+                        }
+                        using (var reader = await cmd.ExecuteReaderAsync())
+                        {   
                             while (await reader.ReadAsync())
                             {
+                                int stakeHolderId = reader.GetInt32(reader.GetOrdinal("StakeHolderId"));
+
                                 var item = new DTOProjectsFwd
                                 {
                                     ProjId = reader.GetInt32(reader.GetOrdinal("ProjId")),
-									
+                                    PsmIds = reader.GetInt32(reader.GetOrdinal("PsmId")),
                                     ProjName = reader.IsDBNull(reader.GetOrdinal("ProjName")) ? null : reader.GetString(reader.GetOrdinal("ProjName")),
                                     StakeHolder = reader.IsDBNull(reader.GetOrdinal("StakeHolder")) ? null : reader.GetString(reader.GetOrdinal("StakeHolder")),
                                     TimeStamp = reader.IsDBNull(reader.GetOrdinal("TimeStamp")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("TimeStamp")),
-                                    StatusactionMappingid = reader.IsDBNull(reader.GetOrdinal("StatusActionsMappingId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("StatusActionsMappingId"))
-
+                                    StatusactionMappingid = reader.IsDBNull(reader.GetOrdinal("StatusActionsMappingId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("StatusActionsMappingId")),
+                                   
+                                    isSponsor = Logins.unitid == stakeHolderId
                                 };
                                 if (item.StatusactionMappingid == 53)
                                 {

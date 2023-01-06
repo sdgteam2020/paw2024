@@ -208,6 +208,7 @@ function GetAllDashbaordCount() {
                     var spnstatusId = $(this).closest("div").find("#spnstatusId").html();
                     //var spnstatus = $(this).closest("div").find("#spnstatus").html();
                     var spnstatusActionsMappingId = $(this).closest("div").find("#spnstatusActionsMappingId").html();
+                 
 
                     tittle = "Approved: " + $(this).closest("div").find(".statusprojsummry").html();
                     tittleIPA = "Approved by:  "+ $(this).closest("div").find(".statusprojsummry").html()+" (Parallel Processing)";"}][\'[']//"
@@ -246,7 +247,8 @@ function GetAllDashbaordCount() {
 
                         });
                     } else {
-
+                        
+                        $('#CertName').html("Cert&Att");
                         if (spnstatusId == 2 || spnstatusId == 3 || spnstatusId == 22) {
 
                         } else if (parseInt(spnstatusId) == 44 || parseInt(spnstatusId) == 46) {
@@ -268,9 +270,21 @@ function GetAllDashbaordCount() {
 
 
                         else {
-                            $('#ProjectApprovedTittle').html(tittle);
-                            $('#ProjApproved').modal('show');
+                            //$('#ProjectApprovedTittle').html(tittle);
+                            //$('#ProjApproved').modal('show');
+                            debugger;
+                            var hascert = [24, 25, 26, 27, 28, 29].includes(parseInt(spnstatusId));
 
+                            if (hascert) {
+                                $('#IPAProjectApprovedTittle').html(tittle);
+                                $('#IPAProjApproved').modal('show');
+                            } else {
+                                $('#ProjectApprovedTittle').html(tittle);
+                                $('#ProjApproved').modal('show');
+                            }
+
+                           
+                          
                             getProjApproved(spnstatusId, spnstatusActionsMappingId);
                         }
                     }
@@ -505,10 +519,12 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
         data: userdata,
         type: 'POST',
         success: function (response) {
-            //console.log("GetDashboardApprovedData", response);
             if (response != "null" && response != null) {
+                console.log(response);
+                var hasIPA = response.some(item =>
+                    [53, 63, 68, 73, 78, 83, 88].includes(item.statusactionMappingid)
+                );
 
-                var hasIPA = response.some(item => item.statusactionMappingid == 53);
                 if (response == -1) {
                     Swal.fire({ text: "" });
                 } else if (response == 0) {
@@ -523,7 +539,7 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                     var count = 1;
 
                     var unitId = $('#spndashboardUnitId').text().trim();
-                    //alert(unitId);
+                  
                     
                     $('#DetailBodyApproved').empty();
                     $('#dashboardApproved').dataTable().fnClearTable();
@@ -566,14 +582,35 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                                 listItem += `<td></td>`;
                             }
                             // Show button if mapping ID is 53
-                       
-                        }
+
+                        } else if ([63, 68, 73, 78, 83, 88].includes(response[i].statusactionMappingid)) {
+
+                            if (response[i].isSponsor == true) {
+                                listItem += `
+<td>
+    <a href="javascript:void(0);" 
+       class="anchorDetail" 
+       data-id="${response[i].psmIds}">
+        <img src="/assets/images/icons/attachemnts_clip.png" 
+             alt="Icon" 
+             style="width: 31px; height: 29px; margin-right: 0px;">
+    </a>
+</td>`;
+                            }
+                            else {
+                                listItem += `<td></td>`;
+                            }
+                            }
+                        
+
+                      
                         listItem += "</tr>";
                         count++;
                     }
 
                     if (hasIPA) {
                         //initializeDataTable("#IPAdashboardApproved");
+                        refreshDataTable('#IPAdashboardApproved')
                         $("#IPADetailBodyApproved").html(listItem);
                         var table = $('#IPAdashboardApproved').DataTable({
                             lengthChange: true,
@@ -626,6 +663,7 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                         });
                     } else {
 
+                        refreshDataTable('#dashboardApproved')
                         $("#DetailBodyApproved").html(listItem);
                     var table = $('#dashboardApproved').DataTable({
                         lengthChange: true,
@@ -678,16 +716,7 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                     });
                     }
 
-                    //var memberTable = $('#dashboardApproved').DataTable({
-                    //    retrieve: true,
-                    //    bDestroy: true,
-                    //    lengthChange: false,
-                    //    searching: true,
-                    //    stateSave: true,
-                    //    "order": [[0, "asc"]],
-                    //    "ordering": true,
-                    //    "paging": true,
-                    //});
+               
 
                 }
             }
@@ -1126,114 +1155,7 @@ function getProjBisagN(spnstatusId, spnstatusActionsMappingId) {
     });
 }
 
-//function getProjBisagN(spnstatusId, spnstatusActionsMappingId) {
-//    var listItem = "";
-//    var table = new DataTable('#dashboardApprovedBisagN');
-//    table.destroy();
-//    /* alert(spnstatusActionsMappingId)*/
-//    var userdata = {
-//        "StatusId": spnstatusId,
-//        "statusActionsMappingId": spnstatusActionsMappingId,
-//    };
 
-//    $.ajax({
-//        url: '/Home/GetDashboardApproved',
-//        contentType: 'application/x-www-form-urlencoded',
-//        data: userdata,
-//        type: 'POST',
-//        success: function (response) {
-//            if (response != "null" && response != null) {
-
-//                if (response == -1) {
-//                    Swal.fire({ text: "" });
-//                } else if (response == 0) {
-
-//                    $('#DetailBodyBisagN').empty();
-//                    listItem += "<tr><td class='text-center' colspan='7'>No Record Found</td></tr>";
-//                    $("#DetailBodyBisagN").html(listItem);
-//                    $("#lblTotal").html(0);
-
-
-//                } else {
-//                    var count = 1;
-
-
-//                    $('#DetailBodyBisagN').empty();
-//                    $('#dashboardApprovedBisagN').dataTable().fnClearTable();
-//                    $('#DetailBodyBisagN').dataTable().fnDestroy();
-//                    for (var i = 0; i < response.length; i++) {
-//                        listItem += "<tr>";
-//                        listItem += "<td class='align-middle'>" + count + "</td>";
-//                        listItem += "<td class='align-middle nowrap'><span id='ProjName'>" + response[i].projName + "</span></td>";
-//                        listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
-//                        listItem += "<td class='align-middle'><span id='ProjName'>" + DateFormateddMMyyyyhhmmss(response[i].timeStamp) + "</span></td>";
-//                        listItem += "</tr>";
-//                        count++;
-//                    }
-
-//                    $("#DetailBodyBisagN").html(listItem);
-
-//                    var table = $('#dashboardApprovedBisagN').DataTable({
-//                        lengthChange: true,
-//                        retrieve: true,
-//                        bDestroy: true,
-
-//                        searching: true,
-//                        stateSave: true,
-//                        "order": [[0, "asc"]],
-//                        "ordering": true,
-//                        "paging": true,
-//                        dom: 'lBfrtip',
-//                        buttons: [
-//                            'copy',
-//                            'excel',
-//                            'csv',
-//                        ],
-//                        searchBuilder: {
-//                            conditions: {
-//                                num: {
-//                                    'MultipleOf': {
-//                                        conditionName: 'Multiple Of',
-//                                        init: function (that, fn, preDefined = null) {
-//                                            var el = $('<input/>').on('input', function () { fn(that, this) });
-
-//                                            if (preDefined !== null) {
-//                                                $(el).val(preDefined[0]);
-//                                            }
-
-//                                            return el;
-//                                        },
-//                                        inputValue: function (el) {
-//                                            return $(el[0]).val();
-//                                        },
-//                                        isInputValid: function (el, that) {
-//                                            return $(el[0]).val().length !== 0;
-//                                        },
-//                                        search: function (value, comparison) {
-//                                            return value % comparison === 0;
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    });
-//                }
-//            }
-//            else {
-
-//                $('#DetailBodyBisagN').empty();
-//                listItem += "<tr><td class='text-center' colspan='7'>No Record Found</td></tr>";
-//                $("#DetailBodyBisagN").html(listItem);
-
-
-
-//            }
-//        },
-//        error: function (result) {
-//            Swal.fire({ text: "" });
-//        }
-//    });
-//}
 
 function CreateChartSummary() {
 
@@ -1581,4 +1503,40 @@ document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') {
         closePopup();
     }
+});
+
+$(document).ready(function () {
+
+    var TeamDetailPostBackURL = '/Projects/AttDetails';
+
+    // Click event for dynamically generated anchors
+    $(document).on("click", ".anchorDetail", function (e) {
+        e.preventDefault(); // prevent default anchor behavior
+        debugger;
+        var id = $(this).data('id'); // better than attr()
+
+        $.ajax({
+            type: "GET",
+            url: TeamDetailPostBackURL,
+            data: { Id: id }, // no quotes needed
+            success: function (response) {
+                debugger;
+                $('#myModalContenthistoryAttechment').html(response);
+                $('#myModalPagehistoryAttechment').modal({
+                    backdrop: 'static',
+                    keyboard: true
+                }).modal('show');
+
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
+            }
+        });
+    });
+
+    // PDF click handler
+    $(document).on('click', '.pdf', function () {
+        $('#ViewRecordsHistory').modal('show');
+    });
+
 });

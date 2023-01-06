@@ -186,3 +186,10 @@ function PdfDiv(tableSelector, watermarkSelector = "#IpAddress") {
         </html>`);
     popupWin.document.close();
 }
+
+
+function refreshDataTable(tableId) {
+    if ($.fn.DataTable.isDataTable(tableId)) {
+        $(tableId).DataTable().clear().destroy();
+    }
+}

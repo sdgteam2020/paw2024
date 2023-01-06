@@ -11,7 +11,7 @@ namespace swas.BAL.DTO
     public class DTOProjectsFwd
     {
         public int ProjId { get; set; }
-        public int PsmIds { get; set; }
+        public int? PsmIds { get; set; }
         public string? ProjName { get; set; }
         public int StakeHolderId { get; set; }
         public string? StakeHolder { get; set; }
@@ -80,6 +80,8 @@ namespace swas.BAL.DTO
         public string? StautsForComment { get; set; }
         public string? ApprovedRemarks { get; set; }
         public int? StatusactionMappingid { get; set; }
+
+        public bool isSponsor { get; set; }
 
     }
 }

@@ -575,6 +575,7 @@ function CheckFwdCondition(CurrentPslmId) {
                     $(".ProjectsFwd").addClass("d-none");
                     $(".Attmenthistory").removeClass("d-none");
                     if (ddlaction === "Approved / Completed" && $('#ddlfwdStage').val() == 3) {
+                        $('.uploadLoader').remove('d-none')
 
                         // Show only required buttons
                         $("#btnlogsign").removeClass("d-none");
@@ -594,7 +595,7 @@ function CheckFwdCondition(CurrentPslmId) {
                                 Projid: Projid
                             },
                             success: function (response) {
-
+                                $('.uploadLoader').addClass('d-none')
                                 // Base64 → Blob
                                 const byteCharacters = atob(response);
                                 const byteNumbers = new Array(byteCharacters.length);
@@ -1269,6 +1270,7 @@ function openForwardModal(btn, isFromMov) {
 
 //****************************//DigitalSignCode********************************
 $('#btnDigitalsign').on('click', function () {
+    $('.uploadLoader').removeClass('d-none')
     SaveDocumentForTemp();
 
 })
@@ -1305,6 +1307,7 @@ function DigitalSignByAPI(pdfpath) {
     GetThumbprint().then(function (tprint) {
 
         if (tprint == null) {
+            $('.uploadLoader').addClass('d-none')
             Swal.fire({
                 icon: 'warning',
                 title: 'Token Required !',
@@ -1330,7 +1333,7 @@ function DigitalSignByAPI(pdfpath) {
 
 
 function GetThumbprint() {
-    debugger;
+    $('.uploadLoader').addClass('d-none')
     return $.ajax({
         url: 'https://dgisapp.army.mil:55102/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
         type: 'GET'
@@ -1349,107 +1352,4 @@ function GetThumbprint() {
 }
 
 
-function sendPDFToServer(pdfpath, thumbprint) {
-
-
-    $.ajax({
-        url: 'https://dgisapp.army.mil:55102/Temporary_Listen_Addresses/ByteDigitalSignAsync',
-        type: 'POST',
-        contentType: 'application/json',
-        dataType: 'json',
-        data: JSON.stringify([{
-            Thumbprint: thumbprint,
-            pdfpath: pdfpath,
-            XCoordinate: "20",
-            YCoordinate: "20",
-            Page: "1",
-            CustomText: "Digital Signature"
-        }]),
-        success: function (response) {
-            debugger;
-            console.log(response);
-            if (response) {
-                Swal.fire({
-                    title: "Application Approved",
-                    text: "Application has been digitally signed successfully.",
-                    icon: "success",
-                    confirmButtonText: "OK",
-                    customClass: {
-                        popup: 'swal-success-theme',
-                        confirmButton: 'swal-confirm-green'
-                    },
-                    buttonsStyling: false
-                }).then(async () => {  // <-- async here
-
-                    if (response.Message == "Token Expired !") {
-                        Swal.fire({
-                            title: "Application Not Approved",
-                            text: response.Message,
-                            icon: "warning",
-                            confirmButtonText: "OK",
-                            customClass: {
-                                popup: 'swal-danger-theme',
-                                confirmButton: 'swal-confirm-danger'
-                            },
-
-                        });
-                    }
-                    const base64String = response.Message.replace(/\s/g, '').replace(/-/g, '+').replace(/_/g, '/');
-                    const byteCharacters = atob(base64String);
-                    const byteNumbers = new Array(byteCharacters.length);
-
-                    for (let i = 0; i < byteCharacters.length; i++) {
-                        byteNumbers[i] = byteCharacters.charCodeAt(i);
-                    }
-
-                    const pdfBytes = new Uint8Array(byteNumbers);
-                    generatedPdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
-
-                    const blobUrl = URL.createObjectURL(generatedPdfBlob);
-                    $('#btnLogSign').attr('disabled', true);
-                    $('#btnDigitalsign').attr('disabled', true);
-
-                    $("#Certificatepreview").html(`
-                <iframe id="pdfFrame"
-                        src="${blobUrl}"
-                        width="100%"
-                        height="600px"
-                        style="border:none;">
-                </iframe>
-            `);
-
-                    // Determine PSIM
-                    const urlParams = new URLSearchParams(window.location.search);
-                    let psmid;
-                    let allAttachments = [];
-
-                    if (urlParams.get('Type') === 'XRDC') {
-                        psmid = urlParams.get('psmid');
-                    } else {
-                        psmid = $("#spanFwdCurrentPslmId").html();
-                    }
-
-                    let ddlaction = $("#ddlfwdAction option:selected").text();
-                    let generatedPdf = null;
-
-                    if (ddlaction === "Approved / Completed" && $('#ddlfwdStage').val() == 3) {
-                        generatedPdf = await getGeneratedPdfFromPreview(); // now works
-                    }
-
-                    SaveFwdTo(psmid, generatedPdf, allAttachments);
-                });
-            } else {
-                Swal.fire({
-                    title: "Error!",
-                    text: "Failed to sign PDF.",
-                    icon: "error"
-                });
-            }
-        },
-        error: function (error) {
-            console.error('Error sending PDF:', error);
-        }
-    });
-
-}
 //<************************************End Digital Sign**********************************************>>
