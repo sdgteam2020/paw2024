@@ -13493,11 +13493,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\master\\source\\repos\\sdgteam2020\\paw2024\\swas.UI\\swas.UI.csproj",
+      "projectUniqueName": "K:\\Projects\\paw2024\\swas.UI\\swas.UI.csproj",
       "projectName": "swas.UI",
-      "projectPath": "C:\\Users\\master\\source\\repos\\sdgteam2020\\paw2024\\swas.UI\\swas.UI.csproj",
+      "projectPath": "K:\\Projects\\paw2024\\swas.UI\\swas.UI.csproj",
       "packagesPath": "C:\\Users\\master\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\master\\source\\repos\\sdgteam2020\\paw2024\\swas.UI\\obj\\",
+      "outputPath": "K:\\Projects\\paw2024\\swas.UI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -13519,8 +13519,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\master\\source\\repos\\sdgteam2020\\paw2024\\swas.BAL\\swas.BAL.csproj": {
-              "projectPath": "C:\\Users\\master\\source\\repos\\sdgteam2020\\paw2024\\swas.BAL\\swas.BAL.csproj"
+            "K:\\Projects\\paw2024\\swas.BAL\\swas.BAL.csproj": {
+              "projectPath": "K:\\Projects\\paw2024\\swas.BAL\\swas.BAL.csproj"
             }
           }
         }

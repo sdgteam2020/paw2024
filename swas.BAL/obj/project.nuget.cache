@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DQiiJnjgPgqmsmhTqEawXjxSpcDI/B3Wgw2WH8yHYXNl7PPFTk/Wj1K5LMKwoX/LmJO2+A6MN3RhLHX1kTRxhQ==",
+  "dgSpecHash": "bP95zX2hm/qiGyeXQlr+9hfJqtqALc16uJ8uyZIjlI1hrovGBz7fkzPrBrqKlYjyWaxyHKI43FQBADryC4SADw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\master\\source\\repos\\sdgteam2020\\paw2024\\swas.BAL\\swas.BAL.csproj",
+  "projectFilePath": "K:\\Projects\\paw2024\\swas.BAL\\swas.BAL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\master\\.nuget\\packages\\grpc.core\\2.46.6\\grpc.core.2.46.6.nupkg.sha512",
     "C:\\Users\\master\\.nuget\\packages\\grpc.core.api\\2.46.6\\grpc.core.api.2.46.6.nupkg.sha512",

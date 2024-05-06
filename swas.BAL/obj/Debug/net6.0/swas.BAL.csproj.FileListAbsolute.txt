@@ -238,3 +238,18 @@ D:\IAM Commented code ver 1.0 30 Apr 24\IAM Commented code ver 1.0 30 Apr 24\swa
 D:\IAM Commented code ver 1.0 30 Apr 24\IAM Commented code ver 1.0 30 Apr 24\swas.BAL\obj\Debug\net6.0\refint\swas.BAL.dll
 D:\IAM Commented code ver 1.0 30 Apr 24\IAM Commented code ver 1.0 30 Apr 24\swas.BAL\obj\Debug\net6.0\swas.BAL.pdb
 D:\IAM Commented code ver 1.0 30 Apr 24\IAM Commented code ver 1.0 30 Apr 24\swas.BAL\obj\Debug\net6.0\ref\swas.BAL.dll
+K:\Projects\paw2024\swas.BAL\bin\Debug\net6.0\swas.BAL.deps.json
+K:\Projects\paw2024\swas.BAL\bin\Debug\net6.0\swas.BAL.dll
+K:\Projects\paw2024\swas.BAL\bin\Debug\net6.0\swas.BAL.pdb
+K:\Projects\paw2024\swas.BAL\bin\Debug\net6.0\swas.DAL.dll
+K:\Projects\paw2024\swas.BAL\bin\Debug\net6.0\swas.DAL.pdb
+K:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\swas.BAL.csproj.AssemblyReference.cache
+K:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\swas.BAL.GeneratedMSBuildEditorConfig.editorconfig
+K:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\swas.BAL.AssemblyInfoInputs.cache
+K:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\swas.BAL.AssemblyInfo.cs
+K:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\swas.BAL.csproj.CoreCompileInputs.cache
+K:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\swas.BAL.csproj.CopyComplete
+K:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\swas.BAL.dll
+K:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\refint\swas.BAL.dll
+K:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\swas.BAL.pdb
+K:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\ref\swas.BAL.dll

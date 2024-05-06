@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "48yBhPL+lOrHyAt6gBef/4uKsYvekUOU2otOBMbCIYFaeY31I/jPD6pV7ybW9b40ycQXztcdfguIiVrOE88VOg==",
+  "dgSpecHash": "4Ywgi2rnMMAiRVoq6DEEyqLLz6npEPXWqd4wkfS7Y9DlyzXJT7l1d+le/F2NUcNFaH2svQ4v1jbCSEY96b4dsg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\master\\source\\repos\\sdgteam2020\\paw2024\\swas.UI\\swas.UI.csproj",
+  "projectFilePath": "K:\\Projects\\paw2024\\swas.UI\\swas.UI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\master\\.nuget\\packages\\bootstrap\\5.3.0\\bootstrap.5.3.0.nupkg.sha512",
     "C:\\Users\\master\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",
