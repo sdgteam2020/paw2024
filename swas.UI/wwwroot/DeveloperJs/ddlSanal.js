@@ -475,7 +475,7 @@ function getActionsByStatus(selectedStatusId) {
 // fwd process
 function EditActionsByStatus(selectedStatusId, selectedStageId, projIds) {
 
-    debugger;
+    
     $.ajax({
 
         url: '/Ddl/GetActiByStageStat',

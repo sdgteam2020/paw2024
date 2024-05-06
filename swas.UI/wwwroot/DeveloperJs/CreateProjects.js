@@ -246,37 +246,8 @@ function AddProject(thistag) {
         success: function (result) {
 
 
-            if (result>0) {
-               
-                $("#spanProjectId").html(result);
-                AttechHistory();
-                current_fs = $(thistag).parent();
-                next_fs = $(thistag).parent().next();
-
-
-                //Add Class Active
-                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-
-                //show the next fieldset
-                next_fs.show();
-                //hide the current fieldset with style
-                current_fs.animate({ opacity: 0 }, {
-                    step: function (now) {
-                        // for making fielset appear animation
-                        opacity = 1 - now;
-
-                        current_fs.css({
-                            'display': 'none',
-                            'position': 'relative'
-                        });
-                        next_fs.css({ 'opacity': opacity });
-                    },
-                    duration: 600
-                });
-
-
-            }
-            else if (result == -2) {
+           
+            if (result == -2) {
                 
 
                 Swal.fire({
@@ -312,14 +283,40 @@ function AddProject(thistag) {
 
                 })
 
-            } else {
-                if (result.length > 0) {
-                    for (var i = 0; i < result.length; i++) {
-                        toastr.error(result[i][0].ErrorMessage)
-                    }
+            } else if (result != null) {
+               
+
+                    $("#spanProjectId").html(result.projId);
+                    $("#spanCurrentPslmId").html(result.currentPslmId);
 
 
-                }
+                    AttechHistory();
+                    current_fs = $(thistag).parent();
+                    next_fs = $(thistag).parent().next();
+
+
+                    //Add Class Active
+                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+                    //show the next fieldset
+                    next_fs.show();
+                    //hide the current fieldset with style
+                    current_fs.animate({ opacity: 0 }, {
+                        step: function (now) {
+                            // for making fielset appear animation
+                            opacity = 1 - now;
+
+                            current_fs.css({
+                                'display': 'none',
+                                'position': 'relative'
+                            });
+                            next_fs.css({ 'opacity': opacity });
+                        },
+                        duration: 600
+                    });
+
+
+                
 
 
             }
@@ -330,7 +327,7 @@ function FwdProjConfirm(thisdata) {
     $.ajax({
         url: '/Projects/FwdProjConfirm',
         type: 'POST',
-        data: { "projid": $("#spanProjectId").html() },
+        data: { "projid": $("#spanCurrentPslmId").html() },
         success: function (response) {
             console.log(response);
 

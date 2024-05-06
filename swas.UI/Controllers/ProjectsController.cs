@@ -2207,6 +2207,7 @@ namespace swas.UI.Controllers
                 {
                     Data.CurrentPslmId = 0;
                     projid = await _projectsRepository.AddProjectAsync(Data);
+                    Data = await _projectsRepository.GetProjectByIdAsync(projid);
                 }
                 else
                 {
@@ -2216,10 +2217,11 @@ namespace swas.UI.Controllers
 
 
                     await _projectsRepository.UpdateProjectAsync(Data);
-                    projid=Data.ProjId;
+                    Data = await _projectsRepository.GetProjectByIdAsync(Data.ProjId);
+
                 }
 
-                return Json(projid);
+                return Json(Data);
             }
             catch (Exception ex)
             {
@@ -2635,8 +2637,8 @@ namespace swas.UI.Controllers
                 try
                 {
                     tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
-                    var project = await _projectsRepository.GetProjectByIdAsync(projid);
-                    psmove = await _projectsRepository.GettXNByPsmIdAsync(project.CurrentPslmId);
+                   // var project = await _projectsRepository.GetProjectByIdAsync(projid);
+                    psmove = await _projectsRepository.GettXNByPsmIdAsync(projid);
                     psmove.ActionCde = 1;
                     psmove.DateTimeOfUpdate = DateTime.Now;
                     psmove.TimeStamp = DateTime.Now;
