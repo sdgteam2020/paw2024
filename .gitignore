@@ -312,5 +312,6 @@ AppPackages/
 /swas.UI/obj/project.assets.json
 /swasUnitTest/obj/Release/net6.0/swasUnitTest.GeneratedMSBuildEditorConfig.editorconfig
 /swasUnitTest/obj/Release/net6.0/swasUnitTest.csproj.AssemblyReference.cache
+
 /swasUnitTest/obj/Debug/net6.0/swasUnitTest.GeneratedMSBuildEditorConfig.editorconfig
 /.vs/slnx.sqlite
