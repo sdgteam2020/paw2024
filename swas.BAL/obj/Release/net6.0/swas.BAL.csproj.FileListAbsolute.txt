@@ -1,0 +1,150 @@
+K:\paw6_it2\swas.BAL\bin\Release\net6.0\swas.BAL.deps.json
+K:\paw6_it2\swas.BAL\bin\Release\net6.0\swas.BAL.dll
+K:\paw6_it2\swas.BAL\bin\Release\net6.0\swas.BAL.pdb
+K:\paw6_it2\swas.BAL\bin\Release\net6.0\swas.DAL.dll
+K:\paw6_it2\swas.BAL\bin\Release\net6.0\swas.DAL.pdb
+K:\paw6_it2\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.AssemblyReference.cache
+K:\paw6_it2\swas.BAL\obj\Release\net6.0\swas.BAL.GeneratedMSBuildEditorConfig.editorconfig
+K:\paw6_it2\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfoInputs.cache
+K:\paw6_it2\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfo.cs
+K:\paw6_it2\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CoreCompileInputs.cache
+K:\paw6_it2\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CopyComplete
+K:\paw6_it2\swas.BAL\obj\Release\net6.0\swas.BAL.dll
+K:\paw6_it2\swas.BAL\obj\Release\net6.0\refint\swas.BAL.dll
+K:\paw6_it2\swas.BAL\obj\Release\net6.0\swas.BAL.pdb
+K:\paw6_it2\swas.BAL\obj\Release\net6.0\ref\swas.BAL.dll
+E:\Work_new\swas\_2itrectification\_paw_final\swas.BAL\bin\Release\net6.0\swas.BAL.deps.json
+E:\Work_new\swas\_2itrectification\_paw_final\swas.BAL\bin\Release\net6.0\swas.BAL.dll
+E:\Work_new\swas\_2itrectification\_paw_final\swas.BAL\bin\Release\net6.0\swas.BAL.pdb
+E:\Work_new\swas\_2itrectification\_paw_final\swas.BAL\bin\Release\net6.0\swas.DAL.dll
+E:\Work_new\swas\_2itrectification\_paw_final\swas.BAL\bin\Release\net6.0\swas.DAL.pdb
+E:\Work_new\swas\_2itrectification\_paw_final\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.AssemblyReference.cache
+E:\Work_new\swas\_2itrectification\_paw_final\swas.BAL\obj\Release\net6.0\swas.BAL.GeneratedMSBuildEditorConfig.editorconfig
+E:\Work_new\swas\_2itrectification\_paw_final\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfoInputs.cache
+E:\Work_new\swas\_2itrectification\_paw_final\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfo.cs
+E:\Work_new\swas\_2itrectification\_paw_final\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CoreCompileInputs.cache
+E:\Work_new\swas\_2itrectification\_paw_final\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CopyComplete
+E:\Work_new\swas\_2itrectification\_paw_final\swas.BAL\obj\Release\net6.0\swas.BAL.dll
+E:\Work_new\swas\_2itrectification\_paw_final\swas.BAL\obj\Release\net6.0\refint\swas.BAL.dll
+E:\Work_new\swas\_2itrectification\_paw_final\swas.BAL\obj\Release\net6.0\swas.BAL.pdb
+E:\Work_new\swas\_2itrectification\_paw_final\swas.BAL\obj\Release\net6.0\ref\swas.BAL.dll
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_22_Jan_24\swas.BAL\bin\Release\net6.0\swas.BAL.deps.json
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_22_Jan_24\swas.BAL\bin\Release\net6.0\swas.BAL.dll
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_22_Jan_24\swas.BAL\bin\Release\net6.0\swas.BAL.pdb
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_22_Jan_24\swas.BAL\bin\Release\net6.0\swas.DAL.dll
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_22_Jan_24\swas.BAL\bin\Release\net6.0\swas.DAL.pdb
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_22_Jan_24\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.AssemblyReference.cache
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_22_Jan_24\swas.BAL\obj\Release\net6.0\swas.BAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_22_Jan_24\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfoInputs.cache
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_22_Jan_24\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfo.cs
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_22_Jan_24\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_22_Jan_24\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CopyComplete
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_22_Jan_24\swas.BAL\obj\Release\net6.0\swas.BAL.dll
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_22_Jan_24\swas.BAL\obj\Release\net6.0\refint\swas.BAL.dll
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_22_Jan_24\swas.BAL\obj\Release\net6.0\swas.BAL.pdb
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_22_Jan_24\swas.BAL\obj\Release\net6.0\ref\swas.BAL.dll
+E:\_paw_acg_22_Jan_24\_paw_acg_22_Jan_24\swas.BAL\bin\Release\net6.0\swas.BAL.deps.json
+E:\_paw_acg_22_Jan_24\_paw_acg_22_Jan_24\swas.BAL\bin\Release\net6.0\swas.BAL.dll
+E:\_paw_acg_22_Jan_24\_paw_acg_22_Jan_24\swas.BAL\bin\Release\net6.0\swas.BAL.pdb
+E:\_paw_acg_22_Jan_24\_paw_acg_22_Jan_24\swas.BAL\bin\Release\net6.0\swas.DAL.dll
+E:\_paw_acg_22_Jan_24\_paw_acg_22_Jan_24\swas.BAL\bin\Release\net6.0\swas.DAL.pdb
+E:\_paw_acg_22_Jan_24\_paw_acg_22_Jan_24\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.AssemblyReference.cache
+E:\_paw_acg_22_Jan_24\_paw_acg_22_Jan_24\swas.BAL\obj\Release\net6.0\swas.BAL.GeneratedMSBuildEditorConfig.editorconfig
+E:\_paw_acg_22_Jan_24\_paw_acg_22_Jan_24\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfoInputs.cache
+E:\_paw_acg_22_Jan_24\_paw_acg_22_Jan_24\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfo.cs
+E:\_paw_acg_22_Jan_24\_paw_acg_22_Jan_24\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CoreCompileInputs.cache
+E:\_paw_acg_22_Jan_24\_paw_acg_22_Jan_24\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CopyComplete
+E:\_paw_acg_22_Jan_24\_paw_acg_22_Jan_24\swas.BAL\obj\Release\net6.0\swas.BAL.dll
+E:\_paw_acg_22_Jan_24\_paw_acg_22_Jan_24\swas.BAL\obj\Release\net6.0\refint\swas.BAL.dll
+E:\_paw_acg_22_Jan_24\_paw_acg_22_Jan_24\swas.BAL\obj\Release\net6.0\swas.BAL.pdb
+E:\_paw_acg_22_Jan_24\_paw_acg_22_Jan_24\swas.BAL\obj\Release\net6.0\ref\swas.BAL.dll
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_06Feb_24\swas.BAL\bin\Release\net6.0\swas.BAL.deps.json
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_06Feb_24\swas.BAL\bin\Release\net6.0\swas.BAL.dll
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_06Feb_24\swas.BAL\bin\Release\net6.0\swas.BAL.pdb
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_06Feb_24\swas.BAL\bin\Release\net6.0\swas.DAL.dll
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_06Feb_24\swas.BAL\bin\Release\net6.0\swas.DAL.pdb
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_06Feb_24\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.AssemblyReference.cache
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_06Feb_24\swas.BAL\obj\Release\net6.0\swas.BAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_06Feb_24\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfoInputs.cache
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_06Feb_24\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfo.cs
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_06Feb_24\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_06Feb_24\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CopyComplete
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_06Feb_24\swas.BAL\obj\Release\net6.0\swas.BAL.dll
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_06Feb_24\swas.BAL\obj\Release\net6.0\refint\swas.BAL.dll
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_06Feb_24\swas.BAL\obj\Release\net6.0\swas.BAL.pdb
+C:\Users\Administrator\Desktop\PAW_SOURCE\_paw_acg_06Feb_24\swas.BAL\obj\Release\net6.0\ref\swas.BAL.dll
+C:\Users\Administrator\Desktop\_paw_acg_06Feb_24\swas.BAL\bin\Release\net6.0\swas.BAL.deps.json
+C:\Users\Administrator\Desktop\_paw_acg_06Feb_24\swas.BAL\bin\Release\net6.0\swas.BAL.dll
+C:\Users\Administrator\Desktop\_paw_acg_06Feb_24\swas.BAL\bin\Release\net6.0\swas.BAL.pdb
+C:\Users\Administrator\Desktop\_paw_acg_06Feb_24\swas.BAL\bin\Release\net6.0\swas.DAL.dll
+C:\Users\Administrator\Desktop\_paw_acg_06Feb_24\swas.BAL\bin\Release\net6.0\swas.DAL.pdb
+C:\Users\Administrator\Desktop\_paw_acg_06Feb_24\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.AssemblyReference.cache
+C:\Users\Administrator\Desktop\_paw_acg_06Feb_24\swas.BAL\obj\Release\net6.0\swas.BAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\Desktop\_paw_acg_06Feb_24\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfoInputs.cache
+C:\Users\Administrator\Desktop\_paw_acg_06Feb_24\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfo.cs
+C:\Users\Administrator\Desktop\_paw_acg_06Feb_24\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Desktop\_paw_acg_06Feb_24\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CopyComplete
+C:\Users\Administrator\Desktop\_paw_acg_06Feb_24\swas.BAL\obj\Release\net6.0\swas.BAL.dll
+C:\Users\Administrator\Desktop\_paw_acg_06Feb_24\swas.BAL\obj\Release\net6.0\refint\swas.BAL.dll
+C:\Users\Administrator\Desktop\_paw_acg_06Feb_24\swas.BAL\obj\Release\net6.0\swas.BAL.pdb
+C:\Users\Administrator\Desktop\_paw_acg_06Feb_24\swas.BAL\obj\Release\net6.0\ref\swas.BAL.dll
+C:\Users\Administrator\Desktop\paw code 22 Feb 24 1530hrs\swas.BAL\bin\Release\net6.0\swas.BAL.deps.json
+C:\Users\Administrator\Desktop\paw code 22 Feb 24 1530hrs\swas.BAL\bin\Release\net6.0\swas.BAL.dll
+C:\Users\Administrator\Desktop\paw code 22 Feb 24 1530hrs\swas.BAL\bin\Release\net6.0\swas.BAL.pdb
+C:\Users\Administrator\Desktop\paw code 22 Feb 24 1530hrs\swas.BAL\bin\Release\net6.0\swas.DAL.dll
+C:\Users\Administrator\Desktop\paw code 22 Feb 24 1530hrs\swas.BAL\bin\Release\net6.0\swas.DAL.pdb
+C:\Users\Administrator\Desktop\paw code 22 Feb 24 1530hrs\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.AssemblyReference.cache
+C:\Users\Administrator\Desktop\paw code 22 Feb 24 1530hrs\swas.BAL\obj\Release\net6.0\swas.BAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\Desktop\paw code 22 Feb 24 1530hrs\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfoInputs.cache
+C:\Users\Administrator\Desktop\paw code 22 Feb 24 1530hrs\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfo.cs
+C:\Users\Administrator\Desktop\paw code 22 Feb 24 1530hrs\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Desktop\paw code 22 Feb 24 1530hrs\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CopyComplete
+C:\Users\Administrator\Desktop\paw code 22 Feb 24 1530hrs\swas.BAL\obj\Release\net6.0\swas.BAL.dll
+C:\Users\Administrator\Desktop\paw code 22 Feb 24 1530hrs\swas.BAL\obj\Release\net6.0\refint\swas.BAL.dll
+C:\Users\Administrator\Desktop\paw code 22 Feb 24 1530hrs\swas.BAL\obj\Release\net6.0\swas.BAL.pdb
+C:\Users\Administrator\Desktop\paw code 22 Feb 24 1530hrs\swas.BAL\obj\Release\net6.0\ref\swas.BAL.dll
+C:\Users\Administrator\Desktop\final paw code 23  Feb 24 1530hrs\swas.BAL\bin\Release\net6.0\swas.BAL.deps.json
+C:\Users\Administrator\Desktop\final paw code 23  Feb 24 1530hrs\swas.BAL\bin\Release\net6.0\swas.BAL.dll
+C:\Users\Administrator\Desktop\final paw code 23  Feb 24 1530hrs\swas.BAL\bin\Release\net6.0\swas.BAL.pdb
+C:\Users\Administrator\Desktop\final paw code 23  Feb 24 1530hrs\swas.BAL\bin\Release\net6.0\swas.DAL.dll
+C:\Users\Administrator\Desktop\final paw code 23  Feb 24 1530hrs\swas.BAL\bin\Release\net6.0\swas.DAL.pdb
+C:\Users\Administrator\Desktop\final paw code 23  Feb 24 1530hrs\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.AssemblyReference.cache
+C:\Users\Administrator\Desktop\final paw code 23  Feb 24 1530hrs\swas.BAL\obj\Release\net6.0\swas.BAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\Desktop\final paw code 23  Feb 24 1530hrs\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfoInputs.cache
+C:\Users\Administrator\Desktop\final paw code 23  Feb 24 1530hrs\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfo.cs
+C:\Users\Administrator\Desktop\final paw code 23  Feb 24 1530hrs\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Desktop\final paw code 23  Feb 24 1530hrs\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CopyComplete
+C:\Users\Administrator\Desktop\final paw code 23  Feb 24 1530hrs\swas.BAL\obj\Release\net6.0\swas.BAL.dll
+C:\Users\Administrator\Desktop\final paw code 23  Feb 24 1530hrs\swas.BAL\obj\Release\net6.0\refint\swas.BAL.dll
+C:\Users\Administrator\Desktop\final paw code 23  Feb 24 1530hrs\swas.BAL\obj\Release\net6.0\swas.BAL.pdb
+C:\Users\Administrator\Desktop\final paw code 23  Feb 24 1530hrs\swas.BAL\obj\Release\net6.0\ref\swas.BAL.dll
+C:\Users\Administrator\Desktop\Version Control\Iam Code Final Code MERGE Latest Code\swas.BAL\bin\Release\net6.0\swas.BAL.deps.json
+C:\Users\Administrator\Desktop\Version Control\Iam Code Final Code MERGE Latest Code\swas.BAL\bin\Release\net6.0\swas.BAL.dll
+C:\Users\Administrator\Desktop\Version Control\Iam Code Final Code MERGE Latest Code\swas.BAL\bin\Release\net6.0\swas.BAL.pdb
+C:\Users\Administrator\Desktop\Version Control\Iam Code Final Code MERGE Latest Code\swas.BAL\bin\Release\net6.0\swas.DAL.dll
+C:\Users\Administrator\Desktop\Version Control\Iam Code Final Code MERGE Latest Code\swas.BAL\bin\Release\net6.0\swas.DAL.pdb
+C:\Users\Administrator\Desktop\Version Control\Iam Code Final Code MERGE Latest Code\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.AssemblyReference.cache
+C:\Users\Administrator\Desktop\Version Control\Iam Code Final Code MERGE Latest Code\swas.BAL\obj\Release\net6.0\swas.BAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\Desktop\Version Control\Iam Code Final Code MERGE Latest Code\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfoInputs.cache
+C:\Users\Administrator\Desktop\Version Control\Iam Code Final Code MERGE Latest Code\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfo.cs
+C:\Users\Administrator\Desktop\Version Control\Iam Code Final Code MERGE Latest Code\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Desktop\Version Control\Iam Code Final Code MERGE Latest Code\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CopyComplete
+C:\Users\Administrator\Desktop\Version Control\Iam Code Final Code MERGE Latest Code\swas.BAL\obj\Release\net6.0\swas.BAL.dll
+C:\Users\Administrator\Desktop\Version Control\Iam Code Final Code MERGE Latest Code\swas.BAL\obj\Release\net6.0\refint\swas.BAL.dll
+C:\Users\Administrator\Desktop\Version Control\Iam Code Final Code MERGE Latest Code\swas.BAL\obj\Release\net6.0\swas.BAL.pdb
+C:\Users\Administrator\Desktop\Version Control\Iam Code Final Code MERGE Latest Code\swas.BAL\obj\Release\net6.0\ref\swas.BAL.dll
+C:\Users\Administrator\Desktop\Version Control\Source code ver control\IAM Commented code ver 1.0 30 Apr 24\swas.BAL\bin\Release\net6.0\swas.BAL.deps.json
+C:\Users\Administrator\Desktop\Version Control\Source code ver control\IAM Commented code ver 1.0 30 Apr 24\swas.BAL\bin\Release\net6.0\swas.BAL.dll
+C:\Users\Administrator\Desktop\Version Control\Source code ver control\IAM Commented code ver 1.0 30 Apr 24\swas.BAL\bin\Release\net6.0\swas.BAL.pdb
+C:\Users\Administrator\Desktop\Version Control\Source code ver control\IAM Commented code ver 1.0 30 Apr 24\swas.BAL\bin\Release\net6.0\swas.DAL.dll
+C:\Users\Administrator\Desktop\Version Control\Source code ver control\IAM Commented code ver 1.0 30 Apr 24\swas.BAL\bin\Release\net6.0\swas.DAL.pdb
+C:\Users\Administrator\Desktop\Version Control\Source code ver control\IAM Commented code ver 1.0 30 Apr 24\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.AssemblyReference.cache
+C:\Users\Administrator\Desktop\Version Control\Source code ver control\IAM Commented code ver 1.0 30 Apr 24\swas.BAL\obj\Release\net6.0\swas.BAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\Desktop\Version Control\Source code ver control\IAM Commented code ver 1.0 30 Apr 24\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfoInputs.cache
+C:\Users\Administrator\Desktop\Version Control\Source code ver control\IAM Commented code ver 1.0 30 Apr 24\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfo.cs
+C:\Users\Administrator\Desktop\Version Control\Source code ver control\IAM Commented code ver 1.0 30 Apr 24\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\Desktop\Version Control\Source code ver control\IAM Commented code ver 1.0 30 Apr 24\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CopyComplete
+C:\Users\Administrator\Desktop\Version Control\Source code ver control\IAM Commented code ver 1.0 30 Apr 24\swas.BAL\obj\Release\net6.0\swas.BAL.dll
+C:\Users\Administrator\Desktop\Version Control\Source code ver control\IAM Commented code ver 1.0 30 Apr 24\swas.BAL\obj\Release\net6.0\refint\swas.BAL.dll
+C:\Users\Administrator\Desktop\Version Control\Source code ver control\IAM Commented code ver 1.0 30 Apr 24\swas.BAL\obj\Release\net6.0\swas.BAL.pdb
+C:\Users\Administrator\Desktop\Version Control\Source code ver control\IAM Commented code ver 1.0 30 Apr 24\swas.BAL\obj\Release\net6.0\ref\swas.BAL.dll

@@ -1,0 +1,952 @@
+﻿@using swas.BAL.DTO;
+@using swas.BAL.Helpers;
+@model Projmove
+
+
+@{
+
+    Model.Submitcde = ViewBag.SubmitCde;
+    Model.ProjMov.PsmId = ViewBag.PsmId ?? 0;
+    Model.ProjMov.ProjCode = ViewBag.PjIR;
+    int psmidtest = Model.ProjMov.PsmId;
+    int subcde = 0;
+
+    //int? DataProjId = ViewBag.DataProjId as int?;
+
+
+}
+
+<style>
+
+    .thead-gradient {
+        background: white !important;
+        color: #fff;
+    }
+
+    .table-3d {
+        background-color: #fff;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        /*border: 1px solid #ccc; */
+    }
+
+        .table-3d th, .table-3d td {
+            /*border: 1px solid #ccc;*/
+        }
+
+        .table-3d:hover {
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.8);
+            transform: translateY(-6px);
+        }
+
+
+    .container {
+        max-width: 100% !important;
+        margin-left: -33px !important;
+        padding-right: 141px !important;
+    }
+
+    label {
+        display: inline-block;
+        margin-bottom: 0.5rem;
+        font-size: medium !important;
+    }
+
+    select, optgroup, textarea {
+        width: 100%;
+    }
+
+    .bx-trash:before {
+        content: "\eeb3";
+        color: white !important;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+
+    .popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 1001; /* Set a higher z-index for the popup */
+    }
+
+    .popup-content {
+        position: absolute;
+        top: 55%;
+        left: 55%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        width: 75% !important;
+        margin-left: 48px !important;
+        z-index: 1002; /* Set a higher z-index for the popup content */
+    }
+
+
+    .control-label {
+        color: black;
+    }
+
+    .underline-h5 {
+        padding: 0.5rem;
+        width: 100%;
+        margin: 0 auto; /* Center the box */
+        text-align: center;
+        border-color: #03c1fc;
+        /*box-shadow: 2px 6px 5px -3px #062b50;*/
+        background-color: #0cafff;
+        color: white;
+        font-family: Arial;
+        font-size: 15px;
+        margin-bottom: 0.5rem;
+        height: -1px;
+    }
+
+    .underline-h6 {
+        background-color: #044c92;
+        color: white !important;
+        text-align: center;
+        padding: 0.5rem;
+        width: 100%;
+        margin: 0 auto; /* Center the box */
+        text-align: center;
+        font-family: Arial;
+        font-size: 15px;
+        margin-bottom: 0.5rem;
+        height: -1px;
+    }
+
+
+    .btn-close {
+        background-color: red;
+        color: black;
+        border: none;
+        font-size: 20px;
+        font-weight: bold;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+
+    /* Custom styles for label alignment and input width */
+    .form-group {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 10px; /* Adjust the margin as needed */
+    }
+
+        .form-group label {
+            text-align: left;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        /* Adjust width as needed */
+        .form-group select,
+        .form-group textarea,
+        .form-group input[type="file"] {
+            flex-grow: 1;
+            width: calc(100% - 15px); /* Adjust the width as needed */
+        }
+
+    .form-control {
+        margin-left: 10px; /* Adjust the margin as needed */
+    }
+
+        .form-control label {
+            margin-left: 10px; /* Adjust the margin as needed */
+        }
+</style>
+
+<div class="accordion accordion-flush" id="accordionFlushExample">
+
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingOne">
+
+
+            <button class="btn btn-secondary" id="openPopup" type="button">
+                Send
+            </button>
+
+            <button class="btn btn-secondary" type="button">
+                <a href="/Projects/ProjDetails" style="color: white;">
+                    Close
+                </a>
+
+
+
+            </button>
+            <button class="btn btn-danger" type="button">
+
+                <img src="/assets/images/icons/pdfimg.png" onclick="PrintDiv()" alt="Pdf Download" width="35" height="25">
+            </button>
+
+        </h2>
+    </div>
+</div>
+
+<div id="popup" class="popup">
+    <div class="popup-content">
+
+
+        <br />
+        <div class="messagepop1 pop10" style="position:relative">
+            <div class="row">
+                <h5 class="text-center mb-4 underline-h5" style="text-align: center; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); position: relative;margin-top:-40px;">
+                    <span>
+                        Project Movment
+                    </span>
+                    <button type="button" class="btn-close" id="closePopup" data-bs-dismiss="modal" aria-label="Close" style="background-color: red; color: black;margin-top: -7px;">
+                    </button>
+                </h5>
+
+                <!--Projects Status Action-->
+                <div class="col-12 col-lg-12 col-xl-6 d-flex" style="margin-top: -28px;">
+
+                    <div class="card radius-10 w-100">
+
+                        <div class="card-body">
+
+                            <h5 class="text-center mb-4 underline-h6" style="text-align: center; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); position: relative;margin-top: -19px">
+                                <span>
+                                    Projects Move Details
+                                </span>
+                            </h5>
+                            <div style="margin-top: -35px;">
+                                <div class="mt-5">
+                                    @if (Model.ProjMov.ProjCode != null)
+                                    {
+                                        @*<h3 style="color: red;">Project Code is: @Model.ProjMov.ProjCode</h3>*@
+                                    }
+                                    @using (Html.BeginForm("FwdCreate", "ProjStakeHolderMov", FormMethod.Post, new { id = "ProjMove", enctype = "multipart/form-data" }))
+
+                                    {
+                                        @if (Model.Submitcde == false)
+                                        {
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group" style="text-align:center;">
+                                                        @Html.LabelFor(model => model.ProjMov.StageId, "Stage", htmlAttributes: new { @class = "control-label" })
+                                                        @Html.DropDownListFor(model => model.ProjMov.StageId, new SelectList(Enumerable.Empty<SelectListItem>(), "Value", "Text" ),  new { id = "ddlStages", @class = "form-control text-center  dropdownsearch", @required = "required" })
+
+                                                        @Html.ValidationMessageFor(model => model.ProjMov.StageId, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.ProjMov.StatusId, "Status", htmlAttributes: new { @class = "control-label" })
+                                                        @Html.DropDownListFor(model => model.ProjMov.StatusId, new SelectList(Enumerable.Empty<SelectListItem>(), "Value", "Text"), new { id = "ddlStatus", @class = "form-control text-center  dropdownsearch", required = "required" })
+                                                        @Html.ValidationMessageFor(model => model.ProjMov.StatusId, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.ProjMov.ActionId, "Action", htmlAttributes: new { @class = "control-label" })
+                                                        @Html.DropDownListFor(model => model.ProjMov.ActionId, new SelectList(Enumerable.Empty<SelectListItem>(), "Value", "Text"), new { id = "ddlActions", @class = "form-control  dropdownsearch", required = "required" })
+                                                        @Html.ValidationMessageFor(model => model.ProjMov.ActionId, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.ProjMov.StakeHolderId, "Fwd To..", htmlAttributes: new { @class = "control-label" })
+                                                        @Html.DropDownListFor(model => model.ProjMov.StakeHolderId, new SelectList(Enumerable.Empty<SelectListItem>(), "Value", "Text"),  new { id = "ddlUnitId", @class = "form-control text-center  dropdownsearch", required = "required" })
+                                                        @Html.ValidationMessageFor(model => model.ProjMov.StakeHolderId, "", new { @class = "text-danger" })
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.ProjMov.AddRemarks, "Remarks", htmlAttributes: new { @class = "control-label" })
+                                                        @Html.TextAreaFor(model => model.ProjMov.AddRemarks, new { @class = "form-control", oninput = "ValInDatass(this)" })
+                                                        @Html.ValidationMessageFor(model => model.ProjMov.AddRemarks, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                               @* <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.ProjMov.Comments, "Comment", htmlAttributes: new { @class = "control-label" })
+                                                        @Html.TextAreaFor(model => model.ProjMov.Comments, new { @class = "form-control", oninput = "ValInDatasss(this)" })
+                                                        @Html.ValidationMessageFor(model => model.ProjMov.Comments, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>*@
+                                            </div>
+                                        }
+
+                                        else
+                                        {
+                                            subcde = 1;
+                                        }
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    @Html.HiddenFor(model => model.DataProjId, new { htmlAttributes = new { @class = "form-control" } })
+
+                                                    @Html.HiddenFor(model => model.ProjMov.PsmId, new { htmlAttributes = new { @class = "form-control" , id="PsmIds"} })
+                                                    @Html.HiddenFor(model => model.Submitcde, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.HiddenFor(model => model.ProjMov.ProjCode, new { htmlAttributes = new { @class = "form-control" } })
+
+
+                                                    <label for="documentDescription" class="form-label">Attach Document Description</label>
+                                                    @Html.TextAreaFor(model => model.ProjMov.AttRemarks, new { @class = "form-control", oninput = "ValInDatasss(this)" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    @Html.HiddenFor(model => model.ProjMov.PsmId, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.HiddenFor(model => model.ProjMov.ProjId, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.Hidden("custobox", psmidtest, new { @class = "form-control", @readonly = "readonly", id = "custobox" })
+                                                    @Html.HiddenFor(model => model.ProjMov.StakeHolderId)
+                                                    @Html.HiddenFor(model => model.ProjMov.StageId)
+                                                    @Html.HiddenFor(model => model.ProjMov.StatusId)
+                                                    @Html.HiddenFor(model => model.ProjMov.ActionId)
+                                                    @Html.HiddenFor(model => model.ProjMov.AddRemarks)
+                                                    @Html.HiddenFor(model => model.ProjMov.CurrentStakeHolderId)
+                                                    @Html.HiddenFor(model => model.ProjMov.TimeStamp)
+                                                    @Html.HiddenFor(model => model.ProjMov.ToStakeHolderId)
+                                                    @Html.HiddenFor(model => model.ProjMov.FromStakeHolderId)
+                                                    @Html.HiddenFor(model => model.ProjMov.CommentId)
+                                                    @Html.HiddenFor(model => model.ProjMov.IsDeleted)
+                                                    @Html.HiddenFor(model => model.ProjMov.IsActive)
+                                                    @Html.HiddenFor(model => model.ProjMov.EditDeleteBy)
+                                                    @Html.HiddenFor(model => model.ProjMov.EditDeleteDate)
+                                                    @Html.HiddenFor(model => model.ProjMov.UpdatedByUserId)
+                                                    @Html.HiddenFor(model => model.ProjMov.DateTimeOfUpdate)
+                                                    @Html.HiddenFor(model => model.ProjMov.Comments)
+                                                    @Html.HiddenFor(model => model.ProjMov.TostackholderDt)
+                                                    @Html.HiddenFor(model => model.ProjMov.ActionDt)
+                                                    @Html.HiddenFor(model => model.ProjMov.ActionCde)
+                                                    @Html.HiddenFor(model => model.ProjMov.grouppsmid)
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group" >
+                                                    <label for="pdfFileInput" class="form-label">
+
+                                                    </label>
+                                                    <div class="input-group">
+                                                        <input style="color: black;" type="file" id="pdfFileInput" name="uploadfile" class="form-control custom-width" accept=".pdf">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <center>
+                                                    @if (psmidtest > 0)
+                                                    {
+                                                        <button type="submit" id="upload" class="btn btn-primary"> Upload </button>
+                                                        <span style="margin-right: 15px;"></span>
+                                                        <button type="button" id="finalupload" class="btn btn-primary">Fwd </button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button type="submit" class="btn btn-primary">Save Draft & Upload </button>
+                                                    }
+                                                </center>
+                                            </div>
+                                        </div>
+
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="popup" class="popup">
+                    <div class="popup-content">
+                        <button type="button" class="btn-close" id="closePopup" data-bs-dismiss="modal" aria-label="Close" style="background-color: red; color: black;">
+                            &times;
+                        </button>
+                        <iframe id="pdfFrame" src="" width="600" height="200"></iframe>
+                    </div>
+                </div>
+
+                <!--Upload Section-->
+
+
+
+                <div class="col-12 col-lg-12 col-xl-6 d-flex" style="margin-top: -28px;">
+
+                    <div class="card radius-10 w-100 overflow-scroll">
+                        <div class="card-body">
+                            <div>
+                                <h5 class="text-center mb-4 underline-h6" style="text-align: center; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); position: relative;margin-top: -19px">
+                                    <span>
+                                        Upload Attachment
+                                    </span>
+                                </h5>
+                                <div class="card-body" style="margin-top: -39px;">
+
+
+                                    <table class="table table-striped table-bordered">
+
+
+                                        <thead>
+                                            <tr>
+
+
+                                                <th>Delete</th>
+
+                                                <th>Docu Desc</th>
+                                                <th>File Name</th>
+                                                <th>Timestamp</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var history in Model.Atthistory)
+                                            {
+                                                @if (history.AttId > 0)
+                                                {
+                                                    <tr>
+
+                                                        <td>
+
+                                                            <a data-id="@history.AttId" onclick="functionConfirm1('@history.AttId')" class="btn btn-secondary btn-ecomm"><i class="bx bx-trash"></i></a>
+
+
+
+
+                                                        </td>
+
+
+
+                                                        <td>
+                                                             <a download="@history.AttPath" href="~/upload/@history.AttPath">
+                                                    @history.Reamarks
+                                                    </a> 
+                                                            @history.Reamarks
+                                                        </td>
+
+
+                                                        <td>
+                                                            @history.ActFileName
+                                                        </td>
+                                                        <td>@history.TimeStamp</td>
+
+
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('openPopup').click();
+    });
+</script>
+
+
+
+<script>
+    $("#openPopup").click(function () {
+        document.getElementById('popup').style.display = 'block';
+        document.getElementById('PopUpHide').style.display = 'none';
+        document.getElementById('PopUpHide1').style.display = 'none';
+    });
+
+    $("#closePopup").click(function () {
+        document.getElementById('popup').style.display = 'none';
+        document.getElementById('PopUpHide').style.display = 'block';
+        document.getElementById('PopUpHide1').style.display = 'block';
+    });
+
+</script>
+
+<script>
+    $(document).ready(function () {
+
+        document.getElementById('PopUpHide').style.display = 'block';
+        document.getElementById('PopUpHide1').style.display = 'block';
+        var psmIds = '@Model.ProjMov.PsmId';
+        var projIds = '@Model.DataProjId';
+
+        popRestddlfwdUnit(projIds);
+
+
+        
+        populateStages(0, $("#spnstageid").html(), projIds);
+
+
+        $('#ddlStages').on('change', function () {
+
+            
+
+            var stageIds = $(this).val();
+
+            var projIds = '@Model.DataProjId';
+
+           
+
+            if (stageIds > 0) {
+                $('#ddlStatus').empty();
+                $('#ddlActions').empty();
+                getStatusByStage(stageIds);
+
+            } else {
+                $('#ddlStatus').empty();
+                $('#ddlActions').empty();
+            }
+
+        });
+
+       
+        $('#ddlActions').on('change', function () {
+            var ddlActions = $(this).val();
+            var ddlStages = $('#ddlStatus').val();
+            var psmId = '@Model.ProjMov.PsmId';
+            var projId = psmId == 0 ? '@Model.DataProjId' : 0;
+            var StakeHolderId = '@Model.ProjMov.FromStakeHolderId';
+
+
+            $.ajax({
+                url: '/Projects/ValidateAction',
+                type: 'POST',
+                data: {
+                    "psmid": psmId,
+                    "ActionId": ddlActions,
+                    "proId": projId,
+                    "ddlStag": ddlStages,
+                    "unitid": StakeHolderId,
+
+                    "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+                },
+                success: function (response) {
+
+                    if (response) {
+                        if (response === "Succeed") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Found Eligible for this action',
+                                showConfirmButton: false,
+                                timer: 600
+                            });
+                        } else {
+
+                            Swal.fire({
+                                icon: 'error',
+                                title: response,
+                                showConfirmButton: true,
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    CallbackFunction();
+
+                                }
+                            });
+
+
+                        }
+
+                    }
+
+                }
+            });
+
+        });
+
+        function CallbackFunction() {
+           
+
+            $('#ddlActions').empty();
+            $('#ddlStatus').empty();
+
+              
+        }
+
+        $('#ddlStatus').on('change', function () {
+            var selectedStatusId = $(this).val();
+
+            var selectedStageIds = $('#ddlStages').val();
+
+            var projIds = '@Model.DataProjId';
+
+            if (selectedStatusId > 0) {
+                $('#ddlActions').empty();
+                EditActionsByStatus(selectedStatusId, selectedStageIds, projIds);
+            } else {
+                $('#ddlActions').empty();
+            }
+        });
+        if (@subcde === 0) {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('PopUpHide').style.display = 'block';
+            document.getElementById('PopUpHide1').style.display = 'block';
+        }
+        else {
+            document.getElementById('PopUpHide').style.display = 'none';
+            document.getElementById('PopUpHide1').style.display = 'none';
+        }
+
+    @*  document.getElementById('popup').style.display = 'block';
+            document.getElementById('PopUpHide').style.display = 'none'; *@
+
+            });
+
+
+</script>
+
+
+
+
+
+
+<script>
+    @if (TempData.ContainsKey("SuccessMessage"))
+    {
+        <text>
+            Swal.fire({
+                title: '** Saved ** ',
+                text: '@TempData["SuccessMessage"]',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+
+        $("fieldset").removeClass("active");
+        $("fieldset#upload").addClass("active");
+
+        </text>
+        TempData.Remove("SuccessMessage");
+        ViewBag.SubmitCde = true;
+    }
+</script>
+
+
+
+<script>
+    @if (TempData.ContainsKey("FailureMessage"))
+    {
+        <text>
+            Swal.fire({
+                title: 'Something Went Wrong....!',
+                text: '@TempData["FailureMessage"]',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        </text>
+        TempData.Remove("FailureMessage");
+    }
+</script>
+
+<script>
+    function functionConfirm1(ProjectId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to delete?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/Projects/DeleteConfDft',
+                    type: 'POST',
+                    data: { "id": ProjectId, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+                    success: function (response) {
+                        console.log(response);
+
+                        if (response) {
+                            if (response >= 1) {
+                                // Remove the corresponding row from the table
+
+
+                                var rowToRemove = $('a[data-id="' + ProjectId + '"]').closest('tr');
+                                rowToRemove.remove();
+
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Record Deleted successfully',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    }
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        var table = $('#SoftwareTypes').DataTable({
+            lengthChange: false,
+            buttons: ['copy', 'excel', 'csv', 'pdf', 'colvis']
+        });
+
+        table.buttons().container()
+            .appendTo('#SoftwareTypes_wrapper .col-md-6:eq(0)');
+    });
+</script>
+
+
+
+<script>
+
+    const pdfFileInput = document.getElementById('pdfFileInput');
+
+    pdfFileInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+
+        if (file) { 
+
+
+            const maxSizeInBytes = 10 * 1024 * 1024;
+            if (file.size > maxSizeInBytes) {
+                $('#uploadButton').hide();
+                pdfFileInput.value = '';
+                Swal.fire({
+                    title: 'File Size Exceeded',
+                    text: 'Please select a file smaller than 10MB.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                }); 
+                return;
+            }
+
+
+            const reader = new FileReader();
+            reader.onloadend = function () {
+                const bytes = new Uint8Array(reader.result);
+                const pdfHeader = new Uint8Array([37, 80, 68, 70, 45]); // %PDF-
+                const isPDF = compareArrays(bytes.slice(0, 5), pdfHeader);
+                if (isPDF) {
+
+                    console.log('PDF file is valid. Proceed with upload.');
+                } else {
+
+                    Swal.fire({
+                        title: 'Invalid File ....!',
+                        text: 'Invalid PDF file. Please select a valid PDF file.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    $('#uploadButton').hide();
+                    pdfFileInput.value = '';
+                }
+            };
+
+
+            reader.readAsArrayBuffer(file);
+        }
+    });
+
+
+    function compareArrays(array1, array2) {
+        if (array1.length !== array2.length) {
+            return false;
+        }
+        for (let i = 0; i < array1.length; i++) {
+            if (array1[i] !== array2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+    $(document).ready(function () {
+        // Wait for the document to be ready
+
+        function submitFormnew() {
+
+            var curPSMid = @psmidtest;
+
+
+            $.ajax({
+
+                type: 'POST',
+                url: 'FwdProjConfirm',
+                data: { "projid": curPSMid },
+                datatype: "json",
+
+                success: function (response) {
+
+
+                    window.location.href = '@Url.Action("ProjDetails", "Projects")';
+                    console.log('Request successful', response);
+                },
+                error: function (error) {
+                    console.error('Error occurred:', error);
+                }
+            });
+        }
+
+        $("#finalupload").click(function () {
+            submitFormnew();
+            var fdset = "fieldset#" + "4";
+            editFormContainer.style.display = 'none';
+            addFormContainer.style.display = 'block';
+            $(fdset).show();
+            $("fieldset#upload").hide();
+            $("fieldset#2").hide();
+            $("fieldset#1").hide();
+            animateProgressBar();
+        });
+
+        // Any other code that you need to run after the document is ready
+    });
+
+
+
+</script>
+
+
+<script>
+
+    const pdfFileInput = document.getElementById('pdfFileInput');
+
+    pdfFileInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+
+        if (file) {
+            // Read the first few bytes of the file as a Uint8Array
+            const reader = new FileReader();
+            reader.onloadend = function () {
+                const bytes = new Uint8Array(reader.result);
+                const pdfHeader = new Uint8Array([37, 80, 68, 70, 45]); // %PDF-
+                const isPDF = compareArrays(bytes.slice(0, 5), pdfHeader);
+                if (isPDF) {
+
+                    console.log('PDF file is valid. Proceed with upload.');
+                } else {
+                    pdfFileInput.value = '';
+                    Swal.fire({
+                        title: 'Invalid File ....!',
+                        text: 'Invalid PDF file. Please select a valid PDF file.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    // Reset the input
+                }
+            };
+
+
+            reader.readAsArrayBuffer(file);
+        }
+    });
+
+
+    function compareArrays(array1, array2) {
+        const pdfFileInputs = document.getElementById('pdfFileInput');
+        if (array1.length !== array2.length) {
+            pdfFileInputs.value = '';
+            return false;
+        }
+        for (let i = 0; i < array1.length; i++) {
+            if (array1[i] !== array2[i]) {
+                pdfFileInputs.value = '';
+                return false;
+            }
+        }
+        return true;
+    }
+
+    $(document).ready(function () {
+        $('.dropdownsearch').select2();
+    });
+</script>
+
+
+
+<script>
+    $(document).ready(function () {
+
+        function checkConditions() {
+            var remarksLength = $('#AttHisAdd_Reamarks').val().length;
+            var pdfFileInput = $('#pdfFileInput')[0].files.length;
+
+            if (remarksLength > 1 && pdfFileInput > 0) {
+                $('#uploadButton').prop('disabled', false);
+            } else {
+                $('#uploadButton').prop('disabled', true);
+            }
+        }
+
+        $('#upload').click(function () {
+            var documentDescription = $('#pdfFileInput').val();
+            if (documentDescription.trim() === "") {
+                Swal.fire({
+                    title: 'Missing Upload File  ....!',
+                    text: 'Please upload a file first.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+                
+                return false; // Prevent form submission
+            }
+        });
+
+        $('#AttHisAdd_Reamarks, #pdfFileInput').on('input change', function () {
+            checkConditions();
+        });
+
+        $('#uploadButton').prop('disabled', true);
+    });
+
+</script>

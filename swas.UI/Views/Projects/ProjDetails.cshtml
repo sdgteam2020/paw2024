@@ -1,0 +1,1257 @@
+﻿@*View Created by Sub Maj M Sanal Kumar on :  02 Aug 23
+    Reviewd by Hav Mani on : 02 Aug 23
+*@
+@using Microsoft.AspNetCore.Identity
+@using swas.BAL.DTO
+@using swas.BAL.Helpers;
+@using swas.DAL.Models
+@model MailBox
+@inject IHttpContextAccessor HttpContextAccessor
+
+
+@{
+    Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor.HttpContext.Session, "User");
+
+    ViewBag.Title = "Projects List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int snoinbox = 0;
+    int snosent = 0;
+    int snodraft = 0;
+    int snocompleted = 0;
+}
+
+<style>
+    .red-text {
+        color: red;
+    }
+
+</style>
+
+<style>
+
+    .tabs__head {
+        list-style: none;
+        padding: 0;
+        display: flex;
+    }
+
+        .tabs__head li {
+            margin-right: 10px;
+        }
+
+        .tabs__head a {
+            text-decoration: none;
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            background-color: #fff; /* Set the default background color */
+        }
+
+            .tabs__head a.active-link {
+                background-color: white; /* Set the active background color to white */
+                border-bottom: 20px solid #dee2e6; /* Adjust this as needed */
+            }
+
+    .tabs__content__item {
+        display: none;
+    }
+
+        .tabs__content__item.active-tab {
+            display: block;
+        }
+
+</style>
+
+<style>
+    .tabs__content__item {
+        overflow: auto; /* Add this style to enable scrolling */
+        max-height: 700px; /* Set a maximum height for the table to make the scrollbar appear when the content exceeds this height */
+    }
+
+        /* Optional: Add styling for the scrollbar */
+        .tabs__content__item::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .tabs__content__item::-webkit-scrollbar-thumb {
+            background-color: #888;
+        }
+</style>
+
+
+<div class="tabs" id="tabs">
+    <ul class="tabs__head">
+
+        <li>
+            <a class="active-link" href="#" data-tab="inbox">
+
+
+                <img src="~/assets/images/inbox.png" width="20px;" height="20px;" />&nbsp;Inbox
+            </a>
+        </li>
+        <li><a href="#" data-tab="sent">@*<span class="fa fa-edit"></span>*@<img src="~/assets/images/sentmail.png" width="20px;" height="20px;" />&nbsp;Sent</a></li>
+        <li><a href="#" data-tab="completed">@*<span class="fa fa-camera"></span>*@<img src="~/assets/images/completed.png" width="20px;" height="20px;" />&nbsp;Completed</a></li>
+          <li><a href="#" data-tab="draft"><img src="~/assets/images/draft.png" width="20px;" height="20px;" />&nbsp;Draft</a></li>
+        <li class="red-text" id="blinking-li">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Inbox -->> click on project name for Add Comments, Attach file and Fwd to Stakeholders/Units
+        </li>
+
+    </ul>
+
+    @{
+        snoinbox = 0;
+    }
+
+
+    <div class="tabs__content">
+        <div class="tabs__content__item active-tab" id="inbox" style="height:100%; ">
+            <div class="content" style="height:100%;">
+                <div class="card radius-10 w-100" style="height:100%;">
+                    <div class="card-body" style="height:100%; overflow-y: scroll;">
+
+                        <table id="Inbox" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Ser No</th>
+                                    <th>Proj ID</th>
+                                    <th>Proj Name</th>
+                                    <th>Recd From</th>
+
+                                    <th>Recd On</th>
+
+                                    <th>Stage</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                    <th>Awaited Days</th>
+
+                                    <th>Att</th>
+                                    @if (Logins.unitid == 1)
+                                    {
+                                        <th>Process</th>
+                                    }
+                                    @if (Logins.Role == "Dte")
+                                    {
+                                        <th>Return(Obsn)</th>
+                                    }
+                                    @if (Logins.Role == "Dte" && Logins.unitid == 1)
+                                    {
+                                        <th>Reject(Duplicate)</th>
+                                    }
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                               
+                                @foreach (var project in Model.InBox)
+                                {
+
+                                    <tr style="@(project.ActionCde == 1 ? "font-weight: bold; font-size: 16px;" : "")">
+
+
+                                        <td>
+
+                                            @{
+                                                snoinbox++;
+                                            }
+                                            @snoinbox
+                                        </td>
+                                        <td>@project.ProjId</td>
+
+                                        @if (Logins.unitid == 1)
+                                        {
+                                            
+                                            <td>
+
+                                                @if (project.ActionId < 5)
+                                                {
+                                                    <a class="editButton1" data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID">
+                                                        @project.ProjName
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a class="editButton" data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID">
+                                                        @project.ProjName
+                                                    </a>
+                                                }
+
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+
+                                                <a class="editButton" data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID">
+                                                    @project.ProjName
+                                                </a>
+
+                                            </td>
+                                        }
+
+                                        <td>@project.RecdFmUser</td>
+
+                                        <td>@project.EditDeleteDate?.ToString("dd-MM-yyyy")</td>
+
+                                        <td>@project.Stages</td>
+                                        <td>
+                                            @project.Status
+
+                                        </td>
+                                        <td>
+                                            @project.Action
+
+                                        </td>
+                                        <td>
+                                            @project.TotalDays
+
+                                        </td>
+
+                                        <td>
+
+                                            @if (project.AttCnt > 0)
+                                            {
+
+                                                <a href="javascript:void(0);" class="anchorDetail" data-id="@project.CurrentPslmId">
+                                                    <img src="/assets/images/icons/attachemnts_clip.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
+                                                </a>
+
+
+                                            }
+                                            else
+                                            {
+
+                                            }
+                                        </td>
+                                        @if (Logins.unitid == 1)
+                                        {
+                                            <td>
+                                                @if (project.ActionId < 5)
+                                                {
+                                                    <a href="javascript:void(0);" class="processDetail" data-id="@project.EncyPsmID">
+                                                        <img src="/assets/images/icons/process1.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
+                                                    </a>
+                                                }
+                                            </td>
+                                        }
+
+                                        @if (Logins.Role == "Dte")
+                                        {
+                                            <td>
+                                                @if (project.ActionId < 5)
+                                                {
+                                                    <a href="javascript:void(0);" class="RetObsn" data-id="@project.EncyPsmID">
+                                                        <img src="/assets/images/icons/back.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
+                                                    </a>
+                                                }
+                                            </td>
+                                        }
+                                        @if (Logins.Role == "Dte" && Logins.unitid == 1)
+                                        {
+                                            <td>
+                                                @if (project.ActionId < 5)
+                                                {
+                                                    <a href="javascript:void(0);" class="RetDuplicate" data-id="@project.EncyPsmID">
+                                                        <img src="/assets/images/icons/reject.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
+                                                    </a>
+                                                }
+                                            </td>
+                                        }
+
+                                    </tr>
+
+                                }
+                            </tbody>
+
+                        </table>
+
+                        @*
+                        <td>@project.Comments</td>
+                        <td>
+                        @project.InitialRemark
+
+                        </td>
+                        *@
+
+
+
+
+
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+        </div>
+
+
+
+
+        <!--Sent Items-->
+        @{
+            snosent = 0;
+        }
+
+
+        <div class="tabs__content__item" id="sent" style="height:100%; ">
+            <div class="content" style="height:100%;">
+                <div class="card radius-10 w-100" style="height:100%;">
+                    <div class="card-body" style="height:100%; overflow-y: scroll;">
+
+                        <table id="Sents" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Ser No</th>
+                                    <th>Proj ID</th>
+                                    <th>Proj Name</th>
+
+                                    @* <th>Recd From</th>*@
+
+                                    @*  <th>Recd On</th>*@
+
+                                    <th>Fwd To</th>
+                                    <th>Fwd On</th>
+
+                                    <th>Stage</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                    <th>Comments</th>
+                                    <th>Remark</th>
+                                    @*<th>Days in Inbox</th>*@
+                                    <th>Att</th>
+                                    <th>Recall/Undo</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var project in Model.SendItems)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @{
+                                                snosent++;
+                                            }
+                                            @snosent
+                                        </td>
+                                        <td>@project.ProjId</td>
+                                        <td>
+                                            <a class="editButton" data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistoryView?EncyID=@project.EncyID">
+                                                @project.ProjName
+                                            </a>
+
+                                        </td>
+                                        @* <td>@project.RecdFmUser</td>*@
+                                        @*  <td>@project.EditDeleteDate?.ToString("dd-MM-yyyy")</td>*@
+
+                                        <td>@project.FwdtoUser</td>
+                                        <td>@project.FwdtoDate?.ToString("dd-MM-yyyy")</td>
+
+                                        <td>@project.Stages</td>
+                                        <td>
+                                            @project.Status
+                                        </td>
+                                        <td>
+                                            @project.Action
+
+                                        </td>
+                                        <td>
+                                            @project.Comments
+
+                                        </td>
+                                        <td>
+                                            @project.AdRemarks
+
+                                        </td>
+                                        @*<td>
+                                    @project.TotalDays
+
+                                    </td>*@
+                                        <td>
+
+                                            @if (project.AttCnt > 0)
+                                            {
+
+                                                <a href="javascript:void(0);" class="anchorDetail" data-id="@project.CurrentPslmId">
+                                                    <img src="/assets/images/icons/attachemnts_clip.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
+                                                </a>
+
+
+                                            }
+                                            else
+                                            {
+
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (project.ActionCde == 1)
+                                            {
+
+                                                <center>
+                                                    <a href="@Url.Action("ProjCallBack", "Projects", new { id = project.EncyPsmID })">
+
+                                                    </a>
+
+                                                    <div class="ProjDetailUndo" data-project-id="@project.EncyID" id="ProjDetailId-@project.ProjId">
+                                                        <img src="/assets/images/icons/undo.png" alt="Icon" style="width: 25px; height: 20px; margin-right: 0px;">
+                                                    </div>
+
+                                                </center>
+                                            }
+
+
+
+
+
+
+
+                                        </td>
+                                    </tr>
+
+                                }
+                            </tbody>
+
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Completed Items-->
+
+
+        <div class="tabs__content__item" id="completed" style="height:100%; ">
+            <div class="content" style="height:100%;">
+                <div class="card radius-10 w-100" style="height:100%;">
+                    <div class="card-body" style="height:100%; overflow-y: scroll;">
+
+                        <table id="Completed" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Ser No</th>
+                                    <th>Proj ID</th>
+                                    <th>Proj Name</th>
+                                    <th>Sponsor Dte</th>
+                                    <th>Completed By</th>
+                                    <th>Completed On</th>
+
+                                    <th>Stage</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                    <th>#Att</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var project in Model.CompletedItems)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @{
+                                                snocompleted++;
+                                            }
+                                            @snocompleted
+                                        </td>
+                                        <td>@project.ProjId</td>
+                                        <td>
+                                            @*<a class="editButton" data-proj-name="@project.ProjName" href="/Projects/ProjHistory">
+                                        @project.ProjName
+                                        @project.ProjName
+                                        </a>*@
+
+
+                                            <a class="editButton" data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistoryView?EncyID=@project.EncyID">
+                                                @project.ProjName
+                                            </a>
+
+                                        </td>
+                                        <td>@project.StakeHolder</td>
+                                        <td>@project.FwdBy</td>
+                                        <td>@project.DateTimeOfUpdate?.ToString("dd-MM-yyyy")</td>
+
+                                        <td>@project.Stages</td>
+                                        <td>
+                                            @project.Status
+                                        </td>
+                                        <th>@project.Action</th>
+                                        <td>
+
+                                            @if (project.AttCnt > 0)
+                                            {
+
+                                                <a href="javascript:void(0);" class="anchorDetail" data-id="@project.CurrentPslmId">
+                                                    <img src="/assets/images/icons/attachemnts_clip.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
+                                                </a>
+
+
+                                            }
+                                            else
+                                            {
+
+                                            }
+                                        </td>
+                                    </tr>
+
+                                }
+                            </tbody>
+
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- end completed items -->
+        <!----Draft---->
+
+        <div class="tabs__content__item" id="draft" style="height:100%; ">
+            <div class="content" style="height:100%;">
+                <div class="card radius-10 w-100" style="height:100%;">
+                    <div class="card-body" style="height:100%; overflow-y: scroll;">
+
+                        <table id="Draft" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Ser No</th>
+                                    <th>Proj ID</th>
+                                    <th>Proj Name</th>
+
+                                    <th>Recd From</th>
+
+                                    <th>Recd On</th>
+
+                                    <th>Fwd To</th>
+                                    <th>Fwd On</th>
+
+                                    <th>Stage</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                    <th>Comments</th>
+                                    <th>Remarks</th>
+                                    @*  <th>Days in Inbox</th> *@
+                                    <th>Att</th>
+                                    <th>Edit</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var project in Model.Draft)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @{
+                                                snodraft++;
+                                            }
+                                            @snodraft
+                                        </td>
+                                        <td>@project.ProjId</td>
+                                        <td>
+
+                                            @project.ProjName
+                                        </td>
+                                        <td>@project.RecdFmUser</td>
+                                        <td>@project.EditDeleteDate?.ToString("dd-MM-yyyy")</td>
+
+                                        <td>@project.FwdtoUser</td>
+                                        <td>@project.FwdtoDate?.ToString("dd-MM-yyyy")</td>
+
+                                        <td>@project.Stages</td>
+                                        <td>
+                                            @project.Status
+                                        </td>
+                                        <td>
+                                            @project.Action
+
+                                        </td>
+                                        <td>
+                                            @project.Comments
+
+                                        </td>
+                                        <td>
+                                            @project.AdRemarks
+
+                                        </td>
+                                        @*   <td>
+                                    @project.TotalDays
+
+                                    </td> *@
+                                        <td>
+
+                                            @if (project.AttCnt > 0)
+                                            {
+
+                                                <a href="javascript:void(0);" class="anchorDetail" data-id="@project.CurrentPslmId">
+                                                    <img src="/assets/images/icons/attachemnts_clip.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
+                                                </a>
+
+
+                                            }
+                                            else
+                                            {
+
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (project.ActionCde == 0)
+                                            {
+
+                                                <center>
+
+
+                                                    <a href="@Url.Action("ProjDraftUndo", "Projects", new { id = project.EncyID })">
+                                                        <div data-project-id="@project.EncyID" id="ProjDetailId-@project.ProjId">
+                                                            <img src="/assets/images/icons/edit.png" alt="Icon" style="width: 35px; height: 30px; margin-right: 0px;">
+
+
+                                                        </div>
+                                                    </a>
+
+
+                                                </center>
+                                            }
+                                            @*  <div class="ProjDetailUndo" data-project-id="@project.EncyID" id="ProjDetailId-@project.ProjId">
+                                        <img src="/assets/images/icons/undo.png" alt="Icon" style="width: 25px; height: 20px; margin-right: 0px;">
+                                        </div>*@
+
+                                        </td>
+                                    </tr>
+
+                                }
+                            </tbody>
+
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!---END-DRAFT-->
+
+
+
+
+
+    </div>
+
+
+
+</div>
+<div class="modal fade" id="AttHistoryView" tabindex="-1" aria-labelledby="AttHistoryViewLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:1000px;margin-left:-250px;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AttHistoryViewLabel">View Att History</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                @*@Html.Partial("_ViewProjHistory", new tbl_Projects())*@
+                @* @await Html.PartialAsync("~/Views/Shared/_ViewProjHistory.cshtml")*@
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id='myModal' class='modal' style="width: 85% !important; margin-left: 79px !important;">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 203% !important">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.editButton1').forEach(item => {
+            item.addEventListener('click', event => {
+                const project = event.target.dataset.projName;
+                const projectId = event.target.dataset.projId;
+                const encyId = event.target.dataset.encyId;
+
+                // Check if the project has been processed
+                const actionId = getActionId(projectId); // You need to implement this function to get the actionId for the project
+
+                if (actionId < 5) {
+                   
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Please process the project first before viewing details.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    event.preventDefault(); 
+                }
+                else {
+                    // Continue with the default action (opening project details)
+                }
+            });
+        });
+    });
+
+    // Function to get the ActionId for the project (you need to implement this function)
+    function getActionId(projectId) {
+        // Implement logic to retrieve ActionId for the project with projectId
+        // For demonstration, return a random number less than 5
+        return Math.floor(Math.random() * 5);
+    }
+</script>
+
+<script type="text/javascript">
+    function blink() {
+        $('#blinking-li').fadeOut(500).fadeIn(500, blink);
+    }
+
+    // Start the blinking effect
+    blink();
+
+
+
+
+    $(function () {
+        $(".processDetail").click(function () {
+
+            var $buttonClicked = $(this);
+            var ProjectId = $buttonClicked.attr('data-id');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Do you want to Process!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Process it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/ProjStakeHolderMov/ProcessMail',
+                        type: 'POST',
+                        data: { "id": ProjectId, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+                        success: function (response) {
+                            console.log(response);
+                            if (response && response === 1) {
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Project Processed successfully',
+                                    showConfirmButton: false,
+                                    timer: 700
+                                });
+                            }
+
+                            window.location.reload();
+                        },
+                        error: function (error) {
+                            console.error('Error occurred:', error);
+                            // Handle error if needed
+                        }
+                    });
+                }
+            });
+
+        });
+    });
+
+
+
+
+    $(function () {
+        $(".RetDuplicate").click(function () {
+
+            var $buttonClicked = $(this);
+            var ProjectId = $buttonClicked.attr('data-id');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Do you want to Return!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Return it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/ProjStakeHolderMov/RetDuplicate',
+                        type: 'POST',
+                        data: { "id": ProjectId, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+                        success: function (response) {
+                            console.log(response);
+                            if (response && response === 1) {
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Project Returned successfully',
+                                    showConfirmButton: false,
+                                    timer: 700
+                                });
+                            }
+
+                            window.location.reload();
+                        },
+                        error: function (error) {
+                            console.error('Error occurred:', error);
+                            
+                        }
+                    });
+                }
+            });
+
+        });
+    });
+
+
+
+
+    $(function () {
+        $(".RetObsn").click(function () {
+            var $buttonClicked = $(this);
+            var ProjectId = $buttonClicked.attr('data-id');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Do you want to Return with Obsn!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Return it!',
+                input: 'text',
+                inputPlaceholder: 'Enter your observation comments...',
+                inputValidator: (value) => {
+
+                    if (!value) {
+                        return 'Please enter your observation comments!';
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var observationComments = Swal.getInput().value;
+
+                    $.ajax({
+                        url: '/ProjStakeHolderMov/RetwithObsn',
+                        type: 'POST',
+                        data: {
+                            "id": ProjectId,
+                            "observationComments": observationComments,
+                            "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+                        },
+                        success: function (response) {
+                            console.log(response);
+                            if (response && response === 1) {
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Project Returned successfully',
+                                    showConfirmButton: false,
+                                    timer: 700
+                                });
+                            }
+
+                            window.location.reload();
+                        },
+                        error: function (error) {
+                            console.error('Error occurred:', error);
+                            // Handle error if needed
+                        }
+                    });
+                }
+            });
+        });
+    });
+
+
+
+
+    var PostBackURLs = '/Projects/AttDetails';
+    $(function () {
+        $(document).on('click', '.newanchorDetailk', function (event) {
+            event.preventDefault();
+
+            var $anchorClicked = $(this);
+            var id = $anchorClicked.attr('data-id');
+
+
+
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: PostBackURLs,
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                datatype: "json",
+                success: function (data) {
+
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+
+        });
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    var TeamDetailPostBackURL = '/Projects/AttDetailsRead';
+    $(function () {
+        $(document).on('click', '.anchorDetail', function (event) {
+            event.preventDefault();
+
+            var $anchorClicked = $(this);
+            var id = $anchorClicked.attr('data-id');
+
+
+
+
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: TeamDetailPostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                datatype: "json",
+                success: function (data) {
+
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+
+        });
+
+    });
+
+
+
+
+    $(function () {
+        $(document).on('click', '.anchorDetailnew', function (event) {
+            event.preventDefault();
+
+            var $anchorClicked = $(this);
+            var id = $anchorClicked.attr('data-id');
+
+
+
+
+
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: TeamDetailPostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                datatype: "json",
+                success: function (data) {
+
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+
+        });
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    $(document).ready(function () {
+        $(document).on('click', '.pdf', function () {
+            $('#AttHistoryView').modal('show');
+        });
+    });
+</script>
+
+
+
+<script>
+    @if (TempData.ContainsKey("SuccessMessage"))
+    {
+        <text>
+            Swal.fire({
+                title: 'Success',
+                text: '@TempData["SuccessMessage"]',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        </text>
+        TempData.Remove("SuccessMessage");
+    }
+</script>
+
+<script type="text/javascript">
+
+
+
+
+    $(document).ready(function () {
+
+        $('.editButton').click(function () {
+            
+            var projId = $(this).data('proj-id');
+            var stage = $(this).closest('tr').find('td:nth-child(6)').text().trim();
+            var role = "@(Logins.Role)"; // Assuming Logins.Role contains the role of the user
+            if (role === "Dte" && stage === "Process") {
+                var url = $(this).attr('href');
+                window.open(url, "popupWindow", "width=1200,height=600,scrollbars=yes");
+            } else {
+                alert("You can only edit projects in the 'Process' stage.");
+            }
+            return false;
+        });
+
+
+
+
+        $("#Addbtn").click(function () {
+
+            $('#ProjectAdd').modal('show');
+
+        });
+
+        $("#Editbtn").click(function () {
+
+            $('#ProjectEdit').modal('show');
+
+        });
+        // editAnchors.forEach((editAnchor) => {
+        //     editAnchor.addEventListener('click', (event) => {
+        //         event.preventDefault();
+        //         const projName = editAnchor.getAttribute('data-proj-name');
+        //          const projid = editAnchor.getAttribute('data-proj-id');
+        //           const response = await fetch(`/Projects/Details?userid=${projName}`);
+
+        //         editFormContainer.style.display = 'block';
+        //         addFormContainer.style.display = 'none';
+        //     });
+    });
+    });
+</script>
+
+<script>
+    const containerTabs = document.getElementById("tabs");
+
+    const getInfoTabs = container => {
+        return [...container.querySelectorAll(".tabs__content__item")];
+    };
+
+    const getLinksTab = container => {
+        return [...container.querySelectorAll("a[data-tab]")];
+    };
+
+    const activateTab = (tabId) => {
+        const tabsInfo = getInfoTabs(containerTabs);
+
+        tabsInfo.forEach(tab => {
+            const isActive = tab.getAttribute("id") === tabId;
+            tab.classList.toggle("active-tab", isActive);
+        });
+    };
+
+    const activateLink = (link) => {
+        const linksTab = getLinksTab(containerTabs);
+        linksTab.forEach(tabLink => {
+            tabLink.classList.toggle("active-link", tabLink === link);
+        });
+    };
+
+    const handleTabClick = event => {
+        const clickedElement = event.target;
+        if (clickedElement.tagName === "A" && clickedElement.hasAttribute("data-tab")) {
+            event.preventDefault();
+            const tabId = clickedElement.getAttribute("data-tab");
+            activateTab(tabId);
+
+            activateLink(clickedElement);
+
+
+
+        }
+    };
+
+    containerTabs.addEventListener("click", handleTabClick);
+</script>
+
+
+
+<script>
+    const containerTabss = document.getElementById("tabs");
+
+    const getInfoTabs = container => {
+        return [...container.querySelectorAll(".tabs__content__item")];
+    };
+
+    const getLinksTab = container => {
+        return [...container.querySelectorAll("a[data-tab]")];
+    };
+
+    const activateTab = (tabId) => {
+        const tabsInfo = getInfoTabs(containerTabss);
+
+        tabsInfo.forEach(tab => {
+            const isActive = tab.getAttribute("id") === tabId;
+            tab.classList.toggle("active-tab", isActive);
+        });
+    };
+
+    const activateLink = (link) => {
+        const linksTab = getLinksTab(containerTabss);
+        linksTab.forEach(tabLink => {
+            tabLink.classList.remove("active-link");
+        });
+        link.classList.add("active-link");
+    };
+
+    const handleTabClick = event => {
+        const clickedElement = event.target;
+        if (clickedElement.tagName === "A" && clickedElement.hasAttribute("data-tab")) {
+            event.preventDefault();
+            const tabId = clickedElement.getAttribute("data-tab");
+            activateTab(tabId);
+
+            activateLink(clickedElement);
+        }
+    };
+
+    containerTabss.addEventListener("click", handleTabClick);
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var ProjDraftUndobuttons = document.querySelectorAll(".ProjDraftUndo");
+
+        ProjDraftUndobuttons.forEach(function (button) {
+            button.addEventListener("click", function () {
+
+                var projectID = this.getAttribute("data-project-id");
+
+                if (projectID !== null) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Projects/ProjCallBack',
+                        data: { id: projectID },
+                        success: function (response) {
+
+                            if (response !== null) {
+
+                                window.location.href = '/Projects/ProjCallBack?idx=' + projectID;
+
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: response.message,
+                                });
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            $('#response').html('Error: ' + errorThrown);
+                        }
+                    });
+                } else {
+                    console.log("data-project-id is null or not found.");
+                }
+            });
+        });
+    });
+
+
+</script>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var undoButtons = document.querySelectorAll(".ProjDetailUndo");
+
+        undoButtons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                var projectIDs = this.getAttribute("data-project-id");
+
+                if (projectIDs !== null) {
+
+
+                    // Make an AJAX request
+                    $.ajax({
+                        url: '/Projects/ProjectUndo?id=' + projectIDs,
+                        type: 'POST',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.success) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: data.message,
+                                }).then(function () {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: data.message,
+                                });
+                            }
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            $('#response').html('Error: ' + errorThrown);
+                        }
+                    });
+                } else {
+                    console.log("data-project-id is null or not found.");
+                }
+            });
+        });
+    });
+</script>

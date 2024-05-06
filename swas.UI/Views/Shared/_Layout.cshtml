@@ -1,0 +1,2316 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using swas.BAL.DTO
+@using swas.BAL.Helpers
+@using Microsoft.AspNetCore.Authorization
+
+
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+
+    TempData["Tabshift"] = 0;
+    Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor.HttpContext.Session, "User");
+
+}
+@{
+
+    bool isAdmin = User.Identity.IsAuthenticated && User.IsInRole("Dte");
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>@ViewData["Title"] - PAW</title>
+<!-- loader-->
+<script>
+
+    //if (performance.navigation.type === 1) {
+
+    //    localStorage.setItem('pageRefreshed', 'true');
+    //}
+
+    //function preventBack() { window.history.forward(); }
+    //setTimeout("preventBack()", 0);
+    //window.onunload = function () { null };
+
+
+</script>
+
+
+
+<head>
+
+    <style>
+        .header {
+            background-color: blue; /* Replace with your desired header color */
+            color: blue; /* Replace with your desired text color for the header */
+        }
+
+        .footer {
+            background-color: #044c92; /* Replace with your desired footer color */
+            color: #044c92; /* Replace with your desired text color for the footer */
+        }
+
+        .wrapper .page-content {
+            margin-top: 0px !important;
+        }
+    </style>
+    <style>
+
+        .loader-container {
+            position: relative;
+            display: table-cell;
+            vertical-align: middle;
+            z-index: 12;
+            text-align: center;
+        }
+
+            .loader-container img {
+                width: 60px;
+            }
+
+        .loader {
+            vertical-align: top;
+        }
+
+
+        .loader {
+            overflow-x: hidden;
+            overflow-y: hidden;
+            vertical-align: middle;
+            background-color: rgba(255, 255, 255, 0.75);
+            position: fixed;
+            display: table;
+            width: 100%;
+            top: 0;
+            height: 100%;
+            min-height: 100%;
+            z-index: 99999;
+            left: 0;
+        }
+
+        .loader-container {
+            position: relative;
+            display: table-cell;
+            vertical-align: middle;
+            z-index: 12;
+            text-align: center;
+        }
+
+            .loader-container img {
+                width: 60px;
+            }
+
+        .loader {
+            vertical-align: top;
+        }
+
+    </style>
+
+
+    <link rel="stylesheet" href="~/" asp-append-version="true" />
+
+
+    <!-- CSS Files -->
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/css/bootstrap-extended.css" rel="stylesheet">
+    <link href="~/assets/css/style.css" rel="stylesheet">
+    <link href="~/css/style.css" rel="stylesheet">
+    <link href="~/css/select2.min.css" rel="stylesheet" />
+
+    <link href="~/assets/css/icons.css" rel="stylesheet">
+    <link href= "~/assets/css/font-awesome.min.css" rel="stylesheet">
+    <!--data Table-->
+    <link rel="stylesheet" href="~/assets/dataTable/css/bootstrap.css">
+    <link rel="stylesheet" href="~/assets/dataTable/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/assets/dataTable/css/buttons.bootstrap4.min.css">
+
+    <link rel="stylesheet" href="~/assets/dataTable/css/all.min.css">
+    <link href="~/assets/dataTable/css/searchbuilder.datatables.min.css" rel="stylesheet" />
+    <link href="~/assets/dataTable/css/all.min.css" rel="stylesheet" />
+    <link href="~/assets/dataTable/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/assets/dataTable/css/jquery.datatables.min.css" rel="stylesheet" />
+    <link href="~/assets/dataTable/css/responsive.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/assets/dataTable/css/datatables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/assets/dataTable/css/datatables.datetime.min.css" rel="stylesheet" />
+
+    <script language="JavaScript" type="text/javascript" src="~/assets/js/jquery.min.js"></script>
+
+    <script language="JavaScript" type="text/javascript" src="~/assets/js/bootstrap.bundle.min.js"></script>
+
+    <!--plugins-->
+
+    <link href="~/assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
+    <script language="JavaScript" type="text/javascript" src="~/assets/plugins/chartjs/chart.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="~/assets/plugins/metismenu/js/metisMenu.min.js"></script>
+
+    <!-- Main JS-->
+    <script language="JavaScript" type="text/javascript" src="~/assets/js/main.js"></script>
+    <!-- dataTable-->
+
+    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/jquery.dataTables.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/dataTables.bootstrap4.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/dataTables.buttons.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/buttons.bootstrap4.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/jszip.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/pdfmake.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/vfs_fonts.js"></script>
+    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/buttons.html5.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/buttons.print.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/buttons.colVis.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/dataTables.responsive.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/assets/dataTable/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/assets/dataTable/js/pdfmake.min.js"></script>
+    <script src="~/assets/dataTable/js/datatables.datetime.min.js"></script>
+    <script src="~/assets/dataTable/js/datatables.searchbuilder.min.js"></script>
+    <script src="~/assets/dataTable/js/fnmultifilter.js"></script>
+    <link href="~/css/sweetalert2.min.css" rel="stylesheet">
+    <script src="~/assets/datatable/js/select2.min.js"></script>
+
+    <script language="JavaScript" type="text/javascript" src="~/js/sweetalert2.all.min.js"></script>
+
+
+    <script src="~/DeveloperJs/ddlSanal.js"></script>
+
+    <script>
+        function ValInData(input) {
+            
+            var regex = /[^a-zA-Z/_& ]/g;
+            input.value = input.value.replace(regex, "");
+        }
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+
+            var table = $('#Software').DataTable({
+                lengthChange: true,
+                dom: 'lBfrtip',
+                buttons: [
+                    'copy',
+                    'excel',
+                    'csv',
+                    {
+                        text: 'PDF',
+                        extend: 'pdfHtml5',
+                        action: function (e, dt, node, config) {
+                            PdfDiv();
+                        }
+                    },
+                ],
+                searchBuilder: {
+                    conditions: {
+                        num: {
+                            'MultipleOf': {
+                                conditionName: 'Multiple Of',
+                                init: function (that, fn, preDefined = null) {
+                                    var el = $('<input/>').on('input', function () { fn(that, this) });
+
+                                    if (preDefined !== null) {
+                                        $(el).val(preDefined[0]);
+                                    }
+
+                                    return el;
+                                },
+                                inputValue: function (el) {
+                                    return $(el[0]).val();
+                                },
+                                isInputValid: function (el, that) {
+                                    return $(el[0]).val().length !== 0;
+                                },
+                                search: function (value, comparison) {
+                                    return value % comparison === 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            //var buttonContainer = table.buttons().container();
+
+            //var searchBuilderContainer = table.searchBuilder.container();
+            //buttonContainer.insertBefore(table.table().container());
+            //searchBuilderContainer.insertBefore(table.table().container());
+
+            function PdfDiv() {
+                var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+                popupWin.document.open();
+
+                var tableStyles = `
+                                <style type="text/css">
+                                    table {
+                                              width: 100%;
+                                              border-collapse: collapse;
+                                              margin-bottom: 20px;
+                                          }
+
+                                          .table > thead {
+                                              vertical-align: bottom;
+                                              background-color: red;
+                                          }
+
+                                          th, td {
+                                              padding: 8px;
+                                              border: 1px solid #ddd;
+                                              text-align: center;
+                                          }
+
+                                          th {
+                                              background-color: #f2f2f2;
+                                              color: black;
+                                          }
+                                      </style>
+                                          `;
+
+                var table = $('#Software').DataTable();
+
+                var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+                var tableHTML = '<table>';
+
+                tableHTML += '<thead>';
+                tableHTML += '<tr>';
+                table.columns().header().each(function (header) {
+                    tableHTML += '<th>' + header.innerHTML + '</th>';
+                });
+                tableHTML += '</tr>';
+                tableHTML += '</thead>';
+
+                tableHTML += '<tbody>';
+                for (var i = 0; i < filteredData.length; i++) {
+                    tableHTML += '<tr>';
+                    for (var j = 0; j < filteredData[i].length; j++) {
+                        tableHTML += '<td>' + filteredData[i][j] + '</td>';
+                    }
+                    tableHTML += '</tr>';
+                }
+                tableHTML += '</tbody>';
+
+                tableHTML += '</table>';
+
+                var watermarkText = '@(TempData["ipadd"])';
+
+                popupWin.document.write('<html><head>'
+                    + tableStyles + '</head><body onload="window.print()">'
+                    + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
+                    + watermarkText + '</div></body></html>');
+
+                popupWin.document.close();
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#SoftwareType1').DataTable({
+                lengthChange: true,
+                dom: 'lBfrtip',
+                buttons: [
+                    'copy',
+                    'excel',
+                    'csv',
+                    {
+                        text: 'PDF',
+                        extend: 'pdfHtml5',
+                        action: function (e, dt, node, config) {
+                            PdfDiv();
+                        }
+                    },
+                ],
+                searchBuilder: {
+                    conditions: {
+                        num: {
+                            'MultipleOf': {
+                                conditionName: 'Multiple Of',
+                                init: function (that, fn, preDefined = null) {
+                                    var el = $('<input/>').on('input', function () { fn(that, this) });
+
+                                    if (preDefined !== null) {
+                                        $(el).val(preDefined[0]);
+                                    }
+
+                                    return el;
+                                },
+                                inputValue: function (el) {
+                                    return $(el[0]).val();
+                                },
+                                isInputValid: function (el, that) {
+                                    return $(el[0]).val().length !== 0;
+                                },
+                                search: function (value, comparison) {
+                                    return value % comparison === 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            //var buttonContainer = table.buttons().container();
+            //var searchBuilderContainer = table.searchBuilder.container();
+            //buttonContainer.insertBefore(table.table().container());
+            //searchBuilderContainer.insertBefore(table.table().container());
+
+            function PdfDiv() {
+                var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+                popupWin.document.open();
+
+                var tableStyles = `
+                                       <style type="text/css">
+                                            table {
+                                                width: 100%;
+                                                border-collapse: collapse;
+                                                margin-bottom: 20px;
+                                            }
+
+                                            .table > thead {
+                                                vertical-align: bottom;
+                                                background-color: red;
+                                            }
+
+                                            th, td {
+                                                padding: 8px;
+                                                border: 1px solid #ddd;
+                                                text-align: center;
+                                            }
+
+                                            th {
+                                                background-color: #f2f2f2;
+                                                color: black;
+                                            }
+                                        </style>
+                                    `;
+
+                var table = $('#SoftwareType1').DataTable();
+
+                var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+                var tableHTML = '<table>';
+
+                tableHTML += '<thead>';
+                tableHTML += '<tr>';
+                table.columns().header().each(function (header) {
+                    tableHTML += '<th>' + header.innerHTML + '</th>';
+                });
+                tableHTML += '</tr>';
+                tableHTML += '</thead>';
+
+                tableHTML += '<tbody>';
+                for (var i = 0; i < filteredData.length; i++) {
+                    tableHTML += '<tr>';
+                    for (var j = 0; j < filteredData[i].length; j++) {
+                        tableHTML += '<td>' + filteredData[i][j] + '</td>';
+                    }
+                    tableHTML += '</tr>';
+                }
+                tableHTML += '</tbody>';
+
+                tableHTML += '</table>';
+
+                var watermarkText = '@(TempData["ipadd"])';
+
+                popupWin.document.write('<html><head>'
+                    + tableStyles + '</head><body onload="window.print()">'
+                    + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
+                    + watermarkText + '</div></body></html>');
+
+                popupWin.document.close();
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#SoftwareType').DataTable({
+                lengthChange: true,
+                dom: 'lBfrtip',
+                buttons: [
+                    'copy',
+                    'excel',
+                    'csv',
+                    {
+                        text: 'PDF',
+                        extend: 'pdfHtml5',
+                        action: function (e, dt, node, config) {
+                            PdfDiv();
+                        }
+                    },
+                ],
+                searchBuilder: {
+                    conditions: {
+                        num: {
+                            'MultipleOf': {
+                                conditionName: 'Multiple Of',
+                                init: function (that, fn, preDefined = null) {
+                                    var el = $('<input/>').on('input', function () { fn(that, this) });
+
+                                    if (preDefined !== null) {
+                                        $(el).val(preDefined[0]);
+                                    }
+
+                                    return el;
+                                },
+                                inputValue: function (el) {
+                                    return $(el[0]).val();
+                                },
+                                isInputValid: function (el, that) {
+                                    return $(el[0]).val().length !== 0;
+                                },
+                                search: function (value, comparison) {
+                                    return value % comparison === 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            //var buttonContainer = table.buttons().container();
+            //var searchBuilderContainer = table.searchBuilder.container();
+            //buttonContainer.insertBefore(table.table().container());
+            //searchBuilderContainer.insertBefore(table.table().container());
+
+            function PdfDiv() {
+                var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+                popupWin.document.open();
+
+                var tableStyles = `
+                                 <style type="text/css">
+                                     table {
+                                         width: 100%;
+                                         border-collapse: collapse;
+                                         margin-bottom: 20px;
+                                     }
+
+                                     .table > thead {
+                                         vertical-align: bottom;
+                                         background-color: red;
+                                     }
+
+                                     th, td {
+                                         padding: 8px;
+                                         border: 1px solid #ddd;
+                                         text-align: center;
+                                     }
+
+                                     th {
+                                         background-color: #f2f2f2;
+                                         color: black;
+                                     }
+                                 </style>
+                             `;
+
+                var table = $('#SoftwareType').DataTable();
+
+                var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+                var tableHTML = '<table>';
+
+                tableHTML += '<thead>';
+                tableHTML += '<tr>';
+                table.columns().header().each(function (header) {
+                    tableHTML += '<th>' + header.innerHTML + '</th>';
+                });
+                tableHTML += '</tr>';
+                tableHTML += '</thead>';
+
+                tableHTML += '<tbody>';
+                for (var i = 0; i < filteredData.length; i++) {
+                    tableHTML += '<tr>';
+                    for (var j = 0; j < filteredData[i].length; j++) {
+                        tableHTML += '<td>' + filteredData[i][j] + '</td>';
+                    }
+                    tableHTML += '</tr>';
+                }
+                tableHTML += '</tbody>';
+
+                tableHTML += '</table>';
+
+                var watermarkText = '@(TempData["ipadd"])';
+
+                popupWin.document.write('<html><head>'
+                    + tableStyles + '</head><body onload="window.print()">'
+                    + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
+                    + watermarkText + '</div></body></html>');
+
+                popupWin.document.close();
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#Inbox1').DataTable({
+                lengthChange: true,
+                dom: 'lBfrtip',
+                buttons: [
+                    'copy',
+                    'excel',
+                    'csv',
+                    {
+                        text: 'PDF',
+                        extend: 'pdfHtml5',
+                        action: function (e, dt, node, config) {
+                            PdfDiv();
+                        }
+                    },
+                ],
+                searchBuilder: {
+                    conditions: {
+                        num: {
+                            'MultipleOf': {
+                                conditionName: 'Multiple Of',
+                                init: function (that, fn, preDefined = null) {
+                                    var el = $('<input/>').on('input', function () { fn(that, this) });
+
+                                    if (preDefined !== null) {
+                                        $(el).val(preDefined[0]);
+                                    }
+
+                                    return el;
+                                },
+                                inputValue: function (el) {
+                                    return $(el[0]).val();
+                                },
+                                isInputValid: function (el, that) {
+                                    return $(el[0]).val().length !== 0;
+                                },
+                                search: function (value, comparison) {
+                                    return value % comparison === 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            //var buttonContainer = table.buttons().container();
+            //var searchBuilderContainer = table.searchBuilder.container();
+            //buttonContainer.insertBefore(table.table().container());
+            //searchBuilderContainer.insertBefore(table.table().container());
+
+            function PdfDiv() {
+                var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+                popupWin.document.open();
+
+                var tableStyles = `
+                                         <style type="text/css">
+                                             table {
+                                                 width: 100%;
+                                                 border-collapse: collapse;
+                                                 margin-bottom: 20px;
+                                             }
+
+                                             .table > thead {
+                                                 vertical-align: bottom;
+                                                 background-color: red;
+                                             }
+
+                                             th, td {
+                                                 padding: 8px;
+                                                 border: 1px solid #ddd;
+                                                 text-align: center;
+                                             }
+
+                                             th {
+                                                 background-color: #f2f2f2;
+                                                 color: black;
+                                             }
+                                         </style>
+                                     `; 
+
+                var table = $('#Inbox1').DataTable();
+
+                var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+                var tableHTML = '<table>';
+
+                tableHTML += '<thead>';
+                tableHTML += '<tr>';
+                table.columns().header().each(function (header) {
+                    tableHTML += '<th>' + header.innerHTML + '</th>';
+                });
+                tableHTML += '</tr>';
+                tableHTML += '</thead>';
+
+                tableHTML += '<tbody>';
+                for (var i = 0; i < filteredData.length; i++) {
+                    tableHTML += '<tr>';
+                    for (var j = 0; j < filteredData[i].length; j++) {
+                        tableHTML += '<td>' + filteredData[i][j] + '</td>';
+                    }
+                    tableHTML += '</tr>';
+                }
+                tableHTML += '</tbody>';
+
+                tableHTML += '</table>';
+
+                var watermarkText = '@(TempData["ipadd"])';
+
+                popupWin.document.write('<html><head>'
+                    + tableStyles + '</head><body onload="window.print()">'
+                    + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
+                    + watermarkText + '</div></body></html>');
+
+                popupWin.document.close();
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#SoftwareType3').DataTable({
+                lengthChange: true,
+                dom: 'lBfrtip',
+                buttons: [
+                    'copy',
+                    'excel',
+                    'csv',
+                    {
+                        text: 'PDF',
+                        extend: 'pdfHtml5',
+                        action: function (e, dt, node, config) {
+                            PdfDiv();
+                        }
+                    },
+                ],
+                searchBuilder: {
+                    conditions: {
+                        num: {
+                            'MultipleOf': {
+                                conditionName: 'Multiple Of',
+                                init: function (that, fn, preDefined = null) {
+                                    var el = $('<input/>').on('input', function () { fn(that, this) });
+
+                                    if (preDefined !== null) {
+                                        $(el).val(preDefined[0]);
+                                    }
+
+                                    return el;
+                                },
+                                inputValue: function (el) {
+                                    return $(el[0]).val();
+                                },
+                                isInputValid: function (el, that) {
+                                    return $(el[0]).val().length !== 0;
+                                },
+                                search: function (value, comparison) {
+                                    return value % comparison === 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            //var buttonContainer = table.buttons().container();
+            //var searchBuilderContainer = table.searchBuilder.container();
+            //buttonContainer.insertBefore(table.table().container());
+            //searchBuilderContainer.insertBefore(table.table().container());
+
+            function PdfDiv() {
+                var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+                popupWin.document.open();
+
+                var tableStyles = `
+                            <style type="text/css">
+                                table {
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                    margin-bottom: 20px;
+                                }
+
+                                .table > thead {
+                                    vertical-align: bottom;
+                                    background-color: red;
+                                }
+
+                                th, td {
+                                    padding: 8px;
+                                    border: 1px solid #ddd;
+                                    text-align: center;
+                                }
+
+                                th {
+                                    background-color: #f2f2f2;
+                                    color: black;
+                                }
+                            </style>
+                        `;
+
+                var table = $('#SoftwareType3').DataTable();
+
+                var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+                var tableHTML = '<table>';
+
+                tableHTML += '<thead>';
+                tableHTML += '<tr>';
+                table.columns().header().each(function (header) {
+                    tableHTML += '<th>' + header.innerHTML + '</th>';
+                });
+                tableHTML += '</tr>';
+                tableHTML += '</thead>';
+
+                tableHTML += '<tbody>';
+                for (var i = 0; i < filteredData.length; i++) {
+                    tableHTML += '<tr>';
+                    for (var j = 0; j < filteredData[i].length; j++) {
+                        tableHTML += '<td>' + filteredData[i][j] + '</td>';
+                    }
+                    tableHTML += '</tr>';
+                }
+                tableHTML += '</tbody>';
+
+                tableHTML += '</table>';
+
+                var watermarkText = '@(TempData["ipadd"])';
+
+                popupWin.document.write('<html><head>'
+                    + tableStyles + '</head><body onload="window.print()">'
+                    + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
+                    + watermarkText + '</div></body></html>');
+
+                popupWin.document.close();
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#Inbox').DataTable({
+                lengthChange: true,
+                dom: 'lBfrtip',
+                buttons: [
+                    'copy',
+                    'excel',
+                    'csv',
+                    {
+                        text: 'PDF',
+                        extend: 'pdfHtml5',
+                        action: function (e, dt, node, config) {
+                            PdfDiv();
+                        }
+                    },
+                ],
+                searchBuilder: {
+                    conditions: {
+                        num: {
+                            'MultipleOf': {
+                                conditionName: 'Multiple Of',
+                                init: function (that, fn, preDefined = null) {
+                                    var el = $('<input/>').on('input', function () { fn(that, this) });
+
+                                    if (preDefined !== null) {
+                                        $(el).val(preDefined[0]);
+                                    }
+
+                                    return el;
+                                },
+                                inputValue: function (el) {
+                                    return $(el[0]).val();
+                                },
+                                isInputValid: function (el, that) {
+                                    return $(el[0]).val().length !== 0;
+                                },
+                                search: function (value, comparison) {
+                                    return value % comparison === 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            //var buttonContainer = table.buttons().container();
+            //var searchBuilderContainer = table.searchBuilder.container();
+            //buttonContainer.insertBefore(table.table().container());
+            //searchBuilderContainer.insertBefore(table.table().container());
+
+            function PdfDiv() {
+                var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+                popupWin.document.open();
+
+                var tableStyles = `
+                                       <style type="text/css">
+                                           table {
+                                               width: 100%;
+                                               border-collapse: collapse;
+                                               margin-bottom: 20px;
+                                           }
+
+                                           .table > thead {
+                                               vertical-align: bottom;
+                                               background-color: red;
+                                           }
+
+                                           th, td {
+                                               padding: 8px;
+                                               border: 1px solid #ddd;
+                                               text-align: center;
+                                           }
+
+                                           th {
+                                          background-color: #f2f2f2;
+                                                      color: black;
+                                                  }
+                                              </style>
+                                          `;
+
+                var table = $('#Inbox').DataTable();
+
+                var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+                var tableHTML = '<table>';
+
+                tableHTML += '<thead>';
+                tableHTML += '<tr>';
+                table.columns().header().each(function (header) {
+                    tableHTML += '<th>' + header.innerHTML + '</th>';
+                });
+                tableHTML += '</tr>';
+                tableHTML += '</thead>';
+
+                tableHTML += '<tbody>';
+                for (var i = 0; i < filteredData.length; i++) {
+                    tableHTML += '<tr>';
+                    for (var j = 0; j < filteredData[i].length; j++) {
+                        tableHTML += '<td>' + filteredData[i][j] + '</td>';
+                    }
+                    tableHTML += '</tr>';
+                }
+                tableHTML += '</tbody>';
+
+                tableHTML += '</table>';
+
+                var watermarkText = '@(TempData["ipadd"])';
+
+                popupWin.document.write('<html><head>'
+                    + tableStyles + '</head><body onload="window.print()">'
+                    + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
+                    + watermarkText + '</div></body></html>');
+
+                popupWin.document.close();
+            }
+        });
+    </script>
+
+
+
+
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#Sents').DataTable({
+                lengthChange: true,
+                dom: 'lBfrtip',
+                buttons: [
+                    'copy',
+                    'excel',
+                    'csv',
+                    {
+                        text: 'PDF',
+                        extend: 'pdfHtml5',
+                        action: function (e, dt, node, config) {
+                            PdfDiv();
+                        }
+                    },
+                ],
+                searchBuilder: {
+                    conditions: {
+                        num: {
+                            'MultipleOf': {
+                                conditionName: 'Multiple Of',
+                                init: function (that, fn, preDefined = null) {
+                                    var el = $('<input/>').on('input', function () { fn(that, this) });
+
+                                    if (preDefined !== null) {
+                                        $(el).val(preDefined[0]);
+                                    }
+
+                                    return el;
+                                },
+                                inputValue: function (el) {
+                                    return $(el[0]).val();
+                                },
+                                isInputValid: function (el, that) {
+                                    return $(el[0]).val().length !== 0;
+                                },
+                                search: function (value, comparison) {
+                                    return value % comparison === 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            //var buttonContainer = table.buttons().container();
+            //var searchBuilderContainer = table.searchBuilder.container();
+            //buttonContainer.insertBefore(table.table().container());
+            //searchBuilderContainer.insertBefore(table.table().container());
+
+            function PdfDiv() {
+                var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+                popupWin.document.open();
+
+                var tableStyles = `
+                             <style type="text/css">
+                                  table {
+                                      width: 100%;
+                                      border-collapse: collapse;
+                                      margin-bottom: 20px;
+                                  }
+
+                                 .table > thead {
+                                     vertical-align: bottom;
+                                     background-color: red;
+                                 }
+
+                                 th, td {
+                                     padding: 8px;
+                                     border: 1px solid #ddd;
+                                     text-align: center;
+                                 }
+
+                                 th {
+                                     background-color: #f2f2f2;
+                                     color: black;
+                                 }
+                             </style>
+                               `;
+
+                var table = $('#Sents').DataTable();
+
+                var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+                var tableHTML = '<table>';
+
+                tableHTML += '<thead>';
+                tableHTML += '<tr>';
+                table.columns().header().each(function (header) {
+                    tableHTML += '<th>' + header.innerHTML + '</th>';
+                });
+                tableHTML += '</tr>';
+                tableHTML += '</thead>';
+
+                tableHTML += '<tbody>';
+                for (var i = 0; i < filteredData.length; i++) {
+                    tableHTML += '<tr>';
+                    for (var j = 0; j < filteredData[i].length; j++) {
+                        tableHTML += '<td>' + filteredData[i][j] + '</td>';
+                    }
+                    tableHTML += '</tr>';
+                }
+                tableHTML += '</tbody>';
+
+                tableHTML += '</table>';
+
+                var watermarkText = '@(TempData["ipadd"])';
+
+                popupWin.document.write('<html><head>'
+                    + tableStyles + '</head><body onload="window.print()">'
+                    + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
+                    + watermarkText + '</div></body></html>');
+
+                popupWin.document.close();
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#Completed').DataTable({
+                lengthChange: true,
+                dom: 'lBfrtip',
+                buttons: [
+                    'copy',
+                    'excel',
+                    'csv',
+                    {
+                        text: 'PDF',
+                        extend: 'pdfHtml5',
+                        action: function (e, dt, node, config) {
+                            PdfDiv();
+                        }
+                    },
+                ],
+                searchBuilder: {
+                    conditions: {
+                        num: {
+                            'MultipleOf': {
+                                conditionName: 'Multiple Of',
+                                init: function (that, fn, preDefined = null) {
+                                    var el = $('<input/>').on('input', function () { fn(that, this) });
+
+                                    if (preDefined !== null) {
+                                        $(el).val(preDefined[0]);
+                                    }
+
+                                    return el;
+                                },
+                                inputValue: function (el) {
+                                    return $(el[0]).val();
+                                },
+                                isInputValid: function (el, that) {
+                                    return $(el[0]).val().length !== 0;
+                                },
+                                search: function (value, comparison) {
+                                    return value % comparison === 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            //var buttonContainer = table.buttons().container();
+            //var searchBuilderContainer = table.searchBuilder.container();
+            //buttonContainer.insertBefore(table.table().container());
+            //searchBuilderContainer.insertBefore(table.table().container());
+
+            function PdfDiv() {
+                var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+                popupWin.document.open();
+
+                var tableStyles = `
+                                           <style type="text/css">
+                               table {
+                                   width: 100%;
+                                   border-collapse: collapse;
+                                   margin-bottom: 20px;
+                               }
+
+                               .table > thead {
+                                   vertical-align: bottom;
+                                   background-color: red;
+                               }
+
+                               th, td {
+                                   padding: 8px;
+                                   border: 1px solid #ddd;
+                                   text-align: center;
+                               }
+
+                               th {
+                                   background-color: #f2f2f2;
+                                   color: black;
+                               }
+                           </style>
+                            `;
+
+                var table = $('#Completed').DataTable();
+
+                var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+                var tableHTML = '<table>';
+
+                tableHTML += '<thead>';
+                tableHTML += '<tr>';
+                table.columns().header().each(function (header) {
+                    tableHTML += '<th>' + header.innerHTML + '</th>';
+                });
+                tableHTML += '</tr>';
+                tableHTML += '</thead>';
+
+                tableHTML += '<tbody>';
+                for (var i = 0; i < filteredData.length; i++) {
+                    tableHTML += '<tr>';
+                    for (var j = 0; j < filteredData[i].length; j++) {
+                        tableHTML += '<td>' + filteredData[i][j] + '</td>';
+                    }
+                    tableHTML += '</tr>';
+                }
+                tableHTML += '</tbody>';
+
+                tableHTML += '</table>';
+
+                var watermarkText = '@(TempData["ipadd"])';
+
+                popupWin.document.write('<html><head>'
+                    + tableStyles + '</head><body onload="window.print()">'
+                    + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
+                    + watermarkText + '</div></body></html>');
+
+                popupWin.document.close();
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#IndexTable').DataTable({
+                lengthChange: true,
+                dom: 'lBfrtip',
+                buttons: [
+                    'copy',
+                    'excel',
+                    'csv',
+                    {
+                        text: 'PDF',
+                        extend: 'pdfHtml5',
+                        action: function (e, dt, node, config) {
+                            PdfDiv();
+                        }
+                    },
+                ],
+                searchBuilder: {
+                    conditions: {
+                        num: {
+                            'MultipleOf': {
+                                conditionName: 'Multiple Of',
+                                init: function (that, fn, preDefined = null) {
+                                    var el = $('<input/>').on('input', function () { fn(that, this) });
+
+                                    if (preDefined !== null) {
+                                        $(el).val(preDefined[0]);
+                                    }
+
+                                    return el;
+                                },
+                                inputValue: function (el) {
+                                    return $(el[0]).val();
+                                },
+                                isInputValid: function (el, that) {
+                                    return $(el[0]).val().length !== 0;
+                                },
+                                search: function (value, comparison) {
+                                    return value % comparison === 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            //var buttonContainer = table.buttons().container();
+            //var searchBuilderContainer = table.searchBuilder.container();
+            //buttonContainer.insertBefore(table.table().container());
+            //searchBuilderContainer.insertBefore(table.table().container());
+
+            function PdfDiv() {
+                var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+                popupWin.document.open();
+
+                var tableStyles = `
+                               <style type="text/css">
+                                   table {
+                                       width: 100%;
+                                       border-collapse: collapse;
+                                       margin-bottom: 20px;
+                                   }
+
+                                   .table > thead {
+                                       vertical-align: bottom;
+                                       background-color: red;
+                                   }
+
+                                   th, td {
+                                       padding: 8px;
+                                       border: 1px solid #ddd;
+                                       text-align: center;
+                                   }
+
+                                   th {
+                                       background-color: #f2f2f2;
+                                       color: black;
+                                   }
+                               </style>
+                           `;
+
+                var table = $('#IndexTable').DataTable();
+
+                var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+                var tableHTML = '<table>';
+
+                tableHTML += '<thead>';
+                tableHTML += '<tr>';
+                table.columns().header().each(function (header) {
+                    tableHTML += '<th>' + header.innerHTML + '</th>';
+                });
+                tableHTML += '</tr>';
+                tableHTML += '</thead>';
+
+                tableHTML += '<tbody>';
+                for (var i = 0; i < filteredData.length; i++) {
+                    tableHTML += '<tr>';
+                    for (var j = 0; j < filteredData[i].length; j++) {
+                        tableHTML += '<td>' + filteredData[i][j] + '</td>';
+                    }
+                    tableHTML += '</tr>';
+                }
+                tableHTML += '</tbody>';
+
+                tableHTML += '</table>';
+
+                var watermarkText = '@(TempData["ipadd"])';
+
+                popupWin.document.write('<html><head>'
+                    + tableStyles + '</head><body onload="window.print()">'
+                    + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
+                    + watermarkText + '</div></body></html>');
+
+                popupWin.document.close();
+            }
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#SoftwareType5').DataTable({
+                lengthChange: true,
+                dom: 'lBfrtip',
+                buttons: [
+                    'copy',
+                    'excel',
+                    'csv',
+                    {
+                        text: 'PDF',
+                        extend: 'pdfHtml5',
+                        action: function (e, dt, node, config) {
+                            PdfDiv();
+                        }
+                    },
+                ],
+                searchBuilder: {
+                    conditions: {
+                        num: {
+                            'MultipleOf': {
+                                conditionName: 'Multiple Of',
+                                init: function (that, fn, preDefined = null) {
+                                    var el = $('<input/>').on('input', function () { fn(that, this) });
+
+                                    if (preDefined !== null) {
+                                        $(el).val(preDefined[0]);
+                                    }
+
+                                    return el;
+                                },
+                                inputValue: function (el) {
+                                    return $(el[0]).val();
+                                },
+                                isInputValid: function (el, that) {
+                                    return $(el[0]).val().length !== 0;
+                                },
+                                search: function (value, comparison) {
+                                    return value % comparison === 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            //var buttonContainer = table.buttons().container();
+            //var searchBuilderContainer = table.searchBuilder.container();
+            //buttonContainer.insertBefore(table.table().container());
+            //searchBuilderContainer.insertBefore(table.table().container());
+
+            function PdfDiv() {
+                var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+                popupWin.document.open();
+
+                var tableStyles = `
+                                  <style type="text/css">
+                                      table {
+                                          width: 100%;
+                                          border-collapse: collapse;
+                                          margin-bottom: 20px;
+                                      }
+
+                                      .table > thead {
+                                          vertical-align: bottom;
+                                          background-color: red;
+                                      }
+
+                                      th, td {
+                                          padding: 8px;
+                                          border: 1px solid #ddd;
+                                          text-align: center;
+                                      }
+
+                                      th {
+                                          background-color: #f2f2f2;
+                                          color: black;
+                                      }
+                                  </style>
+                              `;
+
+                var table = $('#SoftwareType5').DataTable();
+
+                var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+                var tableHTML = '<table>';
+
+                tableHTML += '<thead>';
+                tableHTML += '<tr>';
+                table.columns().header().each(function (header) {
+                    tableHTML += '<th>' + header.innerHTML + '</th>';
+                });
+                tableHTML += '</tr>';
+                tableHTML += '</thead>';
+
+                tableHTML += '<tbody>';
+                for (var i = 0; i < filteredData.length; i++) {
+                    tableHTML += '<tr>';
+                    for (var j = 0; j < filteredData[i].length; j++) {
+                        tableHTML += '<td>' + filteredData[i][j] + '</td>';
+                    }
+                    tableHTML += '</tr>';
+                }
+                tableHTML += '</tbody>';
+
+                tableHTML += '</table>';
+
+                var watermarkText = '@(TempData["ipadd"])';
+
+                popupWin.document.write('<html><head>'
+                    + tableStyles + '</head><body onload="window.print()">'
+                    + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
+                    + watermarkText + '</div></body></html>');
+
+                popupWin.document.close();
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#SentProjDetails').DataTable({
+
+
+            });
+
+            var buttonContainer = table.buttons().container();
+
+            buttonContainer.insertBefore(table.table().container());
+
+
+
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#Soft').DataTable({
+                lengthChange: true,
+                dom: 'lBfrtip',
+                buttons: [
+                    'copy',
+                    'excel',
+                    'csv',
+                    {
+                        text: 'PDF',
+                        extend: 'pdfHtml5',
+                        action: function (e, dt, node, config) {
+                            PdfDiv();
+                        }
+                    },
+                ],
+                searchBuilder: {
+                    conditions: {
+                        num: {
+                            'MultipleOf': {
+                                conditionName: 'Multiple Of',
+                                init: function (that, fn, preDefined = null) {
+                                    var el = $('<input/>').on('input', function () { fn(that, this) });
+
+                                    if (preDefined !== null) {
+                                        $(el).val(preDefined[0]);
+                                    }
+
+                                    return el;
+                                },
+                                inputValue: function (el) {
+                                    return $(el[0]).val();
+                                },
+                                isInputValid: function (el, that) {
+                                    return $(el[0]).val().length !== 0;
+                                },
+                                search: function (value, comparison) {
+                                    return value % comparison === 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+
+            function PdfDiv() {
+                var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+                popupWin.document.open();
+
+                var tableStyles = `
+                         <style type="text/css">
+                             table {
+                                 width: 100%;
+                                 border-collapse: collapse;
+                                 margin-bottom: 20px;
+                             }
+
+                             .table > thead {
+                                 vertical-align: bottom;
+                                 background-color: red;
+                             }
+
+                             th, td {
+                                 padding: 8px;
+                                 border: 1px solid #ddd;
+                                 text-align: center;
+                             }
+
+                             th {
+                                 background-color: #f2f2f2;
+                                 color: black;
+                             }
+                         </style>
+                     `;
+
+                var table = $('#Soft').DataTable();
+
+                var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+                var tableHTML = '<table>';
+
+                tableHTML += '<thead>';
+                tableHTML += '<tr>';
+                table.columns().header().each(function (header) {
+                    tableHTML += '<th>' + header.innerHTML + '</th>';
+                });
+                tableHTML += '</tr>';
+                tableHTML += '</thead>';
+
+                tableHTML += '<tbody>';
+                for (var i = 0; i < filteredData.length; i++) {
+                    tableHTML += '<tr>';
+                    for (var j = 0; j < filteredData[i].length; j++) {
+                        tableHTML += '<td>' + filteredData[i][j] + '</td>';
+                    }
+                    tableHTML += '</tr>';
+                }
+                tableHTML += '</tbody>';
+
+                tableHTML += '</table>';
+
+                var watermarkText = '@(TempData["ipadd"])';
+
+                popupWin.document.write('<html><head>'
+                    + tableStyles + '</head><body onload="window.print()">'
+                    + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
+                    + watermarkText + '</div></body></html>');
+
+                popupWin.document.close();
+            }
+        });
+    </script>
+
+
+    
+
+
+</head>
+
+
+<body class="sidebar-collapsed sidebar-hover">
+    <div class="wrapper">
+        <div id="loading" class="loader">
+            <div class="loader-container">
+                @*<img src="/images/loads.gif" width="600px" height="200px">*@
+                <img src="/assets/images/loadsss.gif" height="100">
+                <div>
+                    <h4 style="margin-top: -20px;">Loading...</h4>
+                    <span>Please wait... This may take few seconds...</span>
+                </div>
+            </div>
+        </div>
+
+        @if (Logins != null && Logins.Role == "Dte")
+        {
+            <!--start sidebar -->
+            <aside class="sidebar-wrapper" data-simplebar="true">
+                <div class="sidebar-header" style="background-color:#044c92 !important">
+                    <div>
+                        <img src="~/assets/images/icons/armylogo.png" class="logo-icon" alt="logo icon">
+                    </div>
+                    <div>
+                        <h4 class="logo-text">PAW</h4>
+                    </div>
+                    <div class="toggle-icon ms-auto">
+                        <ion-icon name="menu-sharp" id=" menusharp"></ion-icon>
+                        <img src="~/assets/images/menu-sharp.256x172.png" style="width: 16px;" />
+                    </div>
+                </div>
+                <!--navigation-->
+
+
+                <ul class="metismenu sidebar-menu" id="menu">
+
+                    <li>
+                        <div class="parent-icon">
+                            <ion-icon name="home-sharp" id="iconname"></ion-icon>
+                        </div>
+                        <a href="/Home/Index">
+                            <div class="menu-title">
+                                Dashboard :  @Logins.UserName
+                            </div>
+
+                        </a>
+                    </li>
+
+                    @* <li>
+                <a href="/Home/UnitDashbard">
+                <div class="icon-container">
+                <img src="/assets/images/icons/backtounit.jpg" alt="Icon">
+                <ion-icon name="ellipse-outline"></ion-icon>
+                <span class="icon-name">My DashBoard</span>
+                </div>
+                </a>
+                </li>*@
+
+                    <li>
+                        <a href="/Projects/ClearTempDataAndRedirect">
+                            <div class="icon-container">
+                                <img src="/assets/images/icons/createproj.png" alt="Icon">
+                                <ion-icon name="ellipse-outline"></ion-icon>
+                                <span class="icon-name">Add New Project</span>
+                            </div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="/Projects/ProjDetails">
+                            <div class="inbox-container" style="margin-left : 46px !important">
+
+                                <div class="icon-container" style="margin-left:-43px;">
+                                    <img src="/assets/images/icons/icons8-mail-94.png" alt="Icon">
+                                    <ion-icon name="ellipse-outline"></ion-icon>
+                                    <span class="icon-name">InBox</span>
+
+                                    <span class="inbox-alertsub"> @Logins.totmsgin</span>
+
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    @*  <li>
+
+                <a href="/Documents/Index">
+                <div class="icon-container">
+                <img src="/assets/images/icons/documents.png" alt="Icon">
+                <ion-icon name="ellipse-outline"></ion-icon>
+                <span class="icon-name">Proj Docu</span>
+                </div>
+                </a>
+                </li> *@
+
+                    <li>
+                        <a href="/Home/ProjComments" @*onclick="createNotification(event)"*@>
+                            <div class="icon-container">
+                                <img src="/assets/images/icons/icons8-comment-94.png" alt="Icon">
+                                <ion-icon name="ellipse-outline"></ion-icon>
+                                <span class="icon-name">Proj Comments</span>
+                                <span class="inbox-alertsub1"> @Logins.tocommentin</span>
+                            </div>
+                        </a>
+                    </li>
+
+
+                    
+
+                    <li>
+                        <a href="/Search/CurrentSearch">
+                            <div class="icon-container">
+                                <img src="/assets/images/icons/search.png" alt="Icon">
+                                <ion-icon name="ellipse-outline"></ion-icon>
+                                <span class="icon-name">Search</span>
+                            </div>
+                        </a>
+
+                    </li>
+
+                    <li>
+                        <a href="/Home/StratgicAnalysis">
+                            <div class="icon-container">
+                                <img src="/assets/images/icons/icons8-pie-chart-94.png" alt="Icon">
+                                <ion-icon name="ellipse-outline"></ion-icon>
+                                <span class="icon-name">Statistic Analysis</span>
+                            </div>
+                        </a>
+
+                    </li>
+
+                    <li>
+                        <a href="/Search/GetProjLogview">
+                            <div class="icon-container">
+                                <img src="/assets/images/icons/icons8-search-property-48.png" alt="Icon">
+                                <ion-icon name="ellipse-outline"></ion-icon>
+                                <span class="icon-name">Proj Log</span>
+                            </div>
+
+                        </a>
+                    </li>
+
+                    @if (Logins != null && Logins.Role == "Dte" && Logins.unitid == 1)
+                    {
+
+                        <li class="dropdown">
+                            <div class="icon-container" style="margin-top: 10px; margin-left: 13px;">
+                                <img src="/assets/images/icons/icons8-male-user-94.png" alt="Icon">
+                                <ion-icon name="ellipse-outline"></ion-icon>
+                                <span class="icon-name">User Setting</span>
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li class="selected">
+                                    <a href="/Actions/Index">
+                                        <div class="icon-container">
+                                            <img src="/assets/images/icons/actions.jpg" alt="Icon">
+
+                                            <ion-icon name="ellipse-outline"></ion-icon>
+                                            <span class="icon-name">View Actions</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="selected">
+                                    <a href="/UnitDtls/AddOrEdit">
+                                        <div class="icon-container">
+                                            <img src="/assets/images/icons/units.png" alt="Icon">
+                                            <ion-icon name="ellipse-outline"></ion-icon>
+                                            <span class="icon-name">View Units</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="selected">
+                                    <a href="/Identity/Account/Register" target="_new">
+                                        <div class="icon-container">
+                                            <img src="/assets/images/icons/adduser.png" alt="Icon">
+                                            <ion-icon name="ellipse-outline"></ion-icon>
+                                            <span class="icon-name">Register New User</span>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li class="selected">
+                                    <a href="/Account/GetsAllUsers">
+                                        <div class="icon-container">
+                                            <img src="/assets/images/icons/viewallusers.png" alt="Icon">
+                                            <ion-icon name="ellipse-outline"></ion-icon>
+                                            <span class="icon-name">View Users</span>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+
+                        </li>
+
+                        <li>
+
+                        </li>
+
+                    }
+
+                </ul>
+
+                <!--end navigation-->
+
+                <div class="sidebar-footer">
+                </div>
+            </aside>
+
+            <!--end sidebar -->
+            <!--start top header-->
+            <header class="top-header" style="color:#044c92">
+                <nav class="navbar navbar-expand gap-3">
+                    <div class="mobile-menu-button">
+                        <ion-icon name="menu-sharp"></ion-icon>
+                    </div>
+                    <p class="headertext">
+                        <h1 style="margin-left: 350px; color:white">Portal for Application Whitelisting (PAW)</h1>
+                    </p>
+
+
+                    <div class="top-navbar-right ms-auto">
+
+                        <ul class="navbar-nav align-items-center">
+
+                            <li class="nav-item dropdown dropdown-user-setting">
+
+                                <div class="user-setting" style="margin-right:100px;">
+                                    <a href="/Account/Logout">
+                                        <img src="~/assets/images/icons/logout.png" class="user-img" alt="">
+                                    </a>
+                                </div>
+
+
+                                <div class="user-setting" style="float:right">
+
+                                    <img src="~/assets/images/dgis_logo.png" class="dgislogo">
+
+                                </div>
+
+
+                            </li>
+
+                        </ul>
+                    </div>
+                </nav>
+
+
+            </header>
+
+
+        }
+
+
+
+
+        <!--end top header-->
+
+        <!-- unit level users menu start  -->
+        @if (Logins != null && Logins.Role == "Unit")
+        {
+
+            <!--start sidebar -->
+            <aside class="sidebar-wrapper" data-simplebar="true">
+                <div class="sidebar-header">
+                    <div>
+                        <img src="~/assets/images/icons/armylogo.png" class="logo-icon" alt="logo icon">
+                    </div>
+                    <div>
+                        <h4 class="logo-text">PAW</h4>
+                    </div>
+                    <div class="toggle-icon ms-auto">
+                        <ion-icon name="menu-sharp"></ion-icon>
+                        <img src="~/assets/images/menu-sharp.256x172.png" style="width: 16px;" />
+                    </div>
+                </div>
+                <!--navigation-->
+
+
+                <ul class="metismenu sidebar-menu" id="menu">
+
+
+                    <li>
+                        <div class="parent-icon">
+                            <ion-icon name="home-sharp"></ion-icon>
+                        </div>
+                        <a href="/Home/Index">
+                            <div class="menu-title">
+                                Welcome Users  @Logins.UserName
+                            </div>
+
+                        </a>
+                    </li>
+
+                    @if (isAdmin)
+                    {
+
+                        <li>
+                            <a href="/Home/StkHDashbard">
+                                <div class="icon-container" style="margin-right:-10px ;letter-spacing: -0.5px !important">
+                                    <img src="/assets/images/icons/admin.jpg" alt="Icon">
+                                    <ion-icon name="ellipse-outline"></ion-icon>
+                                    <span class="icon-name">Stakeholder DashBoard</span>
+                                </div>
+                            </a>
+                        </li>
+
+
+                    }
+                    @if (Logins.Iamuserid != null)
+                    {
+
+                        <li>
+                            <a href="/Projects/ClearTempDataAndRedirect">
+                                <div class="icon-container">
+                                    <img src="/assets/images/icons/createproj.png" alt="Icon">
+                                    <ion-icon name="ellipse-outlinProj Commentse"></ion-icon>
+                                    <span class="icon-name">Add New Project</span>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/Projects/ProjDetails">
+                                <div class="inbox-container" style="margin-left : 46px !important">
+
+                                    <div class="icon-container" style="margin-left:-43px;">
+                                        <img src="/assets/images/icons/inbox_icon.jpg" alt="Icon">
+                                        <ion-icon name="ellipse-outline"></ion-icon>
+                                        <span class="icon-name">InBox</span>
+
+                                        <span class="inbox-alertsub"> @Logins.totmsgin</span>
+
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+
+                        @* <li>
+
+                <a href="/Index/ProjEdit">
+                <div class="icon-container">
+                <img src="/assets/images/icons/comment.png" alt="Icon">
+                <ion-icon name="ellipse-outline"></ion-icon>
+                <span class="icon-name">Proj Edit</span>
+                </div>
+                </a>
+                </li>*@
+
+                        <li>
+                            <a href="/Home/ProjUnitComments">
+                                <div class="icon-container">
+                                    <img src="/assets/images/icons/icons8-comment-94.png" alt="Icon">
+                                    <ion-icon name="ellipse-outline"></ion-icon>
+                                    <span class="icon-name">Proj Comments</span>
+                                    <span class="inbox-alertsub1"> @Logins.tocommentin</span>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/Actions/ActionSeqView">
+                                <div class="icon-container">
+                                    <img src="/assets/images/icons/filemove.png" alt="Icon">
+
+                                    <ion-icon name="ellipse-outline"></ion-icon>
+                                    <span class="icon-name"> How to Move Proj</span>
+
+
+                                </div>
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+
+                        <li>
+                            <a href="/Identity/Account/Register" target="_new">
+                                <div class="icon-container">
+                                    <img src="/assets/images/icons/adduser.png" alt="Icon">
+                                    <ion-icon name="ellipse-outline"></ion-icon>
+                                    <span class="icon-name">Register New User</span>
+                                </div>
+                            </a>
+                        </li>
+                    }
+
+
+                </ul>
+
+                <!--end navigation-->
+
+                <div class="sidebar-footer">
+                </div>
+
+            </aside>
+
+            <!--end sidebar -->
+            <!--start top header-->
+            <header class="top-header">
+                <nav class="navbar navbar-expand gap-3">
+                    <div class="mobile-menu-button">
+                        <ion-icon name="menu-sharp"></ion-icon>
+                    </div>
+                    <p class="headertext">
+                        <h1 style="margin-left: 350px; color:white">Portal for Application Whitelisting (PAW)</h1>
+
+                    </p>
+
+
+                    <div class="top-navbar-right ms-auto">
+
+                        <ul class="navbar-nav align-items-center">
+
+                            <li class="nav-item dropdown dropdown-user-setting">
+
+                                <div class="user-setting" style="margin-right:100px;">
+                                    <a href="/Account/Logout">
+                                        <img src="~/assets/images/icons/logout.png" class="user-img" alt="">
+                                    </a>
+                                </div>
+
+
+                                <div class="user-setting" style="float:right">
+
+                                    <img src="~/assets/images/dgis_logo.png" class="dgislogo">
+
+                                </div>
+
+
+                            </li>
+
+                        </ul>
+                    </div>
+                </nav>
+
+
+            </header>
+
+        }
+
+
+        <div class="page-content-wrapper">
+            @if (Logins != null)
+            {
+                <div class="switcher-body" style="visibility: hidden;">
+                    <button class="btn btn-primary btn-switcher shadow-sm" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+                        <ion-icon name="color-palette-sharp" class="me-0"></ion-icon>
+                    </button>
+                    <div class="offcanvas offcanvas-end shadow border-start-0 p-2" data-bs-scroll="true" data-bs-backdrop="false"
+                         tabindex="-1" id="offcanvasScrolling">
+                        <div class="offcanvas-header border-bottom">
+                            <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Theme Customizer</h5>
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <h6 class="mb-0">Theme Variation</h6>
+                            <hr>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="LightTheme" value="option1">
+                                <label class="form-check-label" for="LightTheme">Light</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="DarkTheme" value="option2">
+                                <label class="form-check-label" for="DarkTheme">Dark</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="SemiDark" value="option3"
+                                       checked>
+                                <label class="form-check-label" for="SemiDark">Semi Dark</label>
+                            </div>
+                            <hr />
+                            <h6 class="mb-0">Header Colors</h6>
+                            <hr />
+                            <div class="header-colors-indigators">
+                                <div class="row row-cols-auto g-3">
+                                    <div class="col">
+                                        <div class="indigator headercolor1" id="headercolor1"></div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="indigator headercolor2" id="headercolor2"></div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="indigator headercolor3" id="headercolor3"></div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="indigator headercolor4" id="headercolor4"></div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="indigator headercolor5" id="headercolor5"></div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="indigator headercolor6" id="headercolor6"></div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="indigator headercolor7" id="headercolor7"></div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="indigator headercolor8" id="headercolor8"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <!-- start page content-->
+            <div class="page-content">
+
+                @RenderBody()
+            </div>
+
+        </div>
+        @*</main>
+        </div>*@
+        <!--start footer-->
+        @if (Logins != null)
+        {
+            <footer class="footer" style="position: fixed;margin-bottom: 0px;">
+                <div class="footer-text">
+                    Copyright &copy; Developed by ASDC, DGIS
+                </div>
+            </footer>
+        }
+        <!--end footer-->
+        <!--Start Back To Top Button-->
+        <a href="javaScript:;" class="back-to-top">
+            <ion-icon name="arrow-up-outline"></ion-icon>
+        </a>
+        <!--End Back To Top Button-->
+        <!--start switcher-->
+        <!--end switcher-->
+        <!--start overlay-->
+        <div class="overlay nav-toggle-icon"></div>
+        <!--end overlay-->
+
+    </div>
+
+    <button id="btnid" class="hidden">@Logins.unitid</button>
+
+</body>
+
+
+<!-- JavaScript code -->
+<script>
+    function createNotification(event) {
+        event.preventDefault();
+
+       
+        var stakeHolderId = document.getElementById('btnid').innerText;
+
+        
+        fetch(`/Home/GetNotification?stakeHolderId=${stakeHolderId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            
+        })
+            .then(response => {
+                if (response.ok) {
+                   
+                    console.log('Notification data retrieved successfully');
+
+                    
+                    window.location.href = event.target.href;
+                } else {
+                    
+                    console.error('Failed to retrieve notification data');
+                }
+            })
+            .catch(error => {
+                
+                console.error('Error:', error);
+            });
+    }
+</script>
+
+
+
+
+
+
+<script>
+
+    $(document).ready(function () {
+        $("#loading").hide();
+        $(document).ajaxStart(function () {
+            $("#loading").show();
+        }).ajaxStop(function () {
+            $("#loading").hide();
+        }).ajaxError(function () {
+            $("#loading").hide();
+        });
+
+    });
+
+
+
+</script>
+
+
+
+<script>
+
+    var pageRefreshed = localStorage.getItem('pageRefreshed');
+    if (pageRefreshed) {
+
+        localStorage.removeItem('pageRefreshed');
+
+
+        window.location.href = '/Home/Index';
+    }
+</script>
+
+<script>
+
+    document.getElementById('menusharp').onclick = function () {
+        document.body.classList.toggle('sidebar-collapsed');
+    };
+
+    document.querySelector('.sidebar-wrapper').onmouseenter = function () {
+        document.body.classList.add('sidebar-hover');
+    };
+
+    document.querySelector('.sidebar-wrapper').onmouseleave = function () {
+        document.body.classList.remove('sidebar-hover');
+    };
+
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        $('.dropdown').hover(
+            function () {
+                $(this).children('.dropdown-menu').slideDown(200);
+            },
+            function () {
+                $(this).children('.dropdown-menu').slideUp(200);
+            }
+        );
+    });
+</script>
+
+
+<script>
+    $(document).ready(function () {
+
+        var currentPageUrl = window.location.pathname;
+
+
+        $(".dropdown-menu li").removeClass("selected");
+
+
+        $(".dropdown-menu li a[href='" + currentPageUrl + "']").parent().addClass("selected");
+
+
+        $(".dropdown-menu.selected").addClass("visible");
+    });
+</script>
+
+
+@RenderSection("scripts", required: false)
+
+</html>
+
+
+<style>
+    .dropdown-menu {
+        display: none;
+    }
+
+
+        .dropdown-menu.visible {
+            display: block;
+        }
+
+        .dropdown-menu li.selected {
+            background-color: #044c92;
+        }
+
+
+    .inbox-alertsub1 {
+        position: absolute;
+        right: 13px;
+        top: 12px;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        width: 36px;
+        height: 27px;
+        text-align: center;
+        line-height: 24px;
+        font-weight: bold;
+        font-size: 14px;
+        cursor: pointer;
+       }
+
+
+    .sidebar-menu li .menu-title {
+        display: none;
+        transition: margin-left 0.3s; /* Add smooth transition */
+    }
+
+    .sidebar-hover .sidebar-menu li .menu-title {
+        display: block;
+        margin-left: 10px; /* Adjust the margin as needed */
+    }
+
+    .sidebar-menu .parent-icon {
+        display: flex;
+        align-items: center;
+    }
+
+        .sidebar-menu .parent-icon ion-icon {
+            margin-right: 10px;
+        }
+
+        .sidebar-menu .parent-icon img {
+            width: 36px;
+            height: 36px;
+            margin-right: 10px;
+        }
+
+
+    .metismenu img {
+        width: 36px;
+        height: 36px;
+        margin-right: 10px;
+    }
+
+    .metismenu ion-icon {
+        font-size: 24px;
+        margin-right: 10px;
+    }
+
+
+
+    .sidebar-wrapper {
+        background-color: white;
+        color: black;
+    }
+
+    .sidebar-header {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .sidebar-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 21px;
+        background-color: #044c92;
+    }
+
+
+
+
+    .logo-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .logo-text {
+        font-size: 1.5rem;
+        margin-left: 10px;
+    }
+
+    #notification {
+        position: relative;
+    }
+
+        #notification::after {
+            content: "";
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 15px;
+            height: 15px;
+            background-color: red; 
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+
+</style>

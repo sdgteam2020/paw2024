@@ -1,0 +1,1279 @@
+﻿@using swas.BAL.DTO
+@using swas.BAL.Helpers
+@using swas.DAL.Models
+@model List<tbl_Projects>
+@using Microsoft.AspNetCore.Identity
+
+
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+
+    ViewData["Title"] = "Home Page";
+    int sno = 0;
+    int cnt = 0;
+    int cntcomment = 0;
+    int procnst = 0;
+    string encid = "";
+    var tabname = "";
+    Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor.HttpContext.Session, "User");
+
+}
+
+
+<head>
+    <link href="~/assets/css/style.css" rel="stylesheet">
+
+    <style>
+        #litabs {
+            white-space: nowrap;
+            display: inline-block;
+            width: 200px;
+        }
+
+        .slice {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+            transform-origin: 0 0;
+            background-color: #044c92;
+            transform: rotate(calc(var(--percentage, 0) * 3.6deg));
+        }
+
+        .aj {
+            text-align: center;
+            height: 2rem;
+            background-color: #044c92;
+            padding-top: 0px;
+            font-size: larger;
+        }
+
+
+        .card-body {
+            margin-top: -10px !important;
+            margin-bottom: 0px !important;
+            word-wrap: normal !important;
+            margin-left: -4px !important;
+            word-spacing: normal !important;
+            padding: 0.78rem !important;
+        }
+
+        .col-lg-4 {
+            -ms-flex: 0 0 33.333333% !important;
+            flex: 3 0 33.333333% !important;
+            max-width: 33.333333% !important;
+            padding: -1px !important;
+            margin-bottom: -12px !important;
+        }
+
+        .row {
+            margin-bottom: -4px !important;
+        }
+
+        #myChart1 {
+            width: 100%; /* Make the element take up the full width of its parent container */
+            height: auto; /* Allow the height to adjust proportionally to the width */
+
+            max-width: 752px !important; /* Set a maximum width for the element */
+            max-height: 388px !important; /* Set a maximum height for the element */
+        }
+
+        #myChart {
+            width: 100%; /* Make the element take up the full width of its parent container */
+            height: auto; /* Allow the height to adjust proportionally to the width */
+
+            max-width: 752px !important; /* Set a maximum width for the element */
+            max-height: 388px !important; /* Set a maximum height for the element */
+        }
+
+        .js-is-visible {
+            opacity: 1;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50%; /* Adjust the width as needed */
+            max-width: 80%; /* Optional: Set a maximum width if desired */
+            height: auto; /* Set a fixed height, or adjust as needed */
+            background-color: #0000; /* Set the background color */
+            z-index: 999;
+            border-radius: 5px; /* Optional: Add rounded corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Optional: Add a shadow */
+            overflow: auto; /* Add scrollbars if the content exceeds the height */
+        }
+
+        .popup-content {
+            padding: 20px;
+            /* Other styling for your content */
+        }
+
+        #popupOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        #popupContent {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            max-width: 80%;
+            max-height: 40%;
+            overflow-y: auto;
+        }
+
+        .tabs {
+            /* Styles for your tabs content */
+        }
+
+
+        .tabs__head li a {
+            width: 180px !important;
+            padding-right: 1px;
+        }
+
+        .closeButton {
+            background-color: #f44336;
+            border: none;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            border-radius: 10%;
+        }
+
+            .closeButton:hover {
+                background-color: #d32f2f;
+            }
+
+
+        .blue-button {
+            /* Add your styles for the black button here */
+            background-color: #044C92; /* Example background color */
+            border: 1px solid #000;
+            color: #fff;
+            /* Add other styles as needed */
+        }
+
+        .green-button {
+            /* Styles for the green button */
+            background-color: #4CAF50; /* Example green color */
+            /* Add other styles as needed */
+        }
+
+        .yellow-button {
+            /* Styles for the yellow button */
+            background-color: #FFC107; /* Example yellow color */
+            /* Add other styles as needed */
+        }
+
+        .red-button {
+            /* Styles for the red button */
+            background-color: #F44336; /* Example red color */
+            /* Add other styles as needed */
+        }
+
+        /* Add 3D effect styles for the buttons */
+        .table-button {
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Example shadow effect */
+            transition: transform 0.3s;
+        }
+
+            .table-button:hover {
+                transform: translateY(-3px);
+                background-color: blue; /* Example hover effect for 3D appearance */
+            }
+
+        .r-1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 10px;
+            font-size: 22px;
+        }
+
+
+
+        .cd-1 {
+            width: 150px;
+            height: 100px;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            box-shadow: -4px -4px 3px rgba(0, 0, 0, 0.1);
+            margin: 23px;
+            padding-top: 5px;
+            font-size: 12px;
+            text-overflow: inherit;
+            font-weight: bolder;
+            text-align: center;
+            border: 2px solid #044c92;
+            background-color: white;
+            transition: all 0.3s ease;
+            border-radius: 30px;
+            box-shadow: inset 0 0 10px;
+        }
+
+            .cd-1:hover {
+                transform: translateY(-5px);
+                box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.2);
+            }
+
+        .card-title {
+            font-size: 20px !important;
+            align-items: baseline;
+            font-family: auto;
+        }
+
+        .t-1 {
+            flex: 4
+        }
+
+        .text {
+            overflow: scroll;
+            padding: 10px;
+        }
+
+
+
+    </style>
+
+
+</head>
+
+
+
+<!-- start firstDiv -->
+<span id="spnName" style="display:none">@TempData["NameId"]</span>
+<span id="spnRole" style="display:none">@TempData["RoleId"]</span>
+    <div  id="firstDiv">
+
+        <div class="card">
+
+            <div class="card-body;" style="background-color:#044c92;margin-top: 0px!important;height:25px !important;color: white;">
+                <center>
+                    <h6 class="card-title"><b>Initial Stage</b></h6><br><br>
+                </center>
+
+            </div>
+
+        <div class="r-1" style="margin-top: -13px;">
+                @{
+                    var backgroundColors = new[] { "#a2e0fa", "#b0e1f5", "#a2e0fa", "#b0e1f5" };
+                    int u = 0;
+                    foreach (var stat in ViewBag.Statusone)
+                    {
+                        if (stat.StatusId == 1 || stat.StatusId == 3)
+                        {
+                            <div class="cd-1" onclick="openPopup('@stat.EncID','@stat.Status')" style="background-color:white">
+                                @if (stat.StatusId == 1)
+                                {
+                                    <div class="icon-container">
+                                        <img src="/assets/images/icons/adduser.png" alt="Icon" style="height:25px">
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="icon-container">
+                                    <img src="/assets/images/icons/icons8-process-40.png" alt="Icon" style="height:25px">
+                                    </div>
+                                }
+                                @if (stat.StatusId == 1)
+                                {
+                                <h5 style="margin-top: 8px;">
+                                        <b>@stat.TotalProj</b>
+                                    </h5>
+                                }
+
+                                else
+                                {
+
+                                    @if (stat.StatusId == 4)
+                                    {
+                                        procnst = stat.TotalProj;
+                                        encid = stat.EncID;
+                                    }
+                                <h5 style="margin-top: 0px;">
+                                        <b>@stat.TotalProj</b>
+                                    </h5>
+                                }
+
+                                @if (Logins != null && Logins.Role == "Unit" && stat.Status == "New Project")
+                                {
+                                    <div class="t-1">Submitted</div>
+                                }
+                                else
+                                {
+                                    <div class="t-1">@stat.ViewDescStkHold</div>
+                                }
+
+
+
+                            </div>
+                        }
+                        else if (stat.StatusId == 2 || stat.StatusId == 31)
+                        {
+                            <div class="cd-1" onclick="openPopup('@stat.EncID','@stat.Status')" style="background-color:white">
+                                @if (stat.StatusId == 2)
+                                {
+                                    <div class="icon-container">
+                                    <img src="/assets/images/icons/ret.png" alt="Icon" style="height:25px">
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="icon-container">
+                                    <img src="/assets/images/icons/rejec.png" alt="Icon" style="height:25px">
+                                    </div>
+                                }
+
+
+                            <h6 style="margin-top: 0px;">
+                                    <b>@stat.TotalProj</b>
+                                </h6>
+
+                                <div class="t-1">@stat.ViewDescStkHold</div>
+
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="cd-1" onclick="openPopup('@stat.EncID','@stat.Status')" style="background-color:white">
+                                <div class="icon-container">
+                                <img src="/assets/images/icons/accept.png" alt="Icon" style="height:25px">
+                                </div>
+
+                            <h6 style="margin-top: 4px;">
+                                    <b>@stat.TotalProj</b>
+                                </h6>
+
+                                <div class="t-1">@stat.ViewDescStkHold</div>
+
+                            </div>
+                        }
+                        u++;
+                    }
+                }
+            </div>
+
+        </div>
+    </div>
+   
+    <div id="thirdDiv">
+
+        <div class="card">
+            <div class="card-body;" style="background-color:#044c92;margin-top: -23px!important;height:25px !important;color: white;">
+                <center>
+                    <h6 class="card-title"><b>Pre Devp Stage</b></h6><br><br>
+                </center>
+            </div>
+
+
+
+        <div class="r-1" style="margin-top: -12px;">
+                @{
+                    var backgroundColors1 = new[] { "#a2e0fa", "#b0e1f5", "#a2e0fa", "#b0e1f5" };
+
+                    int s = 0;
+
+                    foreach (var stat in ViewBag.Statustwo)
+                    {
+
+                        if (stat.StatusId == 22)
+                        {
+                            <div class="cd-1" onclick="openPopup('@stat.EncID','@stat.Status')" style="background-color:white">
+
+                                <div class="icon-container">
+                                <img src="/assets/images/icons/rejec.png" alt="Icon" style="height:25px">
+                                </div>
+
+                            <h6 style="margin-top: 8px;">
+                                    <b>
+                                        @stat.TotalProj
+                                    </b>
+                                </h6>
+
+
+                                <div class="t-1">@stat.ViewDescStkHold</div>
+
+
+
+                            </div>
+                        }
+
+                        else if (stat.StageId == 0)
+                        {
+                            <div class="cd-1" onclick="openPopup('@stat.EncID','@stat.Status')" style="background-color:white">
+
+                                <div class="icon-container">
+                                <img src="/assets/images/icons/com.png" alt="Icon" style="height:25px">
+                                </div>
+
+
+                            <h6 style="margin-top:2px;">
+                                    <b>
+                                        @ViewBag.Sumip
+
+                                    </b>
+                                </h6>
+
+                                <div class="t-1">@stat.ViewDescStkHold</div>
+
+
+
+                            </div>
+                        }
+
+                        else
+                        {
+
+
+                            <div class="cd-1" onclick="openPopup('@stat.EncID','@stat.Status')" style="background-color:White">
+                                @if (stat.StatusId == 5 || stat.StatusId == 7 || stat.StatusId == 11)
+                                {
+                                    <div class="icon-container">
+                                    <img src="/assets/images/icons/process.png" alt="Icon" style="height:25px">
+                                    </div>
+                                }
+                                else if (stat.StatusId == 20 || stat.StatusId == 21)
+                                {
+                                    <div class="icon-container">
+                                    <img src="/assets/images/icons/stakeholder.png" alt="Icon" style="height:25px">
+                                    </div>
+                                }
+
+                            <h6 style="margin-top: 8px;">
+                                    <b>
+                                        @stat.TotalProj
+                                        @* //** san */ *@
+                                        @if (stat.StatusId < 12)
+                                        {
+
+                                            @foreach (var item in ViewBag.SumfwdExt)
+                                            {
+                                                @("/" + @item)
+                                                ;
+
+                                            }
+                                        }
+                                    </b>
+                                </h6>
+
+
+
+
+                                <div class="t-1">@stat.ViewDescStkHold</div>
+
+
+
+                            </div>
+                        }
+                        s++;
+
+                    }
+
+
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- End of thirdDiv -->
+
+    <div id="fourthDiv">
+
+        <div class="card">
+        <div class="card-body;" style="background-color:#044c92;margin-top: -26px!important;height:25px !important;color: white;">
+                <center>
+                    <h6 class="card-title"><b>Post Devp Stage</b></h6><br><br>
+                </center>
+            </div>
+
+
+
+        <div class="r-1" style="margin-top:-13px">
+                @{
+                    var backgroundColors2 = new[] { "#a2e0fa", "#b0e1f5", "#a2e0fa", "#b0e1f5" };
+
+                    int t = 0;
+
+
+                    foreach (var stat in ViewBag.Statusthree)
+                    {
+
+
+                        @* //** san *@
+
+
+                        @if (stat.StatusId == 23)
+                        {
+                            <div class="cd-1" onclick="openPopup('@stat.EncID','@stat.Status')" style="background-color:#fa8cc3">
+                                <div class="t-1">@stat.ViewDescStkHold</div>
+
+                                <h6 class="card-title"><b>@ViewBag.PendiStkh</b></h6>
+                            </div>
+                        }
+                        else if (stat.StatusId == 29)
+                        {
+                            <div class="cd-1" onclick="openPopup('@stat.EncID','@stat.Status')" style="background-color:white">
+
+                                <div class="icon-container">
+                                <img src="/assets/images/icons/accept.png" alt="Icon" style="height:25px">
+                                </div>
+                            <h6 style="margin-top: 8px;"><b>@stat.TotalProj</b></h6>
+
+                                <div class="t-1">@stat.ViewDescStkHold</div>
+
+                            </div>
+                        }
+                        else if (stat.StatusId == 30)
+                        {
+
+
+                            <div class="cd-1" onclick="openPopup('@stat.EncID','@stat.Status')" style="background-color:white">
+                                <div class="icon-container">
+                                <img src="/assets/images/icons/rejec.png" alt="Icon" style="height:25px">
+                                </div>
+
+                            <h6 style="margin-top: 8px;">
+                                    <b>
+                                        @stat.TotalProj
+                                    </b>
+                                </h6>
+
+
+                                <div class="t-1">@stat.ViewDescStkHold</div>
+                            </div>
+
+
+
+                        }
+
+
+                        else
+                        {
+                            <div class="cd-1" onclick="openPopup('@stat.EncID','@stat.Status')" style="background-color:white">
+
+                                @if (stat.StatusId == 24)
+                                {
+                                    <div class="icon-container">
+                                    <img src="/assets/images/icons/icons8-test-passed-60.png" alt="Icon" style="height:25px">
+                                    </div>
+                                }
+                                else if (stat.StatusId == 25)
+                                {
+                                    <div class="icon-container">
+                                    <img src="/assets/images/icons/icons8-architecture-64.png" alt="Icon" style="height:25px">
+                                    </div>
+                                }
+                                else if (stat.StatusId == 26)
+                                {
+                                    <div class="icon-container">
+                                    <img src="/assets/images/icons/icons8-information-48.png" alt="Icon" style="height:25px">
+                                    </div>
+                                }
+                                else if (stat.StatusId == 27)
+                                {
+                                    <div class="icon-container">
+                                    <img src="/assets/images/icons/icons8-remote-desktop-48.png" alt="Icon" style="height:25px">
+                                    </div>
+                                }
+                                else if (stat.StatusId == 28)
+                                {
+                                    <div class="icon-container">
+                                    <img src="/assets/images/icons/logview.png" alt="Icon" style="height:25px">
+                                    </div>
+                                }
+
+                            <h6 style="margin-top: 8px;"><b>@stat.TotalProj</b></h6>
+
+
+                                <div class="t-1">@stat.ViewDescStkHold</div>
+
+
+
+                            </div>
+                        }
+
+
+
+                        t++;
+
+                    }
+
+
+                }
+            </div>
+        </div>
+    </div>
+
+
+
+
+<!--   end of third item  -->
+<!-- Pop up chart  hower effect -->
+
+<div class="modal" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal Title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="modalContent">Modal Content</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    function openPopup(id) {
+       
+        document.getElementById('modalContent').innerText = id;
+        $('#myModal').modal('show');
+        window.location.href = '/ControllerName/ActionName?id=' + id;   comment by kapoor
+    }
+</script>
+
+
+
+
+
+<div id='myModal' class='modal' style="width: 85% !important; margin-left: 79px !important;">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 203% !important">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+
+</div>
+
+@if (Logins != null && Logins.Role == "Dte")
+{
+    <!-- Left Sidebar (Chart) -->
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+
+            <div class="card radius-12">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                    <h6 class="mb-0">Application Type wise Analysis : (Last Six Months) </h6>
+                    
+                </div>
+
+
+            </div>
+        </div>
+        <!-- Right Sidebar (Pie Chart) -->
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="card radius-12">
+                <div class="card-body">
+
+                    <div class="d-flex align-items-center mb-3">
+                        <canvas id="myChart1"></canvas>
+                    </div>
+                    <h6 class="mb-0">Current Status Analysis</h6>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@* Table for Stakeholder Status Change
+
+
+<div class="card-body">
+    <div class="card radius-10 w-100">
+        <div class="card-body">
+
+            <table id="IndexTable" class="table table-striped table-bordered">
+
+                <thead>
+                    <tr>
+                        <th>Ser No</th>
+                        <th>Att</th>
+                        <th>Project</th>
+                        <th>Stakeholder</th>
+                        <th>Held With</th>
+                        <th> Comment</th>
+                        <th>Updated on</th>
+
+                        @foreach (var project in ViewBag.stakeholders)
+                        {
+                            if (Logins.Unit == @project.StakeHolder)
+                            {
+                                <th>@project.StakeHolder</th>
+                            }
+                        }
+
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var project in ViewBag.projects)
+                    {
+                        <tr>
+                            <td>
+                                @{
+                                    sno++;
+                                }
+                                @sno
+                            </td>
+                            <td>
+                                @if (project.AttCnt > 0)
+                                {
+                                    <a href="javascript:void(0);" class="anchorDetail" data-id="@project.CurrentPslmId">
+                                        <img src="/assets/images/icons/attachemnts_clip.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
+                                    </a>
+                                }
+                            </td>
+                            <td>@project.ProjName</td>
+                            <td>@project.StakeHolder</td>
+                            <td>@project.FwdtoUser</td>
+                            <td>@project.Comments</td>
+                            <td>@project.DateTimeOfUpdate?.ToString("dd-MM-yyyy")</td>
+
+
+                            @foreach (var th in ViewBag.stakeholders)
+                            {
+                                if (th.StakeHolder ==  Logins.Unit)
+                                {
+                                dynamic query = ViewBag.query;
+
+                                dynamic statusForStakeholder = null;
+                                string buttonColor = "blue-button";
+
+                                if (query != null)
+
+                                {
+                                    foreach (dynamic item in query)
+                                    {
+                                        if (item.StakeholderName == th.StakeHolder && item.ProjId == project.ProjId && item.PsmId == project.CurrentPslmId)
+                                        {
+                                            statusForStakeholder = item;
+                                            break;
+                                        }
+                                    }
+
+                                    if (statusForStakeholder != null)
+                                    {
+                                        var statusCodeForStakeholder = statusForStakeholder.StatusName;
+
+                                        if (statusCodeForStakeholder == "Accepted")
+                                        {
+                                            buttonColor = "green-button";
+                                        }
+                                        else if (statusCodeForStakeholder == "Obsn & Rectification")
+                                        {
+                                            buttonColor = "yellow-button";
+                                        }
+                                        else if (statusCodeForStakeholder == "Rejected")
+                                        {
+                                            buttonColor = "red-button";
+                                        }
+                                    }
+                                }
+
+                                <td>
+                                    <button type="button" class="btn @buttonColor table-button" data-bs-toggle="modal" data-bs-target="#UnitAdd" data-proj-id="@project.ProjId" data-psm-id="@project.CurrentPslmId" data-stakeholder-id="@th.StakeHolderId" data-stakeholder-name="@th.StakeHolder">
+                                    </button>
+                                </td>
+                            }
+                            }
+
+
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    *@
+
+<div class="modal fade" id="UnitAdd" tabindex="-1" aria-labelledby="ProjectAddLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                @* <h5 class="modal-title" id="UnitAddLabel">Add Action</h5>*@
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                @Html.Partial("_CreateTableDetails", new StkComment())
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!----END Table for Stakeholder Status Change----->
+@* popup datagrid tab  end *@
+@* popup datagrid tab start script *@
+
+@* popup datagrid tab  start *@
+<div class="card-body">
+    <div id="popupOverlay">
+
+        <div id="popupContent">
+
+
+            <div class="tabs" id="tabs">
+
+                <button id="closeButton" class="closeButton">X</button>
+                <br />
+                <br />
+                <ul class="tabs__head">
+                    @foreach (var statusName in ViewBag.statusName)
+                    {
+                        tabname = @statusName;
+
+                        <li id="litabs" style="">
+                            <a href="#" data-tab="@statusName">
+                                <img src="~/assets/images/icons/bluetick.png" width="20px;" height="20px;" />&nbsp;@statusName
+                            </a>
+                        </li>
+
+
+                    }
+                </ul>
+                <div class="tabs__content">
+                    @foreach (var statusName in ViewBag.statusName)
+                    {
+
+
+                        <div class="tabs__content__item" id="@statusName">
+                            <div class="content">
+                                <div class="card radius-10 w-100">
+                                    <div class="card-body" style="background-color: #f0f0f0; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);">
+                                        <div class="table-container" style="max-height: 300px; overflow-y: auto;">
+                                            @*<table id="@($"{statusName.Replace(" ", "")}tbl")" class="table table-striped table-bordered stylish-table">
+                                        *@
+                                            <table id="DynTable@(cnt)" class="table table-striped table-bordered stylish-table">
+
+                                                <!-- Table header -->
+                                                <thead>
+                                                    <tr>
+                                                        <th>Ser No</th>
+                                                        <th>Project Name</th>
+                                                        <th>Sponsor </th>
+                                                        <th>Sponsor Remarks</th>
+
+                                                        <th>Date Time Of Update</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var meet in ViewBag.StatusDataDictionary[statusName])
+                                                    {
+                                                        <tr>
+                                                            @{
+                                                                sno++;
+                                                            }
+                                                            <td>@sno</td>
+                                                            <td>@meet.ProjName</td>
+                                                            <td>@meet.StakeHolder</td>
+                                                            <td>@meet.InitialRemark</td>
+
+                                                            <td>@meet.DateTimeOfUpdate?.ToString("dd-MM-yyyy")</td>
+                                                        </tr>
+
+
+
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        cnt++;
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@*  end of popup datagrid *@
+
+<script>
+   
+</script>
+
+
+
+
+<script>
+ 
+</script>
+
+
+@*  End Tab popup *@
+
+
+@*<script>
+
+    var TeamDetailPostBackURL = '/Projects/AttDetails';
+    $(function () {
+        $(".anchorDetail").click(function () {
+
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: TeamDetailPostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                datatype: "json",
+                success: function (data) {
+
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+
+
+
+                },
+                error: function () {
+                    alert("Dynamic content load failed.");
+                }
+            });
+
+        });
+
+    });
+
+</script>*@
+
+
+
+
+   
+
+    <script>
+       var myChart1;
+
+        $(document).ready(function () {
+            // Fetching data for the first chart
+            $.ajax({
+                url: '/Home/indexToBarChartS',
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.error) {
+                        console.error('Error fetching data:', data.error);
+                        return;
+                    }
+
+                    var monthNames = [...new Set(data.map(item => item.MonthNameYr))];
+                    var unitNames = [...new Set(data.map(item => item.unitname))];
+
+                    var datasets = unitNames.map(unitName => {
+                        var totalInData = [];
+                        var totalOutData = [];
+
+                        monthNames.forEach(month => {
+                            var monthData = data.find(item => item.MonthNameYr === month && item.unitname === unitName);
+                            if (monthData) {
+                                totalInData.push(monthData.TotalIn);
+                                totalOutData.push(monthData.TotalOut);
+                            } else {
+                                totalInData.push(0);
+                                totalOutData.push(0);
+                            }
+                        });
+
+                        var totalInColor = getRandomColor();
+                        var totalOutColor = getRandomColor();
+
+                        return [{
+                            label: unitName + ' Proj In',
+                            data: totalInData,
+                            backgroundColor: totalInColor,
+                            stack: unitName,
+                        }, {
+                            label: unitName + ' Proj Out',
+                            data: totalOutData,
+                            backgroundColor: totalOutColor,
+                            stack: unitName,
+                        }];
+
+                    }).flat();
+
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: monthNames,
+                            datasets: datasets
+                        },
+                        options: {
+                            scales: {
+                                x: {
+                                    stacked: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Month Name'
+                                    }
+                                },
+                                y: {
+                                    stacked: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Total In/Total Out'
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                    // Set the title for the first chart
+                    $('#chartTitle').text('Bar Chart Title');
+                }
+            });
+
+            // Fetching data for the second chart
+            $.ajax({
+                url: '/Home/indexToPieChart',
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.error) {
+                        console.error('Error fetching data:', data.error);
+                        return;
+                    }
+
+                    updatePieChart(data);
+
+                    // Set the title for the second chart
+                    $('#chart1Title').text('Pie Chart Title');
+                },
+                error: function (error) {
+                    console.error('Error fetching data:', error);
+                }
+            });
+        });
+
+    function updatePieChart(data) {
+        var titles = data.map(item => item.Status);
+        var chartData = data.map(item => item.TotalProj);
+
+        var canvas = document.getElementById('myChart1');
+        if (!canvas) {
+            console.error("Canvas element 'myChart1' not found.");
+            return;
+        }
+        var backgroundColors = generateRandomColors(titles.length);
+
+        var ctx = canvas.getContext('2d');
+
+        var myChart1 = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: titles,
+                datasets: [{
+                    data: chartData,
+                    backgroundColor: backgroundColors,
+                    borderColor: backgroundColors, // Border color same as background color for consistency
+                    borderWidth: 1,
+                }],
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+            },
+        });
+    }
+
+    function getRandomColor() {
+        const minBrightness = 130;
+        let color;
+        do {
+            color = '#' + Math.floor(Math.random() * 16777215).toString(16);
+            const rgb = parseInt(color.slice(1), 16);
+            const r = (rgb >> 16) & 0xff;
+            const g = (rgb >> 8) & 0xff;
+            const b = (rgb >> 0) & 0xff;
+            const brightness = (r + g + b) / 3;
+            if (brightness < minBrightness) {
+                color = null;
+            }
+        } while (color === null);
+        return color;
+    }
+
+    function generateRandomColors(count) {
+        const colors = [];
+        for (let i = 0; i < count; i++) {
+            let color;
+            do {
+                color = getRandomColor();
+            } while (colors.includes(color));
+            colors.push(color);
+        }
+        return colors;
+    }
+</script>
+
+
+
+@*
+<script>
+
+    const containerTabs = document.getElementById("tabs");
+
+    const getInfoTabs = container => {
+        return [...container.querySelectorAll(".tabs__content__item")];
+    };
+
+    const getLinksTab = container => {
+        return [...container.querySelectorAll("a[data-tab]")];
+    };
+
+    const activateTab = (tabId) => {
+        const tabsInfo = getInfoTabs(containerTabs);
+
+        tabsInfo.forEach(tab => {
+            const isActive = tab.getAttribute("id") === tabId;
+            tab.classList.toggle("active-tab", isActive);
+        });
+    };
+
+    const activateLink = (link) => {
+        const linksTab = getLinksTab(containerTabs);
+        linksTab.forEach(tabLink => {
+            tabLink.classList.toggle("active-link", tabLink === link);
+        });
+    };
+
+    const handleTabClick = event => {
+        const clickedElement = event.target;
+        if (clickedElement.tagName === "A" && clickedElement.hasAttribute("data-tab")) {
+            event.preventDefault();
+            const tabId = clickedElement.getAttribute("data-tab");
+            activateTab(tabId);
+
+
+            activateLink(clickedElement);
+        }
+    };
+
+    containerTabs.onclick = handleTabClick;
+
+    // Simulate click event on the first tab to load its content on page load
+    const firstTabLink = getLinksTab(containerTabs)[0];
+    if (firstTabLink) {
+        firstTabLink.click();
+    }
+
+
+</script>*@
+
+@for (int i = 0; i < cnt; i++)
+{
+    <script>
+        $(document).ready(function () {
+
+            var tableName = "DynTable" + @i;
+
+            var table = $('#' + tableName).DataTable({
+                lengthChange: false,
+                buttons: []
+            });
+
+            table.buttons().container()
+                .appendTo('#' + tableName + '_wrapper .col-md-6:eq(0)');
+        });
+
+    </script>
+}
+
+<script src="~/DeveloperJs/Home.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+        var dn = $('#spnName').html();
+        var appl = 'PAW Appl';
+        var role = $('#spnRole').html();
+        var userip = '';
+        var dataToSend = {
+            domainName: dn,
+            appName: appl,
+            appRoleName: role,
+            flexible: userip
+        };
+
+        // Create a query string from the data object
+        var queryString = Object.keys(dataToSend).map(function (key) {
+            return key + '=' + dataToSend[key];
+        }).join('&');
+
+
+        // Make an AJAX request with the data in the URL
+        $.ajax({
+            url: 'https://iam2.army.mil/IAM/singleAppConfirmLoginResponse.htm?' + queryString,
+            type: 'GET',
+            dataType: 'html',
+            success: function (response) {
+                // Display the response in the 'result' div
+    @*  $('#result').html(response); *@
+                        },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+</script>
+
+@*
+  document.getElementById('modalContent').innerText = id + status;
+        $('#myModal').modal('show');
+        *@
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

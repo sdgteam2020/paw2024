@@ -1,0 +1,116 @@
+﻿@using swas.BAL.DTO
+@using swas.DAL.Models
+@model List<Actiondto>
+
+@{
+    ViewBag.Title = "Actions List";
+}
+
+<style>
+         .underline-h5 {
+            padding: 0.5rem;
+            width: 100%;
+            margin: -16px auto; /* Center the box */
+            text-align: center;
+            border-color: #03c1fc;
+            /*box-shadow: 2px 6px 5px -3px #062b50;*/
+            background-color: #0cafff;
+            color: white;
+            font-family: Arial;
+            font-size: 15px;
+            margin-bottom: 0.5rem;
+            height: -1px;
+        }
+    </style>
+<button type="button" id="AddButon" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#UnitAdd" style="margin-left: 91%;">
+    Add New Action
+</button>
+@*<button id="addNewButton" class="btn btn-primary"><a href="/Actions/Create">Add New</a></button>*@
+
+<div class="card radius-10 w-100">
+    <div class="card-body">
+
+        <table id="SoftwareType" class="table table-striped table-bordered">
+            <!-- Table header -->
+            <thead>
+                <tr>
+                    <th>Ser No</th>
+                    <th>Action Name</th>
+                    <th>Status</th>
+                    <th>Stages</th>
+                    <th>Days Limit</th>
+                    <th>Edit/Delete Date</th>
+                   @* <th>Action Seq</th>
+                    <th>Edit/Delete</th>*@
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var models in Model)
+                {
+                    <tr>
+                        <td>@(Model.IndexOf(models) + 1)</td>
+                        <td>@models.Actions</td>
+
+                        <td>@models.Status</td>
+                        <td>@models.Stages</td>
+                        <td>@models.TimeLimit</td>
+                        <td>@models.EditDeleteDate?.ToString("dd-MM-yyyy")</td>
+                       @* <td>@models.ActionSeq</td>
+                        <td>
+                            
+                            <a asp-action="Edit" asp-route-id="@models.ActionsId" class="btn btn-secondary btn-ecomm"><i class='bx bx-edit'></i></a>
+                      
+
+                            <a onclick="functionConfirm1('@models.ActionsId')" class="btn btn-secondary btn-ecomm"><i class="bx bx-trash"></i></a>
+                      
+                        </td>*@
+                    </tr>
+
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="~/js/sweetalert2.all.min.js"></script>
+
+
+    <div class="modal fade" id="UnitAdd" tabindex="-1" aria-labelledby="ProjectAddLabel" aria-hidden="true">
+        <div class="modal-dialog" style="max-width: 800px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                   @* <h5 class="modal-title" id="UnitAddLabel">Add Action</h5>*@
+                     <h5 class="text-center mb-4 underline-h5" style="text-align: center; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); position: relative;height: 33px;">
+                <span>
+                     New Action Page
+                </span>
+                   </h5>
+                </div>
+                <div class="modal-body">
+
+                    @Html.Partial("_Create", new tbl_mActions())
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+<script src="~/DeveloperJs/Actions.js"></script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
