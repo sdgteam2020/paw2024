@@ -228,16 +228,19 @@ AppPackages/
 #####
 # End of core ignore list, below put you custom 'per project' settings (patterns or path)
 #####
-/swas.BAL/bin/
-/swas.BAL/obj/
-/swas.DAL/bin/
-/swas.DAL/obj/
-/swas.UI/bin/
-/swas.UI/obj/
-/swasapi/bin/
-/swasapi/obj/
-/swasUnitTest/bin/
-/swasUnitTest/obj/
+
+/.vs/swas/
+/.vs/swas/v17/*.dll
+/swas.BAL/bin/*.dll
+/swas.BAL/obj/*.dll
+/swas.DAL/bin/*.dll
+/swas.DAL/obj/*.dll
+/swas.UI/bin/*.dll
+/swas.UI/obj/*.dll
+/swasapi/bin/*.dll
+/swasapi/obj/*.dll
+/swasUnitTest/bin/*.dll
+/swasUnitTest/obj/*.dll
 
 
 /swas.BAL/bin/Debug/net6.0/*.dll
