@@ -229,7 +229,7 @@ AppPackages/
 # End of core ignore list, below put you custom 'per project' settings (patterns or path)
 #####
 
-/.vs/swas/
+/.vs/swas/*
 /.vs/swas/v17/*.dll
 /swas.BAL/bin/*.dll
 /swas.BAL/obj/*.dll
