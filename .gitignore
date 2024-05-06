@@ -240,6 +240,12 @@ AppPackages/
 /swasUnitTest/obj/
 
 
+/swas.BAL/bin/Debug/net6.0/*.dll
+/swas.DAL/bin/Debug/net6.0/*.dll
+/swas.UI/bin/Debug/net6.0/*.dll
+/swasapi/bin/Debug/net6.0/*.dll
+/swasUnitTest/bin/Debug/net6.0/*.dll
+
 
 /Web/wwwroot/WriteReadData/Photo/2024/April/02/15690012A.jpg
 

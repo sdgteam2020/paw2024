@@ -99,7 +99,7 @@ namespace swas.UI.Controllers
 
         ///Developer Name :- Sub Maj M Sanal Kumar
         ///Revised on :- 01/10/2023
-        ///    chart generation corrected dfdsfdsfsf bf dfg  fdgg fgdgf gfg
+        ///    chart generation corrected df
         ///    
        
         [HttpGet]
