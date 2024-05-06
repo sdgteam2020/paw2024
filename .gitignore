@@ -229,32 +229,28 @@ AppPackages/
 # End of core ignore list, below put you custom 'per project' settings (patterns or path)
 #####
 
-/.vs/swas/
-/.vs/swas/v17/*.suo
-/.vs/swas/v17/*.dll
-/swas.BAL/bin/*.dll
-/swas.BAL/obj/*.dll
-/swas.DAL/bin/*.dll
-/swas.DAL/obj/*.dll
-/swas.UI/bin/*.dll
-/swas.UI/obj/*.dll
-/swasapi/bin/*.dll
-/swasapi/obj/*.dll
-/swasUnitTest/bin/*.dll
-/swasUnitTest/obj/*.dll
 
-
-/swas.BAL/bin/Debug/net6.0/*.dll
-/swas.DAL/bin/Debug/net6.0/*.dll
-/swas.UI/bin/Debug/net6.0/*.dll
-/swasapi/bin/Debug/net6.0/*.dll
-/swasUnitTest/bin/Debug/net6.0/*.dll
-
-
-/Web/wwwroot/WriteReadData/Photo/2024/April/02/15690012A.jpg
 
 /swas.UI/bin/Debug/net6.0/swas.UI.pdb
 /swas.UI/bin/Debug/net6.0/swas.UI.dll
 /swas.UI/obj/Debug/net6.0/swas.UI.dll
 /swas.UI/obj/Debug/net6.0/swas.UI.pdb
 /.vs/swas/v17/.suo
+/swas.BAL/bin/Debug/net6.0/swas.BAL.dll
+/swas.BAL/bin/Debug/net6.0/swas.BAL.pdb
+/swas.BAL/obj/Debug/net6.0/ref/swas.BAL.dll
+/swas.BAL/obj/Debug/net6.0/refint/swas.BAL.dll
+/swas.BAL/obj/Debug/net6.0/swas.BAL.dll
+/swas.BAL/obj/Debug/net6.0/swas.BAL.pdb
+/swas.BAL/obj/Debug/net6.0/swas.BAL.csproj.CoreCompileInputs.cache
+/swas.UI/bin/Debug/net6.0/swas.BAL.dll
+/swas.UI/bin/Debug/net6.0/swas.UI.staticwebassets.runtime.json
+/swas.UI/bin/Debug/net6.0/swas.BAL.pdb
+/swas.UI/obj/Debug/net6.0/ref/swas.UI.dll
+/swas.UI/obj/Debug/net6.0/refint/swas.UI.dll
+/swas.UI/obj/Debug/net6.0/staticwebassets/msbuild.swas.UI.Microsoft.AspNetCore.StaticWebAssets.props
+/swas.UI/obj/Debug/net6.0/project.razor.vs.json
+/swas.UI/obj/Debug/net6.0/staticwebassets.build.json
+/swas.UI/obj/Debug/net6.0/staticwebassets.development.json
+/swas.UI/obj/Debug/net6.0/staticwebassets.pack.json
+/swas.UI/obj/Debug/net6.0/swas.UI.csproj.AssemblyReference.cache
