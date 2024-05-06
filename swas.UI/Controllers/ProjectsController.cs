@@ -21,6 +21,10 @@ using iText.Layout.Properties;
 using System.Timers;
 
 using System.Web;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
+using Org.BouncyCastle.Utilities;
+using Microsoft.CodeAnalysis;
+using Microsoft.Build.Evaluation;
 
 namespace swas.UI.Controllers
 {
@@ -460,10 +464,12 @@ namespace swas.UI.Controllers
         }
 
 
-        //Created and Reviewed by : Sub Maj M Sanal Kumar
+        ///Created and Reviewed by : Sub Maj M Sanal Kumar
         // Reviewed Date : 18 Nov 23  -- flow merge
         // GET: Projects/Create
 
+
+        //[Authorize(Policy = "StakeHolders")]
         [HttpGet]
         public async Task<IActionResult> ProjHistoryProcess(string? EncyID)
         {
@@ -835,7 +841,7 @@ namespace swas.UI.Controllers
                             project.EditDeleteDate = DateTime.Now;
                             project.EditDeleteBy = Logins.unitid;
                             project.IsDeleted = false;
-                            project.UpdatedByUserId = Logins.unitid;
+                            project.UpdatedByUserId = Logins.unitid ;
                             project.Comments = project.InitialRemark;
 
                             await _projectsRepository.UpdateProjectAsync(project);
@@ -1010,7 +1016,7 @@ namespace swas.UI.Controllers
         // Reviewed Date : 31 Jul 23
         // GET: Projects/Delete/5
         //[Authorize(Policy = "StakeHolders")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteAttech(int AttechId)
         {
             try
             {
@@ -1018,12 +1024,13 @@ namespace swas.UI.Controllers
 
                 if (Logins != null)
                 {
-                    var project = await _projectsRepository.GetProjectByIdAsync(id);
-                    if (project == null)
+                    var ret =await _attHistoryRepository.DeleteAttHistoryAsync(AttechId);
+                   
+                    if (ret == null)
                     {
-                        return NotFound();
+                        return Json(0);
                     }
-                    return View(project);
+                   else return Json(1);
                 }
                 else
                 {
@@ -1813,30 +1820,6 @@ namespace swas.UI.Controllers
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
        // [Authorize(Policy = "StakeHolders")]
         [HttpPost]
 
@@ -2060,55 +2043,77 @@ namespace swas.UI.Controllers
 
 
 
+        public async Task<IActionResult> GetAllMasterTableforddl(int id, int ParentId)
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            List<DTODDLComman> lst = new List<DTODDLComman>();
+            if (id==1)
+            {
+                var ret= await _dlRepository.ddlLimitUnit(Logins.unitid, 0);
 
+                foreach (var cmd in ret)
+                {
+                   
+                    DTODDLComman db = new DTODDLComman();
+                    db.Name = cmd.UnitName;
+                    db.Id = cmd.unitid;
+                    lst.Add(db);
+                }
+                return Json(lst);
+            }
+           else if (id == 2)
+            {
+                var ret = await _dlRepository.ddlmHostType(0);
+                foreach (var cmd in ret)
+                {
 
+                    DTODDLComman db = new DTODDLComman();
+                    db.Name = cmd.HostingDesc;
+                    db.Id = cmd.HostTypeID;
+                    lst.Add(db);
+                }
+                return Json(lst);
+              
 
+            }
+          else  if (id == 3)
+            {
+                var ret = await _dlRepository.DdlAppType();
 
+                foreach (var cmd in ret)
+                {
 
+                    DTODDLComman db = new DTODDLComman();
+                    db.Name = cmd.AppDesc;
+                    db.Id = cmd.Apptype;
+                    lst.Add(db);
+                }
+                return Json(lst);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            }
+            return Json(null);
+        }
 
         ///Created and Reviewed by : Sub Maj M Sanal Kumar
         // Reviewed Date : 31 Jul 23
         // GET: Projects/Create
         [HttpGet]
         //[Authorize(Policy = "StakeHolders")]
-        public async Task<IActionResult> Create(CommonDTO cmndto)
+        public async Task<IActionResult> Create(string id)
         {
             try
             {
+                int ids = 0;
+                if (id != null)
+                {
+                    string decryptedValue = _dataProtector.Unprotect(id);
+                    ids = int.Parse(decryptedValue);
+                    tbl_Projects tbl_Projects = new tbl_Projects();
+                    tbl_Projects = await _projectsRepository.GetProjectByPsmIdAsync(ids);
+                    ViewBag.Projects = await _projectsRepository.GetMyProjectsAsync();
+                    return View(tbl_Projects);
+
+                }
                 TempData["SubCde"] = false;
                 TempData.Keep("SubCde");
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
@@ -2118,99 +2123,9 @@ namespace swas.UI.Controllers
                     var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
                     var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
                     var watermarkText = $" {ipAddress}\n  {currentDatetime}";
-                    TempData["ipadd"] = watermarkText;
 
-                    ViewBag.SubmitCde = false;
-
-                    TempData.Remove("TfrToNext");
-                    if (ViewBag.SubmitCde = false)
-                        TempData["projpsmid"] = null;
-
-
-                    ViewBag.corpsId = 0;
-                    List<mCommand> cl = new List<mCommand>();
-                    cl = await _dlRepository.ddlCommand();
-                    cl.Insert(0, new mCommand { comdid = 0, Command_Name = "--Select--" });
-                    ViewBag.cl = cl.ToList();
-                    List<Types> ty = new List<Types>();
-                    ty = await _dlRepository.ddlType();
-                    ty.Insert(0, new Types { Id = 0, Name = "--Select--" });
-                    ViewBag.ty = ty.ToList();
-
-
-                    List<mAppType> tapp = await _dlRepository.DdlAppType();
-                    List<SelectListItem> selectList = new List<SelectListItem>
-                {
-                new SelectListItem { Value = "0", Text = "--Select--" }
-                    };
-                    selectList.AddRange(tapp.Select(item => new SelectListItem { Value = item.Apptype.ToString(), Text = item.AppDesc }));
-                    ViewBag.apptype = new SelectList(selectList, "Value", "Text");
-
-
-                    List<UnitDtl> stkholder = await _dlRepository.ddlLimitUnit(Logins.unitid, 0);
-                    List<SelectListItem> selectLists = new List<SelectListItem>
-                {
-                new SelectListItem { Value = "0", Text = "--Select--" }
-                };
-                    selectLists.AddRange(stkholder.Select(item => new SelectListItem { Value = item.unitid.ToString(), Text = item.UnitName }));
-                    ViewBag.stkhold = new SelectList(selectLists, "Value", "Text");
-
-                    List<mHostType> mHostTypes = await _dlRepository.ddlmHostType(0);
-                    List<SelectListItem> mHostTyp = new List<SelectListItem>
-                {
-                new SelectListItem { Value = "0", Text = "--Select--" }
-                };
-                    mHostTyp.AddRange(mHostTypes.Select(item => new SelectListItem { Value = item.HostTypeID.ToString(), Text = item.HostingDesc }));
-
-                    ViewBag.Hostedon = new SelectList(mHostTyp, "Value", "Text");
-
-                    ViewBag.ProjEdit = string.Empty;
-
-                    if (TempData["projpsmid"] == null)
-                        TempData["projpsmid"] = 0;
-
-                    if (TempData["TfrToNext"] == null)
-                        TempData["TfrToNext"] = 0;
-
-                    if (TempData["ProjID"] == null)
-                        TempData["ProjID"] = 0;
-                    if (TempData["projpsmided"] == null)
-                        TempData["projpsmided"] = 0;
-
-                    int TfrToNext = (int)TempData["Tabshift"];
-                    if ((int)TempData["projpsmided"] > 0)
-                    {
-                        TempData["projpsmided"] = TempData["projpsmided"];
-                        cmndto.Atthistory = _projectsRepository.GetAttachmentsByPsmId((int)TempData["projpsmided"]);
-                        TempData["Tabshift"] = 12;
-
-                    }
-                    else if (cmndto.ProjEdit != null)
-                    {
-                        cmndto.Atthistory = await _attHistoryRepository.GetAttHistoryByIdAsync(cmndto.ProjEdit.CurrentPslmId);
-
-                    }
-
-                    cmndto.Projects = await _projectsRepository.GetMyProjectsAsync();
-                    //await _projectsRepository.GetActProjectsAsync();
-
-                    if (cmndto.Projects.Count < 1)
-                    {
-                        TempData["Tabshift"] = 0;
-                        ViewBag.SubmitCde = false;
-                        TempData["projpsmid"] = 0;
-                        TempData["projpsmided"] = 0;
-
-
-                    }
-                    if (cmndto.ProjMov != null)
-                    {
-                        if (cmndto.ProjMov.PsmId == null)
-                        {
-                            cmndto.ProjMov.PsmId = 0;
-                        }
-                    }
-                    return View(cmndto);
+                    ViewBag.Projects = await _projectsRepository.GetMyProjectsAsync();
+                    return View(null);
                 }
                 else
                 {
@@ -2226,7 +2141,114 @@ namespace swas.UI.Controllers
 
         }
 
+        [HttpPost]
+        //[Authorize(Policy = "StakeHolders")]
+        public async Task<IActionResult> UploadMultiFile(IFormFile uploadfile,string Reamarks,int ProjectId)
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
+            if (uploadfile != null && uploadfile.Length > 0)
+            {
+                string uniqueFileName = $"{"Swas"}_{Guid.NewGuid()}{System.IO.Path.GetExtension(uploadfile.FileName)}";
+
+                string filePath = System.IO.Path.Combine(_environment.ContentRootPath, "wwwroot/Uploads/", uniqueFileName);
+
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    uploadfile.CopyTo(stream);
+                }
+
+               var  project = await _projectsRepository.GetProjectByIdAsync(ProjectId);
+                if(project!=null && project.CurrentPslmId !=null)
+                {
+                    tbl_AttHistory atthis = new tbl_AttHistory();
+                    atthis.ActionId = 0;
+                    atthis.AttPath = uniqueFileName;
+
+                    atthis.Reamarks = Reamarks;
+                    atthis.PsmId = Convert.ToInt32(project.CurrentPslmId);
+                    atthis.UpdatedByUserId = Logins.unitid;
+                    atthis.DateTimeOfUpdate = DateTime.Now;
+                    atthis.IsDeleted = false;
+                    atthis.IsActive = true;
+                    atthis.EditDeleteBy = Logins.unitid;
+                    atthis.EditDeleteDate = DateTime.Now;
+                    atthis.TimeStamp = DateTime.Now;
+                    atthis.ActFileName = uploadfile.FileName;
+
+                    await _attHistoryRepository.AddAttHistoryAsync(atthis);
+                }
+                else
+                {
+                    return Json(-1);
+                }
+            }
+            return Json(1);
+
+        }
+        public async Task<IActionResult> AddProject(tbl_Projects Data)
+        {
+
+            try
+            {
+                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+                int projid = 0;
+                Data.DateTimeOfUpdate = DateTime.Now;
+                Data.StakeHolderId = Logins.unitid ?? 0;
+                Data.IsActive = true;
+                Data.EditDeleteDate = DateTime.Now;
+                Data.EditDeleteBy = Logins.unitid;
+                Data.IsDeleted = false;
+               
+                Data.UpdatedByUserId = Logins.unitid;
+                Data.Comments = Data.InitialRemark;
+                if (Data.ProjId == 0)
+                {
+                    Data.CurrentPslmId = 0;
+                    projid = await _projectsRepository.AddProjectAsync(Data);
+                }
+                else
+                {
+                    
+                    Data.EditDeleteDate= DateTime.Now;
+                   
+
+
+                    await _projectsRepository.UpdateProjectAsync(Data);
+                    projid=Data.ProjId;
+                }
+
+                return Json(projid);
+            }
+            catch (Exception ex)
+            {
+                return Json(5);
+            }
+        }
+
+        public async Task<IActionResult> GetAtthHistoryByProjectId(int ProjectId)
+        {
+            try
+            {
+                var project = await _projectsRepository.GetProjectByIdAsync(ProjectId);
+                if (project != null && project.CurrentPslmId != null)
+                    return Json(await _attHistoryRepository.GetAttHistoryByIdAsync(project.CurrentPslmId));
+                else
+                    return Json(0);
+            }
+            catch(Exception ex) {
+                return Json(-1);
+            }
+        }
+        public async Task<IActionResult> DeleteProjects(int ProjectId)
+        {
+            var ret= await _projectsRepository.DeleteProjectAsync(ProjectId);
+            if(ret==true)
+            return Json(1);
+            else
+            return Json(0);
+        }
 
         ///Created and Reviewed by : Sub Maj M Sanal Kumar
         // Reviewed Date : 31 Jul 23
@@ -2551,7 +2573,7 @@ namespace swas.UI.Controllers
                             atthis.DateTimeOfUpdate = DateTime.Now;
                             atthis.IsDeleted = false;
                             atthis.IsActive = true;
-                            atthis.EditDeleteBy = Logins.unitid;
+                            atthis.EditDeleteBy =       Logins.unitid;
                             atthis.EditDeleteDate = DateTime.Now;
                             atthis.TimeStamp = DateTime.Now;
                             atthis.ActFileName = uploadfile.FileName;
@@ -2613,7 +2635,8 @@ namespace swas.UI.Controllers
                 try
                 {
                     tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
-                    psmove = await _projectsRepository.GettXNByPsmIdAsync(projid);
+                    var project = await _projectsRepository.GetProjectByIdAsync(projid);
+                    psmove = await _projectsRepository.GettXNByPsmIdAsync(project.CurrentPslmId);
                     psmove.ActionCde = 1;
                     psmove.DateTimeOfUpdate = DateTime.Now;
                     psmove.TimeStamp = DateTime.Now;
@@ -2944,7 +2967,7 @@ namespace swas.UI.Controllers
                                 atthis.DateTimeOfUpdate = DateTime.Now;
                                 atthis.IsDeleted = false;
                                 atthis.IsActive = true;
-                                atthis.EditDeleteBy = Logins.unitid;
+                                atthis.EditDeleteBy =   Logins.unitid   ;
                                 atthis.EditDeleteDate = DateTime.Now;
                                 atthis.ActionId = 0;
                                 atthis.TimeStamp = DateTime.Now;
@@ -3516,7 +3539,7 @@ namespace swas.UI.Controllers
                 string Dfilename = rnd.Next(1, 1000).ToString();
                 var filePath1 = System.IO.Path.Combine(_environment.ContentRootPath, "wwwroot\\DownloadFile\\" + Dfilename + ".pdf");
                 PdfDocument pdfDoc = new PdfDocument(new PdfReader(Path), new PdfWriter(filePath1));
-                Document doc = new Document(pdfDoc);
+                iText.Layout.Document doc = new iText.Layout.Document(pdfDoc);
                 PdfFont font = PdfFontFactory.CreateFont(FontProgramFactory.CreateFont(StandardFonts.HELVETICA));
                 Paragraph paragraph = new Paragraph(ip + " " + DateTime.Now).SetFont(font).SetFontSize(30);
 

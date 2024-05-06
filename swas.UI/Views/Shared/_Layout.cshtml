@@ -27,14 +27,14 @@
 <!-- loader-->
 <script>
 
-    //if (performance.navigation.type === 1) {
+    // if (performance.navigation.type === 1) {
 
-    //    localStorage.setItem('pageRefreshed', 'true');
-    //}
+    //     localStorage.setItem('pageRefreshed', 'true');
+    // }
 
-    //function preventBack() { window.history.forward(); }
-    //setTimeout("preventBack()", 0);
-    //window.onunload = function () { null };
+    // function preventBack() { window.history.forward(); }
+    // setTimeout("preventBack()", 0);
+    // window.onunload = function () { null };
 
 
 </script>
@@ -122,7 +122,7 @@
     <link href="~/css/select2.min.css" rel="stylesheet" />
 
     <link href="~/assets/css/icons.css" rel="stylesheet">
-    <link href= "~/assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/assets/css/font-awesome.min.css" rel="stylesheet">
     <!--data Table-->
     <link rel="stylesheet" href="~/assets/dataTable/css/bootstrap.css">
     <link rel="stylesheet" href="~/assets/dataTable/css/dataTables.bootstrap4.min.css">
@@ -136,6 +136,11 @@
     <link href="~/assets/dataTable/css/responsive.bootstrap4.min.css" rel="stylesheet" />
     <link href="~/assets/dataTable/css/datatables.bootstrap4.min.css" rel="stylesheet" />
     <link href="~/assets/dataTable/css/datatables.datetime.min.css" rel="stylesheet" />
+    <link href="~/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/font-awesome/css/fontawesome.min.css" rel="stylesheet" />
+    <link href="~/css/main.css" rel="stylesheet" />
+
+
 
     <script language="JavaScript" type="text/javascript" src="~/assets/js/jquery.min.js"></script>
 
@@ -170,7 +175,8 @@
     <script src="~/assets/dataTable/js/fnmultifilter.js"></script>
     <link href="~/css/sweetalert2.min.css" rel="stylesheet">
     <script src="~/assets/datatable/js/select2.min.js"></script>
-
+    <script src="~/font-awesome/js/all.min.js"></script>
+    <script src="~/font-awesome/js/fontawesome.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="~/js/sweetalert2.all.min.js"></script>
 
 
@@ -178,8 +184,8 @@
 
     <script>
         function ValInData(input) {
-            
-            var regex = /[^a-zA-Z/_& ]/g;
+
+            var regex = /[^a-zA-Z0-9/_& ]/g;
             input.value = input.value.replace(regex, "");
         }
     </script>
@@ -243,30 +249,30 @@
                 popupWin.document.open();
 
                 var tableStyles = `
-                                <style type="text/css">
-                                    table {
-                                              width: 100%;
-                                              border-collapse: collapse;
-                                              margin-bottom: 20px;
-                                          }
+                                        <style type="text/css">
+                                            table {
+                                                      width: 100%;
+                                                      border-collapse: collapse;
+                                                      margin-bottom: 20px;
+                                                  }
 
-                                          .table > thead {
-                                              vertical-align: bottom;
-                                              background-color: red;
-                                          }
+                                                  .table > thead {
+                                                      vertical-align: bottom;
+                                                      background-color: red;
+                                                  }
 
-                                          th, td {
-                                              padding: 8px;
-                                              border: 1px solid #ddd;
-                                              text-align: center;
-                                          }
+                                                  th, td {
+                                                      padding: 8px;
+                                                      border: 1px solid #ddd;
+                                                      text-align: center;
+                                                  }
 
-                                          th {
-                                              background-color: #f2f2f2;
-                                              color: black;
-                                          }
-                                      </style>
-                                          `;
+                                                  th {
+                                                      background-color: #f2f2f2;
+                                                      color: black;
+                                                  }
+                                              </style>
+                                                  `;
 
                 var table = $('#Software').DataTable();
 
@@ -362,30 +368,30 @@
                 popupWin.document.open();
 
                 var tableStyles = `
-                                       <style type="text/css">
-                                            table {
-                                                width: 100%;
-                                                border-collapse: collapse;
-                                                margin-bottom: 20px;
-                                            }
+                                               <style type="text/css">
+                                                    table {
+                                                        width: 100%;
+                                                        border-collapse: collapse;
+                                                        margin-bottom: 20px;
+                                                    }
 
-                                            .table > thead {
-                                                vertical-align: bottom;
-                                                background-color: red;
-                                            }
+                                                    .table > thead {
+                                                        vertical-align: bottom;
+                                                        background-color: red;
+                                                    }
 
-                                            th, td {
-                                                padding: 8px;
-                                                border: 1px solid #ddd;
-                                                text-align: center;
-                                            }
+                                                    th, td {
+                                                        padding: 8px;
+                                                        border: 1px solid #ddd;
+                                                        text-align: center;
+                                                    }
 
-                                            th {
-                                                background-color: #f2f2f2;
-                                                color: black;
-                                            }
-                                        </style>
-                                    `;
+                                                    th {
+                                                        background-color: #f2f2f2;
+                                                        color: black;
+                                                    }
+                                                </style>
+                                            `;
 
                 var table = $('#SoftwareType1').DataTable();
 
@@ -481,30 +487,30 @@
                 popupWin.document.open();
 
                 var tableStyles = `
-                                 <style type="text/css">
-                                     table {
-                                         width: 100%;
-                                         border-collapse: collapse;
-                                         margin-bottom: 20px;
-                                     }
+                                         <style type="text/css">
+                                             table {
+                                                 width: 100%;
+                                                 border-collapse: collapse;
+                                                 margin-bottom: 20px;
+                                             }
 
-                                     .table > thead {
-                                         vertical-align: bottom;
-                                         background-color: red;
-                                     }
+                                             .table > thead {
+                                                 vertical-align: bottom;
+                                                 background-color: red;
+                                             }
 
-                                     th, td {
-                                         padding: 8px;
-                                         border: 1px solid #ddd;
-                                         text-align: center;
-                                     }
+                                             th, td {
+                                                 padding: 8px;
+                                                 border: 1px solid #ddd;
+                                                 text-align: center;
+                                             }
 
-                                     th {
-                                         background-color: #f2f2f2;
-                                         color: black;
-                                     }
-                                 </style>
-                             `;
+                                             th {
+                                                 background-color: #f2f2f2;
+                                                 color: black;
+                                             }
+                                         </style>
+                                     `;
 
                 var table = $('#SoftwareType').DataTable();
 
@@ -600,30 +606,30 @@
                 popupWin.document.open();
 
                 var tableStyles = `
-                                         <style type="text/css">
-                                             table {
-                                                 width: 100%;
-                                                 border-collapse: collapse;
-                                                 margin-bottom: 20px;
-                                             }
+                                                 <style type="text/css">
+                                                     table {
+                                                         width: 100%;
+                                                         border-collapse: collapse;
+                                                         margin-bottom: 20px;
+                                                     }
 
-                                             .table > thead {
-                                                 vertical-align: bottom;
-                                                 background-color: red;
-                                             }
+                                                     .table > thead {
+                                                         vertical-align: bottom;
+                                                         background-color: red;
+                                                     }
 
-                                             th, td {
-                                                 padding: 8px;
-                                                 border: 1px solid #ddd;
-                                                 text-align: center;
-                                             }
+                                                     th, td {
+                                                         padding: 8px;
+                                                         border: 1px solid #ddd;
+                                                         text-align: center;
+                                                     }
 
-                                             th {
-                                                 background-color: #f2f2f2;
-                                                 color: black;
-                                             }
-                                         </style>
-                                     `; 
+                                                     th {
+                                                         background-color: #f2f2f2;
+                                                         color: black;
+                                                     }
+                                                 </style>
+                                             `;
 
                 var table = $('#Inbox1').DataTable();
 
@@ -719,30 +725,30 @@
                 popupWin.document.open();
 
                 var tableStyles = `
-                            <style type="text/css">
-                                table {
-                                    width: 100%;
-                                    border-collapse: collapse;
-                                    margin-bottom: 20px;
-                                }
+                                    <style type="text/css">
+                                        table {
+                                            width: 100%;
+                                            border-collapse: collapse;
+                                            margin-bottom: 20px;
+                                        }
 
-                                .table > thead {
-                                    vertical-align: bottom;
-                                    background-color: red;
-                                }
+                                        .table > thead {
+                                            vertical-align: bottom;
+                                            background-color: red;
+                                        }
 
-                                th, td {
-                                    padding: 8px;
-                                    border: 1px solid #ddd;
-                                    text-align: center;
-                                }
+                                        th, td {
+                                            padding: 8px;
+                                            border: 1px solid #ddd;
+                                            text-align: center;
+                                        }
 
-                                th {
-                                    background-color: #f2f2f2;
-                                    color: black;
-                                }
-                            </style>
-                        `;
+                                        th {
+                                            background-color: #f2f2f2;
+                                            color: black;
+                                        }
+                                    </style>
+                                `;
 
                 var table = $('#SoftwareType3').DataTable();
 
@@ -838,30 +844,30 @@
                 popupWin.document.open();
 
                 var tableStyles = `
-                                       <style type="text/css">
-                                           table {
-                                               width: 100%;
-                                               border-collapse: collapse;
-                                               margin-bottom: 20px;
-                                           }
+                                               <style type="text/css">
+                                                   table {
+                                                       width: 100%;
+                                                       border-collapse: collapse;
+                                                       margin-bottom: 20px;
+                                                   }
 
-                                           .table > thead {
-                                               vertical-align: bottom;
-                                               background-color: red;
-                                           }
+                                                   .table > thead {
+                                                       vertical-align: bottom;
+                                                       background-color: red;
+                                                   }
 
-                                           th, td {
-                                               padding: 8px;
-                                               border: 1px solid #ddd;
-                                               text-align: center;
-                                           }
+                                                   th, td {
+                                                       padding: 8px;
+                                                       border: 1px solid #ddd;
+                                                       text-align: center;
+                                                   }
 
-                                           th {
-                                          background-color: #f2f2f2;
-                                                      color: black;
-                                                  }
-                                              </style>
-                                          `;
+                                                   th {
+                                                  background-color: #f2f2f2;
+                                                              color: black;
+                                                          }
+                                                      </style>
+                                                  `;
 
                 var table = $('#Inbox').DataTable();
 
@@ -961,30 +967,30 @@
                 popupWin.document.open();
 
                 var tableStyles = `
-                             <style type="text/css">
-                                  table {
-                                      width: 100%;
-                                      border-collapse: collapse;
-                                      margin-bottom: 20px;
-                                  }
+                                     <style type="text/css">
+                                          table {
+                                              width: 100%;
+                                              border-collapse: collapse;
+                                              margin-bottom: 20px;
+                                          }
 
-                                 .table > thead {
-                                     vertical-align: bottom;
-                                     background-color: red;
-                                 }
+                                         .table > thead {
+                                             vertical-align: bottom;
+                                             background-color: red;
+                                         }
 
-                                 th, td {
-                                     padding: 8px;
-                                     border: 1px solid #ddd;
-                                     text-align: center;
-                                 }
+                                         th, td {
+                                             padding: 8px;
+                                             border: 1px solid #ddd;
+                                             text-align: center;
+                                         }
 
-                                 th {
-                                     background-color: #f2f2f2;
-                                     color: black;
-                                 }
-                             </style>
-                               `;
+                                         th {
+                                             background-color: #f2f2f2;
+                                             color: black;
+                                         }
+                                     </style>
+                                       `;
 
                 var table = $('#Sents').DataTable();
 
@@ -1080,30 +1086,30 @@
                 popupWin.document.open();
 
                 var tableStyles = `
-                                           <style type="text/css">
-                               table {
-                                   width: 100%;
-                                   border-collapse: collapse;
-                                   margin-bottom: 20px;
-                               }
+                                                   <style type="text/css">
+                                       table {
+                                           width: 100%;
+                                           border-collapse: collapse;
+                                           margin-bottom: 20px;
+                                       }
 
-                               .table > thead {
-                                   vertical-align: bottom;
-                                   background-color: red;
-                               }
+                                       .table > thead {
+                                           vertical-align: bottom;
+                                           background-color: red;
+                                       }
 
-                               th, td {
-                                   padding: 8px;
-                                   border: 1px solid #ddd;
-                                   text-align: center;
-                               }
+                                       th, td {
+                                           padding: 8px;
+                                           border: 1px solid #ddd;
+                                           text-align: center;
+                                       }
 
-                               th {
-                                   background-color: #f2f2f2;
-                                   color: black;
-                               }
-                           </style>
-                            `;
+                                       th {
+                                           background-color: #f2f2f2;
+                                           color: black;
+                                       }
+                                   </style>
+                                    `;
 
                 var table = $('#Completed').DataTable();
 
@@ -1199,30 +1205,30 @@
                 popupWin.document.open();
 
                 var tableStyles = `
-                               <style type="text/css">
-                                   table {
-                                       width: 100%;
-                                       border-collapse: collapse;
-                                       margin-bottom: 20px;
-                                   }
+                                       <style type="text/css">
+                                           table {
+                                               width: 100%;
+                                               border-collapse: collapse;
+                                               margin-bottom: 20px;
+                                           }
 
-                                   .table > thead {
-                                       vertical-align: bottom;
-                                       background-color: red;
-                                   }
+                                           .table > thead {
+                                               vertical-align: bottom;
+                                               background-color: red;
+                                           }
 
-                                   th, td {
-                                       padding: 8px;
-                                       border: 1px solid #ddd;
-                                       text-align: center;
-                                   }
+                                           th, td {
+                                               padding: 8px;
+                                               border: 1px solid #ddd;
+                                               text-align: center;
+                                           }
 
-                                   th {
-                                       background-color: #f2f2f2;
-                                       color: black;
-                                   }
-                               </style>
-                           `;
+                                           th {
+                                               background-color: #f2f2f2;
+                                               color: black;
+                                           }
+                                       </style>
+                                   `;
 
                 var table = $('#IndexTable').DataTable();
 
@@ -1319,30 +1325,30 @@
                 popupWin.document.open();
 
                 var tableStyles = `
-                                  <style type="text/css">
-                                      table {
-                                          width: 100%;
-                                          border-collapse: collapse;
-                                          margin-bottom: 20px;
-                                      }
+                                          <style type="text/css">
+                                              table {
+                                                  width: 100%;
+                                                  border-collapse: collapse;
+                                                  margin-bottom: 20px;
+                                              }
 
-                                      .table > thead {
-                                          vertical-align: bottom;
-                                          background-color: red;
-                                      }
+                                              .table > thead {
+                                                  vertical-align: bottom;
+                                                  background-color: red;
+                                              }
 
-                                      th, td {
-                                          padding: 8px;
-                                          border: 1px solid #ddd;
-                                          text-align: center;
-                                      }
+                                              th, td {
+                                                  padding: 8px;
+                                                  border: 1px solid #ddd;
+                                                  text-align: center;
+                                              }
 
-                                      th {
-                                          background-color: #f2f2f2;
-                                          color: black;
-                                      }
-                                  </style>
-                              `;
+                                              th {
+                                                  background-color: #f2f2f2;
+                                                  color: black;
+                                              }
+                                          </style>
+                                      `;
 
                 var table = $('#SoftwareType5').DataTable();
 
@@ -1450,30 +1456,30 @@
                 popupWin.document.open();
 
                 var tableStyles = `
-                         <style type="text/css">
-                             table {
-                                 width: 100%;
-                                 border-collapse: collapse;
-                                 margin-bottom: 20px;
-                             }
+                                 <style type="text/css">
+                                     table {
+                                         width: 100%;
+                                         border-collapse: collapse;
+                                         margin-bottom: 20px;
+                                     }
 
-                             .table > thead {
-                                 vertical-align: bottom;
-                                 background-color: red;
-                             }
+                                     .table > thead {
+                                         vertical-align: bottom;
+                                         background-color: red;
+                                     }
 
-                             th, td {
-                                 padding: 8px;
-                                 border: 1px solid #ddd;
-                                 text-align: center;
-                             }
+                                     th, td {
+                                         padding: 8px;
+                                         border: 1px solid #ddd;
+                                         text-align: center;
+                                     }
 
-                             th {
-                                 background-color: #f2f2f2;
-                                 color: black;
-                             }
-                         </style>
-                     `;
+                                     th {
+                                         background-color: #f2f2f2;
+                                         color: black;
+                                     }
+                                 </style>
+                             `;
 
                 var table = $('#Soft').DataTable();
 
@@ -1514,7 +1520,7 @@
     </script>
 
 
-    
+
 
 
 </head>
@@ -1581,7 +1587,7 @@
                             <div class="icon-container">
                                 <img src="/assets/images/icons/createproj.png" alt="Icon">
                                 <ion-icon name="ellipse-outline"></ion-icon>
-                                <span class="icon-name">Add New Project</span>
+                                <span class="icon-name">New Project</span>
                             </div>
                         </a>
                     </li>
@@ -1624,7 +1630,7 @@
                     </li>
 
 
-                    
+
 
                     <li>
                         <a href="/Search/CurrentSearch">
@@ -1776,7 +1782,6 @@
 
 
         <!--end top header-->
-
         <!-- unit level users menu start  -->
         @if (Logins != null && Logins.Role == "Unit")
         {
@@ -1836,7 +1841,7 @@
                                 <div class="icon-container">
                                     <img src="/assets/images/icons/createproj.png" alt="Icon">
                                     <ion-icon name="ellipse-outlinProj Commentse"></ion-icon>
-                                    <span class="icon-name">Add New Project</span>
+                                    <span class="icon-name">Create New Project</span>
                                 </div>
                             </a>
                         </li>
@@ -2070,31 +2075,31 @@
     function createNotification(event) {
         event.preventDefault();
 
-       
+
         var stakeHolderId = document.getElementById('btnid').innerText;
 
-        
+
         fetch(`/Home/GetNotification?stakeHolderId=${stakeHolderId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            
+
         })
             .then(response => {
                 if (response.ok) {
-                   
+
                     console.log('Notification data retrieved successfully');
 
-                    
+
                     window.location.href = event.target.href;
                 } else {
-                    
+
                     console.error('Failed to retrieve notification data');
                 }
             })
             .catch(error => {
-                
+
                 console.error('Error:', error);
             });
     }
@@ -2126,22 +2131,22 @@
 
 
 <script>
-
-    var pageRefreshed = localStorage.getItem('pageRefreshed');
-    if (pageRefreshed) {
+    @*
+        var pageRefreshed = localStorage.getItem('pageRefreshed');
+        if (pageRefreshed) {
 
         localStorage.removeItem('pageRefreshed');
 
 
         window.location.href = '/Home/Index';
-    }
+        } *@
 </script>
 
 <script>
 
-    document.getElementById('menusharp').onclick = function () {
-        document.body.classList.toggle('sidebar-collapsed');
-    };
+        document.getElementById('menusharp').onclick = function () {
+            document.body.classList.toggle('sidebar-collapsed');
+        };
 
     document.querySelector('.sidebar-wrapper').onmouseenter = function () {
         document.body.classList.add('sidebar-hover');
@@ -2219,7 +2224,7 @@
         font-weight: bold;
         font-size: 14px;
         cursor: pointer;
-       }
+    }
 
 
     .sidebar-menu li .menu-title {
@@ -2307,10 +2312,9 @@
             right: -5px;
             width: 15px;
             height: 15px;
-            background-color: red; 
+            background-color: red;
             border-radius: 50%;
             border: 2px solid white;
         }
-
 
 </style>

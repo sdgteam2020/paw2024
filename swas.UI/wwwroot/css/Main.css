@@ -1,0 +1,10 @@
+﻿.form-control.is-invalid, .was-validated .form-control:invalid {
+    border-color: #dc3545 !important;
+}
+.invalid-feedback {
+    color: #dc3545 !important;
+}
+.is-valid {
+    border-color: #198754 !important;
+    background-image: none !important;
+}

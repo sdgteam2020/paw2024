@@ -262,6 +262,27 @@
     <None Include="wwwroot\DeveloperJs\NewProject.js" />
     <None Include="wwwroot\DeveloperJs\NewProjectTable.js" />
     <None Include="wwwroot\DeveloperJs\ProjectComment.js" />
+    <None Include="wwwroot\font-awesome\js\all.js" />
+    <None Include="wwwroot\font-awesome\js\all.min.js" />
+    <None Include="wwwroot\font-awesome\js\brands.js" />
+    <None Include="wwwroot\font-awesome\js\brands.min.js" />
+    <None Include="wwwroot\font-awesome\js\conflict-detection.js" />
+    <None Include="wwwroot\font-awesome\js\conflict-detection.min.js" />
+    <None Include="wwwroot\font-awesome\js\fontawesome.js" />
+    <None Include="wwwroot\font-awesome\js\fontawesome.min.js" />
+    <None Include="wwwroot\font-awesome\js\regular.js" />
+    <None Include="wwwroot\font-awesome\js\regular.min.js" />
+    <None Include="wwwroot\font-awesome\js\solid.js" />
+    <None Include="wwwroot\font-awesome\js\solid.min.js" />
+    <None Include="wwwroot\font-awesome\js\v4-shims.js" />
+    <None Include="wwwroot\font-awesome\js\v4-shims.min.js" />
+    <None Include="wwwroot\font-awesome\sprites\brands.svg" />
+    <None Include="wwwroot\font-awesome\sprites\regular.svg" />
+    <None Include="wwwroot\font-awesome\sprites\solid.svg" />
+    <None Include="wwwroot\font-awesome\webfonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\font-awesome\webfonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\font-awesome\webfonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\font-awesome\webfonts\fa-v4compatibility.woff2" />
     <None Include="wwwroot\jquery\jquery.js" />
     <None Include="wwwroot\jquery\jquery.min.js" />
     <None Include="wwwroot\jquery\jquery.min.map" />
@@ -392,6 +413,9 @@
     <Folder Include="wwwroot\assets\images\similar-products\" />
     <Folder Include="wwwroot\DownloadFile\" />
     <Folder Include="wwwroot\Download\" />
+    <Folder Include="wwwroot\Download\" />
+    <Folder Include="wwwroot\DownloadFile\" />
+    <Folder Include="wwwroot\Uploads\" />
     <Folder Include="wwwroot\Uploads\" />
   </ItemGroup>
 

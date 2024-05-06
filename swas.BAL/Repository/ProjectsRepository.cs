@@ -16,6 +16,7 @@ using System.Xml.Linq;
 using System;
 using Microsoft.AspNetCore.Mvc;
 using swas.BAL.Utility;
+using static Grpc.Core.Metadata;
 
 namespace swas.BAL.Repository
 {
@@ -102,7 +103,7 @@ namespace swas.BAL.Repository
             psmove.IsActive = true;
             psmove.ActionCde = 0;
             psmove.EditDeleteDate = DateTime.Now;
-            psmove.EditDeleteBy = Logins.unitid; 
+            psmove.EditDeleteBy = Logins.unitid;
             psmove.TimeStamp = DateTime.Now;
             _dbContext.ProjStakeHolderMov.Add(psmove);
             await _dbContext.SaveChangesAsync();
@@ -1448,7 +1449,7 @@ e.statusid=" + StatusId;
             {
                 try
                 {
-                    project.UpdatedByUserId = Logins.unitid ;
+                    project.UpdatedByUserId = Logins.unitid;
                     project.DateTimeOfUpdate = DateTime.Now;
                     project.InitialRemark = project.InitialRemark + ".. Edited on " + DateTime.Now;
                     project.IsDeleted = false;
@@ -1478,70 +1479,78 @@ e.statusid=" + StatusId;
             if (Logins != null)
             {
 
-                tbl_ProjStakeHolderMov psmove = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == project.CurrentPslmId);
+                // tbl_ProjStakeHolderMov psmove = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == project.CurrentPslmId);
+
+                _dbContext.Entry(project).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+                return true;
+
                 tbl_Comment cmt = new tbl_Comment();
+                _dbContext.Projects.Update(project);
 
-                if (psmove != null)
-                {
+                await _dbContext.SaveChangesAsync();
+                return true;
+                //if (psmove != null)
+                //{
 
-                    psmove.ProjId = project.ProjId;
+                //    psmove.ProjId = project.ProjId;
 
-                    psmove.AddRemarks = project.InitialRemark;
+                //    psmove.AddRemarks = project.InitialRemark;
 
-                    psmove.CurrentStakeHolderId = project.StakeHolderId;
-                    // psmove.CommentId = 0;
-                    psmove.CurrentStakeHolderId = 1;
+                //    psmove.CurrentStakeHolderId = project.StakeHolderId;
+                //    // psmove.CommentId = 0;
+                //    psmove.CurrentStakeHolderId = 1;
 
-                    psmove.StakeHolderId = project.StakeHolderId;
-                    psmove.UpdatedByUserId = Logins.unitid;
-                    psmove.DateTimeOfUpdate = DateTime.Now;
-                    psmove.IsActive = true;
-                    psmove.ActionCde = 1;
-                    psmove.EditDeleteDate = DateTime.Now;
-                    psmove.EditDeleteBy = Logins.unitid;
-                    psmove.TimeStamp = DateTime.Now;
+                //    psmove.StakeHolderId = project.StakeHolderId;
+                //    psmove.UpdatedByUserId = Logins.ActualUserName + "(" + Logins.Unit + ")";
+                //    psmove.DateTimeOfUpdate = DateTime.Now;
+                //    psmove.IsActive = true;
+                //    psmove.ActionCde = 1;
+                //    psmove.EditDeleteDate = DateTime.Now;
+                //    psmove.EditDeleteBy = Logins.ActualUserName + "(" + Logins.Unit + ")";
+                //    psmove.TimeStamp = DateTime.Now;
 
-                    _dbContext.ProjStakeHolderMov.Attach(psmove);
-                    _dbContext.Entry(psmove).State = EntityState.Modified;
-                    await _dbContext.SaveChangesAsync();
-                    tbl_Comment compsmid = _dbContext.Comment.FirstOrDefault(x => x.PsmId == psmove.PsmId);
+                //    _dbContext.ProjStakeHolderMov.Attach(psmove);
+                //    _dbContext.Entry(psmove).State = EntityState.Modified;
+                //    await _dbContext.SaveChangesAsync();
+                //    tbl_Comment compsmid = _dbContext.Comment.FirstOrDefault(x => x.PsmId == psmove.PsmId);
 
-                    if (compsmid != null)
-                    {
-                        compsmid.EditDeleteDate = DateTime.Now;
-                        compsmid.IsDeleted = false;
-                        compsmid.IsActive = true;
-                        compsmid.DateTimeOfUpdate = DateTime.Now;
-                        compsmid.Comment = project.InitialRemark;
-                        compsmid.PsmId = psmove.PsmId;
-                        compsmid.UpdatedByUserId = Logins.unitid;
-                        compsmid.EditDeleteBy = Logins.unitid;
-                        _dbContext.Comment.Update(compsmid);
-                        await _dbContext.SaveChangesAsync();
-                    }
-                    else
-                    {
-                        cmt.EditDeleteDate = DateTime.Now;
-                        cmt.IsDeleted = false;
-                        cmt.IsActive = true;
-                        cmt.DateTimeOfUpdate = DateTime.Now;
-                        cmt.Comment = project.InitialRemark;
-                        cmt.PsmId = psmove.PsmId;
-                        cmt.UpdatedByUserId = Logins.unitid;
-                        cmt.EditDeleteBy = Logins.unitid;
-                        _dbContext.Comment.Add(cmt);
-                        await _dbContext.SaveChangesAsync();
-                    }
+                //    if (compsmid != null)
+                //    {
+                //        compsmid.EditDeleteDate = DateTime.Now;
+                //        compsmid.IsDeleted = false;
+                //        compsmid.IsActive = true;
+                //        compsmid.DateTimeOfUpdate = DateTime.Now;
+                //        compsmid.Comment = project.InitialRemark;
+                //        compsmid.PsmId = psmove.PsmId;
+                //        compsmid.UpdatedByUserId = Logins.ActualUserName + "(" + Logins.Unit + ")";
+                //        compsmid.EditDeleteBy = Logins.ActualUserName + "(" + Logins.Unit + ")";
+                //        _dbContext.Comment.Update(compsmid);
+                //        await _dbContext.SaveChangesAsync();
+                //    }
+                //    else
+                //    {
+                //        cmt.EditDeleteDate = DateTime.Now;
+                //        cmt.IsDeleted = false;
+                //        cmt.IsActive = true;
+                //        cmt.DateTimeOfUpdate = DateTime.Now;
+                //        cmt.Comment = project.InitialRemark;
+                //        cmt.PsmId = psmove.PsmId;
+                //        cmt.UpdatedByUserId = Logins.ActualUserName + "(" + Logins.Unit + ")";
+                //        cmt.EditDeleteBy = Logins.ActualUserName + "(" + Logins.Unit + ")";
+                //        _dbContext.Comment.Add(cmt);
+                //        await _dbContext.SaveChangesAsync();
+                //    }
 
-                    _dbContext.Projects.Update(project);
+                //    _dbContext.Projects.Update(project);
 
-                    await _dbContext.SaveChangesAsync();
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                //    await _dbContext.SaveChangesAsync();
+                //    return true;
+                //}
+                //else
+                //{
+                //    return false;
+                //}
             }
             else
             {
@@ -1837,8 +1846,7 @@ e.statusid=" + StatusId;
 
         public async Task<tbl_Projects> GetProjectByPsmIdAsync(int psmId)
         {
-            return await _dbContext.Projects
-                .FirstOrDefaultAsync(a => a.CurrentPslmId == psmId);
+            return await _dbContext.Projects.FirstOrDefaultAsync(a => a.CurrentPslmId == psmId);
         }
 
 
@@ -1869,13 +1877,13 @@ e.statusid=" + StatusId;
                                Id = a.Id,
                                HeaderID = b.Id,
                                ProjName = a.ProjName,
-                               Appt=a.Appt,
+                               Appt = a.Appt,
                                Fmn = a.Fmn,
                                ContactNo = a.ContactNo,
                                Clearence = a.Clearence == null ? string.Empty : ((DateTime)a.Clearence).ToString("dd/MM/yy"),
                                CertNo = a.CertNo,
                                date = a.date == null ? string.Empty : ((DateTime)a.date).ToString("dd/MM/yy"),
-                               ValidUpto= a.ValidUpto == null ? string.Empty : ((DateTime)a.ValidUpto).ToString("dd/MM/yy"),
+                               ValidUpto = a.ValidUpto == null ? string.Empty : ((DateTime)a.ValidUpto).ToString("dd/MM/yy"),
                                Remarks = a.Remarks,
                                Header = b.Header
                            }).ToList();
@@ -2160,7 +2168,7 @@ e.statusid=" + StatusId;
                         orderby e.DateTimeOfUpdate descending
 
                         select new tbl_Projects
-                        {   
+                        {
                             ProjId = a.ProjId,
                             ProjName = a.ProjName,
                             StakeHolderId = a.StakeHolderId,
@@ -2186,7 +2194,7 @@ e.statusid=" + StatusId;
                         };
 
             var projectsWithDetails = await query.ToListAsync();
-          
+
             return projectsWithDetails;
 
         }
@@ -2365,7 +2373,7 @@ e.statusid=" + StatusId;
             where x.PsmId == t.PsmId
             select $"{stkComment.UnitName} ({x.DateTimeOfUpdate}) Comment: {x.Comments} "
         ).ToList()))
-         };
+                                };
                     var result = query.ToList();
                     return result;
                 }
@@ -2430,10 +2438,10 @@ e.statusid=" + StatusId;
 
                                      string.Join(", ", (
                                     from x in _dbContext.StkComment
-                                   join y in _dbContext.tbl_mUnitBranch on x.StakeHolderId equals y.unitid into stkCommentJoin
-                                   from stkComment in stkCommentJoin.DefaultIfEmpty()
-                                   where x.PsmId == t.PsmId
-                                   select $"{stkComment.UnitName} ({x.DateTimeOfUpdate}) Comment: {x.Comments} "
+                                    join y in _dbContext.tbl_mUnitBranch on x.StakeHolderId equals y.unitid into stkCommentJoin
+                                    from stkComment in stkCommentJoin.DefaultIfEmpty()
+                                    where x.PsmId == t.PsmId
+                                    select $"{stkComment.UnitName} ({x.DateTimeOfUpdate}) Comment: {x.Comments} "
                                ).ToList()))
 
 
@@ -2578,8 +2586,8 @@ e.statusid=" + StatusId;
                                           where x.PsmId == t.PsmId
                                           select $"{stkComment.UnitName} ({x.DateTimeOfUpdate}) Comment: {x.Comments} "
                                       ).ToList()))
-                                      
-                                      
+
+
 
 
                                 };
@@ -2633,13 +2641,13 @@ e.statusid=" + StatusId;
                                     BlogComment = (
 
                                     string.Join(", ", (
-                                         from x in _dbContext.StkComment 
+                                         from x in _dbContext.StkComment
                                          join y in _dbContext.tbl_mUnitBranch on x.StakeHolderId equals y.unitid into stkCommentJoin
                                          from stkComment in stkCommentJoin.DefaultIfEmpty()
-                                          where x.PsmId == t.PsmId
+                                         where x.PsmId == t.PsmId
                                          select $"{stkComment.UnitName} ({x.DateTimeOfUpdate}) Comment: {x.Comments} "
                                      ).ToList()))
-                                    
+
 
                                 };
                     var result = query.ToList();
@@ -2686,7 +2694,7 @@ e.statusid=" + StatusId;
                                     AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == t.PsmId),
                                     Stages = eStage.Stages,
                                     BlogComment = (
-                                   
+
                                       string.Join(", ", (
                                          from x in _dbContext.StkComment
                                          join y in _dbContext.tbl_mUnitBranch on x.StakeHolderId equals y.unitid into stkCommentJoin
@@ -2694,7 +2702,10 @@ e.statusid=" + StatusId;
                                          where x.PsmId == t.PsmId
                                          select $"{stkComment.UnitName} ({x.DateTimeOfUpdate}) Comment: {x.Comments} "
                                      ).ToList()))
-                                   
+
+
+
+
                                 };
 
                     var result = query.ToList();
@@ -2744,7 +2755,7 @@ e.statusid=" + StatusId;
                               join projMov in _dbContext.ProjStakeHolderMov on comment.PsmId equals projMov.PsmId
                               join StackHolder in _dbContext.tbl_mUnitBranch on comment.StakeHolderId equals StackHolder.unitid
                               // comment by nitin kumar 25-04-2024
-                              join StkStatus in _dbContext.StkStatus on comment.StkStatusId equals StkStatus.StkStatusId into actionsGroup      
+                              join StkStatus in _dbContext.StkStatus on comment.StkStatusId equals StkStatus.StkStatusId into actionsGroup
                               //join actions in _dbContext.mActions on comment.ActionsId equals actions.ActionsId into actionsGroup
                               from StkStatus in actionsGroup.DefaultIfEmpty()  // Left outer join
                               where comment.ProjId == projid

@@ -20,13 +20,13 @@ namespace swas.BAL.Interfaces
         Task<int> AddProjectAsync(tbl_Projects project);
         Task<tbl_Projects> GetProjectByIdAsync(int projectId);
         Task<tbl_Projects> GetProjectByIdAsync1(int dataProjId);
-      
+
 
         Task<List<tbl_Projects>> GetProjByIdLstAsync(int projectId);
 
         Task<List<tbl_Projects>> GetAllProjectsAsync();
         Task<List<tbl_Projects>> GetActProjectsAsync();
-        Task<List<tbl_Projects>> GetActInboxAsync(); 
+        Task<List<tbl_Projects>> GetActInboxAsync();
         Task<List<tbl_Projects>> GetActSendItemsAsync();
         Task<List<tbl_Projects>> GetActComplettemsAsync();
         Task<bool> UpdateProjectAsync(tbl_Projects project);
