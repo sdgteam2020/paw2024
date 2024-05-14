@@ -1,0 +1,900 @@
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 4:39:11 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:00:41 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:00:51 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:02:44 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:22:35 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:23:52 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:24:19 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:24:49 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:25:32 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:27:44 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:28:06 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:28:27 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:29:08 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:29:34 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:30:07 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:31:24 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:32:42 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:34:03 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:37:28 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:40:07 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:42:55 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:43:49 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 9:31:08 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 9:32:05 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 9:42:48 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 9:43:32 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 9:43:35 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 9:44:00 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 9:44:05 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 9:44:31 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 9:45:52 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 9:45:57 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 9:46:16 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 9:47:56 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 9:55:08 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:18:12 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:20:09 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:20:24 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:21:29 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:22:19 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:22:22 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:22:22 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:22:23 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:22:23 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:22:23 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:22:23 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:22:23 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:22:24 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:25:56 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:26:27 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:26:31 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:26:41 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:27:14 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:27:17 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:27:30 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:28:11 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:28:25 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:28:26 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:28:44 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:28:46 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:29:36 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:34:00 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:37:32 AM
+Invalid object name 'Users'.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:38:25 AM
+Invalid object name 'Users'.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:44:50 AM
+Invalid column name 'IC/JC/Army No'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 10:44:56 AM
+Invalid column name 'IC/JC/Army No'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 2:06:00 PM
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 4/25/2024 2:06:00 PM
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 4/25/2024 2:06:42 PM
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 26-04-2024 15:28:20
+Unable to cast object of type 'System.DateTime' to type 'System.String'.
+-----------------------------------------------------------------------------
+Date : 30-04-2024 10:52:41
+Invalid column name 'CreatedDate'.
+Invalid column name 'Flag'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 30-04-2024 10:52:42
+Invalid column name 'CreatedDate'.
+Invalid column name 'Flag'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 30-04-2024 10:52:44
+Invalid column name 'CreatedDate'.
+Invalid column name 'Flag'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 30-04-2024 10:54:35
+Invalid column name 'CreatedDate'.
+Invalid column name 'Flag'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 30-04-2024 10:54:36
+Invalid column name 'CreatedDate'.
+Invalid column name 'Flag'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 30-04-2024 10:54:40
+Invalid column name 'CreatedDate'.
+Invalid column name 'Flag'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 30-04-2024 14:59:42
+There is already an open DataReader associated with this Connection which must be closed first.
+-----------------------------------------------------------------------------
+Date : 30-04-2024 14:59:42
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 30-04-2024 15:00:42
+There is already an open DataReader associated with this Connection which must be closed first.
+-----------------------------------------------------------------------------
+Date : 30-04-2024 15:00:42
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 30-04-2024 15:01:28
+There is already an open DataReader associated with this Connection which must be closed first.
+-----------------------------------------------------------------------------
+Date : 30-04-2024 15:01:28
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 4/30/2024 4:09:54 PM
+An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+-----------------------------------------------------------------------------
+Date : 4/30/2024 4:09:57 PM
+An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+-----------------------------------------------------------------------------
+Date : 4/30/2024 4:10:42 PM
+Login failed for user 'swas'.
+-----------------------------------------------------------------------------
+Date : 4/30/2024 4:10:43 PM
+Login failed for user 'swas'.
+-----------------------------------------------------------------------------
+Date : 4/30/2024 4:10:45 PM
+Login failed for user 'swas'.
+-----------------------------------------------------------------------------
+Date : 5/2/2024 10:14:08 AM
+'System.Dynamic.DynamicObject' does not contain a definition for 'flag'
+-----------------------------------------------------------------------------
+Date : 5/6/2024 9:45:06 AM
+Unable to cast object of type 'System.String' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 5/6/2024 9:45:06 AM
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 5/6/2024 9:45:06 AM
+Unable to cast object of type 'System.String' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 5/6/2024 9:45:06 AM
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 5/6/2024 9:45:44 AM
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-05-2024 11:48:21
+A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SNI_PN11, error: 28 - Server doesn't support requested protocol)
+-----------------------------------------------------------------------------
+Date : 06-05-2024 11:59:05
+Unable to cast object of type 'System.String' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 06-05-2024 11:59:05
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-05-2024 11:59:05
+Unable to cast object of type 'System.String' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 06-05-2024 11:59:05
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-05-2024 11:59:06
+Unable to cast object of type 'System.String' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 06-05-2024 11:59:06
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-05-2024 11:59:06
+Unable to cast object of type 'System.String' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 06-05-2024 11:59:06
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-05-2024 11:59:16
+Unable to cast object of type 'System.String' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 06-05-2024 11:59:16
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-05-2024 11:59:16
+Unable to cast object of type 'System.String' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 06-05-2024 11:59:16
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-05-2024 16:22:00
+A transport-level error has occurred when receiving results from the server. (provider: Session Provider, error: 19 - Physical connection is not usable)
+-----------------------------------------------------------------------------
+Date : 06-05-2024 16:32:54
+A transport-level error has occurred when receiving results from the server. (provider: Session Provider, error: 19 - Physical connection is not usable)
+-----------------------------------------------------------------------------
+Date : 06-05-2024 16:33:52
+A transport-level error has occurred when receiving results from the server. (provider: Session Provider, error: 19 - Physical connection is not usable)
+-----------------------------------------------------------------------------
+Date : 06-05-2024 16:34:18
+A transport-level error has occurred when receiving results from the server. (provider: Session Provider, error: 19 - Physical connection is not usable)
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:27:39
+Invalid column name 'ViewDescUnit'.
+Invalid column name 'ViewDescStkHold'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:27:39
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:27:39
+Invalid column name 'ViewDescUnit'.
+Invalid column name 'ViewDescStkHold'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:27:39
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:27:44
+Invalid column name 'ViewDescUnit'.
+Invalid column name 'ViewDescStkHold'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:27:44
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:27:44
+Invalid column name 'ViewDescUnit'.
+Invalid column name 'ViewDescStkHold'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:27:44
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:28:25
+Invalid column name 'ViewDescUnit'.
+Invalid column name 'ViewDescStkHold'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:28:25
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:28:25
+Invalid column name 'ViewDescUnit'.
+Invalid column name 'ViewDescStkHold'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:28:25
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:30:12
+Invalid column name 'ViewDescUnit'.
+Invalid column name 'ViewDescStkHold'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:30:12
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:31:19
+Invalid column name 'ViewDescUnit'.
+Invalid column name 'ViewDescStkHold'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:31:19
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:31:19
+Invalid column name 'ViewDescUnit'.
+Invalid column name 'ViewDescStkHold'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:31:19
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:31:46
+Invalid column name 'ViewDescUnit'.
+Invalid column name 'ViewDescStkHold'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:31:46
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:31:46
+Invalid column name 'ViewDescUnit'.
+Invalid column name 'ViewDescStkHold'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:31:46
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:34:52
+Invalid column name 'ViewDescUnit'.
+Invalid column name 'ViewDescStkHold'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:34:52
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:34:53
+Invalid column name 'ViewDescUnit'.
+Invalid column name 'ViewDescStkHold'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:34:53
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:35:40
+The method 'swas.DAL.Models.tbl_ProjStakeHolderMov.get_ProjId' is not a property accessor (Parameter 'propertyAccessor')
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:35:40
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:35:41
+Invalid column name 'ViewDescUnit'.
+Invalid column name 'ViewDescStkHold'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:35:41
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:36:43
+Invalid column name 'ViewDescUnit'.
+Invalid column name 'ViewDescStkHold'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:36:43
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:37:03
+Invalid column name 'ViewDescUnit'.
+Invalid column name 'ViewDescStkHold'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 10:37:18
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 11:15:22
+Invalid column name 'FininshID'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 11:15:34
+Invalid column name 'FininshID'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 11:15:43
+Invalid column name 'FininshID'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 11:15:43
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 11:15:45
+Invalid column name 'FininshID'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 11:15:45
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 11:15:47
+Invalid column name 'FininshID'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 11:15:47
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 11:15:47
+Invalid column name 'FininshID'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 11:15:47
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 11:15:48
+Invalid column name 'FininshID'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 11:15:48
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 11:15:48
+Invalid column name 'FininshID'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 11:15:48
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 11:16:01
+Invalid column name 'FininshID'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 11:16:01
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 12:29:06
+Invalid column name 'ToUnitId'.
+Invalid column name 'ToUnitId'.
+Invalid column name 'FromUnitId'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 12:29:06
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 12:29:07
+Invalid column name 'ToUnitId'.
+Invalid column name 'ToUnitId'.
+Invalid column name 'FromUnitId'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 12:29:07
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 12:31:10
+Invalid column name 'ToUnitId'.
+Invalid column name 'ToUnitId'.
+Invalid column name 'FromUnitId'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 12:31:10
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 12:34:01
+Invalid column name 'ToUnitId'.
+Invalid column name 'ToUnitId'.
+Invalid column name 'FromUnitId'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 12:34:01
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 12:48:16
+The method or operation is not implemented.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 12:48:16
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 12:48:20
+The method or operation is not implemented.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 12:48:20
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 14:01:33
+The method or operation is not implemented.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 14:01:33
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 14:07:57
+The method or operation is not implemented.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 14:07:57
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 14:08:06
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 14:08:24
+The method or operation is not implemented.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 14:08:24
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-05-2024 14:30:39
+Invalid column name 'FininshID'.
+-----------------------------------------------------------------------------
+Date : 07-05-2024 14:30:39
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 08-05-2024 10:56:57
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 08-05-2024 11:34:43
+The LINQ expression 'DbSet<tbl_Projects>()
+    .Join(
+        inner: DbSet<tbl_ProjStakeHolderMov>(), 
+        outerKeySelector: t => t.ProjId, 
+        innerKeySelector: t0 => t0.ProjId, 
+        resultSelector: (t, t0) => new TransparentIdentifier<tbl_Projects, tbl_ProjStakeHolderMov>(
+            Outer = t, 
+            Inner = t0
+        ))
+    .LeftJoin(
+        inner: DbSet<tbl_mStatus>(), 
+        outerKeySelector: ti => ti.Inner.StatusId, 
+        innerKeySelector: t1 => t1.StatusId, 
+        resultSelector: (ti, t1) => new TransparentIdentifier<TransparentIdentifier<tbl_Projects, tbl_ProjStakeHolderMov>, tbl_mStatus>(
+            Outer = ti, 
+            Inner = t1
+        ))
+    .LeftJoin(
+        inner: DbSet<UnitDtl>(), 
+        outerKeySelector: ti0 => ti0.Outer.Inner.ToUnitId, 
+        innerKeySelector: u => u.unitid, 
+        resultSelector: (ti0, u) => new TransparentIdentifier<TransparentIdentifier<TransparentIdentifier<tbl_Projects, tbl_ProjStakeHolderMov>, tbl_mStatus>, UnitDtl>(
+            Outer = ti0, 
+            Inner = u
+        ))
+    .LeftJoin(
+        inner: DbSet<UnitDtl>(), 
+        outerKeySelector: ti1 => ti1.Outer.Outer.Inner.FromUnitId, 
+        innerKeySelector: u0 => u0.unitid, 
+        resultSelector: (ti1, u0) => new TransparentIdentifier<TransparentIdentifier<TransparentIdentifier<TransparentIdentifier<tbl_Projects, tbl_ProjStakeHolderMov>, tbl_mStatus>, UnitDtl>, UnitDtl>(
+            Outer = ti1, 
+            Inner = u0
+        ))
+    .LeftJoin(
+        inner: DbSet<tbl_mStages>(), 
+        outerKeySelector: ti2 => ti2.Outer.Outer.Outer.Outer.StageId, 
+        innerKeySelector: t2 => t2.StagesId, 
+        resultSelector: (ti2, t2) => new TransparentIdentifier<TransparentIdentifier<TransparentIdentifier<TransparentIdentifier<TransparentIdentifier<tbl_Projects, tbl_ProjStakeHolderMov>, tbl_mStatus>, UnitDtl>, UnitDtl>, tbl_mStages>(
+            Outer = ti2, 
+            Inner = t2
+        ))' could not be translated. Additional information: Translation of member 'StageId' on entity type 'tbl_Projects' failed. This commonly occurs when the specified member is unmapped. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+-----------------------------------------------------------------------------
+Date : 08-05-2024 11:34:43
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:05:41
+Nullable object must have a value.
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:05:41
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:07:20
+Nullable object must have a value.
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:07:20
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:13:07
+Nullable object must have a value.
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:13:07
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:21:47
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:21:47
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:21:47
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:23:05
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:23:05
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:23:07
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:23:07
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:23:08
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:23:08
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:28:52
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:28:52
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:28:53
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:28:53
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:29:43
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:29:43
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:29:44
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:29:44
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:29:49
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:29:49
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:30:51
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:30:51
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:30:53
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:30:53
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:30:54
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:30:54
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:30:54
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:30:54
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:30:57
+'System.Dynamic.DynamicObject' does not contain a definition for 'Projects'
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:30:57
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:30:58
+'System.Dynamic.DynamicObject' does not contain a definition for 'Projects'
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:30:58
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:30:59
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:30:59
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:33:09
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 08-05-2024 12:33:09
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 09-05-2024 11:21:16
+K:\Projects\paw2024\swas.UI\wwwroot\Uploads\null not found as file or resource.
+-----------------------------------------------------------------------------
+Date : 10-05-2024 16:05:11
+Invalid column name 'ActionCde'.
+Invalid column name 'ViewDescUnit'.
+Invalid column name 'ViewDescStkHold'.
+Invalid column name 'ViewDescUnit'.
+Invalid column name 'ViewDescStkHold'.
+-----------------------------------------------------------------------------
+Date : 10-05-2024 16:05:11
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-05-2024 11:23:52
+Invalid object name 'mUnitBranch'.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 11:23:52
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-05-2024 11:23:54
+Invalid object name 'mUnitBranch'.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 11:23:54
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-05-2024 11:24:09
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-05-2024 11:24:27
+Invalid object name 'mUnitBranch'.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 11:24:28
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-05-2024 11:33:37
+Invalid object name 'mUnitBranch'.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 11:33:37
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-05-2024 12:19:49
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 12:23:36
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 12:23:36
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-05-2024 12:23:37
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 12:23:37
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-05-2024 12:24:05
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 12:24:05
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-05-2024 12:24:33
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 12:24:33
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-05-2024 12:24:34
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 12:24:34
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-05-2024 12:24:34
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 12:24:34
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-05-2024 14:22:31
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 14:22:31
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-05-2024 14:22:32
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 14:22:32
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-05-2024 14:22:33
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 14:22:33
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-05-2024 14:22:33
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 14:22:33
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-05-2024 14:22:34
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 14:22:34
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-05-2024 14:22:35
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 14:22:35
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-05-2024 14:22:35
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 14:22:35
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-05-2024 14:23:39
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 14:32:30
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 14:33:10
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 14:36:03
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 14:39:25
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 14:50:50
+Invalid column name 'IsProcess'.
+-----------------------------------------------------------------------------
+Date : 13-05-2024 14:50:50
+Request failed & Status Code : 200

@@ -197,6 +197,7 @@ namespace swas.Areas.Identity.Pages.Account
                                         Db.Iamuserid = userdet.domain_iam;
                                         Db.Unit = unitdetl.UnitName;        
                                         Db.unitid = userdet.unitid;
+                                        Db.UserIntId = userdet.UserIntId;
                                         var users = await _userManager.FindByNameAsync(userdet.UserName);
                                         var usroles = await _userManager.GetRolesAsync(users);
                                         Db.Role = usroles.Any() ? usroles[0] : "Unit"; 

@@ -41,8 +41,8 @@ namespace swas.BAL.DTO
     }
     public class MailBox
     {
-        public List<tbl_Projects> InBox { get; set; }
-        public List<tbl_Projects> SendItems { get; set; }
+        public List<DTOProjectsFwd> InBox { get; set; }
+        public List<DTOProjectsFwd> SendItems { get; set; }
         public List<tbl_Projects> CompletedItems { get; set; }
 
         public List<tbl_Projects> Draft { get; set; }
@@ -88,6 +88,7 @@ namespace swas.BAL.DTO
         public int? totmsgin { get; set; }
         public int? tocommentin { get; set; }
         public int? typeid { get; set; }
+        public int UserIntId { get; set; }
 
     }
     public class DefaultValueID

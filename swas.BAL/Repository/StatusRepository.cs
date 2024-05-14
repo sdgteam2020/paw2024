@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Grpc.Core;
+using Microsoft.EntityFrameworkCore;
+using swas.BAL.DTO;
 using swas.BAL.Interfaces;
 using swas.DAL;
 using swas.DAL.Models;
@@ -63,6 +65,42 @@ namespace swas.BAL.Repository
             _dbContext.mStatus.Remove(status);
             await _dbContext.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<List<DTODDLComman>> GetAllByStages_takeHolder(int ParentId, int UnitId, bool IsOwnProj)
+        {
+           // var retisdte=await _dbContext.mUnitBranch.Where()
+            List<DTODDLComman> lst=new List<DTODDLComman>();
+                var ret = (from Status in _dbContext.mStatus
+                           join Stages in _dbContext.mStages on Status.StageId equals Stages.StagesId
+                           join StatusMapping in _dbContext.TrnUnitStatusMapping on Status.StatusId equals StatusMapping.StatusId
+                           where StatusMapping.UnitId == UnitId && Status.StageId == ParentId
+                           select new DTODDLComman
+                           {
+                               Name = Status.Status,
+                               Id = Status.StatusId,
+                           }
+                    ).ToListAsync();
+                  lst.AddRange(ret.Result);
+            if(IsOwnProj)
+            {
+                var ret1 = (from Status in _dbContext.mStatus
+                           join Stages in _dbContext.mStages on Status.StageId equals Stages.StagesId
+                           join StatusMapping in _dbContext.TrnUnitStatusMapping on Status.StatusId equals StatusMapping.StatusId
+                           //join re1 in ret.Result on ret1.Id equals Status.StatusId
+                            where StatusMapping.UnitId == 0 && Status.StageId == ParentId
+                           select new DTODDLComman
+                           {
+                               Name = Status.Status,
+                               Id = Status.StatusId,
+                           }
+                  ).ToListAsync();
+
+                lst.AddRange(ret1.Result);
+              //var ss=  lst.GroupBy(x => x.Name).ToDictionary(x => x.Key, x => x.Select(e => e.Id).ToList());
+            }
+            
+            return lst;
         }
     }
 

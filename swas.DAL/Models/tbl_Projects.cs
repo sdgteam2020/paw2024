@@ -111,13 +111,16 @@ namespace swas.DAL.Models
         [ForeignKey("mAppType")]
       
         public int? Apptype { get; set; }
+        public bool IsProcess { get; set; }
 
         [Display(Name = "Deployment Mode")]
         [StringLength(100)]
         public string? Deplytype { get; set; }
-		[Display(Name = "Hosted On")]
+		
+        public bool IsSubmited { get; set; }
+
+        [Display(Name = "Hosted On")]
         [ForeignKey("mHostType")]
-      
         public int HostTypeID { get; set; }
 
         // end new properties
@@ -181,8 +184,8 @@ namespace swas.DAL.Models
 		public string? BlogComment { get; set; }
         [NotMapped]
         public int? PsmIds { get; set; }
-
-  
+        [NotMapped]
+        public int StageId { get; set; }    
 
     }
 

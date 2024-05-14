@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using BAL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -73,6 +74,13 @@ builder.Services.AddScoped<IStatusRepository, StatusRepository>();
 builder.Services.AddScoped<IUnitRepository, UnitRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAttHistComment, AttHistCommentRepository>();
+
+builder.Services.AddScoped<IProjComments, ProjComments>();
+builder.Services.AddScoped<IStkStatusRepository, StkStatusRepository>();
+builder.Services.AddScoped<IStkCommentRepository, StkCommentRepository>();
+
+
+
 builder.Services.AddAntiforgery(o => o.SuppressXFrameOptionsHeader = true);
 
 

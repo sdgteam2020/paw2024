@@ -12,9 +12,11 @@
         public static int Delete = 3;
         public static int Duplicate = 4;
         public static int Exception = 5;
-        public static int Null = 6;
+        public static int NotSave = 6;
+        public static int NotUpload = 7;
        
             
 
     }
+  
 }

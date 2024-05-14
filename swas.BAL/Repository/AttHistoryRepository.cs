@@ -16,11 +16,11 @@ namespace swas.BAL.Repository
     ///Tested By :- 
     ///Tested Date : 
     ///Start
-    public class AttHistoryRepository : IAttHistoryRepository
+    public class AttHistoryRepository : GenericRepositoryDL<tbl_AttHistory>, IAttHistoryRepository
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public AttHistoryRepository(ApplicationDbContext dbContext)
+        public AttHistoryRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
         }

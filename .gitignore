@@ -315,6 +315,21 @@ AppPackages/
 
 /swasUnitTest/obj/Debug/net6.0/swasUnitTest.GeneratedMSBuildEditorConfig.editorconfig
 /.vs/slnx.sqlite
+<<<<<<< HEAD
 /swas.BAL/obj/Debug/net6.0/swas.BAL.csproj.AssemblyReference.cache
 /swas.UI/obj/Debug/net6.0/swas.UI.AssemblyInfo.cs
 /swas.UI/obj/Debug/net6.0/swas.UI.AssemblyInfoInputs.cache
+=======
+/.vs/swas/v17/.futdcache.v2
+/.vs/swas/v17/fileList.bin
+/swas.BAL/obj/Debug/net6.0/swas.BAL.assets.cache
+/swas.BAL/obj/Debug/net6.0/swas.BAL.csproj.AssemblyReference.cache
+/swas.DAL/obj/Debug/net6.0/swas.DAL.assets.cache
+/swas.DAL/obj/Debug/net6.0/swas.DAL.csproj.AssemblyReference.cache
+/swas.UI/obj/Debug/net6.0/swas.UI.AssemblyInfoInputs.cache
+/swas.UI/obj/Debug/net6.0/swas.UI.assets.cache
+/swas.UI/obj/Debug/net6.0/swas.UI.GeneratedMSBuildEditorConfig.editorconfig
+>>>>>>> 2ec0faa08b1abeb57f173fb7473ffaf6cbb6e2a0
+/.vs/swas/DesignTimeBuild/.dtbcache.v2
+/swas.DAL/obj/Debug/net6.0/swas.DAL.GeneratedMSBuildEditorConfig.editorconfig
+/swas.BAL/obj/Debug/net6.0/swas.BAL.GeneratedMSBuildEditorConfig.editorconfig

@@ -188,12 +188,12 @@ namespace swas.BAL.Repository
                                       from pm in pmJoin.DefaultIfEmpty()
                                       join ma in _dbContext.mActions on pm.ActionId equals ma.ActionsId into maJoin
                                       from ma in maJoin.DefaultIfEmpty()
-                                      where pj.ProjId == ProjID && pm.StageId == 1  
+                                      where pj.ProjId == ProjID 
 
 
             select new ProjectDetailsDTO
                                       {
-                                          StageId = pm.StageId,
+                                          //StageId = pm.StageId,
                                           StatusId = pm.StatusId,
                                           ActionId = pm.ActionId,
                                           NextActionId = _dbContext.mActions
@@ -259,10 +259,20 @@ namespace swas.BAL.Repository
 
         }
 
+        public async Task<List<DTODDLComman>> GetActionByStatusId(int StatusId)
+        {
+            var query = await (from act in _dbContext.mActions
+                        join map in _dbContext.TrnStatusActionsMapping on act.ActionsId equals map.ActionsId
+                        where map.StatusId == StatusId 
+                        select new DTODDLComman
+                        {
+                            Id=act.ActionsId,
+                            Name=act.Actions,
 
-
-
+                        }).ToArrayAsync();
+            return query.ToList();
         }
+    }
 
 
 }

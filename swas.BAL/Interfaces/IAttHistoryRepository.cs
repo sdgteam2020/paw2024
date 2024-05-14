@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace swas.BAL.Interfaces
 {
-    public interface IAttHistoryRepository
+    public interface IAttHistoryRepository:IGenericRepositoryDL<tbl_AttHistory>
     {
 
         ///Created and Reviewed by : Sub Maj Sanal

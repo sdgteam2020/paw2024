@@ -7,7 +7,7 @@ namespace swas.DAL.Models
 	///Reviewed Date : 31 Jul 23
 	///Tested By :- 
 	///Tested Date : 
-	///Start
+	///Start 
 	public class tbl_AttHistory
 	{
 		[Key]

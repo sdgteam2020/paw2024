@@ -46,8 +46,8 @@ namespace swas.BAL.Repository
         public async Task<int> CountCommentAsync(int stkhol)
         {
             var totalCount = await _dbContext.ProjStakeHolderMov
-           .Where(psm => psm.CurrentStakeHolderId == stkhol
-            && psm.ActionCde == 1
+           .Where(psm => psm.ToUnitId == stkhol
+         
             && psm.ActionId != 48
             && _dbContext.Projects.Any(proj => proj.IsActive == true
             && proj.CurrentPslmId == psm.PsmId))

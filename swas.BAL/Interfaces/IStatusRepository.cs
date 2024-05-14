@@ -1,4 +1,5 @@
-﻿using swas.DAL.Models;
+﻿using swas.BAL.DTO;
+using swas.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,10 @@ namespace swas.BAL.Interfaces
         Task<int> AddStatusAsync(tbl_mStatus status);
         Task<tbl_mStatus> GetStatusByIdAsync(int statusId);
         Task<List<tbl_mStatus>> GetAllStatusAsync();
+        Task<List<DTODDLComman>> GetAllByStages_takeHolder(int ParentId,int UnitId,bool IsOwnProj);
         Task<bool> UpdateStatusAsync(tbl_mStatus status);
         Task<bool> DeleteStatusAsync(int statusId);
+
     }
 
 }

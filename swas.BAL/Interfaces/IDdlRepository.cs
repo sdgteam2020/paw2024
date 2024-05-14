@@ -1,4 +1,5 @@
-﻿using swas.DAL.Models;
+﻿using swas.BAL.DTO;
+using swas.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace swas.BAL.Interfaces
 
     public interface IDdlRepository
     {
+        Task<List<DTODDLComman>> GetFwdTo(int UnitId);
         Task<List<tbl_mStatus>>ddlStatus();
         Task<List<tbl_mStages>> ddlStages(int projIds);
 
