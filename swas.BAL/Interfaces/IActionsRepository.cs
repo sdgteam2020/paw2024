@@ -28,5 +28,8 @@ namespace swas.BAL.Interfaces
         Task<List<ProjectDetailsDTO>> GetNextStgStatAct(int? ProjID, int? psmID, int? stgID);
 
         Task<List<ActionsSeq>> GetActionresp();
+        Task<List<DTODDLComman>> GetActionByStatusId(int StatusId);
+
+
     }
 }

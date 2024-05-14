@@ -5,6 +5,7 @@ using swas.BAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using swas.DAL;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace swas.BAL
 {
@@ -129,6 +130,11 @@ namespace swas.BAL
             return unitsresult;
         }
 
+        public async Task<List<UnitDtl>> GetAllStakeHolderComment()
+        {
+            return await _context.tbl_mUnitBranch.Where(i=>i.commentreqdid==true).ToListAsync();
+        }
+
 
         //public async Task<List<UnitDtl>> GetFindUnitAsync(string UserName)
         //{
@@ -146,7 +152,7 @@ namespace swas.BAL
         //    var result = query.ToList();
 
         //    return result;
-            
+
         //}
 
     }

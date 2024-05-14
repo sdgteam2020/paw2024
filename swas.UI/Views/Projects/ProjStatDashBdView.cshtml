@@ -136,9 +136,9 @@
 
                             </td>
                             <td>@project.StakeHolder</td>
-                            <td>@project.ActionDt?.ToString("dd-MM-yyyy")</td>
+                           @*  <td></td>@project.ActionDt?.ToString("dd-MM-yyyy") *@
 
-                            <td>@project.RecdFmUser</td>
+                            @* <td>@project.RecdFmUser</td> *@
                            @*  <td>@project.FwdtoDate?.ToString("dd-MM-yyyy")</td> *@
 
                          @*   <td>@project.Stages</td>
@@ -150,13 +150,13 @@
 
                             </td>
                             <td>
-                                @project.Comments
+                               @*  @project.Comments *@
 
                             </td>
                            <td>
-            @{
-                string blogComment = project.BlogComment;
-                int maxWords = 10; // Change this to your desired number of words
+                                @{
+                                    string blogComment = ""; //project.BlogComment;
+                                    int maxWords = 10; // Change this to your desired number of words
                 commentIndex++;
 
                 if (!string.IsNullOrEmpty(blogComment) && blogComment.Split(' ').Length > maxWords)

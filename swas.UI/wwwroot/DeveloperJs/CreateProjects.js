@@ -7,7 +7,7 @@ $(document).ready(function () {
     mMsater($("#StakeHolderId").val(),"ddlStakeHolderId",1,0)
     mMsater($("#HostTypeID").val(),"ddlHostTypeID",2,0)
     mMsater($("#Apptype").val(), "ddlApptype", 3, 0)
-    AttechHistory();
+   
     var current_fs, next_fs, previous_fs; //fieldsets
     var opacity;
 
@@ -43,7 +43,7 @@ $(document).ready(function () {
     });
     $("#finalupload").click(function () {
 
-        FwdProjConfirm($(this));
+        ProjectSubmited($(this));
        
 
     });
@@ -85,8 +85,8 @@ $(document).ready(function () {
 
     $("#tempBasicDetails").click(function () {
         var number = 1 + Math.floor(Math.random() * 15000);
-        const predate = DateFormatedd_mm_yyyy(new Date()-1);
-        const todaydate = DateFormatedd_mm_yyyy(new Date());
+        const predate = DateFormateyyy_mm_dd(new Date()-1);
+        const todaydate = DateFormateyyy_mm_dd(new Date());
         $("#ProjName").val("New Project" + number);
         $("#InitiatedDate").val(predate);
         $("#CompletionDate").val(todaydate);;
@@ -327,12 +327,12 @@ function FwdProjConfirm(thisdata) {
     $.ajax({
         url: '/Projects/FwdProjConfirm',
         type: 'POST',
-        data: { "projid": $("#spanCurrentPslmId").html() },
+        data: { "PslmId": $("#spanCurrentPslmId").html() },
         success: function (response) {
             console.log(response);
 
 
-            if (response >=1) {
+            if (response >= 1) {
 
                 Swal.fire({
                     position: "top-end",
@@ -365,166 +365,62 @@ function FwdProjConfirm(thisdata) {
                     },
                     duration: 600
                 });
-               
+
 
             }
 
         }
     });
 }
-function UploadFiles() {
-    var formData = new FormData();
-    var totalFiles = document.getElementById("pdfFileInput").files.length;
-    for (var i = 0; i < totalFiles; i++) {
-        var file = document.getElementById("pdfFileInput").files[i];
-        formData.append("uploadfile", file);
-        formData.append("Reamarks", $("#Reamarks").val());
-        formData.append("ProjectId", $("#spanProjectId").html());
-    }
-
+function ProjectSubmited(thisdata) {
     $.ajax({
-        type: "POST",
-        url: '/Projects/UploadMultiFile',
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function (response) {
-
-            if (response == 1) {
-                AttechHistory();
-                $("#Reamarks").val("");
-                $("#pdfFileInput").val("");
-               
-            }
-            
-        },
-        error: function (error) {
-            $(".error-msg").removeClass("d-none")
-            $("#error-msg").html("Somthing is wrong");;
-
-        }
-    });
-}
-
-function AttechHistory() {
-    var listItem = "";
-    var userdata =
-    {
-        "ProjectId": $("#spanProjectId").html(),
-
-    };
-    $.ajax({
-        url: '/Projects/GetAtthHistoryByProjectId',
-        contentType: 'application/x-www-form-urlencoded',
-        data: userdata,
+        url: '/Projects/ProjectSubmited',
         type: 'POST',
-
-        success: function (response) {
-            if (response != "null" && response != null) {
-
-                if (response == -1) {
-                    Swal.fire({
-                        text: ""
-                    });
-                }
-                else if (response == 0) {
-                    listItem += "<tr><td class='text-center' colspan=4>No Record Found</td></tr>";
-                  
-                    $("#DetailBody").html(listItem);
-                    $("#lblTotal").html(0);
-                }
-
-                else {
-
-                   
-                   // { attId: 8, psmId: 8, attPath: 'Swas_22ed1265-b2a0-4008-b7ff-b3eb5f704849.pdf', actionId: 0, timeStamp: '2024-05-02T16:17:45.6016413', … }
-                    for (var i = 0; i < response.length; i++) {
-
-                        listItem += "<tr>";
-                        listItem += "<td class='d-none'><span id='spnattId'>" + response[i].attId + "</span><span id='spnpsmId'>" + response[i].psmId + "</span></td>";
-                        listItem += "<td class='align-middle'><span id='btnedit'><button type='button' class='cls-btnDelete btn-icon btn-round btn-danger mr-1'><i class='fas fa-trash-alt'></i></button></td>";
-                        listItem += "<td class='align-middle'><span id='comdName'>" + response[i].reamarks + "</span></td>";
-                        listItem += "<td class='align-middle'><span id='corpsName'><a class='link-success' target='_blank' href=/uploads/" + response[i].attPath + ">" + response[i].actFileName + "</a></span></td>";
-                        listItem += "<td class='align-middle'><span id='divName'>" + response[i].timeStamp + "</span></td>";
-
-
-
-                        /*    listItem += "<td class='nowrap'><button type='button' class='cls-btnSend btn btn-outline-success mr-1'>Send To Verification</button></td>";*/
-                        listItem += "</tr>";
-                    }
-
-                    $("#DetailBody").html(listItem);
-                    $("#lblTotal").html(response.length);
-
-                 
-
-                    var rows;
-                   
-
-                  
-
-
-                    $("body").on("click", ".cls-btnDelete", function () {
-
-                        Swal.fire({
-                            title: 'Are you sure?',
-                            text: "You want to Delete ",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#072697',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Yes, Delete It!'
-                        }).then((result) => {
-                            if (result.value) {
-
-                                Deleteattechment($(this).closest("tr").find("#spnattId").html());
-
-                            }
-                        });
-                    });
-
-
-                }
-            }
-            else {
-                listItem += "<tr><td class='text-center' colspan=7>No Record Found</td></tr>";
-                $("#SoftwareTypes").DataTable().destroy();
-                $("#DetailBody").html(listItem);
-                $("#lblTotal").html(0);
-            }
-        },
-        error: function (result) {
-            Swal.fire({
-                text: ""
-            });
-        }
-    });
-}
-function Deleteattechment(AttechId) {
-    $.ajax({
-        url: '/Projects/DeleteAttech',
-        type: 'POST',
-        data: { "AttechId": AttechId },
+        data: { "projid": $("#spanProjectId").html() },
         success: function (response) {
             console.log(response);
 
-      
-                if (response == 1) {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Record Deleted successfully',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+            if (response >= 1) {
 
-                    AttechHistory();
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Project Successfully Submitted..!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
 
-                }
-            
+                current_fs = $(thisdata).parent();
+                next_fs = $(thisdata).parent().next();
+
+
+                //Add Class Active
+                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+                //show the next fieldset
+                next_fs.show();
+                //hide the current fieldset with style
+                current_fs.animate({ opacity: 0 }, {
+                    step: function (now) {
+                        // for making fielset appear animation
+                        opacity = 1 - now;
+
+                        current_fs.css({
+                            'display': 'none',
+                            'position': 'relative'
+                        });
+                        next_fs.css({ 'opacity': opacity });
+                    },
+                    duration: 600
+                });
+
+
+            }
+
         }
     });
 }
+
 function validationIsSuccessful() {
     // Your validation logic goes here
     // Return true if validation passes, false otherwise
@@ -537,7 +433,7 @@ function validationIsSuccessful() {
     // Validation passes
     return true;
 }
-function DateFormatedd_mm_yyyy(date) {
+function DateFormateyyy_mm_dd(date) {
 
    
     var datef2 = new Date(date);

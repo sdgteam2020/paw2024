@@ -41,6 +41,8 @@ using swas.BAL.Repository;
 using Org.BouncyCastle.Utilities;
 using iText.Commons.Actions.Contexts;
 using Microsoft.AspNet.Identity;
+using iText.StyledXmlParser.Jsoup.Nodes;
+using Grpc.Core;
 
 namespace swas.UI.Controllers
 {
@@ -53,6 +55,7 @@ namespace swas.UI.Controllers
     ///Dated :- 29/07/2023  
     ///Remarks :- 
     //manish
+    [Authorize]
     public class HomeController : Controller
     {
         //private readonly ILogger<HomeController> _logger;
@@ -112,527 +115,7 @@ namespace swas.UI.Controllers
                 {
                     return Redirect("/Identity/Account/Login");
                 }
-                var stgip = 0;
-                var stgipwlist = 0;
-                var stghwstkhol = 0;
-                int uid = 0;
-                var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-                var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
-                var watermarkText = $" {ipAddress}\n  {currentDatetime}";
-                TempData["ipadd"] = watermarkText;
-
-                var dateTime = DateTime.Now;
-                var stakeholders = await _context.tbl_mUnitBranch.Where(a => a.commentreqdid == true || a.unitid == Logins.unitid).ToListAsync();
-                ViewBag.stakeholders = stakeholders;
-
-                var Stk_Status = _context.StkStatus.ToList();
-                ViewBag.Stk_Status = Stk_Status;
-
-                List<mCommand> cl = await _dlRepository.ddlCommand();
-
-                if (cl == null)
-                {
-                    cl = new List<mCommand>();
-                }
-
-               
-                if (cl != null)
-                {
-                    cl.Insert(0, new mCommand { comdid = 0, Command_Name = "--Select--" });
-                }
-                ViewBag.cl = cl.ToList();
-
-                try
-                {
-                    if (Logins.IsNotNull())
-                    {
-                        if (Logins.Role == "StakeHolder")
-                        {
-                            return Redirect("/Home/newproject");
-
-                        }
-
-                        else
-                        {
-                            int cnt = await _stkholdmove.CountinboxAsync(Logins.unitid ?? 0);
-                            ViewBag.Count = cnt;
-                            Logins.totmsgin = cnt;
-                            SessionHelper.SetObjectAsJson(HttpContext.Session, "User", Logins);
-
-                            int tocommentin = _context.Notification
-                        .Where(notification => notification.IsRead == false)
-                        .ToList()
-                        .Count();
-                            ViewBag.tocommentin = tocommentin;
-                            Logins.tocommentin = tocommentin;
-                            SessionHelper.SetObjectAsJson(HttpContext.Session, "User", Logins);
-
-                            var projects = await _projectsRepository.GetActProjectsAsync();
-                            ViewBag.projects = projects;
-                            var sql = "";
-                            var sqlsecond = "";
-
-                            if (Logins.Role == "Dte")
-                            {
-                                sql = @"
-                                        SELECT
-                                        s.StatusId,
-                                        s.StageId,
-                                        s.Status,
-                                        s.IsDeleted,
-                                        s.IsActive,
-                                        s.EditDeleteBy,
-                                        s.EditDeleteDate,
-                                        s.UpdatedByUserId,
-                                        s.DateTimeOfUpdate,
-                                        s.InitiaalID,
-                                        s.FininshID,
-                                    s.ViewDescUnit,
-                                    s.ViewDescStkHold,
-                                    s.Statseq,
-                                    
-                                    
-                                        COALESCE(p.TotalProj, 0) AS TotalProj
-                                    FROM
-                                        mStatus s
-                                    LEFT JOIN
-                                        (SELECT t.StatusId, COUNT(p.ProjId) AS TotalProj
-                                         FROM ProjStakeHolderMov t
-                                         LEFT JOIN projects p ON t.PsmId = p.CurrentPslmId
-                                         WHERE  t.ActionCde>0
-                                         GROUP BY t.StatusId) p
-                                    ON s.StatusId = p.StatusId
-                                    
-                                    ORDER BY s.Statseq
-                                                        ";
-
-                                stgip = (from p in _context.ProjStakeHolderMov
-                                         where new[] { 7, 11, 14 }.Contains(p.ActionId) &&
-                                               !_context.ProjStakeHolderMov.Any(sub1 => sub1.ProjId == p.ProjId && sub1.StatusId > 19) &&
-                                               _context.ProjStakeHolderMov.Any(sub2 => sub2.ProjId == p.ProjId && sub2.ActionCde > 0)
-                                         group p by p.ProjId into g
-                                         where g.Select(p => p.ActionId).Distinct().Count() == 3
-                                         select g.Key).Count();
-
-
-
-                                stgipwlist = (from a in _context.Projects
-                                              join b in _context.ProjStakeHolderMov on a.CurrentPslmId equals b.PsmId into projStakeHolderMovGroup
-                                              from b in projStakeHolderMovGroup.DefaultIfEmpty()
-                                              where _context.ProjStakeHolderMov
-                                                  .Where(psm => psm.StageId == 29 && new[] { 47, 48 }.Contains(psm.ActionId)
-                                                 && b.ActionCde > 0
-                                                  )
-                                                  .Select(psm => psm.ProjId)
-                                                  .Contains(a.ProjId)
-                                              select a).Count();
-
-
-
-                                stghwstkhol = (from sb in _context.Projects
-                                               join sa in _context.ProjStakeHolderMov on sb.ProjId equals sa.ProjId into saGroup
-                                               from sa in saGroup.DefaultIfEmpty()
-                                               where (sa == null || (sa.StatusId == 21 && sa.ActionId == 20))
-                                                     && !_context.ProjStakeHolderMov.Any(psh => psh.ProjId == sb.ProjId && psh.StatusId > 21)
-                                               group new { sb, sa } by new { sb.ProjId, sb.ProjName } into grouped
-                                               select grouped.Count()
-                                                ).FirstOrDefault();
-
-
-                            }
-                            else
-                            {
-                                sql = @"
-
-                                       SELECT
-                                           s.StatusId,
-                                           s.StageId,
-                                           s.Status,
-                                           s.IsDeleted,
-                                           s.IsActive,
-                                           s.EditDeleteBy,
-                                           s.EditDeleteDate,
-                                           s.UpdatedByUserId,
-                                           s.DateTimeOfUpdate,
-                                           s.InitiaalID,
-                                           s.FininshID,
-                                       s.ViewDescUnit,
-                                       s.ViewDescStkHold,
-                                       s.Statseq,
-                                       
-                                           COALESCE(p.TotalProj, 0) AS TotalProj
-                                       FROM
-                                           mStatus s
-                                       LEFT JOIN
-                                           (SELECT t.StatusId, COUNT(p.ProjId) AS TotalProj
-                                            FROM ProjStakeHolderMov t
-                                            LEFT JOIN projects p ON t.PsmId = p.CurrentPslmId
-                                            WHERE  p.StakeHolderId= " + Logins.unitid + @"
-                                       and t.ActionCde>0
-                                            GROUP BY t.StatusId) p
-                                       ON s.StatusId = p.StatusId
-                                       
-                                       ORDER BY s.Statseq
-                                       
-                                       ";
-
-
-                                stgip = (from p in _context.ProjStakeHolderMov
-                                         join project in _context.Projects on p.ProjId equals project.ProjId into projJoin
-                                         from projs in projJoin.DefaultIfEmpty()
-                                         where new[] { 7, 11, 14 }.Contains(p.ActionId) &&
-                                               !_context.ProjStakeHolderMov.Any(sub1 => sub1.ProjId == p.ProjId && sub1.StatusId > 19) &&
-                                               _context.ProjStakeHolderMov.Any(sub2 => sub2.ProjId == p.ProjId && sub2.ActionCde > 0) &&
-                                               projs.StakeHolderId == Logins.unitid
-                                         group p by p.ProjId into g
-                                         where g.Select(p => p.ActionId).Distinct().Count() == 3
-                                         select g.Key).Count();
-
-
-                                stgipwlist = (from a in _context.Projects
-                                              join b in _context.ProjStakeHolderMov on a.CurrentPslmId equals b.PsmId into projStakeHolderMovGroup
-                                              from b in projStakeHolderMovGroup.DefaultIfEmpty()
-                                              where _context.ProjStakeHolderMov
-                                                  .Where(psm => psm.StageId == 29 && new[] { 47, 48 }.Contains(psm.ActionId)
-                                                  && a.StakeHolderId == Logins.unitid && b.ActionCde > 0
-                                                  )
-                                                  .Select(psm => psm.ProjId)
-                                                  .Contains(a.ProjId)
-                                              select a).Count();
-
-                                stghwstkhol = (from sb in _context.Projects
-                                               join sa in _context.ProjStakeHolderMov on sb.ProjId equals sa.ProjId into saGroup
-                                               from sa in saGroup.DefaultIfEmpty()
-                                               where (sa == null || (sa.StatusId == 21 && sa.ActionId == 20) && sb.StakeHolderId == Logins.unitid)
-                                                     && !_context.ProjStakeHolderMov.Any(psh => psh.ProjId == sb.ProjId && psh.StatusId > 21)
-                                               group new { sb, sa } by new { sb.ProjId, sb.ProjName } into grouped
-                                               select grouped.Count()
-                                                ).FirstOrDefault();
-
-                            }
-
-
-                            List<tbl_mStatus> statuses = new List<tbl_mStatus>();
-                            statuses = await _context.mStatus.FromSqlRaw(sql).ToListAsync();
-                            List<Resultss> reslt = new List<Resultss>();
-
-
-
-                            foreach (var status in statuses)
-                            {
-                                status.EncID = _dataProtector.Protect(status.StatusId.ToString());
-
-                                try
-                                {
-                                    if (status != null)
-                                    {
-
-                                        if (status.StatusId == 5 || status.StatusId == 7 || status.StatusId == 11)
-                                        {
-
-                                            if (status.StatusId == 5)
-                                                uid = 4;
-                                            if (status.StatusId == 7)
-                                                uid = 3;
-                                            if (status.StatusId == 11)
-                                                uid = 5;
-
-                                            sqlsecond = @"
-
-                                                         SELECT CONVERT(VARCHAR, COUNT(*)) AS Result FROM (
-                SELECT ProjName, ProjId, PsmId, StatusId, StageId 
-                FROM ProjStakeHolderMov a
-                LEFT JOIN Projects b ON a.PsmId = b.CurrentPslmId
-                WHERE a.ProjId IN (
-                    SELECT aa.ProjId 
-                    FROM Projects bb 
-                    LEFT JOIN ProjStakeHolderMov aa ON a.PsmId = b.CurrentPslmId AND aa.StatusId = 4
-                )
-                AND a.ProjId IN (
-                    SELECT ProjId 
-                    FROM ProjStakeHolderMov 
-                    WHERE ActionId IN (
-                        SELECT ActionsId 
-                        FROM mActions 
-                        WHERE StageId = 2 AND StatCompId = " + uid + @" AND ProjId = a.ProjId
-                    )
-                )
-                AND a.ProjId NOT IN (
-                    SELECT ProjId 
-                    FROM ProjStakeHolderMov 
-                    WHERE ActionId IN (
-                        SELECT ActionsId 
-                        FROM mActions 
-                        WHERE StatusId > 15 AND ProjId = a.ProjId
-                    )
-                )
-            ) AS ss";
-
-
-                                            if (Logins.Role == "Unit")
-                                            {
-                                                sqlsecond = @"
-
-                                                            select convert(varchar, count(*)) as Result from
-                                                            (
-                                                            
-                                                            select b.ProjName,  a.ProjId,a.PsmId,a.StatusId,a.StageId from ProjStakeHolderMov a
-                                                            left join Projects b on a.PsmId=b.CurrentPslmId
-                                                            where a.ProjId in 
-                                                            (select aa.ProjId from Projects bb 
-                                                            left join ProjStakeHolderMov aa on a.PsmId=b.CurrentPslmId and aa.StatusId=4)
-                                                            
-                                                            and  a.ProjId in 
-                                                            (select ProjId from ProjStakeHolderMov where ActionId in
-                                                            (select ActionsId from mActions where StageId=2 and StatCompId=" + uid + @" and ProjId=a.ProjId)
-                                                            ) and b.StakeHolderId= " + Logins.unitid + @" 
-                                                            
-                                                            and  a.ProjId not in 
-                                                            (select ProjId from ProjStakeHolderMov where ActionId in
-                                                            (select ActionsId from mActions where StatusId>15
-                                                            
-                                                            ) and ProjId=a.ProjId )
-                                                            )  as ss
-                                                            
-                                                            
-                                                            ";
-
-
-
-                                            }
-
-
-                                            reslt = await _context.Resultstr.FromSqlRaw(sqlsecond).ToListAsync();
-
-                                            // var matchingStatSecond = statsecond.FirstOrDefault();
-
-                                            if (reslt != null)
-                                            {
-                                                // string res = reslt.Select(a => a.Result).FirstOrDefault().ToString();
-                                                status.TotalProj = int.Parse(reslt.Select(a => a.Result).FirstOrDefault().ToString());
-                                            }
-                                            else
-                                            {
-                                                // Handle the case where result.Result is null.
-                                                status.TotalProj = 0; // Or any other default value
-                                            }
-                                        }
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
-                                    string msg = ex.Message;
-                                }
-                            }
-
-                            //** san
-
-
-                            List<tbl_viewActionsum> actions = new List<tbl_viewActionsum>();
-
-                            var stg1 = statuses.Where(a => a.StageId == 1).ToList();
-                            var stg2 = statuses.Where(a => a.StageId == 2 || a.StageId == 0).ToList();
-
-                            var sumstg2 = stg1
-                              .Where(a => a.StageId == 1 && a.StatusId == 4)
-                              .Select(b => b.TotalProj).ToList();
-                            //** san
-
-                            var sumstg1 = stg1
-                            .Where(a => a.StageId == 1 && a.StatusId != 31)
-                            .Select(b => b.TotalProj)
-                            .Sum();
-                           
-                                                ViewBag.TotalNew = sumstg1;
-
-                            var stg3 = statuses.Where(a => a.StageId == 3).ToList();
-                            ViewBag.Statusone = stg1.ToList();
-                            ViewBag.Statustwo = stg2.ToList();
-                            ViewBag.Statusthree = stg3.ToList();
-                            ViewBag.SumfwdExt = sumstg2.ToList();
-                            ViewBag.Sumip = stgip;
-                            ViewBag.Whitlst = stgipwlist;
-                            ViewBag.PendiStkh = stghwstkhol;
-
-                            int totalSum = stg1.Sum(item => item.TotalProj ?? 0);
-                            ViewBag.Statustotone = totalSum;
-                            totalSum = stg2.Sum(item => item.TotalProj ?? 0);
-                            ViewBag.Statustottwo = totalSum;
-                            totalSum = stg3.Sum(item => item.TotalProj ?? 0);
-                            ViewBag.Statustotthree = totalSum;
-
-                            sql = "SELECT ActionsId, Actions, total, SUM(total) OVER() as gttotal " +
-                                                    "FROM(SELECT e.ActionsId,e.Actions,COUNT(b.ActionId) as total " +
-                                                    "FROM mActions e LEFT JOIN ProjStakeHolderMov b ON e.ActionsId = b.actionid " +
-                                                    "LEFT JOIN Projects c ON c.CurrentPslmId = b.PsmId WHERE e.StagesId = 1 " +
-                                                    "GROUP BY e.ActionsId, e.Actions, e.StagesId) AS subquery";
-
-                            actions = _context.Viewaction.FromSqlRaw(sql).ToList();
-
-                            ViewBag.ActionStgone = actions.ToList();
-
-                            sql = "SELECT ActionsId, Actions, total, SUM(total) OVER() as gttotal " +
-                                                     "FROM(SELECT e.ActionsId,e.Actions,COUNT(b.ActionId) as total " +
-                                                     "FROM mActions e LEFT JOIN ProjStakeHolderMov b ON e.ActionsId = b.actionid " +
-                                                     "LEFT JOIN Projects c ON c.CurrentPslmId = b.PsmId WHERE e.StagesId = 2 " +
-                                                     "GROUP BY e.ActionsId, e.Actions, e.StagesId) AS subquery";
-
-                            actions = _context.Viewaction.FromSqlRaw(sql).ToList();
-                            ViewBag.ActionStgtwo = actions.ToList();
-
-                            sql = "SELECT ActionsId, Actions, total, SUM(total) OVER() as gttotal " +
-                                                  "FROM(SELECT e.ActionsId,e.Actions,COUNT(b.ActionId) as total " +
-                                                  "FROM mActions e LEFT JOIN ProjStakeHolderMov b ON e.ActionsId = b.actionid " +
-                                                  "LEFT JOIN Projects c ON c.CurrentPslmId = b.PsmId WHERE e.StagesId = 3 " +
-                                                  "GROUP BY e.ActionsId, e.Actions, e.StagesId) AS subquery";
-
-                            actions = _context.Viewaction.FromSqlRaw(sql).ToList();
-                            ViewBag.ActionStgthree = actions.ToList();
-
-
-
-                            ///Developer Name :- Sub Maj M Sanal Kumar
-
-                            ///Revised on :- 08/10/2023
-
-                            ///    proj originator and current user error rectified
-                            ///    
-
-
-                            var proj = await (from a in _context.Projects
-                                              join b in _context.ProjStakeHolderMov on a.CurrentPslmId equals b.PsmId into bs
-                                              from e in bs.DefaultIfEmpty()
-                                              join d in _context.mStatus on e.StatusId equals d.StatusId into ds
-                                              from eWithStatus in ds.DefaultIfEmpty()
-                                              join c in _context.tbl_mUnitBranch on e.CurrentStakeHolderId equals c.unitid into cs
-                                              from eWithUnit in cs.DefaultIfEmpty()
-
-                                              join g in _context.tbl_mUnitBranch on a.StakeHolderId equals g.unitid into psh
-                                              from prosh in psh.DefaultIfEmpty()
-
-                                              join f in _context.Comment on a.CurrentPslmId equals f.PsmId into fs
-                                              from eWithComment in fs.DefaultIfEmpty()
-                                              where a.IsActive && !a.IsDeleted && (a.StakeHolderId == a.StakeHolderId || e.FromStakeHolderId == a.StakeHolderId || e.ToStakeHolderId == a.StakeHolderId || e.CurrentStakeHolderId == a.StakeHolderId)
-
-                                              orderby e.DateTimeOfUpdate descending
-                                              select new tbl_Projects
-                                              {
-                                                  ProjId = a.ProjId,
-                                                  ProjName = a.ProjName,
-                                                  StakeHolderId = a.StakeHolderId,
-                                                  CurrentPslmId = a.CurrentPslmId,
-                                                  InitiatedDate = a.InitiatedDate,
-                                                  CompletionDate = a.CompletionDate,
-                                                  IsWhitelisted = a.IsWhitelisted,
-                                                  InitialRemark = a.InitialRemark,
-                                                  IsDeleted = a.IsDeleted,
-                                                  IsActive = a.IsActive,
-                                                  EditDeleteBy = a.EditDeleteBy,
-                                                  EditDeleteDate = a.EditDeleteDate,
-                                                  UpdatedByUserId = a.UpdatedByUserId,
-                                                  DateTimeOfUpdate = e.DateTimeOfUpdate,
-                                                  CurrentStakeHolderId = a.CurrentStakeHolderId,
-                                                  StakeHolder = prosh.UnitName,   
-                                                  FwdtoUser = eWithUnit.UnitName,  
-                                                  Status = eWithStatus.Status,
-                                                  Comments = eWithComment.Comment
-
-                                              }).ToListAsync();
-
-
-                            ViewBag.proj = proj;
-
-
-                            // Create dictionaries to store count and data for each status group
-
-                            var statusGroups = proj.GroupBy(p => p.Status);
-
-                            var countDictionary = new Dictionary<string, int>();
-                            var statusDataDictionary = new Dictionary<string, List<tbl_Projects>>();
-
-                            try
-                            {
-
-
-                                foreach (var group in statusGroups)
-                                {
-                                    var statusName = group.Key;
-
-                                    // Check if statusName is null before adding it to dictionaries
-                                    if (statusName != null)
-                                    {
-                                        var projectsInGroup = group.ToList();
-
-                                        // Check if projectsInGroup is null before adding it to dictionaries
-                                        if (projectsInGroup != null)
-                                        {
-                                            countDictionary[statusName] = projectsInGroup.Count;
-                                            statusDataDictionary[statusName] = projectsInGroup;
-                                        }
-                                        else
-                                        {
-                                            // Handle the case when projectsInGroup is null (if necessary)
-                                            // statusDataDictionary[statusName] = new List<Project>();
-                                        }
-                                    }
-                                    else
-                                    {
-                                        // Handle the case when statusName is null (if necessary)
-                                        // For example: statusName = "Unknown Status";
-                                    }
-                                }
-
-
-                            }
-                            catch (Exception ex)
-                            {
-                                string ss = ex.Message;
-                            }
-
-                            ViewBag.StatusDataDictionary = statusDataDictionary;
-                            ViewBag.CountDictionary = countDictionary;
-
-                            ViewBag.statusName = statusDataDictionary.Keys.ToList();
-
-                            // ViewBag.unitstatus = _projectsRepository.GetStkHolderStatus();
-                            List<TimeExceedsAlerts> tlex = await _projectsRepository.GetStkHolderStatus();
-
-                            sql = @"select h.StatusId as ID, count(h.Status) as Projcount, h.Status as Stagescleared from Projects e
-                                    left join ProjStakeHolderMov f on e.ProjId = f.ProjId
-                                            left join mActions g on f.ActionId = g.ActionsId
-                                                    left join mStatus h on f.StatusId = h.StatusId
-                                                        where f.ActionId in (
-
-                                                            select b.ActionsId from mStatus a left join
-                                                            mActions b on a.StatusId = b.StatCompId
-                                                            where b.ActionsId is not null) and h.StatusId !=1
-                                                            group by h.Status, h.StatusId";
-
-
-                            // List<tbl_viewStageSummary> stgsum = await _projectsRepository.GetStageSummary();
-                            List<tbl_viewStageSummary> stgsum = new List<tbl_viewStageSummary>();
-
-                            stgsum = _context.StageSummary.FromSqlRaw(sql).ToList();
-
-                            ViewBag.unitstatus = tlex;
-                            ViewBag.stgsum = stgsum;
-                            ///  end data grid tab
-
-                            return View();
-
-                        }
-                    }
-
-                    else
-                        return Redirect("/Identity/Account/Login");
-
-                }
-                catch (Exception ex)
-                {
-
-                    swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                    return RedirectToAction("Error", "Home");
-                }
+                return View();
             }
             catch (Exception ex)
             {
@@ -668,27 +151,47 @@ namespace swas.UI.Controllers
                 ViewBag.Stk_StatusForDte = Stk_StatusForDte;
 
 
-                var queryes = (from comment in _context.StkComment
-                               join stakeholder in _context.tbl_mUnitBranch on comment.StakeHolderId equals stakeholder.unitid
-                               join status in _context.StkStatus on comment.StkStatusId equals status.StkStatusId into statusGroup
-                               from status in statusGroup.DefaultIfEmpty() // Left Join
-                               join project in _context.Projects on comment.ProjId equals project.ProjId // Assuming 'ProjId' is in the 'Stk_Comments' table
-                               orderby comment.StkCommentId descending
-                               select new
-                               {
-                                   StakeholderName = stakeholder.UnitName,
-                                   StatusName = status != null ? status.Status : null,
-                                   Comments = comment.Comments ?? "",
-                                   ProjId = comment.ProjId ?? 0, // Include ProjId
-                                   PsmId = project.CurrentPslmId,
-                                   Date = comment.DateTimeOfUpdate,
-                                   CommentId = comment.StkCommentId,
-                                   StakeholderId = comment.StakeHolderId
+                //var queryes = (from comment in _context.StkComment
+                //               join stakeholder in _context.tbl_mUnitBranch on comment.StakeHolderId equals stakeholder.unitid
+                //               join status in _context.StkStatus on comment.StkStatusId equals status.StkStatusId into statusGroup
+                //               from status in statusGroup.DefaultIfEmpty() // Left Join
+                //               join project in _context.Projects on comment.ProjId equals project.ProjId // Assuming 'ProjId' is in the 'Stk_Comments' table
+                //               orderby comment.StkCommentId descending
+                //               select new
+                //               {
+                //                   StakeholderName = stakeholder.UnitName,
+                //                   StatusName = status != null ? status.Status : null,
+                //                   Comments = comment.Comments ?? "",
+                //                   ProjId = comment.ProjId ?? 0, // Include ProjId
+                //                   PsmId = project.CurrentPslmId,
+                //                   Date = comment.DateTimeOfUpdate,
+                //                   CommentId = comment.StkCommentId,
+                //                   StakeholderId = comment.StakeHolderId
 
-                               }).ToList();
+                //               }).ToList();
+
+                //var queryes = (from proj in _context.Projects
+                //               join mov in _context.ProjStakeHolderMov on proj.ProjId equals mov.ProjId
+                //               join stakeholder in _context.tbl_mUnitBranch on proj.StakeHolderId equals stakeholder.unitid
+                //               join comment in _context.StkComment on mov.PsmId equals comment.PsmId into com
+                //               from comment in com.DefaultIfEmpty()
+                //               join status in _context.StkStatus on comment.StkStatusId equals status.StkStatusId into statusGroup
+                //               from status in statusGroup.DefaultIfEmpty()
+                //               select new
+                //               {
+                //                   StakeholderName = stakeholder.UnitName,
+                //                   StatusName = status.Status ?? "" ,
+                //                   Comments = comment.Comments ?? "",
+                //                   ProjId = comment.ProjId ?? 0, // Include ProjId
+                //                   PsmId = mov.PsmId,
+                //                   Date = comment.DateTimeOfUpdate ?? null,
+                //                   CommentId = comment.StkCommentId == null ? 0 : comment.StkCommentId,
+                //                   StakeholderId = stakeholder.unitid == null ? 0 : stakeholder.unitid
+                //               }).ToList();
 
 
-                ViewBag.queryes = queryes;
+
+                //ViewBag.queryes = queryes;
                 StkComment stkcm = new StkComment();
 
                 return View("ProjComments", stkcm);
@@ -886,12 +389,12 @@ s.Statseq
                     }
                     // Pass roles data to the view
 
-                    var data = await _projectsRepository.GetWhitelistedProjAsync();
-                    ViewBag.ProjectList = data;
+                   // var data = await _projectsRepository.GetWhitelistedProjAsync();
+                   // ViewBag.ProjectList = data;
                     ViewBag.WhiteListed = await _projectsRepository.GetWhiteListedActionProj();
-                    ViewBag.RecentAction = await _projectsRepository.GetRecentActionProj();
-                    ViewBag.HoldProj = await _projectsRepository.GetHoldActionProj();
-                    ViewBag.RFPProj = await _projectsRepository.GetHoldRFPProj();
+                   // ViewBag.RecentAction = await _projectsRepository.GetRecentActionProj();
+                    //ViewBag.HoldProj = await _projectsRepository.GetHoldActionProj();
+                    //ViewBag.RFPProj = await _projectsRepository.GetHoldRFPProj();
 
              
                     ViewBag.ipadd = watermarkText;
@@ -940,11 +443,13 @@ s.Statseq
                     ViewBag.ty = ty.ToList();
                     ViewBag.ty = ty.ToList();
 
-                    var data = await _projectsRepository.GetWhitelistedProjAsync();
-                    ViewBag.ProjectList = data;
-                    ViewBag.RecentAction = await _projectsRepository.GetRecentActionProj();
-                    ViewBag.HoldProj = await _projectsRepository.GetHoldActionProj();
-                    ViewBag.RFPProj = await _projectsRepository.GetHoldRFPProj();
+                    // var data = await _projectsRepository.GetWhitelistedProjAsync();
+                    // ViewBag.ProjectList = data;
+                    ViewBag.WhiteListed = await _projectsRepository.GetWhiteListedActionProj();
+                    // ViewBag.RecentAction = await _projectsRepository.GetRecentActionProj();
+                    //ViewBag.HoldProj = await _projectsRepository.GetHoldActionProj();
+                    //ViewBag.RFPProj = await _projectsRepository.GetHoldRFPProj();
+
 
                     ViewBag.ipadd = watermarkText;
 
@@ -1350,256 +855,7 @@ s.Statseq
             }
         }
 
-        // Created by Manish 
-        // Reviewed on 18 Nov by Sub Maj Sanal
-        // Revied Purpose --->> Code mode changed.... Upload included for proj  move 
-
-        [HttpPost]
-        public async Task<IActionResult> UpdateStatus(StkComment? stkcom, IFormFile uploadfile)
-        {
-            try
-            {
-                Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
-
-                //try
-                //{
-                var stkComment = new StkComment
-                {
-                    StkStatusId = stkcom.StkStatusId,
-                    Comments = stkcom.Comments,
-                    StakeHolderId = Logins.unitid,
-                    ProjId = stkcom.ProjId,
-                    PsmId = stkcom.PsmId,
-                    DateTimeOfUpdate = DateTime.Now,
-                    ActFileName = null,
-                    Attpath = null,
-                    AttDesc = null
-
-                };
-
-
-
-                if (uploadfile == null)
-                    ModelState.Remove("uploadfile");
-
-                if (ModelState.IsValid && stkComment.Comments != null)
-                {
-                    // Model is valid, proceed with processing
-                    // ...
-                    List<ProjectDetailsDTO> projectDetailsDTOs = new List<ProjectDetailsDTO>();
-                    projectDetailsDTOs = await _ActionsRepository.GetNextStgStatAct(stkcom.ProjId, stkcom.PsmId, 2);
-
-
-
-                    if (projectDetailsDTOs.Count > 0)
-                    {
-                        //int? ProjID, int? psmID, int? stgID
-
-                        if ((int)projectDetailsDTOs[0].NextActionId > 0)
-                        {
-                            if (stkComment.StkStatusId == 1)
-                            {
-                                // Accepted with comments only  
-                                Projmove projm = new Projmove();
-                                projm.DataProjId = stkcom.ProjId;
-                                projm.ProjMov.ProjId = stkcom.ProjId ?? 0;
-                                projm.ProjMov.StakeHolderId = projectDetailsDTOs[0].StkHoldID ?? 0;
-                                projm.ProjMov.StageId = projectDetailsDTOs[0].NextStage ?? 0;
-                                projm.ProjMov.StatusId = projectDetailsDTOs[0].NextStatus ?? 0;
-                                projm.ProjMov.ActionId = projectDetailsDTOs[0].NextActionId ?? 0;
-                                projm.ProjMov.ActionDt = DateTime.Now;
-                                projm.ProjMov.TostackholderDt = DateTime.Now;
-                                projm.ProjMov.AddRemarks = projectDetailsDTOs[0].ActionName ?? "";
-
-
-
-                                // att start
-
-                                if (uploadfile != null && uploadfile.Length > 0)
-                                {
-
-
-                                    string uniqueFileName = $"{"Swas"}_{Guid.NewGuid()}{System.IO.Path.GetExtension(uploadfile.FileName)}";
-
-                                    string filePath = System.IO.Path.Combine(_env.ContentRootPath, "wwwroot/Uploads/", uniqueFileName);
-
-                                    using (var stream = new FileStream(filePath, FileMode.Create))
-                                    {
-                                        uploadfile.CopyTo(stream);
-                                    }
-
-                                    tbl_AttHistory atthis = new tbl_AttHistory();
-                                    atthis.AttPath = uniqueFileName;
-                                    atthis.PsmId = stkcom.PsmId ?? 0;
-                                    atthis.UpdatedByUserId = Logins.unitid;
-                                    atthis.DateTimeOfUpdate = DateTime.Now;
-                                    atthis.IsDeleted = false;
-                                    atthis.IsActive = true;
-                                    atthis.EditDeleteBy = Logins.unitid;
-                                    atthis.EditDeleteDate = DateTime.Now;
-                                    atthis.ActionId = 0;
-                                    atthis.TimeStamp = DateTime.Now;
-                                    atthis.Reamarks = Logins.Unit + "  : " + stkcom.Reamarks;
-                                    atthis.ActFileName = uploadfile.FileName;
-                                    projm.Atthistory.Add(atthis);
-                                    projm.Atthistory.RemoveAll(a => a.AttPath == null);
-                                    stkComment.ActFileName = uploadfile.FileName;
-                                    stkComment.Attpath = uniqueFileName;
-
-                                    // await _attHistoryRepository.AddAttHistoryAsync(atthis);
-                                    // TempData["SuccessMessage"] = "New Files Attached  !";
-
-                                }
-
-                                await _stkholdmove.AddProStkMovBlogAsync(projm);
-                                await _context.SaveChangesAsync();
-                                await _context.StkComment.AddAsync(stkComment);
-                                await _context.SaveChangesAsync();
-
-                                var Commentdata = from comment in _context.StkComment
-                                                  join branch in _context.tbl_mUnitBranch on comment.StakeHolderId equals branch.unitid
-                                                  join project in _context.Projects on comment.ProjId equals project.ProjId
-                                                  join projMov in _context.ProjStakeHolderMov on comment.PsmId equals projMov.PsmId
-                                                  join StackHolder in _context.tbl_mUnitBranch on comment.StakeHolderId equals StackHolder.unitid
-                                                  join actions in _context.mActions on comment.ActionsId equals actions.ActionsId into actionsGroup
-                                                  from actions in actionsGroup.DefaultIfEmpty()
-                                                  where comment.ProjId == stkcom.ProjId
-                                                  select new Notification
-                                                  {
-                                                      ProjId = (int)comment.ProjId,
-                                                      NotificationFrom = (int)comment.StakeHolderId,
-                                                      NotificationTo = projMov.StakeHolderId
-
-                                                  };
-
-                                foreach (var item in Commentdata)
-                                {
-                                    int projId = item.ProjId;
-
-
-                                    var commentsForProj = await _context.ProjStakeHolderMov
-                                                                        .Where(sc => sc.ProjId == projId)
-                                                                        .ToListAsync();
-
-                                    var notificationsToAdd = commentsForProj.Select(comment => new Notification
-                                    {
-                                        ProjId = projId,
-                                        NotificationFrom = comment.FromStakeHolderId,
-                                        NotificationTo = comment.ToStakeHolderId,
-                                        IsRead = false,
-                                        ReadDateTime = DateTime.Now,
-                                    }).ToList();
-
-                                    _context.Notification.AddRange(notificationsToAdd);
-                                }
-
-                                await _context.SaveChangesAsync();
-                                // att end
-
-
-                                TempData["SuccessMessage"] = "Successfully Approved..!";
-                                return RedirectToActionPermanent("ProjComments", "Home");
-                            }
-                            if (stkComment.StkStatusId == 2 || stkComment.StkStatusId == 3 || stkComment.StkStatusId == 4)
-                            {
-
-                                if (uploadfile != null && uploadfile.Length > 0)
-                                {
-                                    string uniqueFileName = $"{"Swas"}_{Guid.NewGuid()}{System.IO.Path.GetExtension(uploadfile.FileName)}";
-
-                                    string filePath = System.IO.Path.Combine(_env.ContentRootPath, "wwwroot/Uploads/", uniqueFileName);
-
-                                    using (var stream = new FileStream(filePath, FileMode.Create))
-                                    {
-                                        uploadfile.CopyTo(stream);
-                                    }
-                                    stkComment.ActFileName = uploadfile.FileName;
-                                    stkComment.Attpath = uniqueFileName;
-
-                                    // await _attHistoryRepository.AddAttHistoryAsync(atthis);
-                                    // TempData["SuccessMessage"] = "New Files Attached  !";
-
-                                }
-
-                                TempData["SuccessMessage"] = "Comments Updated..! ";
-                                // Obsn and comments only here 
-                                _context.StkComment.Add(stkComment);
-                                _context.SaveChanges();
-
-                                var Commentdata = from comment in _context.StkComment
-                                                  join branch in _context.tbl_mUnitBranch on comment.StakeHolderId equals branch.unitid
-                                                  join project in _context.Projects on comment.ProjId equals project.ProjId
-                                                  join projMov in _context.ProjStakeHolderMov on comment.PsmId equals projMov.PsmId
-                                                  join StackHolder in _context.tbl_mUnitBranch on comment.StakeHolderId equals StackHolder.unitid
-                                                  join actions in _context.mActions on comment.ActionsId equals actions.ActionsId into actionsGroup
-                                                  from actions in actionsGroup.DefaultIfEmpty()
-                                                  where comment.ProjId == stkcom.ProjId
-                                                  select new Notification
-                                                  {
-                                                      ProjId = (int)comment.ProjId,
-                                                      NotificationFrom = (int)comment.StakeHolderId,
-                                                      NotificationTo = projMov.StakeHolderId
-
-                                                  };
-
-
-
-                                foreach (var item in Commentdata)
-                                {
-                                    int projId = item.ProjId;
-
-
-                                    var commentsForProj = await _context.ProjStakeHolderMov
-                                                                        .Where(sc => sc.ProjId == projId)
-                                                                        .ToListAsync();
-
-                                    var notificationsToAdd = commentsForProj.Select(comment => new Notification
-                                    {
-                                        ProjId = projId,
-                                        NotificationFrom = comment.FromStakeHolderId,
-                                        NotificationTo = comment.ToStakeHolderId,
-                                        IsRead = true,
-                                        ReadDateTime = DateTime.Now,
-                                    }).ToList();
-
-                                    _context.Notification.AddRange(notificationsToAdd);
-                                }
-
-                                await _context.SaveChangesAsync();
-
-                                return RedirectToActionPermanent("ProjComments", "Home");
-                            }
-                        }
-                        else
-                        {
-                            TempData["SuccessMessage"] = "Already Approved..! ";
-                            return RedirectToActionPermanent("ProjComments", "Home");
-                            // already accepted message here 
-                        }
-                        TempData["SuccessMessage"] = "Satus Error..! ";
-                        return RedirectToActionPermanent("ProjComments", "Home");
-                    }
-                    else
-                    {
-                        TempData["SuccessMessage"] = "Project Not Exist for this action..! ";
-                        return RedirectToActionPermanent("ProjComments", "Home");
-                    }
-
-
-                }
-                else
-                {
-                    TempData["SuccessMessage"] = "Comment Not Found..! ";
-                    return RedirectToActionPermanent("ProjComments", "Home");
-                }
-            }
-            catch (Exception ex)
-            {
-                swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                return Redirect("/Home/Error");
-            }
-
-        }
+       
 
 
         

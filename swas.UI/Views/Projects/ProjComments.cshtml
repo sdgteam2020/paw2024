@@ -6,6 +6,7 @@
          
 
 }
+
 <!----Table for Stakeholder Status Change----->
 
 <div class="card-body">
@@ -17,116 +18,108 @@
                 <thead>
                     <tr>
                         <th>Ser No</th>
-                       @*  <th>Att</th> *@
                         <th>Project</th>
                         <th>Stakeholder</th>
-                        <th>Held With</th>
-                        <th> Comment</th>
-                        <th>Updated on</th>
-
-                        @foreach (var project in ViewBag.stakeholders)
-                        {
-                            <th>@project.UnitName</th>
-                        }
+                       @*  <th>Held With</th> *@
+                        @*  <th>Comment</th>*@
+                        <th>Status</th> 
+                        <th>Action</th>
+                        
 
                     </tr>
                 </thead>
 
-                <tbody>
-                    @foreach (var project in ViewBag.projects)
-                    {
-                        <tr>
-                            <td>
-                                @{
-                                    sno++;
-                                }
-                                @sno
-                            </td>
-                          @*   <td>
-                                @if (project.AttCnt > 0)
-                                {
-                                    <a href="javascript:void(0);" class="anchorDetail" data-id="@project.CurrentPslmId">
-                                        <img src="/assets/images/icons/attachemnts_clip.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
-                                    </a>
-                                }
-                            </td> *@
-                            <td>@project.ProjName</td>
-                            <td>@project.UnitName</td>
-                            <td>@project.FwdtoUser</td>
-                            <td>@project.Comments</td>
-                            <td>@project.DateTimeOfUpdate?.ToString("dd-MM-yyyy")</td>
-
-
-                            @foreach (var th in ViewBag.stakeholders)
-                            {
-                                dynamic query = ViewBag.query;
-
-                                dynamic statusForStakeholder = null;
-                                string buttonColor = "blue-button";
-
-                                if (query != null)
-                                {
-                                    foreach (dynamic item in query)
-                                    {
-                                        if (item.StakeholderName == th.UnitName && item.ProjId == project.ProjId && item.PsmId == project.CurrentPslmId)
-                                        {
-                                            statusForStakeholder = item;
-                                            break;
-                                        }
-                                    }
-
-                                    if (statusForStakeholder != null)
-                                    {
-                                        var statusCodeForStakeholder = statusForStakeholder.StatusName;
-
-                                        if (statusCodeForStakeholder == "Accepted")
-                                        {
-                                            buttonColor = "green-button";
-                                        }
-                                        else if (statusCodeForStakeholder == "Obsn & Rectification")
-                                        {
-                                            buttonColor = "yellow-button";
-                                        }
-                                        else if (statusCodeForStakeholder == "Rejected")
-                                        {
-                                            buttonColor = "red-button";
-                                        }
-                                    }
-                                }
-
-                                <td>
-                                    <button type="button" class="btn @buttonColor table-button" data-bs-toggle="modal" data-bs-target="#UnitAdd" data-proj-id="@project.ProjId" data-psm-id="@project.CurrentPslmId" data-stakeholder-id="@th.unitid" data-stakeholder-name="@th.UnitName">
-                                    </button>
-                                </td>
-                            }
-
-
-
-                        </tr>
-                    }
+                <tbody id="DetailBody">
+                   
                 </tbody>
 
             </table>
         </div>
     </div>
+  </div>
 
 
 
-    <div class="modal fade" id="UnitAdd" tabindex="-1" aria-labelledby="ProjectAddLabel" aria-hidden="true">
-        <div class="modal-dialog" style="max-width: 800px;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    @* <h5 class="modal-title" id="UnitAddLabel">Add Action</h5>*@
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade" id="ProjCommentModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Comments</h5>
+                <span id="ProjectcommentprojId"></span>
+                <span id="ProjectcommentPsmId"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                <div class="col-md-6">
+                    <div class="card radius-12">
+                        <div class="text-with-icon underline-h7">
+                            <span style="font-size: 20px;">&#128172;</span>
+                            <h7 class="text-center mb-4 underline-h7" style="text-align:left; text-decoration-color:revert; color:antiquewhite">
+                                Add Comments for Project
+                            </h7>
+                        </div>
+
+                        <form class="form-group" asp-action="UpdateStatus" id="StatusUpdateForm" enctype="multipart/form-data">
+                            <div class="container mt-1">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-10 form-container">
+                                        @*<h6 class="text-center mb-4" id="stakeholderInfo">*@
+
+
+                                        <div class="needs-validation" novalidate>
+                                            <div class="row">
+                                                <div>
+                                                    <!-- First Part: Comments -->
+                                                    <div class="form-group">
+                                                        <label id="Comm"><b>Comment</b> <span class="required-indicator">*</span></label>
+                                                            <textarea id="Comments" style="width: 100%; height: 240px;" class="form-control requiredField" rows="4" required oninput="ValInData(this)"></textarea>
+                                                        <div class="invalid-feedback">Please provide the Comments</div>
+                                                        
+                                                    </div>
+                                                    <div class="form-group">
+
+                                                        
+
+                                                            <label  class="control-label"><b>Status</b> <span class="text-danger"><font style="color:red;"><b>*</b></font></span></label>
+                                                            <select class="form-control requiredField" id="ddlStatus">
+                                                                <option value="">Select a Status</option>
+
+                                                               
+                                                            </select>
+
+                                                            <div class="invalid-feedback">
+                                                                Select Status Required
+                                                            </div>
+
+                                                        <div class="invalid-feedback">Please select a Status.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="pdfFile"><b>Upload PDF</b></label>
+                                                    <input type="file" id="uploadfile" name="uploadfile" accept=".pdf" class="form-control" />
+                                                    <div class="invalid-feedback">Please upload a PDF file.</div>
+                                                </div>
+                                                <div class="form-group text-left">
+                                                    <button type="button" class="btn btn-primary" id="StatusUpdate">Send</button>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="modal-body">
-
-                    @Html.Partial("_CreateTableDetails", new StkComment())
-
+                    <div class="col-md-6">
+                        @Html.Partial("_ProjectComments");
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
-
-    <!----END Table for Stakeholder Status Change----->
+</div>
+<script src="~/developerjs/mtable.js"></script>
+<script src="~/developerjs/projectstkholdercomments.js"></script>

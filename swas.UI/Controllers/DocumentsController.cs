@@ -110,8 +110,8 @@ namespace swas.UI.Controllers
                     var AttHistry = _context.AttHistory.FirstOrDefault();
                     ViewBag.AttHistry = AttHistry;
 
-                    var proj = await _projectsRepository.GetProjforDocView();
-                    ViewBag.proj = proj;
+                   // var proj = await _projectsRepository.GetProjforDocView();
+                    ViewBag.proj = null;
 
                     return View();
                 }

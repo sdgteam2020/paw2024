@@ -27,9 +27,9 @@ namespace swas.DAL.Models
             public int? StkStatusId { get; set; }
             public bool? IsDeleted { get; set; }
             public bool? IsActive { get; set; }
-            public string? EditDeleteBy { get; set; }
+            public int? EditDeleteBy { get; set; }
             public DateTime? EditDeleteDate { get; set; }
-            public string? UpdatedByUserId { get; set; }
+            public int? UpdatedByUserId { get; set; }
             public DateTime? DateTimeOfUpdate { get; set; }
 
             [NotMapped]

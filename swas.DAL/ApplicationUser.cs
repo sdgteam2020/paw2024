@@ -14,6 +14,7 @@ namespace ASPNetCoreIdentityCustomFields.Data
 {
     public class ApplicationUser : IdentityUser
     {
+        public int UserIntId { get; set; }
         public string? RoleName { get; set; }
         public string? domain_iam { get; set; }
         public string? description_iam { get; set; }

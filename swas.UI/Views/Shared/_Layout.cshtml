@@ -108,6 +108,8 @@
             vertical-align: top;
         }
 
+     
+
     </style>
 
 
@@ -115,29 +117,30 @@
 
 
     <!-- CSS Files -->
-    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="~/assets/css/bootstrap-extended.css" rel="stylesheet">
-    <link href="~/assets/css/style.css" rel="stylesheet">
-    <link href="~/css/style.css" rel="stylesheet">
+   
+   
     <link href="~/css/select2.min.css" rel="stylesheet" />
-
+    
     <link href="~/assets/css/icons.css" rel="stylesheet">
     <link href="~/assets/css/font-awesome.min.css" rel="stylesheet">
     <!--data Table-->
     <link rel="stylesheet" href="~/assets/dataTable/css/bootstrap.css">
     <link rel="stylesheet" href="~/assets/dataTable/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="~/assets/dataTable/css/buttons.bootstrap4.min.css">
-
+    
     <link rel="stylesheet" href="~/assets/dataTable/css/all.min.css">
     <link href="~/assets/dataTable/css/searchbuilder.datatables.min.css" rel="stylesheet" />
     <link href="~/assets/dataTable/css/all.min.css" rel="stylesheet" />
-    <link href="~/assets/dataTable/css/bootstrap.css" rel="stylesheet" />
+    @* <link href="~/assets/dataTable/css/bootstrap.css" rel="stylesheet" /> *@
     <link href="~/assets/dataTable/css/jquery.datatables.min.css" rel="stylesheet" />
     <link href="~/assets/dataTable/css/responsive.bootstrap4.min.css" rel="stylesheet" />
     <link href="~/assets/dataTable/css/datatables.bootstrap4.min.css" rel="stylesheet" />
     <link href="~/assets/dataTable/css/datatables.datetime.min.css" rel="stylesheet" />
     <link href="~/font-awesome/css/all.min.css" rel="stylesheet" />
     <link href="~/font-awesome/css/fontawesome.min.css" rel="stylesheet" />
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/css/bootstrap-extended.css" rel="stylesheet">
+    <link href="~/assets/css/style.css" rel="stylesheet">
     <link href="~/css/main.css" rel="stylesheet" />
 
 
@@ -1583,9 +1586,9 @@
                 </li>*@
 
                     <li>
-                        <a href="/Projects/ClearTempDataAndRedirect">
+                        <a href="/Projects/Create">
                             <div class="icon-container">
-                                <img src="/assets/images/icons/createproj.png" alt="Icon">
+                               
                                 <ion-icon name="ellipse-outline"></ion-icon>
                                 <span class="icon-name">New Project</span>
                             </div>
@@ -1597,7 +1600,7 @@
                             <div class="inbox-container" style="margin-left : 46px !important">
 
                                 <div class="icon-container" style="margin-left:-43px;">
-                                    <img src="/assets/images/icons/icons8-mail-94.png" alt="Icon">
+                                   
                                     <ion-icon name="ellipse-outline"></ion-icon>
                                     <span class="icon-name">InBox</span>
 
@@ -1619,9 +1622,9 @@
                 </li> *@
 
                     <li>
-                        <a href="/Home/ProjComments" @*onclick="createNotification(event)"*@>
+                        <a href="/Projects/ProjComments" @*onclick="createNotification(event)"*@>
                             <div class="icon-container">
-                                <img src="/assets/images/icons/icons8-comment-94.png" alt="Icon">
+                              
                                 <ion-icon name="ellipse-outline"></ion-icon>
                                 <span class="icon-name">Proj Comments</span>
                                 <span class="inbox-alertsub1"> @Logins.tocommentin</span>
@@ -1635,7 +1638,7 @@
                     <li>
                         <a href="/Search/CurrentSearch">
                             <div class="icon-container">
-                                <img src="/assets/images/icons/search.png" alt="Icon">
+                                
                                 <ion-icon name="ellipse-outline"></ion-icon>
                                 <span class="icon-name">Search</span>
                             </div>
@@ -1646,7 +1649,7 @@
                     <li>
                         <a href="/Home/StratgicAnalysis">
                             <div class="icon-container">
-                                <img src="/assets/images/icons/icons8-pie-chart-94.png" alt="Icon">
+                               
                                 <ion-icon name="ellipse-outline"></ion-icon>
                                 <span class="icon-name">Statistic Analysis</span>
                             </div>
@@ -1657,7 +1660,7 @@
                     <li>
                         <a href="/Search/GetProjLogview">
                             <div class="icon-container">
-                                <img src="/assets/images/icons/icons8-search-property-48.png" alt="Icon">
+                                
                                 <ion-icon name="ellipse-outline"></ion-icon>
                                 <span class="icon-name">Proj Log</span>
                             </div>
@@ -1670,7 +1673,7 @@
 
                         <li class="dropdown">
                             <div class="icon-container" style="margin-top: 10px; margin-left: 13px;">
-                                <img src="/assets/images/icons/icons8-male-user-94.png" alt="Icon">
+                               
                                 <ion-icon name="ellipse-outline"></ion-icon>
                                 <span class="icon-name">User Setting</span>
                             </div>
@@ -1678,7 +1681,7 @@
                                 <li class="selected">
                                     <a href="/Actions/Index">
                                         <div class="icon-container">
-                                            <img src="/assets/images/icons/actions.jpg" alt="Icon">
+                                            
 
                                             <ion-icon name="ellipse-outline"></ion-icon>
                                             <span class="icon-name">View Actions</span>
@@ -1688,7 +1691,7 @@
                                 <li class="selected">
                                     <a href="/UnitDtls/AddOrEdit">
                                         <div class="icon-container">
-                                            <img src="/assets/images/icons/units.png" alt="Icon">
+                                            
                                             <ion-icon name="ellipse-outline"></ion-icon>
                                             <span class="icon-name">View Units</span>
                                         </div>
@@ -1697,7 +1700,7 @@
                                 <li class="selected">
                                     <a href="/Identity/Account/Register" target="_new">
                                         <div class="icon-container">
-                                            <img src="/assets/images/icons/adduser.png" alt="Icon">
+                                            
                                             <ion-icon name="ellipse-outline"></ion-icon>
                                             <span class="icon-name">Register New User</span>
                                         </div>
@@ -1707,7 +1710,7 @@
                                 <li class="selected">
                                     <a href="/Account/GetsAllUsers">
                                         <div class="icon-container">
-                                            <img src="/assets/images/icons/viewallusers.png" alt="Icon">
+                                           
                                             <ion-icon name="ellipse-outline"></ion-icon>
                                             <span class="icon-name">View Users</span>
                                         </div>
@@ -1837,9 +1840,9 @@
                     {
 
                         <li>
-                            <a href="/Projects/ClearTempDataAndRedirect">
+                            <a href="/Projects/Create">
                                 <div class="icon-container">
-                                    <img src="/assets/images/icons/createproj.png" alt="Icon">
+                                    
                                     <ion-icon name="ellipse-outlinProj Commentse"></ion-icon>
                                     <span class="icon-name">Create New Project</span>
                                 </div>
@@ -1851,7 +1854,7 @@
                                 <div class="inbox-container" style="margin-left : 46px !important">
 
                                     <div class="icon-container" style="margin-left:-43px;">
-                                        <img src="/assets/images/icons/inbox_icon.jpg" alt="Icon">
+                                       
                                         <ion-icon name="ellipse-outline"></ion-icon>
                                         <span class="icon-name">InBox</span>
 
@@ -1874,9 +1877,9 @@
                 </li>*@
 
                         <li>
-                            <a href="/Home/ProjUnitComments">
+                            <a href="/Projects/ProjComments">
                                 <div class="icon-container">
-                                    <img src="/assets/images/icons/icons8-comment-94.png" alt="Icon">
+                                    
                                     <ion-icon name="ellipse-outline"></ion-icon>
                                     <span class="icon-name">Proj Comments</span>
                                     <span class="inbox-alertsub1"> @Logins.tocommentin</span>
@@ -1887,8 +1890,7 @@
                         <li>
                             <a href="/Actions/ActionSeqView">
                                 <div class="icon-container">
-                                    <img src="/assets/images/icons/filemove.png" alt="Icon">
-
+                                   
                                     <ion-icon name="ellipse-outline"></ion-icon>
                                     <span class="icon-name"> How to Move Proj</span>
 
@@ -1903,7 +1905,7 @@
                         <li>
                             <a href="/Identity/Account/Register" target="_new">
                                 <div class="icon-container">
-                                    <img src="/assets/images/icons/adduser.png" alt="Icon">
+                                   
                                     <ion-icon name="ellipse-outline"></ion-icon>
                                     <span class="icon-name">Register New User</span>
                                 </div>
@@ -2195,126 +2197,3 @@
 </html>
 
 
-<style>
-    .dropdown-menu {
-        display: none;
-    }
-
-
-        .dropdown-menu.visible {
-            display: block;
-        }
-
-        .dropdown-menu li.selected {
-            background-color: #044c92;
-        }
-
-
-    .inbox-alertsub1 {
-        position: absolute;
-        right: 13px;
-        top: 12px;
-        background-color: red;
-        color: white;
-        border-radius: 50%;
-        width: 36px;
-        height: 27px;
-        text-align: center;
-        line-height: 24px;
-        font-weight: bold;
-        font-size: 14px;
-        cursor: pointer;
-    }
-
-
-    .sidebar-menu li .menu-title {
-        display: none;
-        transition: margin-left 0.3s; /* Add smooth transition */
-    }
-
-    .sidebar-hover .sidebar-menu li .menu-title {
-        display: block;
-        margin-left: 10px; /* Adjust the margin as needed */
-    }
-
-    .sidebar-menu .parent-icon {
-        display: flex;
-        align-items: center;
-    }
-
-        .sidebar-menu .parent-icon ion-icon {
-            margin-right: 10px;
-        }
-
-        .sidebar-menu .parent-icon img {
-            width: 36px;
-            height: 36px;
-            margin-right: 10px;
-        }
-
-
-    .metismenu img {
-        width: 36px;
-        height: 36px;
-        margin-right: 10px;
-    }
-
-    .metismenu ion-icon {
-        font-size: 24px;
-        margin-right: 10px;
-    }
-
-
-
-    .sidebar-wrapper {
-        background-color: white;
-        color: black;
-    }
-
-    .sidebar-header {
-        display: flex;
-        align-items: center;
-        padding: 10px;
-    }
-
-    .sidebar-footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        padding: 21px;
-        background-color: #044c92;
-    }
-
-
-
-
-    .logo-icon {
-        width: 40px;
-        height: 40px;
-    }
-
-    .logo-text {
-        font-size: 1.5rem;
-        margin-left: 10px;
-    }
-
-    #notification {
-        position: relative;
-    }
-
-        #notification::after {
-            content: "";
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            width: 15px;
-            height: 15px;
-            background-color: red;
-            border-radius: 50%;
-            border: 2px solid white;
-        }
-
-</style>

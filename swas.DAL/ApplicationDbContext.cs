@@ -52,6 +52,8 @@ namespace swas.DAL
         public DbSet<AttHistComment> AttHistComments { get; set; }
         public DbSet<mWhiteListedHeader> mWhiteListedHeader { get; set; }
         public DbSet<trnWhiteListed> trnWhiteListed { get; set; }
+        public DbSet<TrnUnitStatusMapping> TrnUnitStatusMapping { get; set; }
+        public DbSet<TrnStatusActionsMapping> TrnStatusActionsMapping { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Resultss>().HasNoKey();

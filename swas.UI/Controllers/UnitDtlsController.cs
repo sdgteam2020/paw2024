@@ -415,8 +415,11 @@ namespace swas.UI.Controllers
             else
                 return Redirect("/Identity/Account/Login");
         }
-
-
+        [HttpPost]
+        public async Task<IActionResult> GetAllStakeHolderComment(int Id)
+        {
+            return Json(await _unitRepository.GetAllStakeHolderComment());
+        }
 
     }
 }

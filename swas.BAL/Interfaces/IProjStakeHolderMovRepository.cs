@@ -14,9 +14,22 @@ namespace swas.BAL.Interfaces
     ///Tested By :- 
     ///Tested Date : 
     ///Start
-    public interface IProjStakeHolderMovRepository
+    public interface IProjStakeHolderMovRepository:IGenericRepositoryDL<tbl_ProjStakeHolderMov>
     {
-        Task<int> AddProjStakeHolderMovAsync(Projmove psmove);
+        Task<int> AddProjStakeHolderMovAsync(tbl_ProjStakeHolderMov psmove);
+        Task<List<DTOProjectMovHistory>> ProjectMovHistory(int ProjectId);
+        int GetLastRecProjectMov(int ProjectId);
+       
+        //Task<int> UpdateUndoProjectMov(int ProjectId,int PsmId);
+
+
+
+
+
+
+
+
+
         Task<tbl_ProjStakeHolderMov> GetProjStakeHolderMovByIdAsync(int psmId);
         Task<List<tbl_ProjStakeHolderMov>> GetAllProjStakeHolderMovAsync();
         Task<bool> UpdateProjStakeHolderMovAsync(tbl_ProjStakeHolderMov projStakeHolderMov);

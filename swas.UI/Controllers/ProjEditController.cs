@@ -94,7 +94,7 @@ namespace swas.UI.Controllers
                     var action = _context.mActions.Select(e => e.Actions).ToList();
                     ViewBag.action = action;
                     List<tbl_Projects> modelproj = new List<tbl_Projects>();
-                    modelproj =  await _projectsRepository.GetProjforEditAsync();
+                    ///modelproj =  await _projectsRepository.GetProjforEditAsync();
 
                     return View(modelproj);
                 }
@@ -110,47 +110,9 @@ namespace swas.UI.Controllers
             }
         }
 
-        [Authorize(Policy = "StakeHolders")]
-        public async Task<IActionResult> EditWithHistory(string EncyId)
-        {
-            tbl_Projects? tbproj = new tbl_Projects();
+     
 
-            int proid = 0;
-            if (EncyId != null)
-            {
-                string decryptedValue = _dataProtector.Unprotect(EncyId);
-                proid = int.Parse(decryptedValue);
-            }
-            tbproj = await _projectsRepository.EditWithHistory(proid);
-
-
-            return View(tbproj);
-        }
-
-
-       
-        [HttpPost]
-        public async Task<IActionResult> EditProjHistory(tbl_Projects project)
-        {
-         bool Reslt = await _projectsRepository.EdtSaveProjAsync(project);
-            List<tbl_Projects> modelproj = new List<tbl_Projects>();
-            if (Reslt)
-            {
-                modelproj = await _projectsRepository.GetProjforEditAsync();
-                TempData["SuccessMessage"] = "Project Detl Edited  !";
-                return RedirectToAction("Index", "ProjEdit");
-            }
-            else
-            {
-                tbl_Projects tbp = new tbl_Projects();
-                tbp = await _projectsRepository.EditWithHistory(project.ProjId);
-                TempData["FailureMessage"] = "One of the reqd input missing....";
-                return RedirectToAction("Index", "ProjEdit");
-                //return View("EditWithHistory", tbp);
-            }
-                
-        }
-
+     
 
     }
 }
