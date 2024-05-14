@@ -324,3 +324,6 @@ AppPackages/
 /swas.UI/obj/Debug/net6.0/swas.UI.AssemblyInfoInputs.cache
 /swas.UI/obj/Debug/net6.0/swas.UI.assets.cache
 /swas.UI/obj/Debug/net6.0/swas.UI.GeneratedMSBuildEditorConfig.editorconfig
+/swas.DAL/obj/Debug/net6.0/ref/swas.DAL.dll
+/swas.DAL/obj/Debug/net6.0/refint/swas.DAL.dll
+/.vs/swas/DesignTimeBuild/.dtbcache.v2
