@@ -315,3 +315,6 @@ AppPackages/
 
 /swasUnitTest/obj/Debug/net6.0/swasUnitTest.GeneratedMSBuildEditorConfig.editorconfig
 /.vs/slnx.sqlite
+/swas.BAL/obj/Debug/net6.0/swas.BAL.csproj.AssemblyReference.cache
+/swas.UI/obj/Debug/net6.0/swas.UI.AssemblyInfo.cs
+/swas.UI/obj/Debug/net6.0/swas.UI.AssemblyInfoInputs.cache
