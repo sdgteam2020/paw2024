@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/ProjectEvaluation/swas.metadata.v7.bin
+/.vs/ProjectEvaluation/swas.projects.v7.bin
+/.vs/swas/DesignTimeBuild/.dtbcache.v2
+/.vs/swas/v17/.futdcache.v2
+/.vs/swas/v17/.suo
+/.vs/swas/v17/fileList.bin
