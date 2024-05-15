@@ -17,6 +17,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Components.Routing;
 using ASPNetCoreIdentityCustomFields.Data;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Xml.Linq;
 
 namespace swas.BAL.Repository
 {
@@ -85,7 +86,17 @@ namespace swas.BAL.Repository
             catch (Exception ex) { return 0; }
           
         }
-       
+        //public async Task<int> IsReadInbox(int psmId)
+        //{
+
+        //    var _person = new tbl_ProjStakeHolderMov() {PsmId=psmId, IsRead=true};
+
+
+        //    _context.ProjStakeHolderMov.Attach(_person);
+        //    _context.Entry(_person).Property(X => X.PsmId).IsModified = true;
+        //    _context.SaveChanges();
+        //    return 1;
+        //}
         ///Created and Reviewed by : Sub Maj M Sanal Kumar
         // Reviewed Date : 15,16 & 31 Jul 23
         // Reviewed Date : 27 Aug 23, 02,03, 09 & 10 Oct 23  ---   Flags Error Rectified
@@ -214,5 +225,7 @@ namespace swas.BAL.Repository
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }

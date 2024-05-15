@@ -19,6 +19,7 @@ using swas.BAL.Utility;
 using static Grpc.Core.Metadata;
 using Grpc.Core;
 using System.Diagnostics;
+using System.Threading;
 
 namespace swas.BAL.Repository
 {
@@ -363,8 +364,8 @@ namespace swas.BAL.Repository
                                 StageId= eWithStages.StagesId,
                                 EncyID =_dataProtector.Protect(a.ProjId.ToString()),
                                 EncyPsmID= _dataProtector.Protect(b.PsmId.ToString()),
-                                IsProcess=a.IsProcess
-
+                                IsProcess=a.IsProcess,
+                                IsRead=b.IsRead
                             };
 
                 var projectsWithDetails = await query.ToListAsync();
