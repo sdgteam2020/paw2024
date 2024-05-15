@@ -27,6 +27,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.Build.Evaluation;
 using swas.BAL.Repository;
 using Microsoft.EntityFrameworkCore;
+using swas.UI.Helpers;
 
 namespace swas.UI.Controllers
 {
@@ -637,8 +638,8 @@ namespace swas.UI.Controllers
             psmove.Remarks = psmove.Remarks;
             psmove.FromUnitId = Logins.unitid ?? 0;
             psmove.ToUnitId = psmove.ToUnitId; //  
-                                 //psmove.TostackholderDt = DateTime.Now;  
-
+            //psmove.TostackholderDt = DateTime.Now;  
+            psmove.UserDetails = Helper.LoginDetails(Logins);
             psmove.UpdatedByUserId = Logins.UserIntId; // change with userid
             psmove.DateTimeOfUpdate = DateTime.Now;
             psmove.IsActive = true;

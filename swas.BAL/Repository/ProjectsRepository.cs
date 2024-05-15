@@ -80,7 +80,7 @@ namespace swas.BAL.Repository
             psmove.FromUnitId = Logins.unitid ?? 0;
             psmove.ToUnitId = 1; //  
                                  //psmove.TostackholderDt = DateTime.Now;  
-
+            psmove.UserDetails = Logins.Rank.Trim() + " " + Logins.Offr_Name.Trim() + " (" + Logins.UserName.Trim() + ")";
             psmove.UpdatedByUserId = Logins.unitid; // change with userid
             psmove.DateTimeOfUpdate = DateTime.Now;
             psmove.IsActive = true;

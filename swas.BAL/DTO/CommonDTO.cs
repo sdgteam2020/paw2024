@@ -89,7 +89,9 @@ namespace swas.BAL.DTO
         public int? tocommentin { get; set; }
         public int? typeid { get; set; }
         public int UserIntId { get; set; }
-
+        public string? IcNo { get; set; }
+        public string? Offr_Name { get; set; }
+        public string? Rank { get; set; }
     }
     public class DefaultValueID
     {
