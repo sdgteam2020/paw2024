@@ -37,7 +37,7 @@ namespace swas.BAL.Repository
         {
             return await _dbContext.Comment.FindAsync(commentId);
         }
-        public async Task<tbl_Comment> GetCommentByPsmIdAsync(int PsmId)
+        public async Task<tbl_Comment> GetCommentByPsmIdAsync(int? PsmId)
         {
             return await _dbContext.Comment.FindAsync(PsmId);
         }
@@ -128,6 +128,7 @@ namespace swas.BAL.Repository
             return true;
         }
 
+     
     }
 
 
