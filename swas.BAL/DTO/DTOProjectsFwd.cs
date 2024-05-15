@@ -24,7 +24,8 @@ namespace swas.BAL.DTO
         public int TotalDays { get; set; }
         public string? EncyID { get; set; }
         public string? EncyPsmID { get; set; }
-        public bool IsProcess { get; set; }
+        public bool IsProcess { get; set; } 
+        public bool IsRead { get; set; }            
         public int undopsmId { get; set; }
     }
 }

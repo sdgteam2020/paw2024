@@ -129,51 +129,104 @@
 
                                 @foreach (var project in Model.InBox)
                                 {
+                                    if (project.IsRead == true)
+                                    {
+                                        <tr>
 
-                                    <tr>
+
+                                            <td>
+                                                <span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
+                                                <span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
+                                                <span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
+                                                <span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
+                                                @{
+                                                    snoinbox++;
+                                                }
+                                                @snoinbox
+                                            </td>
 
 
-                                        <td>
-                                            <span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
-                                            <span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
-                                            <span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
-                                            <span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
-                                            @{
-                                                snoinbox++;
-                                            }
-                                            @snoinbox
-                                        </td>
-                                       
+                                            <td>@project.ProjName</td>
+                                            <td>@project.StakeHolder</td>
+                                            <td>@project.FromUnitName</td>
+                                            <td>@project.ToUnitName</td>
+                                            <td>@project.Action</td>
 
-                                        <td>@project.ProjName</td>
-                                        <td>@project.StakeHolder</td>
-                                        <td>@project.FromUnitName</td>
-                                        <td>@project.ToUnitName</td>
-                                        <td>@project.Action</td>
+                                            <td>
+                                                @project.TotalDays
 
-                                        <td>
-                                            @project.TotalDays
+                                            </td>
 
-                                        </td>
 
-                                       
-                                        <td>
-                                            
-                                            @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
-                                            {
-                                                <a href="javascript:void(0);" class="processDetail" data-id="@project.EncyPsmID">
-                                                    <img src="/assets/images/icons/process1.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
-                                                </a>
-                                                <button type="button" class="btn btn-success btn-Obsn ml-2">Obsn</button>
-                                            }else
-                                            
-                                            {
-                                                <button type="button" class="btn btn-success btn-Fwd">Fwd</button>
-                                            }
-                                            <button type="button" class="btn btn-success btn-FwdHistory" title="History"><i class="fa-solid fa-timeline"></i></button>
+                                            <td>
 
-                                        </td>
-                                    </tr>
+                                                @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
+                                                {
+                                                    <a href="javascript:void(0);" class="processDetail" data-id="@project.EncyPsmID">
+                                                        <img src="/assets/images/icons/process1.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
+                                                    </a>
+                                                    <button type="button" class="btn btn-success btn-Obsn ml-2">Obsn</button>
+                                                }
+                                                else
+
+                                                {
+                                                    <button type="button" class="btn btn-success btn-Fwd">Fwd</button>
+                                                }
+                                                <button type="button" class="btn btn-success btn-FwdHistory" title="History"><i class="fa-solid fa-timeline"></i></button>
+
+                                            </td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        <tr class="table-primary">
+
+
+                                            <td>
+                                                <span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
+                                                <span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
+                                                <span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
+                                                <span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
+                                                @{
+                                                    snoinbox++;
+                                                }
+                                                @snoinbox
+                                            </td>
+
+
+                                            <td>@project.ProjName</td>
+                                            <td>@project.StakeHolder</td>
+                                            <td>@project.FromUnitName</td>
+                                            <td>@project.ToUnitName</td>
+                                            <td>@project.Action</td>
+
+                                            <td>
+                                                @project.TotalDays
+
+                                            </td>
+
+
+                                            <td>
+
+                                                @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
+                                                {
+                                                    <a href="javascript:void(0);" class="processDetail" data-id="@project.EncyPsmID">
+                                                        <img src="/assets/images/icons/process1.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
+                                                    </a>
+                                                    <button type="button" class="btn btn-success btn-Obsn ml-2">Obsn</button>
+                                                }
+                                                else
+
+                                                {
+                                                    <button type="button" class="btn btn-success btn-Fwd">Fwd</button>
+                                                }
+                                                <button type="button" class="btn btn-success btn-FwdHistory" title="History"><i class="fa-solid fa-timeline"></i></button>
+
+                                            </td>
+                                        </tr>
+
+                                    }
+                                   
 
                                 }
                             </tbody>
