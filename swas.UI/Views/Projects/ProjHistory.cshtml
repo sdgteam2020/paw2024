@@ -26,6 +26,21 @@
 </style>
 <style>
 
+    .heading-line {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .line {
+        flex-grow: 1;
+        height: 1px;
+        background-color: #333; /* You can change this to your preferred color */
+        margin: 0 10px;
+    }
+
+
+
     #checklist th, #checklist td {
         margin-top: 30px;
         font-size: 20px;
@@ -680,7 +695,11 @@
 }
 <div class="card bi-ui-radios-30 w-100">
     <div class="card-body">
-        <h2>Comment By StakeHolders</h2>
+        <div class="heading-line" style="text-align: center;">
+            <div class="line"></div>
+            <h6 style="color: #044c92; font-weight: bold;">Comment By Stakeholders</h6>
+            <div class="line"></div>
+        </div>
         <div class="chat-messages" id="ChatBox">
             <!-- Your chat messages go here -->
         </div>
