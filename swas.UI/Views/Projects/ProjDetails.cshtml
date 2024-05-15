@@ -197,9 +197,13 @@
                                                 @snoinbox
 
                                             </td>
-
-
-                                            <td><span class="blink">@project.ProjName</span></td> 
+                                            <td>
+                                                
+                                             <a  class="blink" data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID">
+                                               @project.ProjName
+                                            </a>
+                                            </td>
+                                           
                                             <td>@project.StakeHolder</td>
                                             <td>@project.FromUnitName</td>
                                             <td>@project.ToUnitName</td>
