@@ -15,6 +15,7 @@
         mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnStakeHolderId").html())
     });
     $(".btn-Undo").click(function () {
+        IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
         Swal.fire({
             title: "Enter Undo Remarks",
             input: "text",
@@ -41,6 +42,7 @@
     });
     $(".btn-FwdHistory").click(function () {
         $('#ProjFwdHistory').modal('show');
+        IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
         GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentProjId").html());
     });
         $(".btn-Fwd").click(function () {
@@ -48,8 +50,8 @@
         $("#spanFwdCurrentPslmId").html($(this).closest("tr").find("#SpnCurrentpsmId").html())
         $("#spanFwdProjectId").html($(this).closest("tr").find("#SpnCurrentProjId").html())
         $("#SpnFwdStakeHolderId").html($(this).closest("tr").find("#SpnStakeHolderId").html())
-
-        
+           
+            IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
         $('#ProjFwd').modal('show');
 
         $(".Fwdtitle").html("Projects Move Details");

@@ -408,6 +408,44 @@ namespace swas.UI.Controllers
                 return Redirect("/Identity/Account/login");
             }
         }
+
+        [HttpPost]
+        public async Task<IActionResult> IsReadInbox(int PsmId)
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+
+          
+            if (Logins != null)
+            {
+
+                try
+                {
+
+                    tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
+                    // var project = await _projectsRepository.GetProjectByIdAsync(projid);
+                    psmove = await _projectsRepository.GettXNByPsmIdAsync(PsmId);
+                    psmove.DateTimeOfUpdate = DateTime.Now;
+                    psmove.IsRead = true;
+                    await _projectsRepository.UpdateTxnAsync(psmove);
+
+
+
+                    return Json(PsmId);
+
+
+
+                }
+                catch (Exception ex)
+                {
+                    swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                    return Json(0);
+                }
+            }
+            else
+            {
+                return Redirect("/Identity/Account/login");
+            }
+        }
         [HttpPost]
         public async Task<IActionResult> IsProcessProjConfirm(int ProjId)
         {
