@@ -80,7 +80,7 @@ namespace swas.BAL.Repository
             psmove.FromUnitId = Logins.unitid ?? 0;
             psmove.ToUnitId = 1; //  
                                  //psmove.TostackholderDt = DateTime.Now;  
-
+            psmove.UserDetails = Logins.Rank.Trim() + " " + Logins.Offr_Name.Trim() + " (" + Logins.UserName.Trim() + ")";
             psmove.UpdatedByUserId = Logins.unitid; // change with userid
             psmove.DateTimeOfUpdate = DateTime.Now;
             psmove.IsActive = true;
@@ -705,6 +705,13 @@ namespace swas.BAL.Repository
                                 from proj in projectJoin.DefaultIfEmpty()
                                 join fromSH in _dbContext.tbl_mUnitBranch on p.FromUnitId equals fromSH.unitid into fromStakeHolderJoin
                                 from fromSH in fromStakeHolderJoin.DefaultIfEmpty()
+
+                                join h in _DBContext.mHostType on proj.HostTypeID equals h.HostTypeID into hs
+                                from hostType in hs.DefaultIfEmpty()
+
+                                join i in _DBContext.mAppType on proj.Apptype equals i.Apptype into ms
+                                from eWithAppType in ms.DefaultIfEmpty()
+
                                 join toSH in _dbContext.tbl_mUnitBranch on p.ToUnitId equals toSH.unitid into toStakeHolderJoin
                                 from toSH in toStakeHolderJoin.DefaultIfEmpty()
                                 join curSH in _dbContext.tbl_mUnitBranch on proj.StakeHolderId equals curSH.unitid into currentStakeHolderJoin
@@ -730,6 +737,10 @@ namespace swas.BAL.Repository
                                     Remarks = p.Remarks,  //  work
                                     AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == p.PsmId),
                                     ActionName = l.Actions,
+                                    AppDesc = eWithAppType.AppDesc,
+                                    HostedOn = hostType.HostingDesc
+
+
                                 };
 
 
@@ -1092,6 +1103,8 @@ namespace swas.BAL.Repository
                                       from eWithUnit in cs.DefaultIfEmpty()
                                       join h in _DBContext.mHostType on a.HostTypeID equals h.HostTypeID into hs
                                       from hostType in hs.DefaultIfEmpty()
+                                      join i in _DBContext.mAppType on a.Apptype equals i.Apptype into ms
+                                      from eWithAppType in ms.DefaultIfEmpty()
                                       join g in _DBContext.tbl_mUnitBranch on e.ToUnitId equals g.unitid into csh
                                       from curstk in csh.DefaultIfEmpty()
 
@@ -1124,7 +1137,7 @@ namespace swas.BAL.Repository
                                           //ActionCde = e.ActionCde,
                                           AimScope = a.AimScope,
                                           ReqmtJustification = a.ReqmtJustification,
-                                          HostTypeID = hostType.HostTypeID,
+                                          Deplytype = eWithAppType.AppDesc,
                                           Hostedon = hostType.HostingDesc,
                                           EncyID = _dataProtector.Protect(a.CurrentPslmId.ToString()),
 
@@ -1151,6 +1164,11 @@ namespace swas.BAL.Repository
                                       from eWithUnit in cs.DefaultIfEmpty()
                                       join h in _DBContext.mHostType on a.HostTypeID equals h.HostTypeID into hs
                                       from hostType in hs.DefaultIfEmpty()
+
+                                      join i in _DBContext.mAppType on a.Apptype equals i.Apptype into ms
+                                      from eWithAppType in ms.DefaultIfEmpty()
+
+
                                       join g in _DBContext.tbl_mUnitBranch on e.ToUnitId equals g.unitid into csh
                                       from curstk in csh.DefaultIfEmpty()
 
@@ -1184,7 +1202,7 @@ namespace swas.BAL.Repository
                                           //ActionCde = e.ActionCde,
                                           AimScope = a.AimScope,
                                           ReqmtJustification = a.ReqmtJustification,
-                                          HostTypeID = hostType.HostTypeID,
+                                          Deplytype = eWithAppType.AppDesc,
                                           Hostedon = hostType.HostingDesc,
                                           EncyID = _dataProtector.Protect(a.CurrentPslmId.ToString()),
 
@@ -1208,6 +1226,10 @@ namespace swas.BAL.Repository
                                       from hostType in hs.DefaultIfEmpty()
                                       join g in _DBContext.tbl_mUnitBranch on e.ToUnitId equals g.unitid into csh
                                       from curstk in csh.DefaultIfEmpty()
+
+                                      join i in _DBContext.mAppType on a.Apptype equals i.Apptype into ms
+                                      from eWithAppType in ms.DefaultIfEmpty()
+
 
                                       join f in _DBContext.Comment on a.CurrentPslmId equals f.PsmId into fs
                                       from eWithComment in fs.DefaultIfEmpty()
@@ -1239,7 +1261,7 @@ namespace swas.BAL.Repository
                                           //ActionCde = e.ActionCde,
                                           AimScope = a.AimScope,
                                           ReqmtJustification = a.ReqmtJustification,
-                                          HostTypeID = hostType.HostTypeID,
+                                          Deplytype = eWithAppType.AppDesc,
                                           Hostedon = hostType.HostingDesc,
                                           EncyID = _dataProtector.Protect(a.CurrentPslmId.ToString()),
 
@@ -1252,6 +1274,78 @@ namespace swas.BAL.Repository
         }
 
         public async Task<List<tbl_Projects>> GetProjforCommentsAsync()
+        {
+
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+
+            //if (Logins != null && Logins.Role == "Unit")
+            //{
+            string username = Logins.UserName;
+
+            int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
+
+            var projects = await (from a in _DBContext.Projects
+                                  join b in _DBContext.ProjStakeHolderMov on a.CurrentPslmId equals b.PsmId into bs
+                                  from e in bs.DefaultIfEmpty()
+                                  join d in _DBContext.mStatus on e.StatusId equals d.StatusId into ds
+                                  from eWithStatus in ds.DefaultIfEmpty()
+                                  join c in _DBContext.tbl_mUnitBranch on a.StakeHolderId equals c.unitid into cs
+                                  from eWithUnit in cs.DefaultIfEmpty()
+                                  join g in _DBContext.tbl_mUnitBranch on e.ToUnitId equals g.unitid into csh
+                                  from curstk in csh.DefaultIfEmpty()
+
+                                  join f in _DBContext.Comment on a.CurrentPslmId equals f.PsmId into fs
+                                  from eWithComment in fs.DefaultIfEmpty()
+
+                                  join i in _DBContext.mAppType on a.Apptype equals i.Apptype into ms
+                                  from eWithAppType in ms.DefaultIfEmpty()
+
+                                  where a.IsActive && !a.IsDeleted && a.StakeHolderId == Logins.unitid
+                                   //&& e.ActionCde > 0 
+                                   && e.ActionId > 4
+                                  orderby e.TimeStamp descending
+                                  select new tbl_Projects
+                                  {
+                                      ProjId = a.ProjId,
+                                      ProjName = a.ProjName,
+                                      StakeHolderId = a.StakeHolderId,
+                                      CurrentPslmId = a.CurrentPslmId,
+                                      InitiatedDate = a.InitiatedDate,
+                                      CompletionDate = a.CompletionDate,
+                                      IsWhitelisted = a.IsWhitelisted,
+                                      InitialRemark = a.InitialRemark,
+                                      IsDeleted = a.IsDeleted,
+                                      IsActive = a.IsActive,
+                                      EditDeleteBy = a.EditDeleteBy,
+                                      EditDeleteDate = a.EditDeleteDate,
+                                      UpdatedByUserId = a.UpdatedByUserId,
+                                      DateTimeOfUpdate = e.DateTimeOfUpdate,
+                                      //ToUnitId = a.ToUnitId,
+                                      StakeHolder = eWithUnit.UnitName,
+                                      FwdtoUser = curstk.UnitName,
+                                      Status = eWithStatus.Status,
+                                      Comments = eWithComment.Comment,
+                                      Deplytype = eWithAppType.AppDesc,                                      
+                                      //ActionCde = e.ActionCde,
+                                      AimScope = a.AimScope,
+                                      ReqmtJustification = a.ReqmtJustification,
+                                      EncyID = _dataProtector.Protect(a.CurrentPslmId.ToString()),
+
+                                      AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == a.CurrentPslmId)
+                                  }).ToListAsync();
+
+
+            return projects;
+
+
+            //}
+
+        }
+
+
+
+
+        public async Task<List<tbl_Projects>> GetProjforCommentsAsync1()
         {
 
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
@@ -1314,6 +1408,17 @@ namespace swas.BAL.Repository
             //}
 
         }
+
+
+
+
+
+
+
+
+
+
+
 
     }
 

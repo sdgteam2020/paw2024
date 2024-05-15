@@ -110,7 +110,9 @@ namespace swas.DAL.Models
 		[Display(Name = "Application Type")]
         [ForeignKey("mAppType")]
       
-        public int? Apptype { get; set; }
+        public int Apptype { get; set; }
+
+
         public bool IsProcess { get; set; }
 
         [Display(Name = "Deployment Mode")]
@@ -143,6 +145,8 @@ namespace swas.DAL.Models
         [NotMapped]
         public string? FwdBy { get; set; }
 
+
+     
         [NotMapped]
         public string? Status { get; set; }
 		[NotMapped]

@@ -339,3 +339,5 @@ AppPackages/
 /.vs/ProjectEvaluation/swas.metadata.v7.bin
 /.vs/ProjectEvaluation/swas.projects.v7.bin
 /.vs/swas/DesignTimeBuild/.dtbcache.v2
+/swas.DAL/obj/Debug/net6.0/ref/swas.DAL.dll
+/swas.DAL/obj/Debug/net6.0/refint/swas.DAL.dll

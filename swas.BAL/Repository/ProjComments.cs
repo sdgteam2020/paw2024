@@ -30,7 +30,7 @@ namespace swas.BAL
                                  //from status in statusGroup.DefaultIfEmpty()
                                  let StkStatusId =
                             (from cr1 in _context.StkComment
-                             where cr1.StakeHolderId== mov.ToUnitId
+                             where cr1.StakeHolderId== mov.ToUnitId && cr1.PsmId== mov.PsmId
                              select cr1.StkStatusId
                             ).Count()
                                

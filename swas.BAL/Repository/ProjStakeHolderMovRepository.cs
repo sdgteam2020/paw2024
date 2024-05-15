@@ -42,7 +42,7 @@ namespace swas.BAL.Repository
         }
 
 
-        public async Task<List<DTOProjectMovHistory>> ProjectMovHistory(int ProjectId)
+        public async Task<List<DTOProjectMovHistory>> ProjectMovHistory(int? ProjectId)
         {
             var query = await (from a in _dbContext.Projects
                         join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
@@ -53,7 +53,7 @@ namespace swas.BAL.Repository
                         join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
                         join act in _dbContext.mActions on b.ActionId equals act.ActionsId
                        
-                        where b.ProjId == ProjectId
+                        where b.ProjId == ProjectId && b.StatusId!=5
                         orderby b.TimeStamp descending
                          select new DTOProjectMovHistory
                         {
@@ -67,7 +67,8 @@ namespace swas.BAL.Repository
                             ToUser="",
                             Date=b.TimeStamp,
                             Remarks=b.Remarks,
-                            UndoRemarks=b.UndoRemarks
+                            UndoRemarks=b.UndoRemarks,
+                            AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == b.PsmId),
                          }).ToListAsync();
 
 

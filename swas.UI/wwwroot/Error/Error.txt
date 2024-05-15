@@ -1,11 +1,5 @@
 A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
 -----------------------------------------------------------------------------
-Date : 4/24/2024 5:37:28 PM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/24/2024 5:40:07 PM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
 Date : 4/24/2024 5:42:55 PM
 A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
 -----------------------------------------------------------------------------
@@ -898,3 +892,9 @@ Request failed & Status Code : 200
 -----------------------------------------------------------------------------
 Date : 5/15/2024 10:21:26 AM
 D:\paw2024\swas.UI\wwwroot\Uploads\ not found as file or resource.
+-----------------------------------------------------------------------------
+Date : 15-05-2024 11:46:01
+K:\Projects\paw2024\swas.UI\wwwroot\Uploads\ not found as file or resource.
+-----------------------------------------------------------------------------
+Date : 15-05-2024 16:08:03
+K:\Projects\paw2024\swas.UI\wwwroot\Uploads\ not found as file or resource.
