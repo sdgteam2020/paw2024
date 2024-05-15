@@ -198,10 +198,13 @@ namespace swas.Areas.Identity.Pages.Account
                                         Db.Unit = unitdetl.UnitName;        
                                         Db.unitid = userdet.unitid;
                                         Db.UserIntId = userdet.UserIntId;
+                                        Db.Rank=userdet.Rank;
+                                        Db.IcNo = userdet.Icno;
+                                        Db.Offr_Name = userdet.Offr_Name;
                                         var users = await _userManager.FindByNameAsync(userdet.UserName);
                                         var usroles = await _userManager.GetRolesAsync(users);
-                                        Db.Role = usroles.Any() ? usroles[0] : "Unit"; 
-
+                                        Db.Role = usroles.Any() ? usroles[0] : "Unit";
+                                        
                                         if (Db.ActualUserName == null)
                                         {
                                             Db.ActualUserName = Input.UserName;

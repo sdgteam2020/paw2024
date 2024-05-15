@@ -50,8 +50,8 @@ namespace swas.DAL.Models
         public DateTime? DateTimeOfUpdate { get; set; }
 
         public bool IsComplete { get; set; }
-       
 
+        public string? UserDetails { get; set; }
     }
 
 

@@ -101,6 +101,7 @@ function FwdProjConfirm(psmId) {
 
 function GetProjectMovHistory(ProjId) {
     var listitem = "";
+   
     $.ajax({
         url: '/Projects/ProjectMovHistory',
         type: 'POST',
@@ -109,8 +110,8 @@ function GetProjectMovHistory(ProjId) {
             console.log(response);
             if (response.length) {
                 listitem += '<div class="timeline-month">';
-                listitem += '  August, 2018';
-                listitem += '<span>3 Entries</span>';
+                listitem += '  ' + DateFormatedd_mm_yyyy(new Date($.now())) +'';
+                listitem += '<span>' + response.length +' Entries</span>';
                 listitem += '</div>';
                 for (var i = 0; i < response.length; i++) {
                     listitem += '<div class="timeline-section"> <div class="timeline-date"> ' + DateFormatedd_mm_yyyy(response[i].date)+'</div>';
@@ -180,7 +181,7 @@ function Reset() {
     $("#pdfFileInput").val("");
 }
 function IsReadInbox(psmId) {
-    alert(psmId)
+   
     $.ajax({
         url: '/Projects/IsReadInbox',
         type: 'POST',

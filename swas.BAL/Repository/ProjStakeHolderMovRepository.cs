@@ -53,7 +53,7 @@ namespace swas.BAL.Repository
                         join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
                         join act in _dbContext.mActions on b.ActionId equals act.ActionsId
                        
-                        where b.ProjId == ProjectId
+                        where b.ProjId == ProjectId && b.StatusId!=5
                         orderby b.TimeStamp descending
                          select new DTOProjectMovHistory
                         {
