@@ -49,7 +49,8 @@ namespace swas.UI.Controllers
         private IWebHostEnvironment webHostEnvironment;
         private System.Timers.Timer aTimer;
         private readonly IStkCommentRepository _stkCommentRepository;
-
+        private readonly IProjStakeHolderMovRepository _stkholdmove;
+        
         public ProjectsController(IProjectsRepository projectsRepository, IDdlRepository ddlRepository, 
             IProjStakeHolderMovRepository psmRepository, IHttpContextAccessor httpContextAccessor, 
             IDdlRepository DDLRepository, IAttHistoryRepository attHistoryRepository, 
@@ -57,6 +58,7 @@ namespace swas.UI.Controllers
             IDataProtectionProvider DataProtector, IWebHostEnvironment _webHostEnvironment, 
             ICommentRepository commentRepository, IActionsRepository actionsRepository,
             IProjComments projComments, IStkCommentRepository stkCommentRepository
+            
             )
         {
             _projectsRepository = projectsRepository;
@@ -66,7 +68,7 @@ namespace swas.UI.Controllers
             webHostEnvironment = _webHostEnvironment;
 
             _DDLRepository = ddlRepository;
-
+            _stkholdmove = stkholdmove;
             _attHistoryRepository = attHistoryRepository;
             _environment = environment;
             _commentRepository = commentRepository;
@@ -786,20 +788,220 @@ namespace swas.UI.Controllers
 
         #region Project History
         [HttpGet]
-        public async Task<IActionResult> ProjHistory(string? EncyID)
+
+        public async Task<IActionResult> ProjHistory(string userid, int? dataProjId, int? dtaProjID, string? AttPath, int? psmid, string? Projpin, string? EncyID, EncryModel? encryModel)
         {
             try
             {
-                return View();
+                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+
+                string actufilename = "";
+                string AttDocuDescs = "";
+
+                if (EncyID != null)
+                {
+                    ViewBag.SubmitCde = true;
+                    ViewBag.EncyID = EncyID;
+
+                }
+                if (userid == null && dataProjId == null && dtaProjID == null && AttPath == null && psmid == null && EncyID == null)
+                {
+                    EncyID = ViewBag.EncyID;
+                    if (TempData.ContainsKey("Psmiiddel"))
+                    {
+                        if (TempData["Psmiiddel"] is int)
+                        {
+
+                            psmid = (int)TempData["Psmiiddel"];
+                            TempData.Remove("Psmiiddel");
+                            dataProjId = null;
+                            userid = Logins.UserName;
+                            ViewBag.SubmitCde = true;
+                        }
+                    }
+                }
+
+                if (encryModel.EncryItem != null)
+                {
+                    var UnprotectedValue = _dataProtector.Unprotect(encryModel.EncryItem.ToString() ?? "");
+                    // Assuming your model type is MyModelClass
+                    var originalData = JsonConvert.DeserializeObject<MyRequestModel>(UnprotectedValue);
+                    dtaProjID = originalData.DtaProjID;
+                    if (dtaProjID == 0)
+                    {
+                        dtaProjID = null;
+                    }
+
+                    AttPath = originalData.AttPath;
+                    Projpin = originalData.Projpin;
+                    psmid = originalData.PsmId;
+                    actufilename = originalData.ActFileName;
+                    AttDocuDescs = originalData.AttDocuDesc;
+
+                    ViewBag.SubmitCde = true;
+                    encryModel.EncryItem = null;
+                }
+                else
+                {
+                    ViewBag.SubmitCde = false;
+                }
+
+                if (EncyID != null)
+                {
+
+                    TempData["EncyID"] = EncyID;
+                }
+                else
+                {
+                    //ViewBag.SubmitCde = false;
+                    EncyID = TempData["EncyID"].ToString() ?? null;
+                    TempData["EncyID"] = EncyID;
+                }
+
+                var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+                var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
+                var watermarkText = $" {ipAddress}\n  {currentDatetime}";
+                TempData["ipadd"] = watermarkText;
+
+                if (EncyID != null)
+                {
+                    try
+                    {
+                        string decryptedValue = _dataProtector.Unprotect(EncyID);
+                        dataProjId = int.Parse(decryptedValue);
+                    }
+                    catch (Exception ex)
+                    {
+                        string ss = ex.Message;
+                        swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                    }
+
+                }
+                int statgeIDMAx = await _stkholdmove.GetlaststageId(dataProjId);
+                ViewBag.stageid = statgeIDMAx;
+
+                var projdetails =await  _projectsRepository.GetProjectByIdAsync1(dataProjId);
+
+
+                var dto3 = await _commentRepository.GetCommentByPsmIdAsync(projdetails.CurrentPslmId);
+
+                ViewBag.CommentByStakeholderList = dto3;
+
+
+                ViewBag.PsmId = psmid ?? 0;
+                ViewBag.PjIR = Projpin;
+                List<tbl_AttHistory> atthis = new List<tbl_AttHistory>();
+                if (dtaProjID != null)
+                {
+                    List<ProjHistory> prohis = await _projectsRepository.GetProjectHistorybyID(dtaProjID);
+                    tbl_Projects projects = await _projectsRepository.GetProjectByIdAsync(dtaProjID ?? 0);
+
+
+                    if (prohis.Count > 0)
+                    {
+                        prohis[0].Attachments = AttPath;
+                        prohis[0].ActFileName = actufilename;
+                        prohis[0].DocumentDesc = AttDocuDescs;
+                        //prohis[0].ActFileName = uplo
+                    }
+
+                    atthis = await _attHistoryRepository.GetAttHistoryByIdAsync(psmid ?? 0);
+                    prohis[0].Atthistory = atthis;
+                    prohis[0].ProjectDetl.Add(projects);
+
+                    return View(prohis);
+                }
+
+
+                ViewBag.DataProjId = dataProjId;
+                List<ProjHistory> projHistory = await _projectsRepository.GetProjectHistorybyID(Logins.unitid);
+                if (dataProjId == null && userid != null)
+                {
+                    if (projHistory == null)
+                    {
+                        ViewBag.DataProjId = projHistory.Select(a => a.ProjId).FirstOrDefault();
+
+                        return View(new List<ProjHistory>());
+                    }
+                }
+                else if (psmid > 0)
+                {
+                    int psmId = psmid ?? 0;
+
+                    tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
+
+                    psmove = await _psmRepository.GetProjStakeHolderMovByIdAsync(psmId);
+                    List<ProjHistory> projHist = await _projectsRepository.GetProjectHistorybyID(psmove.ProjId);
+                    tbl_Projects projects = await _projectsRepository.GetProjectByIdAsync(psmove.ProjId);
+                    projHist[0].ProjectDetl.Add(projects);
+                    ViewBag.DataProjId = projHist.Select(a => a.ProjId).FirstOrDefault();
+
+
+                    if (projHist != null)
+                    {
+
+                        projHist[0].Attachments = AttPath;
+                        projHist[0].ActFileName = actufilename;
+                        projHist[0].DocumentDesc = AttDocuDescs;
+                        atthis = await _attHistoryRepository.GetAttHistoryByIdAsync(psmove.PsmId);
+                        projHist[0].Atthistory = atthis;
+                    }
+
+
+                    projHist[0].Attachments = AttPath;
+                    projHist[0].ActFileName = actufilename;
+                    projHist[0].DocumentDesc = AttDocuDescs;
+                    return View(projHist);
+                }
+                else if (dataProjId > 0)
+                {
+
+                    List<ProjHistory> projHist = await _projectsRepository.GetProjectHistorybyID(dataProjId);
+                    tbl_Projects projects = await _projectsRepository.GetProjectByIdAsync(dataProjId ?? 0);
+                    projHist[0].ProjectDetl.Add(projects);
+
+                    var stholder = await _psmRepository.GetProjStakeHolderMovByIdAsync(projects.CurrentPslmId);
+                    //if (stholder.ActionId == 1)
+                    //{
+                    //    stholder.EditDeleteDate = DateTime.Now;
+                    //    stholder.Acx = 2;
+
+
+                    //    await _psmRepository.UpdateProjStakeHolderMovAsync(stholder);
+
+                    //    int cnt = await _stkholdmove.CountinboxAsync(Logins.unitid ?? 0);
+
+                    //    Logins.totmsgin = cnt;
+
+                    //    SessionHelper.SetObjectAsJson(HttpContext.Session, "User", Logins);
+                    //}
+                    ViewBag.DataProjId = projHist.Select(a => a.ProjId).FirstOrDefault();
+                    return View(projHist);
+
+                }
+                else
+                {
+                    List<ProjHistory> projHist = await _projectsRepository.GetProjectHistorybyID(dataProjId);
+                    tbl_Projects projects = await _projectsRepository.GetProjectByIdAsync(projHist[0].ProjId);
+                    projHist[0].ProjectDetl.Add(projects);
+
+                    ViewBag.DataProjId = projHist.Select(a => a.ProjId).FirstOrDefault();
+                    if (projHist != null)
+                        projHist[0].Attachments = AttPath;
+                    projHist[0].ActFileName = actufilename;
+                    projHist[0].DocumentDesc = AttDocuDescs;
+                    return View(projHist);
+
+                }
+                return null;
             }
             catch (Exception ex)
             {
                 swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
                 return Redirect("/Home/Error");
             }
-
-
         }
+
 
         #endregion
     }

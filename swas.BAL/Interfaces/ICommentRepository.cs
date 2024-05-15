@@ -19,11 +19,14 @@ namespace swas.BAL.Interfaces
         Task<List<tbl_Comment>> GetAllCommentsAsync();
         Task<bool> UpdateCommentAsync(tbl_Comment comment);
         Task<bool> DeleteCommentAsync(int commentId);
-        Task<tbl_Comment> GetCommentByPsmIdAsync(int PsmId);
+        Task<tbl_Comment> GetCommentByPsmIdAsync(int? PsmId);
 
         Task<int> CountCommentAsync(int stkhol);
 
         Task<List<Notification>> GetNotificationAsync(int stakeHolderId);
+
+      
+
         //
     }
 

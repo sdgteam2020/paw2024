@@ -194,9 +194,16 @@ namespace swas.BAL.Repository
             throw new NotImplementedException();
         }
 
-        public Task<int> GetlaststageId(int? ProjId)
+        public async Task<int> GetlaststageId(int? ProjId)
         {
-            throw new NotImplementedException();
+            int? maxStatusId = _dbContext.ProjStakeHolderMov
+           .Where(p => p.ProjId == ProjId)
+            .Select(p => (int?)p.StatusId)
+           .Max();
+
+            int result = maxStatusId ?? 0;
+                
+            return result;
         }
 
         public Task<int> ReturnDuplProjMovAsync(Projmove psmove)

@@ -146,11 +146,15 @@
                                             </td>
 
 
-                                            <td>@project.ProjName</td>
-                                            <td>@project.StakeHolder</td>
-                                            <td>@project.FromUnitName</td>
-                                            <td>@project.ToUnitName</td>
-                                            <td>@project.Action</td>
+                                        <td>
+                                            <a  data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID">
+                                                @project.ProjName
+                                            </a>
+                                        </td>
+                                        <td>@project.StakeHolder</td>
+                                        <td>@project.FromUnitName</td>
+                                        <td>@project.ToUnitName</td>
+                                        <td>@project.Action</td>
 
                                             <td>
                                                 @project.TotalDays

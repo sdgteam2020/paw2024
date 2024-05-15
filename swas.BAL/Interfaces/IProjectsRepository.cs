@@ -36,6 +36,7 @@ namespace swas.BAL.Interfaces
         Task<List<tbl_Projects>> GetProjforCommentsAsync();
         Task<List<ProjHistory>> GetProjectHistorybyID(int? dtaProjID);
         Task<bool> UpdateTxnAsync(tbl_ProjStakeHolderMov psmov);
+        Task<tbl_Projects> GetProjectByIdAsync1(int? dataProjId);
     }
 
 

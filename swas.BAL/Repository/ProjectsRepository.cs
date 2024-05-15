@@ -556,6 +556,131 @@ namespace swas.BAL.Repository
             return await _dbContext.Projects.FindAsync(projectId);
         }
 
+        public async Task<tbl_Projects> GetProjectByIdAsync1(int? dataProjId)
+        {
+
+
+            return await _dbContext.Projects.FindAsync(dataProjId);
+        }
+
+
+        public async Task<List<ProjHistory>> GetProjectHistory(string userid)
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
+
+            if (Logins != null || stkholder != 0)
+            {
+                try
+                {
+                    var query = from p in _dbContext.ProjStakeHolderMov
+                                join b in _dbContext.mStages on p.StatusId equals b.StagesId into stageJoin
+                                from b in stageJoin.DefaultIfEmpty()
+                                join c in _dbContext.mStatus on p.StatusId equals c.StatusId into statusJoin
+                                from c in statusJoin.DefaultIfEmpty()
+                                join l in _dbContext.mActions on p.ActionId equals l.ActionsId into ActionJoin
+                                from l in ActionJoin.DefaultIfEmpty()
+                                join d in _dbContext.Comment on p.PsmId equals d.PsmId into commentJoin
+                                from d in commentJoin.DefaultIfEmpty()
+                                join proj in _dbContext.Projects on p.ProjId equals proj.ProjId into projectJoin
+                                from proj in projectJoin.DefaultIfEmpty()
+                                join fromSH in _dbContext.tbl_mUnitBranch on p.FromUnitId equals fromSH.unitid into fromStakeHolderJoin
+                                from fromSH in fromStakeHolderJoin.DefaultIfEmpty()
+                                join toSH in _dbContext.tbl_mUnitBranch on p.ToUnitId equals toSH.unitid into toStakeHolderJoin
+                                from toSH in toStakeHolderJoin.DefaultIfEmpty()
+                                join curSH in _dbContext.tbl_mUnitBranch on p.PsmId equals curSH.unitid into currentStakeHolderJoin
+                                from curSH in currentStakeHolderJoin.DefaultIfEmpty()
+                                join stakeHolderSH in _dbContext.tbl_mUnitBranch on p.FromUnitId equals stakeHolderSH.unitid into stakeHolderJoin
+                                from stakeHolderSH in stakeHolderJoin.DefaultIfEmpty()
+                                where proj.ProjName.Length > 1
+                                orderby p.ProjId, p.PsmId
+                                select new ProjHistory
+                                {
+                                    ProjId = proj.ProjId,
+                                    PsmId = p.PsmId,
+                                    ProjName = proj.ProjName,
+                                    Stages = b.Stages,
+                                    Status = c.Status,
+                                    Comment = d.Comment,
+                                    FromStakeHolder = fromSH.UnitName,
+                                    ToStakeHolder = toSH.UnitName,
+                                    CurrentStakeHolder = curSH.UnitName,
+                                    InitiatedBy = stakeHolderSH.UnitName,
+                                    TimeStamp = p.TimeStamp.HasValue ? p.TimeStamp.Value.ToString("dd-MM-yyyy") : "",
+                                    InitialRemarks = p.Remarks,
+                                    AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == p.PsmId),
+                                    ActionName = l.Actions
+
+
+                                };
+
+                    var result = query.ToList();
+
+                    //where proj.ProjName.Length > 1 && (p.FromStakeHolderId == stkholder || p.ToStakeHolderId == stkholder || p.CurrentStakeHolderId == stkholder)
+
+
+                    //var query = from a in _dbContext.ProjStakeHolderMov
+                    //            join b in _dbContext.mStages on a.StageId equals b.StagesId into stageJoin
+                    //            from b in stageJoin.DefaultIfEmpty()
+                    //            join c in _dbContext.mStatus on a.StatusId equals c.StatusId into statusJoin
+                    //            from c in statusJoin.DefaultIfEmpty()
+                    //            join d in _dbContext.Comment on a.PsmId equals d.PsmId into commentJoin
+                    //            from d in commentJoin.DefaultIfEmpty()
+                    //            join f in _dbContext.Projects on a.ProjId equals f.ProjId into projectJoin
+                    //            from f in projectJoin.DefaultIfEmpty()
+                    //            join g in _dbContext.tbl_mUnitBranch on a.FromStakeHolderId equals g.Id into fromStakeHolderJoin
+                    //            from g in fromStakeHolderJoin.DefaultIfEmpty()
+                    //            join h in _dbContext.tbl_mUnitBranch on a.ToStakeHolderId equals h.Id into toStakeHolderJoin
+                    //            from h in toStakeHolderJoin.DefaultIfEmpty()
+                    //            join i in _dbContext.tbl_mUnitBranch on a.CurrentStakeHolderId equals i.Id into currentStakeHolderJoin
+                    //            from i in currentStakeHolderJoin.DefaultIfEmpty()
+                    //            join j in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals j.Id into stakeHolderJoin
+                    //            from j in stakeHolderJoin.DefaultIfEmpty()
+
+                    //            orderby a.ProjId, a.PsmId
+                    //            select new ProjHistory
+                    //            {
+                    //                ProjId = f.ProjId,
+                    //                PsmId = a.PsmId,
+                    //                ProjName = f.ProjName,
+                    //                Stages = b.Stages,
+                    //                Status = c.Status,
+                    //                Comment = d.Comment,
+                    //                FromStakeHolder = g.UnitName,
+                    //                ToStakeHolder = h.UnitName,
+                    //                CurrentStakeHolder = i.UnitName,
+                    //                InitiatedBy = j.UnitName,
+                    //                TimeStamp = a.TimeStamp.HasValue ? a.TimeStamp.Value.ToString("dd-MM-yyyy") : "",
+                    //                InitialRemarks = a.AddRemarks,
+                    //                Attachments = ""
+                    //            };
+
+                    var projHistory = await query.ToListAsync();
+                    return projHistory;
+
+                }
+                catch (Exception ex)
+                {
+
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
         public async Task<List<ProjHistory>> GetProjectHistorybyID(int? dtaProjID)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
