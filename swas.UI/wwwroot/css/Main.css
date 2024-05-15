@@ -81,3 +81,35 @@
 }
 
 /*End comment On proje csss*/
+.blink-soft {
+    animation: blinker 1.5s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+.blink {
+   /* background-color: yellow;*/
+   padding:5px;
+
+    -webkit-animation: blink 800ms step-end infinite;
+    animation: blink 800ms step-end infinite;
+}
+
+@-webkit-keyframes blink {
+    50% {
+        background-color: royalblue;
+        color:white;
+    }
+}
+
+@keyframes blink {
+    50% {
+        background-color: royalblue;
+        color: white;
+    }
+}
+
+/*=============*/ 

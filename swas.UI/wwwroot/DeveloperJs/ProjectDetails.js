@@ -114,7 +114,7 @@ function GetProjectMovHistory(ProjId) {
                 listitem += '</div>';
                 for (var i = 0; i < response.length; i++) {
                     listitem += '<div class="timeline-section"> <div class="timeline-date"> ' + DateFormatedd_mm_yyyy(response[i].date)+'</div>';
-                    listitem += '<div class="row"><div class="col-sm-4">';
+                    listitem += '<div class="row"><div class="col-sm-6">';
                     listitem += '<div class="timeline-box">';
                     if (response[i].actions == "FWD" && (response[i].undoRemarks == "" || response[i].undoRemarks == null))
                         listitem += '<div class="box-title bg-warning  text-white"><i class="fa-solid fa-forward" style="color: #FFD43B;"></i> ' + response[i].actions + '</div>';
@@ -125,15 +125,15 @@ function GetProjectMovHistory(ProjId) {
 
                     listitem += '<div class="box-content">';
                     /*listitem += '<a class="btn btn-xs btn-default pull-right">Details</a>';*/
-                    listitem += '<div class="box-item"><strong>Stages</strong>: ' + response[i].stages +'</div>';
-                    listitem += '<div class="box-item"><strong>Sub Stages</strong>: ' + response[i].status +'</div>';
-                    listitem += '<div class="box-item"><strong>From Unit</strong>: ' + response[i].fromUnitName +'</div>';
-                    listitem += '<div class="box-item"><strong>TO Unit</strong>: ' + response[i].toUnitName +'</div>';
+                    listitem += '<div class="box-item"><strong>Stages</strong>: <span class="badge rounded-pill bg-primary">' + response[i].stages +'</span></div>';
+                    listitem += '<div class="box-item"><strong>Sub Stages</strong>: <span class="badge rounded-pill bg-warning text-dark">' + response[i].status +'</span></div>';
+                    listitem += '<div class="box-item"><strong>From Unit</strong>: <span class="badge rounded-pill bg-secondary">' + response[i].fromUnitName +'</span></div>';
+                    listitem += '<div class="box-item"><strong>TO Unit</strong>: <span class="badge rounded-pill bg-info text-dark">' + response[i].toUnitName +'</span></div>';
                     listitem += '</div>';
                     listitem += ' <div class="box-footer"></div>';
                     listitem += '</div> </div>';
                     if (response[i].remarks != "") {
-                        listitem += '<div class="col-sm-4">';
+                        listitem += '<div class="col-sm-6">';
                         listitem += '<div class="timeline-box">';
                         listitem += '<div class="box-title">';
                         listitem += '<i class="fa fa-pencil text-info" aria-hidden="true"></i> Remarks';
@@ -146,7 +146,7 @@ function GetProjectMovHistory(ProjId) {
                         listitem += '</div></div>';
                     }
                     if (response[i].undoRemarks != null) {
-                        listitem += '<div class="col-sm-4">';
+                        listitem += '<div class="col-sm-6">';
                         listitem += '<div class="timeline-box">';
                         listitem += '<div class="box-title">';
                         listitem += '<i class="fa fa-pencil text-info" aria-hidden="true"></i>Undo Remarks';
@@ -178,4 +178,16 @@ function Reset() {
     $("#ddlfwdFwdTo").val(0);
     $("#Reamarks").val("");
     $("#pdfFileInput").val("");
+}
+function IsReadInbox(psmId) {
+    alert(psmId)
+    $.ajax({
+        url: '/Projects/IsReadInbox',
+        type: 'POST',
+        data: { "PsmId": psmId },
+        success: function (response) {
+            console.log(response);
+            
+        }
+    });
 }

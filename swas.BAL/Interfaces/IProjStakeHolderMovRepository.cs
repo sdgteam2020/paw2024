@@ -19,6 +19,7 @@ namespace swas.BAL.Interfaces
         Task<int> AddProjStakeHolderMovAsync(tbl_ProjStakeHolderMov psmove);
         Task<List<DTOProjectMovHistory>> ProjectMovHistory(int ProjectId);
         int GetLastRecProjectMov(int ProjectId);
+        //Task<int> IsReadInbox(int psmId);
        
         //Task<int> UpdateUndoProjectMov(int ProjectId,int PsmId);
 
