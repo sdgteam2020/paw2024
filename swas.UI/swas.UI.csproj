@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\DeveloperJs\ProjectDetails.js" />
+    <Content Remove="wwwroot\Uploads\Swas_76b4206a-8ef9-4b6c-8d33-77fd915cc3d6.pdf" />
   </ItemGroup>
 
   <ItemGroup>
@@ -425,8 +426,6 @@
     <Folder Include="wwwroot\Download\" />
     <Folder Include="wwwroot\Download\" />
     <Folder Include="wwwroot\DownloadFile\" />
-    <Folder Include="wwwroot\Uploads\" />
-    <Folder Include="wwwroot\Uploads\" />
   </ItemGroup>
 
 </Project>

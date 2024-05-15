@@ -131,9 +131,16 @@ namespace swas.BAL.DTO
         public DateTime? ActionDt { get; set; }
         public int? ActionCde { get; set; }
 
+        public string? AppDesc { get; set; }
+
+        public string? HostedOn { get; set; }
+
+
         public List<tbl_AttHistory> Atthistory { get; set; }
 
         public List<tbl_Projects> ProjectDetl { get; set; }
+
+        
         public ProjHistory()
         {
             Atthistory = new List<tbl_AttHistory> { new tbl_AttHistory { Reamarks = "" } };
