@@ -20,6 +20,7 @@ namespace swas.BAL.Interfaces
         Task<tbl_mStatus> GetStatusByIdAsync(int statusId);
         Task<List<tbl_mStatus>> GetAllStatusAsync();
         Task<List<DTODDLComman>> GetAllByStages_takeHolder(int ParentId,int UnitId,bool IsOwnProj);
+        Task<List<DTODDLComman>> GetAll();
         Task<bool> UpdateStatusAsync(tbl_mStatus status);
         Task<bool> DeleteStatusAsync(int statusId);
 

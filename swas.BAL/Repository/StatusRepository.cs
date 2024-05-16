@@ -102,6 +102,19 @@ namespace swas.BAL.Repository
             
             return lst;
         }
+
+        public async Task<List<DTODDLComman>> GetAll()
+        {
+            
+            var ret1 =await (from Status in _dbContext.mStatus
+                        select new DTODDLComman
+                        {
+                            Name = Status.Status,
+                            Id = Status.StatusId,
+                        }).ToListAsync();
+           
+            return ret1;
+        }
     }
 
 
