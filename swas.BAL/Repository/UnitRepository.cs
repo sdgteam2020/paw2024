@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using swas.DAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using swas.BAL.DTO;
+using System;
 
 namespace swas.BAL
 {
@@ -82,6 +84,9 @@ namespace swas.BAL
         }
 
 
+
+
+
         public async Task<int> del(UnitDtl Db)
         {
             var query =
@@ -134,6 +139,36 @@ namespace swas.BAL
         {
             return await _context.tbl_mUnitBranch.Where(i=>i.commentreqdid==true).ToListAsync();
         }
+
+        public async Task<List<DTOUnitMapping>> GetallUnitwithmap()
+        {
+
+            var ret1 = await (from usm in _context.TrnUnitStatusMapping
+                       join ms in _context.mStatus on usm.StatusId equals ms.StatusId
+                       join sam in _context.TrnStatusActionsMapping on ms.StatusId equals sam.StatusId
+                       join s in _context.mStages on ms.StageId equals s.StagesId
+                       join a in _context.mActions on sam.ActionsId equals a.ActionsId
+                       join ub in _context.tbl_mUnitBranch on usm.UnitId equals ub.unitid
+                              where !(from ub in _context.tbl_mUnitBranch
+                                      where ub.unitid == usm.UnitId && ub.TypeId == 6
+                                      select 1).Any()
+                              orderby ub.unitid  ascending
+                       select new DTOUnitMapping
+                       {
+                           Unit = ub.UnitName,                           
+                           Stages = s.Stages,
+                           SubStages = ms.Status,                          
+                           Actions = a.Actions
+                       }).ToListAsync();
+
+
+
+            return ret1;
+
+        }
+
+
+
 
 
         //public async Task<List<UnitDtl>> GetFindUnitAsync(string UserName)

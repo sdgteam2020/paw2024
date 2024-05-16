@@ -1,12 +1,10 @@
 ﻿function mMsater(sectid = '', ddl, TableId, ParentId) {
 
-    debugger;
     var userdata =
     {
         "id": TableId,
         "ParentId": ParentId,
-        "unitId": unitId
-
+     
     };
     $.ajax({
         url: '/Master/GetAllMasterTableforddl',

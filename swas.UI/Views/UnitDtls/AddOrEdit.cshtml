@@ -1,4 +1,5 @@
 ﻿@using swas.DAL.Models
+@using swas.BAL.DTO
 @model List<UnitDtl>
 
 
@@ -98,16 +99,29 @@
                                         <input class="form-control" type="text" id="SpnUnitName" name="UnitName">
                                        
                                     </div>
+                                    <div class="form-group col-md-6 ProjectsFwd ">
+                                        <label for="inputEmail4">Stage</label>
+                                        <select class="form-control requiredField" style="width: 100%;" tabindex="-1"
+                                                name="fwdoffrs" required id="ddlStage">
+                                            <option value="0">Select Stage</option>
+                                        </select>
+                                    </div>
                                     <div class="form-group col-md-6 ProjectsFwd">
                                         <label for="SubStage">Sub Stage</label>
                                         <select class="form-control requiredField" style="width: 100%;" tabindex="-1"
-                                                name="fwdoffrs" required id="ddlSubStage" multiple>
+                                                name="fwdoffrs" required id="ddlSubStage">
                                             <option value="0">Select Sub Stage</option>
-                                            <!-- Add more options here if needed -->
                                         </select>
                                     </div>
-                                  
-                                    <div class="form-group col-md-12 Attmenthistory d-none text-center">
+                                    <div class="form-group col-md-6 ProjectsFwd">
+                                        <label for="SubStage">Action</label>
+                                        <select class="form-control requiredField" style="width: 100%;" tabindex="-1"
+                                                name="fwdoffrs" required id="ddlfwdAction">
+                                            <option value="0">Select Action</option>
+                                        </select>
+                                    </div>
+                                   
+                                    <div class="form-group col-md-12">
 
                                         <button class="btn btn-submit" type="button" id="btnsave">Save</button>
 
@@ -120,35 +134,44 @@
                     </div>
 
                 </div>
-                @*<div class="col-md-12 Attmenthistory d-none">
+                
+                <div class="form-group col-md-12 mt-4 text-center">
                     <div class="card">
-                        <div class="modal-header"><h5 class="card-title">Projects Move Att Details</h5></div>
+                        <div class="modal-header"><h5 class="card-title">Unit Mapping Stages</h5></div>
                         <div class="card-body">
-                            <table class="table table-striped table-bordered">
+                            <table id="mapunit" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
 
-
-                                        <th>Delete</th>
-
-                                        <th>Docu Desc</th>
-                                        <th>File Name</th>
-                                        <th>Timestamp</th>
+                                        <th>Unit</th>
+                                        <th>Stages</th>
+                                        <th>SubStages</th>
+                                        <th>Actions</th>
 
                                     </tr>
                                 </thead>
-                                <tbody id="DetailBody">
+                                <tbody id="DetailUnitMapping">
+                                    @foreach (var item in ViewBag.unitmap)
+                                    {
+                                        <tr>
+                                            <td>@item.Unit</td>
+                                            <td>@item.Stages</td>
+                                            <td>@item.SubStages</td>
+                                            <td>@item.Actions</td>
+
+                                        </tr>
+
+                                    }
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                <div class="form-group col-md-12 mt-4 text-center">
-                    <input type="button" id="btnFwdNext" value="Fwd Next For Attch" class="btn btn-primary btn-lg ProjectsFwd" />
-                </div>*@
 
 
             </div>
+
+            
         </div>
     </div>
 </div>
@@ -281,3 +304,5 @@
 
 
 </script>
+
+

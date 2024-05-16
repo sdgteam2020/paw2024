@@ -92,7 +92,16 @@ namespace swas.UI.Controllers
 
                 udtl = await _unitRepository.GetAllUnitAsync();
 
+                var unitmap = await _unitRepository.GetallUnitwithmap();
+
+                ViewBag.unitmap = unitmap;
+
+
+
                 return View(udtl);
+
+             
+                
               
             }
 
