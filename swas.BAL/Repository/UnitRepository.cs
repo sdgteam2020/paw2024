@@ -15,7 +15,7 @@ namespace swas.BAL
 {
     ///Created and Reviewed by : Sub Maj Sanal
     ///Reviewed Date : 10 Aug 23
-    ///Tested By :- 
+    ///Tested By :-  
     ///Tested Date : 
     ///Start
     public class UnitRepository : IUnitRepository

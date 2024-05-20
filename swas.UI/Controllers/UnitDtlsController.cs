@@ -95,7 +95,7 @@ namespace swas.UI.Controllers
 
 
                 List<UnitDtl> udtl = new List<UnitDtl>();
-
+                 
 
 
                 udtl = await _unitRepository.GetAllUnitAsync();
