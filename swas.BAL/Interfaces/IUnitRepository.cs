@@ -14,7 +14,7 @@ namespace swas.BAL.Interfaces
     ///Tested Date : 
     ///Start
     public interface IUnitRepository
-    {
+    { 
         Task<int> Save(UnitDtl Db);
         bool CheckUserExist(string UserName, string susno);
         Task<int> del(UnitDtl Db);

@@ -51,7 +51,7 @@ namespace swas.UI.Controllers
 
         }
       
-        public async Task<IActionResult> GetAllMasterTableforddl(int id, int ParentId)
+        public async Task<IActionResult> GetAllMasterTableforddl(int id, int ParentId ,int unitId)
         {
             try
             {
@@ -133,10 +133,22 @@ namespace swas.UI.Controllers
                 }
                 else if (id == Mastertablenmumcs.mStatus)
                 {
-                    var ret = await _statusRepository.GetAllByStages_takeHolder(ParentId, Convert.ToInt32(Logins.unitid), false);
+                    if(ParentId==0)
+                    {
+                        var ret = await _statusRepository.GetAll();
+
+                       
+                        return Json(ret);
+                    }
+                    else
+                    {
+                        var ret = await _statusRepository.GetAllByStages_takeHolder(ParentId, Convert.ToInt32(Logins.unitid), false);
 
 
-                    return Json(ret);
+                        return Json(ret);
+
+                    }
+                    
 
                 }
                 else if (id == Mastertablenmumcs.mActions)

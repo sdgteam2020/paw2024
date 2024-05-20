@@ -800,14 +800,6 @@ namespace swas.BAL.Repository
 
 
 
-
-
-
-
-
-
-
-
         public async Task<List<ProjHistory>> GetProjectHistorybyID(int? dtaProjID)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
