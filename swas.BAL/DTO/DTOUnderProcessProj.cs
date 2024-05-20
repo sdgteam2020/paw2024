@@ -22,7 +22,7 @@ namespace swas.BAL.DTO
         public int StatusId { get; set; }
         public int ActionId { get; set; }
         public string UserDetails { get; set; }
-        public DateTime DateTimeOfUpdate { get; set; }
+        public DateTime? DateTimeOfUpdate { get; set; }
 
     }
 }

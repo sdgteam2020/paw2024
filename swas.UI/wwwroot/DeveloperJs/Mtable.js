@@ -65,8 +65,8 @@
         }
     });
 }
-function mMsaterStage(sectid = '', ddl, TableId, ParentId, StakeHolderId) {
-
+function mMsaterStage(sectid = '', ddl, TableId, ParentId, StakeHolderId)
+{
 
     var userdata =
     {

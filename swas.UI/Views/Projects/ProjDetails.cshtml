@@ -305,6 +305,7 @@
                                             <span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
                                             <span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
                                             <span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
+                                            <span class="d-none" id="SpnprojectStageId">@project.StageId</span>
                                             @{
                                                 snoinbox++;
                                             }
@@ -326,7 +327,7 @@
                                         <td>
                                             @if(project.PsmIds==project.undopsmId)
                                             {
-                                                <button type="button" class="btn btn-success btn-Undo ml-2">Undo</button>
+                                                <button type="button" class="btn btn-success btn-Undo ml-2">Undo </button>
                                             }
 
                                             <button type="button" class="btn btn-success btn-FwdHistory" title="History"><i class="fa-solid fa-timeline"></i></button>

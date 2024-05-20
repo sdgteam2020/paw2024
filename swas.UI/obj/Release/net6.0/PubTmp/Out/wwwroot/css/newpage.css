@@ -50,7 +50,13 @@ body {
 .page-content {
     padding: 0rem !important;
 }
-
+.modal-header .btn-close {
+    background-color: red;
+}
+.Getdetailsbtn {
+    margin-bottom: -3.0rem !important;
+    z-index: 0;
+}
 .card {
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
@@ -68,7 +74,7 @@ body {
 
 .policy {
     padding: 1rem;
-    background-color: #044c92;
+    background-color: #0081ff;
     color: white;
     justify-content: center;
     text-align: center;
@@ -76,7 +82,7 @@ body {
 
 .policy2 {
     padding: 1rem;
-    background-color: #044c92;
+    background-color: #0081ff;
     color: white;
     justify-content: center;
     text-align: center;
@@ -158,9 +164,7 @@ body {
     margin-top: 6rem;
 }
 
-.col-md-4 {
-    box-shadow: 2px 2px 10px black;
-}
+
 
 .wrapper .page-content {
     padding-top: 0rem !important;
@@ -171,17 +175,12 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.col-md-4 {
-    width: 100%;
-    box-shadow: 1px 1px 3px black;
-    padding: 15px;
-    margin: 10px 0;
-}
+
 
 .card {
     border: 1px solid #ccc;
     border-radius: 10px;
-    padding: 15px;
+   background-color:#ffffff
 }
 
 .accordion-button {
@@ -196,3 +195,6 @@ body {
     .accordion-button:hover {
         background-color: #0056b3;
     }
+.table > thead {
+    background-color: #0575b7 !important;
+}

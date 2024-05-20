@@ -148,3 +148,18 @@ C:\Users\Administrator\Desktop\Version Control\Source code ver control\IAM Comme
 C:\Users\Administrator\Desktop\Version Control\Source code ver control\IAM Commented code ver 1.0 30 Apr 24\swas.BAL\obj\Release\net6.0\refint\swas.BAL.dll
 C:\Users\Administrator\Desktop\Version Control\Source code ver control\IAM Commented code ver 1.0 30 Apr 24\swas.BAL\obj\Release\net6.0\swas.BAL.pdb
 C:\Users\Administrator\Desktop\Version Control\Source code ver control\IAM Commented code ver 1.0 30 Apr 24\swas.BAL\obj\Release\net6.0\ref\swas.BAL.dll
+D:\paw2024\swas.BAL\bin\Release\net6.0\swas.BAL.deps.json
+D:\paw2024\swas.BAL\bin\Release\net6.0\swas.BAL.dll
+D:\paw2024\swas.BAL\bin\Release\net6.0\swas.BAL.pdb
+D:\paw2024\swas.BAL\bin\Release\net6.0\swas.DAL.dll
+D:\paw2024\swas.BAL\bin\Release\net6.0\swas.DAL.pdb
+D:\paw2024\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.AssemblyReference.cache
+D:\paw2024\swas.BAL\obj\Release\net6.0\swas.BAL.GeneratedMSBuildEditorConfig.editorconfig
+D:\paw2024\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfoInputs.cache
+D:\paw2024\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfo.cs
+D:\paw2024\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CoreCompileInputs.cache
+D:\paw2024\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CopyComplete
+D:\paw2024\swas.BAL\obj\Release\net6.0\swas.BAL.dll
+D:\paw2024\swas.BAL\obj\Release\net6.0\refint\swas.BAL.dll
+D:\paw2024\swas.BAL\obj\Release\net6.0\swas.BAL.pdb
+D:\paw2024\swas.BAL\obj\Release\net6.0\ref\swas.BAL.dll

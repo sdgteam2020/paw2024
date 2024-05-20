@@ -1,264 +1,487 @@
-﻿
+﻿var current = 1;
 $(document).ready(function () {
-    $(document).on('click', '.plus', function () {
-        $('#UnitAdd').modal('show');
-    });
+    //$("#1").hide();
+    //$("#3").show();
+    
+    $("#spanProjectId").html($("#ProjId").val());
+    mMsater($("#StakeHolderId").val(),"ddlStakeHolderId",1,0)
+    mMsater($("#HostTypeID").val(),"ddlHostTypeID",2,0)
+    mMsater($("#Apptype").val(), "ddlApptype", 3, 0)
+   
+    var current_fs, next_fs, previous_fs; //fieldsets
+    var opacity;
 
+   
 
-    var initiatedDateInput = $("#ProjEdit_InitiatedDate");
-    var completionDateInput = $("#ProjEdit_CompletionDate");
+    $("#uploadButton").click(function () {
 
-    var today = new Date();
+       
 
-
-    var formattedDate = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
-
-
-    $("#ProjEdit_InitiatedDate").val(formattedDate);
-
-    var completionDateInput = document.getElementById("ProjEdit_CompletionDate");
-
-    @if (Model.ProjEdit != null && Model.ProjEdit.CompletionDate.HasValue) {
-
-        var completionDateValue = Model.ProjEdit.CompletionDate.Value.ToString("yyyy-MM-dd");
-        @Html.Raw("ProjEdit_CompletionDate.value = '" + completionDateValue + "';")
-    }
-
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-
-    var form = document.getElementById('msform');
-    var submitButton = document.getElementById('submitUpload');
-    submitButton.addEventListener('click', function (event) {
-        event.preventDefault();
-        form.submit();
-    });
-});
-
-
-$(document).ready(function () {
-
-    var initiatedDateInput = $("#ProjEdit_InitiatedDate");
-    var completionDateInput = $("#ProjEdit_CompletionDate");
-
-    completionDateInput.on("change", function () {
-
-        var initiatedDateVal = initiatedDateInput.val();
-        var completionDateVal = completionDateInput.val();
-
-        if (!initiatedDateVal) {
+        requiredFields = $('#fwduploaditems').find('.requiredField');
+        var allFieldsComplete = true;
+        requiredFields.each(function (index) {
+            if (this.value.length == 0) {
+                $(this).addClass('is-invalid');
+                allFieldsComplete = false;
+            } else {
+                $(this).removeClass('is-invalid');
+            }
+        });
+        if (!allFieldsComplete) {
 
             Swal.fire({
+                title: 'Error!',
+                text: 'Please complete all required fields',
                 icon: 'error',
-                title: 'Validation Error',
-                text: 'Initiation Date is required',
-                confirmButtonColor: '#d33',
-                confirmButtonText: 'OK'
-            });
-
-            completionDateInput.val('');
-            return;
+                showConfirmButton: false,
+                timer: 1000
+            })
         }
-
-        var initiatedDate = new Date(initiatedDateVal);
-        var completionDate = new Date(completionDateVal);
-
-
-        if (completionDate <= initiatedDate) {
-
-            Swal.fire({
-                icon: 'error',
-                title: 'Validation Error',
-                text: 'Completion Date must be greater than Initiation Date',
-                confirmButtonColor: '#d33',
-                confirmButtonText: 'OK'
-            });
-
-            completionDateInput.val('');
+        else {
+            UploadFiles();
         }
     });
-});
+    $("#finalupload").click(function () {
+
+        ProjectSubmited($(this));
+       
+
+    });
+     $("#submitUpload").click(function () {
 
 
-const addFormContainer = document.getElementById('addForm');
+         AddProject(this);
+       
 
-addFormContainer.style.display = 'block';
-document.addEventListener('DOMContentLoaded', () => {
-    const editButtons = document.querySelectorAll('.editButton');
-    editButtons.forEach(editButton => {
-        editButton.addEventListener('click', async () => {
+    });
+    $(".previous").click(function () {
 
+        current_fs = $(this).parent();
+        prev_fs = $(this).parent().prev();
 
+        //Add Class Active
+        $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+        $("#progressbar li").eq($("fieldset").index(prev_fs)).addClass("active");
 
+        //show the next fieldset
+        prev_fs.show();
+        //hide the current fieldset with style
+        current_fs.animate({ opacity: 0 }, {
+            step: function (now) {
+                // for making fielset appear animation
+                opacity = 1 - now;
 
-            var fdset = "fieldset#" + "uploaded";
-            $(fdset).hide();
-            var fdset = "fieldset#" + "5";
-
-            editFormContainer.style.display = 'block';
-            addFormContainer.style.display = 'none';
-            var fdsetn = "fieldset#" + "8";
-            $(fdsetn).hide();
-
-
-
-
-            $("#fieldset#5").addClass("active");
-            $(fdset).show();
-
-
-
-            const projId = editButton.getAttribute('data-proj-id');
-            const response = await fetch(`/Projects/Details?id=${projId}`);
-            const data = await response.json();
-
-            if (data.success) {
-
-                const project = data.project;
+                current_fs.css({
+                    'display': 'none',
+                    'position': 'relative'
+                });
+                prev_fs.css({ 'opacity': opacity });
+            },
+            duration: 600
+        });
 
 
+    });
 
-                const editFormContainer = document.getElementById('editFormContainer');
-                const ProjNameInput = editFormContainer.querySelector('#ProjEdit_ProjName');
-                const InitiatedDateInput = editFormContainer.querySelector('#ProjEdit_InitiatedDate');
-                const CompletionDateInput = editFormContainer.querySelector('#ProjEdit_CompletionDate');
-                const IsWhitelistedInput = editFormContainer.querySelector('#ProjEdit_IsWhitelisted');
-                const InitialRemarkInput = editFormContainer.querySelector('#ProjEdit_InitialRemark');
-                const StakeHolderIdSelect = editFormContainer.querySelector('#ddlUnitIdedit');
-                const AppTypeidSelect = editFormContainer.querySelector('#ddlAppTypeEdit');
-                const AimScopeTextarea = editFormContainer.querySelector('#ProjEdit_AimScope');
-                const HQandITinfraReqdInput = editFormContainer.querySelector('#ProjEdit_HQandITinfraReqd');
-                const HostedonInput = editFormContainer.querySelector('#Hostedtype');
-                const ContentofSWAppTextarea = editFormContainer.querySelector('#ProjEdit_ContentofSWApp');
-                const ReqmtJustificationTextarea = editFormContainer.querySelector('#ProjEdit_ReqmtJustification');
-                const UsabilityofProposedApplnInput = editFormContainer.querySelector('#ProjEdit_UsabilityofProposedAppln');
-                const DetlsofUserBaseInput = editFormContainer.querySelector('#ProjEdit_DetlsofUserBase');
+    $("#tempBasicDetails").click(function () {
+        var number = 1 + Math.floor(Math.random() * 15000);
+        const predate = DateFormateyyy_mm_dd(new Date()-1);
+        const todaydate = DateFormateyyy_mm_dd(new Date());
+        $("#ProjName").val("New Project" + number);
+        $("#InitiatedDate").val(predate);
+        $("#CompletionDate").val(todaydate);;
+        $("#IsWhitelisted").val("YES" + number);;
+        $("#InitialRemark").val("Remarks" + number);
+        $("#AimScope").val("AimScope" + number);
+        $("#HQandITinfraReqd").val("HQandITinfraReqd" + number);
+        $("#ContentofSWApp").val("Content of SWApp" + number);
+        $("#ReqmtJustification").val("Reqmt Justification" + number);
+        $("#UsabilityofProposedAppln").val("Usability of Proposed" + number);
 
-                const EnvisagedCostTextarea = editFormContainer.querySelector('#envisagedCostInput');
-
-                const NWBandWidthReqmtInput = editFormContainer.querySelector('#ProjEdit_NWBandWidthReqmt');
-
-
-                const MajTimeLinesInput = editFormContainer.querySelector('#ProjEdit_MajTimeLines');
-                const TechStackProposedInput = editFormContainer.querySelector('#ProjEdit_TechStackProposed');
-                const DataSecurity_backupInput = editFormContainer.querySelector('#ProjEdit_DataSecurity_backup');
-                const TypeofSWInput = editFormContainer.querySelector('#ProjEdit_TypeofSW');
-                const BeingDevpInhouseInput = editFormContainer.querySelector('#ProjEdit_BeingDevpInhouse');
-                const EndorsmentbyHeadofInput = editFormContainer.querySelector('#ProjEdit_EndorsmentbyHeadof');
-
-                const ProjEditProjId = editFormContainer.querySelector('#ProjEdit_ProjId');
-                const CurrentPslmId = editFormContainer.querySelector('#ProjEdit_CurrentPslmId');
+        $("#ddlStakeHolderId").val(1);
+        $("#ddlHostTypeID").val(1);
+        $("#ddlApptype").val(1);
 
 
-
-                CurrentPslmId.value = project.currentPslmId;
-                ProjEditProjId.value = project.projId;
-                ProjNameInput.value = project.projName;
-
-                InitiatedDateInput.value = formatDate(project.initiatedDate);
-                CompletionDateInput.value = formatDate(project.completionDate);
-
-                setSelectedValue(StakeHolderIdSelect, project.stakeHolderId);
-                setSelectedValue(AppTypeidSelect, project.apptype);
-                setSelectedValue(HostedonInput, project.hostTypeID);
-
-
+        $("#DetlsofUserBase").val("DetlsofUserBase" + number);
+        $("#EnvisagedCost").val(number);
+        $("#NWBandWidthReqmt").val("NWBa" + number);
+        $("#MajTimeLines").val("MajTimeLines" + number);
+        $("#TechStackProposed").val("TechStackProposed" + number);
+        $("#DataSecurity_backup").val("DataSecurity_backup" + number);
+        $("#TypeofSW").val("TypeofSW" + number);
+        $("#BeingDevpInhouse").val("BeingDevpInhouse" + number);
+        $("#EndorsmentbyHeadof").val("EndorsmentbyHeadof" + number);
+    });
+    $(".requiredField").change(function () {
 
 
-                IsWhitelistedInput.value = project.isWhitelisted;
-                InitialRemarkInput.value = project.initialRemark;
-                AimScopeTextarea.value = project.aimScope;
-                HQandITinfraReqdInput.value = project.hQandITinfraReqd;
+        if (this.value.length == 0) {
+            $(this).addClass('is-invalid');
 
-                ContentofSWAppTextarea.value = project.contentofSWApp;
+        } else {
+            $(this).removeClass('is-invalid');
+            $(this).addClass('is-valid');
+        }
+    });
+    $(".requiredField").blur(function () {
 
-                ReqmtJustificationTextarea.value = project.reqmtJustification;
-                UsabilityofProposedApplnInput.value = project.usabilityofProposedAppln;
-                DetlsofUserBaseInput.value = project.detlsofUserBase;
-                EnvisagedCostTextarea.value = project.envisagedCost;
+        
+        if (this.value.length == 0) {
+            $(this).addClass('is-invalid');
+            
+        } else {
+            $(this).removeClass('is-invalid');
+            $(this).addClass('is-valid');
+        }
+    });
+    $("#btnbasic").click(function () {
 
-                NWBandWidthReqmtInput.value = project.nwBandWidthReqmt;
+       
+        requiredFields = $('#tablebasic').find('.requiredField');
+        var allFieldsComplete = true;
+        requiredFields.each(function (index) {
+            if (this.value.length == 0) {
+                $(this).addClass('is-invalid');
+                allFieldsComplete = false;
+            } else {
+                $(this).removeClass('is-invalid');
+            }
+        });
+        if (!allFieldsComplete) {
+           
+            Swal.fire({
+                title: 'Error!',
+                text: 'Please complete all required fields',
+                icon: 'error',
+                showConfirmButton: false,
+                timer: 1000
+            })
+        }
+        else {
+            current_fs = $(this).parent();
+            next_fs = $(this).parent().next();
 
-                MajTimeLinesInput.value = project.majTimeLines;
-                TechStackProposedInput.value = project.techStackProposed;
-                DataSecurity_backupInput.value = project.dataSecurity_backup;
-                TypeofSWInput.value = project.typeofSW;
-                BeingDevpInhouseInput.value = project.beingDevpInhouse;
-                EndorsmentbyHeadofInput.value = project.endorsmentbyHeadof;
 
+            //Add Class Active
+            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
 
+            //show the next fieldset
+            next_fs.show();
+            //hide the current fieldset with style
+            current_fs.animate({ opacity: 0 }, {
+                step: function (now) {
+                    // for making fielset appear animation
+                    opacity = 1 - now;
 
-                editFormContainer.style.display = 'block';
-                addFormContainer.style.display = 'none';
+                    current_fs.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    next_fs.css({ 'opacity': opacity });
+                },
+                duration: 600
+            });
+
+        }
+        return allFieldsComplete;
+    });
+
+   
+    $("body").on("click", ".btndeleteProject", function () {
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You want to Delete ",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#072697',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Delete It!'
+        }).then((result) => {
+            if (result.value) {
+                
+                
+                DeleteProject($(this).closest("tr").find(".tblspnprojectid").html());
+
             }
         });
     });
 });
+function AddProject(thistag) {
 
-function formatDate(dateString) {
-    const dateParts = dateString.split('T')[0].split('-');
-    return `${dateParts[0]}-${dateParts[1]}-${dateParts[2]}`;
+    $.ajax({
+        url: '/Projects/AddProject',
+        type: 'POST',
+        data: {
+            "ProjId": $("#ProjId").val(),
+            "ProjName": $("#ProjName").val(),
+            "InitiatedDate": $("#InitiatedDate").val(),
+            "CompletionDate": $("#CompletionDate").val(),
+            "IsWhitelisted": $("#IsWhitelisted").val(),
+            "InitialRemark": $("#InitialRemark").val(),
+            "StakeHolderId": $("#ddlStakeHolderId").val(),
+            "AimScope": $("#AimScope").val(),
+            "HQandITinfraReqd": $("#HQandITinfraReqd").val(),
+            "HostTypeID": $("#ddlHostTypeID").val(),
+            "ContentofSWApp": $("#ContentofSWApp").val(),
+            "ReqmtJustification": $("#ReqmtJustification").val(),
+            "UsabilityofProposedAppln": $("#UsabilityofProposedAppln").val(),
+            "Apptype": $("#ddlApptype").val(),
+            "DetlsofUserBase": $("#DetlsofUserBase").val(),
+            "EnvisagedCost": $("#EnvisagedCost").val(),
+            "NWBandWidthReqmt": $("#NWBandWidthReqmt").val(),
+            "MajTimeLines": $("#MajTimeLines").val(),
+            "TechStackProposed": $("#TechStackProposed").val(),
+            "DataSecurity_backup": $("#DataSecurity_backup").val(),
+            "TypeofSW": $("#TypeofSW").val(),
+            "BeingDevpInhouse": $("#BeingDevpInhouse").val(),
+            "EndorsmentbyHeadof": $("#EndorsmentbyHeadof").val(),
+            "CurrentPslmId": $("#CurrentPslmId").val(),
+            "ProjCode": $("#ProjCode").val()
+            
+           
+
+        }, //get the search string
+        success: function (result) {
+
+
+           
+            if (result == -2) {
+                
+
+                Swal.fire({
+                    title: "success!",
+                    text: "User has been Updated!",
+                    icon: "success"
+                });
+
+            }
+            else if (result == -3) {
+
+                Swal.fire({
+                    title: "success!",
+                    text: "Project Name Allredy Exit!",
+                    icon: "Error"
+                });
+
+            }
+            else if (result == -4) {
+                Swal.fire({
+                    title: "success!",
+                    text: "Incorrect Data!",
+                    icon: "Error"
+                });
+                
+
+            }
+            else if (result == -5) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong or Invalid Entry!',
+
+                })
+
+            } else if (result != null) {
+               
+
+                    $("#spanProjectId").html(result.projId);
+                    $("#spanCurrentPslmId").html(result.currentPslmId);
+
+
+                    AttechHistory();
+                    current_fs = $(thistag).parent();
+                    next_fs = $(thistag).parent().next();
+
+
+                    //Add Class Active
+                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+                    //show the next fieldset
+                    next_fs.show();
+                    //hide the current fieldset with style
+                    current_fs.animate({ opacity: 0 }, {
+                        step: function (now) {
+                            // for making fielset appear animation
+                            opacity = 1 - now;
+
+                            current_fs.css({
+                                'display': 'none',
+                                'position': 'relative'
+                            });
+                            next_fs.css({ 'opacity': opacity });
+                        },
+                        duration: 600
+                    });
+
+
+                
+
+
+            }
+        }
+    });
 }
+function FwdProjConfirm(thisdata) {
+    $.ajax({
+        url: '/Projects/FwdProjConfirm',
+        type: 'POST',
+        data: { "PslmId": $("#spanCurrentPslmId").html() },
+        success: function (response) {
+            console.log(response);
 
-function setSelectedValue(selectElement, value) {
 
-    for (let option of selectElement.options) {
-        if (option.value == value) {
-            option.selected = true;
+            if (response >= 1) {
 
-            break;
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Project Successfully Submitted..!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+
+                current_fs = $(thisdata).parent();
+                next_fs = $(thisdata).parent().next();
+
+
+                //Add Class Active
+                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+                //show the next fieldset
+                next_fs.show();
+                //hide the current fieldset with style
+                current_fs.animate({ opacity: 0 }, {
+                    step: function (now) {
+                        // for making fielset appear animation
+                        opacity = 1 - now;
+
+                        current_fs.css({
+                            'display': 'none',
+                            'position': 'relative'
+                        });
+                        next_fs.css({ 'opacity': opacity });
+                    },
+                    duration: 600
+                });
+
+
+            }
 
         }
+    });
+}
+function ProjectSubmited(thisdata) {
+    $.ajax({
+        url: '/Projects/ProjectSubmited',
+        type: 'POST',
+        data: { "projid": $("#spanProjectId").html() },
+        success: function (response) {
+            console.log(response);
 
+            if (response >= 1) {
+
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Project Successfully Submitted..!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+
+                current_fs = $(thisdata).parent();
+                next_fs = $(thisdata).parent().next();
+
+
+                //Add Class Active
+                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+                //show the next fieldset
+                next_fs.show();
+                //hide the current fieldset with style
+                current_fs.animate({ opacity: 0 }, {
+                    step: function (now) {
+                        // for making fielset appear animation
+                        opacity = 1 - now;
+
+                        current_fs.css({
+                            'display': 'none',
+                            'position': 'relative'
+                        });
+                        next_fs.css({ 'opacity': opacity });
+                    },
+                    duration: 600
+                });
+
+
+            }
+
+        }
+    });
+}
+
+function validationIsSuccessful() {
+    // Your validation logic goes here
+    // Return true if validation passes, false otherwise
+    // Example:
+    var inputVal = $("#ProjEdit_DetlsofUserBase").val();
+    if (inputVal === "") {
+        // Validation fails
+        return false;
+    }
+    // Validation passes
+    return true;
+}
+function DateFormateyyy_mm_dd(date) {
+
+   
+    var datef2 = new Date(date);
+    var months = "" + `${(datef2.getMonth() + 1)}`;
+    var days = "" + `${(datef2.getDate())}`;
+    var pad = "00"
+    var monthsans = pad.substring(0, pad.length - months.length) + months
+    var dayans = pad.substring(0, pad.length - days.length) + days
+    var year = `${datef2.getFullYear()}`;
+    if (year > 1902) {
+
+        var datemmddyyyy = year + `-` + monthsans + `-` + dayans
+        return datemmddyyyy;
+    }
+    else {
+        return '';
+    }
+
+    //`${datef2.getFullYear()}/` + monthsans + `/` + dayans ;
+}
+
+function checkFileSize(input) {
+    const maxFileSizeInBytes = 500000;
+    if (input.files.length > 0) {
+        const fileSize = input.files[0].size;
+        if (fileSize > maxFileSizeInBytes) {
+            alert("File size exceeds the maximum limit of 5MB.");
+            input.value = '';
+        }
     }
 }
 
-
-editAnchors.forEach((editAnchor) => {
-    editAnchor.addEventListener('click', (event) => {
-        event.preventDefault();
-        const projName = editAnchor.getAttribute('data-proj-name');
-
-
-        editFormContainer.style.display = 'block';
-        addFormContainer.style.display = 'none';
-    });
-});
+function DeleteProject(ProjectId) {
+    $.ajax({
+        url: '/Projects/DeleteProjects',
+        type: 'POST',
+        data: { "ProjectId": ProjectId },
+        success: function (response) {
+            console.log(response);
 
 
-$(document).ready(function () {
-    $("#envisagedCostInputa").on("input", function () {
+            if (response == 1) {
+                alert("Record Deleted successfully");
 
-        var inputValue = $(this).val();
+                location.reload();
 
+            }
 
-        var numericValue = parseFloat(inputValue);
-
-
-        if (numericValue < 0) {
-
-            $(this).val('');
-
-            Swal.fire({
-                title: 'Negative Value Not Allowed',
-                text: 'Please Enter Possitive Values...',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
         }
     });
-});
-
-
-$(document).ready(function () {
-    // Check if it's a postback
-    var isPostBack = '<%= Page.IsPostBack %>';
-
-    if (isPostBack.toLowerCase() === 'true') {
-        // If it's a postback, hide the table
-        $('#SoftwareType1').hide();
-    }
-});
-
-
+}

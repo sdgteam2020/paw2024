@@ -1873,9 +1873,10 @@
                     <div class="top-navbar-right ms-auto">
 
                         <ul class="navbar-nav align-items-center">
-
+                            <li class="nav-item dropdown">
+                                <div class="text-white mr-2">Welcome :  @Logins.UserName (@Logins.Rank.ToUpper() @Logins.Offr_Name.ToUpper())</div>
+                             </li> 
                             <li class="nav-item dropdown dropdown-user-setting">
-
                                 <div class="user-setting" style="margin-right:100px;">
                                     <a href="/Account/Logout">
                                         <img src="~/assets/images/icons/logout.png" class="user-img" alt="">
@@ -1935,7 +1936,7 @@
                             <ion-icon name="home-sharp"></ion-icon>
                         </div>
                         <a href="/Home/Index">
-                            <div class="menu-title">
+                            <div class="menu-title text-center">
                                 Welcome Users  @Logins.UserName
                             </div>
 

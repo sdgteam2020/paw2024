@@ -7,7 +7,17 @@
     .select2-container {
         z-index: 9999; /* Adjust the z-index value as needed */
     }
-    </style>
+
+    .hiddenData {
+        visibility: hidden;
+        width: 0;
+        height: 0;
+        padding: 0;
+        margin: 0;
+        border: none;
+    }
+   
+</style>
 <!-- Button to open the modal for adding a new unit -->
 <button type="button" id="AddButon" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#UnitAdd">
     Add New Unit
@@ -63,6 +73,90 @@
 </div>
 
 
+
+<div class="modal fade" id="unitMapping" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Unit Mapping</h5>
+                <span class="d-none1" id="Spnmodalunitid">0</span>
+                <span class="d-none1" id="spanmodalStatusActionsMappingId">0</span>
+                <span class="d-none1" id="spanmodalUnitStatusMappingId">0</span>
+
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="modal-header"><h5 class="card-title Fwdtitle">Projects Move Details</h5></div>
+                            <div class="card-body">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6 ProjectsFwd">
+                                        <label for="UnitName">Unit</label>
+                                        <input class="form-control" type="text" id="UnitName" name="UnitName">
+                                    </div>
+                                    <div class="form-group col-md-6 ProjectsFwd">
+                                        <label for="ddlStage">Stage</label>
+                                        <select class="form-control requiredField" style="width: 100%;" tabindex="-1" name="fwdoffrs" required id="ddlStage">
+                                            <option value="0">Select Stage</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6 ProjectsFwd">
+                                        <label for="ddlSubStage">Sub Stage</label>
+                                        <select class="form-control requiredField" style="width: 100%;" tabindex="-1" name="fwdoffrs" required id="ddlSubStage">
+                                            <option value="0">Select Sub Stage</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6 ProjectsFwd">
+                                        <label for="ddlAction">Action</label>
+                                        <select class="form-control requiredField" style="width: 100%;" tabindex="-1" name="fwdoffrs" required id="ddlAction">
+                                            <option value="0">Select Action</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <button class="btn btn-submit" type="button" id="btnsave" style="    margin-left: 20rem;background-color: #2d5eff; color:white">
+                                            Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group col-md-12 mt-4 text-center">
+                    <div class="card">
+                        <div class="modal-header"><h5 class="card-title">Unit Mapping Stages</h5></div>
+                        <div class="card-body">
+                            <table id="mapunit" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+
+                                        <th>Unit</th>
+                                        <th>Stages</th>
+                                        <th>SubStages</th>
+                                        <th>Actions</th>
+                                        <th>Edit/Delete</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="mappingdetails">
+                                
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            
+
+    </div>
+</div>
+
+
 <div class="modal fade" id="UnitAdd" tabindex="-1" aria-labelledby="ProjectAddLabel" aria-hidden="true">
     <div class="modal-dialog" style="max-width: 800px;">
         <div class="modal-content">
@@ -78,7 +172,12 @@
             </div>
          
 
-            <script>
+
+
+<script src="~/developerjs/mtable.js"></script>
+<script src="~/developerjs/unitmapping.js"></script>
+
+<script>
     @if (TempData.ContainsKey("SuccessMessage"))
     {
         <text>
@@ -116,13 +215,8 @@
 
             $('#UnitAdd').modal('show');
 
-        });
-
-                    $("#Editbtn").click(function () {
-
-            $('#ProjectEdit').modal('show');
-
                     });
-                });
-            </script>
+
+    });
+</script>
 

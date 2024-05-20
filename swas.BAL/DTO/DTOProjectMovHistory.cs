@@ -23,7 +23,9 @@ namespace swas.BAL.DTO
         public bool IsComment { get; set; }
 
         public int? AttCnt { get; set; }
-
+        public string? UserDetails { get; set; }
         
+
+
     }
 }

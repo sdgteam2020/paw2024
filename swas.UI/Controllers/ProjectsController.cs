@@ -671,21 +671,37 @@ namespace swas.UI.Controllers
             var Ret = await _psmRepository.ProjectMovHistory(ProjectId);
             return Json(Ret);
         }
-        public async Task<IActionResult> UndoProject(int ProjectId, int PsmId, string Remarks)
+        public async Task<IActionResult> UndoProject(int ProjectId, int PsmId, string Remarks,int StageId)
         {
             try
             {
-                var movent = await _psmRepository.GetByByte(PsmId);
-                movent.IsActive = false;
-                movent.IsDeleted = true;
-                movent.UndoRemarks = Remarks;
-                var Ret = await _psmRepository.UpdateWithReturn(movent);
+             
+                if (StageId == 1)
+                {
+                    var proj = await _projectsRepository.GetProjectByIdAsync(ProjectId);
+                    proj.IsSubmited = false;
+                  
+                    await _projectsRepository.UpdateProjectAsync(proj);
 
-                var psmidold = _psmRepository.GetLastRecProjectMov(ProjectId);
-                var movent1 = await _psmRepository.GetByByte(psmidold);
-                movent1.Remarks = "";
-                movent1.IsComplete = false;
-                var Ret1 = await _psmRepository.UpdateWithReturn(movent);
+                   // var ret = await _psmRepository.DeleteProjStakeHolderMovAsync(PsmId);
+                }
+                else
+                {
+                    var movent = await _psmRepository.GetByByte(PsmId);
+                    movent.IsActive = false;
+                    movent.IsDeleted = true;
+                    movent.UndoRemarks = Remarks;
+                    var Ret = await _psmRepository.UpdateWithReturn(movent);
+
+
+                    var psmidold = _psmRepository.GetLastRecProjectMov(ProjectId);
+                    var movent1 = await _psmRepository.GetByByte(psmidold);
+                    movent1.Remarks = "";
+                    movent1.IsComplete = false;
+                    var Ret1 = await _psmRepository.UpdateWithReturn(movent);
+                }
+
+               
                 return Json(nmum.Update);
             }
             catch (Exception ex)
