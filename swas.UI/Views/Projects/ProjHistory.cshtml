@@ -130,7 +130,7 @@
 
                     </tr>
                     <tr>
-                        <td>Major Timeline..?</td>
+                        <td>Major Timeline?</td>
                         <td>@Model[0].ProjectDetl[1].MajTimeLines</td>
 
                     </tr>
@@ -173,19 +173,10 @@
                     </tr>
                     <tr>
                         <td>Hosted On</td>
-                        <td>@Model[0].ProjectDetl[1].HostTypeID</td>
+                        <td>@Model[0].HostedOn</td>
 
                     </tr>
-                    <tr>
-                        <td>Deployment Type</td>
-                        <td>@Model[0].ProjectDetl[1].Apptype</td>
-
-                    </tr>
-                    <tr>
-                        <td>Being Devp In House..?</td>
-                        <td>@Model[0].ProjectDetl[1].BeingDevpInhouse</td>
-
-                    </tr>
+                   
                 </table>
             </div>
         </div>
@@ -208,7 +199,7 @@
                         <td>@Model[0].ProjectDetl[1].EnvisagedCost</td>
 
                     </tr>
-                    <tr>
+                  @*  <tr>
                         <td>Content of SW Appln</td>
                         <td>@Model[0].ProjectDetl[1].ContentofSWApp</td>
 
@@ -222,8 +213,17 @@
                         <td>Reqmt Justification</td>
                         <td class="long-text">@Model[0].ProjectDetl[1].ReqmtJustification</td>
 
-                    </tr>
+                    </tr>*@
+                    <tr>
+                        <td>Deployment Type</td>
+                        <td>@Model[0].AppDesc</td>
 
+                    </tr>
+                    <tr>
+                        <td>Being Devp In House?</td>
+                        <td>@Model[0].ProjectDetl[1].BeingDevpInhouse</td>
+
+                    </tr>
                 </table>
             </div>
         </div>
@@ -533,18 +533,20 @@
                                 <tr>
                                     <th style="text-align: center; border: 1px solid black;">Ser No</th>
                                     <th style="text-align: center; border: 1px solid black;">Date</th>
-                                    <th style="text-align: center; border: 1px solid black;">Status</th>
-                                    <th style="text-align: center; border: 1px solid black;">Fwd Fm</th>
-                                    <th style="text-align: center; border: 1px solid black;">Fwd To</th>
+                                    <th style="text-align: center; border: 1px solid black;">FromStakeHolder</th>
+                                    <th style="text-align: center; border: 1px solid black;">ToStakeHolder</th>
+                                    <th style="text-align: center; border: 1px solid black;">Stage</th>
+                                    <th style="text-align: center; border: 1px solid black;">SubStage</th>
+                                    <th style="text-align: center; border: 1px solid black;">Action</th>
                                     <th style="text-align: center; border: 1px solid black;">Remarks</th>
-                                    <th style="text-align: center; border: 1px solid black;">Comment</th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 @{
                                     int snoa3 = 0;
                                 }
-                                @foreach (var history in Model)
+                                @foreach (var history in ViewBag.ProjMovementHist)
                                 {
                                     <tr>
                                         <td style="text-align: center; border: 1px solid black;">
@@ -553,14 +555,15 @@
                                             }
                                             @snoa3
                                         </td>
-                                        <td style="text-align: center; border: 1px solid black;">@history.TimeStamp</td>
+                                        <td style="text-align: center; border: 1px solid black;">@history.Date</td>
+                                        <td style="text-align: center; border: 1px solid black;">@history.FromUnitName</td>
+                                        <td style="text-align: center; border: 1px solid black;">@history.ToUnitName</td>
+                                        <td style="text-align: center; border: 1px solid black;">@history.Stages</td>
                                         <td style="text-align: center; border: 1px solid black;">@history.Status</td>
-                                        <td style="text-align: center; border: 1px solid black;">@history.FromStakeHolder</td>
-                                        <td style="text-align: center; border: 1px solid black;">@history.CurrentStakeHolder</td>
+                                        <td style="text-align: center; border: 1px solid black;">@history.Actions</td>
                                         <td style="text-align: center; border: 1px solid black;">
                                             @history.Remarks
                                         </td>
-                                        <td style="text-align: center; border: 1px solid black;">@history.Comment</td>
                                     </tr>
                                 }
                             </tbody>
@@ -624,21 +627,18 @@
                 <tr>
                     <th>Ser No</th>
                     <th>Date</th>
-                    <th>Status</th>
-                    <th>Fwd Fm</th>
-                    <th>Fwd To</th>
+                    <th>FromStakeHolder</th>
+                    <th>ToStakeHolder</th>
+                    <th>Stage</th>
+                    <th>SubStage</th>
+                    <th>Action</th>
                     <th>Remarks</th>
-                    <th>Comment</th>
-                    <th>Current Stake Holder</th>
                     <th>#Att</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var history in Model)
+                @foreach (var history in ViewBag.ProjMovementHist)
                 {
-                    if (history.Comment != string.Empty)
-                    {
-
                         <tr>
 
                             <td>
@@ -647,19 +647,18 @@
                                 }
                                 @snoa
                             </td>
-                            <td>@history.TimeStamp</td>
+                            <td>@history.Date</td>
+                            <td>@history.FromUnitName</td>
+                            <td>@history.ToUnitName</td>
+                            <td>@history.Stages</td>
                             <td>@history.Status</td>
-                            <td>@history.FromStakeHolder</td>
-                            <td>@history.CurrentStakeHolder</td>
-
-                            @*<td>@history.Stages</td>*@
+                        <td style="color: @((history.Actions == "Approved") ? "green" : "inherit")">
+                            @history.Actions
+                        </td>
                             <td>
                                 @history.Remarks
                             </td>
-                            <td>@history.Comment</td>
-
-                            <td>@history.CurrentStakeHolder</td>
-                            @*  <td>@history.InitiatedBy</td> *@
+                            
                             <td>
                                 @if (history.AttCnt > 0)
                                 {
@@ -678,7 +677,7 @@
 
                             </td>
                         </tr>
-                    }
+                    
                 }
             </tbody>
         </table>
@@ -695,10 +694,10 @@
 }
 <div class="card bi-ui-radios-30 w-100">
     <div class="card-body">
-        <div class="heading-line" style="text-align: center;">
-            <div class="line"></div>
-            <h6 style="color: #044c92; font-weight: bold;">Comment By Stakeholders</h6>
-            <div class="line"></div>
+        <div class="projectheading" style="text-align: center;">
+           
+            <h6 style="color: white;margin-top: 8px; font-weight: bold;">Comment By Stakeholders</h6>
+            
         </div>
         <div class="chat-messages" id="ChatBox">
             <!-- Your chat messages go here -->
@@ -740,10 +739,6 @@
             });
 
         });
-
-
-
-
 
         $(document).on('click', '.pdf', function () {
             $('#ViewRecordsHistory').modal('show');

@@ -11,7 +11,7 @@ namespace swas.DAL.Models
     {
         [Key]
         public int Apptype { get; set; }
-        public string? AppDesc { get; set; }
+        public string AppDesc { get; set; }
     
         
     }

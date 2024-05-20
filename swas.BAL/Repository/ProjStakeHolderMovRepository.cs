@@ -44,7 +44,7 @@ namespace swas.BAL.Repository
         }
 
 
-        public async Task<List<DTOProjectMovHistory>> ProjectMovHistory(int ProjectId)
+        public async Task<List<DTOProjectMovHistory>> ProjectMovHistory(int? ProjectId)
         {
             var query = await (from a in _dbContext.Projects
                         join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
@@ -72,6 +72,8 @@ namespace swas.BAL.Repository
                             Remarks=b.Remarks,
                             UndoRemarks=b.UndoRemarks,
                             IsComment=b.IsComment
+                            UndoRemarks=b.UndoRemarks,
+                            AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == b.PsmId),
                          }).ToListAsync();
 
 

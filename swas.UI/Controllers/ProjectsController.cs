@@ -46,6 +46,7 @@ namespace swas.UI.Controllers
         private readonly ICommentRepository _commentRepository;
         private readonly IActionsRepository _actionsRepository;
         private readonly IProjComments _projComments;
+        private readonly IProjStakeHolderMovRepository _projStakeHolderMovRepository;
 
         private IWebHostEnvironment webHostEnvironment;
         private System.Timers.Timer aTimer;
@@ -58,8 +59,10 @@ namespace swas.UI.Controllers
             IWebHostEnvironment environment, IProjStakeHolderMovRepository stkholdmove, 
             IDataProtectionProvider DataProtector, IWebHostEnvironment _webHostEnvironment, 
             ICommentRepository commentRepository, IActionsRepository actionsRepository,
-            IProjComments projComments, IStkCommentRepository stkCommentRepository
-            
+            IProjComments projComments, IStkCommentRepository stkCommentRepository,
+            IProjStakeHolderMovRepository projStakeHolderMovRepository
+
+
             )
         {
             _projectsRepository = projectsRepository;
@@ -77,6 +80,7 @@ namespace swas.UI.Controllers
             _dataProtector = DataProtector.CreateProtector("swas.UI.Controllers.ProjectsController");
             _projComments = projComments;
             _stkCommentRepository = stkCommentRepository;
+            _projStakeHolderMovRepository = projStakeHolderMovRepository;
         }
 
 
@@ -894,10 +898,17 @@ namespace swas.UI.Controllers
 
                 var projdetails =await  _projectsRepository.GetProjectByIdAsync1(dataProjId);
 
+                
 
                 var dto3 = await _commentRepository.GetCommentByPsmIdAsync(projdetails.CurrentPslmId);
 
                 ViewBag.CommentByStakeholderList = dto3;
+
+                var ProjMovementHist = await _projStakeHolderMovRepository.ProjectMovHistory(dataProjId);
+                ViewBag.ProjMovementHist = ProjMovementHist;
+
+
+
 
 
                 ViewBag.PsmId = psmid ?? 0;
@@ -973,20 +984,7 @@ namespace swas.UI.Controllers
                     projHist[0].ProjectDetl.Add(projects);
 
                     var stholder = await _psmRepository.GetProjStakeHolderMovByIdAsync(projects.CurrentPslmId);
-                    //if (stholder.ActionId == 1)
-                    //{
-                    //    stholder.EditDeleteDate = DateTime.Now;
-                    //    stholder.Acx = 2;
-
-
-                    //    await _psmRepository.UpdateProjStakeHolderMovAsync(stholder);
-
-                    //    int cnt = await _stkholdmove.CountinboxAsync(Logins.unitid ?? 0);
-
-                    //    Logins.totmsgin = cnt;
-
-                    //    SessionHelper.SetObjectAsJson(HttpContext.Session, "User", Logins);
-                    //}
+                   
                     ViewBag.DataProjId = projHist.Select(a => a.ProjId).FirstOrDefault();
                     return View(projHist);
 
@@ -1016,6 +1014,45 @@ namespace swas.UI.Controllers
 
 
         #endregion
+
+
+        #region Attchment Document
+
+        public async Task<IActionResult> AttDetails(int Id)
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            if (Logins != null)
+            {
+                List<tbl_AttHistory> atthis = new List<tbl_AttHistory>();
+                atthis = await _attHistoryRepository.GetAttHistoryByIdAsync(Id);
+                return PartialView("_attachmetsview", atthis);
+            }
+            else
+            {
+                return Redirect("/Identity/Account/login");
+            }
+        }
+
+        public async Task<IActionResult> AttDetailsRead(int Id)
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            if (Logins != null)
+            {
+                List<tbl_AttHistory> atthis = new List<tbl_AttHistory>();
+                atthis = await _attHistoryRepository.GetAttHistoryByIdAsync(Id);
+                return PartialView("_attachmetsread", atthis);
+            }
+            else
+            {
+                return Redirect("/Identity/Account/login");
+            }
+        }
+
+        #endregion
+
+
+
+
     }
 
 }
