@@ -5,8 +5,10 @@
        
         var ProjId = $(this).closest("tr").find("#SpnCurrentProjId").html();
         var psmId = $(this).closest("tr").find("#SpnCurrentpsmId").html();
-        GetForCommentStakeHolder(ProjId, psmId);
        
+      //  GetForCommentStakeHolder(ProjId, psmId);
+        SentForComment(ProjId, psmId, 0)
+        ProcessProjConfirm(ProjId)
     });
 });
 function GetForCommentStakeHolder(ProjId, psmId) {
@@ -117,13 +119,19 @@ function GetProjectMovHistory(ProjId) {
                     listitem += '<div class="timeline-section"> <div class="timeline-date"> ' + DateFormatedd_mm_yyyy(response[i].date)+'</div>';
                     listitem += '<div class="row"><div class="col-sm-6">';
                     listitem += '<div class="timeline-box">';
-                    if (response[i].actions == "FWD" && (response[i].undoRemarks == "" || response[i].undoRemarks == null))
-                        listitem += '<div class="box-title bg-warning  text-white"><i class="fa-solid fa-forward" style="color: #FFD43B;"></i> ' + response[i].actions + '</div>';
-                    else if (response[i].undoRemarks == "" || response[i].undoRemarks == null)
-                        listitem += '<div class="box-title bg-success text-white"><i class="fa-solid fa-circle-check fa-xl" style="color: #3adb00;"></i> ' + response[i].actions + '</div>';
-                    else 
-                        listitem += '<div class="box-title bg-danger text-white"><i class="fa-solid fa-rotate-left fa-xl" style="color: #ffff;"></i> ' + response[i].actions + '</div>';
+                    if (response[i].isComment == false) {
+                        if (response[i].actions == "FWD" && (response[i].undoRemarks == "" || response[i].undoRemarks == null))
+                            listitem += '<div class="box-title bg-warning  text-white"><i class="fa-solid fa-forward" style="color: #FFD43B;"></i> ' + response[i].actions + '</div>';
+                        else if (response[i].undoRemarks == "" || response[i].undoRemarks == null)
+                            listitem += '<div class="box-title bg-success text-white"><i class="fa-solid fa-circle-check fa-xl" style="color: #3adb00;"></i> ' + response[i].actions + '</div>';
+                        else
+                            listitem += '<div class="box-title bg-danger text-white"><i class="fa-solid fa-rotate-left fa-xl" style="color: #ffff;"></i> ' + response[i].actions + '</div>';
 
+                    }
+                    else if (response[i].isComment == true) {
+                        listitem += '<div class="box-title bg-danger text-white"><i class="fa-solid fa-comments fa-xl" style="color: #ffff;"></i> For Comments</div>';
+
+                    }
                     listitem += '<div class="box-content">';
                     /*listitem += '<a class="btn btn-xs btn-default pull-right">Details</a>';*/
                     listitem += '<div class="box-item"><strong>Stages</strong>: <span class="badge rounded-pill bg-primary">' + response[i].stages +'</span></div>';

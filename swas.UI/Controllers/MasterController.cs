@@ -147,6 +147,14 @@ namespace swas.UI.Controllers
                     return Json(ret);
 
                 }
+                else if (id == Mastertablenmumcs.mMappingActions)
+                {
+                    var ret = await _actionsRepository.GetActionsMappingIdByStatusId(ParentId);
+
+
+                    return Json(ret);
+
+                }
                 return Json(null);
             }
             catch(Exception ex)

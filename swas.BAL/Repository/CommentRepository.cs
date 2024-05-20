@@ -48,14 +48,14 @@ namespace swas.BAL.Repository
             var totalCount = await _dbContext.ProjStakeHolderMov
            .Where(psm => psm.ToUnitId == stkhol
          
-            && psm.ActionId != 48
+            //&& psm.ActionId != 48
             && _dbContext.Projects.Any(proj => proj.IsActive == true
             && proj.CurrentPslmId == psm.PsmId))
            .Join(_dbContext.ProjStakeHolderMov,
             comment => comment.PsmId,
             proj => proj.PsmId,
             (comment, proj) => new { Comment = comment, Proj = proj })
-           .Where(joined => joined.Proj.ActionId == 5)
+           //.Where(joined => joined.Proj.ActionId == 5)
            .GroupBy(joined => joined.Comment.PsmId)
            .Where(group => group.Any())
            .CountAsync();

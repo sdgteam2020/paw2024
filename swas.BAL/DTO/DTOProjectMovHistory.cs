@@ -20,6 +20,7 @@ namespace swas.BAL.DTO
         public DateTime? Date { get; set; }
         public string? Remarks { get; set; }
         public string? UndoRemarks { get; set; }
+        public bool IsComment { get; set; }
 
         public int? AttCnt { get; set; }
 

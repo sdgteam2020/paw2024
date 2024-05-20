@@ -143,12 +143,23 @@ function SendMsg() {
                     timer: 1500
                 });
 
-                reset();
+               
                 GetAllComments($("#ProjectcommentprojId").html());
                 GetProjCommentsByUnitId();
-            }
-            if (response == 5) {
+                if ($("#ddlStatus").val() == 1) {
+                    FwdProjConfirm($("#ProjectcommentPsmId").html());
+                }
 
+                reset();
+            }
+            if (response == 6) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'Error',
+                    title: 'comment Not sent allready Accepted !',
+                    showConfirmButton: true,
+                    
+                });
             }
         },
         error: function (error) {
@@ -223,4 +234,24 @@ function reset() {
     $("#Comments").val("");
     $("#ddlStatus").val(0);
     $("#uploadfile").val("");
+}
+function FwdProjConfirm(psmid) {
+    $.ajax({
+        url: '/Projects/FwdProjConfirm',
+        type: 'POST',
+        data: { "PslmId": psmid },
+        success: function (response) {
+            console.log(response);
+
+
+            if (response >= 1) {
+
+              
+                
+
+
+            }
+
+        }
+    });
 }

@@ -115,6 +115,7 @@ namespace swas.UI.Controllers
                 {
                     return Redirect("/Identity/Account/Login");
                 }
+              
                 return View();
             }
             catch (Exception ex)
@@ -122,6 +123,21 @@ namespace swas.UI.Controllers
                 swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
                 return Redirect("/Home/Error");
             }
+        }
+        public async Task<IActionResult> GetDashboardStatusDetails(int StatusId)
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
+            var ss = await _projectsRepository.GetDashboardStatusDetails(StatusId,Convert.ToInt32(Logins.unitid));
+
+            return Json(ss);
+            
+        }
+        public async Task<IActionResult> GetDashboardCount(int Id)
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
+
+            
+            return Json(await _stkholdmove.DashboardCount(Convert.ToInt32(Logins.unitid)));
         }
 
         [Authorize(Policy = "Admin")]

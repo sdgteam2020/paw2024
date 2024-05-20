@@ -384,10 +384,7 @@ namespace swas.UI.Controllers
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
             var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-            var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
-            var watermarkText = $" {ipAddress}\n  {currentDatetime}";
-
-            TempData["ipadd"] = watermarkText;
+          
 
             if (Logins != null)
             {
@@ -586,33 +583,39 @@ namespace swas.UI.Controllers
                 {
                     if (ProjId != null)
                     {
+                        var project = await _projectsRepository.GetProjectByIdAsync(ProjId);
+                        unitid = project.StakeHolderId;
+                        int[] stausid = {23, 22, 25, 27, 27 };
+                        int[] unitids = {4,3,5 ,1, unitid };
+                        for(int i = 0; i < stausid.Length; i++) 
+                        {
+                            tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
+
+                            psmove.ProjId = ProjId;
+                            psmove.StatusActionsMappingId = stausid[i];
+                            //psmove.ActionId = 1;
+                            psmove.Remarks = "";
+                            psmove.FromUnitId = Logins.unitid ?? 0;
+
+                            //psmove.TostackholderDt = DateTime.Now;  
+
+                            psmove.UpdatedByUserId = Logins.unitid; // change with userid
+                            psmove.DateTimeOfUpdate = DateTime.Now;
+                            psmove.IsActive = true;
+
+                            psmove.EditDeleteDate = DateTime.Now;
+                            psmove.EditDeleteBy = Logins.unitid;
+                            psmove.TimeStamp = DateTime.Now;
+                            psmove.IsComplete = false;
+                            psmove.ToUnitId = unitids[i];
+                            psmove.IsComment = true;
+
+                            await _psmRepository.AddProjStakeHolderMovAsync(psmove);
 
 
-                        tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
 
-                        psmove.ProjId = ProjId;
-                        psmove.StatusId = 5;
-                        psmove.ActionId = 1;
-                        psmove.Remarks = "";
-                        psmove.FromUnitId = Logins.unitid ?? 0;
-
-                        //psmove.TostackholderDt = DateTime.Now;  
-
-                        psmove.UpdatedByUserId = Logins.unitid; // change with userid
-                        psmove.DateTimeOfUpdate = DateTime.Now;
-                        psmove.IsActive = true;
-
-                        psmove.EditDeleteDate = DateTime.Now;
-                        psmove.EditDeleteBy = Logins.unitid;
-                        psmove.TimeStamp = DateTime.Now;
-                        psmove.IsComplete = false;
-                        psmove.ToUnitId = unitid;
-
-
-                        await _psmRepository.AddProjStakeHolderMovAsync(psmove);
-
-
-
+                            
+                        }
                         return Json(1);
                     }
                     else
@@ -634,8 +637,8 @@ namespace swas.UI.Controllers
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
             psmove.ProjId = psmove.ProjId;
-            psmove.StatusId = psmove.StatusId;
-            psmove.ActionId = psmove.ActionId;
+            psmove.StatusActionsMappingId = psmove.StatusActionsMappingId;
+           // psmove.ActionId = psmove.ActionId;
             psmove.Remarks = psmove.Remarks;
             psmove.FromUnitId = Logins.unitid ?? 0;
             psmove.ToUnitId = psmove.ToUnitId; //  
@@ -649,8 +652,9 @@ namespace swas.UI.Controllers
             psmove.EditDeleteBy = Logins.UserIntId;
             psmove.TimeStamp = DateTime.Now;
             psmove.IsComplete = false;
-            var Ret = await _psmRepository.AddWithReturn(psmove);
-            if (Ret != null)
+            psmove.IsComment = false;
+            var Ret= await _psmRepository.AddWithReturn(psmove);
+           if(Ret!=null)
             {
                 return Json(Ret);
             }
@@ -718,43 +722,50 @@ namespace swas.UI.Controllers
                 StkComment cmmets = new StkComment();
                 string uniqueFileName = "";
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
-                if (uploadfile != null && uploadfile.Length > 0)
+               var psmove = await _projectsRepository.GettXNByPsmIdAsync(psmid);
+                if(psmove.IsComplete==false)
                 {
-                    uniqueFileName = $"{"Swas"}_{Guid.NewGuid()}{System.IO.Path.GetExtension(uploadfile.FileName)}";
-
-                    string filePath = System.IO.Path.Combine(_environment.ContentRootPath, "wwwroot/Uploads/", uniqueFileName);
-
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    if (uploadfile != null && uploadfile.Length > 0)
                     {
-                        uploadfile.CopyTo(stream);
+                        uniqueFileName = $"{"Swas"}_{Guid.NewGuid()}{System.IO.Path.GetExtension(uploadfile.FileName)}";
+
+                        string filePath = System.IO.Path.Combine(_environment.ContentRootPath, "wwwroot/Uploads/", uniqueFileName);
+
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            uploadfile.CopyTo(stream);
+                        }
+
+
+                        cmmets.ActFileName = uploadfile.FileName;
                     }
 
+                    cmmets.Attpath = uniqueFileName;
+                    cmmets.Comments = Comments;
+                    cmmets.PsmId = psmid;
+                    cmmets.ProjId = ProjectId;
+                    cmmets.UpdatedByUserId = Logins.UserIntId;
+                    cmmets.DateTimeOfUpdate = DateTime.Now;
+                    cmmets.IsDeleted = false;
+                    cmmets.IsActive = true;
+                    cmmets.EditDeleteBy = Logins.unitid;
+                    cmmets.EditDeleteDate = DateTime.Now;
+                    cmmets.StkStatusId = StkStatusId;
 
-                    cmmets.ActFileName = uploadfile.FileName;
+                    cmmets.StakeHolderId = Logins.unitid; ;
+
+                    var ret = await _stkCommentRepository.AddWithReturn(cmmets);
+
+                    if (ret != null)
+                        return Json(nmum.Save);
+                    else
+                        return Json(0);
                 }
-
-                cmmets.Attpath = uniqueFileName;
-                cmmets.Comments = Comments;
-                cmmets.PsmId = psmid;
-                cmmets.ProjId = ProjectId;
-                cmmets.UpdatedByUserId = Logins.UserIntId;
-                cmmets.DateTimeOfUpdate = DateTime.Now;
-                cmmets.IsDeleted = false;
-                cmmets.IsActive = true;
-                cmmets.EditDeleteBy = Logins.unitid;
-                cmmets.EditDeleteDate = DateTime.Now;
-                cmmets.StkStatusId = StkStatusId;
-
-                cmmets.StakeHolderId = Logins.unitid; ;
-
-                var ret = await _stkCommentRepository.AddWithReturn(cmmets);
-
-                if (ret != null)
-                    return Json(nmum.Save);
                 else
-                    return Json(0);
+                {
+                    return Json(nmum.NotSave);
+                }
 
             }
             catch (Exception ex)
