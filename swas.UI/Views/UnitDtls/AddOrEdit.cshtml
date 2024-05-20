@@ -3,20 +3,11 @@
 @model List<UnitDtl>
 
 
-    <style>
+<style>
     .select2-container {
         z-index: 9999; /* Adjust the z-index value as needed */
     }
 
-    .hiddenData {
-        visibility: hidden;
-        width: 0;
-        height: 0;
-        padding: 0;
-        margin: 0;
-        border: none;
-    }
-   
 </style>
 <!-- Button to open the modal for adding a new unit -->
 <button type="button" id="AddButon" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#UnitAdd">
@@ -49,8 +40,9 @@
                 @foreach (var unit in Model)
                 {
                     <tr>
-                        <td>@unit.unitid</td>
-                        <td>@unit.UnitName</td>
+
+                        <td id="Spnunitid">@unit.unitid</td>
+                        <td id="SpnUnitName">@unit.UnitName</td>
                         <td>@unit.ComdAbbreviation</td>
                         @*<td>@unit.UnitSusNo</td>*@
                         @*   <td>@unit.Loc</td>*@
@@ -59,10 +51,18 @@
                         <td>@(unit.Status ? "Active" : "Inactive")</td>
                         <td>@unit.UpdatedBy</td>
                         <td>@unit.UpdatedDate.ToString("dd-MM-yyyy")</td>
-                      @*  <td>
-                            <a href="#" class="btn btn-secondary btn-ecomm"><i class='bx bx-edit'></i></a>
-                            <!-- Add edit action button/link -->
-                        </td>*@
+                        <td>
+                            @* <button type="button" data-name="@unit.UnitName" data-id="@unit.unitid" class="btn btn-success btn-Mapping">Unit Mapping</button>*@
+
+                            <button type="button" data-name="@unit.UnitName" data-id="@unit.unitid" class="btn btn-success btn-Mapping">Unit Mapping</button>
+
+
+                        </td>
+
+                        @*  <td>
+                    <a href="#" class="btn btn-secondary btn-ecomm"><i class='bx bx-edit'></i></a>
+                    <!-- Add edit action button/link -->
+                    </td>*@
                     </tr>
                 }
             </tbody>
@@ -79,9 +79,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Unit Mapping</h5>
-                <span class="d-none1" id="Spnmodalunitid">0</span>
-                <span class="d-none1" id="spanmodalStatusActionsMappingId">0</span>
-                <span class="d-none1" id="spanmodalUnitStatusMappingId">0</span>
+                <span hidden class="d-none1" id="Spnmodalunitid">0</span>
+                <span hidden class="d-none1" id="spanmodalStatusActionsMappingId">0</span>
+                <span hidden class="d-none1" id="spanmodalUnitStatusMappingId">0</span>
 
 
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -116,7 +116,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-12">
-                                        <button class="btn btn-submit" type="button" id="btnsave" style="    margin-left: 20rem;background-color: #2d5eff; color:white">
+                                        <button class="btn btn-submit" type="button" id="btnsave" style=" margin-left: 20rem;background-color: #2d5eff;color: white;">
                                             Save
                                         </button>
                                     </div>
@@ -144,17 +144,22 @@
                                     </tr>
                                 </thead>
                                 <tbody id="mappingdetails">
-                                
                                 </tbody>
 
                             </table>
                         </div>
                     </div>
                 </div>
-            
 
+
+            </div>
+        </div>
     </div>
 </div>
+
+
+
+
 
 
 <div class="modal fade" id="UnitAdd" tabindex="-1" aria-labelledby="ProjectAddLabel" aria-hidden="true">
@@ -170,7 +175,12 @@
 
 
             </div>
-         
+        </div>
+    </div>
+</div>
+
+
+
 
 
 
@@ -215,8 +225,48 @@
 
             $('#UnitAdd').modal('show');
 
-                    });
+        });
 
     });
 </script>
 
+<script>
+    function filterUnitMapping(unitId) {
+        // Get all rows in the mapunit table
+        const rows = document.querySelectorAll('#mapunit tbody tr');
+
+        // Loop through each row and show/hide based on the unitId
+        rows.forEach(row => {
+            const mappingUnitId = row.querySelector('#spanMappingUnitId').textContent.trim();
+            if (parseInt(mappingUnitId) === unitId) {
+                row.style.display = ''; // Show the row
+            } else {
+                row.style.display = 'none'; // Hide the row
+            }
+        });
+
+        // Show the modal
+        $('#unitMapping').modal('show');
+    }
+</script>
+
+
+<script>
+    function filterUnitMapping(unitId) {
+        // Get all rows in the mapunit table
+        const rows = document.querySelectorAll('#mapunit tbody tr');
+
+        // Loop through each row and hide those that don't match the unitId
+        rows.forEach(row => {
+            const mappingUnitId = row.querySelector('#spanMappingUnitId').textContent.trim();
+            if (parseInt(mappingUnitId) === unitId) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        // Show the modal
+        $('#unitMapping').modal('show');
+    }
+</script>
