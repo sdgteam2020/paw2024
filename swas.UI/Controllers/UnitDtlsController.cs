@@ -100,6 +100,11 @@ namespace swas.UI.Controllers
 
                 udtl = await _unitRepository.GetAllUnitAsync();
 
+                var unitmap = await _unitRepository.GetallUnitwithmap();
+
+                ViewBag.unitmap = unitmap;
+
+
 
                 return View(udtl);
 
@@ -117,10 +122,6 @@ namespace swas.UI.Controllers
 
             return udtl.ToList();
         }
-
-        //
-
-        //AddOrEdit Post Method
 
 
         [HttpPost]
@@ -445,27 +446,27 @@ namespace swas.UI.Controllers
             {
                 TrnStatusActionsMapping statusActionsMapping = new TrnStatusActionsMapping
                 {
-                    ActionsId = data.Actions,
-                    StatusId = data.SubStages,
+                    ActionsId = data.ActionsId,
+                    StatusId = data.SubStagesId,
                     StatusActionsMappingId = data.StatusActionsMappingId
                 };
 
                 TrnUnitStatusMapping trnUnitStatusMapping = new TrnUnitStatusMapping
                 {
-                    StatusId = data.SubStages,
+                    StatusId = data.SubStagesId,
                     UnitId = data.UnitId,
                     UnitStatusMappingId = data.UnitStatusMappingId
                 };
 
                 // Check if the statusActionsMapping already exists in the database
-                var existingStatusActionsMapping = await _statusActionsMapping.GetByActionsAndStatusAsync(data.Actions, data.SubStages);
+                var existingStatusActionsMapping = await _statusActionsMapping.GetByActionsAndStatusAsync(data.StatusActionsMappingId,data.ActionsId, data.SubStagesId);
                 if (existingStatusActionsMapping != null)
                 {
                     return Json(new { message = "StatusActionsMapping data is already in the table" });
                 }
 
                 // Check if the trnUnitStatusMapping already exists in the database
-                var existingUnitStatusMapping = await _unitStatusMapping.GetByUnitAndStatusAsync(data.UnitId, data.SubStages);
+                var existingUnitStatusMapping = await _unitStatusMapping.GetByUnitAndStatusAsync(data.UnitStatusMappingId,data.UnitId, data.SubStagesId);
                 if (existingUnitStatusMapping != null)
                 {
                     return Json(new { message = "UnitStatusMapping data is already in the table" });

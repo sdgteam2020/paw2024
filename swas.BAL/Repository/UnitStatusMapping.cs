@@ -33,10 +33,10 @@ namespace swas.BAL.Repository
 
       
 
-        public async Task<TrnUnitStatusMapping> GetByUnitAndStatusAsync(int unitid, int statusid)
+        public async Task<TrnUnitStatusMapping> GetByUnitAndStatusAsync(int UnitStatusMappingId,int unitid, int statusid)
         {
             return await _context.TrnUnitStatusMapping
-               .FirstOrDefaultAsync(usm => usm.UnitId == unitid && usm.StatusId == statusid);
+               .FirstOrDefaultAsync(usm => usm.UnitId == unitid && usm.StatusId == statusid &&usm.UnitStatusMappingId == UnitStatusMappingId);
         }
     }
 }

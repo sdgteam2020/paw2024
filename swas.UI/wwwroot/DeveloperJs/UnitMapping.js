@@ -1,8 +1,12 @@
-﻿$(document).ready(function () {
+﻿
+
+$(document).ready(function () {
+
+    var UnitId = $("#Spnmodalunitid").html();
 
     $("#ddlStage").change(function () {
 
-        mMsaterStage(0, "ddlSubStage", 6, $("#ddlStage").val(), 0)
+        mMsaterStage(0, "ddlSubStage", 6, $("#ddlStage").val(), 100)
     });
     $("#ddlSubStage").change(function () {
 
@@ -13,12 +17,7 @@
         var closestRow = $(this).closest("tr");
         var hiddenData = closestRow.find(".hiddenData");
 
-        alert("test");
-
-        alert(hiddenData.find(".spanStatusActionsMappingId").text());
-        alert(hiddenData.find(".spanUnitStatusMappingId").text());
-
-        alert(hiddenData.find(".spanMappingUnitId").text());
+        
 
         $('#UnitName').val(closestRow.find("#mapingUnit").text());
         $('#Spnmodalunitid').val(hiddenData.find(".spanMappingUnitId").text());
@@ -26,17 +25,31 @@
         $('#spanmodalUnitStatusMappingId').text(hiddenData.find(".spanUnitStatusMappingId").text());
 
         mMsater(hiddenData.find(".spanMappingStages").text(), "ddlStage", 5, 0);
-        alert(hiddenData.find(".spanMappingSubStages").text());
+        
         mMsaterStage(hiddenData.find(".spanMappingSubStages").text(), "ddlSubStage", 6, hiddenData.find(".spanMappingStages").text(), 100);
 
         mMsater(hiddenData.find(".spanMappingActions").text(), "ddlAction", 7, hiddenData.find(".spanMappingSubStages").text());
     });
 
     $(".btn-Mapping").click(function () {
+
         $("#Spnmodalunitid").html($(this).closest("tr").find("#Spnunitid").html());
+
+
+
         var UnitId = $("#Spnmodalunitid").html();
+
+        $("#Spnmodalunitid").html($(this).closest("tr").find("#Spnunitid").html());
+        $("#UnitName").val($(this).closest("tr").find("#SpnUnitName").html());
+
+        mMsater(0, "ddlStage", 5, 0)
+
+        $('#unitMapping').modal('show');
+        $(".Fwdtitle").html("Unit & Status Mapping");
+
+
         var table;
-        alert(UnitId)
+       
 
         $.ajax({
             type: 'POST',
@@ -53,17 +66,17 @@
                 var tableRows = '';
                 for (var i = 0; i < data.length; i++) {
                     tableRows += '<tr>';
-                    tableRows += '<td id="mapingUnit">' + data[i].unit + '</td>';
+                    tableRows += '<td id="mapingUnit">' + data[i].unitName + '</td>';
                     tableRows += '<td>' + data[i].stagesName + '</td>';
                     tableRows += '<td>' + data[i].subStagesName + '</td>';
                     tableRows += '<td>' + data[i].actionsName + '</td>';
-                    tableRows += '<td class="hiddenData">' +
+                    tableRows += '<td class="hiddenData" style="display: none;">' +
                         '<span class="spanStatusActionsMappingId">' + data[i].statusActionsMappingId + '</span>' +
                         '<span class="spanUnitStatusMappingId">' + data[i].unitStatusMappingId + '</span>' +
                         '<span class="spanMappingUnitId">' + data[i].unitId + '</span>' +
-                        '<span class="spanMappingStages">' + data[i].stages + '</span>' +
-                        '<span class="spanMappingSubStages">' + data[i].subStages + '</span>' +
-                        '<span class="spanMappingActions">' + data[i].actions + '</span>' +
+                        '<span class="spanMappingStages">' + data[i].stagesId + '</span>' +
+                        '<span class="spanMappingSubStages">' + data[i].subStagesId + '</span>' +
+                        '<span class="spanMappingActions">' + data[i].actionsId + '</span>' +
                         '</td>';
                     tableRows += '<td>' +
                         '<button class="btn btn-primary btn-editmapping">Edit</button>' +
@@ -126,24 +139,25 @@
 
             success: function (response) {
                 if (response.message === "StatusActionsMapping data is already in the table") {
-                    alert("Error", "data is already in the table", "error");
+                    alert( "data is already in the table");
                 } else {
-                    alert("Success", "Data saved successfully", "success");
+                    alert( "Data saved successfully", );
                 }
             },
             error: function (error) {
                 // Handle error
-                alert("Error", "Error saving data", "error");
+                alert( "Error saving data");
             }
         });
     });
 
     $(document).on('click', '.btn-deletemapping', function () {
-        debugger;
-
-        $('#Spnmodalunitid').val($(this).closest("tr").find("#spanMappingUnitId").html());
-        $('#spanmodalStatusActionsMappingId').html($(this).closest("tr").find("#spanStatusActionsMappingId").html());
-        $('#spanmodalUnitStatusMappingId').html($(this).closest("tr").find("#spanUnitStatusMappingId").html());
+        var closestRow = $(this).closest("tr");
+        var hiddenData = closestRow.find(".hiddenData");
+       
+        $('#Spnmodalunitid').val(hiddenData.find(".spanMappingUnitId").text());
+        $('#spanmodalStatusActionsMappingId').text(hiddenData.find(".spanStatusActionsMappingId").text());
+        $('#spanmodalUnitStatusMappingId').text(hiddenData.find(".spanUnitStatusMappingId").text());
 
         var data = {
             StatusActionsMappingId: $("#spanmodalStatusActionsMappingId").html(),
