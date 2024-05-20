@@ -53,7 +53,7 @@ function GetAllDashbaordCount() {
                         }
                     }
                     listitem += '<h5 style="margin-top: 8px;" >' + tot + ' </h5>';
-                    listitem += '<div class="t-1">' + dtoDashboardHeaderlst[i].status +'</div> ';
+                    listitem += '<div class="t-1 statusprojsummry">' + dtoDashboardHeaderlst[i].status +'</div> ';
                     listitem += ' <div class="mb-2">';
                   
                        
@@ -84,6 +84,7 @@ function GetAllDashbaordCount() {
 
                     var spnstatusId = $(this).closest("div").find("#spnstatusId").html();
                     $('#ProjGetsummay').modal('show');
+                    $('#ProjectSummaryTittle').html($(this).closest("div").find(".statusprojsummry").html());
                     getProjGetsummay(spnstatusId);
 
 

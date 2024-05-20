@@ -102,7 +102,9 @@ namespace swas.BAL.Repository
                                join ststus in _dbContext.mStatus on actmap.StatusId equals ststus.StatusId
                                join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
                                //join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
-                               where mov.ToUnitId == UserId && mov.IsComplete == false /*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
+                               where 
+                               //mov.ToUnitId == UserId &&
+                               mov.IsComplete == false /*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
                                orderby stge.StagesId ascending
                                group mov by new { ststus.StatusId, QStages = stge.Stages, QStagesId= stge.StagesId, 
                                    QStatus=ststus.Status,
@@ -130,7 +132,9 @@ namespace swas.BAL.Repository
                                join ststus in _dbContext.mStatus on actmap.StatusId equals ststus.StatusId
                                join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
                                //join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
-                               where mov.FromUnitId == UserId && mov.IsComplete == true /*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
+                               where 
+                              // mov.FromUnitId == UserId && 
+                               mov.IsComplete == true /*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
                                orderby stge.StagesId ascending
                                group mov by new
                                {
