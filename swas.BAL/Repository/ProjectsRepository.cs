@@ -1434,7 +1434,7 @@ namespace swas.BAL.Repository
 
                                   where a.IsActive && !a.IsDeleted && a.StakeHolderId == Logins.unitid
                                    //&& e.ActionCde > 0 
-                                   && e.ActionId > 4
+                                   //&& e.ActionId > 4
                                   orderby e.TimeStamp descending
                                   select new tbl_Projects
                                   {
@@ -1491,7 +1491,8 @@ namespace swas.BAL.Repository
             var projects = await (from a in _DBContext.Projects
                                   join b in _DBContext.ProjStakeHolderMov on a.CurrentPslmId equals b.PsmId into bs
                                   from e in bs.DefaultIfEmpty()
-                                  join d in _DBContext.mStatus on e.StatusId equals d.StatusId into ds
+                                  join actm in _dbContext.TrnStatusActionsMapping on e.StatusActionsMappingId equals actm.StatusActionsMappingId
+                                  join d in _DBContext.mStatus on actm.StatusId equals d.StatusId into ds
                                   from eWithStatus in ds.DefaultIfEmpty()
                                   join c in _DBContext.tbl_mUnitBranch on a.StakeHolderId equals c.unitid into cs
                                   from eWithUnit in cs.DefaultIfEmpty()
@@ -1502,7 +1503,7 @@ namespace swas.BAL.Repository
                                   from eWithComment in fs.DefaultIfEmpty()
                                   where a.IsActive && !a.IsDeleted && a.StakeHolderId == Logins.unitid
                                    //&& e.ActionCde > 0 
-                                   && actm.ActionsId > 4
+                                 //  && actm.ActionsId > 4
                                   orderby e.TimeStamp descending
                                   select new tbl_Projects
                                   {

@@ -71,8 +71,7 @@ namespace swas.BAL.Repository
                             Date=b.TimeStamp,
                             Remarks=b.Remarks,
                             UndoRemarks=b.UndoRemarks,
-                            IsComment=b.IsComment
-                            UndoRemarks=b.UndoRemarks,
+                            IsComment=b.IsComment,
                             AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == b.PsmId),
                          }).ToListAsync();
 
