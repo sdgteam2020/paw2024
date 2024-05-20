@@ -79,8 +79,9 @@ namespace swas.BAL.Repository
                             from eWithComment in fs.DefaultIfEmpty()
 
                             where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true && b.IsComplete == false
-                            && b.ToUnitId == Logins.unitid
+                            //&& b.ToUnitId == Logins.unitid 
                             && actm.StatusId == StatuId
+                            
                             orderby b.DateTimeOfUpdate descending
 
                             select new DTOProjectsFwd
@@ -129,10 +130,10 @@ namespace swas.BAL.Repository
                                        join f in _dbContext.Comment on b.PsmId equals f.PsmId into fs
                                        from eWithComment in fs.DefaultIfEmpty()
 
-                                       where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true && b.IsComplete == true
-                                       && b.FromUnitId == Logins.unitid
-                                       && actm.StatusId == StatuId
-                                       orderby b.DateTimeOfUpdate descending
+                            where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true && b.IsComplete == true
+                            //&& b.FromUnitId == Logins.unitid 
+                            && actm.StatusId == StatuId
+                                      orderby b.DateTimeOfUpdate descending
 
                                        select new DTOProjectsFwd
                                        {
@@ -296,18 +297,19 @@ namespace swas.BAL.Repository
                              from stk in stkhol.DefaultIfEmpty()
 
 
-                             join f in _dbContext.Comment on a.PsmId equals f.PsmId into fs
-                             from eWithComment in fs.DefaultIfEmpty()
-                             join actm in _dbContext.TrnStatusActionsMapping on a.StatusActionsMappingId equals actm.StatusActionsMappingId
-                             join h in _dbContext.mStatus on actm.StatusId equals h.StatusId into hs
-                             from eWithStatus in hs.DefaultIfEmpty()
-                             join j in _dbContext.mStages on eWithStatus.StageId equals j.StagesId into js
-                             from eWithStages in js.DefaultIfEmpty()
-                             join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId into ks
-                             from eWithAction in ks.DefaultIfEmpty()
-                             where a.IsComplete == true && b.IsSubmited == true && a.ToUnitId == Logins.unitid
-                             // where a.ActionId == dft.ActionId
-                             select new tbl_Projects
+                                 join f in _dbContext.Comment on a.PsmId equals f.PsmId into fs
+                                 from eWithComment in fs.DefaultIfEmpty()
+                                 join actm in _dbContext.TrnStatusActionsMapping on a.StatusActionsMappingId equals  actm.StatusActionsMappingId 
+                                 join h in _dbContext.mStatus on actm.StatusId equals h.StatusId into hs
+                                 from eWithStatus in hs.DefaultIfEmpty()
+                                 join j in _dbContext.mStages on eWithStatus.StageId equals j.StagesId into js
+                                 from eWithStages in js.DefaultIfEmpty()
+                                 join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId into ks
+                                 from eWithAction in ks.DefaultIfEmpty()
+                                 where a.IsComplete == true && b.IsSubmited == true && a.ToUnitId== Logins.unitid
+                                 && eWithStatus.StatusId==33
+                                 // where a.ActionId == dft.ActionId
+                                 select new tbl_Projects
 
                              {
                                  ProjId = b.ProjId,
@@ -558,7 +560,8 @@ namespace swas.BAL.Repository
                                 EncyID = _dataProtector.Protect(a.ProjId.ToString()),
                                 EncyPsmID = _dataProtector.Protect(b.PsmId.ToString()),
                                 IsProcess = a.IsProcess,
-                                undopsmId = _psmRepository.GetLastRecProjectMov(a.ProjId)
+                                undopsmId = _psmRepository.GetLastRecProjectMov(a.ProjId),
+                                StageId= eWithStages.StagesId
 
                             };
 

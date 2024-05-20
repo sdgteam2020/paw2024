@@ -20,6 +20,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Xml.Linq;
 using System.Net.NetworkInformation;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Identity;
 
 namespace swas.BAL.Repository
 {
@@ -46,6 +47,8 @@ namespace swas.BAL.Repository
 
         public async Task<List<DTOProjectMovHistory>> ProjectMovHistory(int? ProjectId)
         {
+           
+
             var query = await (from a in _dbContext.Projects
                         join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
                         join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid
@@ -73,6 +76,9 @@ namespace swas.BAL.Repository
                             UndoRemarks=b.UndoRemarks,
                             IsComment=b.IsComment,
                             AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == b.PsmId),
+                            UserDetails=b.UserDetails,
+                            
+
                          }).ToListAsync();
 
 
@@ -84,7 +90,7 @@ namespace swas.BAL.Repository
             try
             {
                // var query = _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.PsmId < (_context.ProjStakeHolderMov.Max(p => p.PsmId))).Max(p => p.PsmId);
-                var query = _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.IsActive==true).Max(p => p.PsmId);
+                var query = _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.IsActive==true && i.IsComment==false).Max(p => p.PsmId);
                 return query;
 
             }
@@ -102,10 +108,14 @@ namespace swas.BAL.Repository
                                join ststus in _dbContext.mStatus on actmap.StatusId equals ststus.StatusId
                                join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
                                //join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
-                               where mov.ToUnitId == UserId && mov.IsComplete == false /*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
+                               where 
+                               //mov.ToUnitId == UserId &&
+                               mov.IsComplete == false /*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
+                               && ststus.IsDashboard == true
                                orderby stge.StagesId ascending
                                group mov by new { ststus.StatusId, QStages = stge.Stages, QStagesId= stge.StagesId, 
                                    QStatus=ststus.Status,
+                                
                                    QIsComplete = mov.IsComplete,QprojId= proj.ProjId
                                   
                                } into gr  //,QActionId= actmap.ActionsId
@@ -119,7 +129,8 @@ namespace swas.BAL.Repository
                                    Status = gr.Key.QStatus,
                                    IsComplete=gr.Key.QIsComplete,
                                    //ActionId = gr.Key.QActionId,
-                                   Tot = gr.Count()
+                                   Tot = gr.Count(),
+                                 
                                }).ToListAsync();
 
             db.DTODashboardCountlst=(query);
@@ -130,14 +141,18 @@ namespace swas.BAL.Repository
                                join ststus in _dbContext.mStatus on actmap.StatusId equals ststus.StatusId
                                join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
                                //join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
-                               where mov.FromUnitId == UserId && mov.IsComplete == true /*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
-                               orderby stge.StagesId ascending
+                               where 
+                              // mov.FromUnitId == UserId && 
+                               mov.IsComplete == true /*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
+                               && ststus.IsDashboard == true
+                         orderby stge.StagesId ascending
                                group mov by new
                                {
                                    ststus.StatusId,
                                    QStages = stge.Stages,
                                    QStagesId = stge.StagesId,
                                    QStatus = ststus.Status,
+                                   
                                    QIsComplete = mov.IsComplete,
                                    QprojId = proj.ProjId
 
@@ -152,6 +167,7 @@ namespace swas.BAL.Repository
                                    Status = gr.Key.QStatus,
                                    IsComplete = gr.Key.QIsComplete,
                                    //ActionId = gr.Key.QActionId,
+                                   
                                    Tot = gr.Count()
                                }).ToListAsync();
 
@@ -161,14 +177,17 @@ namespace swas.BAL.Repository
 
             var query1 = await (from ststus in _dbContext.mStatus
                                join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
+                               where ststus.IsDashboard == true
                                 orderby stge.StagesId ascending
                                 select new DTODashboardHeader
                                {
                                    StageId= stge.StagesId,
                                    StatusId=ststus.StatusId,
                                    Status=ststus.Status,
-                                   Stages= stge.Stages
-                               }).ToListAsync();
+                                   Stages= stge.Stages,
+                                   Icons= ststus.Icon
+
+                                }).ToListAsync();
             db.DTODashboardHeaderlst = query1;
 
             //var query2 = await (from actmap in _dbContext.TrnStatusActionsMapping

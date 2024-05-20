@@ -34,8 +34,8 @@
             allowOutsideClick: () => !Swal.isLoading()
         }).then((result) => {
             if (result.isConfirmed) {
-               
-                Updateundo($(this).closest("tr").find("#SpnCurrentProjId").html(), $(this).closest("tr").find("#SpnCurrentpsmId").html(), result.value);
+                
+                Updateundo($(this).closest("tr").find("#SpnCurrentProjId").html(), $(this).closest("tr").find("#SpnCurrentpsmId").html(), result.value, $(this).closest("tr").find("#SpnprojectStageId").html() );
 
             }
         });
@@ -176,12 +176,13 @@ function SaveFwdTo(CurrentPslmId) {
         });
     
 }
-function Updateundo(ProjId, PslmId, UndoRemarks) {
+function Updateundo(ProjId, PslmId, UndoRemarks,StageId) {
     var userdata =
     {
         "ProjectId": ProjId,
         "PsmId": PslmId,
-        "Remarks": UndoRemarks
+        "Remarks": UndoRemarks,
+        "StageId": StageId
         
 
     };

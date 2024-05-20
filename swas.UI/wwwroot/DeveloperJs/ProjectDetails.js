@@ -139,7 +139,7 @@ function GetProjectMovHistory(ProjId) {
                     listitem += '<div class="box-item"><strong>From Unit</strong>: <span class="badge rounded-pill bg-secondary">' + response[i].fromUnitName +'</span></div>';
                     listitem += '<div class="box-item"><strong>TO Unit</strong>: <span class="badge rounded-pill bg-info text-dark">' + response[i].toUnitName +'</span></div>';
                     listitem += '</div>';
-                    listitem += ' <div class="box-footer"></div>';
+                    listitem += '<div class="box-footer">' + response[i].userDetails + '</div>';
                     listitem += '</div> </div>';
                     if (response[i].remarks != "") {
                         listitem += '<div class="col-sm-6">';
@@ -151,7 +151,7 @@ function GetProjectMovHistory(ProjId) {
                         /*listitem += ' <a class="btn btn-xs btn-default pull-right">Remarks</a>';*/
                         listitem += '<div class="box-item">' + response[i].remarks + '</div>';
                         listitem += '</div>';
-                        listitem += '<div class="box-footer"></div>';
+                        listitem += '<div class="box-footer">' + response[i].userDetails +'</div>';
                         listitem += '</div></div>';
                     }
                     if (response[i].undoRemarks != null) {
@@ -164,7 +164,7 @@ function GetProjectMovHistory(ProjId) {
                         /*listitem += ' <a class="btn btn-xs btn-default pull-right">Remarks</a>';*/
                         listitem += '<div class="box-item">' + response[i].undoRemarks + '</div>';
                         listitem += '</div>';
-                        listitem += '<div class="box-footer"></div>';
+                        listitem += '<div class="box-footer">' + response[i].userDetails + '</div>';
                         listitem += '</div></div>';
                     }
                     listitem += '</div></div>';
