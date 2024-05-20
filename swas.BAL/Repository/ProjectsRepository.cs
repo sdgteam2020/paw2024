@@ -105,9 +105,9 @@ namespace swas.BAL.Repository
                                 IsProcess = a.IsProcess,
                                 IsRead = b.IsRead,
                                 IsComplete = b.IsComplete,
-                            };
+                            }).ToListAsync();
 
-                lst = await query.ToListAsync();
+                lst = query;
 
                 var queryfrom = await (from a in _dbContext.Projects
                                        join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
