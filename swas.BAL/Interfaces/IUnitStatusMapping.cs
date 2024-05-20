@@ -13,6 +13,6 @@ namespace swas.BAL.Interfaces
 
         Task<List<TrnUnitStatusMapping>> GetAllAsyn();
 
-        Task<TrnUnitStatusMapping> GetByUnitAndStatusAsync(int unitid, int statusid);
+        Task<TrnUnitStatusMapping> GetByUnitAndStatusAsync(int UnitStatusMappingId,int unitid, int statusid);
     }
 }

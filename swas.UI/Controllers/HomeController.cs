@@ -412,7 +412,7 @@ s.Statseq
 
                     //ViewBag.RFPProj = await _projectsRepository.GetHoldRFPProj();
 
-                    //ViewBag.HoldProj = await _projectsRepository.GetHoldActionProj();
+                    ViewBag.HoldProj = await _projectsRepository.GetHoldActionProj();
 
 
                     ViewBag.ipadd = watermarkText;

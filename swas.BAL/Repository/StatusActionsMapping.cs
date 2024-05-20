@@ -28,10 +28,10 @@ namespace swas.BAL.Repository
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<TrnStatusActionsMapping> GetByActionsAndStatusAsync(int actionsId, int statusId)
+        public async Task<TrnStatusActionsMapping> GetByActionsAndStatusAsync(int StatusActionsMappingId,int actionsId, int statusId)
         {
             return await _context.TrnStatusActionsMapping
-                .FirstOrDefaultAsync(usm => usm.ActionsId == actionsId && usm.StatusId == statusId);
+                .FirstOrDefaultAsync(usm => usm.ActionsId == actionsId && usm.StatusId == statusId &&usm.StatusActionsMappingId== StatusActionsMappingId);
         }
     }
 }

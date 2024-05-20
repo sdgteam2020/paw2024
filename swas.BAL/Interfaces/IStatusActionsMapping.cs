@@ -10,7 +10,7 @@ namespace swas.BAL.Interfaces
     public interface IStatusActionsMapping:IGenericRepositoryDL<TrnStatusActionsMapping>
     {
 
-        Task<TrnStatusActionsMapping> GetByActionsAndStatusAsync(int actionsId, int statusId);
+        Task<TrnStatusActionsMapping> GetByActionsAndStatusAsync(int StatusActionsMappingId, int actionsId, int statusId);
        
 
     }

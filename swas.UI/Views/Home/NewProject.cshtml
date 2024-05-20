@@ -308,32 +308,42 @@
 
                                 <table id="HeldTable" class="table table-striped table-bordered datatablefordownload">
                                     <!-- Table header -->
-                                    <thead style="position: sticky;top: -18">
+                                    <thead style="position: sticky;top: -18px">
                                         <tr>
                                             <th class="text-nowrap text-center">S.No</th>
+                                            <th class="text-nowrap text-center">Project Id</th>
                                             <th class="text-nowrap text-center">Project Name</th>
                                             <th class="text-nowrap text-center">From</th>
-                                            <th class="text-nowrap text-center">Comment</th>
-                                            <th class="text-nowrap text-center">Fwd to</th>
+                                            <th class="text-nowrap text-center">To</th>
+                                            <th class="text-nowrap text-center">Status</th>
+                                            <th class="text-nowrap text-center">Action</th>
+                                            <th class="text-nowrap text-center">UserName</th>
                                             <th class="text-nowrap text-center">Date</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @if (Holdproj != null)
                                         {
-
+                                            int count = 1;
+                                            
 
                                             @foreach (var unitsa in Holdproj)
                                             {
                                                 <tr>
+                                                    <td class="f-8">@count</td>
 
-                                                    <td style="font-size:12px;">@unitsa.ProjId</td>
-                                                    <td style="font-size:12px;">@unitsa.ProjName</td>
-                                                    <td style="font-size:12px;">@unitsa.fwdby</td>
-                                                    <td style="font-size:12px;">@unitsa.Comment</td>
-                                                    <td style="font-size:12px;">@unitsa.helwith</td>
-                                                    <td style="font-size:12px;">@unitsa.StrDate</td>
+
+                                                    <td class="f-12">@unitsa.ProjId</td>
+                                                    <td class="f-12">@unitsa.ProjName</td>
+                                                    <td class="f-12">@unitsa.FromUnitName</td>
+                                                    <td class="f-12">@unitsa.ToUnitName</td>
+                                                    <td class="f-12">@unitsa.StatusName</td>
+                                                    <td class="f-12">@unitsa.ActionName</td>
+                                                    <td class="f-12">@unitsa.UserDetails</td>
+                                                    <td class="f-12">@unitsa.DateTimeOfUpdate</td>
                                                 </tr>
+                                                count = count + 1;
                                             }
                                         }
 
@@ -360,7 +370,7 @@
                                 <table id="WhitelistedTable" class="table  table-striped table-bordered datatablefordownload" style="overflow: scroll;">
                                     <!-- Table header -->
 
-                                    <thead style="position: sticky;top: -18">
+                                    <thead style="position: sticky;top:-18px">
                                         @*  <tr>
                                         <th colspan="3"></th>
                                         <th colspan="3" class="text-center">Sponsor Contact Details</th>
@@ -457,32 +467,42 @@
 
                 <table id="HeldTablemodal" class="table table-striped table-bordered datatablefordownload">
                     <!-- Table header -->
-                    <thead>
+                    <thead style="position: sticky;top: -18px">
                         <tr>
                             <th class="text-nowrap text-center">S.No</th>
+                            <th class="text-nowrap text-center">Project Id</th>
                             <th class="text-nowrap text-center">Project Name</th>
                             <th class="text-nowrap text-center">From</th>
-                            <th class="text-nowrap text-center">Comment</th>
-                            <th class="text-nowrap text-center">Fwd to</th>
+                            <th class="text-nowrap text-center">To</th>
+                            <th class="text-nowrap text-center">Status</th>
+                            <th class="text-nowrap text-center">Action</th>
+                            <th class="text-nowrap text-center">UserName</th>
                             <th class="text-nowrap text-center">Date</th>
+
                         </tr>
                     </thead>
                     <tbody>
                         @if (Holdproj != null)
                         {
+                            int count = 1;
 
 
                             @foreach (var unitsa in Holdproj)
                             {
                                 <tr>
+                                    <td class="f-12">@count</td>
 
-                                    <td style="font-size:12px;">@unitsa.ProjId</td>
-                                    <td style="font-size:12px;">@unitsa.ProjName</td>
-                                    <td style="font-size:12px;">@unitsa.fwdby</td>
-                                    <td style="font-size:12px;">@unitsa.Comment</td>
-                                    <td style="font-size:12px;">@unitsa.helwith</td>
-                                    <td style="font-size:12px;">@unitsa.StrDate</td>
+
+                                    <td class="f-12">@unitsa.ProjId</td>
+                                    <td class="f-12">@unitsa.ProjName</td>
+                                    <td class="f-12">@unitsa.FromUnitName</td>
+                                    <td class="f-12">@unitsa.ToUnitName</td>
+                                    <td class="f-12">@unitsa.StatusName</td>
+                                    <td class="f-12">@unitsa.ActionName</td>
+                                    <td class="f-12">@unitsa.UserDetails</td>
+                                    <td class="f-12">@unitsa.DateTimeOfUpdate</td>
                                 </tr>
+                                count = count + 1;
                             }
                         }
 

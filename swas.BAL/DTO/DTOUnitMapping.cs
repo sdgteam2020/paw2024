@@ -12,12 +12,12 @@ namespace swas.BAL.DTO
         public int UnitStatusMappingId { get; set; }
         public int Id { get; set; }
         public int UnitId { get; set; }
-        public string? Unit { get; set; }
+        public string? UnitName { get; set; }
         public string? StagesName { get; set; }
-        public int Stages { get; set; }
+        public int StagesId { get; set; }
         public string? SubStagesName { get; set; }
-        public int SubStages { get; set;}
-        public int Actions { get; set; }
+        public int SubStagesId { get; set;}
+        public int ActionsId { get; set; }
         public string? ActionsName { get; set; }
 
     }

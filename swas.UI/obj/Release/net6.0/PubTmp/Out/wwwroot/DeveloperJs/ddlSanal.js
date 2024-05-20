@@ -366,55 +366,61 @@ function populateddlStatus(paramValue) {
 
 }
 
+function populateStages(paramValue, laststagesId, projIds) {
+        
+        $.ajax({
+            url: '/Ddl/GetAllStages',
+            data: {
+                paramValue: paramValue,
+                projIds: projIds
+            },
+            method: 'GET',
+            success: function (data) {
 
-function populateStages(paramValue, laststagesId) {
-    
-    $.ajax({
-        url: '/Ddl/GetAllStages',
-        data: { paramValue: paramValue },
-        method: 'GET',
-        success: function (data) {
-           
-            const odc = document.getElementById('ddlStages');
-            var optionS = document.createElement("option");
-            optionS.value = "";
-            optionS.text = "---- Select ----";
-            odc.appendChild(optionS);
+                const odc = document.getElementById('ddlStages');
+                var optionS = document.createElement("option");
+                optionS.value = "";
+                optionS.text = "---- Select ----";
+                odc.appendChild(optionS);
 
-            for (var i = 0; i < data.length; i++) {
-                var item = data[i];
-               /* if (item.stagesId == laststagesId) {*/
+                for (var i = 0; i < data.length; i++) {
+                    var item = data[i];
+
                     var option = document.createElement("option");
                     option.value = item.stagesId;
                     option.text = item.stages;
                     odc.appendChild(option);
-               /* }*/
-            };
 
 
 
-        }
+                };
 
-    });
+
+
+            }
+
+        });
 
 }
 
 
-function getStatusByStage(stageIds) {
-    
+
+function getStatusByStage(stageIds, currentstakeholderid)
+{
+   
     $.ajax({
-        
+
         url: '/Ddl/GetStatusByStage',
-        data: { stageIds: stageIds }, 
+        data: { stageIds: stageIds },
         method: 'GET',
         success: function (data) {
-           
+
             const odc = document.getElementById('ddlStatus');
             var optionX = document.createElement("option");
             optionX.value = "";
             optionX.text = "---- Select ----";
             odc.appendChild(optionX);
-           
+
             for (var i = 0; i < data.length; i++) {
                 var item = data[i];
                 var itemValues = Object.values(item);
@@ -422,9 +428,12 @@ function getStatusByStage(stageIds) {
                 option.value = item.statusId;
                 option.text = item.status;
                 odc.appendChild(option);
+                if ((stageIds == 2 && (option.value == 5 || option.value == 7 || option.value == 11)) ||
+                    (stageIds == 1 && option.value == 1 || option.value == 2 || option.value == 4 || option.value==31)) {
+                    odc.removeChild(option);
+                }
+
             };
-
-
 
         }
 
@@ -432,9 +441,8 @@ function getStatusByStage(stageIds) {
 
 }
 
-
 function getActionsByStatus(selectedStatusId) {
-
+    debugger;
     $.ajax({
 
         url: '/Ddl/GetActionsByStatus',
@@ -465,14 +473,16 @@ function getActionsByStatus(selectedStatusId) {
 
 }
 // fwd process
-function EditActionsByStatus(selectedStatusId, selectedStageId) {
+function EditActionsByStatus(selectedStatusId, selectedStageId, projIds) {
 
+    
     $.ajax({
 
         url: '/Ddl/GetActiByStageStat',
         data: {
             selectedStatusId: selectedStatusId,
-            selectedStageId: selectedStageId
+            selectedStageId: selectedStageId,
+            projIds: projIds
 
         },
         method: 'GET',
