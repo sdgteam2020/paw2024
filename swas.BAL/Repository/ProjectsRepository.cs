@@ -57,7 +57,7 @@ namespace swas.BAL.Repository
 
                 string username = Logins.UserName;
 
-                var query = from a in _dbContext.Projects
+                var query =await (from a in _dbContext.Projects
                             join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
                             join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
                             from stackcs in cs1.DefaultIfEmpty()
@@ -105,9 +105,9 @@ namespace swas.BAL.Repository
                                 IsProcess = a.IsProcess,
                                 IsRead = b.IsRead,
                                 IsComplete = b.IsComplete,
-                            };
+                            }).ToListAsync();
 
-                lst = await query.ToListAsync();
+                lst = query;
 
                 var queryfrom = await (from a in _dbContext.Projects
                                        join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
