@@ -8,14 +8,17 @@ namespace swas.BAL.DTO
 {
     public class DTOUnitMapping
     {
+        public int StatusActionsMappingId { get; set; }
+        public int UnitStatusMappingId { get; set; }
         public int Id { get; set; }
-        public string Unit { get; set; }
-
-        public string Stages { get; set; }
-
-        public string SubStages { get; set;}
-
-        public string Actions { get; set; }
+        public int UnitId { get; set; }
+        public string? Unit { get; set; }
+        public string? StagesName { get; set; }
+        public int Stages { get; set; }
+        public string? SubStagesName { get; set; }
+        public int SubStages { get; set;}
+        public int Actions { get; set; }
+        public string? ActionsName { get; set; }
 
     }
 }

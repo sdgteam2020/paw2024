@@ -18,11 +18,11 @@ namespace swas.BAL.Repository
     ///Tested By :- 
     ///Tested Date : 
     ///Start
-    public class StatusRepository : IStatusRepository
+    public class StatusRepository :GenericRepositoryDL<tbl_mStatus>, IStatusRepository
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public StatusRepository(ApplicationDbContext dbContext)
+        public StatusRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
         }
@@ -113,6 +113,19 @@ namespace swas.BAL.Repository
                             Id = Status.StatusId,
                         }).ToListAsync();
            
+            return ret1;
+        }
+        public async Task<List<DTODDLComman>> GetAllbyParentId(int ParentId)
+        {
+
+            var ret1 = await (from Status in _dbContext.mStatus
+                              where Status.StageId== ParentId
+                              select new DTODDLComman
+                              {
+                                  Name = Status.Status,
+                                  Id = Status.StatusId,
+                              }).ToListAsync();
+
             return ret1;
         }
     }

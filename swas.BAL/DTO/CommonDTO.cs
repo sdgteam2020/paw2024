@@ -33,7 +33,6 @@ namespace swas.BAL.DTO
     }
 
 
-
     public class ChartServiceResponse
     {
         public string? JsonData { get; set; }

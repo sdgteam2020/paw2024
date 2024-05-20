@@ -21,6 +21,8 @@ namespace swas.BAL.Interfaces
         Task<List<UnitDtl>> GetAllUnitAsync();
 
         Task<List<DTOUnitMapping>> GetallUnitwithmap();
+
+        Task<List<DTOUnitMapping>> GetallUnitwithmap1(int unitId);
         Task<List<UnitDtl>> GetAllStakeHolderComment();
 
 

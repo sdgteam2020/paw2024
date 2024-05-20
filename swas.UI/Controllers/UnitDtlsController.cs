@@ -1,4 +1,4 @@
-﻿    
+﻿
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
@@ -22,17 +22,23 @@ namespace swas.UI.Controllers
     {
 
         private readonly ApplicationDbContext _context;
-               private readonly IDataProtector _dataProtector;
+        private readonly IDataProtector _dataProtector;
         private readonly IUnitRepository _unitRepository;
         private readonly IDdlRepository _DdlRepostory;
+        private readonly IUnitStatusMapping _unitStatusMapping;
+        private readonly IStatusActionsMapping _statusActionsMapping;
 
-        public UnitDtlsController(ApplicationDbContext context, IDataProtectionProvider DataProtector, IUnitRepository unitRepository, IDdlRepository ddlRepository)
-        
+        public UnitDtlsController(ApplicationDbContext context, IDataProtectionProvider DataProtector,
+            IUnitRepository unitRepository, IDdlRepository ddlRepository,
+            IUnitStatusMapping unitStatusMapping, IStatusActionsMapping statusActionsMapping)
+
         {
             _context = context;
             _dataProtector = DataProtector.CreateProtector("swas.UI.Controllers.UnitDtlsController");
             _unitRepository = unitRepository;
             _DdlRepostory = ddlRepository;
+            _unitStatusMapping = unitStatusMapping;
+            _statusActionsMapping = statusActionsMapping;
         }
 
 
@@ -53,7 +59,7 @@ namespace swas.UI.Controllers
 
         [Authorize(Policy = "Admin")]
         [HttpGet]
-        public async Task<IActionResult> AddOrEdit(string? Id)
+        public async Task<IActionResult> AddOrEdit(int result)
         {
             var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
             var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
@@ -66,10 +72,10 @@ namespace swas.UI.Controllers
             {
 
                 ViewBag.corpsId = 0;
-                List <mCommand> cl = new List<mCommand>();
-                
+                List<mCommand> cl = new List<mCommand>();
+
                 //---------------Getting Data From Database Using EntityFrameworkCore----------------------
-                cl =  await _DdlRepostory.ddlCommand();
+                cl = await _DdlRepostory.ddlCommand();
 
                 //-------------------Inserting Select Item in List-------------------------
                 cl.Insert(0, new mCommand { comdid = 0, Command_Name = "--Select--" });
@@ -90,6 +96,8 @@ namespace swas.UI.Controllers
 
                 List<UnitDtl> udtl = new List<UnitDtl>();
 
+
+
                 udtl = await _unitRepository.GetAllUnitAsync();
 
                 var unitmap = await _unitRepository.GetallUnitwithmap();
@@ -99,16 +107,14 @@ namespace swas.UI.Controllers
 
 
                 return View(udtl);
-
-             
-                
               
             }
 
             else
                 return Redirect("/Identity/Account/Login");
+
         }
- 
+
         public async Task<List<mCorps>> GetCorpsOptions(int commandId)
         {
             List<mCorps> udtl = new List<mCorps>();
@@ -116,11 +122,12 @@ namespace swas.UI.Controllers
 
             return udtl.ToList();
         }
+
         //
 
         //AddOrEdit Post Method
 
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddOrEdit(UnitDtl UnitData)
@@ -147,7 +154,7 @@ namespace swas.UI.Controllers
                     {
                         builder.Append(hashedBytes[i].ToString("x2"));
                     }
-                    UnitData.UnitSusNo = builder.ToString(); 
+                    UnitData.UnitSusNo = builder.ToString();
                 }
 
                 int result = await _unitRepository.Save(UnitData);
@@ -373,7 +380,7 @@ namespace swas.UI.Controllers
         {
             //var result = _context.tbl_mUnitBranch.Select(p => p.UnitName.ToUpper() == unit.UnitName.ToUpper() && p.Id != unit.Id).ToList();
             //if (result.Contains(true))
-                return 1;
+            return 1;
             //else
             //    return 0;
         }
@@ -382,12 +389,12 @@ namespace swas.UI.Controllers
         {
             //var result = _context.tbl_mUnitBranch.Select(p => p.UnitName.ToUpper() == unit.UnitName.ToUpper() && p.Id != unit.Id).ToList();
             //if (result.Contains(true))
-                return 1;
+            return 1;
             //else
             //    return 0;
 
         }
-     
+
         [HttpPost]
         public async Task<IActionResult> Delete(string? DelID)
         {
@@ -425,10 +432,118 @@ namespace swas.UI.Controllers
                 return Redirect("/Identity/Account/Login");
         }
         [HttpPost]
-        public async Task<IActionResult> GetAllStakeHolderComment(int Id)
+        public async Task<IActionResult> GetMappingByUnitId(int UnitId)
         {
-            return Json(await _unitRepository.GetAllStakeHolderComment());
+
+
+            var unitmap = await _unitRepository.GetallUnitwithmap1(UnitId);
+
+            ViewBag.unitmapww = unitmap;
+
+
+            return Json(unitmap);
+        }
+        #region  unitmapping for unitstatus ans action mapping
+        public async Task<IActionResult> AddMapping(DTOUnitMapping data)
+        {
+            try
+            {
+                TrnStatusActionsMapping statusActionsMapping = new TrnStatusActionsMapping
+                {
+                    ActionsId = data.Actions,
+                    StatusId = data.SubStages,
+                    StatusActionsMappingId = data.StatusActionsMappingId
+                };
+
+                TrnUnitStatusMapping trnUnitStatusMapping = new TrnUnitStatusMapping
+                {
+                    StatusId = data.SubStages,
+                    UnitId = data.UnitId,
+                    UnitStatusMappingId = data.UnitStatusMappingId
+                };
+
+                // Check if the statusActionsMapping already exists in the database
+                var existingStatusActionsMapping = await _statusActionsMapping.GetByActionsAndStatusAsync(data.Actions, data.SubStages);
+                if (existingStatusActionsMapping != null)
+                {
+                    return Json(new { message = "StatusActionsMapping data is already in the table" });
+                }
+
+                // Check if the trnUnitStatusMapping already exists in the database
+                var existingUnitStatusMapping = await _unitStatusMapping.GetByUnitAndStatusAsync(data.UnitId, data.SubStages);
+                if (existingUnitStatusMapping != null)
+                {
+                    return Json(new { message = "UnitStatusMapping data is already in the table" });
+                }
+
+                // Proceed with add or update operations for trnUnitStatusMapping
+                if (trnUnitStatusMapping.UnitStatusMappingId == 0)
+                {
+                    var ret = await _unitStatusMapping.AddWithReturn(trnUnitStatusMapping);
+                }
+                else
+                {
+                    var ret = await _unitStatusMapping.UpdateWithReturn(trnUnitStatusMapping);
+                }
+
+                // Proceed with add or update operations for statusActionsMapping
+                if (statusActionsMapping.StatusActionsMappingId == 0)
+                {
+                    var ret1 = await _statusActionsMapping.AddWithReturn(statusActionsMapping);
+                }
+                else
+                {
+                    var ret1 = await _statusActionsMapping.UpdateWithReturn(statusActionsMapping);
+                }
+
+                return Json(nmum.Save);
+            }
+            catch (Exception ex)
+            {
+                return Json(nmum.Exception);
+            }
         }
 
+
+        #endregion
+
+        #region Delete For UnitMapping and Action Mapping
+
+        public async Task<IActionResult> DeleteMapping(DTOUnitMapping data)
+        {
+            try
+            {
+
+
+                if (data.StatusActionsMappingId != null)
+                {
+                    var ret1 = await _statusActionsMapping.Delete(data.StatusActionsMappingId);
+                }
+                else
+                {
+                    Console.WriteLine("StatusAction is not in the table.");
+                }
+
+
+                if (data.UnitStatusMappingId != null)
+                {
+                    var ret1 = await _unitStatusMapping.Delete(data.UnitStatusMappingId);
+                }
+                else
+                {
+                    Console.WriteLine("UnitStatus is not in the table.");
+                }
+
+                return Json(nmum.Save);
+            }
+            catch (Exception ex)
+            {
+                return Json(nmum.Exception);
+            }
+
+
+        }
+
+        #endregion
     }
 }

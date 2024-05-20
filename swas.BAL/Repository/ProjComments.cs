@@ -24,6 +24,7 @@ namespace swas.BAL
             var queryes = await (from proj in _context.Projects
                            join mov in _context.ProjStakeHolderMov on proj.ProjId equals mov.ProjId
                            join stakeholder in _context.tbl_mUnitBranch on proj.StakeHolderId equals stakeholder.unitid
+
                                  //join comment in _context.StkComment on mov.PsmId equals comment.PsmId into com
                                  //from comment in com.DefaultIfEmpty()
                                  // join status in _context.StkStatus on comment.StkStatusId equals status.StkStatusId into statusGroup
@@ -34,7 +35,7 @@ namespace swas.BAL
                              select cr1.StkStatusId
                             ).Count()
                                
-                                 where mov.ToUnitId==UnitId && mov.StatusId==5
+                                 where mov.ToUnitId==UnitId && mov.IsComment==true //&& mov.StatusId==5
                                  select new DTOProComments
                            {
                                ProjectName= proj.ProjName,
@@ -47,33 +48,33 @@ namespace swas.BAL
                               
                            }).ToListAsync();
 
-            var queryes1 = await (from proj in _context.Projects
-                                 join stakeholder in _context.tbl_mUnitBranch on proj.StakeHolderId equals stakeholder.unitid
-                                 //join comment in _context.StkComment on mov.PsmId equals comment.PsmId into com
-                                 //from comment in com.DefaultIfEmpty()
-                                 // join status in _context.StkStatus on comment.StkStatusId equals status.StkStatusId into statusGroup
-                                 //from status in statusGroup.DefaultIfEmpty()
-                                 let StkStatusId =
-                            (from cr1 in _context.StkComment
-                             where cr1.ProjId == proj.ProjId
-                             select cr1.StkStatusId
-                            ).Count()
+            //var queryes1 = await (from proj in _context.Projects
+            //                     join stakeholder in _context.tbl_mUnitBranch on proj.StakeHolderId equals stakeholder.unitid
+            //                     //join comment in _context.StkComment on mov.PsmId equals comment.PsmId into com
+            //                     //from comment in com.DefaultIfEmpty()
+            //                     // join status in _context.StkStatus on comment.StkStatusId equals status.StkStatusId into statusGroup
+            //                     //from status in statusGroup.DefaultIfEmpty()
+            //                     let StkStatusId =
+            //                (from cr1 in _context.StkComment
+            //                 where cr1.ProjId == proj.ProjId
+            //                 select cr1.StkStatusId
+            //                ).Count()
 
-                                 where proj.StakeHolderId==UnitId
-                                  select new DTOProComments
-                                 {
-                                     ProjectName = proj.ProjName,
-                                     Stakeholder = stakeholder.UnitName,
-                                     Status = "",
-                                     StkStatusId = Convert.ToInt32(StkStatusId),
-                                     ProjId = proj.ProjId,
-                                     PsmId = 0,
+            //                     where proj.StakeHolderId==UnitId
+            //                      select new DTOProComments
+            //                     {
+            //                         ProjectName = proj.ProjName,
+            //                         Stakeholder = stakeholder.UnitName,
+            //                         Status = "",
+            //                         StkStatusId = Convert.ToInt32(StkStatusId),
+            //                         ProjId = proj.ProjId,
+            //                         PsmId = 0,
 
 
-                                 }).ToListAsync();
+            //                     }).ToListAsync();
 
             lst.AddRange(queryes);
-            lst.AddRange(queryes1);
+            //lst.AddRange(queryes1);
             return lst;
 
         }

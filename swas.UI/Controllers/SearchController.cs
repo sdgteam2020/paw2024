@@ -150,7 +150,8 @@ namespace swas.UI.Controllers
                     var projectsQueryAction = await (from a in _context.Projects
                                                      join b in _context.ProjStakeHolderMov on a.CurrentPslmId equals b.PsmId into bs
                                                      from e in bs.DefaultIfEmpty()
-                                                     join d in _context.mStatus on e.StatusId equals d.StatusId into ds
+                                                     join actm in _context.TrnStatusActionsMapping on e.StatusActionsMappingId equals actm.StatusActionsMappingId 
+                                                     join d in _context.mStatus on actm.StatusId equals d.StatusId into ds
                                                      from eWithStatus in ds.DefaultIfEmpty()
                                                      join c in _context.tbl_mUnitBranch on e.ToUnitId equals c.unitid into cs
                                                      from eWithUnit in cs.DefaultIfEmpty()
@@ -158,7 +159,7 @@ namespace swas.UI.Controllers
                                                      from eWithUnits in cg.DefaultIfEmpty()
                                                      join j in _context.mStages on eWithStatus.StageId equals j.StagesId into js
                                                      from eWithStages in js.DefaultIfEmpty()
-                                                     join k in _context.mActions on e.ActionId equals k.ActionsId into ks
+                                                     join k in _context.mActions on actm.ActionsId equals k.ActionsId into ks
                                                      from eWithAction in ks.DefaultIfEmpty()
                                                      join f in _context.Comment on a.CurrentPslmId equals f.PsmId into fs
                                                      from eWithComment in fs.DefaultIfEmpty()

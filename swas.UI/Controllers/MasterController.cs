@@ -32,7 +32,11 @@ namespace swas.UI.Controllers
         public async Task<IActionResult> GetStagebyStakeHolderId(int id, int ParentId,int StakeHolderId)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-            if(StakeHolderId==Logins.unitid)
+            if(StakeHolderId==100)
+            {
+                return Json(await _statusRepository.GetAllbyParentId(ParentId));
+            }
+            else if(StakeHolderId==Logins.unitid)
                 return Json(await _statusRepository.GetAllByStages_takeHolder(ParentId, Convert.ToInt32(Logins.unitid),true));
             else
                 return Json(await _statusRepository.GetAllByStages_takeHolder(ParentId, Convert.ToInt32(Logins.unitid),false));
@@ -150,6 +154,14 @@ namespace swas.UI.Controllers
                 else if (id == Mastertablenmumcs.mActions)
                 {
                     var ret = await _actionsRepository.GetActionByStatusId(ParentId);
+
+
+                    return Json(ret);
+
+                }
+                else if (id == Mastertablenmumcs.mMappingActions)
+                {
+                    var ret = await _actionsRepository.GetActionsMappingIdByStatusId(ParentId);
 
 
                     return Json(ret);

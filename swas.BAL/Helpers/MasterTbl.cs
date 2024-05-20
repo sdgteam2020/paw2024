@@ -15,6 +15,7 @@ namespace swas.BAL.Helpers
         public const int mStages = 5;
         public const int mStatus = 6;
         public const int mActions = 7;
+        public const int mMappingActions = 9;
         public const int mFwd = 8;
 
 

@@ -8,7 +8,7 @@
     });
     $("#ddlfwdSubStage").change(function () {
 
-        mMsater(0, "ddlfwdAction", 7, $("#ddlfwdSubStage").val())
+        mMsater(0, "ddlfwdAction", 9, $("#ddlfwdSubStage").val())
     });
     $("#ddlfwdAction").change(function () {
      
@@ -151,8 +151,8 @@ function SaveFwdTo(CurrentPslmId) {
     var userdata =
     {
         "ProjId": $("#spanFwdProjectId").html(),
-        "StatusId": $("#ddlfwdSubStage").val(),
-        "ActionId": $("#ddlfwdAction").val(),
+       /* "StatusId": $("#ddlfwdSubStage").val(),*/
+        "StatusActionsMappingId": $("#ddlfwdAction").val(),
         "Remarks": $("#txtRemarksfwd").val(),
         "ToUnitId": $("#ddlfwdFwdTo").val(),
 
