@@ -33,12 +33,11 @@ function GetAllDashbaordCount() {
                     
                     
                     listitem += '<div class="cd-1 btn btnGetsummay" style="background-color:white"><span class="d-none" id="spnstatusId">' + dtoDashboardHeaderlst[i].statusId +'</span>';
-                    listitem += '<div class="icon-container">';
-                    listitem += '<img src="/assets/images/icons/adduser.png" alt="Icon" style="height:25px">';
-                    listitem += '</div>';
+                  
                     tot = 0;
                     peding = 0;
                     sent = 0;
+                    var icons = "";
                     var DTODashboardCount = data.dtoDashboardCountlst.filter(function (element) { return element.stagesId == dtoDashboardHeaderlst[i].stageId && element.statusId == dtoDashboardHeaderlst[i].statusId; });
                     for (var j = 0; j < DTODashboardCount.length; j++) {
 
@@ -51,7 +50,12 @@ function GetAllDashbaordCount() {
                         if (DTODashboardCount[j].isComplete == true) {
                             sent += DTODashboardCount[j].tot;
                         }
+                      
                     }
+                   
+                    listitem += '<div class="icon-container">';
+                    listitem += '<img src="/assets/images/icons/' + dtoDashboardHeaderlst[i].icons +'" alt="Icon" style="height:25px">';
+                    listitem += '</div>';
                     listitem += '<h5 style="margin-top: 8px;" >' + tot + ' </h5>';
                     listitem += '<div class="t-1 statusprojsummry">' + dtoDashboardHeaderlst[i].status +'</div> ';
                     listitem += ' <div class="mb-2">';

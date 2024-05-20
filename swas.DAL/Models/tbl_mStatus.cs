@@ -49,6 +49,8 @@ namespace swas.DAL.Models
 
         public bool IsDashboard { get; set; }
 
+        public string? Icon { get; set; }
+
     }
 
 

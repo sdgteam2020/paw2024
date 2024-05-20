@@ -20,6 +20,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Xml.Linq;
 using System.Net.NetworkInformation;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Identity;
 
 namespace swas.BAL.Repository
 {
@@ -46,6 +47,8 @@ namespace swas.BAL.Repository
 
         public async Task<List<DTOProjectMovHistory>> ProjectMovHistory(int? ProjectId)
         {
+           
+
             var query = await (from a in _dbContext.Projects
                         join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
                         join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid
@@ -73,6 +76,9 @@ namespace swas.BAL.Repository
                             UndoRemarks=b.UndoRemarks,
                             IsComment=b.IsComment,
                             AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == b.PsmId),
+                            UserDetails=b.UserDetails,
+                            
+
                          }).ToListAsync();
 
 
@@ -109,6 +115,7 @@ namespace swas.BAL.Repository
                                orderby stge.StagesId ascending
                                group mov by new { ststus.StatusId, QStages = stge.Stages, QStagesId= stge.StagesId, 
                                    QStatus=ststus.Status,
+                                
                                    QIsComplete = mov.IsComplete,QprojId= proj.ProjId
                                   
                                } into gr  //,QActionId= actmap.ActionsId
@@ -122,7 +129,8 @@ namespace swas.BAL.Repository
                                    Status = gr.Key.QStatus,
                                    IsComplete=gr.Key.QIsComplete,
                                    //ActionId = gr.Key.QActionId,
-                                   Tot = gr.Count()
+                                   Tot = gr.Count(),
+                                 
                                }).ToListAsync();
 
             db.DTODashboardCountlst=(query);
@@ -144,6 +152,7 @@ namespace swas.BAL.Repository
                                    QStages = stge.Stages,
                                    QStagesId = stge.StagesId,
                                    QStatus = ststus.Status,
+                                   
                                    QIsComplete = mov.IsComplete,
                                    QprojId = proj.ProjId
 
@@ -158,6 +167,7 @@ namespace swas.BAL.Repository
                                    Status = gr.Key.QStatus,
                                    IsComplete = gr.Key.QIsComplete,
                                    //ActionId = gr.Key.QActionId,
+                                   
                                    Tot = gr.Count()
                                }).ToListAsync();
 
@@ -174,8 +184,10 @@ namespace swas.BAL.Repository
                                    StageId= stge.StagesId,
                                    StatusId=ststus.StatusId,
                                    Status=ststus.Status,
-                                   Stages= stge.Stages
-                               }).ToListAsync();
+                                   Stages= stge.Stages,
+                                   Icons= ststus.Icon
+
+                                }).ToListAsync();
             db.DTODashboardHeaderlst = query1;
 
             //var query2 = await (from actmap in _dbContext.TrnStatusActionsMapping

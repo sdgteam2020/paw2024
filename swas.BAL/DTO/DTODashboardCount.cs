@@ -21,6 +21,7 @@ namespace swas.BAL.DTO
         public string? Status { get; set; }
         public int Tot { get; set; }
         public bool IsComplete { get; set; }
+       
     }
     public class DTODashboardHeader
     {
@@ -28,6 +29,7 @@ namespace swas.BAL.DTO
         public int StatusId { get; set; }
         public string? Stages { get; set; }
         public string? Status { get; set; }
+        public string? Icons { get; set; }
     }
     public class DTODashboardAction
     {
