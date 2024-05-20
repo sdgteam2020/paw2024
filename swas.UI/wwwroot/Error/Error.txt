@@ -1,7 +1,3 @@
-Date : 4/25/2024 9:44:31 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/25/2024 10:18:12 AM
 A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
 -----------------------------------------------------------------------------
 Date : 4/25/2024 10:20:09 AM
@@ -899,3 +895,6 @@ Invalid column name 'StatusId'.
 -----------------------------------------------------------------------------
 Date : 5/17/2024 5:12:08 PM
 Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 20-05-2024 14:23:10
+A transport-level error has occurred when receiving results from the server. (provider: Session Provider, error: 19 - Physical connection is not usable)

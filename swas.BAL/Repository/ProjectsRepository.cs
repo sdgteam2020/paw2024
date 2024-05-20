@@ -560,7 +560,8 @@ namespace swas.BAL.Repository
                                 EncyID = _dataProtector.Protect(a.ProjId.ToString()),
                                 EncyPsmID = _dataProtector.Protect(b.PsmId.ToString()),
                                 IsProcess = a.IsProcess,
-                                undopsmId = _psmRepository.GetLastRecProjectMov(a.ProjId)
+                                undopsmId = _psmRepository.GetLastRecProjectMov(a.ProjId),
+                                StageId= eWithStages.StagesId
 
                             };
 
