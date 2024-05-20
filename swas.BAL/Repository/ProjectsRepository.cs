@@ -79,8 +79,9 @@ namespace swas.BAL.Repository
                             from eWithComment in fs.DefaultIfEmpty()
 
                             where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true && b.IsComplete == false
-                            && b.ToUnitId == Logins.unitid 
-                            && actm.StatusId== StatuId
+                            //&& b.ToUnitId == Logins.unitid 
+                            && actm.StatusId == StatuId
+                            
                             orderby b.DateTimeOfUpdate descending
 
                             select new DTOProjectsFwd
@@ -130,7 +131,7 @@ namespace swas.BAL.Repository
                             from eWithComment in fs.DefaultIfEmpty()
 
                             where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true && b.IsComplete == true
-                            && b.FromUnitId == Logins.unitid 
+                            //&& b.FromUnitId == Logins.unitid 
                             && actm.StatusId == StatuId
                                       orderby b.DateTimeOfUpdate descending
 

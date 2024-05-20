@@ -105,6 +105,7 @@ namespace swas.BAL.Repository
                                where 
                                //mov.ToUnitId == UserId &&
                                mov.IsComplete == false /*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
+                               && ststus.IsDashboard == true
                                orderby stge.StagesId ascending
                                group mov by new { ststus.StatusId, QStages = stge.Stages, QStagesId= stge.StagesId, 
                                    QStatus=ststus.Status,
@@ -135,7 +136,8 @@ namespace swas.BAL.Repository
                                where 
                               // mov.FromUnitId == UserId && 
                                mov.IsComplete == true /*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
-                               orderby stge.StagesId ascending
+                               && ststus.IsDashboard == true
+                         orderby stge.StagesId ascending
                                group mov by new
                                {
                                    ststus.StatusId,
@@ -165,6 +167,7 @@ namespace swas.BAL.Repository
 
             var query1 = await (from ststus in _dbContext.mStatus
                                join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
+                               where ststus.IsDashboard == true
                                 orderby stge.StagesId ascending
                                 select new DTODashboardHeader
                                {

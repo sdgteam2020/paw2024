@@ -60,7 +60,7 @@ function GetAllDashbaordCount() {
 
                      //   listitem += '<button type="button" class="btn btn-primary"> ' + DTODashboardActionlst[j].action +' <span class="badge badge-light">9</span>';
                        
-                    listitem += '<span class="badge badge-light text-black" style="font-size:12px">' + peding + '/' + sent +'</span>';
+                    listitem += '<span class="badge badge-light text-black" style="font-size:18px"><span class="badge bg-danger">' + peding + '</span> / <span class="badge bg-success">' + sent + '</span></span>';
                       
                         
 

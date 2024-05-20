@@ -7,7 +7,7 @@ namespace swas.DAL.Models
 	///Reviewed Date : 31 Jul 23
 	///Tested By :- 
 	///Tested Date : 
-	///Start
+	///Start 
 	public class tbl_mStatus
 	{
 		[Key]
@@ -47,9 +47,9 @@ namespace swas.DAL.Models
 
 		public int? Statseq { get; set; }
 
-		
+        public bool IsDashboard { get; set; }
 
-	}
+    }
 
 
 }
