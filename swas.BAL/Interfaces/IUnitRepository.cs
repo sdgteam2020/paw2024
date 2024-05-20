@@ -1,4 +1,5 @@
-﻿using swas.DAL.Models;
+﻿using swas.BAL.DTO;
+using swas.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
