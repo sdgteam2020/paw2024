@@ -110,7 +110,9 @@ namespace swas.BAL.Repository
                                //join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
                                where 
                                //mov.ToUnitId == UserId &&
-                               mov.IsComplete == false /*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
+                               mov.IsComplete == false
+                               && mov.IsActive == true
+                               /*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
                                && ststus.IsDashboard == true
                                orderby stge.StagesId ascending
                                group mov by new { ststus.StatusId, QStages = stge.Stages, QStagesId= stge.StagesId, 
@@ -143,7 +145,8 @@ namespace swas.BAL.Repository
                                //join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
                                where 
                               // mov.FromUnitId == UserId && 
-                               mov.IsComplete == true /*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
+                               mov.IsComplete == true
+                                && mov.IsActive == true/*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
                                && ststus.IsDashboard == true
                          orderby stge.StagesId ascending
                                group mov by new
