@@ -18,6 +18,10 @@ namespace swas.BAL.Interfaces
         bool CheckUserExist(string UserName, string susno);
         Task<int> del(UnitDtl Db);
         Task<List<UnitDtl>> GetAllUnitAsync();
+
+        Task<List<DTOUnitMapping>> GetallUnitwithmap();
+
+        Task<List<DTOUnitMapping>> GetallUnitwithmap1(int unitId);
         Task<List<UnitDtl>> GetAllStakeHolderComment();
 
 

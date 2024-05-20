@@ -16,13 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\DeveloperJs\ProjectDetails.js" />
     <Content Remove="wwwroot\Uploads\Swas_76b4206a-8ef9-4b6c-8d33-77fd915cc3d6.pdf" />
   </ItemGroup>
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\css\timeline.css" />
-    <_ContentIncludedByDefault Remove="wwwroot\DeveloperJs\ProjectDetails.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -264,15 +262,25 @@
     <None Include="wwwroot\assets\plugins\metismenu\js\metisMenu.min.js.map" />
     <None Include="wwwroot\DeveloperJs\Account.js" />
     <None Include="wwwroot\DeveloperJs\Actions.js" />
+    <None Include="wwwroot\DeveloperJs\AttHistory.js" />
+    <None Include="wwwroot\DeveloperJs\CommanForDatatable.js" />
     <None Include="wwwroot\DeveloperJs\CreateProjects.js" />
     <None Include="wwwroot\DeveloperJs\ddlSanal.js" />
     <None Include="wwwroot\DeveloperJs\Documents.js" />
+    <None Include="wwwroot\DeveloperJs\FwdProject.js" />
     <None Include="wwwroot\DeveloperJs\Home.js" />
     <None Include="wwwroot\DeveloperJs\Login.js" />
+    <None Include="wwwroot\DeveloperJs\Mtable.js" />
     <None Include="wwwroot\DeveloperJs\NewProject.js" />
     <None Include="wwwroot\DeveloperJs\NewProjectTable.js" />
     <None Include="wwwroot\DeveloperJs\ProjectComment.js" />
     <None Include="wwwroot\DeveloperJs\ProjectDetails.js" />
+    <None Include="wwwroot\DeveloperJs\ProjectstckholdercommentforProjHistory.js" />
+    <None Include="wwwroot\DeveloperJs\ProjectstkholderComments.js" />
+    <None Include="wwwroot\DeveloperJs\Rank.js" />
+    <None Include="wwwroot\DeveloperJs\Stage.js" />
+    <None Include="wwwroot\DeveloperJs\Status.js" />
+    <None Include="wwwroot\DeveloperJs\UnitMapping.js" />
     <None Include="wwwroot\font-awesome\js\all.js" />
     <None Include="wwwroot\font-awesome\js\all.min.js" />
     <None Include="wwwroot\font-awesome\js\brands.js" />

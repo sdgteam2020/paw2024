@@ -32,6 +32,8 @@ namespace swas.BAL.Interfaces
         Task<List<tbl_Projects>> GetActProjectsAsync();
         Task<tbl_ProjStakeHolderMov> GettXNByPsmIdAsync(int psmId);
         Task<List<DToWhiteListed>> GetWhiteListedActionProj();
+
+        //Task<List<DTOUnderProcessProj>> GetHoldActionProj();
         Task<List<tbl_Projects>> GetProcProjAsync();
         Task<List<tbl_Projects>> GetProjforCommentsAsync();
         Task<List<ProjHistory>> GetProjectHistorybyID(int? dtaProjID);

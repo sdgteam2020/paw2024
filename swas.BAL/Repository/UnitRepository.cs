@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using swas.DAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using swas.BAL.DTO;
+using System;
+using swas.BAL.Repository;
 
 namespace swas.BAL
 {
@@ -134,6 +137,70 @@ namespace swas.BAL
         {
             return await _context.tbl_mUnitBranch.Where(i=>i.commentreqdid==true).ToListAsync();
         }
+
+        public async Task<List<DTOUnitMapping>> GetallUnitwithmap()
+        {
+            var ret1 = await (from usm in _context.TrnUnitStatusMapping
+                              join ms in _context.mStatus on usm.StatusId equals ms.StatusId
+                              join sam in _context.TrnStatusActionsMapping on ms.StatusId equals sam.StatusId
+                              join s in _context.mStages on ms.StageId equals s.StagesId
+                              join a in _context.mActions on sam.ActionsId equals a.ActionsId
+                              join ub in _context.tbl_mUnitBranch on usm.UnitId equals ub.unitid
+                              where 
+                               !(from ub in _context.tbl_mUnitBranch
+                                   where ub.unitid == usm.UnitId && ub.TypeId == 6
+                                   select 1).Any()
+                              orderby ub.unitid descending
+                              select new DTOUnitMapping
+                              {
+                                  StatusActionsMappingId = sam.StatusActionsMappingId,
+                                  UnitStatusMappingId = usm.UnitStatusMappingId,
+                                  Unit = ub.UnitName,
+                                  UnitId = usm.UnitId,
+                                  StagesName = s.Stages,
+                                  Stages = s.StagesId,
+                                  SubStagesName = ms.Status,
+                                  SubStages = ms.StatusId,
+                                  ActionsName = a.Actions,
+                                  Actions = a.ActionsId
+                              }).ToListAsync();
+
+            return ret1;
+        }
+
+        public async Task<List<DTOUnitMapping>> GetallUnitwithmap1(int unitId)
+        {
+            var ret1 = await(from usm in _context.TrnUnitStatusMapping
+                             join ms in _context.mStatus on usm.StatusId equals ms.StatusId
+                             join sam in _context.TrnStatusActionsMapping on ms.StatusId equals sam.StatusId
+                             join s in _context.mStages on ms.StageId equals s.StagesId
+                             join a in _context.mActions on sam.ActionsId equals a.ActionsId
+                             join ub in _context.tbl_mUnitBranch on usm.UnitId equals ub.unitid
+                             where usm.UnitId==unitId &&
+                              !(from ub in _context.tbl_mUnitBranch
+                                where ub.unitid == usm.UnitId && ub.TypeId == 6
+                                select 1).Any()
+                             orderby ub.unitid descending
+                             select new DTOUnitMapping
+                             {
+                                 StatusActionsMappingId = sam.StatusActionsMappingId,
+                                 UnitStatusMappingId = usm.UnitStatusMappingId,
+                                 Unit = ub.UnitName,
+                                 UnitId = usm.UnitId,
+                                 StagesName = s.Stages,
+                                 Stages = s.StagesId,
+                                 SubStagesName = ms.Status,
+                                 SubStages = ms.StatusId,
+                                 ActionsName = a.Actions,
+                                 Actions = a.ActionsId
+                             }).ToListAsync();
+
+            return ret1;
+        }
+
+
+
+
 
 
         //public async Task<List<UnitDtl>> GetFindUnitAsync(string UserName)

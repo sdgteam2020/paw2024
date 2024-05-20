@@ -52,12 +52,12 @@ namespace swas.UI.Controllers
         private System.Timers.Timer aTimer;
         private readonly IStkCommentRepository _stkCommentRepository;
         private readonly IProjStakeHolderMovRepository _stkholdmove;
-        
-        public ProjectsController(IProjectsRepository projectsRepository, IDdlRepository ddlRepository, 
-            IProjStakeHolderMovRepository psmRepository, IHttpContextAccessor httpContextAccessor, 
-            IDdlRepository DDLRepository, IAttHistoryRepository attHistoryRepository, 
-            IWebHostEnvironment environment, IProjStakeHolderMovRepository stkholdmove, 
-            IDataProtectionProvider DataProtector, IWebHostEnvironment _webHostEnvironment, 
+
+        public ProjectsController(IProjectsRepository projectsRepository, IDdlRepository ddlRepository,
+            IProjStakeHolderMovRepository psmRepository, IHttpContextAccessor httpContextAccessor,
+            IDdlRepository DDLRepository, IAttHistoryRepository attHistoryRepository,
+            IWebHostEnvironment environment, IProjStakeHolderMovRepository stkholdmove,
+            IDataProtectionProvider DataProtector, IWebHostEnvironment _webHostEnvironment,
             ICommentRepository commentRepository, IActionsRepository actionsRepository,
             IProjComments projComments, IStkCommentRepository stkCommentRepository,
             IProjStakeHolderMovRepository projStakeHolderMovRepository
@@ -186,8 +186,8 @@ namespace swas.UI.Controllers
                     mbx.SendItems = await _projectsRepository.GetActSendItemsAsync();
                     mbx.CompletedItems = await _projectsRepository.GetActComplettemsAsync();
 
-                    
-                        return View(mbx);
+
+                    return View(mbx);
 
 
                     //var projects = await _projectsRepository.GetActProjectsAsync();
@@ -206,7 +206,7 @@ namespace swas.UI.Controllers
         }
 
 
-       
+
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> GetAllStatus()
         {
@@ -278,7 +278,7 @@ namespace swas.UI.Controllers
                     uploadfile.CopyTo(stream);
                 }
 
-               // var project = await _projectsRepository.GetProjectByIdAsync(ProjectId);
+                // var project = await _projectsRepository.GetProjectByIdAsync(ProjectId);
                 if (PsmId != null && PsmId != 0)
                 {
                     tbl_AttHistory atthis = new tbl_AttHistory();
@@ -352,11 +352,12 @@ namespace swas.UI.Controllers
         {
             try
             {
-            
-                    return Json(await _attHistoryRepository.GetAttHistoryByIdAsync(PslmId));
-              
+
+                return Json(await _attHistoryRepository.GetAttHistoryByIdAsync(PslmId));
+
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return Json(-1);
             }
         }
@@ -373,7 +374,7 @@ namespace swas.UI.Controllers
         public async Task<IActionResult> ProjectSubmited(int projid)
         {
             var project = await _projectsRepository.GetProjectByIdAsync(projid);
-            project.IsSubmited=true;
+            project.IsSubmited = true;
             await _projectsRepository.UpdateProjectAsync(project);
             return Json(project.ProjId);
         }
@@ -394,14 +395,14 @@ namespace swas.UI.Controllers
                 try
                 {
                     tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
-                   // var project = await _projectsRepository.GetProjectByIdAsync(projid);
+                    // var project = await _projectsRepository.GetProjectByIdAsync(projid);
                     psmove = await _projectsRepository.GettXNByPsmIdAsync(PslmId);
                     psmove.DateTimeOfUpdate = DateTime.Now;
                     psmove.IsComplete = true;
                     await _projectsRepository.UpdateTxnAsync(psmove);
 
 
-                   
+
                     return Json(PslmId);
                 }
                 catch (Exception ex)
@@ -421,7 +422,7 @@ namespace swas.UI.Controllers
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
-          
+
             if (Logins != null)
             {
 
@@ -571,7 +572,7 @@ namespace swas.UI.Controllers
 
         }
 
-      
+
 
         #region Project Movment For PROcess For Comment
 
@@ -648,8 +649,8 @@ namespace swas.UI.Controllers
             psmove.EditDeleteBy = Logins.UserIntId;
             psmove.TimeStamp = DateTime.Now;
             psmove.IsComplete = false;
-          var Ret= await _psmRepository.AddWithReturn(psmove);
-           if(Ret!=null)
+            var Ret = await _psmRepository.AddWithReturn(psmove);
+            if (Ret != null)
             {
                 return Json(Ret);
             }
@@ -662,11 +663,11 @@ namespace swas.UI.Controllers
 
         public async Task<IActionResult> ProjectMovHistory(int ProjectId)
         {
-          //  var Ret1 = await _psmRepository.UndoProjectMov(ProjectId);
+            //  var Ret1 = await _psmRepository.UndoProjectMov(ProjectId);
             var Ret = await _psmRepository.ProjectMovHistory(ProjectId);
             return Json(Ret);
         }
-        public async Task<IActionResult> UndoProject(int ProjectId,int PsmId,string Remarks)
+        public async Task<IActionResult> UndoProject(int ProjectId, int PsmId, string Remarks)
         {
             try
             {
@@ -679,11 +680,11 @@ namespace swas.UI.Controllers
                 var psmidold = _psmRepository.GetLastRecProjectMov(ProjectId);
                 var movent1 = await _psmRepository.GetByByte(psmidold);
                 movent1.Remarks = "";
-                movent1.IsComplete = false; 
+                movent1.IsComplete = false;
                 var Ret1 = await _psmRepository.UpdateWithReturn(movent);
                 return Json(nmum.Update);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Json(nmum.Exception);
             }
@@ -692,7 +693,7 @@ namespace swas.UI.Controllers
         #region ProjComments
         public async Task<IActionResult> ProjComments()
         {
-            
+
             return View();
         }
         public async Task<IActionResult> GetProjCommentsByUnitId(int Id)
@@ -703,19 +704,19 @@ namespace swas.UI.Controllers
 
                 return Json(await _projComments.GetAllStkForComment(Convert.ToInt32(Logins.unitid)));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Json(nmum.Exception);
             }
         }
         [HttpPost]
         //[Authorize(Policy = "StakeHolders")]
-        public async Task<IActionResult> SendCommentonProject(IFormFile uploadfile, string Comments, int StkStatusId, int ProjectId,int psmid)
+        public async Task<IActionResult> SendCommentonProject(IFormFile uploadfile, string Comments, int StkStatusId, int ProjectId, int psmid)
         {
             try
             {
                 StkComment cmmets = new StkComment();
-                string uniqueFileName="";
+                string uniqueFileName = "";
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
                 if (uploadfile != null && uploadfile.Length > 0)
@@ -733,7 +734,7 @@ namespace swas.UI.Controllers
 
                     cmmets.ActFileName = uploadfile.FileName;
                 }
-            
+
                 cmmets.Attpath = uniqueFileName;
                 cmmets.Comments = Comments;
                 cmmets.PsmId = psmid;
@@ -745,7 +746,7 @@ namespace swas.UI.Controllers
                 cmmets.EditDeleteBy = Logins.unitid;
                 cmmets.EditDeleteDate = DateTime.Now;
                 cmmets.StkStatusId = StkStatusId;
-               
+
                 cmmets.StakeHolderId = Logins.unitid; ;
 
                 var ret = await _stkCommentRepository.AddWithReturn(cmmets);
@@ -760,7 +761,7 @@ namespace swas.UI.Controllers
             {
                 return Json(nmum.Exception);
             }
-            
+
 
         }
 
@@ -778,8 +779,9 @@ namespace swas.UI.Controllers
                 return Json(ret);
 
             }
-            catch (Exception ex) { 
-             return Json(nmum.Exception);
+            catch (Exception ex)
+            {
+                return Json(nmum.Exception);
             }
         }
         public async Task<IActionResult> GetCommentStatus(int UnitId)
@@ -885,9 +887,9 @@ namespace swas.UI.Controllers
                 int statgeIDMAx = await _stkholdmove.GetlaststageId(dataProjId);
                 ViewBag.stageid = statgeIDMAx;
 
-                var projdetails =await  _projectsRepository.GetProjectByIdAsync1(dataProjId);
+                var projdetails = await _projectsRepository.GetProjectByIdAsync1(dataProjId);
 
-                
+
 
                 var dto3 = await _commentRepository.GetCommentByPsmIdAsync(projdetails.CurrentPslmId);
 
@@ -973,7 +975,7 @@ namespace swas.UI.Controllers
                     projHist[0].ProjectDetl.Add(projects);
 
                     var stholder = await _psmRepository.GetProjStakeHolderMovByIdAsync(projects.CurrentPslmId);
-                   
+
                     ViewBag.DataProjId = projHist.Select(a => a.ProjId).FirstOrDefault();
                     return View(projHist);
 
@@ -1038,6 +1040,7 @@ namespace swas.UI.Controllers
         }
 
         #endregion
+
 
 
 

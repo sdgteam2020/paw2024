@@ -104,7 +104,7 @@ namespace swas.UI.Controllers
         ///Revised on :- 01/10/2023ddgf
         ///    chart generation corrected df fgdgd sdfsdf dsfdsfsdfsfd dsfdsfdsf fgfdgdfgdfg
         ///    
-       
+
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -338,7 +338,7 @@ s.Statseq
 
         ///    chart generation full dynamic tested and error rectified
         ///    
-    
+
 
 
         [HttpGet]
@@ -358,7 +358,7 @@ s.Statseq
                     var flag = userflag.Flag;
                     ViewBag.flag = flag;
 
-                  //  bool isUserRegistered = await _projectsRepository.UserRegistered(Logins.UserName); comment by kapoor
+                    //  bool isUserRegistered = await _projectsRepository.UserRegistered(Logins.UserName); comment by kapoor
                     if (true)
                     {
                         ViewBag.ProcessButtonColor = "green";
@@ -373,7 +373,7 @@ s.Statseq
                         ViewBag.ButtonText = "Sign Up";
                     }
 
-                  
+
 
                     ViewBag.LoggedInUserName = Logins.UserName;
 
@@ -389,14 +389,16 @@ s.Statseq
                     }
                     // Pass roles data to the view
 
-                   // var data = await _projectsRepository.GetWhitelistedProjAsync();
-                   // ViewBag.ProjectList = data;
+                    // var data = await _projectsRepository.GetWhitelistedProjAsync();
+                    // ViewBag.ProjectList = data;
                     ViewBag.WhiteListed = await _projectsRepository.GetWhiteListedActionProj();
-                   // ViewBag.RecentAction = await _projectsRepository.GetRecentActionProj();
-                    //ViewBag.HoldProj = await _projectsRepository.GetHoldActionProj();
+                    // ViewBag.RecentAction = await _projectsRepository.GetRecentActionProj();
+
                     //ViewBag.RFPProj = await _projectsRepository.GetHoldRFPProj();
 
-             
+                    //ViewBag.HoldProj = await _projectsRepository.GetHoldActionProj();
+
+
                     ViewBag.ipadd = watermarkText;
 
                     string path = System.IO.Path.Combine(this.webHostEnvironment.WebRootPath, "PDF");
@@ -449,6 +451,7 @@ s.Statseq
                     // ViewBag.RecentAction = await _projectsRepository.GetRecentActionProj();
                     //ViewBag.HoldProj = await _projectsRepository.GetHoldActionProj();
                     //ViewBag.RFPProj = await _projectsRepository.GetHoldRFPProj();
+
 
 
                     ViewBag.ipadd = watermarkText;
@@ -509,7 +512,7 @@ s.Statseq
 
         ///    New Project Creation with multiple forms and upload errors
         ///    
-    
+
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -616,7 +619,7 @@ s.Statseq
 
 
         string filepathpdf = "";
-      
+
         public IActionResult WaterMark2(string id)
         {
             //var stream = new FileStream(@"path\to\file", FileMode.Open);
@@ -666,7 +669,7 @@ s.Statseq
             }
         }
 
-      
+
         public string generate2(string Path, string ip)
         {
             try
@@ -855,10 +858,10 @@ s.Statseq
             }
         }
 
-       
 
 
-        
+
+
         public async Task<IActionResult> ProjUnitComments()
         {
             try
@@ -909,7 +912,7 @@ s.Statseq
 
         }
 
-       
+
         public async Task<IActionResult> GetUnitComments(int psmId, int stakeholderId, int projId)
         {
             // Your existing code for getting comments
@@ -1064,7 +1067,7 @@ s.Statseq
 
         //   created by ajay for unit comments on 24 Nov 23
         string filepathpdf1 = "";
-        
+
         public IActionResult WaterMark3(string id)
         {
             //var stream = new FileStream(@"path\to\file", FileMode.Open);
@@ -1119,7 +1122,7 @@ s.Statseq
 
 
         //   created by ajay for unit comments on 24 Nov 23
-        
+
         public string generate3(string Path, string ip)
         {
             try
@@ -1244,7 +1247,7 @@ s.Statseq
 
                         SessionHelper.SetObjectAsJson(HttpContext.Session, "User", Db);
 
-                         return RedirectToActionPermanent("Index", "Home");
+                        return RedirectToActionPermanent("Index", "Home");
                     }
 
                 }

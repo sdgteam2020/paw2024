@@ -312,8 +312,6 @@ namespace swas.BAL.Repository
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
-
-
             if (Logins != null)
             {
                 int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
@@ -1409,17 +1407,55 @@ namespace swas.BAL.Repository
 
         }
 
+        //public async Task<List<DTOUnderProcessProj>> GetHoldActionProj()
+        //{
 
+        //    var latestProjStakeHolderMov = _DBContext.ProjStakeHolderMov
+        //        .GroupBy(psm => psm.ProjId)
+        //        .Select(g => new
+        //        {
+        //            ProjId = g.Key,
+        //            LatestEditDeleteDate = g.Max(psm => psm.DateTimeOfUpdate)
+        //        });
 
+        //    var query = from lp in latestProjStakeHolderMov
+        //                join psm1 in _DBContext.ProjStakeHolderMov
+        //                    on new { lp.ProjId, lp.LatestEditDeleteDate } equals new { psm1.ProjId, psm1.DateTimeOfUpdate }
+        //                join sam in _DBContext.TrnStatusActionsMapping
+        //                    on psm1.StatusActionsMappingId equals sam.StatusActionsMappingId
+        //                join usm in _DBContext.TrnUnitStatusMapping
+        //                    on sam.StatusId equals usm.StatusId
+        //                join p in _DBContext.Projects
+        //                    on psm1.ProjId equals p.ProjId
+        //                join fub in _DBContext.tbl_mUnitBranch
+        //                    on psm1.FromUnitId equals fub.unitid
+        //                join tub in _DBContext.tbl_mUnitBranch
+        //                    on psm1.ToUnitId equals tub.unitid
+        //                join ms in _DBContext.mStatus
+        //                    on sam.StatusId equals ms.StatusId
+        //                join ma in _DBContext.mActions
+        //                    on sam.ActionsId equals ma.ActionsId
+        //                where usm.StatusId == sam.StatusId
+        //                select new DTOUnderProcessProj
+        //                {
+        //                    ProjId = psm1.ProjId,
+        //                    ProjName = p.ProjName,
+        //                    FromUnitId = psm1.FromUnitId,
+        //                    FromUnitName = fub.UnitName,
+        //                    ToUnitId = psm1.ToUnitId,
+        //                    ToUnitName = tub.UnitName,
+        //                    StatusId = sam.StatusId,
+        //                    StatusName = ms.Status,
+        //                    ActionId = sam.ActionsId,
+        //                    ActionName = ma.Actions,
+        //                    UserDetails = psm1.UserDetails,
+        //                    DateTimeOfUpdate = psm1.DateTimeOfUpdate
+        //                };
 
+        //    var result = query.ToList();
 
-
-
-
-
-
-
-
+        //    return result;
+        //}
     }
 
 

@@ -78,6 +78,8 @@ builder.Services.AddScoped<IAttHistComment, AttHistCommentRepository>();
 builder.Services.AddScoped<IProjComments, ProjComments>();
 builder.Services.AddScoped<IStkStatusRepository, StkStatusRepository>();
 builder.Services.AddScoped<IStkCommentRepository, StkCommentRepository>();
+builder.Services.AddScoped<IUnitStatusMapping, UnitStatusMapping>();
+builder.Services.AddScoped<IStatusActionsMapping, StatusActionsMapping>();
 
 
 

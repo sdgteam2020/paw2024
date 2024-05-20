@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.DataProtection;
 
 namespace swas.UI.Controllers
 {
-  
+
 
     public class ProjStakeHolderMovController : Controller
     {
@@ -68,7 +68,7 @@ namespace swas.UI.Controllers
             return View(stackhold);
         }
 
-     
+
 
 
         public async Task<IActionResult> Edit(int id)
@@ -102,17 +102,17 @@ namespace swas.UI.Controllers
             if (Logins != null)
             {
                 if (id != projStakeHolderMov.PsmId)
-            {
-                return NotFound();
-            }
+                {
+                    return NotFound();
+                }
 
-            if (ModelState.IsValid)
-            {
-                await _psmRepo.UpdateProjStakeHolderMovAsync(projStakeHolderMov);
-                return RedirectToAction(nameof(Index));
-            }
+                if (ModelState.IsValid)
+                {
+                    await _psmRepo.UpdateProjStakeHolderMovAsync(projStakeHolderMov);
+                    return RedirectToAction(nameof(Index));
+                }
 
-            return View(projStakeHolderMov);
+                return View(projStakeHolderMov);
             }
             else
             {
@@ -123,7 +123,7 @@ namespace swas.UI.Controllers
         // Reviewed Date : 30 Jul 23
         // GET: ProjStakeHolderMov/Delete/5
         //[Authorize(Policy = "StakeHolders")]
-        
+
         public async Task<IActionResult> Delete(int id)
         {
 
@@ -131,11 +131,11 @@ namespace swas.UI.Controllers
             if (Logins != null)
             {
                 var projStakeHolderMov = await _psmRepo.GetProjStakeHolderMovByIdAsync(id);
-            if (projStakeHolderMov == null)
-            {
-                return NotFound();
-            }
-            return View(projStakeHolderMov);
+                if (projStakeHolderMov == null)
+                {
+                    return NotFound();
+                }
+                return View(projStakeHolderMov);
             }
             else
             {
@@ -156,7 +156,7 @@ namespace swas.UI.Controllers
             {
 
                 await _psmRepo.DeleteProjStakeHolderMovAsync(id);
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
             else
             {
@@ -164,7 +164,7 @@ namespace swas.UI.Controllers
             }
         }
 
-        
+
 
 
 
