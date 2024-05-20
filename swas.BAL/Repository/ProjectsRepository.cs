@@ -45,7 +45,128 @@ namespace swas.BAL.Repository
             _dataProtector = dataProtector.CreateProtector("swas.UI.Controllers.ProjectsController");
             _psmRepository = psmRepository;
         }
+        public async Task<List<DTOProjectsFwd>> GetDashboardStatusDetails(int StatuId,int UnitId)
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
+            List<DTOProjectsFwd> lst = new List<DTOProjectsFwd>();
+
+            if (Logins != null)
+            {
+                int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
+
+                string username = Logins.UserName;
+
+                var query = from a in _dbContext.Projects
+                            join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
+                            join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
+                            from stackcs in cs1.DefaultIfEmpty()
+                            join actm in _dbContext.TrnStatusActionsMapping on b.StatusActionsMappingId equals actm.StatusActionsMappingId
+                            join d in _dbContext.mStatus on actm.StatusId equals d.StatusId
+                            join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId
+
+                            join c in _dbContext.tbl_mUnitBranch on b.ToUnitId equals c.unitid into cs
+                            from toUnit in cs.DefaultIfEmpty()
+
+                            join g in _dbContext.tbl_mUnitBranch on b.FromUnitId equals g.unitid into cg
+                            from fromUnits in cg.DefaultIfEmpty()
+
+                            join j in _dbContext.mStages on d.StageId equals j.StagesId into js
+                            from eWithStages in js.DefaultIfEmpty()
+
+
+                            join f in _dbContext.Comment on b.PsmId equals f.PsmId into fs
+                            from eWithComment in fs.DefaultIfEmpty()
+
+                            where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true && b.IsComplete == false
+                            && b.ToUnitId == Logins.unitid 
+                            && actm.StatusId== StatuId
+                            orderby b.DateTimeOfUpdate descending
+
+                            select new DTOProjectsFwd
+                            {
+                                ProjId = a.ProjId,
+                                PsmIds = b.PsmId,
+                                ProjName = a.ProjName,
+                                StakeHolderId = a.StakeHolderId,
+                                StakeHolder = stackcs.UnitName,
+                                //Remarks= b != null ? b.Remarks : null,
+                                Status = d.Status,
+                                FromUnitId = b.FromUnitId,
+                                FromUnitName = fromUnits.UnitName,
+                                ToUnitId = b.ToUnitId,
+                                ToUnitName = toUnit.UnitName,
+                                Action = k.Actions,
+                                TotalDays = 0,
+                                StageId = eWithStages.StagesId,
+                                EncyID = _dataProtector.Protect(a.ProjId.ToString()),
+                                EncyPsmID = _dataProtector.Protect(b.PsmId.ToString()),
+                                IsProcess = a.IsProcess,
+                                IsRead = b.IsRead,
+                                IsComplete=b.IsComplete,
+                            };
+
+                 lst = await query.ToListAsync();
+
+                var queryfrom =await (from a in _dbContext.Projects
+                            join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
+                            join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
+                            from stackcs in cs1.DefaultIfEmpty()
+                            join actm in _dbContext.TrnStatusActionsMapping on b.StatusActionsMappingId equals actm.StatusActionsMappingId
+                            join d in _dbContext.mStatus on actm.StatusId equals d.StatusId
+                            join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId
+
+                            join c in _dbContext.tbl_mUnitBranch on b.ToUnitId equals c.unitid into cs
+                            from toUnit in cs.DefaultIfEmpty()
+
+                            join g in _dbContext.tbl_mUnitBranch on b.FromUnitId equals g.unitid into cg
+                            from fromUnits in cg.DefaultIfEmpty()
+
+                            join j in _dbContext.mStages on d.StageId equals j.StagesId into js
+                            from eWithStages in js.DefaultIfEmpty()
+
+
+                            join f in _dbContext.Comment on b.PsmId equals f.PsmId into fs
+                            from eWithComment in fs.DefaultIfEmpty()
+
+                            where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true && b.IsComplete == true
+                            && b.FromUnitId == Logins.unitid 
+                            && actm.StatusId == StatuId
+                                      orderby b.DateTimeOfUpdate descending
+
+                            select new DTOProjectsFwd
+                            {
+                                ProjId = a.ProjId,
+                                PsmIds = b.PsmId,
+                                ProjName = a.ProjName,
+                                StakeHolderId = a.StakeHolderId,
+                                StakeHolder = stackcs.UnitName,
+                                //Remarks= b != null ? b.Remarks : null,
+                                Status = d.Status,
+                                FromUnitId = b.FromUnitId,
+                                FromUnitName = fromUnits.UnitName,
+                                ToUnitId = b.ToUnitId,
+                                ToUnitName = toUnit.UnitName,
+                                Action = k.Actions,
+                                TotalDays = 0,
+                                StageId = eWithStages.StagesId,
+                                EncyID = _dataProtector.Protect(a.ProjId.ToString()),
+                                EncyPsmID = _dataProtector.Protect(b.PsmId.ToString()),
+                                IsProcess = a.IsProcess,
+                                IsRead = b.IsRead,
+                                IsComplete = b.IsComplete,
+                            }).ToListAsync();
+
+                lst.AddRange(queryfrom);
+
+
+                return lst;
+            }
+            else
+            {
+                return null;
+            }
+        }
         public async Task<int> AddProjectAsync(tbl_Projects project)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
@@ -74,8 +195,8 @@ namespace swas.BAL.Repository
 
 
             psmove.ProjId = project.ProjId;
-            psmove.StatusId = 1;
-            psmove.ActionId = 1;
+            psmove.StatusActionsMappingId = 21;
+            //psmove.ActionId = 1;
             psmove.Remarks = project.InitialRemark;
             psmove.FromUnitId = Logins.unitid ?? 0;
             psmove.ToUnitId = 1; //  
@@ -89,6 +210,7 @@ namespace swas.BAL.Repository
             psmove.EditDeleteBy = Logins.unitid;
             psmove.TimeStamp = DateTime.Now;
             psmove.IsComplete = false;
+            psmove.IsComment=false;
             _dbContext.ProjStakeHolderMov.Add(psmove);
             await _dbContext.SaveChangesAsync();
 
@@ -176,11 +298,12 @@ namespace swas.BAL.Repository
 
                                  join f in _dbContext.Comment on a.PsmId equals f.PsmId into fs
                                  from eWithComment in fs.DefaultIfEmpty()
-                                 join h in _dbContext.mStatus on a.StatusId equals h.StatusId into hs
+                                 join actm in _dbContext.TrnStatusActionsMapping on a.StatusActionsMappingId equals  actm.StatusActionsMappingId 
+                                 join h in _dbContext.mStatus on actm.StatusId equals h.StatusId into hs
                                  from eWithStatus in hs.DefaultIfEmpty()
                                  join j in _dbContext.mStages on eWithStatus.StageId equals j.StagesId into js
                                  from eWithStages in js.DefaultIfEmpty()
-                                 join k in _dbContext.mActions on a.ActionId equals k.ActionsId into ks
+                                 join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId into ks
                                  from eWithAction in ks.DefaultIfEmpty()
                                  where a.IsComplete == true && b.IsSubmited == true && a.ToUnitId== Logins.unitid
                                  // where a.ActionId == dft.ActionId
@@ -253,11 +376,12 @@ namespace swas.BAL.Repository
                              from fromStake in fromStakeHolder.DefaultIfEmpty()
                              join f in _dbContext.Comment on a.PsmId equals f.PsmId into fs
                              from eWithComment in fs.DefaultIfEmpty()
-                             join h in _dbContext.mStatus on a.StatusId equals h.StatusId into hs
+                             join actm in _dbContext.TrnStatusActionsMapping on a.StatusActionsMappingId equals  actm.StatusActionsMappingId
+                             join h in _dbContext.mStatus on actm.StatusId equals h.StatusId into hs
                              from eWithStatus in hs.DefaultIfEmpty()
                              join j in _dbContext.mStages on eWithStatus.StageId equals j.StagesId into js
                              from eWithStages in js.DefaultIfEmpty()
-                             join k in _dbContext.mActions on a.ActionId equals k.ActionsId into ks
+                             join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId into ks
                              from eWithAction in ks.DefaultIfEmpty()
                              where a.FromUnitId == Logins.unitid && b.IsSubmited==false && a.IsComplete==false
 
@@ -307,7 +431,7 @@ namespace swas.BAL.Repository
                 return null;
             }
         }
-
+         
         public async Task<List<DTOProjectsFwd>> GetActInboxAsync()
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
@@ -324,25 +448,25 @@ namespace swas.BAL.Repository
                             join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
                             join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
                             from stackcs in cs1.DefaultIfEmpty()
-
-                            join d in _dbContext.mStatus on b.StatusId equals d.StatusId into ds
-                            from eWithStatus in ds.DefaultIfEmpty()
+                            join actm in _dbContext.TrnStatusActionsMapping on b.StatusActionsMappingId equals actm.StatusActionsMappingId
+                            join d in _dbContext.mStatus on actm.StatusId equals d.StatusId
+                            join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId
+                           
                             join c in _dbContext.tbl_mUnitBranch on b.ToUnitId equals c.unitid into cs
                             from toUnit in cs.DefaultIfEmpty()
 
                             join g in _dbContext.tbl_mUnitBranch on b.FromUnitId equals g.unitid into cg
                             from fromUnits in cg.DefaultIfEmpty()
 
-                            join j in _dbContext.mStages on eWithStatus.StageId equals j.StagesId into js
+                            join j in _dbContext.mStages on d.StageId equals j.StagesId into js
                             from eWithStages in js.DefaultIfEmpty()
-                            join k in _dbContext.mActions on b.ActionId equals k.ActionsId into ks
-                            from eWithAction in ks.DefaultIfEmpty()
+                         
 
                             join f in _dbContext.Comment on b.PsmId equals f.PsmId into fs
                             from eWithComment in fs.DefaultIfEmpty()
 
                             where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited==true && b.IsComplete == false 
-                            && b.ToUnitId==Logins.unitid && b.StatusId != 5
+                            && b.ToUnitId==Logins.unitid && b.IsComment==false  
 
                             orderby b.DateTimeOfUpdate descending
 
@@ -354,12 +478,12 @@ namespace swas.BAL.Repository
                                 StakeHolderId = a.StakeHolderId,
                                 StakeHolder= stackcs.UnitName,
                                 //Remarks= b != null ? b.Remarks : null,
-                                Status= eWithStatus.Status,   
+                                Status= d.Status,   
                                 FromUnitId=b.FromUnitId,
                                 FromUnitName= fromUnits.UnitName,
                                 ToUnitId=b.ToUnitId,
                                 ToUnitName= toUnit.UnitName,
-                                Action= eWithAction.Actions,
+                                Action= k.Actions,
                                 TotalDays=0,
                                 StageId= eWithStages.StagesId,
                                 EncyID =_dataProtector.Protect(a.ProjId.ToString()),
@@ -396,8 +520,8 @@ namespace swas.BAL.Repository
                             join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
                             join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
                             from stackcs in cs1.DefaultIfEmpty()
-
-                            join d in _dbContext.mStatus on b.StatusId equals d.StatusId into ds
+                            join actm in _dbContext.TrnStatusActionsMapping on b.StatusActionsMappingId equals  actm.StatusActionsMappingId
+                            join d in _dbContext.mStatus on actm.StatusId equals d.StatusId into ds
                             from eWithStatus in ds.DefaultIfEmpty()
                             join c in _dbContext.tbl_mUnitBranch on b.ToUnitId equals c.unitid into cs
                             from toUnit in cs.DefaultIfEmpty()
@@ -407,14 +531,14 @@ namespace swas.BAL.Repository
 
                             join j in _dbContext.mStages on eWithStatus.StageId equals j.StagesId into js
                             from eWithStages in js.DefaultIfEmpty()
-                            join k in _dbContext.mActions on b.ActionId equals k.ActionsId into ks
+                            join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId into ks
                             from eWithAction in ks.DefaultIfEmpty()
 
                             join f in _dbContext.Comment on b.PsmId equals f.PsmId into fs
                             from eWithComment in fs.DefaultIfEmpty()
 
-                            where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true //&& b.IsComplete == false
-                            && b.FromUnitId == Logins.unitid && b.StatusId != 5
+                            where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true && b.IsComplete == false
+                            && b.FromUnitId == Logins.unitid && b.IsComment==false/* && b.StatusId != 5*/
 
                             orderby b.DateTimeOfUpdate descending
 
@@ -487,11 +611,12 @@ namespace swas.BAL.Repository
                              from fromStake in fromStakeHolder.DefaultIfEmpty()
                              join f in _dbContext.Comment on a.PsmId equals f.PsmId into fs
                              from eWithComment in fs.DefaultIfEmpty()
-                             join h in _dbContext.mStatus on a.StatusId equals h.StatusId into hs
+                             join actm in _dbContext.TrnStatusActionsMapping on a.StatusActionsMappingId equals  actm.StatusActionsMappingId
+                             join h in _dbContext.mStatus on actm.StatusId equals h.StatusId into hs
                              from eWithStatus in hs.DefaultIfEmpty()
                              join j in _dbContext.mStages on eWithStatus.StageId equals j.StagesId into js
                              from eWithStages in js.DefaultIfEmpty()
-                             join k in _dbContext.mActions on a.ActionId equals k.ActionsId into ks
+                             join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId into ks
                              from eWithAction in ks.DefaultIfEmpty()
                              where b.StakeHolderId == Logins.unitid
                              // && a.TostackholderDt !=null
@@ -529,7 +654,7 @@ namespace swas.BAL.Repository
                                  AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == b.CurrentPslmId),
                                  HostTypeID = b.HostTypeID,
                                  EncyID = _dataProtector.Protect(b.CurrentPslmId.ToString()),
-                                 ActionId = a.ActionId
+                                 ActionId = actm.ActionsId
 
 
 
@@ -574,11 +699,12 @@ namespace swas.BAL.Repository
                 try
                 {
                     var query = from p in _dbContext.ProjStakeHolderMov
-                                join b in _dbContext.mStages on p.StatusId equals b.StagesId into stageJoin
+                                join actm in _dbContext.TrnStatusActionsMapping on p.StatusActionsMappingId equals  actm.StatusActionsMappingId
+                                join b in _dbContext.mStages on actm.StatusId equals b.StagesId into stageJoin
                                 from b in stageJoin.DefaultIfEmpty()
-                                join c in _dbContext.mStatus on p.StatusId equals c.StatusId into statusJoin
+                                join c in _dbContext.mStatus on actm.StatusId equals c.StatusId into statusJoin
                                 from c in statusJoin.DefaultIfEmpty()
-                                join l in _dbContext.mActions on p.ActionId equals l.ActionsId into ActionJoin
+                                join l in _dbContext.mActions on actm.ActionsId equals l.ActionsId into ActionJoin
                                 from l in ActionJoin.DefaultIfEmpty()
                                 join d in _dbContext.Comment on p.PsmId equals d.PsmId into commentJoin
                                 from d in commentJoin.DefaultIfEmpty()
@@ -692,12 +818,12 @@ namespace swas.BAL.Repository
                 try
                 {
                     var query = from p in _dbContext.ProjStakeHolderMov
-                               
-                                join c in _dbContext.mStatus on p.StatusId equals c.StatusId into statusJoin
+                                join actm in _dbContext.TrnStatusActionsMapping on p.StatusActionsMappingId equals  actm.StatusActionsMappingId
+                                join c in _dbContext.mStatus on actm.StatusId equals c.StatusId into statusJoin
                                 from c in statusJoin.DefaultIfEmpty()
                                 join b in _dbContext.mStages on c.StageId equals b.StagesId into stageJoin
                                 from b in stageJoin.DefaultIfEmpty()
-                                join l in _dbContext.mActions on p.ActionId equals l.ActionsId into ActionJoin
+                                join l in _dbContext.mActions on actm.ActionsId equals l.ActionsId into ActionJoin
                                 from l in ActionJoin.DefaultIfEmpty()
                                 join d in _dbContext.Comment on p.PsmId equals d.PsmId into commentJoin
                                 from d in commentJoin.DefaultIfEmpty()
@@ -812,7 +938,8 @@ namespace swas.BAL.Repository
                 var projects = await (from a in _DBContext.Projects
                                       join b in _DBContext.ProjStakeHolderMov on a.CurrentPslmId equals b.PsmId into bs
                                       from e in bs.DefaultIfEmpty()
-                                      join d in _DBContext.mStatus on e.StatusId equals d.StatusId into ds
+                                      join actm in _dbContext.TrnStatusActionsMapping on e.StatusActionsMappingId equals  actm.StatusActionsMappingId
+                                      join d in _DBContext.mStatus on actm.StatusId equals d.StatusId into ds
                                       from eWithStatus in ds.DefaultIfEmpty()
                                       join c in _DBContext.tbl_mUnitBranch on a.StakeHolderId equals c.unitid into cs
                                       from eWithUnit in cs.DefaultIfEmpty()
@@ -824,7 +951,7 @@ namespace swas.BAL.Repository
                                       join f in _DBContext.Comment on a.CurrentPslmId equals f.PsmId into fs
                                       from eWithComment in fs.DefaultIfEmpty()
                                       where a.IsActive && !a.IsDeleted && (a.StakeHolderId == stkholder || e.ToUnitId == stkholder || e.ToUnitId == stkholder || e.ToUnitId == stkholder)
-                                      && e.ActionId > 4
+                                      && actm.ActionsId > 4
                                       orderby e.TimeStamp descending
                                       select new tbl_Projects
                                       {
@@ -870,7 +997,8 @@ namespace swas.BAL.Repository
                 var projects = await (from a in _DBContext.Projects
                                       join b in _DBContext.ProjStakeHolderMov on a.CurrentPslmId equals b.PsmId into bs
                                       from e in bs.DefaultIfEmpty()
-                                      join d in _DBContext.mStatus on e.StatusId equals d.StatusId into ds
+                                      join actm in _dbContext.TrnStatusActionsMapping on e.StatusActionsMappingId equals  actm.StatusActionsMappingId
+                                      join d in _DBContext.mStatus on actm.StatusId equals d.StatusId into ds
                                       from eWithStatus in ds.DefaultIfEmpty()
                                       join c in _DBContext.tbl_mUnitBranch on a.StakeHolderId equals c.unitid into cs
                                       from eWithUnit in cs.DefaultIfEmpty()
@@ -1086,7 +1214,8 @@ namespace swas.BAL.Repository
                 var projects = await (from a in _DBContext.Projects
                                       join b in _DBContext.ProjStakeHolderMov on a.CurrentPslmId equals b.PsmId into bs
                                       from e in bs.DefaultIfEmpty()
-                                      join d in _DBContext.mStatus on e.StatusId equals d.StatusId into ds
+                                      join actm in _dbContext.TrnStatusActionsMapping on e.StatusActionsMappingId equals  actm.StatusActionsMappingId
+                                      join d in _DBContext.mStatus on actm.StatusId equals d.StatusId into ds
                                       from eWithStatus in ds.DefaultIfEmpty()
                                       join c in _DBContext.tbl_mUnitBranch on a.StakeHolderId equals c.unitid into cs
                                       from eWithUnit in cs.DefaultIfEmpty()
@@ -1098,7 +1227,7 @@ namespace swas.BAL.Repository
                                       join f in _DBContext.Comment on a.CurrentPslmId equals f.PsmId into fs
                                       from eWithComment in fs.DefaultIfEmpty()
                                       where a.IsActive && !a.IsDeleted && (a.StakeHolderId == stkholder || e.FromUnitId == stkholder || e.ToUnitId == stkholder || e.ToUnitId == stkholder)
-                                     && e.StatusId == 4
+                                     && actm.StatusId == 4
                                       orderby e.TimeStamp descending
                                       select new tbl_Projects
                                       {
@@ -1145,7 +1274,8 @@ namespace swas.BAL.Repository
                 var projects = await (from a in _DBContext.Projects
                                       join b in _DBContext.ProjStakeHolderMov on a.CurrentPslmId equals b.PsmId into bs
                                       from e in bs.DefaultIfEmpty()
-                                      join d in _DBContext.mStatus on e.StatusId equals d.StatusId into ds
+                                      join actm in _dbContext.TrnStatusActionsMapping on e.StatusActionsMappingId equals  actm.StatusActionsMappingId
+                                      join d in _DBContext.mStatus on actm.StatusId equals d.StatusId into ds
                                       from eWithStatus in ds.DefaultIfEmpty()
                                       join c in _DBContext.tbl_mUnitBranch on a.StakeHolderId equals c.unitid into cs
                                       from eWithUnit in cs.DefaultIfEmpty()
@@ -1158,7 +1288,7 @@ namespace swas.BAL.Repository
                                       from eWithComment in fs.DefaultIfEmpty()
                                       where a.IsActive && !a.IsDeleted
                                       //&& e.ActionCde > 0 
-                                      && e.StatusId == 4
+                                      && actm.StatusId == 4
                                       orderby e.TimeStamp descending
                                       select new tbl_Projects
                                       {
@@ -1200,7 +1330,8 @@ namespace swas.BAL.Repository
                 var projects = await (from a in _DBContext.Projects
                                       join b in _DBContext.ProjStakeHolderMov on a.CurrentPslmId equals b.PsmId into bs
                                       from e in bs.DefaultIfEmpty()
-                                      join d in _DBContext.mStatus on e.StatusId equals d.StatusId into ds
+                                      join actm in _dbContext.TrnStatusActionsMapping on e.StatusActionsMappingId equals  actm.StatusActionsMappingId
+                                      join d in _DBContext.mStatus on actm.StatusId equals d.StatusId into ds
                                       from eWithStatus in ds.DefaultIfEmpty()
                                       join c in _DBContext.tbl_mUnitBranch on a.StakeHolderId equals c.unitid into cs
                                       from eWithUnit in cs.DefaultIfEmpty()
@@ -1213,7 +1344,7 @@ namespace swas.BAL.Repository
                                       from eWithComment in fs.DefaultIfEmpty()
                                       where a.IsActive && !a.IsDeleted
                                       //&& e.ActionCde > 9999999 
-                                      && e.StatusId == 9999999
+                                      && actm.StatusId == 9999999
                                       orderby e.TimeStamp descending
                                       select new tbl_Projects
                                       {
@@ -1265,7 +1396,8 @@ namespace swas.BAL.Repository
             var projects = await (from a in _DBContext.Projects
                                   join b in _DBContext.ProjStakeHolderMov on a.CurrentPslmId equals b.PsmId into bs
                                   from e in bs.DefaultIfEmpty()
-                                  join d in _DBContext.mStatus on e.StatusId equals d.StatusId into ds
+                                  join actm in _dbContext.TrnStatusActionsMapping on e.StatusActionsMappingId equals  actm.StatusActionsMappingId
+                                  join d in _DBContext.mStatus on actm.StatusId equals d.StatusId into ds
                                   from eWithStatus in ds.DefaultIfEmpty()
                                   join c in _DBContext.tbl_mUnitBranch on a.StakeHolderId equals c.unitid into cs
                                   from eWithUnit in cs.DefaultIfEmpty()
@@ -1276,7 +1408,7 @@ namespace swas.BAL.Repository
                                   from eWithComment in fs.DefaultIfEmpty()
                                   where a.IsActive && !a.IsDeleted && a.StakeHolderId == Logins.unitid
                                    //&& e.ActionCde > 0 
-                                   && e.ActionId > 4
+                                   && actm.ActionsId > 4
                                   orderby e.TimeStamp descending
                                   select new tbl_Projects
                                   {

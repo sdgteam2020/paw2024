@@ -17,9 +17,9 @@ namespace swas.DAL.Models
         [ForeignKey("tbl_Projects")]
         public int ProjId { get; set; }
 
-        public int StatusId { get; set; }
+       // public int StatusId { get; set; }
 
-        public int ActionId { get; set; }
+        public int StatusActionsMappingId { get; set; }
 
         [StringLength(200)]
         [Column(TypeName = "varchar(200)")]
@@ -50,8 +50,11 @@ namespace swas.DAL.Models
         public DateTime? DateTimeOfUpdate { get; set; }
 
         public bool IsComplete { get; set; }
+        public bool IsComment { get; set; }
 
         public string? UserDetails { get; set; }
+
+
     }
 
 

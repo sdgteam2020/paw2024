@@ -16,11 +16,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\DeveloperJs\Dashboard.js" />
     <Content Remove="wwwroot\DeveloperJs\ProjectDetails.js" />
   </ItemGroup>
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\css\timeline.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\DeveloperJs\Dashboard.js" />
     <_ContentIncludedByDefault Remove="wwwroot\DeveloperJs\ProjectDetails.js" />
   </ItemGroup>
 
@@ -264,6 +266,7 @@
     <None Include="wwwroot\DeveloperJs\Account.js" />
     <None Include="wwwroot\DeveloperJs\Actions.js" />
     <None Include="wwwroot\DeveloperJs\CreateProjects.js" />
+    <None Include="wwwroot\DeveloperJs\Dashboard.js" />
     <None Include="wwwroot\DeveloperJs\ddlSanal.js" />
     <None Include="wwwroot\DeveloperJs\Documents.js" />
     <None Include="wwwroot\DeveloperJs\Home.js" />

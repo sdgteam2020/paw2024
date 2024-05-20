@@ -151,7 +151,7 @@ namespace swas.BAL.Repository
         public async Task<List<tbl_mStages>> ddlStages(int projIds)
         {
             bool excludeStage1 = await _dbContext.ProjStakeHolderMov
-                                                   .AnyAsync(m => m.ProjId == projIds && m.StatusId == 4 && m.ActionId == 5);
+                                                   .AnyAsync(m => m.ProjId == projIds );
 
             var stagesQuery = _dbContext.mStages
                                         .Where(a => a.IsActive);

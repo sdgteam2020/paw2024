@@ -186,7 +186,8 @@ namespace swas.BAL.Repository
             var projectDetailsList = (from pj in _dbContext.Projects
                                       join pm in _dbContext.ProjStakeHolderMov on pj.ProjId equals pm.ProjId into pmJoin
                                       from pm in pmJoin.DefaultIfEmpty()
-                                      join ma in _dbContext.mActions on pm.ActionId equals ma.ActionsId into maJoin
+                                      join actm in _dbContext.TrnStatusActionsMapping on pm.StatusActionsMappingId equals actm.StatusActionsMappingId 
+                                      join ma in _dbContext.mActions on actm.ActionsId equals ma.ActionsId into maJoin
                                       from ma in maJoin.DefaultIfEmpty()
                                       where pj.ProjId == ProjID 
 
@@ -194,10 +195,10 @@ namespace swas.BAL.Repository
             select new ProjectDetailsDTO
                                       {
                                           //StageId = pm.StageId,
-                                          StatusId = pm.StatusId,
-                                          ActionId = pm.ActionId,
+                                          StatusId = actm.StatusId,
+                                          ActionId = actm.ActionsId,
                                           NextActionId = _dbContext.mActions
-                                              .Where(a => a.StatCompId == Logins.unitid && a.StagesId == 2 && !_dbContext.ProjStakeHolderMov.Any(psh => psh.ProjId == ProjID && psh.ActionId == a.ActionsId))
+                                              .Where(a => a.StatCompId == Logins.unitid && a.StagesId == 2 && !_dbContext.ProjStakeHolderMov.Any(psh => psh.ProjId == ProjID))
                                               .Select(a => (int?)a.ActionsId)
                                               .FirstOrDefault()??0,
                                           NextStatus = _dbContext.mActions
@@ -210,7 +211,7 @@ namespace swas.BAL.Repository
                                               .FirstOrDefault(),
                                           StkHoldID = pj.StakeHolderId,
                                           ActionName = _dbContext.mActions
-                                .Where(a => a.StatCompId == Logins.unitid && a.StagesId == 2 && !_dbContext.ProjStakeHolderMov.Any(psh => psh.ProjId == ProjID && psh.ActionId == a.ActionsId))
+                                .Where(a => a.StatCompId == Logins.unitid && a.StagesId == 2 && !_dbContext.ProjStakeHolderMov.Any(psh => psh.ProjId == ProjID ))
                                 .Select(a => a.Actions)
                                 .FirstOrDefault()
                                       }).ToList();
@@ -270,6 +271,19 @@ namespace swas.BAL.Repository
                             Name=act.Actions,
 
                         }).ToArrayAsync();
+            return query.ToList();
+        }
+        public async Task<List<DTODDLComman>> GetActionsMappingIdByStatusId(int StatusId)
+        {
+            var query = await (from act in _dbContext.mActions
+                               join map in _dbContext.TrnStatusActionsMapping on act.ActionsId equals map.ActionsId
+                               where map.StatusId == StatusId
+                               select new DTODDLComman
+                               {
+                                   Id = map.StatusActionsMappingId,
+                                   Name = act.Actions,
+
+                               }).ToArrayAsync();
             return query.ToList();
         }
     }

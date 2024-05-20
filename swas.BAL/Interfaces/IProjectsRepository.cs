@@ -23,6 +23,7 @@ namespace swas.BAL.Interfaces
         Task<List<tbl_Projects>> GetAllProjectsAsync();
         Task<bool> DeleteProjectAsync(int projectId);
         Task<List<DTOProjectsFwd>> GetActInboxAsync();
+        Task<List<DTOProjectsFwd>> GetDashboardStatusDetails(int StatuId,int UnitId);
         Task<List<DTOProjectsFwd>> GetActSendItemsAsync();
         Task<List<tbl_Projects>> GetActComplettemsAsync();
         Task<List<tbl_Projects>> GetActDraftItemsAsync();

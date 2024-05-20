@@ -29,6 +29,7 @@ namespace swas.BAL.Interfaces
 
         Task<List<ActionsSeq>> GetActionresp();
         Task<List<DTODDLComman>> GetActionByStatusId(int StatusId);
+        Task<List<DTODDLComman>> GetActionsMappingIdByStatusId(int StatusId);
 
 
     }
