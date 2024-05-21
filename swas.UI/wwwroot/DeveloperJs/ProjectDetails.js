@@ -117,7 +117,7 @@ function GetProjectMovHistory(ProjId) {
                 listitem += '</div>';
                 for (var i = 0; i < response.length; i++) {
                     listitem += '<div class="timeline-section"> <div class="timeline-date"> ' + DateFormatedd_mm_yyyy(response[i].date)+'</div>';
-                    listitem += '<div class="row"><div class="col-sm-6">';
+                    listitem += '<div class="row"><div class="col-sm-4">';
                     listitem += '<div class="timeline-box">';
                     if (response[i].isComment == false) {
                         if (response[i].actions == "FWD" && (response[i].undoRemarks == "" || response[i].undoRemarks == null))
@@ -142,7 +142,7 @@ function GetProjectMovHistory(ProjId) {
                     listitem += '<div class="box-footer">' + response[i].userDetails + '</div>';
                     listitem += '</div> </div>';
                     if (response[i].remarks != "") {
-                        listitem += '<div class="col-sm-6">';
+                        listitem += '<div class="col-sm-4">';
                         listitem += '<div class="timeline-box">';
                         listitem += '<div class="box-title">';
                         listitem += '<i class="fa fa-pencil text-info" aria-hidden="true"></i> Remarks';
@@ -155,7 +155,7 @@ function GetProjectMovHistory(ProjId) {
                         listitem += '</div></div>';
                     }
                     if (response[i].undoRemarks != null) {
-                        listitem += '<div class="col-sm-6">';
+                        listitem += '<div class="col-sm-4">';
                         listitem += '<div class="timeline-box">';
                         listitem += '<div class="box-title">';
                         listitem += '<i class="fa fa-pencil text-info" aria-hidden="true"></i>Undo Remarks';

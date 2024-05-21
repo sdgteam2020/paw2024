@@ -114,6 +114,7 @@ namespace swas.BAL.Repository
                                && mov.IsActive == true
                                /*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
                                && ststus.IsDashboard == true
+                               && proj.IsSubmited == true   
                                orderby stge.StagesId ascending
                                group mov by new { ststus.StatusId, QStages = stge.Stages, QStagesId= stge.StagesId, 
                                    QStatus=ststus.Status,
@@ -148,7 +149,8 @@ namespace swas.BAL.Repository
                                mov.IsComplete == true
                                 && mov.IsActive == true/*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
                                && ststus.IsDashboard == true
-                         orderby stge.StagesId ascending
+                               && proj.IsSubmited == true
+                                 orderby stge.StagesId ascending
                                group mov by new
                                {
                                    ststus.StatusId,

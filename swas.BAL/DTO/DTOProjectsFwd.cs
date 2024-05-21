@@ -28,5 +28,6 @@ namespace swas.BAL.DTO
         public bool IsRead { get; set; }            
         public int undopsmId { get; set; }
         public  bool IsComplete { get; set; }
+        public DateTime? TimeStamp { get; set; }
     }
 }

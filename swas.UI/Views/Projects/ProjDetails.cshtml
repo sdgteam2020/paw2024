@@ -117,10 +117,11 @@
                                     <th>Stake Holder</th>
                                   @*   <th>From</th>
                                     <th>To</th> *@
-                                    <th>From UnitName</th>
+                                    <th>From UnitName (DomainID(Rank Name))</th>
                                     <th>To UnitName</th>
                                     <th>Action</th>
-                                    <th>TotalDays</th>
+                                    @* <th>TotalDays</th> *@
+                                    <th>TimeStamp</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -155,12 +156,13 @@
                                         <td>@project.FromUnitName</td>
                                         <td>@project.ToUnitName</td>
                                         <td>@project.Action</td>
+                                        
 
-                                            <td>
+                                          @*   <td>
                                                 @project.TotalDays
 
-                                            </td>
-
+                                            </td> *@
+                                            <td>@project.TimeStamp</td>
 
                                             <td>
 
@@ -169,14 +171,14 @@
                                                     <a href="javascript:void(0);" class="processDetail" data-id="@project.EncyPsmID">
                                                         <img src="/assets/images/icons/process1.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
                                                     </a>
-                                                    <button type="button" class="btn btn-success btn-Obsn ml-2">Obsn</button>
+                                                    <button type="button" class="btn btn-success btn-Obsn ml-3">Obsn</button>
                                                 }
                                                 else
 
                                                 {
-                                                    <button type="button" class="btn btn-success btn-Fwd">Fwd</button>
+                                                    <button type="button" class="btn btn-success btn-Fwd ml-3">Fwd</button>
                                                 }
-                                                <button type="button" class="btn btn-success btn-FwdHistory" title="History"><i class="fa-solid fa-timeline"></i></button>
+                                                <button type="button" class="btn btn-success btn-FwdHistory ml-3" title="History"><i class="fa-solid fa-timeline"></i></button>
 
                                             </td>
                                         </tr>
@@ -209,11 +211,11 @@
                                             <td>@project.ToUnitName</td>
                                             <td>@project.Action</td>
 
-                                            <td>
+                                           @*  <td>
                                                 @project.TotalDays
 
-                                            </td>
-
+                                            </td> *@
+                                            <td>@project.TimeStamp</td>
 
                                             <td>
 
@@ -222,14 +224,14 @@
                                                     <a href="javascript:void(0);" class="processDetail" data-id="@project.EncyPsmID">
                                                         <img src="/assets/images/icons/process1.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
                                                     </a>
-                                                    <button type="button" class="btn btn-success btn-Obsn ml-2">Obsn</button>
+                                                    <button type="button" class="btn btn-success btn-Obsn ml-3">Obsn</button>
                                                 }
                                                 else
 
                                                 {
-                                                    <button type="button" class="btn btn-success btn-Fwd">Fwd</button>
+                                                    <button type="button" class="btn btn-success btn-Fwd ml-3">Fwd</button>
                                                 }
-                                                <button type="button" class="btn btn-success btn-FwdHistory" title="History"><i class="fa-solid fa-timeline"></i></button>
+                                                <button type="button" class="btn btn-success btn-FwdHistory ml-3" title="History"><i class="fa-solid fa-timeline"></i></button>
 
                                             </td>
                                         </tr>
@@ -286,16 +288,17 @@
                                     <th>Stake Holder</th>
                                    @*  <th>From</th>
                                     <th>To</th> *@
-                                    <th>From UnitName</th>
+                                    <th>From UnitName (DomainID(Rank Name))</th>
                                     <th>To UnitName</th>
                                     <th>Action</th>
-                                    <th>TotalDays</th>
+                                   @*  <th>TotalDays</th> *@
+                                    <th>TimeStamp</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                @foreach (var project in Model.SendItems)
+                                @foreach (var project in Model.SendItems.OrderByDescending(i => i.TimeStamp).ToList())
                                 {
                                     <tr>
 
@@ -307,9 +310,9 @@
                                             <span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
                                             <span class="d-none" id="SpnprojectStageId">@project.StageId</span>
                                             @{
-                                                snoinbox++;
+                                                snosent++;
                                             }
-                                            @snoinbox
+                                            @snosent
                                         </td>
 
 
@@ -317,13 +320,14 @@
                                         <td>@project.StakeHolder</td>
                                         <td>@project.FromUnitName</td>
                                         <td>@project.ToUnitName</td>
+                                      
                                         <td>@project.Action</td>
 
-                                        <td>
+                                       @*  <td>
                                             @project.TotalDays
 
-                                        </td>
-
+                                        </td> *@
+                                        <td>@project.TimeStamp</td>
                                         <td>
                                             @if(project.PsmIds==project.undopsmId)
                                             {
@@ -680,7 +684,7 @@
     </div>
 
 <div class="modal fade" id="ProjFwdHistory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                

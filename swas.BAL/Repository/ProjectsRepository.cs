@@ -104,7 +104,7 @@ namespace swas.BAL.Repository
                                 EncyPsmID = _dataProtector.Protect(b.PsmId.ToString()),
                                 IsProcess = a.IsProcess,
                                 IsRead = b.IsRead,
-                                IsComplete = b.IsComplete,
+                                IsComplete = b.IsComplete
                             }).ToListAsync();
 
                 lst = query;
@@ -480,7 +480,7 @@ namespace swas.BAL.Repository
                                 //Remarks= b != null ? b.Remarks : null,
                                 Status = d.Status,
                                 FromUnitId = b.FromUnitId,
-                                FromUnitName = fromUnits.UnitName,
+                                FromUnitName = fromUnits.UnitName + " ( " +b.UserDetails+")" ,
                                 ToUnitId = b.ToUnitId,
                                 ToUnitName = toUnit.UnitName,
                                 Action = k.Actions,
@@ -509,7 +509,7 @@ namespace swas.BAL.Repository
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
 
-
+            List<DTOProjectsFwd> lst = new List<DTOProjectsFwd>();
             if (Logins != null)
             {
                 int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
@@ -552,7 +552,7 @@ namespace swas.BAL.Repository
                                 //Remarks = b != null ? b.Remarks : null,
                                 Status = eWithStatus.Status,
                                 FromUnitId = b.FromUnitId,
-                                FromUnitName = fromUnits.UnitName,
+                                FromUnitName = fromUnits.UnitName + " ( " + b.UserDetails + ")",
                                 ToUnitId = b.ToUnitId,
                                 ToUnitName = toUnit.UnitName,
                                 Action = eWithAction.Actions,
@@ -561,13 +561,70 @@ namespace swas.BAL.Repository
                                 EncyPsmID = _dataProtector.Protect(b.PsmId.ToString()),
                                 IsProcess = a.IsProcess,
                                 undopsmId = _psmRepository.GetLastRecProjectMov(a.ProjId),
-                                StageId= eWithStages.StagesId
-
+                                StageId= eWithStages.StagesId,
+                                TimeStamp=b.TimeStamp,
+                                IsComplete=b.IsComplete
                             };
 
                 var projectsWithDetails = await query.ToListAsync();
+                lst = projectsWithDetails;
 
-                return projectsWithDetails;
+                var queryhist = from a in _dbContext.Projects
+                            join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
+                            join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
+                            from stackcs in cs1.DefaultIfEmpty()
+                            join actm in _dbContext.TrnStatusActionsMapping on b.StatusActionsMappingId equals actm.StatusActionsMappingId
+                            join d in _dbContext.mStatus on actm.StatusId equals d.StatusId into ds
+                            from eWithStatus in ds.DefaultIfEmpty()
+                            join c in _dbContext.tbl_mUnitBranch on b.ToUnitId equals c.unitid into cs
+                            from toUnit in cs.DefaultIfEmpty()
+
+                            join g in _dbContext.tbl_mUnitBranch on b.FromUnitId equals g.unitid into cg
+                            from fromUnits in cg.DefaultIfEmpty()
+
+                            join j in _dbContext.mStages on eWithStatus.StageId equals j.StagesId into js
+                            from eWithStages in js.DefaultIfEmpty()
+                            join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId into ks
+                            from eWithAction in ks.DefaultIfEmpty()
+
+                            join f in _dbContext.Comment on b.PsmId equals f.PsmId into fs
+                            from eWithComment in fs.DefaultIfEmpty()
+
+                            where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true && b.IsComplete == true
+                            && b.FromUnitId == Logins.unitid && b.IsComment == false/* && b.StatusId != 5*/
+
+                            orderby b.DateTimeOfUpdate descending
+
+                            select new DTOProjectsFwd
+                            {
+                                ProjId = a.ProjId,
+                                PsmIds = b.PsmId,
+                                ProjName = a.ProjName,
+                                StakeHolderId = a.StakeHolderId,
+                                StakeHolder = stackcs.UnitName,
+                                //Remarks = b != null ? b.Remarks : null,
+                                Status = eWithStatus.Status,
+                                FromUnitId = b.FromUnitId,
+                                FromUnitName = fromUnits.UnitName + " (" + b.UserDetails + ")",
+                                ToUnitId = b.ToUnitId,
+                                ToUnitName = toUnit.UnitName,
+                                Action = eWithAction.Actions,
+                                TotalDays = 0,
+                                EncyID = _dataProtector.Protect(a.ProjId.ToString()),
+                                EncyPsmID = _dataProtector.Protect(b.PsmId.ToString()),
+                                IsProcess = a.IsProcess,
+                                undopsmId = 0,
+                                StageId = eWithStages.StagesId,
+                                TimeStamp = b.TimeStamp,
+                                IsComplete = b.IsComplete
+                            };
+
+                var history = await queryhist.ToListAsync();
+                lst.AddRange(history);
+
+
+
+                return lst;
             }
             else
             {
