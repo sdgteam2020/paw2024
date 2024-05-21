@@ -1,27 +1,8 @@
 ﻿
 $(document).ready(function () {
 
-    populateStages();
+   
 
-    $('#ddlStages').on('change', function () {
-
-        var stageIds = $(this).val();
-
-        if (stageIds > 0) {
-            $('#ddlStatus').empty();
-
-            getStatusByStage(stageIds);
-
-        } else {
-            $('#ddlStatus').empty();
-
-        }
-    });
-
-});
-
-
-$(document).ready(function () {
     $("#LimitimeInputa").on("input", function () {
 
         var inputValue = $(this).val();
@@ -40,6 +21,10 @@ $(document).ready(function () {
             });
         }
     });
+
+
+
+
 });
 
 
@@ -97,7 +82,7 @@ function functionConfirm1(ActionsId) {
             $.ajax({
                 url: '/Actions/Delete',
                 type: 'POST',
-                data: { "id": ActionsId, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+                data: { ActionsId: ActionsId },
                 success: function (response) {
                     console.log(response);
                     if (response) {
@@ -108,13 +93,62 @@ function functionConfirm1(ActionsId) {
                                 title: 'Record Deleted successfully',
                                 showConfirmButton: false,
                                 timer: 1500
+                            }).then(function () {
+                                window.location.href = url;
                             });
                         }
                     }
 
-                    window.location.href = '@Url.Action("Index", "Actions")';
+                   
                 }
             });
         }
     });
 }
+$(".btn-Mapping").click(function () {
+
+    $('#unitMapping').modal('show');
+    $(".Fwdtitle").html("Unit & Status Mapping");
+
+});
+
+$('#btnsave').click(function () {
+
+
+    var Actions = $("#ActionName").val();
+
+    var model = {
+ 
+        Actions: Actions
+    };
+
+    $.ajax({
+        type: 'POST',
+        url: '/Actions/Create',
+        data: model,
+
+        success: function () {
+          
+        },
+        error: function (error) {
+            // Handle error
+            alert("Error saving data");
+        }
+    });
+});
+
+$(document).on('click', '.btn-edit', function () {
+    debugger;
+    var closestRow = $(this).closest("tr");
+    var ActionsName = $("#ActionNames").html();
+
+    var ActionsId = $("#ActionsId").html();
+
+    var actionName = closestRow.find("#ActionsName").text(); 
+
+    $('#ActionName').val(actionName);
+    
+    
+});
+
+

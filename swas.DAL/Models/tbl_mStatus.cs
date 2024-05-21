@@ -24,31 +24,29 @@ namespace swas.DAL.Models
 		public bool IsActive { get; set; }
 		
 		[Display(Name = "Edit/Delete By")]
-		public string EditDeleteBy { get; set; }
+		public int EditDeleteBy { get; set; }
 		[Display(Name = "Edit/Delete Date")]
 		[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
 		public DateTime? EditDeleteDate { get; set; }
 
-		public string UpdatedByUserId { get; set; }
+		public int UpdatedByUserId { get; set; }
 		[Display(Name = "Date of Update")]
 		[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
 		public DateTime? DateTimeOfUpdate { get; set; }
 
-		public bool? InitiaalID { get; set; } = false;
+		
+
+        public bool? InitiaalID { get; set; } = false;
 		public bool? FininshID { get; set; } =	false;
 		
 		public int? TotalProj { get; set; }
 
-        public string? ViewDescUnit { get; set; }
-
-        public string? ViewDescStkHold { get; set; }
 		[NotMapped]
-		public string? EncID { get; set; }
-
+		
 		public int? Statseq { get; set; }
 
-        public bool IsDashboard { get; set; }
 
+        public bool IsDashboard { get; set; }
         public string? Icon { get; set; }
 
     }

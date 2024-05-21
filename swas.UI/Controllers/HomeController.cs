@@ -250,11 +250,11 @@ namespace swas.UI.Controllers
                     //}
 
                     var sql = @"
-    SELECT
+SELECT
         s.StatusId,
         s.StageId,
         s.Status,
-s.IsDeleted,
+    s.IsDeleted,
     s.IsActive,
     s.EditDeleteBy,
     s.EditDeleteDate,
@@ -262,17 +262,21 @@ s.IsDeleted,
     s.DateTimeOfUpdate,
     s.InitiaalID,
     s.FininshID,
-s.ViewDescUnit,
-s.ViewDescStkHold,
+	s.IsDashboard,
+	s.Icon,
+
 s.Statseq,
 
         COUNT(p.ProjId) AS TotalProj
     FROM
         mStatus s
     LEFT JOIN
-        ProjStakeHolderMov t ON s.StatusId = t.StatusId
+        TrnStatusActionsMapping t ON s.StatusId = t.StatusId
+		LEFT join 
+		ProjStakeHolderMov m on t.StatusActionsMappingId =m.StatusActionsMappingId
+
     LEFT JOIN
-        projects p ON t.PsmId = p.CurrentPslmId AND t.ActionCde > 0
+        projects p ON m.PsmId = p.CurrentPslmId AND m.IsActive > 0
     GROUP BY
         s.StatusId,
         s.StageId,
@@ -285,9 +289,10 @@ s.IsDeleted,
     s.DateTimeOfUpdate,
     s.InitiaalID,
     s.FininshID,
-s.ViewDescUnit,
-s.ViewDescStkHold,
-s.Statseq
+	
+s.Statseq,
+s.IsDashboard,
+	s.Icon
 
 ";
                     List<tbl_mStatus> statuses = new List<tbl_mStatus>();

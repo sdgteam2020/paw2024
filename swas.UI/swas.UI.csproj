@@ -129,6 +129,8 @@
     <None Include="Views\ProjEdit\EditWithHistory.cshtml" />
     <None Include="Views\ProjEdit\Index.cshtml" />
     <None Include="Views\ProjStakeHolderMov\FwdCreate.cshtml" />
+    <None Include="Views\Rank\Index.cshtml" />
+    <None Include="Views\Rank\_CreateRank.cshtml" />
     <None Include="Views\Search\CurrentSearch.cshtml" />
     <None Include="Views\Search\GetProjLogview.cshtml" />
     <None Include="Views\Search\SearchProjHistory.cshtml" />
@@ -150,7 +152,11 @@
     <None Include="Views\Shared\_unitdetls.cshtml" />
     <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
     <None Include="Views\Stages\Create.cshtml" />
+    <None Include="Views\Stages\EditStage.cshtml" />
+    <None Include="Views\Stages\_CreateStage.cshtml" />
     <None Include="Views\StakeHolder\Create.cshtml" />
+    <None Include="Views\Status\Index.cshtml" />
+    <None Include="Views\Status\_CreateStatus.cshtml" />
     <None Include="Views\UnitDtls\AddOrEdit.cshtml" />
     <None Include="Views\_ViewImports.cshtml" />
     <None Include="Views\_ViewStart.cshtml" />
@@ -433,6 +439,7 @@
     <Folder Include="wwwroot\DownloadFile\" />
     <Folder Include="wwwroot\Download\" />
     <Folder Include="wwwroot\Download\" />
+    <Folder Include="wwwroot\DownloadFile\" />
     <Folder Include="wwwroot\DownloadFile\" />
   </ItemGroup>
 

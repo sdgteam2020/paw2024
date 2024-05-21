@@ -12,14 +12,9 @@ namespace swas.BAL.Interfaces
     ///Tested By :- 
     ///Tested Date : 
     ///Start
-    public interface IStagesRepository
+    public interface IStagesRepository : IGenericRepositoryDL<tbl_mStages>
     {
-        Task<int> AddStageAsync(tbl_mStages stage);
-        Task<tbl_mStages> GetStageByIdAsync(int stageId);
-        Task<List<tbl_mStages>> GetAllStagesAsync();
-        Task<bool> UpdateStageAsync(tbl_mStages stage);
-        Task<bool> DeleteStageAsync(int stageId);
-        List<tbl_mStages> GetAllStages();
+
     }
 
 }

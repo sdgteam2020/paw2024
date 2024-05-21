@@ -102,15 +102,17 @@ namespace swas.UI.Controllers
         }
 
 
-        public Task<List<tbl_mActions>> GetActionsByStatus(int selectedStatusId)
+        public Task<List<tbl_mStatus>> GetActionsByStatus(int selectedStatusId)
         {
             var actionsList = _ddlRepository.GetActionsByStatus(selectedStatusId);
+
             return actionsList;
         }
  
-        public Task<List<tbl_mActions>> GetActiByStageStat(int selectedStatusId, int selectedStageId ,int projIds)
+        public Task<List<tbl_mStatus>> GetActiByStageStat(int selectedStatusId, int selectedStageId ,int projIds)
         {
             var actionsList = _ddlRepository.GetActiByStageStat(selectedStatusId, selectedStageId , projIds);
+
             return actionsList;
         }
 

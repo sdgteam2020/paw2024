@@ -1,5 +1,10 @@
-﻿@{
-   
+﻿@using swas.BAL.DTO;
+@using swas.DAL.Models
+@using swas.BAL.Helpers
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor.HttpContext.Session, "User");
 }
 
 
@@ -287,4 +292,11 @@
         </div><!-- modal-content -->
     </div><!-- modal-dialog -->
 </div>
+
+
+
+
+
+
+
 <script src="~/developerjs/dashboard.js"></script>
