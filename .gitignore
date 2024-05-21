@@ -368,3 +368,4 @@ AppPackages/
 /swas.UI/bin/Release/net6.0/swas.UI.exe
 /swas.UI/bin/Release/net6.0/swas.UI.pdb
 /swas.UI/bin/Release/net6.0/swas.UI.staticwebassets.runtime.json
+/swas.UI/wwwroot/Uploads
