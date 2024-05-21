@@ -455,21 +455,20 @@ namespace swas.UI.Controllers
                     UnitStatusMappingId = data.UnitStatusMappingId
                 };
 
-                // Check if the statusActionsMapping already exists in the database
+                
                 var existingStatusActionsMapping = await _statusActionsMapping.GetByActionsAndStatusAsync(data.StatusActionsMappingId,data.ActionsId, data.SubStagesId);
                 if (existingStatusActionsMapping != null)
                 {
                     return Json(new { message = "StatusActionsMapping data is already in the table" });
                 }
 
-                // Check if the trnUnitStatusMapping already exists in the database
+               
                 var existingUnitStatusMapping = await _unitStatusMapping.GetByUnitAndStatusAsync(data.UnitStatusMappingId,data.UnitId, data.SubStagesId);
                 if (existingUnitStatusMapping != null)
                 {
                     return Json(new { message = "UnitStatusMapping data is already in the table" });
                 }
 
-                // Proceed with add or update operations for trnUnitStatusMapping
                 if (trnUnitStatusMapping.UnitStatusMappingId == 0)
                 {
                     var ret = await _unitStatusMapping.AddWithReturn(trnUnitStatusMapping);
@@ -479,7 +478,7 @@ namespace swas.UI.Controllers
                     var ret = await _unitStatusMapping.UpdateWithReturn(trnUnitStatusMapping);
                 }
 
-                // Proceed with add or update operations for statusActionsMapping
+                
                 if (statusActionsMapping.StatusActionsMappingId == 0)
                 {
                     var ret1 = await _statusActionsMapping.AddWithReturn(statusActionsMapping);

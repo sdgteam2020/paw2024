@@ -23,7 +23,7 @@ namespace swas.BAL.Interfaces
         Task<List<UnitDtl>> ddlUnit();
         Task<List<UnitDtl>> ddlFwdUnit(int Unitid);
         
-        Task<List<tbl_mActions>> GetActionsByStatus(int status);
+        Task<List<tbl_mStatus>> GetActionsByStatus(int status);
 
         Task<List<tbl_mStatus>> GetStatusByStage(int stageId);
 
@@ -31,7 +31,7 @@ namespace swas.BAL.Interfaces
 
         Task<List<mHostType>> ddlmHostType(int id);
 
-        Task<List<tbl_mActions>> GetActiByStageStat(int status, int stageid , int projIds);
+        Task<List<tbl_mStatus>> GetActiByStageStat(int status, int stageid , int projIds);
 
         Task<List<UnitDtl>> ddlLimitUnit(int? unitid, int? projid);
 

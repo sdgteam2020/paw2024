@@ -1537,7 +1537,7 @@ namespace swas.BAL.Repository
 
         public async Task<List<DTOUnderProcessProj>> GetHoldActionProj()
         {
-
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
             var latestProjStakeHolderMov = _DBContext.ProjStakeHolderMov
                 .GroupBy(psm => psm.ProjId)
                 .Select(g => new
@@ -1563,7 +1563,7 @@ namespace swas.BAL.Repository
                             on sam.StatusId equals ms.StatusId
                         join ma in _DBContext.mActions
                             on sam.ActionsId equals ma.ActionsId
-                        where psm1.ProjId == lp.ProjId 
+                        where psm1.ProjId == lp.ProjId
                         select new DTOUnderProcessProj
                         {
                             ProjId = psm1.ProjId,
@@ -1571,6 +1571,7 @@ namespace swas.BAL.Repository
                             FromUnitId = psm1.FromUnitId,
                             FromUnitName = fub.UnitName,
                             ToUnitId = psm1.ToUnitId,
+                            Sponser = " " + fub.UnitName + " (" + Logins.Offr_Name.Trim() + ")" + "",
                             ToUnitName = tub.UnitName,
                             StatusId = sam.StatusId,
                             StatusName = ms.Status,

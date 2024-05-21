@@ -14,6 +14,7 @@ namespace swas.BAL.DTO
         public string FromUnitName { get; set; }
         public string ToUnitName { get; set; }
 
+        public string Sponser { get; set; }
         public string StatusName { get; set; }
         public string ActionName { get; set; }
 

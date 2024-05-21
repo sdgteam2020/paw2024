@@ -17,7 +17,6 @@ $(document).ready(function () {
         var closestRow = $(this).closest("tr");
         var hiddenData = closestRow.find(".hiddenData");
 
-        
 
         $('#UnitName').val(closestRow.find("#mapingUnit").text());
         $('#Spnmodalunitid').val(hiddenData.find(".spanMappingUnitId").text());
@@ -112,13 +111,14 @@ $(document).ready(function () {
 
     $('#btnsave').click(function () {
 
-        
+        debugger;
 
         var UnitId = $('#Spnmodalunitid').html();
-        var stage = $('#ddlStage').val();
-        var subStage = $('#ddlSubStage').val();
-        var action = $('#ddlAction').val();
-
+        var StagesId = $('#ddlStage').val();
+        var SubStagesId = $('#ddlSubStage').val();
+        var ActionsId = $('#ddlAction').val();
+        var StatusActionsMappingId = $("#spanmodalStatusActionsMappingId").html();
+        var UnitStatusMappingId = $("#spanmodalUnitStatusMappingId").html();
 
 
 
@@ -126,9 +126,9 @@ $(document).ready(function () {
             StatusActionsMappingId: $("#spanmodalStatusActionsMappingId").html(),
             UnitStatusMappingId: $("#spanmodalUnitStatusMappingId").html(),
             UnitId: UnitId,
-            Stages: stage,
-            SubStages: subStage,
-            Actions: action
+            StagesId: StagesId,
+            SubStagesId: SubStagesId,
+            ActionsId: ActionsId
         };
 
 
