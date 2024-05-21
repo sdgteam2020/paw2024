@@ -1,7 +1,10 @@
 ﻿$(document).ready(function () {
     GetAllDashbaordCount();
-
+    var myChart1;
 });
+
+
+
 
 function GetAllDashbaordCount() {
     $.ajax({
@@ -101,6 +104,109 @@ function GetAllDashbaordCount() {
         }
     });
 }
+
+$(document).ready(function () {
+    // Fetching data for the first chart
+    $.ajax({
+        url: '/Home/indexToBarChartS',
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            if (data.error) {
+                console.error('Error fetching data:', data.error);
+                return;
+            }
+
+            var monthNames = [...new Set(data.map(item => item.MonthNameYr))];
+            var unitNames = [...new Set(data.map(item => item.unitname))];
+
+            var datasets = unitNames.map(unitName => {
+                var totalInData = [];
+                var totalOutData = [];
+
+                monthNames.forEach(month => {
+                    var monthData = data.find(item => item.MonthNameYr === month && item.unitname === unitName);
+                    if (monthData) {
+                        totalInData.push(monthData.TotalIn);
+                        totalOutData.push(monthData.TotalOut);
+                    } else {
+                        totalInData.push(0);
+                        totalOutData.push(0);
+                    }
+                });
+
+                var totalInColor = getRandomColor();
+                var totalOutColor = getRandomColor();
+
+                return [{
+                    label: unitName + ' Proj In',
+                    data: totalInData,
+                    backgroundColor: totalInColor,
+                    stack: unitName,
+                }, {
+                    label: unitName + ' Proj Out',
+                    data: totalOutData,
+                    backgroundColor: totalOutColor,
+                    stack: unitName,
+                }];
+
+            }).flat();
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: monthNames,
+                    datasets: datasets
+                },
+                options: {
+                    scales: {
+                        x: {
+                            stacked: true,
+                            title: {
+                                display: true,
+                                text: 'Month Name'
+                            }
+                        },
+                        y: {
+                            stacked: true,
+                            title: {
+                                display: true,
+                                text: 'Total In/Total Out'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Set the title for the first chart
+            $('#chartTitle').text('Bar Chart Title');
+        }
+    });
+
+    // Fetching data for the second chart
+    $.ajax({
+        url: '/Home/indexToPieChart',
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            if (data.error) {
+                console.error('Error fetching data:', data.error);
+                return;
+            }
+
+            updatePieChart(data);
+
+            // Set the title for the second chart
+            $('#chart1Title').text('Pie Chart Title');
+        },
+        error: function (error) {
+            console.error('Error fetching data:', error);
+        }
+    });
+});
+
+
 function getProjGetsummay(spnstatusId) {
     var listItem = "";
     var userdata =
@@ -175,4 +281,73 @@ function getProjGetsummay(spnstatusId) {
             });
         }
     });
+
+
+
+
+
+
+}
+
+function updatePieChart(data) {
+    var titles = data.map(item => item.Status);
+    var chartData = data.map(item => item.TotalProj);
+
+    var canvas = document.getElementById('myChart1');
+    if (!canvas) {
+        console.error("Canvas element 'myChart1' not found.");
+        return;
+    }
+    var backgroundColors = generateRandomColors(titles.length);
+
+    var ctx = canvas.getContext('2d');
+
+    var myChart1 = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: titles,
+            datasets: [{
+                data: chartData,
+                backgroundColor: backgroundColors,
+                borderColor: backgroundColors, // Border color same as background color for consistency
+                borderWidth: 1,
+            }],
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        },
+    });
+}
+
+function getRandomColor() {
+    const minBrightness = 130;
+    let color;
+    do {
+        color = '#' + Math.floor(Math.random() * 16777215).toString(16);
+        const rgb = parseInt(color.slice(1), 16);
+        const r = (rgb >> 16) & 0xff;
+        const g = (rgb >> 8) & 0xff;
+        const b = (rgb >> 0) & 0xff;
+        const brightness = (r + g + b) / 3;
+        if (brightness < minBrightness) {
+            color = null;
+        }
+    } while (color === null);
+    return color;
+}
+
+function generateRandomColors(count) {
+    const colors = [];
+    for (let i = 0; i < count; i++) {
+        let color;
+        do {
+            color = getRandomColor();
+        } while (colors.includes(color));
+        colors.push(color);
+    }
+    return colors;
 }

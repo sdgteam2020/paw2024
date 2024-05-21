@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
-
+using swas.BAL.DTO;
+using swas.BAL.Helpers;
 using swas.BAL.Interfaces;
+using swas.DAL;
 using swas.DAL.Models;
 using System.Threading.Tasks;
 
@@ -17,9 +20,12 @@ namespace swas.UI.Controllers
     public class StagesController : Controller
     {
         private readonly IStagesRepository _stagesRepository;
-
-        public StagesController(IStagesRepository stagesRepository)
+        private readonly ApplicationDbContext _context;
+        private readonly IDataProtector _dataProtector;
+        public StagesController(ApplicationDbContext context, IDataProtectionProvider DataProtector, IStagesRepository stagesRepository)
         {
+            _context = context;
+            _dataProtector = DataProtector.CreateProtector("swas.UI.Controllers.UnitDtlsController");
             _stagesRepository = stagesRepository;
         }
         ///Created and Reviewed by : Sub Maj Sanal
@@ -28,7 +34,7 @@ namespace swas.UI.Controllers
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Index()
         {
-            var stages = await _stagesRepository.GetAllStagesAsync();
+            var stages = await _stagesRepository.GetAll();
             return View(stages);
         }
         ///Created and Reviewed by : Sub Maj Sanal
@@ -37,7 +43,7 @@ namespace swas.UI.Controllers
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Details(int id)
         {
-            var stage = await _stagesRepository.GetStageByIdAsync(id);
+            var stage = await _stagesRepository.Get(id);
             if (stage == null)
             {
                 return NotFound();
@@ -51,21 +57,30 @@ namespace swas.UI.Controllers
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create()
         {
-            var stages = await _stagesRepository.GetAllStagesAsync();
+            var stages = await _stagesRepository.GetAll();
             return View(stages);
         }
         ///Created and Reviewed by : Sub Maj Sanal
         //Reviewed Date : 31 Jul 23
         // POST: Stages/Create
-        [Authorize(Policy = "Admin")]
+      
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(tbl_mStages stage)
+        public async Task<IActionResult> CreateStage(tbl_mStages stage)
         {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
             if (ModelState.IsValid)
             {
-                await _stagesRepository.AddStageAsync(stage);
-                return RedirectToAction(nameof(Index));
+                stage.EditDeleteBy = (int)Logins.unitid;
+                stage.UpdatedByUserId = (int)Logins.unitid;
+                stage.IsDeleted = false;
+                stage.IsActive = true;
+                stage.DateTimeOfUpdate = DateTime.Now;
+                stage.EditDeleteDate = DateTime.Now;
+                stage.InitiaalID = false;
+                stage.FininshID = false;
+
+                await _stagesRepository.Add(stage);
+                return RedirectToAction(nameof(Create));
             }
             return View(stage);
         }
@@ -75,7 +90,7 @@ namespace swas.UI.Controllers
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
-            var stage = await _stagesRepository.GetStageByIdAsync(id);
+            var stage = await _stagesRepository.Get(id);
             if (stage == null)
             {
                 return NotFound();
@@ -97,7 +112,7 @@ namespace swas.UI.Controllers
 
             if (ModelState.IsValid)
             {
-                await _stagesRepository.UpdateStageAsync(stage);
+                await _stagesRepository.UpdateWithReturn(stage);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -109,7 +124,7 @@ namespace swas.UI.Controllers
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
-            var stage = await _stagesRepository.GetStageByIdAsync(id);
+            var stage = await _stagesRepository.Delete(id);
             if (stage == null)
             {
                 return NotFound();
@@ -124,7 +139,7 @@ namespace swas.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _stagesRepository.DeleteStageAsync(id);
+            await _stagesRepository.Delete(id);
             return RedirectToAction(nameof(Index));
         }
     }

@@ -44,11 +44,8 @@ namespace swas.UI.Controllers
             var watermarkText = $" {ipAddress}\n  {currentDatetime}";
 
             TempData["ipadd"] = watermarkText;
-            var stages = _stagesRepository.GetAllStages();
-
-            ViewBag.StagesList = new SelectList(stages, "StagesId", "Stages");
-
-            var actions = await _actionsRepository.GetAllActionsAsync();
+        
+            var actions = await _actionsRepository.GetAll();
             return View(actions);
         }
         ///Created and Reviewed by : Sub Maj Sanal
@@ -58,7 +55,7 @@ namespace swas.UI.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var actions = await _actionsRepository.GetActionsByIdAsync(id);
+            var actions = await _actionsRepository.Get(id);
             if (actions == null)
             {
                 return NotFound();
@@ -81,28 +78,38 @@ namespace swas.UI.Controllers
         ///Created and Reviewed by : Sub Maj Sanal
         ///Reviewed Date : 31 Jul 23
         // POST: Actions/Create
-        [Authorize(Policy = "Admin")]
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(tbl_mActions model)
         {
-
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+
             if (ModelState.IsValid)
             {
+                
+                var existingAction = await _actionsRepository.Get(model.ActionsId);
+                if (existingAction != null)
+                {
+                    ModelState.AddModelError("ActionName", "Action already exists in the table.");
+                    return View(model);
+                }
+
+                model.ActionDesc = model.Actions;
                 model.IsDeleted = false;
                 model.IsActive = true;
-                model.UpdatedByUserId = Logins.ActualUserName + "(" + Logins.Unit + ")";
+                model.UpdatedByUserId = Logins.unitid;
                 model.DateTimeOfUpdate = DateTime.Now;
                 model.EditDeleteDate = DateTime.Now;
-                model.EditDeleteBy = Logins.ActualUserName + "(" + Logins.Unit + ")";
+                model.EditDeleteBy = Logins.unitid;
 
+                await _actionsRepository.AddWithReturn(model);
 
-                await _actionsRepository.AddActionsAsync(model);
                 return RedirectToAction(nameof(Index));
             }
+
             return View(model);
         }
+
 
 
 
@@ -110,10 +117,9 @@ namespace swas.UI.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var stages = _stagesRepository.GetAllStages();
-            ViewBag.StagesList = new SelectList(stages, "StagesId", "Stages");
+            
 
-            var actions = await _actionsRepository.GetActionsByIdAsync(id);
+            var actions = await _actionsRepository.Get(id);
             if (actions == null)
             {
                 return NotFound();
@@ -132,7 +138,7 @@ namespace swas.UI.Controllers
 
             if (ModelState.IsValid)
             {
-                await _actionsRepository.UpdateActionsAsync(model);
+                await _actionsRepository.UpdateWithReturn(model);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -142,7 +148,7 @@ namespace swas.UI.Controllers
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
-            var actions = await _actionsRepository.GetActionsByIdAsync(id);
+            var actions = await _actionsRepository.Delete(id);
             if (actions == null)
             {
                 return NotFound();
@@ -153,46 +159,16 @@ namespace swas.UI.Controllers
             TempData["DeleteId"] = id;
             return RedirectToAction(nameof(Index));
         }
-        [Authorize(Policy = "Admin")]
+
+        #region Delete ACtion
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int ActionsId)
         {
-            await _actionsRepository.DeleteActionsAsync(id);
-            return RedirectToAction(nameof(Index));
+            await _actionsRepository.Delete(ActionsId);
+            return Json(1);
         }
 
-
-        public async Task<IActionResult> ActionSeqView()
-        {
-            var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-            var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
-            var watermarkText = $" {ipAddress}\n  {currentDatetime}";
-            TempData["ipadd"] = watermarkText;
-
-            List<ActionsSeq> resultList =  await _actionsRepository.GetActionresp();
-
-            string animatedView = "<div class=\"container\" id=\"container\">";
-
-            for (int i = 0; i < resultList.Count; i++)
-            {
-                ActionsSeq item = resultList[i];
-
-                animatedView += $"<div class=\"box\" id=\"box{i + 1}\" style=\"text-align: center;\">{item.ActionDesc}<br/>{item.UnitName}</div>";
-
-                if (i < resultList.Count - 1)
-                {
-                    animatedView += "<div class=\"link-line\"></div>";
-                }
-
-            }
-
-            animatedView += "</div>";
-
-            ViewBag.AnimatedView = resultList.ToList();
-
-            return View();
-        }
+        #endregion
 
 
     }

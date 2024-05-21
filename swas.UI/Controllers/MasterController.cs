@@ -118,7 +118,7 @@ namespace swas.UI.Controllers
                 }
                 else if (id == Mastertablenmumcs.mStages)
                 {
-                    var ret = await _stagesRepository.GetAllStagesAsync();
+                    var ret = await _stagesRepository.GetAll();
 
                     foreach (var cmd in ret)
                     {

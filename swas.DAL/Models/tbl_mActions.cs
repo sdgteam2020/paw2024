@@ -21,13 +21,13 @@ namespace swas.DAL.Models
 		public bool IsDeleted { get; set; }
 		public bool IsActive { get; set; }
 		[Display(Name = "Edit/Delete By")]
-		public string? EditDeleteBy { get; set; }
+		public int? EditDeleteBy { get; set; }
 		[Display(Name = "Edit/Delete Date")]
 		[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
 		public DateTime? EditDeleteDate { get; set; }
 
         public string? ActionDesc { get; set; }
-        public string? UpdatedByUserId { get; set; }
+        public int? UpdatedByUserId { get; set; }
 		[Display(Name = "Date of Update")]
 		[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
 		public DateTime? DateTimeOfUpdate { get; set; }

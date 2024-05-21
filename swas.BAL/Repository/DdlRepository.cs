@@ -172,15 +172,15 @@ namespace swas.BAL.Repository
        
 
 
-        public Task<List<tbl_mActions>> GetActionsByStatus(int status)
+        public Task<List<tbl_mStatus>> GetActionsByStatus(int status)
         {
-            var actions = _dbContext.mActions.Where(a => a.StatusId == status).ToListAsync();
+            var actions = _dbContext.mStatus.Where(a => a.StatusId == status).ToListAsync();
             return actions;
         }
 
-        public Task<List<tbl_mActions>> GetActiByStageStat(int status, int stageid, int projIds)
+        public Task<List<tbl_mStatus>> GetActiByStageStat(int status, int stageid, int projIds)
         {
-            var actions = _dbContext.mActions.Where(a => a.StatusId == status && a.StagesId == stageid).ToListAsync();
+            var actions = _dbContext.mStatus.Where(a => a.StatusId == status && a.StageId == stageid).ToListAsync();
 
 
             return actions;

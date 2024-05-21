@@ -1,4 +1,4 @@
-﻿# The following command works for downloading when using Git for Windows:
+# The following command works for downloading when using Git for Windows:
 # curl -LOf http://gist.githubusercontent.com/kmorcinek/2710267/raw/.gitignore
 #
 # Download this file using PowerShell v3 under Windows with the following comand:
@@ -368,4 +368,22 @@ AppPackages/
 /swas.UI/bin/Release/net6.0/swas.UI.exe
 /swas.UI/bin/Release/net6.0/swas.UI.pdb
 /swas.UI/bin/Release/net6.0/swas.UI.staticwebassets.runtime.json
-/swas.UI/wwwroot/Uploads
+/swas.BAL/obj/Release/net6.0/refint/swas.BAL.dll
+/swas.DAL/bin/Release/net6.0/swas.DAL.pdb
+/swas.UI/obj/Release/net6.0/PubTmp/Out/wwwroot/Error/Error.txt
+/swas.UI/obj/Release/net6.0/PubTmp/Out/swas.UI.pdb
+/swas.UI/obj/Release/net6.0/PubTmp/Out/swas.UI.dll
+/swas.UI/obj/Release/net6.0/PubTmp/Out/swas.DAL.pdb
+/swas.UI/obj/Release/net6.0/PubTmp/Out/swas.DAL.dll
+/swas.UI/obj/Release/net6.0/PubTmp/Out/swas.BAL.pdb
+/swas.UI/obj/Release/net6.0/PubTmp/Out/swas.BAL.dll
+/swas.UI/Properties/PublishProfiles/FolderProfile.pubxml.user
+/swas.UI/obj/Release/net6.0/swas.UI.pdb
+/swas.UI/obj/Release/net6.0/swas.UI.dll
+/swas.UI/obj/Release/net6.0/staticwebassets.publish.json
+/swas.UI/obj/Release/net6.0/staticwebassets.pack.json
+/swas.UI/obj/Release/net6.0/staticwebassets.development.json
+/swas.UI/obj/Release/net6.0/staticwebassets.build.json
+/swas.UI/obj/Release/net6.0/staticwebassets/msbuild.swas.UI.Microsoft.AspNetCore.StaticWebAssets.props
+/swas.UI/obj/Release/net6.0/refint/swas.UI.dll
+/swas.UI/obj/Release/net6.0/ref/swas.UI.dll

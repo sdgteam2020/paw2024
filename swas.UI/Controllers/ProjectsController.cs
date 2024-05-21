@@ -28,6 +28,7 @@ using Microsoft.Build.Evaluation;
 using swas.BAL.Repository;
 using Microsoft.EntityFrameworkCore;
 using swas.UI.Helpers;
+using System.Threading;
 
 namespace swas.UI.Controllers
 {
@@ -322,6 +323,7 @@ namespace swas.UI.Controllers
                 Data.IsSubmited = false;
                 Data.UpdatedByUserId = Logins.UserIntId;
                 Data.Comments = Data.InitialRemark;
+               
                 if (Data.ProjId == 0)
                 {
                     Data.CurrentPslmId = 0;
@@ -1071,7 +1073,77 @@ namespace swas.UI.Controllers
         #endregion
 
 
+        #region Watermarkpdf for attach
 
+        string filepathpdf = "";
+        
+        public IActionResult WatermarkWithPdf(string id)
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            if (Logins != null)
+            {
+
+              ;
+                try
+                {
+                    var ip = _httpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
+                   
+                    var filePath = System.IO.Path.Combine(_environment.WebRootPath, "Uploads\\" + id + "");
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        filepathpdf = generate2(filePath, ip);
+                    }
+                    else
+                    {
+                        return Content("PDF IS NOT IN FOLDER");
+                    }
+
+
+                    aTimer = new System.Timers.Timer(60000);
+                    // Hook up the Elapsed event for the timer.
+                    aTimer.Elapsed += OnTimer;
+
+                    aTimer.Enabled = true;
+                    return Redirect("../../DownloadFile/" + filepathpdf + ".pdf");
+                }
+                catch (Exception ex)
+                {
+                    swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                    //Comman.ExceptionHandle(ex.Message);
+                    return Json(0);
+                }
+            }
+            else
+            {
+                return Redirect("/Identity/Account/login");
+            }
+        }
+
+
+
+        public void OnTimer(Object source, ElapsedEventArgs e)
+        {
+
+            try
+            {
+                var filePath1 = System.IO.Path.Combine(_environment.ContentRootPath, "wwwroot\\DownloadFile\\" + filepathpdf + ".pdf");
+
+                if (System.IO.File.Exists(filePath1))
+                {
+                    // If file found, delete it    
+
+                    System.IO.File.Delete(filePath1);
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                //Comman.ExceptionHandle(ex.Message);
+            }
+        }
+
+        #endregion
 
 
     }

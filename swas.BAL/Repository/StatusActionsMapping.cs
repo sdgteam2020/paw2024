@@ -30,8 +30,17 @@ namespace swas.BAL.Repository
 
         public async Task<TrnStatusActionsMapping> GetByActionsAndStatusAsync(int StatusActionsMappingId,int actionsId, int statusId)
         {
-            return await _context.TrnStatusActionsMapping
-                .FirstOrDefaultAsync(usm => usm.ActionsId == actionsId && usm.StatusId == statusId &&usm.StatusActionsMappingId== StatusActionsMappingId);
+            if(StatusActionsMappingId > 0)
+            {
+                return await _context.TrnStatusActionsMapping
+                .FirstOrDefaultAsync(usm => usm.ActionsId == actionsId && usm.StatusId == statusId && usm.StatusActionsMappingId == StatusActionsMappingId);
+            }
+            else
+            {
+                return await _context.TrnStatusActionsMapping
+                .FirstOrDefaultAsync(usm => usm.ActionsId == actionsId && usm.StatusId == statusId );
+            }
+            
         }
     }
 }

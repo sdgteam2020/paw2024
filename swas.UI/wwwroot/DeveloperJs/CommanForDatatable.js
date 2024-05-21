@@ -76,7 +76,7 @@
             }
         },
         {
-            text: 'Get Deatils',
+            text: 'View Deatils',
             action: function (e, dt, node, config) {
                 $("#ProjunderprocessModal").modal('show');
             }
@@ -189,7 +189,7 @@ var table2 = $('#WhitelistedTable').DataTable({
             }
         },
         {
-            text: 'Get Deatils',
+            text: 'View Deatils',
             action: function (e, dt, node, config) {
                 $("#ProjWhiteListedProjectModal").modal('show');
             }

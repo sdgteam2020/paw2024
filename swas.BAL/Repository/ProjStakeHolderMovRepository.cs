@@ -338,9 +338,82 @@ namespace swas.BAL.Repository
             throw new NotImplementedException();
         }
 
-        public Task<List<ProjLogView>> GetProjLogviewAsync(string startDate, string endDate)
+        public async Task<List<ProjLogView>> GetProjLogviewAsync(string startDate, string endDate)
         {
-            throw new NotImplementedException();
+            List<ProjLogView> plvew;
+
+            try
+            {
+                var result = from b in _dbContext.ProjStakeHolderMov
+                             join c in _dbContext.Projects on b.ProjId equals c.ProjId
+                             join a in _dbContext.TrnStatusActionsMapping on b.StatusActionsMappingId equals a.StatusActionsMappingId
+                             
+                             join e in _dbContext.mStatus on a.StatusId equals e.StatusId
+                             join d in _dbContext.mStages on e.StageId equals d.StagesId
+                             join f in _dbContext.mActions on a.ActionsId equals f.ActionsId
+                             join g in _dbContext.tbl_mUnitBranch on b.ToUnitId equals g.unitid
+                             join h in _dbContext.tbl_mUnitBranch on b.FromUnitId equals h.unitid
+                             join j in _dbContext.Comment on b.PsmId equals j.PsmId into commentGroup
+                             from j in commentGroup.DefaultIfEmpty()
+                             join k in _dbContext.tbl_mUnitBranch on c.StakeHolderId equals k.unitid
+                             where b.EditDeleteDate >= DateTime.Parse(startDate) &&
+                                   b.EditDeleteDate <= DateTime.Parse(endDate) 
+                             orderby b.ProjId, b.EditDeleteDate
+                             select new
+                             {
+                                 b.PsmId,
+                                 b.ProjId,
+                                 c.ProjName,
+                                 k.UnitName,
+                                 d.Stages,
+                                 e.Status,
+                                 f.Actions,
+                                 b.TimeStamp,
+                                 FwdBy = h.UnitName,
+                                 FwdTo = g.UnitName,
+                                 j.Comment,
+                                 AttDocu = string.Join(", ", _dbContext.AttHistory
+                                                            .Where(a => a.PsmId == b.PsmId)
+                                                            .Select(a => $"Desc: {a.Reamarks} : Docu: {a.ActFileName}")),
+                                 Comments = string.Join(", ", _dbContext.StkComment
+                                                            .Where(sc => sc.PsmId == b.PsmId)
+                                                            .Select(sc => $"{k.UnitName} Desc: {sc.Comments} : Docu: {sc.ActFileName}")),
+                                 b.Remarks,
+                                 b.UpdatedByUserId,
+                                 EncyId = _dataProtector.Protect(b.PsmId.ToString())
+                             };
+
+                // Assuming ProjLogView has the necessary properties
+                var projLogViews = result.ToList().Select(x => new ProjLogView
+                {
+                    PsmId = x.PsmId,
+                    ProjId = x.ProjId,
+                    ProjName = x.ProjName,
+                    UnitName = x.UnitName,
+                    Stages = x.Stages,
+                    Status = x.Status,
+                    Actions = x.Actions,
+                    TimeStamp = x.TimeStamp,
+                    FwdBy = x.FwdBy,
+                    FwdTo = x.FwdTo,
+                    Comment = x.Comment,
+                    AttDocu = x.AttDocu,
+                    Comments = x.Comments,
+                    AddRemarks = x.Remarks,
+                    ActionByUser = (int)x.UpdatedByUserId,
+                    EncyId = x.EncyId
+                }).ToList();
+
+                return projLogViews;
+            }
+            catch (Exception ex)
+            {
+
+
+                plvew = new List<ProjLogView>();
+            }
+
+            return plvew;
         }
 
         public Task<int> UpdateUndoProjectMov(int ProjectId, int PsmId)
