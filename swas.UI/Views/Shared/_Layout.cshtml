@@ -188,7 +188,7 @@
     <script>
         function ValInData(input) {
 
-            var regex = /[^a-zA-Z0-9/_& ]/g;
+            var regex = /[^a-zA-Z0-9 ]/g;
             input.value = input.value.replace(regex, "");
         }
     </script>
@@ -1039,6 +1039,7 @@
         $(document).ready(function () {
             var table = $('#Sents').DataTable({
                 lengthChange: true,
+                order: [[1, 'desc']]
                 dom: 'lBfrtip',
                 buttons: [
                     'copy',
