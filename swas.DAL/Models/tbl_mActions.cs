@@ -31,20 +31,7 @@ namespace swas.DAL.Models
 		[Display(Name = "Date of Update")]
 		[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
 		public DateTime? DateTimeOfUpdate { get; set; }
-		public bool? InitiaalID { get; set; } = false;
-		public bool? FininshID { get; set; } = false;
 
-		public int StagesId { get; set; }
-
-		public int TimeLimit { get; set; }
-
-		public int StatusId { get; set;}
-        public int? Actionseq { get; set; }
-
-		public bool? ObsnFlag { get; set; } = false ;
-
-		public int? StatCompId { get; set; }
-		
 
 	}
 

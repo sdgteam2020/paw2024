@@ -230,6 +230,7 @@ namespace swas.Areas.Identity.Pages.Account
                             {
                                 TempData["UserName"] = Input.UserName;
                                 HttpContext.Session.SetString("UserName", Input.UserName);
+
                                 return RedirectToAction("NewProject", "Home");
                             }
                         }

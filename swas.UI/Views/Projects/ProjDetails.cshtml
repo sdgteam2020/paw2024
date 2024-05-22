@@ -114,11 +114,11 @@
                                 <tr>
                                     <th>Ser No</th>
                                     <th>Proj Name</th>
-                                    <th>Stake Holder</th>
+                                    <th>Sponsor</th>
                                   @*   <th>From</th>
                                     <th>To</th> *@
-                                    <th>From UnitName (DomainID(Rank Name))</th>
-                                    <th>To UnitName</th>
+                                    <th>From Unit (User Name/ Domain Id)</th>
+                                    <th>To Unit Name</th>
                                     <th>Action</th>
                                     @* <th>TotalDays</th> *@
                                     <th>TimeStamp</th>
@@ -285,12 +285,12 @@
                                 <tr>
                                     <th>Ser No</th>
                                     <th>Proj Name</th>
-                                    <th>Stake Holder</th>
+                                    <th>Sponsor</th>
                                    @*  <th>From</th>
                                     <th>To</th> *@
-                                    <th>From UnitName (DomainID(Rank Name))</th>
-                                    <th>To UnitName</th>
-                                    <th>Action</th>
+                                    <th>From Unit (User Name/ Domain Id)</th>
+                                    <th>To Unit Name</th>
+                                    <th>Project Action</th>
                                    @*  <th>TotalDays</th> *@
                                     <th>TimeStamp</th>
                                     <th>Action</th>
@@ -316,7 +316,11 @@
                                         </td>
 
 
-                                        <td>@project.ProjName</td>
+                                        <td>
+                                            <a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID">
+                                                @project.ProjName
+                                            </a>
+                                        </td>
                                         <td>@project.StakeHolder</td>
                                         <td>@project.FromUnitName</td>
                                         <td>@project.ToUnitName</td>
@@ -362,16 +366,13 @@
                             <thead>
                                 <tr>
                                     <th>Ser No</th>
-                                    <th>Proj ID</th>
                                     <th>Proj Name</th>
                                     <th>Sponsor Dte</th>
                                     <th>Completed By</th>
                                     <th>Completed On</th>
-
-                                    <th>Stage</th>
                                     <th>Status</th>
-                                    <th>Action</th>
-                                    <th>#Att</th>
+                                    <th>Project Action</th>
+                                    
                                 </tr>
                             </thead>
 
@@ -386,44 +387,22 @@
                                             }
                                             @snocompleted
                                         </td>
-                                        <td>@project.ProjId</td>
+                                        <span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
                                         <td>
-                                            @*<a class="editButton" data-proj-name="@project.ProjName" href="/Projects/ProjHistory">
-                                        @project.ProjName
-                                        @project.ProjName
-                                        </a>*@
-
-
-                                            <a class="editButton" data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistoryView?EncyID=@project.EncyID">
+                                            <a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?dataProjId=@project.ProjId">
                                                 @project.ProjName
                                             </a>
-
                                         </td>
                                         <td>@project.StakeHolder</td>
                                         <td>@project.FwdBy</td>
                                         <td>@project.DateTimeOfUpdate?.ToString("dd-MM-yyyy")</td>
 
-                                        <td>@project.Stages</td>
+                                      
                                         <td>
                                             @project.Status
                                         </td>
-                                        <th>@project.Action</th>
-                                        <td>
-
-                                            @if (project.AttCnt > 0)
-                                            {
-
-                                                <a href="javascript:void(0);" class="anchorDetail" data-id="@project.CurrentPslmId">
-                                                    <img src="/assets/images/icons/attachemnts_clip.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
-                                                </a>
-
-
-                                            }
-                                            else
-                                            {
-
-                                            }
-                                        </td>
+                                        <td>@project.Action</td>
+                                        
                                     </tr>
 
                                 }

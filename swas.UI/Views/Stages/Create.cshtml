@@ -45,7 +45,7 @@ Reviewd by Hav Mani on :
                     <th>Edit/Delete Date</th>
                     <th>Updated By User ID</th>
                     <th>Date of Update</th>
-                    <th>Delete</th>
+                    @*<th>Delete</th>*@
                     
                 </tr>
             </thead>
@@ -62,10 +62,10 @@ Reviewd by Hav Mani on :
                             <td>@stage.EditDeleteDate?.ToString("dd-MM-yyyy")</td>
                             <td>@stage.UpdatedByUserId</td>
                             <td>@stage.DateTimeOfUpdate?.ToString("dd-MM-yyyy")</td>
-                            <td>
+                          @*  <td>
                                 <a asp-action="EditStage" asp-route-id="@stage.StagesId" class="btn btn-secondary btn-ecomm"><i class='bx bx-edit'></i></a>
                                 <a data-id="@stage.StagesId" data-url="@Url.Action("Create", "Stages")" class="btn btn-secondary btn-ecomm delete-btn"><i class='bx bx-trash'></i></a>
-                            </td>
+                            </td>*@
 
                         </tr>
                     }

@@ -41,9 +41,9 @@ namespace swas.DAL.Models
 		
 		public int? TotalProj { get; set; }
 
-		[NotMapped]
+	
 		
-		public int? Statseq { get; set; }
+		public int Statseq { get; set; }
 
 
         public bool IsDashboard { get; set; }
