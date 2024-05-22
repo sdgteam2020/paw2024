@@ -306,8 +306,8 @@ namespace swas.BAL.Repository
                                  from eWithStages in js.DefaultIfEmpty()
                                  join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId into ks
                                  from eWithAction in ks.DefaultIfEmpty()
-                                 where a.IsComplete == true && b.IsSubmited == true && a.ToUnitId== Logins.unitid
-                                 && eWithStatus.StatusId==33
+                                 where b.IsSubmited == true
+                                 && actm.StatusActionsMappingId==29 && a.IsComplete==false
                                  // where a.ActionId == dft.ActionId
                                  select new tbl_Projects
 

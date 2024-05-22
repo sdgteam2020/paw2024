@@ -161,6 +161,10 @@ namespace swas.Areas.Identity.Pages.Account
                 returnUrl ??= Url.Content("~/");
                 //await _signInManager.SignOutAsync();
                 //await HttpContext.SignOutAsync();
+                var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+                var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
+                var watermarkText = $" {ipAddress}\n  {currentDatetime}";
+
 
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
                 ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -204,7 +208,7 @@ namespace swas.Areas.Identity.Pages.Account
                                         var users = await _userManager.FindByNameAsync(userdet.UserName);
                                         var usroles = await _userManager.GetRolesAsync(users);
                                         Db.Role = usroles.Any() ? usroles[0] : "Unit";
-                                        
+                                        Db.IpAddress = watermarkText;
                                         if (Db.ActualUserName == null)
                                         {
                                             Db.ActualUserName = Input.UserName;

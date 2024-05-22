@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿var memberTable = "";
+$(document).ready(function () {
 
     GetProjCommentsByUnitId();
 
@@ -51,8 +52,9 @@ function GetProjCommentsByUnitId() {
                     for (var i = 0; i < response.length; i++) {
 
                         listItem += "<tr>";
+                        listItem += "<td class='noExport d-none'><span class='noExport d-none' id='spnProjId'>" + response[i].projId + "</span><span class='noExport d-none' id='spnpsmId'>" + response[i].psmId + "</span></td>";
                         listItem += "<td class='align-middle'><span id='divName'>" + count + "</span></td>";
-                        listItem += "<td class='d-none'><span id='spnProjId'>" + response[i].projId + "</span><span id='spnpsmId'>" + response[i].psmId + "</span></td>";
+                      
                         listItem += "<td class='align-middle'><span id='projectName'>" + response[i].projectName + "</span></td>";
                         listItem += "<td class='align-middle'><span id='stakeholder'>" + response[i].stakeholder + "</span></td>";
 
@@ -75,13 +77,7 @@ function GetProjCommentsByUnitId() {
 
                     $("#DetailBody").html(listItem);
                     
-
-
-
-                    var rows;
-
-
-
+              
 
 
                     $("body").on("click", ".cls-btncomment", function () {
@@ -97,7 +93,7 @@ function GetProjCommentsByUnitId() {
                 }
             }
             else {
-                listItem += "<tr><td class='text-center' colspan=7>No Record Found</td></tr>";
+                listItem += "<tr><td class='text-center' colspan=5>No Record Found</td></tr>";
                
                 $("#DetailBody").html(listItem);
                 
@@ -110,6 +106,7 @@ function GetProjCommentsByUnitId() {
         }
     });
 }
+
 
 
 function SendMsg() {
