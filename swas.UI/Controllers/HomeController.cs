@@ -134,10 +134,17 @@ namespace swas.UI.Controllers
         }
         public async Task<IActionResult> GetDashboardCount(int Id)
         {
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
+            try
+            {
+                Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
 
-            
-            return Json(await _stkholdmove.DashboardCount(Convert.ToInt32(Logins.unitid)));
+
+                return Json(await _stkholdmove.DashboardCount(Convert.ToInt32(Logins.unitid)));
+            }
+            catch (Exception ex)
+            {
+                return Json(nmum.Exception);
+            }
         }
 
         [Authorize(Policy = "Admin")]

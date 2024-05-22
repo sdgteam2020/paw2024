@@ -892,8 +892,7 @@ namespace swas.UI.Controllers
                 else
                 {
                     //ViewBag.SubmitCde = false;
-                    EncyID = TempData["EncyID"].ToString() ?? null;
-                    TempData["EncyID"] = EncyID;
+                    dataProjId = dataProjId;
                 }
 
                 var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
@@ -915,6 +914,12 @@ namespace swas.UI.Controllers
                     }
 
                 }
+                else
+                {
+                    dataProjId = dataProjId;
+                }
+                
+                
                 int statgeIDMAx = await _stkholdmove.GetlaststageId(dataProjId);
                 ViewBag.stageid = statgeIDMAx;
 
