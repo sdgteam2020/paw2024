@@ -7,7 +7,7 @@ namespace swas.UI.Helpers
     {
         public static string LoginDetails(Login Logins)
         {
-            return Logins.UserName.Trim() +"("+Logins.Rank.Trim() + " " + Logins.Offr_Name.Trim()+" )";
+            return Logins.Unit.Trim() +"("+Logins.Rank.Trim() + "" + Logins.Offr_Name.Trim()+" / "+Logins.UserName.Trim() + ")";
         }
     }
 }

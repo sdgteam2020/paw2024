@@ -184,14 +184,15 @@ namespace swas.BAL.Repository
             var query1 = await (from ststus in _dbContext.mStatus
                                join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
                                where ststus.IsDashboard == true
-                                orderby stge.StagesId ascending
+                                
                                 select new DTODashboardHeader
                                {
                                    StageId= stge.StagesId,
                                    StatusId=ststus.StatusId,
                                    Status=ststus.Status,
                                    Stages= stge.Stages,
-                                   Icons= ststus.Icon
+                                   Icons= ststus.Icon,
+                                   Statseq=ststus.Statseq
 
                                 }).ToListAsync();
             db.DTODashboardHeaderlst = query1;
@@ -202,6 +203,7 @@ namespace swas.BAL.Repository
             totalProject.Total = count;
             db.TotalProjectCount = totalProject;
 
+            //db.DTODashboardHeaderlst = (List<DTODashboardHeader>)db.DTODashboardHeaderlst.OrderBy(i => i.Statseq);
             //var query2 = await (from actmap in _dbContext.TrnStatusActionsMapping
             //                    join ststus in _dbContext.mStatus on actmap.StatusId equals ststus.StatusId
             //                    join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
@@ -326,7 +328,7 @@ namespace swas.BAL.Repository
         public async Task<int> GetlaststageId(int? ProjId)
         {
             int? maxStatusId = _dbContext.ProjStakeHolderMov
-           .Where(p => p.ProjId == ProjId)
+           .Where(p => p.ProjId == ProjId )
             .Select(p => (int?)p.StatusActionsMappingId)
            .Max();
 

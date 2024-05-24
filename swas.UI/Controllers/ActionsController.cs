@@ -81,8 +81,8 @@ namespace swas.UI.Controllers
 
             if (ModelState.IsValid)
             {
-                
-                var existingAction = await _actionsRepository.Get(model.ActionsId);
+
+                var existingAction = await _actionsRepository.getActionByName(model.Actions);
                 if (existingAction != null)
                 {
                     ModelState.AddModelError("ActionName", "Action already exists in the table.");
@@ -96,13 +96,26 @@ namespace swas.UI.Controllers
                 model.DateTimeOfUpdate = DateTime.Now;
                 model.EditDeleteDate = DateTime.Now;
                 model.EditDeleteBy = Logins.unitid;
+                if (model.ActionsId == 0)
+                {
+                    await _actionsRepository.AddWithReturn(model);
+                    return Json(nmum.Save);
+                }
 
-                await _actionsRepository.AddWithReturn(model);
+                else
+                {
+                    await _actionsRepository.UpdateWithReturn(model);
+                    return Json(nmum.Update);
+                }
 
-                return RedirectToAction(nameof(Index));
+
+
+            }
+            else {
+                return Json(nmum.NotSave);
             }
 
-            return View(model);
+            
         }
 
 
@@ -165,7 +178,42 @@ namespace swas.UI.Controllers
 
         #endregion
 
+        #region Action Seq
 
+        //public async Task<IActionResult> ActionSeqView()
+        //{
+        //    var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+        //    var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
+        //    var watermarkText = $" {ipAddress}\n  {currentDatetime}";
+        //    TempData["ipadd"] = watermarkText;
+
+        //    List<ActionsSeq> resultList = await _actionsRepository.GetActionresp();
+
+        //    string animatedView = "<div class=\"container\" id=\"container\">";
+
+        //    for (int i = 0; i < resultList.Count; i++)
+        //    {
+        //        ActionsSeq item = resultList[i];
+
+        //        animatedView += $"<div class=\"box\" id=\"box{i + 1}\" style=\"text-align: center;\">{item.ActionDesc}<br/>{item.UnitName}</div>";
+
+        //        if (i < resultList.Count - 1)
+        //        {
+        //            animatedView += "<div class=\"link-line\"></div>";
+        //        }
+
+        //    }
+
+        //    animatedView += "</div>";
+
+        //    ViewBag.AnimatedView = resultList.ToList();
+
+        //    return View();
+        //}
+
+
+
+        #endregion
     }
 
 }

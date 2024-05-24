@@ -31,6 +31,7 @@ namespace swas.BAL.DTO
         public string? Stages { get; set; }
         public string? Status { get; set; }
         public string? Icons { get; set; }
+        public int Statseq { get; set; }
     }
     public class DTODashboardAction
     {

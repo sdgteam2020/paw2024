@@ -153,6 +153,11 @@
             color: #fff;
         }
 
+        .bold-underline {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
     </style>
 
 </head>
@@ -300,7 +305,7 @@
                         @*  <h1 class="policy2">Proj Under Process</h1> *@
                         <div class="text-center Getdetailsbtn">
                             @* <button type="button" id="projunderprocess" class="btn btn-outline-primary ">Get Details</button> *@
-                            <h3>Proj Under Process</h3>
+                            <h3 class="bold-underline">Proj Under Process</h3>
                         </div>
 
                         <div class=" hidden shadow-lg p-3 mb-2 bg-white rounded">
@@ -311,7 +316,7 @@
                                     <thead style="position: sticky;top: -18px">
                                         <tr>
                                             <th style="width:40px" class="text-nowrap text-center f-5">S.No</th>
-                                            <th class="text-nowrap text-center">Name Of Sponser</th>
+                                            <th class="text-nowrap text-center">Name Of Sponsor</th>
                                             <th class="text-nowrap text-center">Project Name</th>
                                             <th class="text-nowrap text-center">From(User Name)</th>
                                             <th class="text-nowrap text-center">To</th>
@@ -355,7 +360,7 @@
                     <div class="card">
                         @*  <h1 class="policy">WhiteListed Project  </h1> *@
                         <div class="text-center Getdetailsbtn">
-                            <h3>WhiteListed Project</h3>
+                            <h3 class="bold-underline">WhiteListed Project</h3>
                             @*  <button type="button" id="projWhiteListed" class="btn btn-outline-primary ">Get Details</button> *@
                         </div>
                         <div class=" hidden shadow-lg p-3 mb-2 bg-white rounded ">
@@ -466,64 +471,39 @@
 
                 <table id="HeldTablemodal" class="table table-striped table-bordered datatablefordownload">
                     <!-- Table header -->
-                    <thead style="position: sticky;top:-18px">
-                        @*  <tr>
-                        <th colspan="3"></th>
-                        <th colspan="3" class="text-center">Sponsor Contact Details</th>
-                        <th colspan="6"></th>
-                        </tr> *@
+                    <thead style="position: sticky;top: -18px">
                         <tr>
-                            <th style="width:40px" class="text-nowrap text-center">S.No</th>
-                            <th class="text-nowrap text-center">Name of Sw Appl</th>
-                            <th class="text-nowrap text-center">Project Cat</th>
+                            <th style="width:40px" class="text-nowrap text-center f-5">S.No</th>
+                            <th class="text-nowrap text-center">Name Of Sponsor</th>
+                            <th class="text-nowrap text-center">Project Name</th>
+                            <th class="text-nowrap text-center">From(User Name)</th>
+                            <th class="text-nowrap text-center">To</th>
+                            <th class="text-nowrap text-center">SubStage</th>
+                            <th class="text-nowrap text-center">Action</th>
+                            <th class="text-nowrap text-center">Date</th>
 
-                            <th class="text-nowrap text-center">Appt</th>
-                            <th class="text-nowrap text-center">Fmn</th>
-                            <th class="text-nowrap text-center">Contact No</th>
-                            <th class="text-nowrap text-center">Dt of ACG Clearance</th>
-                            <th class="text-nowrap text-center">Cert No & Date</th>
-                            <th class="text-nowrap text-center">Valid Upto</th>
-                            <th class="text-nowrap text-center">Remarks</th>
                         </tr>
                     </thead>
                     <tbody>
-
-                        @if (WhiteListed != null)
+                        @if (Holdproj != null)
                         {
                             int count = 1;
-                            int headerid = 0;
-                            @foreach (var unitx in WhiteListed)
+
+
+                            @foreach (var unitsa in Holdproj)
                             {
-                                @*  if (headerid != @unitx.HeaderID)
-                        {
-                        <tr>
-
-                        <td colspan="1" style="font-size:12px;">@unitx.Header</td>
-
-
-                        </tr>
-
-                        } *@
                                 <tr>
+                                    <td class="f-8">@count</td>
 
-
-                                    <td class="f-12">@count</td>
-                                    <td class="f-12 text-nowrap">@unitx.ProjName</td>
-                                    <td class="f-12">@unitx.Header</td>
-
-                                    <td class="f-12 text-nowrap">@unitx.Appt</td>
-                                    <td class="f-12 text-nowrap">@unitx.Fmn</td>
-                                    <td class="f-12 text-nowrap">@unitx.ContactNo</td>
-                                    <td class="f-12 text-nowrap">@unitx.Clearence</td>
-                                    <td class="f-12 text-nowrap">@unitx.CertNo @unitx.date</td>
-                                    <td class="f-12 text-nowrap">@unitx.ValidUpto</td>
-                                    <td class="f-12">@unitx.Remarks</td>
-
-
+                                    <td class="f-12">@unitsa.Sponser</td>
+                                    <td class="f-12">@unitsa.ProjName</td>
+                                    <td class="f-12">@unitsa.UserDetails</td>
+                                    <td class="f-12">@unitsa.ToUnitName</td>
+                                    <td class="f-12">@unitsa.StatusName</td>
+                                    <td class="f-12">@unitsa.ActionName</td>
+                                    <td class="f-12">@unitsa.DateTimeOfUpdate</td>
                                 </tr>
-
                                 count = count + 1;
-                                headerid = @unitx.HeaderID;
                             }
                         }
 

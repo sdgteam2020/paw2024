@@ -94,7 +94,7 @@ function functionConfirm1(ActionsId) {
                                 showConfirmButton: false,
                                 timer: 1500
                             }).then(function () {
-                                window.location.href = url;
+                                window.location.href = '/actions/index'; 
                             });
                         }
                     }
@@ -116,10 +116,12 @@ $('#btnsave').click(function () {
 
 
     var Actions = $("#ActionName").val();
+    var ActionsId = $("#ActionsId").val();
 
     var model = {
  
-        Actions: Actions
+        Actions: Actions,
+        ActionsId: ActionsId
     };
 
     $.ajax({
@@ -127,8 +129,29 @@ $('#btnsave').click(function () {
         url: '/Actions/Create',
         data: model,
 
-        success: function () {
-          
+        success: function (result) {
+            if (result == 1) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Record Save successfully',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(function () {
+                    window.location.href = '/actions/index'; 
+                });
+            }
+            else if (result == 2) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Record Update successfully',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(function () {
+                    window.location.href = '/actions/index'; 
+                });
+            }
         },
         error: function (error) {
             // Handle error
@@ -138,17 +161,14 @@ $('#btnsave').click(function () {
 });
 
 $(document).on('click', '.btn-edit', function () {
-    debugger;
-    var closestRow = $(this).closest("tr");
-    var ActionsName = $("#ActionNames").html();
-
-    var ActionsId = $("#ActionsId").html();
-
-    var actionName = closestRow.find("#ActionsName").text(); 
-
-    $('#ActionName').val(actionName);
+   
+    var closestRow = $(this).closest("tr").find("#ActionNames").html();
+    var closestRow1 = $(this).closest("tr").find("#spnActionsId").html();
     
+    $('#ActionsId').val(closestRow1);
+    $('#ActionName').val(closestRow);
     
+    $('#unitMapping').modal('show');
 });
 
 
