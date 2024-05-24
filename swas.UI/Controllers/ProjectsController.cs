@@ -260,7 +260,16 @@ namespace swas.UI.Controllers
 
 
         }
-
+        public async Task<IActionResult> GetMyProjectsDetails(int Id)
+        {
+            try
+            {
+                return Json(await _projectsRepository.GetMyProjectsAllProject());
+            }
+            catch (Exception ex) {
+                return Json(nmum.Exception);
+            }
+        }
         [HttpPost]
         //[Authorize(Policy = "StakeHolders")]
         public async Task<IActionResult> UploadMultiFile(IFormFile uploadfile, string Reamarks, int PsmId)

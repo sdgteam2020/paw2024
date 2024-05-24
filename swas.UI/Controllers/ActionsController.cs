@@ -12,11 +12,6 @@ namespace swas.UI.Controllers
     using swas.BAL.Repository;
     using swas.DAL.Models;
     using System.Threading.Tasks;
-    ///Created and Reviewed by : Sub Maj Sanal
-    ///Reviewed Date : 31 Jul 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start
     public class ActionsController : Controller
     {
         private readonly IActionsRepository _actionsRepository;

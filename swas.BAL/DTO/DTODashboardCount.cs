@@ -11,6 +11,7 @@ namespace swas.BAL.DTO
         public List<DTODashboardCount> DTODashboardCountlst { get; set; }
         public List<DTODashboardHeader> DTODashboardHeaderlst { get; set; }
         public List<DTODashboardAction> DTODashboardActionlst { get; set; }
+        public TotalProject TotalProjectCount { get; set; }
     }
     public class DTODashboardCount
     {
@@ -37,5 +38,9 @@ namespace swas.BAL.DTO
         public int StatusId { get; set; }
         public int ActionId { get; set; }
         public string? Action { get; set; }
+    }
+    public class TotalProject
+    {
+        public int Total { get; set; }
     }
 }

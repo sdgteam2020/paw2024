@@ -295,8 +295,46 @@
 
 
 
+<div class="modal fade" id="ProjGetsummayTotal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title" id="ProjectSummaryTittle">Total Project</h4>
+                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+             <div class="table-responsive">
+                    <table id="tbldata" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="d-none noExport"></th>
+                                <th>S/No</th>
+                                <th class="text-nowrap">Proj Name</th>
+                                <th class="text-nowrap">Stake Holder</th>
+                                <th class="text-nowrap">Createed Date</th>
+                                <th class="text-nowrap">Host On</th>
+                                <th class="text-nowrap">Appt Type</th>
+                                <th class="text-nowrap">Remarks</th>
+                                <th class="text-nowrap">History</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="DetailBodysummaryTotal">
+                        </tbody>
+
+                    </table>
+             </div>
+            </div>
+
+        </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+</div>
 
 
 
 
-<script src="~/developerjs/dashboard.js"></script>
+<script src="~/developerjs/dashboard.js"></script><script src="~/developerjs/mtable.js"></script>
+<script src="~/developerjs/commanfordatatable.js"></script>
+<script src="~/developerjs/projecthistoryforcomman.js"></script>

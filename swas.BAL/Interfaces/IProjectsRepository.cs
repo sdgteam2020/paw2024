@@ -30,6 +30,7 @@ namespace swas.BAL.Interfaces
         Task<List<tbl_Projects>> GetStatusProjAsync(int statusid);
         Task<tbl_Projects> GetProjectByPsmIdAsync(int psmId);
         Task<List<tbl_Projects>> GetMyProjectsAsync();
+        Task<List<DTOTotalProjectDetails>> GetMyProjectsAllProject();
         Task<List<tbl_Projects>> GetActProjectsAsync();
         Task<tbl_ProjStakeHolderMov> GettXNByPsmIdAsync(int psmId);
         Task<List<DToWhiteListed>> GetWhiteListedActionProj();

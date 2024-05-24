@@ -21,6 +21,7 @@ using System.Xml.Linq;
 using System.Net.NetworkInformation;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Identity;
+using swas.BAL.Utility;
 
 namespace swas.BAL.Repository
 {
@@ -96,7 +97,7 @@ namespace swas.BAL.Repository
             }
             catch (Exception ex) { return 0; }
           
-        }
+        } 
         public async Task<DTODashboard> DashboardCount(int UserId)
         {
             DTODashboard db=new DTODashboard();
@@ -194,6 +195,12 @@ namespace swas.BAL.Repository
 
                                 }).ToListAsync();
             db.DTODashboardHeaderlst = query1;
+            TotalProject totalProject = new TotalProject(); 
+            var count = (from result1 in _dbContext.Projects
+                         where result1.IsActive == true 
+                         select result1).Count();
+            totalProject.Total = count;
+            db.TotalProjectCount = totalProject;
 
             //var query2 = await (from actmap in _dbContext.TrnStatusActionsMapping
             //                    join ststus in _dbContext.mStatus on actmap.StatusId equals ststus.StatusId

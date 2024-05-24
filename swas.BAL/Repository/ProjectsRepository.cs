@@ -729,6 +729,58 @@ namespace swas.BAL.Repository
             {
                 return null;
             }
+        } 
+        public async Task<List<DTOTotalProjectDetails>> GetMyProjectsAllProject()
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+
+
+
+            if (Logins != null)
+            {
+
+                int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
+
+                string username = Logins.UserName;
+
+
+
+                var querys = from b in _dbContext.Projects
+                             join c in _dbContext.tbl_mUnitBranch on b.StakeHolderId equals c.unitid into currentStakeHolder
+                             from current in currentStakeHolder.DefaultIfEmpty()
+                             join appli in _dbContext.mAppType on b.Apptype equals appli.Apptype
+                             join host in _dbContext.mHostType on b.HostTypeID equals host.HostTypeID
+                             where b.IsSubmited==true
+                         
+                             // && a.TostackholderDt !=null
+
+                             select new DTOTotalProjectDetails
+
+                             {
+                               ProjId=b.ProjId,
+                                 ProjName = b.ProjName,
+                                 stakeHolder= current.UnitName,
+                                 InitiatedDate = b.InitiatedDate,
+                                 CompletionDate = b.CompletionDate,
+                                 Remark = b.InitialRemark,
+                                 Hostedon=host.HostingDesc,
+                                 Apptype = appli.AppDesc
+
+
+
+                             };
+
+
+                var projectsWithDetails = await querys.ToListAsync();
+
+
+
+                return projectsWithDetails;
+            }
+            else
+            {
+                return null;
+            }
         }
 
 

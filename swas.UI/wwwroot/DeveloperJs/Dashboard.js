@@ -1,6 +1,9 @@
 ﻿$(document).ready(function () {
     GetAllDashbaordCount();
     var myChart1;
+
+
+  
 });
 
 
@@ -25,6 +28,7 @@ function GetAllDashbaordCount() {
             var peding = 0;
             var sent = 0;
             if (data != null) {
+
                 for (var i = 0; i < dtoDashboardHeaderlst.length; i++) {
                     if (stageId != dtoDashboardHeaderlst[i].stageId) {
                         if (stageId != 0) {
@@ -33,7 +37,24 @@ function GetAllDashbaordCount() {
                         listitem += '<div class="newprojectheading text-center"> ' + dtoDashboardHeaderlst[i].stages + ' </div>';
                         listitem += '<div class="r-1" style="margin-top: 13px;">';
                     }
-                    
+
+                    if (i == 0) {
+                        listitem += '<div class="cd-1 btn btnGetsummaytotal" style="background-color:white"><span class="d-none" id="spnstatusId">10000</span>';
+
+
+                        listitem += '<div class="icon-container">';
+                        listitem += '<img src="/assets/images/icons/process.png" alt="Icon" style="height:25px">';
+                        listitem += '</div>';
+                        listitem += '<h5 style="margin-top: 8px;" class="spntotalProject">' + data.totalProjectCount.total +' </h5>';
+                        listitem += '<div class="t-1 statusprojsummry">Total Project</div> ';
+                        listitem += ' <div class="mb-2">';
+
+                        listitem += '<span class="badge bg-success spntotalProject">' + data.totalProjectCount.total +'</span></span>';
+
+                        listitem += ' </div>';
+                        listitem += ' </div>';
+
+                    }
                     
                     listitem += '<div class="cd-1 btn btnGetsummay" style="background-color:white"><span class="d-none" id="spnstatusId">' + dtoDashboardHeaderlst[i].statusId +'</span>';
                   
@@ -62,19 +83,8 @@ function GetAllDashbaordCount() {
                     listitem += '<h5 style="margin-top: 8px;" >' + tot + ' </h5>';
                     listitem += '<div class="t-1 statusprojsummry">' + dtoDashboardHeaderlst[i].status +'</div> ';
                     listitem += ' <div class="mb-2">';
-                  
-                       
-
-                     //   listitem += '<button type="button" class="btn btn-primary"> ' + DTODashboardActionlst[j].action +' <span class="badge badge-light">9</span>';
-                       
+                         
                     listitem += '<span class="badge badge-light text-black" style="font-size:18px"><span class="badge bg-danger">' + peding + '</span> / <span class="badge bg-success">' + sent + '</span></span>';
-                      
-                        
-
-                        //listitem += '<span class="badge badge-primary mr-2"></span>';
-
-                  
-                  
                    
                     listitem += ' </div>';
                     listitem += ' </div>';
@@ -87,7 +97,13 @@ function GetAllDashbaordCount() {
                
                
                 $("#carddashboardcount").html(listitem);
-                $("body").on("click", ".btnGetsummay", function () {
+                $("body").on("click", ".btnGetsummaytotal", function () {
+                    
+                    $('#ProjGetsummayTotal').modal('show');
+                    getProjGetsummayTotal();
+                });
+
+                    $("body").on("click", ".btnGetsummay", function () {
 
                     var spnstatusId = $(this).closest("div").find("#spnstatusId").html();
                     $('#ProjGetsummay').modal('show');
@@ -96,6 +112,7 @@ function GetAllDashbaordCount() {
 
 
                 })
+
             }
 
         },
@@ -206,7 +223,87 @@ $(document).ready(function () {
     });
 });
 
+function getProjGetsummayTotal() {
+    var listItem = "";
+    var userdata =
+    {
+        "Id": 0,
 
+    };
+    $.ajax({
+        url: '/Projects/GetMyProjectsDetails',
+        contentType: 'application/x-www-form-urlencoded',
+        data: userdata,
+        type: 'POST',
+
+        success: function (response) {
+            if (response != "null" && response != null) {
+
+                if (response == -1) {
+                    Swal.fire({
+                        text: ""
+                    });
+                }
+                else if (response == 0) {
+                    listItem += "<tr><td class='text-center' colspan=7>No Record Found</td></tr>";
+
+                    $("#DetailBodysummaryTotal").html(listItem);
+                   
+                }
+
+                else {
+
+                    var count = 1;
+                    // { attId: 8, psmId: 8, attPath: 'Swas_22ed1265-b2a0-4008-b7ff-b3eb5f704849.pdf', actionId: 0, timeStamp: '2024-05-02T16:17:45.6016413', … }
+                    for (var i = 0; i < response.length; i++) {
+
+                        listItem += "<tr>";
+                        listItem += "<td class='d-none'><span id='spntotalprojId'>" + response[i].projId + "</span></td>";
+                        listItem += "<td class='align-middle'><span id='ProjName'>" + count + "</span></td>";
+                        listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].projName + "</span></td>";
+                        listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
+                        listItem += "<td class='align-middle'><span id='ProjName'>" + DateFormatedd_mm_yyyy(response[i].initiatedDate) + "</span></td>";
+                        listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].hostedon + "</span></td>";
+                        listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].apptype + "</span></td>";
+                        listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].remark + "</span></td>";
+                        listItem += "<td class='align-middle'> <button type='button' class='btn btn-success  btn-History ml-3'><i class='fa-solid fa-timeline'></i></button></td>";
+                      
+                          listItem += "</tr>";
+                        count++;
+                    }
+
+                    $("#DetailBodysummaryTotal").html(listItem);
+
+
+                    $("body").on("click", ".btn-History", function () {
+
+                        $('#ProjFwdHistory').modal('show');
+                        GetProjectMovHistory($(this).closest("tr").find("#spntotalprojId").html());
+
+                    });
+
+                }
+            }
+            else {
+                listItem += "<tr><td class='text-center' colspan=7>No Record Found</td></tr>";
+
+                $("#DetailBodysummaryTotal").html(listItem);
+
+            }
+        },
+        error: function (result) {
+            Swal.fire({
+                text: ""
+            });
+        }
+    });
+
+
+
+
+
+
+}
 function getProjGetsummay(spnstatusId) {
     var listItem = "";
     var userdata =
