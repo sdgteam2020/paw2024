@@ -260,9 +260,8 @@ namespace swas.UI.Controllers
 
 
         }
-
-        [HttpPost]
         //[Authorize(Policy = "StakeHolders")]
+        [HttpPost]
         [RequestFormLimits(MultipartBodyLengthLimit = 524288000)]
         public async Task<IActionResult> UploadMultiFile(IFormFile uploadfile, string Reamarks, int PsmId)
         {

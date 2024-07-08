@@ -49,17 +49,18 @@ function GetProjCommentsByUnitId() {
 
                     var count = 1;
                    
-                    // { attId: 8, psmId: 8, attPath: 'Swas_22ed1265-b2a0-4008-b7ff-b3eb5f704849.pdf', actionId: 0, timeStamp: '2024-05-02T16:17:45.6016413', … }
+          
                     for (var i = 0; i < response.length; i++) {
-                        console.log(response[i]); // Log the entire object to see its structure
-                        console.log(response[i].EncyID); // Log specifically the EncyID property
+                        
 
-                        if (response[i] && response[i].EncyID) {
-                            var encyID = response[i].encyID;
-                            alert(encyID); // Alert to check the value of encyID
-                        } else {
-                            console.error("response[i] or response[i].EncyID is undefined or null.");
-                        }
+                        var date = new Date(response[i].timeStamp);
+                        var TimeStamp =
+                            ("0" + date.getDate()).slice(-2) + '-' +
+                            ("0" + (date.getMonth() + 1)).slice(-2) + '-' +
+                            date.getFullYear() + ' ' +
+                            ("0" + date.getHours()).slice(-2) + ':' +
+                            ("0" + date.getMinutes()).slice(-2) + ':' +
+                            ("0" + date.getSeconds()).slice(-2); 
 
                         listItem += "<tr>";
                         listItem += "<td class='noExport d-none'><span class='noExport d-none' id='spnProjId'>" + response[i].projId + "</span><span class='noExport d-none' id='spnpsmId'>" + response[i].psmId + "</span></td>";
@@ -71,7 +72,7 @@ function GetProjCommentsByUnitId() {
                         listItem += "</a>";
                         listItem += "</td>";
                         listItem += "<td class='align-middle'><span id='stakeholder'>" + response[i].stakeholder + "</span></td>";
-
+                        listItem += "<td class='align-middle'><span id='TimeStamp'>" + TimeStamp + "</span></td>";
                         if (response[i].stkStatusId == 1) {  
                             listItem += "<td class='align-middle'><span id='status'>Ok</span></td>";
                             listItem += "<td class='align-middle'><span id='btnedit'><button type='button' class='cls-btncomment btn-icon btn-round btn-success mr-1'><i class='fas fa-comment'></i></button></td>";

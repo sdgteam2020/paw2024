@@ -408,14 +408,14 @@
                         <tr>
                             <th style="width:1% !important;" class=" text-center f-5 s-no-column">S.No</th>
                             <th style="width:9% !important;" class="text-center col-width9">Name of Sponsor</th>
-                            <th class="text-center col-width16">Project Name</th>
+                            <th class="col-width16">Project Name</th>
                             <th style="width:9% !important;" class="text-center col-width9">From</th>
                             <th class="text-center col-width6">To</th>
                             <th class="text-center">Date</th>
                             <th class="text-center">Stage</th>
                             <th class="text-center">SubStage</th>
                             <th style="width:6% !important;" class="text-center col-width6">Action</th>
-                            <th class="text-center">Remark</th>
+                            <th style="width:9% !important;">Remark</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -442,7 +442,7 @@
                                         </div>
                                     </td> *@
 
-                                    <td class="text-center">
+                                    <td class="">
                                         <div class="tooltip-container" data-tooltip="@unitsa.ProjName">
                                             <span class="short-text">@truncateText(unitsa.ProjName, 6)</span>
                                             <span class="tooltip tooltip-text">@unitsa.ProjName</span>
@@ -459,7 +459,7 @@
                                     <td class="col-width10">@unitsa.DateTimeOfUpdate</td>
                                     <td class="col-width10">@unitsa.StageName</td>
                                     <td class="col-width10">@unitsa.StatusName</td>
-                                    <td class="col-width9">@unitsa.ActionName</td>
+                                    <td class="col-width6">@unitsa.ActionName</td>
 
                                     @* <td class="f-12">
                                         <div class="tooltip-containerRemark" data-tooltip="@unitsa.Remark">
@@ -468,7 +468,7 @@
                                         </div>
                                     </td> *@
 
-                                    <td class="text-center">
+                                    <td class="col-width10">
                                         <div class="tooltip-container" data-tooltip="@unitsa.Remark">
                                             <span class="short-text">@truncateText(unitsa.Remark, 2)</span>
                                             <span class="tooltip tooltip-text1">@unitsa.Remark</span>

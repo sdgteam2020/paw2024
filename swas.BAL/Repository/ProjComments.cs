@@ -49,8 +49,8 @@ namespace swas.BAL
                                      //StkStatusId = comment.StkStatusId,
                                      ProjId = proj.ProjId, 
                                      PsmId = mov.PsmId,
-                                     EncyID = _dataProtector.Protect(proj.ProjId.ToString())
-
+                                     EncyID = _dataProtector.Protect(proj.ProjId.ToString()),
+                                     TimeStamp = mov.TimeStamp
                                  }).ToListAsync();
             lst.AddRange(queryes);
             return lst;
