@@ -263,6 +263,7 @@ namespace swas.UI.Controllers
 
         [HttpPost]
         //[Authorize(Policy = "StakeHolders")]
+        [RequestFormLimits(MultipartBodyLengthLimit = 524288000)]
         public async Task<IActionResult> UploadMultiFile(IFormFile uploadfile, string Reamarks, int PsmId)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
@@ -736,6 +737,7 @@ namespace swas.UI.Controllers
 
         [HttpPost]
         //[Authorize(Policy = "StakeHolders")]
+        [RequestFormLimits(MultipartBodyLengthLimit = 524288000)]
         public async Task<IActionResult> SendCommentonProject(IFormFile uploadfile, string Comments, int StkStatusId, int ProjectId, int psmid, DateTime CommentDate)
         {
             try

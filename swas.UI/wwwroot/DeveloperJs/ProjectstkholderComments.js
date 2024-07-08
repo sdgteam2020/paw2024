@@ -167,7 +167,7 @@ function SendMsg() {
                 Swal.fire({
                     position: 'top-end',
                     icon: 'Error',
-                    title: 'comment Not sent allready Accepted !',
+                    title: 'No Amdts Allowed as the Project is Already Accepted By You !',
                     showConfirmButton: true,
                     
                 });
