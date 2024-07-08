@@ -11,44 +11,28 @@
     //    ProcessProjConfirm(ProjId)
     //});
 
-    debugger;
-    // Add this JavaScript after your existing click event handler
     $(".processDetail").click(function () {
-        // Get ProjId and psmId from the corresponding table row
         var $row = $(this).closest('tr');
         var ProjId = $row.find("#SpnCurrentProjId").text().trim();
         var psmId = $row.find("#SpnCurrentpsmId").text().trim();
-
-        // Open the confirmation modal
         $('#confirmationModal').modal('show');
 
-        // Handle confirmation button click
         $('#confirmSend').off('click').on('click', function () {
-            // Get the selected date from datepicker
             var FwdDateForComment = $('#datepicker').val();
-
-            // Check if a date is selected
             if (FwdDateForComment === '') {
-                alert('Please select a date and time.');
-                return; // Prevent further action if date is not selected
+                alert('Please select date & time.');
+                return; 
             }
-            // Close the modal
             $('#confirmationModal').modal('hide');
 
-            // Call your function with selected date
             SentForComment(ProjId, psmId, 0, FwdDateForComment);
             ProcessProjConfirm(ProjId);
         });
     });
 
-    // Ensure modal is closed on dismiss actions
     $('#confirmationModal').on('hidden.bs.modal', function () {
-        // Clear the datepicker value when modal is dismissed
         $('#datepicker').datepicker('setDate', null);
     });
-
-
-
 });
 
 function GetForCommentStakeHolder(ProjId, psmId) {
