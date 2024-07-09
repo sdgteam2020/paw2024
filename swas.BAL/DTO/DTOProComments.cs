@@ -24,5 +24,7 @@ namespace swas.BAL.DTO
         public string? EncyID { get; set; }
 
         public DateTime? TimeStamp { get; set; }
+
+        
     }
 }

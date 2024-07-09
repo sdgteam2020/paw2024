@@ -25,37 +25,37 @@ namespace swas.BAL
         {
             List<DTOProComments> lst = new List<DTOProComments>();
             var queryes = await (from proj in _context.Projects
-                           join mov in _context.ProjStakeHolderMov on proj.ProjId equals mov.ProjId
-                           join stakeholder in _context.tbl_mUnitBranch on proj.StakeHolderId equals stakeholder.unitid
-                                 //join comment in _context.StkComment on mov.PsmId equals comment.PsmId into com
-                                 //from comment in com.DefaultIfEmpty()
-                                     
-                                     // join status in _context.StkStatus on comment.StkStatusId equals status.StkStatusId into statusGroup
-                                     //from status in statusGroup.DefaultIfEmpty()
+                                 join mov in _context.ProjStakeHolderMov on proj.ProjId equals mov.ProjId
+                                 join stakeholder in _context.tbl_mUnitBranch on proj.StakeHolderId equals stakeholder.unitid
                                  let StkStatusId =
-                            (from cr1 in _context.StkComment
-                             join Stdkst in _context.StkStatus on cr1.StkStatusId equals Stdkst.StkStatusId    
-                             where cr1.StakeHolderId== mov.ToUnitId && cr1.PsmId== mov.PsmId
-                             orderby cr1.StkStatusId ascending
-                             select cr1.StkStatusId 
-                            ).FirstOrDefault()/*.Count()*/
-                                 where mov.ToUnitId==UnitId && mov.IsComment==true //&& mov.StatusId==5
-                                 select new DTOProComments
-                           {
-                               ProjectName= proj.ProjName,
-                               Stakeholder = stakeholder.UnitName,
-                               Status = "",
+                             (from cr1 in _context.StkComment
+                              join Stdkst in _context.StkStatus on cr1.StkStatusId equals Stdkst.StkStatusId
+                              where cr1.StakeHolderId == mov.ToUnitId && cr1.PsmId == mov.PsmId
+                              orderby cr1.StkStatusId ascending
+                              select cr1.StkStatusId
+                             ).FirstOrDefault()/*.Count()*/
+                                 where mov.ToUnitId == UnitId && mov.IsComment == true //&& mov.StatusId==5
+                                 group new DTOProComments
+                                 {
+                                     ProjectName = proj.ProjName,
+                                     Stakeholder = stakeholder.UnitName,
+                                     Status = "",
                                      StkStatusId = Convert.ToInt32(StkStatusId),
                                      //StkStatusId = comment.StkStatusId,
-                                     ProjId = proj.ProjId, 
+                                     ProjId = proj.ProjId,
                                      PsmId = mov.PsmId,
                                      EncyID = _dataProtector.Protect(proj.ProjId.ToString()),
-                                     TimeStamp = mov.TimeStamp
-                                 }).ToListAsync();
+                                     TimeStamp = mov.TimeStamp,
+                                     UnitId = mov.ToUnitId
+                                 }
+                                  by new { proj.ProjId, mov.ToUnitId } into g  // Group by both ProjId and ToUnitId
+                                 select g.First()).ToListAsync();
             lst.AddRange(queryes);
             return lst;
 
         }
+
+
 
         public async Task<DTOProComments> GetCommentStatus(int UnitId)
         {
