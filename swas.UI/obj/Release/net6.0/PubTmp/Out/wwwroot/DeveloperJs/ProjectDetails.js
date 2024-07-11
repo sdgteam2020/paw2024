@@ -1,18 +1,38 @@
 ﻿$(document).ready(function () {
 
+    //$(".processDetail").click(function () {
+
+    //    var ProjId = $(this).closest("tr").find("#SpnCurrentProjId").html();
+    //    var psmId = $(this).closest("tr").find("#SpnCurrentpsmId").html();
+    //    var FwdDateForComment = $(this).closest("tr").find("#SpnTimeStampId").text();
+
+    //    //  GetForCommentStakeHolder(ProjId, psmId);
+    //    SentForComment(ProjId, psmId, 0, FwdDateForComment)
+    //    ProcessProjConfirm(ProjId)
+    //});
+
     $(".processDetail").click(function () {
+        var $row = $(this).closest('tr');
+        var ProjId = $row.find("#SpnCurrentProjId").text().trim();
+        var psmId = $row.find("#SpnCurrentpsmId").text().trim();
+        $('#confirmationModal').modal('show');
 
-        var ProjId = $(this).closest("tr").find("#SpnCurrentProjId").html();
-        var psmId = $(this).closest("tr").find("#SpnCurrentpsmId").html();
-        var FwdDateForComment = $(this).closest("tr").find("#SpnTimeStampId").text();
+        $('#confirmSend').off('click').on('click', function () {
+            var FwdDateForComment = $('#datepicker').val();
+            if (FwdDateForComment === '') {
+                alert('Please select date & time.');
+                return; 
+            }
+            $('#confirmationModal').modal('hide');
 
-        //  GetForCommentStakeHolder(ProjId, psmId);
-        SentForComment(ProjId, psmId, 0, FwdDateForComment)
-        ProcessProjConfirm(ProjId)
+            SentForComment(ProjId, psmId, 0, FwdDateForComment);
+            ProcessProjConfirm(ProjId);
+        });
     });
 
-
-
+    $('#confirmationModal').on('hidden.bs.modal', function () {
+        $('#datepicker').datepicker('setDate', null);
+    });
 });
 
 function GetForCommentStakeHolder(ProjId, psmId) {
@@ -39,6 +59,7 @@ function GetForCommentStakeHolder(ProjId, psmId) {
         }
     });
 }
+debugger;
 function SentForComment(ProjId, psmId, unitid, FwdDateForComment) {
     $.ajax({
         url: '/Projects/ProcessMail',
@@ -68,6 +89,7 @@ function SentForComment(ProjId, psmId, unitid, FwdDateForComment) {
         }
     });
 }
+debugger;
 function ProcessProjConfirm(ProjId) {
     $.ajax({
         url: '/Projects/IsProcessProjConfirm',

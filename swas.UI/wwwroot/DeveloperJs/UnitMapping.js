@@ -120,6 +120,8 @@ $(document).ready(function () {
         var StatusActionsMappingId = $("#spanmodalStatusActionsMappingId").html();
         var UnitStatusMappingId = $("#spanmodalUnitStatusMappingId").html();
 
+        var test = $("#spanmodalUnitStatusMappingId").html();
+        alert(test);
 
 
         var data = {

@@ -48,17 +48,32 @@ function GetProjCommentsByUnitId() {
                 else {
 
                     var count = 1;
-                    // { attId: 8, psmId: 8, attPath: 'Swas_22ed1265-b2a0-4008-b7ff-b3eb5f704849.pdf', actionId: 0, timeStamp: '2024-05-02T16:17:45.6016413', … }
+                   
+          
                     for (var i = 0; i < response.length; i++) {
+                        
+
+                        var date = new Date(response[i].timeStamp);
+                        var TimeStamp =
+                            ("0" + date.getDate()).slice(-2) + '-' +
+                            ("0" + (date.getMonth() + 1)).slice(-2) + '-' +
+                            date.getFullYear() + ' ' +
+                            ("0" + date.getHours()).slice(-2) + ':' +
+                            ("0" + date.getMinutes()).slice(-2) + ':' +
+                            ("0" + date.getSeconds()).slice(-2); 
 
                         listItem += "<tr>";
                         listItem += "<td class='noExport d-none'><span class='noExport d-none' id='spnProjId'>" + response[i].projId + "</span><span class='noExport d-none' id='spnpsmId'>" + response[i].psmId + "</span></td>";
                         listItem += "<td class='align-middle'><span id='divName'>" + count + "</span></td>";
-                      
-                        listItem += "<td class='align-middle'><span id='projectName'>" + response[i].projectName + "</span></td>";
-                        listItem += "<td class='align-middle'><span id='stakeholder'>" + response[i].stakeholder + "</span></td>";
 
-                        if (response[i].stkStatusId != null && response[i].stkStatusId != 0 && response[i].stkStatusId != 2) {
+                        listItem += "<td class='align-middle'>";
+                        listItem += "<a href='/Projects/ProjHistory?EncyID=" + encodeURIComponent(response[i].encyID) + "'>";
+                        listItem += "<span id='projectName'>" + response[i].projectName + "</span>";
+                        listItem += "</a>";
+                        listItem += "</td>";
+                        listItem += "<td class='align-middle'><span id='stakeholder'>" + response[i].stakeholder + "</span></td>";
+                        listItem += "<td class='align-middle'><span id='TimeStamp'>" + TimeStamp + "</span></td>";
+                        if (response[i].stkStatusId == 1) {  
                             listItem += "<td class='align-middle'><span id='status'>Ok</span></td>";
                             listItem += "<td class='align-middle'><span id='btnedit'><button type='button' class='cls-btncomment btn-icon btn-round btn-success mr-1'><i class='fas fa-comment'></i></button></td>";
 
@@ -67,9 +82,6 @@ function GetProjCommentsByUnitId() {
                             listItem += "<td class='align-middle'><span id='status'>Pending</span></td>";
                             listItem += "<td class='align-middle'><span id='btnedit'><button type='button' class='cls-btncomment btn-icon btn-round btn-danger mr-1'><i class='fas fa-comment'></i></button></td>";
                         }
-
-
-                        /*    listItem += "<td class='nowrap'><button type='button' class='cls-btnSend btn btn-outline-success mr-1'>Send To Verification</button></td>";*/
                         listItem += "</tr>";
                         count++;
 
@@ -156,7 +168,7 @@ function SendMsg() {
                 Swal.fire({
                     position: 'top-end',
                     icon: 'Error',
-                    title: 'comment Not sent allready Accepted !',
+                    title: 'No Amdts Allowed as the Project is Already Accepted By You !',
                     showConfirmButton: true,
                     
                 });
