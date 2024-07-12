@@ -1,6 +1,6 @@
 ﻿@using swas.DAL.Models
 @{
-   
+
     ViewData["Title"] = "Proj Comments";
     int sno = 0;
 }
@@ -11,7 +11,7 @@
     <div class="card radius-10 w-100">
         <div class="card-body">
 
-            <table id="tbldata" class="table table-striped table-bordered">
+            <table id="Comment" class="table table-striped table-bordered">
                 <!-- Table header -->
                 <thead>
                     <tr>
@@ -20,20 +20,19 @@
                         <th>Project</th>
                         <th>Stakeholder</th>
                         <th>TimeStamp</th>
-                        <th>Status</th> 
+                        <th>Status</th>
                         <th>Action</th>
-                        
+
                     </tr>
                 </thead>
 
                 <tbody id="DetailBody">
-                   
                 </tbody>
 
             </table>
         </div>
     </div>
-  </div>
+</div>
 
 <div class="modal fade" id="ProjCommentModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-xl">
@@ -41,55 +40,55 @@
             <div class="modal-header">
                 <h5 class="modal-title">Add Comments</h5>
                 <span class="d-none" id="ProjectcommentprojId"></span>
-                <span class="d-none"  id="ProjectcommentPsmId"></span>
+                <span class="d-none" id="ProjectcommentPsmId"></span>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
-                <div class="col-md-6">
-                    <div class="card radius-12">
-                        <div class="text-with-icon underline-h7">
-                            <span style="font-size: 20px;">&#128172;</span>
-                            <h7 class="text-center mb-4 underline-h7" style="text-align:left; text-decoration-color:revert; color:antiquewhite">
-                                Add Comments for Project
-                            </h7>
-                        </div>
+                    <div class="col-md-6">
+                        <div class="card radius-12">
+                            <div class="text-with-icon underline-h7">
+                                <span style="font-size: 20px;">&#128172;</span>
+                                <h7 class="text-center mb-4 underline-h7" style="text-align:left; text-decoration-color:revert; color:antiquewhite">
+                                    Add Comments for Project
+                                </h7>
+                            </div>
 
-                        <form class="form-group" asp-action="UpdateStatus" id="StatusUpdateForm" enctype="multipart/form-data">
-                            <div class="container mt-1">
-                                <div class="row justify-content-center">
-                                    <div class="col-md-10 form-container">
-                                        @*<h6 class="text-center mb-4" id="stakeholderInfo">*@
+                            <form class="form-group" asp-action="UpdateStatus" id="StatusUpdateForm" enctype="multipart/form-data">
+                                <div class="container mt-1">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-10 form-container">
+                                            @*<h6 class="text-center mb-4" id="stakeholderInfo">*@
 
 
-                                        <div class="needs-validation" novalidate>
-                                            <div class="row">
-                                                <div>
-                                                    <!-- First Part: Comments -->
-                                                    <div class="form-group">
-                                                        <label id="Comm"><b>Comment</b> <span class="required-indicator">*</span></label>
+                                            <div class="needs-validation" novalidate>
+                                                <div class="row">
+                                                    <div>
+                                                        <!-- First Part: Comments -->
+                                                        <div class="form-group">
+                                                            <label id="Comm"><b>Comment</b> <span class="required-indicator">*</span></label>
                                                             <textarea id="Comments" style="width: 100%; height: 240px;" class="form-control requiredField" rows="4" required oninput="ValInData(this)"></textarea>
-                                                        <div class="invalid-feedback">Please provide the Comments</div>
-                                                        
-                                                    </div>
-                                                    <div class="form-group">
+                                                            <div class="invalid-feedback">Please provide the Comments</div>
 
-                                                        
+                                                        </div>
+                                                        <div class="form-group">
 
-                                                            <label  class="control-label"><b>Status</b> <span class="text-danger"><font style="color:red;"><b>*</b></font></span></label>
+
+
+                                                            <label class="control-label"><b>Status</b> <span class="text-danger"><font style="color:red;"><b>*</b></font></span></label>
                                                             <select class="form-control requiredField" id="ddlStatus">
                                                                 <option value="">Select a Status</option>
 
-                                                               
+
                                                             </select>
 
                                                             <div class="invalid-feedback">
                                                                 Select Status Required
                                                             </div>
 
-                                                        <div class="invalid-feedback">Please select a Status.</div>
+                                                            <div class="invalid-feedback">Please select a Status.</div>
+                                                        </div>
                                                     </div>
-                                                </div>
 
                                                     <div class="form-group">
                                                         <label class="control-label"><b>Date Of Fwd:</b></label>
@@ -97,23 +96,23 @@
                                                     </div>
 
                                                     <div class="form-group">
-                                                    <label for="pdfFile"><b>Upload PDF</b></label>
-                                                    <input type="file" id="uploadfile" name="uploadfile" accept=".pdf" class="form-control" />
-                                                    <div class="invalid-feedback">Please upload a PDF file.</div>
-                                                </div>
-                                                <div class="form-group text-left">
-                                                    <button type="button" class="btn btn-primary" id="StatusUpdate">Send</button>
+                                                        <label for="pdfFile"><b>Upload PDF</b></label>
+                                                        <input type="file" id="uploadfile" name="uploadfile" accept=".pdf" class="form-control" />
+                                                        <div class="invalid-feedback">Please upload a PDF file.</div>
+                                                    </div>
+                                                    <div class="form-group text-left">
+                                                        <button type="button" class="btn btn-primary" id="StatusUpdate">Send</button>
+
+                                                    </div>
 
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                </div>
                     <div class="col-md-6">
                         @Html.Partial("_ProjectComments");
                     </div>
@@ -122,6 +121,15 @@
         </div>
     </div>
 </div>
+
+<script>
+    // JavaScript to reset the date when the modal closes
+    $('#ProjCommentModal').on('hidden.bs.modal', function (e) {
+        $('#CommentDateFwd').val('');
+    });
+</script>
+
 <script src="~/developerjs/mtable.js"></script>
 <script src="~/developerjs/projectstkholdercomments.js"></script>
-<script src="~/developerjs/commanfordatatable.js"></script>
+<script src="~/developerjs/NewProject.js"></script>
+@*<script src="~/developerjs/commanfordatatable.js"></script>*@

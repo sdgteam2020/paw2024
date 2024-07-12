@@ -31,7 +31,7 @@ namespace swas.BAL
                              (from cr1 in _context.StkComment
                               join Stdkst in _context.StkStatus on cr1.StkStatusId equals Stdkst.StkStatusId
                               where cr1.StakeHolderId == mov.ToUnitId && cr1.PsmId == mov.PsmId
-                              orderby cr1.StkStatusId ascending
+                              orderby cr1.StkCommentId descending
                               select cr1.StkStatusId
                              ).FirstOrDefault()/*.Count()*/
                                  where mov.ToUnitId == UnitId && mov.IsComment == true //&& mov.StatusId==5

@@ -18,7 +18,7 @@ $(document).ready(function () {
 
        
 
-        requiredFields = $('#fwduploaditems').find('.requiredField');
+      var  requiredFields = $('#fwduploaditems').find('.requiredField');
         var allFieldsComplete = true;
         requiredFields.each(function (index) {
             if (this.value.length == 0) {
@@ -48,10 +48,31 @@ $(document).ready(function () {
        
 
     });
-     $("#submitUpload").click(function () {
+    $("#submitUpload").click(function () {
 
+        var requiredFields = $('#tablebasic2').find('.requiredField');
+         var allFieldsComplete = true;
+         requiredFields.each(function (index) {
+             if (this.value.length == 0) {
+                 $(this).addClass('is-invalid');
+                 allFieldsComplete = false;
+             } else {
+                 $(this).removeClass('is-invalid');
+             }
+         });
+         if (!allFieldsComplete) {
 
-         AddProject(this);
+             Swal.fire({
+                 title: 'Error!',
+                 text: 'Please complete all required fields',
+                 icon: 'error',
+                 showConfirmButton: false,
+                 timer: 1000
+             })
+         }
+         else {
+             AddProject(this);
+         }
        
 
     });
@@ -187,6 +208,7 @@ $(document).ready(function () {
         }
         return allFieldsComplete;
     });
+
 
    
     $("body").on("click", ".btndeleteProject", function () {
