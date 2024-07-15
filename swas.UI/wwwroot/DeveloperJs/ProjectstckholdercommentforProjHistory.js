@@ -90,7 +90,7 @@ function GetAllComments1() {
             var tableHTML = '<table style="width:100%; border: 1px solid black; border-collapse:collapse;">';
             tableHTML += '<thead>';
             tableHTML += '<tr>';
-            tableHTML += '<th style="text-align: center; border: 1px solid black;">Ser No</th>';
+            tableHTML += '<th style="width:5%;text-align:center;border:1px solid black;border-collapse:collapse">Ser No</th>';
             tableHTML += '<th style="text-align: center; border: 1px solid black;">Stakeholder</th>';
             tableHTML += '<th style="text-align: center; border: 1px solid black;">Datetime</th>';
             tableHTML += '<th style="text-align: center; border: 1px solid black;">Comment</th>';

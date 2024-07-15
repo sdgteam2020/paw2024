@@ -1,102 +1,3 @@
-Date : 4/25/2024 10:27:17 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/25/2024 10:27:30 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/25/2024 10:28:11 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/25/2024 10:28:25 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/25/2024 10:28:26 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/25/2024 10:28:44 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/25/2024 10:28:46 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/25/2024 10:29:36 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/25/2024 10:34:00 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/25/2024 10:37:32 AM
-Invalid object name 'Users'.
------------------------------------------------------------------------------
-Date : 4/25/2024 10:38:25 AM
-Invalid object name 'Users'.
------------------------------------------------------------------------------
-Date : 4/25/2024 10:44:50 AM
-Invalid column name 'IC/JC/Army No'.
-Statement(s) could not be prepared.
------------------------------------------------------------------------------
-Date : 4/25/2024 10:44:56 AM
-Invalid column name 'IC/JC/Army No'.
-Statement(s) could not be prepared.
------------------------------------------------------------------------------
-Date : 4/25/2024 2:06:00 PM
-Object reference not set to an instance of an object.
------------------------------------------------------------------------------
-Date : 4/25/2024 2:06:00 PM
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 4/25/2024 2:06:42 PM
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 26-04-2024 15:28:20
-Unable to cast object of type 'System.DateTime' to type 'System.String'.
------------------------------------------------------------------------------
-Date : 30-04-2024 10:52:41
-Invalid column name 'CreatedDate'.
-Invalid column name 'Flag'.
-Statement(s) could not be prepared.
------------------------------------------------------------------------------
-Date : 30-04-2024 10:52:42
-Invalid column name 'CreatedDate'.
-Invalid column name 'Flag'.
-Statement(s) could not be prepared.
------------------------------------------------------------------------------
-Date : 30-04-2024 10:52:44
-Invalid column name 'CreatedDate'.
-Invalid column name 'Flag'.
-Statement(s) could not be prepared.
------------------------------------------------------------------------------
-Date : 30-04-2024 10:54:35
-Invalid column name 'CreatedDate'.
-Invalid column name 'Flag'.
-Statement(s) could not be prepared.
------------------------------------------------------------------------------
-Date : 30-04-2024 10:54:36
-Invalid column name 'CreatedDate'.
-Invalid column name 'Flag'.
-Statement(s) could not be prepared.
------------------------------------------------------------------------------
-Date : 30-04-2024 10:54:40
-Invalid column name 'CreatedDate'.
-Invalid column name 'Flag'.
-Statement(s) could not be prepared.
------------------------------------------------------------------------------
-Date : 30-04-2024 14:59:42
-There is already an open DataReader associated with this Connection which must be closed first.
------------------------------------------------------------------------------
-Date : 30-04-2024 14:59:42
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 30-04-2024 15:00:42
-There is already an open DataReader associated with this Connection which must be closed first.
------------------------------------------------------------------------------
-Date : 30-04-2024 15:00:42
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 30-04-2024 15:01:28
-There is already an open DataReader associated with this Connection which must be closed first.
------------------------------------------------------------------------------
-Date : 30-04-2024 15:01:28
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
 Date : 01-05-2024 14:38:24
@@ -898,3 +799,102 @@ Data is Null. This method or property cannot be called on Null values.
 -----------------------------------------------------------------------------
 Date : 12-07-2024 17:30:38
 Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 12-07-2024 17:34:39
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 12-07-2024 17:34:39
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 12-07-2024 17:37:18
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 12-07-2024 17:37:18
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 15-07-2024 11:58:01
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 15-07-2024 12:18:11
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 15-07-2024 12:18:11
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 15-07-2024 12:42:12
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 15-07-2024 12:42:12
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 15-07-2024 12:48:07
+D:\Projects\paw2024\swas.UI\wwwroot\Uploads\ not found as file or resource.
+-----------------------------------------------------------------------------
+Date : 15-07-2024 12:54:41
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 15-07-2024 12:54:41
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 15-07-2024 12:56:56
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 15-07-2024 12:56:56
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 15-07-2024 13:00:23
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 15-07-2024 13:00:23
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 15-07-2024 14:29:08
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 15-07-2024 14:29:08
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 15-07-2024 14:31:51
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 15-07-2024 14:31:51
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 15-07-2024 14:44:43
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 15-07-2024 14:44:43
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 15-07-2024 14:44:46
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 15-07-2024 14:44:46
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 15-07-2024 14:48:52
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 15-07-2024 14:48:52
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 15-07-2024 15:19:49
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 15-07-2024 15:19:49
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 15-07-2024 16:36:47
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 15-07-2024 16:36:47
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 15-07-2024 16:46:34
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 15-07-2024 16:46:34
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 15-07-2024 16:48:58
+D:\Projects\paw2024\swas.UI\wwwroot\Uploads\ not found as file or resource.
