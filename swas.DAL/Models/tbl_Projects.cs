@@ -126,6 +126,40 @@ namespace swas.DAL.Models
         [ForeignKey("mHostType")]
         public int HostTypeID { get; set; }
 
+
+
+        //16/07/24
+
+        [Display(Name = "Brief details of OS & Sys software reqmts")]
+        public string? Detlsof_OS { get; set; }
+
+        [Display(Name = "Brief details of proposed DB Engine to be Used in the Appl.")]
+        public string? ProposedDB_Engine { get; set; }
+
+
+        [Display(Name = "Detls of Sw Architecture and COTS Sw proposed to be utilised")]
+        public string? DetlsofSw_Architecture { get; set; }
+
+
+        [Display(Name = "Detls of proposed architecture")]
+        public string? DetlsofProposed_Architecture { get; set; }
+
+        [Display(Name = "Brief details of proposed utilisation of Public Key Infra(PKI) and Iden and Access Mgt(IAM)")]
+        public string? DetlsPki_IAM { get; set; }
+
+
+        [Display(Name = "Technology dependencies(if any)")]
+        public string? Technology_dependencies { get; set; }
+
+
+        [Display(Name = "Database reqmts")]
+        public string? Database_reqmts { get; set; }
+
+        [Display(Name = "Enhancement/upgradation(incl patch mgt/Sw updt procedure and mechanism")]
+        public string? Enhancement_upgradation { get; set; }
+
+        [Display(Name = "Details of licensing(if any)")]
+        public string? Details_licensing { get; set; }
         // end new properties
 
         [NotMapped]
@@ -190,8 +224,9 @@ namespace swas.DAL.Models
         [NotMapped]
         public int? PsmIds { get; set; }
         [NotMapped]
-        public int StageId { get; set; }    
+        public int StageId { get; set; }
 
+        
     }
 
 

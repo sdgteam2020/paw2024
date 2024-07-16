@@ -232,7 +232,9 @@ $(document).ready(function () {
     });
 });
 function AddProject(thistag) {
-
+    debugger;
+    alert($("#Database_reqmts").val());
+    alert($("#ProjName").val());
     $.ajax({
         url: '/Projects/AddProject',
         type: 'POST',
@@ -262,7 +264,17 @@ function AddProject(thistag) {
             "EndorsmentbyHeadof": $("#EndorsmentbyHeadof").val(),
             "CurrentPslmId": $("#CurrentPslmId").val(),
             "ProjCode": $("#ProjCode").val(),
-            "Sponsor": $("#sponsorNameInput").val()
+            "Sponsor": $("#sponsorNameInput").val(),
+
+            "Detlsof_OS": $("#Detlsof_OS").val(),
+            "ProposedDB_Engine": $("#ProposedDB_Engine").val(),
+            "DetlsofSw_Architecture": $("#DetlsofSw_Architecture").val(),
+            "DetlsofProposed_Architecture": $("#DetlsofProposed_Architecture").val(),
+            "DetlsPki_IAM": $("#DetlsPki_IAM").val(),
+            "Technology_dependencies": $("#Technology_dependencies").val(),
+            "Database_reqmts": $("#Database_reqmts").val(),
+            "Enhancement_upgradation": $("#Enhancement_upgradation").val(),
+            "Details_licensing": $("#Details_licensing").val()
            
         }, //get the search string
         success: function (result) {

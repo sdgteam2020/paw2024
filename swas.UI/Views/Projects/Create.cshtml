@@ -324,15 +324,6 @@
                                         </div>
                                     </td>
 
-                                    @*          <td>
-                                @Html.LabelFor(model => model.EnvisagedCost, new { id = "AddEnvisagedCost" })
-
-                                </td>
-                                <td>
-                                @Html.TextBoxFor(model => model.EnvisagedCost, new { @class = "form-control requiredField", type = "number" })
-
-                                </td>*@
-
                                     <td>
                                         @Html.LabelFor(model => model.EnvisagedCost, new { id = "AddEnvisagedCost" })
                                     </td>
@@ -419,6 +410,95 @@
                                     </td>
                                 </tr>
 
+                                <tr>
+                                    <td>
+                                        @Html.LabelFor(model => model.Detlsof_OS, new { id = "AddDetlsof_OS" })
+                                    </td>
+                                    <td>
+
+                                        @Html.EditorFor(model => model.Detlsof_OS, new { htmlAttributes = new { @class = "form-control ",onkeyup="ValInData(this)" } })
+
+                                    </td>
+
+                                    <td>
+                                        @Html.LabelFor(model => model.ProposedDB_Engine, new { id = "AddProposedDB_Engine" })
+
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(model => model.ProposedDB_Engine, new { htmlAttributes = new { @class = "form-control " } })
+
+                                    </td>
+                               
+                                    <td>
+                                        @Html.LabelFor(model => model.DetlsofSw_Architecture, new { id = "AddDetlsofSw_Architecture" })
+
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(model => model.DetlsofSw_Architecture, new { htmlAttributes = new { @class = "form-control " } })
+
+                                    </td>
+                                    
+                                </tr>
+
+
+                                <tr>
+                                    <td>
+                                        @Html.LabelFor(model => model.DetlsofProposed_Architecture, new { id = "AddDetlsofProposed_Architecture" })
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(model => model.DetlsofProposed_Architecture, new { htmlAttributes = new { @class = "form-control ",onkeyup="ValInData(this)" } })
+
+                                    </td>
+
+                                    <td>
+                                        @Html.LabelFor(model => model.DetlsPki_IAM, new { id = "AddDetlsPki_IAM" })
+
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(model => model.DetlsPki_IAM, new { htmlAttributes = new { @class = "form-control " } })
+
+                                    </td>
+
+                                    <td>
+                                        @Html.LabelFor(model => model.Technology_dependencies, new { id = "AddTechnology_dependencies" })
+
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(model => model.Technology_dependencies, new { htmlAttributes = new { @class = "form-control " } })
+
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+                                    <td>
+                                        @Html.LabelFor(model => model.Database_reqmts, new { id = "AddDatabase_reqmts" })
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(model => model.Database_reqmts, new { htmlAttributes = new { @class = "form-control ",onkeyup="ValInData(this)" } })
+
+                                    </td>
+
+                                    <td>
+                                        @Html.LabelFor(model => model.Enhancement_upgradation, new { id = "AddEnhancement_upgradation" })
+
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(model => model.Enhancement_upgradation, new { htmlAttributes = new { @class = "form-control " } })
+
+                                    </td>
+
+                                    <td>
+                                        @Html.LabelFor(model => model.Details_licensing, new { id = "AddDetails_licensing" })
+
+                                    </td>
+                                    <td>
+                                        @Html.EditorFor(model => model.Details_licensing, new { htmlAttributes = new { @class = "form-control " } })
+
+                                    </td>
+
+                                </tr>
                             </table>
 
 

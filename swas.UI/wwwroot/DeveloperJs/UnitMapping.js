@@ -4,6 +4,7 @@ $(document).ready(function () {
 
     var UnitId = $("#Spnmodalunitid").html();
 
+    
     $("#ddlStage").change(function () {
 
         mMsaterStage(0, "ddlSubStage", 6, $("#ddlStage").val(), 100)
@@ -48,7 +49,7 @@ $(document).ready(function () {
 
 
         var table;
-       
+        alert(UnitId);
 
         $.ajax({
             type: 'POST',
