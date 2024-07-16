@@ -272,7 +272,7 @@
                                                 <td>@project.Stage</td>
                                                 <td>@project.Action</td>
 
-                                                <td>
+                                               @* <td>
 
                                                     @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
                                                     {
@@ -288,6 +288,31 @@
                                                     }
                                                     <button type="button" class="btn btn-success btn-FwdHistory ml-3" title="History" style="margin-top: 1px;"><i class="fa-solid fa-timeline"></i></button>
 
+                                                </td>*@
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
+                                                            {
+                                                                <a href="javascript:void(0);" class="processDetail" data-id="@project.EncyPsmID">
+                                                                    <img src="/assets/images/icons/process1.png" alt="Icon" style="height: 22px;">
+                                                                </a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <button type="button" class="btn btn-success btn-Fwd" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
+                                                            }
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
+                                                            {
+                                                                <button type="button" class="btn btn-success btn-Obsn" style="padding: 1px !important;font-size: 13px !important;">Obsn</button>
+                                                            }
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <button type="button" class="btn btn-success btn-FwdHistory" style="margin-top: 1px;" title="History"><i class="fa-solid fa-timeline"></i></button>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         }
@@ -322,20 +347,7 @@
                                                         </div>
                                                     </a>
                                                 </td>
-                                                @* <td class="f-12">
-                                        <span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
-                                        <span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
-                                        <span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
-                                        <span class="d-none" id="SpnTimeStampId">@project.TimeStamp</span>
-                                        <span class="d-none" id="SpnTimeStampId">@project.StageId</span>
-                                        <span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
-
-                                        <div class="tooltip-container" data-tooltip="@project.ProjName">
-                                        <span class="short-text">@truncateText(project.ProjName, 6)</span>
-                                        <span class="tooltip tooltip-text">@project.ProjName</span>
-                                        </div>
-
-                                        </td> *@
+                                                
 
 
                                                 <td class="RefLetter-container">
@@ -358,7 +370,7 @@
                                                 <td>@project.Stage</td>
                                                 <td>@project.Action</td>
 
-                                                <td>
+                                                @*<td>
 
                                                     @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
                                                     {
@@ -374,6 +386,33 @@
                                                     }
                                                     <button type="button" class="btn btn-success btn-FwdHistory ml-3" title="History" style="margin-top: 1px;"><i class="fa-solid fa-timeline"></i></button>
 
+                                                </td>*@
+
+
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
+                                                            {
+                                                                <a href="javascript:void(0);" class="processDetail" data-id="@project.EncyPsmID">
+                                                                    <img src="/assets/images/icons/process1.png" alt="Icon" style="height: 22px;">
+                                                                </a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <button type="button" class="btn btn-success btn-Fwd" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
+                                                            }
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
+                                                            {
+                                                                <button type="button" class="btn btn-success btn-Obsn" style="padding: 1px !important;font-size: 13px !important;">Obsn</button>
+                                                            }
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <button type="button" class="btn btn-success btn-FwdHistory" style="margin-top: 1px;" title="History"><i class="fa-solid fa-timeline"></i></button>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                             </tr>
 
