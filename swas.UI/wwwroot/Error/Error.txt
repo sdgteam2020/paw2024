@@ -1,67 +1,4 @@
 -----------------------------------------------------------------------------
-Date : 03-07-2024 11:25:49
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 03-07-2024 11:59:40
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 03-07-2024 11:59:40
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 03-07-2024 12:02:00
-An error occurred during a cryptographic operation.
------------------------------------------------------------------------------
-Date : 03-07-2024 12:02:00
-The process cannot access the file 'C:\Users\lanmanager\Desktop\3July2024\final paw code 28Jun 24_1635Hrs\swas.UI\wwwroot\Error\Error.txt' because it is being used by another process.
------------------------------------------------------------------------------
-Date : 03-07-2024 12:02:00
-Object reference not set to an instance of an object.
------------------------------------------------------------------------------
-Date : 03-07-2024 12:02:00
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 03-07-2024 12:02:30
-An error occurred during a cryptographic operation.
------------------------------------------------------------------------------
-Date : 03-07-2024 12:02:30
-Object reference not set to an instance of an object.
------------------------------------------------------------------------------
-Date : 03-07-2024 12:02:30
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 03-07-2024 12:03:38
-An error occurred during a cryptographic operation.
------------------------------------------------------------------------------
-Date : 03-07-2024 12:03:38
-Object reference not set to an instance of an object.
------------------------------------------------------------------------------
-Date : 03-07-2024 12:03:38
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 03-07-2024 12:06:18
-An error occurred during a cryptographic operation.
------------------------------------------------------------------------------
-Date : 03-07-2024 12:15:16
-Object reference not set to an instance of an object.
------------------------------------------------------------------------------
-Date : 03-07-2024 12:15:16
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 03-07-2024 12:16:49
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 03-07-2024 12:16:49
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 03-07-2024 12:20:00
-An error occurred during a cryptographic operation.
------------------------------------------------------------------------------
-Date : 03-07-2024 12:20:11
-Object reference not set to an instance of an object.
------------------------------------------------------------------------------
-Date : 03-07-2024 12:20:11
-Request failed & Status Code : 200
------------------------------------------------------------------------------
 Date : 03-07-2024 12:21:31
 Data is Null. This method or property cannot be called on Null values.
 -----------------------------------------------------------------------------
@@ -897,4 +834,67 @@ Date : 16-07-2024 17:22:42
 Data is Null. This method or property cannot be called on Null values.
 -----------------------------------------------------------------------------
 Date : 16-07-2024 17:22:42
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 18-07-2024 09:29:43
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 18-07-2024 09:29:43
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 18-07-2024 09:32:49
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 18-07-2024 09:32:49
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 18-07-2024 09:35:58
+This SqlTransaction has completed; it is no longer usable.
+-----------------------------------------------------------------------------
+Date : 18-07-2024 09:36:04
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 18-07-2024 09:36:04
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 18-07-2024 09:37:40
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 18-07-2024 09:37:40
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 18-07-2024 09:57:05
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 18-07-2024 09:57:05
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 18-07-2024 10:06:33
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 18-07-2024 10:06:33
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 18-07-2024 10:11:11
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 18-07-2024 10:11:11
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 18-07-2024 10:16:45
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 18-07-2024 10:16:45
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 18-07-2024 10:20:11
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 18-07-2024 10:20:11
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 18-07-2024 10:32:26
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 18-07-2024 10:32:26
 Request failed & Status Code : 200

@@ -232,9 +232,9 @@ $(document).ready(function () {
     });
 });
 function AddProject(thistag) {
-    debugger;
-    alert($("#Database_reqmts").val());
-    alert($("#ProjName").val());
+
+   
+  
     $.ajax({
         url: '/Projects/AddProject',
         type: 'POST',

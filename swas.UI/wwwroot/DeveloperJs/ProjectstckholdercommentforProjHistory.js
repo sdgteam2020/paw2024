@@ -16,6 +16,7 @@ function GetAllComments() {
             "ProjId": $(".ProjectcommentprojId").html()
         },
         success: function (data) {
+            debugger;
             var tableHTML = '<table class="table" style="width:100%; border: 1px solid black; border-collapse:collapse;">';
             tableHTML += '<thead>';
             tableHTML += '<tr>';
@@ -46,7 +47,7 @@ function GetAllComments() {
                     tableHTML += '<td style="border: 1px solid black;">' + data[i].comments + '</td>';
                     tableHTML += '<td style="border: 1px solid black;">' + (data[i].status == "Accepted" ? '<span class="badge badge-success text-white">' + data[i].status + '</span>' : '<span class="badge badge-danger text-white">' + data[i].status + '</span>') + '</td>';
                     tableHTML += '<td style="border: 1px solid black;">';
-                    if (data[i].state !== null) {
+                    if (data[i].state !== null && data[i].attpath !== null && data[i].attpath !== '') {
                         tableHTML += '<a href="/Home/WaterMark3?id=' + data[i].attpath + '" target="_blank">';
                         tableHTML += '<img src="/assets/images/icons/pdfimg.png" alt="PDF icon" style="width: 24px; height: 24px;">';
                         tableHTML += '</a>';
