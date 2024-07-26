@@ -16,11 +16,6 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 namespace swas.BAL.Repository
 {
 
-    ///Created and Reviewed by : Sub Maj Sanal
-    ///Reviewed Date : 31 Jul 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start
   
     public class ActionsRepository : GenericRepositoryDL<tbl_mActions>, IActionsRepository
 

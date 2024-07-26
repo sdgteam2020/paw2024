@@ -48,7 +48,7 @@ namespace swas.BAL.Repository
         public async Task<List<DTOProjectMovHistory>> ProjectMovHistory(int? ProjectId)
         {
 
-
+           
             var query = await (from a in _dbContext.Projects
                                join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
                                join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid
@@ -65,7 +65,8 @@ namespace swas.BAL.Repository
                                {
                                    PsmId = b.PsmId,
                                    Stages = stge.Stages,
-                                   Status = ststus.Status,
+                                   Status = tounit.UnitName + " " + "For Comments",
+                                   //Status = ststus.Status,
                                    Actions = act.Actions,
                                    FromUnitName = " " + b.UserDetails + " ( " + fromunit.UnitName + ")",
                                    ToUnitName = tounit.UnitName,
@@ -80,6 +81,12 @@ namespace swas.BAL.Repository
 
                                }).ToListAsync();
 
+            var lastInitialStageRecord = query.LastOrDefault(record => record.Stages == "Initial Stage");
+
+            if (lastInitialStageRecord != null)
+            {
+                lastInitialStageRecord.Status = lastInitialStageRecord.ToUnitName;
+            }
 
 
             return query;

@@ -73,10 +73,19 @@ function GetProjCommentsByUnitId() {
                         listItem += "</td>";
                         listItem += "<td class='align-middle'><span id='stakeholder'>" + response[i].stakeholder + "</span></td>";
                         listItem += "<td class='align-middle'><span id='TimeStamp'>" + TimeStamp + "</span></td>";
-                        if (response[i].stkStatusId == 1) {  
-                            listItem += "<td class='align-middle'><span id='status'>Ok</span></td>";
+                        if (response[i].stkStatusId == 1) {
+                            listItem += "<td class='align-middle'><span id='status'>Accepted</span></td>";
                             listItem += "<td class='align-middle'><span id='btnedit'><button type='button' class='cls-btncomment btn-icon btn-round btn-success mr-1'><i class='fas fa-comment'></i></button></td>";
 
+                        }
+                        else if (response[i].stkStatusId == 2) {
+                            listItem += "<td class='align-middle'><span id='status'>Obsn</span></td>";
+                            listItem += "<td class='align-middle'><span id='btnedit'><button type='button' class='cls-btncomment btn-icon btn-round  btn-warning mr-1'><i class='fas fa-comment'></i></button></td>";
+
+                        }
+                        else if (response[i].stkStatusId == 3) {
+                            listItem += "<td class='align-middle'><span id='status'>Rejected</span></td>";
+                            listItem += "<td class='align-middle'><span id='btnedit'><button type='button' class='cls-btncomment btn-icon btn-round btn-danger mr-1'><i class='fas fa-comment'></i></button></td>";
                         }
                         else {
                             listItem += "<td class='align-middle'><span id='status'>Pending</span></td>";
@@ -213,6 +222,8 @@ function GetAllComments()
                     commentContainer += '<div>';
                     if (data[i].status == "Accepted")
                         commentContainer += '<span class="comment-meta badge badge-success text-white">' + data[i].status + '</span>';
+                    else if (data[i].status == "Obsn")
+                        commentContainer += '<span class="comment-meta badge badge-warning text-white">' + data[i].status + '</span>';
                     else
                         commentContainer += '<span class="comment-meta badge badge-danger text-white">' + data[i].status + '</span>';
                     if (data[i].attpath !== '' && data[i].attpath !== null) {
@@ -225,7 +236,7 @@ function GetAllComments()
                     commentContainer += '</span>';
                     commentContainer += '</div>';
                     commentContainer += '</div>';
-                    commentContainer += '<div class="comment-content">' + data[i].comments + '</div>';
+                    commentContainer += '<div class="comment-content formated-text"><p>' + data[i].comments + '</p></div>';
                     commentContainer += '</div>';
                 }
 

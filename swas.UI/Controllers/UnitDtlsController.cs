@@ -158,7 +158,7 @@ namespace swas.UI.Controllers
                 }
                 else
                 {
-                    TempData["FailureMessage"] = "Unit Already Exist... Check SUS No or Unit Name!";
+                    TempData["FailureMessage"] = "Unit Already Exist... Check Unit Name!";
                 }
 
                 udtl = await _unitRepository.GetAllUnitAsync();

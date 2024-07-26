@@ -41,7 +41,7 @@ function GetAllComments() {
                         ("0" + date.getSeconds()).slice(-2);
 
                     tableHTML += '<tr>';
-                    tableHTML += '<td style="border: 1px solid black;">' + (i + 1) + '</td>';
+                    tableHTML += '<td style="border: 1px solid black;width:1% !important">' + (i + 1) + '</td>';
                     tableHTML += '<td style="border: 1px solid black;">' + data[i].stakeholder + '</td>';
                     tableHTML += '<td style="border: 1px solid black;">' + formattedDate + '</td>';
                     tableHTML += '<td style="border: 1px solid black;">' + data[i].comments + '</td>';

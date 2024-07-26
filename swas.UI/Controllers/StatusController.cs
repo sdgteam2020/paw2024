@@ -1,42 +1,55 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
+using swas.BAL.DTO;
+using swas.BAL.Helpers;
 using swas.BAL.Interfaces;
+using swas.BAL.Repository;
+using swas.DAL;
 using swas.DAL.Models;
 using System.Threading.Tasks;
 
 namespace swas.UI.Controllers
 {
 
-    ///Created and Reviewed by : Sub Maj Sanal
-    ///Reviewed Date : 31 Jul 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start
-
     public class StatusController : Controller
     {
         private readonly IStatusRepository _statusRepository;
+        private readonly ApplicationDbContext _context;
+        private readonly IDataProtector _dataProtector;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public StatusController(IStatusRepository statusRepository)
+        public StatusController( ApplicationDbContext context, IDataProtectionProvider DataProtector , IStatusRepository statusRepository, IHttpContextAccessor httpContextAccessor)
         {
+            
+            _context = context;
+            _dataProtector = DataProtector.CreateProtector("swas.UI.Controllers.UnitDtlsController");
             _statusRepository = statusRepository;
+            _httpContextAccessor = httpContextAccessor;
+
         }
-        ///Created and Reviewed by : Sub Maj M Sanal Kumar
-        // Reviewed Date : 31 Jul 23
-        // GET: Status
+
         [Authorize(Policy = "Admin")]
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var statusList = await _statusRepository.GetAllStatusAsync();
-            return View(statusList);
+
+            var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+            var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
+            var watermarkText = $" {ipAddress}\n  {currentDatetime}";
+
+            TempData["ipadd"] = watermarkText;
+
+            var status = await _statusRepository.GetAll();
+            return View(status);
         }
-        ///Created and Reviewed by : Sub Maj M Sanal Kumar
-        // Reviewed Date : 31 Jul 23
-        // GET: Status/Details/5
+
+
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Details(int id)
         {
-            var status = await _statusRepository.GetStatusByIdAsync(id);
+            var status = await _statusRepository.Get(id);
             if (status == null)
             {
                 return NotFound();
@@ -44,50 +57,101 @@ namespace swas.UI.Controllers
 
             return View(status);
         }
-        ///Created and Reviewed by : Sub Maj M Sanal Kumar
-        // Reviewed Date : 31 Jul 23
-        // GET: Status/Create
-        [Authorize(Policy = "Admin")]
-        public async Task<IActionResult> Create()
-        {
-            var Status = await _statusRepository.GetAllStatusAsync();
-            return View(Status);
+
+     
+
+        //[Authorize(Policy = "Admin")]
+        //public async Task<IActionResult> Create()
+        //{
+        //    var Status = await _statusRepository.GetAll();
+        //    return View(Status);
             
-        }
-        ///Created and Reviewed by : Sub Maj M Sanal Kumar
-        // Reviewed Date : 31 Jul 23
-        // POST: Status/Create
-        [Authorize(Policy = "Admin")]
+        //}
+
+
+        
+        //[HttpPost]
+        
+        //public async Task<IActionResult> CreateStatus (tbl_mStatus status)
+        //{
+        //    Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
+        //    if (ModelState.IsValid)
+        //    {
+        //        status.EditDeleteBy = (int)Logins.unitid;
+        //        status.UpdatedByUserId = (int)Logins.unitid;
+        //        status.IsDeleted = false;
+        //        status.IsActive = true;
+        //        status.DateTimeOfUpdate = DateTime.Now;
+        //        status.EditDeleteDate = DateTime.Now;
+        //        status.InitiaalID = false;
+        //        status.FininshID = false;
+
+        //        await _statusRepository.Add(status);
+        //        return RedirectToAction(nameof(Create));
+        //    }
+        //    //return View(status);
+        //    return RedirectToAction(nameof(Create));
+        //}
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(tbl_mStatus status)
+        public async Task<IActionResult> Create(tbl_mStatus model)
         {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+
             if (ModelState.IsValid)
             {
-                await _statusRepository.AddStatusAsync(status);
-                return RedirectToAction(nameof(Index));
+                model.Status = model.Status;
+                model.IsDeleted = false;
+                model.IsActive = true;
+                model.UpdatedByUserId = (int)Logins.unitid; 
+                model.DateTimeOfUpdate = DateTime.Now;
+                model.EditDeleteDate = DateTime.Now;
+                model.EditDeleteBy = (int)Logins.unitid; 
+
+                model.InitiaalID = false;
+                model.FininshID = false;
+
+                if (model.StatusId == 0)
+                {
+                    await _statusRepository.AddWithReturn(model);
+                    //await _actionsRepository.AddWithReturn(model);
+                    return Json(nmum.Save);
+                }
+
+                else
+                {
+                    await _statusRepository.UpdateWithReturn(model);
+                    return Json(nmum.Update);
+                }
+
+
+
             }
-            return View(status);
+            else
+            {
+                return Json(nmum.NotSave);
+            }
+
+
         }
-        ///Created and Reviewed by : Sub Maj M Sanal Kumar
-        // Reviewed Date : 31 Jul 23
-        // GET: Status/Edit/5
+
+
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
-            var status = await _statusRepository.GetStatusByIdAsync(id);
+            var status = await _statusRepository.Get(id);
             if (status == null)
             {
                 return NotFound();
             }
             return View(status);
         }
-        ///Created and Reviewed by : Sub Maj M Sanal Kumar
-        // Reviewed Date : 31 Jul 23
-        // POST: Status/Edit/5
+
+
+        [Authorize(Policy = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Policy = "Admin")]
+     
         public async Task<IActionResult> Edit(int id, tbl_mStatus status)
         {
             if (id != status.StatusId)
@@ -97,36 +161,38 @@ namespace swas.UI.Controllers
 
             if (ModelState.IsValid)
             {
-                await _statusRepository.UpdateStatusAsync(status);
+                await _statusRepository.UpdateWithReturn(status);
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(status);
+            //return View(status);
+            return RedirectToAction(nameof(Index));
         }
-        ///Created and Reviewed by : Sub Maj M Sanal Kumar
-        // Reviewed Date : 31 Jul 23
-        // GET: Status/Delete/5
+
+
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
-            var status = await _statusRepository.GetStatusByIdAsync(id);
+            var status = await _statusRepository.Delete(id);
             if (status == null)
             {
                 return NotFound();
             }
             return View(status);
         }
-        ///Created and Reviewed by : Sub Maj M Sanal Kumar
-        // Reviewed Date : 31 Jul 23
-        // POST: Status/Delete/5
+
+        
+
         [Authorize(Policy = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _statusRepository.DeleteStatusAsync(id);
+            await _statusRepository.Delete(id);
             return RedirectToAction(nameof(Index));
         }
+
+        
     }
 
 }

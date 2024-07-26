@@ -18,6 +18,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor.HttpContext.Session, "User");
 }
+
+@{
+    var today = DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
+}
+
 <div hidden id="SponsorName">@Logins.Unit @Logins.UserName.Trim() (@Logins.Rank.Trim() @Logins.Offr_Name.Trim()) </div>
 <div class="container-fluid">
 
@@ -85,11 +90,23 @@
                                             Project Name Required
                                         </div>
                                     </td>
+                                    @*<td>
+                                @Html.LabelFor(model => model.InitiatedDate, "Initiation Date", new { id = "AddInitiatedDate" })<font style="color:red;"><b>*</b></font>
+                                </td>
+                                <td>
+                                @Html.TextBoxFor(model => model.InitiatedDate, "{0:yyyy-MM-dd}", new { @class = "form-control requiredField", type = "datetime-local", required = "required" })
+
+                                <div class="invalid-feedback">
+                                Initiation Date Required
+                                </div>
+                                </td>*@
+
                                     <td>
-                                        @Html.LabelFor(model => model.InitiatedDate, "Initiation Date", new { id = "AddInitiatedDate" })<font style="color:red;"><b>*</b></font>
+                                        @Html.LabelFor(model => model.InitiatedDate, "Initiation Date", new { id = "AddInitiatedDate" })
+                                        <font style="color:red;"><b>*</b></font>
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(model => model.InitiatedDate, "{0:yyyy-MM-dd}", new { @class = "form-control requiredField", type = "datetime-local", required = "required" })
+                                        @Html.TextBoxFor(model => model.InitiatedDate, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control requiredField", type = "datetime-local", required = "required", max = today })
 
                                         <div class="invalid-feedback">
                                             Initiation Date Required
@@ -310,15 +327,198 @@
                             </div>
 
 
-                            @*<div class="form-group row">*@
+
+
+                            @* <table class="new-table" id="tablebasic2">
+                        <tr>
+                        <td>
+                        @Html.LabelFor(model => model.DetlsofUserBase,new { id = "AddDetlsofUserBase" })
+                        </td>
+                        <td>
+                        @Html.EditorFor(model => model.DetlsofUserBase, new { htmlAttributes = new { @class = "form-control requiredField",required = "required" } })
+                        <div class="error-message" style="display: none;">
+                        @Html.ValidationMessageFor(model => model.DetlsofUserBase, "This Field is Required", new { @class = "text-danger" })
+                        </div>
+                        </td>
+
+                        <td>
+                        @Html.LabelFor(model => model.EnvisagedCost, new { id = "AddEnvisagedCost" })
+                        </td>
+                        <td>
+                        @Html.TextBoxFor(model => model.EnvisagedCost, new { @class = "form-control requiredField", type = "number", min = "0" })
+                        @Html.ValidationMessageFor(model => model.EnvisagedCost, "", new { @class = "text-danger" })
+                        </td>
+
+                        <td>
+                        @Html.LabelFor(model => model.NWBandWidthReqmt, new { id = "AddNWBandWidthReqmt" })
+
+                        </td>
+                        <td>
+                        @Html.EditorFor(model => model.NWBandWidthReqmt, new { htmlAttributes = new { @class = "form-control requiredField" } })
+
+                        </td>
+                        </tr>
+                        <tr>
+                        <td>
+                        @Html.LabelFor(model => model.MajTimeLines, new { id = "AddMajTimeLines" })
+                        </td>
+                        <td>
+                        @Html.EditorFor(model => model.MajTimeLines, new { htmlAttributes = new { @class = "form-control requiredField"} })
+
+                        </td>
+
+                        <td>
+                        @Html.LabelFor(model => model.TechStackProposed, new { id = "AddTechStackProposed" })
+                        </td>
+                        <td>
+                        @Html.EditorFor(model => model.TechStackProposed, new { htmlAttributes = new { @class = "form-control requiredField " } })
+
+                        </td>
+
+                        <td>
+                        @Html.LabelFor(model => model.DataSecurity_backup, new { id = "AddDataSecurity_backup" })
+                        </td>
+                        <td>
+                        @Html.EditorFor(model => model.DataSecurity_backup, new { htmlAttributes = new { @class = "form-control requiredField"} })
+
+                        </td>
+
+                        </tr>
+                        <tr>
+                        <td>
+                        @Html.LabelFor(model => model.TypeofSW, new { id = "AddTypeofSW" })
+                        </td>
+                        <td>
+                        @Html.EditorFor(model => model.TypeofSW, new { htmlAttributes = new { @class = "form-control requiredField",onkeyup="ValInData(this)" } })
+
+                        </td>
+
+                        <td>
+                        @Html.LabelFor(model => model.BeingDevpInhouse, new { id = "AddBeingDevpInhouse" })
+
+                        </td>
+                        <td>
+                        @Html.EditorFor(model => model.BeingDevpInhouse, new { htmlAttributes = new { @class = "form-control requiredField " } })
+
+                        </td>
+
+
+                        <td>
+                        @Html.LabelFor(model => model.EndorsmentbyHeadof, new { id = "AddEndorsmentbyHeadof" })
+                        </td>
+                        <td>
+                        @Html.DropDownListFor(model => model.EndorsmentbyHeadof,
+                        new SelectList(new List<SelectListItem>
+                        {
+                        new SelectListItem { Text = "--Select--", Value = "" },
+                        new SelectListItem { Text = "Yes", Value = "Yes" },
+                        new SelectListItem { Text = "No", Value = "No" }
+                        }, "Value", "Text"), new { @class = "form-control requiredField", required = "required" })
+
+                        <div class="invalid-feedback">
+                        Endorsement by Head of Required
+                        </div>
+                        </td>
+                        </tr>
+
+                        <tr>
+                        <td>
+                        @Html.LabelFor(model => model.Detlsof_OS, new { id = "AddDetlsof_OS" })
+                        </td>
+                        <td>
+
+                        @Html.EditorFor(model => model.Detlsof_OS, new { htmlAttributes = new { @class = "form-control requiredField ", onkeyup = "ValInData(this)" } })
+
+                        </td>
+
+                        <td>
+                        @Html.LabelFor(model => model.ProposedDB_Engine, new { id = "AddProposedDB_Engine" })
+
+                        </td>
+                        <td>
+                        @Html.EditorFor(model => model.ProposedDB_Engine, new { htmlAttributes = new { @class = "form-control requiredField " } })
+
+                        </td>
+
+                        <td>
+                        @Html.LabelFor(model => model.DetlsofSw_Architecture, new { id = "AddDetlsofSw_Architecture" })
+
+                        </td>
+                        <td>
+                        @Html.EditorFor(model => model.DetlsofSw_Architecture, new { htmlAttributes = new { @class = "form-control  requiredField" } })
+
+                        </td>
+
+                        </tr>
+
+
+                        <tr>
+                        <td>
+                        @Html.LabelFor(model => model.DetlsofProposed_Architecture, new { id = "AddDetlsofProposed_Architecture" })
+                        </td>
+                        <td>
+                        @Html.EditorFor(model => model.DetlsofProposed_Architecture, new { htmlAttributes = new { @class = "form-control requiredField", onkeyup = "ValInData(this)" } })
+
+                        </td>
+
+                        <td>
+                        @Html.LabelFor(model => model.DetlsPki_IAM, new { id = "AddDetlsPki_IAM" })
+
+                        </td>
+                        <td>
+                        @Html.EditorFor(model => model.DetlsPki_IAM, new { htmlAttributes = new { @class = "form-control requiredField" } })
+
+                        </td>
+
+                        <td>
+                        @Html.LabelFor(model => model.Technology_dependencies, new { id = "AddTechnology_dependencies" })
+
+                        </td>
+                        <td>
+                        @Html.EditorFor(model => model.Technology_dependencies, new { htmlAttributes = new { @class = "form-control requiredField" } })
+
+                        </td>
+
+                        </tr>
+
+
+                        <tr>
+                        <td>
+                        @Html.LabelFor(model => model.Database_reqmts, new { id = "AddDatabase_reqmts" })
+                        </td>
+                        <td>
+                        @Html.EditorFor(model => model.Database_reqmts, new { htmlAttributes = new { @class = "form-control requiredField", onkeyup = "ValInData(this)" } })
+
+                        </td>
+
+                        <td>
+                        @Html.LabelFor(model => model.Enhancement_upgradation, new { id = "AddEnhancement_upgradation" })
+
+                        </td>
+                        <td>
+                        @Html.EditorFor(model => model.Enhancement_upgradation, new { htmlAttributes = new { @class = "form-control requiredField" } })
+
+                        </td>
+
+                        <td>
+                        @Html.LabelFor(model => model.Details_licensing, new { id = "AddDetails_licensing" })
+
+                        </td>
+                        <td>
+                        @Html.EditorFor(model => model.Details_licensing, new { htmlAttributes = new { @class = "form-control requiredField" } })
+
+                        </td>
+
+                        </tr>
+                        </table>*@
 
                             <table class="new-table" id="tablebasic2">
                                 <tr>
                                     <td>
-                                        @Html.LabelFor(model => model.DetlsofUserBase,new { id = "AddDetlsofUserBase" })
+                                        @Html.LabelFor(model => model.DetlsofUserBase, new { id = "AddDetlsofUserBase" })
                                     </td>
                                     <td>
-                                        @Html.EditorFor(model => model.DetlsofUserBase, new { htmlAttributes = new { @class = "form-control requiredField",required = "required" } })
+                                        @Html.TextAreaFor(model => model.DetlsofUserBase, new { @class = "form-control requiredField", required = "required" })
                                         <div class="error-message" style="display: none;">
                                             @Html.ValidationMessageFor(model => model.DetlsofUserBase, "This Field is Required", new { @class = "text-danger" })
                                         </div>
@@ -334,11 +534,9 @@
 
                                     <td>
                                         @Html.LabelFor(model => model.NWBandWidthReqmt, new { id = "AddNWBandWidthReqmt" })
-
                                     </td>
                                     <td>
-                                        @Html.EditorFor(model => model.NWBandWidthReqmt, new { htmlAttributes = new { @class = "form-control requiredField" } })
-
+                                        @Html.TextAreaFor(model => model.NWBandWidthReqmt, new { @class = "form-control requiredField" })
                                     </td>
                                 </tr>
                                 <tr>
@@ -346,51 +544,37 @@
                                         @Html.LabelFor(model => model.MajTimeLines, new { id = "AddMajTimeLines" })
                                     </td>
                                     <td>
-                                        @Html.EditorFor(model => model.MajTimeLines, new { htmlAttributes = new { @class = "form-control requiredField"} })
-
+                                        @Html.TextAreaFor(model => model.MajTimeLines, new { @class = "form-control requiredField" })
                                     </td>
 
                                     <td>
                                         @Html.LabelFor(model => model.TechStackProposed, new { id = "AddTechStackProposed" })
                                     </td>
                                     <td>
-                                        @Html.EditorFor(model => model.TechStackProposed, new { htmlAttributes = new { @class = "form-control requiredField " } })
-
+                                        @Html.TextAreaFor(model => model.TechStackProposed, new { @class = "form-control requiredField" })
                                     </td>
 
                                     <td>
                                         @Html.LabelFor(model => model.DataSecurity_backup, new { id = "AddDataSecurity_backup" })
                                     </td>
                                     <td>
-                                        @Html.EditorFor(model => model.DataSecurity_backup, new { htmlAttributes = new { @class = "form-control requiredField"} })
-
+                                        @Html.TextAreaFor(model => model.DataSecurity_backup, new { @class = "form-control requiredField" })
                                     </td>
-
                                 </tr>
                                 <tr>
                                     <td>
                                         @Html.LabelFor(model => model.TypeofSW, new { id = "AddTypeofSW" })
                                     </td>
                                     <td>
-                                        @Html.EditorFor(model => model.TypeofSW, new { htmlAttributes = new { @class = "form-control requiredField",onkeyup="ValInData(this)" } })
-
+                                        @Html.TextAreaFor(model => model.TypeofSW, new { @class = "form-control requiredField" })
                                     </td>
 
                                     <td>
                                         @Html.LabelFor(model => model.BeingDevpInhouse, new { id = "AddBeingDevpInhouse" })
-
                                     </td>
                                     <td>
-                                        @Html.EditorFor(model => model.BeingDevpInhouse, new { htmlAttributes = new { @class = "form-control requiredField " } })
-
+                                        @Html.TextAreaFor(model => model.BeingDevpInhouse, new { @class = "form-control requiredField" })
                                     </td>
-                                    @* <td>
-                                @Html.LabelFor(model => model.EndorsmentbyHeadof, new { id = "AddEndorsmentbyHeadof" })
-                                </td>
-                                <td>
-                                @Html.EditorFor(model => model.EndorsmentbyHeadof, new { htmlAttributes = new { @class = "form-control requiredField " } })
-
-                                </td>*@
 
                                     <td>
                                         @Html.LabelFor(model => model.EndorsmentbyHeadof, new { id = "AddEndorsmentbyHeadof" })
@@ -409,103 +593,78 @@
                                         </div>
                                     </td>
                                 </tr>
-
                                 <tr>
                                     <td>
                                         @Html.LabelFor(model => model.Detlsof_OS, new { id = "AddDetlsof_OS" })
                                     </td>
                                     <td>
-
-                                        @Html.EditorFor(model => model.Detlsof_OS, new { htmlAttributes = new { @class = "form-control ",onkeyup="ValInData(this)" } })
-
+                                        @Html.TextAreaFor(model => model.Detlsof_OS, new { @class = "form-control requiredField"})
                                     </td>
 
                                     <td>
                                         @Html.LabelFor(model => model.ProposedDB_Engine, new { id = "AddProposedDB_Engine" })
-
                                     </td>
                                     <td>
-                                        @Html.EditorFor(model => model.ProposedDB_Engine, new { htmlAttributes = new { @class = "form-control " } })
-
+                                        @Html.TextAreaFor(model => model.ProposedDB_Engine, new { @class = "form-control requiredField" })
                                     </td>
-                               
+
                                     <td>
                                         @Html.LabelFor(model => model.DetlsofSw_Architecture, new { id = "AddDetlsofSw_Architecture" })
-
                                     </td>
                                     <td>
-                                        @Html.EditorFor(model => model.DetlsofSw_Architecture, new { htmlAttributes = new { @class = "form-control " } })
-
+                                        @Html.TextAreaFor(model => model.DetlsofSw_Architecture, new { @class = "form-control requiredField" })
                                     </td>
-                                    
                                 </tr>
-
-
                                 <tr>
                                     <td>
                                         @Html.LabelFor(model => model.DetlsofProposed_Architecture, new { id = "AddDetlsofProposed_Architecture" })
                                     </td>
                                     <td>
-                                        @Html.EditorFor(model => model.DetlsofProposed_Architecture, new { htmlAttributes = new { @class = "form-control ",onkeyup="ValInData(this)" } })
-
+                                        @Html.TextAreaFor(model => model.DetlsofProposed_Architecture, new { @class = "form-control requiredField"})
                                     </td>
 
                                     <td>
                                         @Html.LabelFor(model => model.DetlsPki_IAM, new { id = "AddDetlsPki_IAM" })
-
                                     </td>
                                     <td>
-                                        @Html.EditorFor(model => model.DetlsPki_IAM, new { htmlAttributes = new { @class = "form-control " } })
-
+                                        @Html.TextAreaFor(model => model.DetlsPki_IAM, new { @class = "form-control requiredField" })
                                     </td>
 
                                     <td>
                                         @Html.LabelFor(model => model.Technology_dependencies, new { id = "AddTechnology_dependencies" })
-
                                     </td>
                                     <td>
-                                        @Html.EditorFor(model => model.Technology_dependencies, new { htmlAttributes = new { @class = "form-control " } })
-
+                                        @Html.TextAreaFor(model => model.Technology_dependencies, new { @class = "form-control requiredField" })
                                     </td>
-
                                 </tr>
-
-
                                 <tr>
                                     <td>
                                         @Html.LabelFor(model => model.Database_reqmts, new { id = "AddDatabase_reqmts" })
                                     </td>
                                     <td>
-                                        @Html.EditorFor(model => model.Database_reqmts, new { htmlAttributes = new { @class = "form-control ",onkeyup="ValInData(this)" } })
-
+                                        @Html.TextAreaFor(model => model.Database_reqmts, new { @class = "form-control requiredField" })
                                     </td>
 
                                     <td>
                                         @Html.LabelFor(model => model.Enhancement_upgradation, new { id = "AddEnhancement_upgradation" })
-
                                     </td>
                                     <td>
-                                        @Html.EditorFor(model => model.Enhancement_upgradation, new { htmlAttributes = new { @class = "form-control " } })
-
+                                        @Html.TextAreaFor(model => model.Enhancement_upgradation, new { @class = "form-control requiredField" })
                                     </td>
 
                                     <td>
                                         @Html.LabelFor(model => model.Details_licensing, new { id = "AddDetails_licensing" })
-
                                     </td>
                                     <td>
-                                        @Html.EditorFor(model => model.Details_licensing, new { htmlAttributes = new { @class = "form-control " } })
-
+                                        @Html.TextAreaFor(model => model.Details_licensing, new { @class = "form-control requiredField" })
                                     </td>
-
                                 </tr>
                             </table>
 
 
-
                         </div>
                         <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                        @*  <input type="submit" id="submitUploadNew" name="next" class="next action-button" value="Submit & Upload new" /> *@
+
                         <input type="button" id="submitUpload" name="next" class="next action-button" value="Next" />
 
 

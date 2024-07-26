@@ -238,7 +238,6 @@ function getProjGetsummay(spnstatusId) {
                 else {
 
                     var count = 1;
-                    // { attId: 8, psmId: 8, attPath: 'Swas_22ed1265-b2a0-4008-b7ff-b3eb5f704849.pdf', actionId: 0, timeStamp: '2024-05-02T16:17:45.6016413', … }
                     for (var i = 0; i < response.length; i++) {
 
                         listItem += "<tr>";
@@ -248,21 +247,30 @@ function getProjGetsummay(spnstatusId) {
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].fromUnitName + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].toUnitName + "</span></td>";
-                        
+
                         listItem += "<td class='align-middle'><span id='divName'>" + response[i].action + "</span></td>";
 
                         if (response[i].isComplete) {
-                            listItem += "<td ><span class='badge badge-success' id='divName'>Done</span></td>";
+                            listItem += "<td ><span class='badge badge-success' id='divName'>Accepted</span></td>";
                         } else {
-                            listItem += "<td ><span class='badge badge-danger' id='divName'>Pending</span></td>";
+                            if (response[i].stkStatusId == 2) {
+                                listItem += "<td ><span class='badge badge-warning' id='divName'>Obsn</span></td>";
+                            }
+                            else if (response[i].stkStatusId == 3) {
+                                listItem += "<td ><span class='badge badge-danger' id='divName'>Rejected</span></td>";
+
+                            }
+                            else {
+                                listItem += "<td ><span class='badge badge-danger' id='divName'>Pending</span></td>";
+                            }
                         }
-                        /*    listItem += "<td class='nowrap'><button type='button' class='cls-btnSend btn btn-outline-success mr-1'>Send To Verification</button></td>";*/
+
                         listItem += "</tr>";
                         count++;
                     }
 
                     $("#DetailBodysummary").html(listItem);
-                   
+
 
 
 
@@ -270,9 +278,9 @@ function getProjGetsummay(spnstatusId) {
             }
             else {
                 listItem += "<tr><td class='text-center' colspan=7>No Record Found</td></tr>";
-               
+
                 $("#DetailBodysummary").html(listItem);
-               
+
             }
         },
         error: function (result) {
@@ -281,11 +289,6 @@ function getProjGetsummay(spnstatusId) {
             });
         }
     });
-
-
-
-
-
 
 }
 
@@ -351,3 +354,117 @@ function generateRandomColors(count) {
     }
     return colors;
 }
+
+
+
+
+$(document).ready(function () {
+    var table = $('#DetailBodysummary').DataTable({
+        lengthChange: true,
+        dom: 'lBfrtip',
+        pageLength: -1, // Show all entries by default
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        buttons: [
+            'copy',
+            'excel',
+            'csv',
+            {
+                text: 'PDF',
+                extend: 'pdfHtml5',
+                action: function (e, dt, node, config) {
+                    PdfDiv();
+                }
+            },
+        ], 
+      
+        searchBuilder: {
+            conditions: {
+                num: {
+                    'MultipleOf': {
+                        conditionName: 'Multiple Of',
+                        init: function (that, fn, preDefined = null) {
+                            var el = $('<input/>').on('input', function () { fn(that, this) });
+
+                            if (preDefined !== null) {
+                                $(el).val(preDefined[0]);
+                            }
+
+                            return el;
+                        },
+                        inputValue: function (el) {
+                            return $(el[0]).val();
+                        },
+                        isInputValid: function (el, that) {
+                            return $(el[0]).val().length !== 0;
+                        },
+                        search: function (value, comparison) {
+                            return value % comparison === 0;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    function PdfDiv() {
+        var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+        popupWin.document.open();
+
+        var tableStyles = `
+            <style type="text/css">
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-bottom: 20px;
+                }
+                .table > thead {
+                    vertical-align: bottom;
+                    background-color: red;
+                }
+                th, td {
+                    padding: 8px;
+                    border: 1px solid #ddd;
+                    text-align: center;
+                }
+                th {
+                    background-color: #f2f2f2;
+                    color: black;
+                }
+            </style>
+        `;
+
+        var table = $('#Draft').DataTable();
+        var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+        var tableHTML = '<table>';
+
+        tableHTML += '<thead>';
+        tableHTML += '<tr>';
+        table.columns().header().each(function (header) {
+            tableHTML += '<th>' + header.innerHTML + '</th>';
+        });
+        tableHTML += '</tr>';
+        tableHTML += '</thead>';
+
+        tableHTML += '<tbody>';
+        for (var i = 0; i < filteredData.length; i++) {
+            tableHTML += '<tr>';
+            for (var j = 0; j < filteredData[i].length; j++) {
+                tableHTML += '<td>' + filteredData[i][j] + '</td>';
+            }
+            tableHTML += '</tr>';
+        }
+        tableHTML += '</tbody>';
+
+        tableHTML += '</table>';
+
+        var watermarkText = '@(TempData["ipadd"])';
+
+        popupWin.document.write('<html><head>'
+            + tableStyles + '</head><body onload="window.print()">'
+            + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
+            + watermarkText + '</div></body></html>');
+
+        popupWin.document.close();
+    }
+});

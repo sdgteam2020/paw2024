@@ -79,9 +79,18 @@ namespace swas.BAL.Repository
                                    join f in _dbContext.Comment on b.PsmId equals f.PsmId into fs
                                    from eWithComment in fs.DefaultIfEmpty()
 
+                                   let StkStatusId =
+                                  (from cr1 in _dbContext.StkComment
+                                   join Stdkst in _dbContext.StkStatus on cr1.StkStatusId equals Stdkst.StkStatusId
+                                   where cr1.StakeHolderId == b.ToUnitId && cr1.PsmId == b.PsmId
+                                   orderby cr1.StkCommentId descending
+                                   select cr1.StkStatusId
+                                  ).FirstOrDefault()
+
+
                                    where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true && b.IsComplete == false
-                                   //&& b.ToUnitId == Logins.unitid 
-                                   && actm.StatusId == StatuId
+                                    //&& b.ToUnitId == Logins.unitid 
+                                    && actm.StatusId == StatuId
 
                                    orderby b.DateTimeOfUpdate descending
 
@@ -105,7 +114,8 @@ namespace swas.BAL.Repository
                                        EncyPsmID = _dataProtector.Protect(b.PsmId.ToString()),
                                        IsProcess = a.IsProcess,
                                        IsRead = b.IsRead,
-                                       IsComplete = b.IsComplete
+                                       IsComplete = b.IsComplete,
+                                       StkStatusId = Convert.ToInt32(StkStatusId)
                                    }).ToListAsync();
 
                 lst = query;
@@ -1661,7 +1671,7 @@ namespace swas.BAL.Repository
                                    UnitName = _psmRepository.GetSponsorUnitName(a.StakeHolderId),
                                    FromUnitUserDetail = fromunit.UnitName,
                                    FromUnitName = " " + fromunit.UnitName + " ( " + b.UserDetails + ")",
-                                   Remark = a.InitialRemark,
+                                   Remark = b.Remarks,
                                    //end
 
                                    ToUnitName = tounit.UnitName,

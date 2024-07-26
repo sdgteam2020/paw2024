@@ -11,7 +11,7 @@ namespace swas.DAL.Models
 	public class tbl_mStatus
 	{
 		[Key]
-        [Display(Name = "Status")]
+        [Display(Name = "StatusId")]
         public int StatusId { get; set; }
 		[ForeignKey("tbl_mStages")]
 		public int StageId { get; set; }
@@ -19,7 +19,7 @@ namespace swas.DAL.Models
 		[Column(TypeName = "varchar(200)")]
 		[Display(Name = "Status")]
         [Required]
-        public string Status { get; set; }
+        public string ? Status { get; set; }
 		public bool IsDeleted { get; set; }
 		public bool IsActive { get; set; }
 		

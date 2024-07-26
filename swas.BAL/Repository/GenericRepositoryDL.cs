@@ -30,8 +30,18 @@ namespace swas.BAL.Repository
 
         public async Task<IEnumerable<T>> GetAll()
         {
-            var cc = await _context.Set<T>().ToListAsync();
-            return cc;
+            try
+            {
+                var cc = await _context.Set<T>().ToListAsync();
+                return cc;
+            }
+            catch(Exception ex)
+            {
+              Console.WriteLine("the error is "+  ex.Message );
+
+            }
+            List<T> list = new List<T>();
+            return list;
         }
 
         public async Task Add(T entity)

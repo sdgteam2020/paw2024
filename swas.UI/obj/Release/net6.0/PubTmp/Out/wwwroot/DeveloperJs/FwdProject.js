@@ -92,6 +92,8 @@
         $("#ddlfwdStage option[value='3']").remove();
         //GetAllComments($(this).closest("tr").find("#SpnCurrentProjId").html());
     });
+
+    debugger;
     $("#btnFwdNext").click(function () {
        
         requiredFields = $('#ProjFwd').find('.requiredField');

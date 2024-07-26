@@ -71,7 +71,7 @@
         max-height: 700px; /* Set a maximum height for the table to make the scrollbar appear when the content exceeds this height */
     }
 
-        /* Optional: Add styling for the scrollbar */
+
         .tabs__content__item::-webkit-scrollbar {
             width: 8px;
         }
@@ -170,6 +170,7 @@
         font-size: 15px !important;
     }
 </style>
+
 
 <link href="~/css/timeline.css" rel="stylesheet" />
 <body>
@@ -272,23 +273,7 @@
                                                 <td>@project.Stage</td>
                                                 <td>@project.Action</td>
 
-                                               @* <td>
 
-                                                    @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
-                                                    {
-                                                        <a href="javascript:void(0);" class="processDetail" data-id="@project.EncyPsmID">
-                                                            <img src="/assets/images/icons/process1.png" alt="Icon" style="height: 22px;">
-                                                        </a>
-                                                        <button type="button" class="btn btn-success btn-Obsn ml-3" style="padding: 1px !important;font-size: 13px !important;">Obsn</button>
-                                                    }
-                                                    else
-
-                                                    {
-                                                        <button type="button" class="btn btn-success btn-Fwd ml-3" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
-                                                    }
-                                                    <button type="button" class="btn btn-success btn-FwdHistory ml-3" title="History" style="margin-top: 1px;"><i class="fa-solid fa-timeline"></i></button>
-
-                                                </td>*@
                                                 <td>
                                                     <div class="row">
                                                         <div class="col-md-4">
@@ -319,8 +304,6 @@
                                         else
                                         {
                                             <tr class="">
-                                                @* table-primary *@
-
 
                                                 <td>
 
@@ -347,7 +330,7 @@
                                                         </div>
                                                     </a>
                                                 </td>
-                                                
+
 
 
                                                 <td class="RefLetter-container">
@@ -362,31 +345,14 @@
                                                         @project.FromUnitName
                                                     </div>
                                                 </td>
-                                                @* <td>@project.Sponsor</td>
-                                        <td>@project.FromUnitName</td>*@
+
                                                 <td>@project.ToUnitName</td>
                                                 <td>@project.TimeStamp</td>
                                                 <td>@project.Status</td>
                                                 <td>@project.Stage</td>
                                                 <td>@project.Action</td>
 
-                                                @*<td>
 
-                                                    @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
-                                                    {
-                                                        <a href="javascript:void(0);" class="processDetail" data-id="@project.EncyPsmID">
-                                                            <img src="/assets/images/icons/process1.png" alt="Icon" style="height: 22px;">
-                                                        </a>
-                                                        <button type="button" class="btn btn-success btn-Obsn ml-3" style="padding: 1px !important;font-size: 13px !important;">Obsn</button>
-                                                    }
-                                                    else
-
-                                                    {
-                                                        <button type="button" class="btn btn-success btn-Fwd ml-3" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
-                                                    }
-                                                    <button type="button" class="btn btn-success btn-FwdHistory ml-3" title="History" style="margin-top: 1px;"><i class="fa-solid fa-timeline"></i></button>
-
-                                                </td>*@
 
 
                                                 <td>
@@ -423,16 +389,6 @@
                                 </tbody>
 
                             </table>
-                            @*
-                            <td>@project.Comments</td>
-                            <td>
-                            @project.InitialRemark
-
-                            </td>
-                            *@
-
-
-
 
 
                         </div>
@@ -450,9 +406,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
-                            @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>*@
+
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -493,8 +447,7 @@
                                         <th class="s-no-column">Ser No</th>
                                         <th style="width:20%">Proj Name</th>
                                         <th>Sponsor</th>
-                                        @*  <th>From</th>
-                                        <th>To</th> *@
+
                                         <th class="col-width9">From</th>
                                         <th>To Unit Name</th>
                                         <th>TimeStamp</th>
@@ -502,9 +455,6 @@
                                         <th>SubStage</th>
                                         <th>Action</th>
                                         <th>Project Action</th>
-                                        @*  <th>TotalDays</th> *@
-
-
 
                                     </tr>
                                 </thead>
@@ -538,23 +488,6 @@
                                                     </div>
                                                 </a>
                                             </td>
-
-                                            @* <td class="f-12">
-
-                                        <span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
-                                        <span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
-                                        <span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
-                                        <span class="d-none" id="SpnTimeStampId">@project.TimeStamp</span>
-                                        <span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
-                                        <span class="d-none" id="SpnprojectStageId">@project.StageId</span>
-
-
-                                        <div class="tooltip-container" data-tooltip="@project.ProjName">
-                                        <span class="short-text">@truncateText(project.ProjName, 6)</span>
-                                        <span class="tooltip tooltip-text">@project.ProjName</span>
-                                        </div>
-                                        </td> *@
-
                                             <td class="RefLetter-container">
                                                 @project.UnitName
                                                 <div class="RefLetter">
@@ -568,18 +501,11 @@
                                                 </div>
                                             </td>
 
-                                            @*<td>@project.Sponsor</td>*@
-                                            @*<td>@project.FromUnitName</td>*@
                                             <td>@project.ToUnitName</td>
                                             <td>@project.TimeStamp</td>
                                             <td>@project.Stage</td>
                                             <td>@project.Status</td>
                                             <td>@project.Action</td>
-
-                                            @*  <td>
-                                        @project.TotalDays
-
-                                        </td> *@
 
                                             <td>
                                                 <div class="row">
@@ -932,51 +858,6 @@
                 <div class="modal-body ml-lg-5">
 
                     <div class="timeline" id="projectmovfistory">
-                        @*  <div class="timeline-month">
-                        August, 2018
-                        <span>3 Entries</span>
-                        </div> *@
-                        @*   <div class="timeline-section">
-                        <div class="timeline-date">
-                        21, Tuesday
-                        </div>
-                        <div class="row">
-                        <div class="col-sm-4">
-                        <div class="timeline-box">
-                        <div class="box-title">
-                        <i class="fa fa-asterisk text-success" aria-hidden="true"></i> Job Created
-                        </div>
-                        <div class="box-content">
-                        <a class="btn btn-xs btn-default pull-right">Details</a>
-                        <div class="box-item"><strong>Loss Type</strong>: A/C Leak</div>
-                        <div class="box-item"><strong>Loss Territory</strong>: Texas</div>
-                        <div class="box-item"><strong>Start Date</strong>: 08/22/2018</div>
-                        </div>
-                        <div class="box-footer">- Tyler</div>
-                        </div>
-                        </div>
-                        <div class="col-sm-4">
-                        <div class="timeline-box">
-                        <div class="box-title">
-                        <i class="fa fa-pencil text-info" aria-hidden="true"></i> Job Edited
-                        </div>
-                        <div class="box-content">
-                        <a class="btn btn-xs btn-default pull-right">Details</a>
-                        <div class="box-item"><strong>Project Manager</strong>: Marlyn</div>
-                        <div class="box-item"><strong>Supervisor</strong>: Carol</div>
-                        </div>
-                        <div class="box-footer">- Tyler</div>
-                        </div>
-                        </div>
-
-                        </div>
-
-                        </div>
-                        *@
-
-
-
-
                     </div>
                 </div>
 
@@ -1108,4 +989,14 @@
     };
 
     containerTabss.addEventListener("click", handleTabClick);
+</script>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const datePicker = document.getElementById('datepicker');
+        const today = new Date().toISOString().slice(0, 16);
+        datePicker.max = today;
+    });
 </script>

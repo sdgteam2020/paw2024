@@ -36,5 +36,7 @@ namespace swas.BAL.DTO
 
         public string UnitName { get; set; }
         public string FromUnitUserDetail { get; set; }
+
+        public int StkStatusId { get; set; }
     }
 }

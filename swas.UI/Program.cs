@@ -104,7 +104,7 @@ builder.Services.AddIdentity<ASPNetCoreIdentityCustomFields.Data.ApplicationUser
 
 builder.Services.Configure<FormOptions>(options =>
 {
-    options.MultipartBodyLengthLimit = 1073741824; 
+    options.MultipartBodyLengthLimit = 1073741824;
 });
 
 //builder.Services.AddRazorPages();

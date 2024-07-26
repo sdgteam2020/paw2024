@@ -13,7 +13,9 @@
     ViewBag.Title = "Projects List";
     
 }
-
+@{
+    var today = DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
+}
 
 @using (Html.BeginForm("Create", "Projects", FormMethod.Post, new { id = "addNewForm"}))
 {
@@ -30,7 +32,10 @@
         <tr>
            <div class="col-sm-3">
                 @Html.LabelFor(model => model.InitiatedDate)
-                @Html.TextBoxFor(model => model.InitiatedDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                @Html.TextBoxFor(model => model.InitiatedDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" , max = today })
+
+
+               
             </div>
         </tr>
         <tr>
@@ -244,3 +249,4 @@
         display: none;
     } 
 </style>
+

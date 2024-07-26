@@ -238,7 +238,6 @@ function getProjGetsummay(spnstatusId) {
                 else {
 
                     var count = 1;
-                    // { attId: 8, psmId: 8, attPath: 'Swas_22ed1265-b2a0-4008-b7ff-b3eb5f704849.pdf', actionId: 0, timeStamp: '2024-05-02T16:17:45.6016413', … }
                     for (var i = 0; i < response.length; i++) {
 
                         listItem += "<tr>";
@@ -248,21 +247,30 @@ function getProjGetsummay(spnstatusId) {
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].fromUnitName + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].toUnitName + "</span></td>";
-                        
+
                         listItem += "<td class='align-middle'><span id='divName'>" + response[i].action + "</span></td>";
 
                         if (response[i].isComplete) {
-                            listItem += "<td ><span class='badge badge-success' id='divName'>Done</span></td>";
+                            listItem += "<td ><span class='badge badge-success' id='divName'>Accepted</span></td>";
                         } else {
-                            listItem += "<td ><span class='badge badge-danger' id='divName'>Pending</span></td>";
+                            if (response[i].stkStatusId == 2) {
+                                listItem += "<td ><span class='badge badge-warning' id='divName'>Obsn</span></td>";
+                            }
+                            else if (response[i].stkStatusId == 3) {
+                                listItem += "<td ><span class='badge badge-danger' id='divName'>Rejected</span></td>";
+
+                            }
+                            else {
+                                listItem += "<td ><span class='badge badge-danger' id='divName'>Pending</span></td>";
+                            }
                         }
-                        /*    listItem += "<td class='nowrap'><button type='button' class='cls-btnSend btn btn-outline-success mr-1'>Send To Verification</button></td>";*/
+
                         listItem += "</tr>";
                         count++;
                     }
 
                     $("#DetailBodysummary").html(listItem);
-                   
+
 
 
 
@@ -270,9 +278,9 @@ function getProjGetsummay(spnstatusId) {
             }
             else {
                 listItem += "<tr><td class='text-center' colspan=7>No Record Found</td></tr>";
-               
+
                 $("#DetailBodysummary").html(listItem);
-               
+
             }
         },
         error: function (result) {
@@ -281,11 +289,6 @@ function getProjGetsummay(spnstatusId) {
             });
         }
     });
-
-
-
-
-
 
 }
 

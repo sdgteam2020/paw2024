@@ -33,7 +33,7 @@ namespace swas.BAL
         {
 
 
-            if (!CheckUserExist(Db.UnitName, Db.UnitSusNo))
+            if (!CheckUserExist(Db.UnitName)) /* Db.UnitSusNo*/
             {
                 Db.Status = true;
                 Db.CorpsId = 0;
@@ -53,10 +53,10 @@ namespace swas.BAL
             }
 
         }
-        public bool CheckUserExist(string unitname, string SusNo)
+        public bool CheckUserExist(string unitname)   /*, string SusNo*/
         {
 
-            return _context.tbl_mUnitBranch.Any(e => e.UnitName == unitname || e.UnitSusNo == SusNo);
+            return _context.tbl_mUnitBranch.Any(e => e.UnitName == unitname ); /*|| e.UnitSusNo == SusNo*/
 
         }
 

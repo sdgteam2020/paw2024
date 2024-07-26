@@ -21,10 +21,10 @@ namespace swas.DAL.Models
 
         public int StatusActionsMappingId { get; set; }
 
-        [StringLength(200)]
-        [Column(TypeName = "varchar(200)")]
+        //[StringLength(20000)]
+        //[Column(TypeName = "varchar(20000)")]
         [Display(Name = "Remarks")]
-        public string Remarks { get; set; }
+        public string? Remarks { get; set; }
         public string? UndoRemarks { get; set; }
 
         public DateTime? TimeStamp { get; set; }

@@ -4,6 +4,7 @@ $(document).ready(function () {
 
     var UnitId = $("#Spnmodalunitid").html();
 
+    
     $("#ddlStage").change(function () {
 
         mMsaterStage(0, "ddlSubStage", 6, $("#ddlStage").val(), 100)
@@ -48,7 +49,7 @@ $(document).ready(function () {
 
 
         var table;
-       
+        alert(UnitId);
 
         $.ajax({
             type: 'POST',
@@ -120,6 +121,8 @@ $(document).ready(function () {
         var StatusActionsMappingId = $("#spanmodalStatusActionsMappingId").html();
         var UnitStatusMappingId = $("#spanmodalUnitStatusMappingId").html();
 
+        var test = $("#spanmodalUnitStatusMappingId").html();
+        alert(test);
 
 
         var data = {
