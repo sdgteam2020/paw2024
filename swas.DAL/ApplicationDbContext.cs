@@ -56,6 +56,9 @@ namespace swas.DAL
         public DbSet<trnWhiteListed> trnWhiteListed { get; set; }
         public DbSet<TrnUnitStatusMapping> TrnUnitStatusMapping { get; set; }
         public DbSet<TrnStatusActionsMapping> TrnStatusActionsMapping { get; set; }
+
+        public DbSet<mUserMapChat> mUserMapChat { get; set; }
+        public DbSet<TrnChatMsg> TrnChatMsg { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Resultss>().HasNoKey();

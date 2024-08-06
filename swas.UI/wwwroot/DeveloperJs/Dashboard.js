@@ -35,7 +35,7 @@ function GetAllDashbaordCount() {
                     }
                     
                     
-                    listitem += '<div class="cd-1 btn btnGetsummay" style="background-color:white"><span class="d-none" id="spnstatusId">' + dtoDashboardHeaderlst[i].statusId +'</span>';
+                    listitem += '<div class="cd-1 btn " style="background-color:white"><span class="d-none" id="spnstatusId">' + dtoDashboardHeaderlst[i].statusId +'</span>';
                   
                     tot = 0;
                     peding = 0;
@@ -57,11 +57,12 @@ function GetAllDashbaordCount() {
                     }
                    
                     listitem += '<div class="icon-container">';
-                    listitem += '<img src="/assets/images/icons/' + dtoDashboardHeaderlst[i].icons +'" alt="Icon" style="height:25px">';
+                   /* listitem += '<img src="/assets/images/icons/' + dtoDashboardHeaderlst[i].icons +'" alt="Icon" style="height:25px">';*/
+                    listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" style="height:25px">';
                     listitem += '</div>';
                     listitem += '<h5 style="margin-top: 8px;" >' + tot + ' </h5>';
                     listitem += '<div class="t-1 statusprojsummry">' + dtoDashboardHeaderlst[i].status +'</div> ';
-                    listitem += ' <div class="mb-2">';
+                    listitem += ' <div class="btnGetsummay">';
                   
                        
 
@@ -76,6 +77,10 @@ function GetAllDashbaordCount() {
                   
                   
                    
+                    listitem += ' </div>';
+                    listitem += '';
+                    listitem += ' <div class="mb-2">';
+                    listitem += '<span class="badge badge-info mr-2" style="font-size:18px">85</span>';
                     listitem += ' </div>';
                     listitem += ' </div>';
                     

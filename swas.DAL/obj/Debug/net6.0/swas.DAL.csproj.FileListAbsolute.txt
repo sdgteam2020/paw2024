@@ -334,3 +334,17 @@ D:\Projects\paw2024\swas.DAL\obj\Debug\net6.0\refint\swas.DAL.dll
 D:\Projects\paw2024\swas.DAL\obj\Debug\net6.0\swas.DAL.pdb
 D:\Projects\paw2024\swas.DAL\obj\Debug\net6.0\swas.DAL.genruntimeconfig.cache
 D:\Projects\paw2024\swas.DAL\obj\Debug\net6.0\ref\swas.DAL.dll
+K:\Projects\paw2024\swas.DAL\bin\Debug\net6.0\swas.DAL.deps.json
+K:\Projects\paw2024\swas.DAL\bin\Debug\net6.0\swas.DAL.runtimeconfig.json
+K:\Projects\paw2024\swas.DAL\bin\Debug\net6.0\swas.DAL.dll
+K:\Projects\paw2024\swas.DAL\bin\Debug\net6.0\swas.DAL.pdb
+K:\Projects\paw2024\swas.DAL\obj\Debug\net6.0\swas.DAL.csproj.AssemblyReference.cache
+K:\Projects\paw2024\swas.DAL\obj\Debug\net6.0\swas.DAL.GeneratedMSBuildEditorConfig.editorconfig
+K:\Projects\paw2024\swas.DAL\obj\Debug\net6.0\swas.DAL.AssemblyInfoInputs.cache
+K:\Projects\paw2024\swas.DAL\obj\Debug\net6.0\swas.DAL.AssemblyInfo.cs
+K:\Projects\paw2024\swas.DAL\obj\Debug\net6.0\swas.DAL.csproj.CoreCompileInputs.cache
+K:\Projects\paw2024\swas.DAL\obj\Debug\net6.0\swas.DAL.dll
+K:\Projects\paw2024\swas.DAL\obj\Debug\net6.0\refint\swas.DAL.dll
+K:\Projects\paw2024\swas.DAL\obj\Debug\net6.0\swas.DAL.pdb
+K:\Projects\paw2024\swas.DAL\obj\Debug\net6.0\swas.DAL.genruntimeconfig.cache
+K:\Projects\paw2024\swas.DAL\obj\Debug\net6.0\ref\swas.DAL.dll
