@@ -87,12 +87,14 @@ namespace swas.BAL.Repository
                                    select cr1.StkStatusId
                                   ).FirstOrDefault()
 
+                                  
 
-                                   where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true && b.IsComplete == false
+
+                                   where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true //&& b.IsComplete == false
                                     //&& b.ToUnitId == Logins.unitid 
                                     && actm.StatusId == StatuId
 
-                                   orderby b.DateTimeOfUpdate descending
+                                   orderby a.ProjName, b.DateTimeOfUpdate descending
 
                                    select new DTOProjectsFwd
                                    {
@@ -115,64 +117,66 @@ namespace swas.BAL.Repository
                                        IsProcess = a.IsProcess,
                                        IsRead = b.IsRead,
                                        IsComplete = b.IsComplete,
-                                       StkStatusId = Convert.ToInt32(StkStatusId)
+                                       StkStatusId = Convert.ToInt32(StkStatusId),
+                                       DateTimeOfUpdate= _dbContext.ProjStakeHolderMov.Where(i=>i.ProjId==a.ProjId).Select(x => x.DateTimeOfUpdate).Max()
                                    }).ToListAsync();
 
                 lst = query;
 
-                var queryfrom = await (from a in _dbContext.Projects
-                                       join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
-                                       join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
-                                       from stackcs in cs1.DefaultIfEmpty()
-                                       join actm in _dbContext.TrnStatusActionsMapping on b.StatusActionsMappingId equals actm.StatusActionsMappingId
-                                       join d in _dbContext.mStatus on actm.StatusId equals d.StatusId
-                                       join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId
+                //var queryfrom = await (from a in _dbContext.Projects
+                //                       join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
+                //                       join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
+                //                       from stackcs in cs1.DefaultIfEmpty()
+                //                       join actm in _dbContext.TrnStatusActionsMapping on b.StatusActionsMappingId equals actm.StatusActionsMappingId
+                //                       join d in _dbContext.mStatus on actm.StatusId equals d.StatusId
+                //                       join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId
 
-                                       join c in _dbContext.tbl_mUnitBranch on b.ToUnitId equals c.unitid into cs
-                                       from toUnit in cs.DefaultIfEmpty()
+                //                       join c in _dbContext.tbl_mUnitBranch on b.ToUnitId equals c.unitid into cs
+                //                       from toUnit in cs.DefaultIfEmpty()
 
-                                       join g in _dbContext.tbl_mUnitBranch on b.FromUnitId equals g.unitid into cg
-                                       from fromUnits in cg.DefaultIfEmpty()
+                //                       join g in _dbContext.tbl_mUnitBranch on b.FromUnitId equals g.unitid into cg
+                //                       from fromUnits in cg.DefaultIfEmpty()
 
-                                       join j in _dbContext.mStages on d.StageId equals j.StagesId into js
-                                       from eWithStages in js.DefaultIfEmpty()
-
-
-                                       join f in _dbContext.Comment on b.PsmId equals f.PsmId into fs
-                                       from eWithComment in fs.DefaultIfEmpty()
-
-                                       where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true && b.IsComplete == true
-                                       //&& b.FromUnitId == Logins.unitid 
-                                       && actm.StatusId == StatuId
-                                       orderby b.DateTimeOfUpdate descending
-
-                                       select new DTOProjectsFwd
-                                       {
-                                           ProjId = a.ProjId,
-                                           PsmIds = b.PsmId,
-                                           ProjName = a.ProjName,
-                                           StakeHolderId = a.StakeHolderId,
-                                           StakeHolder = stackcs.UnitName,
-                                           //Remarks= b != null ? b.Remarks : null,
-                                           Status = d.Status,
-                                           FromUnitId = b.FromUnitId,
-                                           FromUnitName = fromUnits.UnitName,
-                                           ToUnitId = b.ToUnitId,
-                                           ToUnitName = toUnit.UnitName,
-                                           Action = k.Actions,
-                                           TotalDays = 0,
-                                           StageId = eWithStages.StagesId,
-                                           EncyID = _dataProtector.Protect(a.ProjId.ToString()),
-                                           EncyPsmID = _dataProtector.Protect(b.PsmId.ToString()),
-                                           IsProcess = a.IsProcess,
-                                           IsRead = b.IsRead,
-                                           IsComplete = b.IsComplete,
-                                       }).ToListAsync();
-
-                lst.AddRange(queryfrom);
+                //                       join j in _dbContext.mStages on d.StageId equals j.StagesId into js
+                //                       from eWithStages in js.DefaultIfEmpty()
 
 
-                return lst;
+                //                       join f in _dbContext.Comment on b.PsmId equals f.PsmId into fs
+                //                       from eWithComment in fs.DefaultIfEmpty()
+
+                //                       where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true && b.IsComplete == true
+                //                       //&& b.FromUnitId == Logins.unitid 
+                //                       && actm.StatusId == StatuId
+                //                       orderby a.ProjName, b.DateTimeOfUpdate descending
+
+                //                       select new DTOProjectsFwd
+                //                       {
+                //                           ProjId = a.ProjId,
+                //                           PsmIds = b.PsmId,
+                //                           ProjName = a.ProjName,
+                //                           StakeHolderId = a.StakeHolderId,
+                //                           StakeHolder = stackcs.UnitName,
+                //                           //Remarks= b != null ? b.Remarks : null,
+                //                           Status = d.Status,
+                //                           FromUnitId = b.FromUnitId,
+                //                           FromUnitName = fromUnits.UnitName,
+                //                           ToUnitId = b.ToUnitId,
+                //                           ToUnitName = toUnit.UnitName,
+                //                           Action = k.Actions,
+                //                           TotalDays = 0,
+                //                           StageId = eWithStages.StagesId,
+                //                           EncyID = _dataProtector.Protect(a.ProjId.ToString()),
+                //                           EncyPsmID = _dataProtector.Protect(b.PsmId.ToString()),
+                //                           IsProcess = a.IsProcess,
+                //                           IsRead = b.IsRead,
+                //                           IsComplete = b.IsComplete,
+                //                           DateTimeOfUpdate = b.DateTimeOfUpdate
+                //                       }).ToListAsync();
+
+                //lst.AddRange(queryfrom);
+            var RETT= lst.OrderByDescending(i => i.DateTimeOfUpdate).ToList();
+
+                return RETT;/*.OrderBy(i => i.DateTimeOfUpdate).ToList();*/
             }
             else
             {
@@ -212,7 +216,7 @@ namespace swas.BAL.Repository
 
 
             psmove.ProjId = project.ProjId;
-            psmove.StatusActionsMappingId = 21;
+            psmove.StatusActionsMappingId = 1; //21  //ajayupdate
             //psmove.ActionId = 1;
             psmove.Remarks = project.InitialRemark;
             psmove.FromUnitId = Logins.unitid ?? 0;
@@ -296,10 +300,6 @@ namespace swas.BAL.Repository
             if (Logins != null)
             {
                 int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
-
-
-
-
 
                 var querys = from a in _dbContext.ProjStakeHolderMov
                              join b in _dbContext.Projects on a.ProjId equals b.ProjId
@@ -495,12 +495,15 @@ namespace swas.BAL.Repository
                                 StakeHolder = stackcs.UnitName,
                                 //Remarks= b != null ? b.Remarks : null,
                                 Status = d.Status,
+                                StatusId=d.StatusId,
                                 FromUnitId = b.FromUnitId,
                                
                                 ToUnitId = b.ToUnitId,
                                 ToUnitName = toUnit.UnitName,
                                 Action = k.Actions,
                                 TotalDays = 0,
+
+                                ActionId = k.ActionsId,
 
                                 Sponsor = a.Sponsor,
 
@@ -590,6 +593,8 @@ namespace swas.BAL.Repository
                                 FromUnitName = fromUnits.UnitName + " ( " + b.UserDetails + ")",
                                 //end
 
+
+
                                 Status = eWithStatus.Status,
                                 FromUnitId = b.FromUnitId,
                                
@@ -611,8 +616,7 @@ namespace swas.BAL.Repository
 
                 var queryhist = from a in _dbContext.Projects
                                 join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
-                                //join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
-                                //from stackcs in cs1.DefaultIfEmpty()
+
                                 join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid
                                 join actm in _dbContext.TrnStatusActionsMapping on b.StatusActionsMappingId equals actm.StatusActionsMappingId
                                 join d in _dbContext.mStatus on actm.StatusId equals d.StatusId into ds
@@ -642,17 +646,14 @@ namespace swas.BAL.Repository
                                     PsmIds = b.PsmId,
                                     ProjName = a.ProjName,
                                     Sponsor = a.Sponsor,
-                                    //Ajay change start 
+                                   
                                     Stage = eWithStages.Stages,
-                                    //end 
-                                    //Singha Changes.....
-                                    //tooltip start
+                                    
                                     UnitName = _psmRepository.GetSponsorUnitName(a.StakeHolderId),
                                     FromUnitUserDetail = fromunit.UnitName,
                                     FromUnitName = " " + fromunit.UnitName + " ( " + b.UserDetails + ")",
-                                   
-                                    //end
-                                    //Singha Changes End.....
+
+                                    
                                     StakeHolderId = a.StakeHolderId,
                                     StakeHolder = stackc.UnitName,
                                     //Remarks = b != null ? b.Remarks : null,

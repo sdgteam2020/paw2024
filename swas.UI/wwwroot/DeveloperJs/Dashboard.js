@@ -212,47 +212,119 @@ $(document).ready(function () {
 });
 
 
+//function getProjGetsummay(spnstatusId) {
+//    var listItem = "";
+//    var userdata =
+//    {
+//        "StatusId": spnstatusId,
+
+//    };
+//    $.ajax({
+//        url: '/Home/GetDashboardStatusDetails',
+//        contentType: 'application/x-www-form-urlencoded',
+//        data: userdata,
+//        type: 'POST',
+
+//        success: function (response) {
+//            if (response != "null" && response != null) {
+
+//                if (response == -1) {
+//                    Swal.fire({
+//                        text: ""
+//                    });
+//                }
+//                else if (response == 0) {
+//                    listItem += "<tr><td class='text-center' colspan=7>No Record Found</td></tr>";
+
+//                    $("#DetailBodysummary").html(listItem);
+//                    $("#lblTotal").html(0);
+//                }
+
+//                else {
+
+//                    var count = 1;
+//                    for (var i = 0; i < response.length; i++) {
+
+//                        listItem += "<tr>";
+
+//                        listItem += "<td class='align-middle'><span id='ProjName'>" + count + "</span></td>";
+//                        listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].projName + "</span></td>";
+//                        listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
+//                        listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].fromUnitName + "</span></td>";
+//                        listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].toUnitName + "</span></td>";
+
+//                        listItem += "<td class='align-middle'><span id='divName'>" + response[i].action + "</span></td>";
+
+//                        if (response[i].isComplete) {
+//                            listItem += "<td ><span class='badge badge-success' id='divName'>Accepted</span></td>";
+//                        } else {
+//                            if (response[i].stkStatusId == 2) {
+//                                listItem += "<td ><span class='badge badge-warning' id='divName'>Obsn</span></td>";
+//                            }
+//                            else if (response[i].stkStatusId == 3) {
+//                                listItem += "<td ><span class='badge badge-danger' id='divName'>Rejected</span></td>";
+
+//                            }
+//                            else {
+//                                listItem += "<td ><span class='badge badge-danger' id='divName'>Pending</span></td>";
+//                            }
+//                        }
+
+//                        listItem += "</tr>";
+//                        count++;
+//                    }
+
+//                    $("#DetailBodysummary").html(listItem);
+
+
+
+
+//                }
+//            }
+//            else {
+//                listItem += "<tr><td class='text-center' colspan=7>No Record Found</td></tr>";
+
+//                $("#DetailBodysummary").html(listItem);
+
+//            }
+//        },
+//        error: function (result) {
+//            Swal.fire({
+//                text: ""
+//            });
+//        }
+//    });
+
+//}
+
 function getProjGetsummay(spnstatusId) {
     var listItem = "";
-    var userdata =
-    {
+    var userdata = {
         "StatusId": spnstatusId,
-
     };
+
     $.ajax({
         url: '/Home/GetDashboardStatusDetails',
         contentType: 'application/x-www-form-urlencoded',
         data: userdata,
         type: 'POST',
-
         success: function (response) {
             if (response != "null" && response != null) {
-
                 if (response == -1) {
-                    Swal.fire({
-                        text: ""
-                    });
-                }
-                else if (response == 0) {
-                    listItem += "<tr><td class='text-center' colspan=7>No Record Found</td></tr>";
-
+                    Swal.fire({ text: "" });
+                } else if (response == 0) {
+                    listItem += "<tr><td class='text-center' colspan='6'>No Record Found</td></tr>";
                     $("#DetailBodysummary").html(listItem);
                     $("#lblTotal").html(0);
-                }
-
-                else {
-
+                } else {
                     var count = 1;
                     for (var i = 0; i < response.length; i++) {
-
                         listItem += "<tr>";
-
                         listItem += "<td class='align-middle'><span id='ProjName'>" + count + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].projName + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].fromUnitName + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].toUnitName + "</span></td>";
-
                         listItem += "<td class='align-middle'><span id='divName'>" + response[i].action + "</span></td>";
 
                         if (response[i].isComplete) {
@@ -260,12 +332,9 @@ function getProjGetsummay(spnstatusId) {
                         } else {
                             if (response[i].stkStatusId == 2) {
                                 listItem += "<td ><span class='badge badge-warning' id='divName'>Obsn</span></td>";
-                            }
-                            else if (response[i].stkStatusId == 3) {
+                            } else if (response[i].stkStatusId == 3) {
                                 listItem += "<td ><span class='badge badge-danger' id='divName'>Rejected</span></td>";
-
-                            }
-                            else {
+                            } else {
                                 listItem += "<td ><span class='badge badge-danger' id='divName'>Pending</span></td>";
                             }
                         }
@@ -276,25 +345,125 @@ function getProjGetsummay(spnstatusId) {
 
                     $("#DetailBodysummary").html(listItem);
 
+                    var table1 = $('#dashboard').DataTable({
+                        destroy: true,
+                        lengthChange: true,
+                        dom: 'lBfrtip',
+                        pageLength: -1, // Show all entries by default
+                        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                        buttons: [
+                            'copy',
+                            'excel',
+                            'csv'
+                            //{
+                            //    text: 'PDF',
+                            //    extend: 'pdfHtml5',
+                            //    action: function (e, dt, node, config) {
+                            //        PdfDiv();
+                            //    }
+                            //},
+                        ],
 
+                        searchBuilder: {
+                            conditions: {
+                                num: {
+                                    'MultipleOf': {
+                                        conditionName: 'Multiple Of',
+                                        init: function (that, fn, preDefined = null) {
+                                            var el = $('<input/>').on('input', function () { fn(that, this) });
 
+                                            if (preDefined !== null) {
+                                                $(el).val(preDefined[0]);
+                                            }
 
+                                            return el;
+                                        },
+                                        inputValue: function (el) {
+                                            return $(el[0]).val();
+                                        },
+                                        isInputValid: function (el, that) {
+                                            return $(el[0]).val().length !== 0;
+                                        },
+                                        search: function (value, comparison) {
+                                            return value % comparison === 0;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                    function PdfDiv() {
+                        var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+                        popupWin.document.open();
+
+                        var tableStyles = `
+            <style type="text/css">
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-bottom: 20px;
                 }
-            }
-            else {
-                listItem += "<tr><td class='text-center' colspan=7>No Record Found</td></tr>";
+                .table > thead {
+                    vertical-align: bottom;
+                    background-color: red;
+                }
+                th, td {
+                    padding: 8px;
+                    border: 1px solid #ddd;
+                    text-align: center;
+                }
+                th {
+                    background-color: #f2f2f2;
+                    color: black;
+                }
+            </style>
+        `;
 
+                        var table = $('#dashboard').DataTable();
+                        var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+                        var tableHTML = '<table>';
+
+                        tableHTML += '<thead>';
+                        tableHTML += '<tr>';
+                        table.columns().header().each(function (header) {
+                            tableHTML += '<th>' + header.innerHTML + '</th>';
+                        });
+                        tableHTML += '</tr>';
+                        tableHTML += '</thead>';
+
+                        tableHTML += '<tbody>';
+                        for (var i = 0; i < filteredData.length; i++) {
+                            tableHTML += '<tr>';
+                            for (var j = 0; j < filteredData[i].length; j++) {
+                                tableHTML += '<td>' + filteredData[i][j] + '</td>';
+                            }
+                            tableHTML += '</tr>';
+                        }
+                        tableHTML += '</tbody>';
+
+                        tableHTML += '</table>';
+
+                        var watermarkText = '@(TempData["ipadd"])';
+
+                        popupWin.document.write('<html><head>'
+                            + tableStyles + '</head><body onload="window.print()">'
+                            + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
+                            + watermarkText + '</div></body></html>');
+
+                        popupWin.document.close();
+                    }
+                }
+            } else {
+                listItem += "<tr><td class='text-center' colspan='6'>No Record Found</td></tr>";
                 $("#DetailBodysummary").html(listItem);
-
             }
         },
         error: function (result) {
-            Swal.fire({
-                text: ""
-            });
+            Swal.fire({ text: "" });
         }
     });
-
 }
 
 function updatePieChart(data) {
@@ -363,113 +532,36 @@ function generateRandomColors(count) {
 
 
 
-$(document).ready(function () {
-    var table = $('#DetailBodysummary').DataTable({
-        lengthChange: true,
-        dom: 'lBfrtip',
-        pageLength: -1, // Show all entries by default
-        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
-        buttons: [
-            'copy',
-            'excel',
-            'csv',
-            {
-                text: 'PDF',
-                extend: 'pdfHtml5',
-                action: function (e, dt, node, config) {
-                    PdfDiv();
-                }
-            },
-        ], 
-      
-        searchBuilder: {
-            conditions: {
-                num: {
-                    'MultipleOf': {
-                        conditionName: 'Multiple Of',
-                        init: function (that, fn, preDefined = null) {
-                            var el = $('<input/>').on('input', function () { fn(that, this) });
 
-                            if (preDefined !== null) {
-                                $(el).val(preDefined[0]);
-                            }
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.querySelector('.modal-content');
+    const header = modal.querySelector('.modal-header');
 
-                            return el;
-                        },
-                        inputValue: function (el) {
-                            return $(el[0]).val();
-                        },
-                        isInputValid: function (el, that) {
-                            return $(el[0]).val().length !== 0;
-                        },
-                        search: function (value, comparison) {
-                            return value % comparison === 0;
-                        }
-                    }
-                }
-            }
-        }
+    let isDragging = false;
+    let startX, startY, initialX, initialY;
+
+    header.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        initialX = modal.offsetLeft;
+        initialY = modal.offsetTop;
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
     });
 
-    function PdfDiv() {
-        var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
-        popupWin.document.open();
-
-        var tableStyles = `
-            <style type="text/css">
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin-bottom: 20px;
-                }
-                .table > thead {
-                    vertical-align: bottom;
-                    background-color: red;
-                }
-                th, td {
-                    padding: 8px;
-                    border: 1px solid #ddd;
-                    text-align: center;
-                }
-                th {
-                    background-color: #f2f2f2;
-                    color: black;
-                }
-            </style>
-        `;
-
-        var table = $('#Draft').DataTable();
-        var filteredData = table.rows({ search: 'applied' }).data().toArray();
-
-        var tableHTML = '<table>';
-
-        tableHTML += '<thead>';
-        tableHTML += '<tr>';
-        table.columns().header().each(function (header) {
-            tableHTML += '<th>' + header.innerHTML + '</th>';
-        });
-        tableHTML += '</tr>';
-        tableHTML += '</thead>';
-
-        tableHTML += '<tbody>';
-        for (var i = 0; i < filteredData.length; i++) {
-            tableHTML += '<tr>';
-            for (var j = 0; j < filteredData[i].length; j++) {
-                tableHTML += '<td>' + filteredData[i][j] + '</td>';
-            }
-            tableHTML += '</tr>';
+    function onMouseMove(e) {
+        if (isDragging) {
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+            modal.style.left = `${initialX + dx}px`;
+            modal.style.top = `${initialY + dy}px`;
         }
-        tableHTML += '</tbody>';
+    }
 
-        tableHTML += '</table>';
-
-        var watermarkText = '@(TempData["ipadd"])';
-
-        popupWin.document.write('<html><head>'
-            + tableStyles + '</head><body onload="window.print()">'
-            + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
-            + watermarkText + '</div></body></html>');
-
-        popupWin.document.close();
+    function onMouseUp() {
+        isDragging = false;
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
     }
 });

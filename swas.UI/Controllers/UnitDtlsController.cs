@@ -94,16 +94,27 @@ namespace swas.UI.Controllers
                 ViewBag.ty = ty.ToList();
 
 
-                List<UnitDtl> udtl = new List<UnitDtl>();
-                 
+                //List<UnitDtl> udtl = new List<UnitDtl>();
+                List<tbl_mStatus> status = new List<tbl_mStatus>();
+                var test = from st in _context.mStatus
+                           join s in _context.mStages on st.StageId equals s.StagesId
+                           select new StatusStageDTO
+                           {
+                               StatusId = st.StatusId,
+                               StageId = st.StageId,
+                               Status = st.Status,
+                               Stages = s.Stages
+                           };
+
+                var resultList = await test.ToListAsync();
+
+                ViewBag.StatusData=resultList;
+                //udtl = await _unitRepository.GetAllUnitAsync();
 
 
-                udtl = await _unitRepository.GetAllUnitAsync();
 
 
-
-
-                return View(udtl);
+                return View();
               
             }
 
@@ -448,35 +459,35 @@ namespace swas.UI.Controllers
                     StatusActionsMappingId = data.StatusActionsMappingId
                 };
 
-                TrnUnitStatusMapping trnUnitStatusMapping = new TrnUnitStatusMapping
-                {
-                    StatusId = data.SubStagesId,
-                    UnitId = data.UnitId,
-                    UnitStatusMappingId = data.UnitStatusMappingId
-                };
+                //TrnUnitStatusMapping trnUnitStatusMapping = new TrnUnitStatusMapping
+                //{
+                //    StatusId = data.SubStagesId,
+                //    UnitId = data.UnitId,
+                //    UnitStatusMappingId = data.UnitStatusMappingId
+                //};
 
-                
-                var existingStatusActionsMapping = await _statusActionsMapping.GetByActionsAndStatusAsync(data.StatusActionsMappingId,data.ActionsId, data.SubStagesId);
+
+                var existingStatusActionsMapping = await _statusActionsMapping.GetByActionsAndStatusAsync(data.StatusActionsMappingId, data.ActionsId, data.SubStagesId);
                 if (existingStatusActionsMapping != null)
                 {
                     return Json(new { message = "StatusActionsMapping data is already in the table" });
                 }
 
-               
-                var existingUnitStatusMapping = await _unitStatusMapping.GetByUnitAndStatusAsync(data.UnitStatusMappingId,data.UnitId, data.SubStagesId);
-                if (existingUnitStatusMapping != null)
-                {
-                    return Json(new { message = "UnitStatusMapping data is already in the table" });
-                }
 
-                if (trnUnitStatusMapping.UnitStatusMappingId == 0)
-                {
-                    var ret = await _unitStatusMapping.AddWithReturn(trnUnitStatusMapping);
-                }
-                else
-                {
-                    var ret = await _unitStatusMapping.UpdateWithReturn(trnUnitStatusMapping);
-                }
+                //var existingUnitStatusMapping = await _unitStatusMapping.GetByUnitAndStatusAsync(data.UnitStatusMappingId,data.UnitId, data.SubStagesId);
+                //if (existingUnitStatusMapping != null)
+                //{
+                //    return Json(new { message = "UnitStatusMapping data is already in the table" });
+                //}
+
+                //if (trnUnitStatusMapping.UnitStatusMappingId == 0)
+                //{
+                //    var ret = await _unitStatusMapping.AddWithReturn(trnUnitStatusMapping);
+                //}
+                //else
+                //{
+                //    var ret = await _unitStatusMapping.UpdateWithReturn(trnUnitStatusMapping);
+                //}
 
                 
                 if (statusActionsMapping.StatusActionsMappingId == 0)

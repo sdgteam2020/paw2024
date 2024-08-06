@@ -99,8 +99,8 @@ namespace swas.BAL.Repository
         public async Task<List<DTODDLComman>> GetActionByStatusId(int StatusId)
         {
             var query = await (from act in _dbContext.mActions
-                        join map in _dbContext.TrnStatusActionsMapping on act.ActionsId equals map.ActionsId
-                        where map.StatusId == StatusId 
+                        //join map in _dbContext.TrnStatusActionsMapping on act.ActionsId equals map.ActionsId
+                        //where map.StatusId == StatusId 
                         select new DTODDLComman
                         {
                             Id=act.ActionsId,

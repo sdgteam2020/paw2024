@@ -65,8 +65,8 @@ namespace swas.BAL.Repository
                                {
                                    PsmId = b.PsmId,
                                    Stages = stge.Stages,
-                                   Status = tounit.UnitName + " " + "For Comments",
-                                   //Status = ststus.Status,
+                                   //Status = tounit.UnitName + " " + "For Comments",
+                                   Status = ststus.Status,
                                    Actions = act.Actions,
                                    FromUnitName = " " + b.UserDetails + " ( " + fromunit.UnitName + ")",
                                    ToUnitName = tounit.UnitName,
@@ -81,12 +81,12 @@ namespace swas.BAL.Repository
 
                                }).ToListAsync();
 
-            var lastInitialStageRecord = query.LastOrDefault(record => record.Stages == "Initial Stage");
+            //var lastInitialStageRecord = query.LastOrDefault(record => record.Stages == "Initial Stage");
 
-            if (lastInitialStageRecord != null)
-            {
-                lastInitialStageRecord.Status = lastInitialStageRecord.ToUnitName;
-            }
+            //if (lastInitialStageRecord != null)
+            //{
+            //    lastInitialStageRecord.Status = lastInitialStageRecord.ToUnitName;
+            //}
 
 
             return query;

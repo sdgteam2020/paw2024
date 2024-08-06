@@ -21,6 +21,8 @@ namespace swas.BAL.DTO
         public string? ToUnitName { get; set; }
         public string? Action { get; set; }
         public int StageId { get; set; }
+        public int StatusId { get; set; }
+        public int ActionId  { get; set; }
         public int TotalDays { get; set; }
         public string? EncyID { get; set; }
         public string? EncyPsmID { get; set; }
@@ -38,5 +40,7 @@ namespace swas.BAL.DTO
         public string FromUnitUserDetail { get; set; }
 
         public int StkStatusId { get; set; }
+        public DateTime? DateTimeOfUpdate { get; set; }
+
     }
 }

@@ -406,7 +406,9 @@ function FwdProjConfirm(thisdata) {
         }
     });
 }
+
 function ProjectSubmited(thisdata) {
+    debugger;
     $.ajax({
         url: '/Projects/ProjectSubmited',
         type: 'POST',

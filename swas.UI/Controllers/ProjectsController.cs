@@ -587,7 +587,7 @@ namespace swas.UI.Controllers
                     {
                         var project = await _projectsRepository.GetProjectByIdAsync(ProjId);
                         unitid = project.StakeHolderId;
-                        int[] stausid = { 23, 22, 25, 27, 27 };
+                        int[] stausid = { 26, 31, 37, 21,21 }; /*  23, 22, 25, 27, 27*/ //ajayupdate
                         int[] unitids = { 4, 3, 5, 1, unitid };
                         for (int i = 0; i < stausid.Length; i++)
                         {

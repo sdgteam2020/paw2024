@@ -172,32 +172,49 @@ namespace swas.BAL
 
         public async Task<List<DTOUnitMapping>> GetallUnitwithmap1(int unitId)
         {
-            var ret1 = await(from usm in _context.TrnUnitStatusMapping
-                             join ms in _context.mStatus on usm.StatusId equals ms.StatusId
-                             join sam in _context.TrnStatusActionsMapping on ms.StatusId equals sam.StatusId
-                             join s in _context.mStages on ms.StageId equals s.StagesId
-                             join a in _context.mActions on sam.ActionsId equals a.ActionsId
-                             join ub in _context.tbl_mUnitBranch on usm.UnitId equals ub.unitid
-                             where usm.UnitId==unitId &&
-                              !(from ub in _context.tbl_mUnitBranch
-                                where ub.unitid == usm.UnitId && ub.TypeId == 6
-                                select 1).Any()
-                             orderby ub.unitid descending
-                             select new DTOUnitMapping
-                             {
-                                 StatusActionsMappingId = sam.StatusActionsMappingId,
-                                 UnitStatusMappingId = usm.UnitStatusMappingId,  // Keep this property
-                                 UnitName = ub.UnitName,  // Changed property name to UnitName
-                                 UnitId = usm.UnitId,
-                                 StagesName = s.Stages,
-                                 StagesId = s.StagesId,  // Changed property name to StagesId
-                                 SubStagesName = ms.Status,
-                                 SubStagesId = ms.StatusId,  // Changed property name to SubStagesId
-                                 ActionsName = a.Actions,
-                                 ActionsId = a.ActionsId
-                             }).ToListAsync();
+            //var ret1 = await(from usm in _context.TrnUnitStatusMapping
+            //                 join ms in _context.mStatus on usm.StatusId equals ms.StatusId
+            //                 join sam in _context.TrnStatusActionsMapping on ms.StatusId equals sam.StatusId
+            //                 join s in _context.mStages on ms.StageId equals s.StagesId
+            //                 join a in _context.mActions on sam.ActionsId equals a.ActionsId
+            //                 join ub in _context.tbl_mUnitBranch on usm.UnitId equals ub.unitid
+            //                 where usm.UnitId==unitId &&
+            //                  !(from ub in _context.tbl_mUnitBranch
+            //                    where ub.unitid == usm.UnitId && ub.TypeId == 6
+            //                    select 1).Any()
+            //                 orderby ub.unitid descending
+            //                 select new DTOUnitMapping
+            //                 {
+            //                     StatusActionsMappingId = sam.StatusActionsMappingId,
+            //                     UnitStatusMappingId = usm.UnitStatusMappingId,  // Keep this property
+            //                     UnitName = ub.UnitName,  // Changed property name to UnitName
+            //                     UnitId = usm.UnitId,
+            //                     StagesName = s.Stages,
+            //                     StagesId = s.StagesId,  // Changed property name to StagesId
+            //                     SubStagesName = ms.Status,
+            //                     SubStagesId = ms.StatusId,  // Changed property name to SubStagesId
+            //                     ActionsName = a.Actions,
+            //                     ActionsId = a.ActionsId
+            //                 }).ToListAsync();
 
-            return ret1;
+            var result = from sam in _context.TrnStatusActionsMapping
+                         join ms in _context.mStatus on sam.StatusId equals ms.StatusId
+                         join s in _context.mStages on ms.StageId equals s.StagesId
+                         join a in _context.mActions on sam.ActionsId equals a.ActionsId
+                         select new DTOUnitMapping
+                         {
+                             StatusActionsMappingId = sam.StatusActionsMappingId,
+                             StagesName = s.Stages,
+                             SubStagesName = ms.Status,
+                             SubStagesId = ms.StatusId,
+                             ActionsName = a.Actions
+                         };
+
+            var resultList = await result.ToListAsync();
+
+
+
+            return resultList;
         }
 
        

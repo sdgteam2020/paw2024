@@ -85,7 +85,7 @@ namespace swas.DAL.Models
         [Display(Name = "Details of user base")]
 		public string? DetlsofUserBase { get; set; }
 		[Display(Name = "Envisage cost of entire proj incl license fees and maint")]
-		public int? EnvisagedCost { get; set; }
+		public string? EnvisagedCost { get; set; }
 		[Display(Name = "Brief details of proposed network and bandwidth reqmts")]
 		[StringLength(10)]
 		public string? NWBandWidthReqmt { get; set; }

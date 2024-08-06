@@ -133,13 +133,13 @@ function FwdProjConfirm(psmId) {
 
 function GetProjectMovHistory(ProjId) {
     var listitem = "";
-
+    debugger;
     $.ajax({
         url: '/Projects/ProjectMovHistory',
         type: 'POST',
         data: { "ProjectId": ProjId },
         success: function (response) {
-            console.log(response);
+          console.log(response);
             if (response.length) {
                 listitem += '<div class="timeline-month">';
 
@@ -163,59 +163,116 @@ function GetProjectMovHistory(ProjId) {
                         else
                             listitem += '<div class="box-title bg-danger text-white"><i class="fa-solid fa-rotate-left fa-xl" style="color: #ffff;"></i> ' + response[i].actions + '</div>';
 
+
+
+                        listitem += '<div class="box-content">';
+
+                        listitem += '<div class="row">';
+                        listitem += '<div class="col-md-4">';
+                        listitem += '<div class="box-item"><strong>Stage</strong>: </div >';
+                        listitem += '</div>';
+
+                        listitem += '<div class="col-md-8">';
+                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-primary">' + response[i].stages + '</span></div>';
+                        listitem += '</div>';
+                        listitem += '</div>';
+
+                        listitem += '<div class="row">';
+                        listitem += '<div class="col-md-4">';
+                        listitem += '<div class="box-item"><strong>Sub Stage</strong>: </div >';
+                        listitem += '</div>';
+
+                        listitem += '<div class="col-md-8">';
+                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-warning text-dark">' + response[i].status + '</span></div>'; /*+ response[i].status + */
+                        listitem += '</div>';
+                        listitem += '</div>';
+
+
+                        listitem += '<div class="row">';
+                        listitem += '<div class="col-md-4">';
+                        listitem += '<div class="box-item"><strong>From</strong>: </div >';
+                        listitem += '</div>';
+
+                        listitem += '<div class="col-md-8">';
+                        listitem += '<div class="box-item"><span class="rounded-pill bg-secondary" style="color: white;">' + response[i].fromUnitName + '</span></div>';
+                        listitem += '</div>';
+                        listitem += '</div>';
+
+
+                        listitem += '<div class="row">';
+                        listitem += '<div class="col-md-4">';
+                        listitem += '<div class="box-item"><strong>TO</strong>: </div >';
+                        listitem += '</div>';
+
+                        listitem += '<div class="col-md-8">';
+                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-secondary">' + response[i].toUnitName + '</span></div>';
+                        listitem += '</div>';
+                        listitem += '</div>';
+
+
+                        listitem += '</div>';
+                        listitem += '<div class="box-footer">' + response[i].userDetails + '</div>';
+                        listitem += '</div></div>';
+
+
+
+
                     }
                     else if (response[i].isComment == true) {
-                        listitem += '<div class="box-title bg-danger text-white"><i class="fa-solid fa-comments fa-xl" style="color: #ffff;"></i> For Comments</div>';
+                        listitem += '<div class="box-title bg-danger text-white"><i class="fa-solid fa-comments fa-xl" style="color: #ffff;"></i> ' + response[i].toUnitName +' For Comments</div>';
 
+
+                        listitem += '<div class="box-content">';
+
+                        listitem += '<div class="row">';
+                        listitem += '<div class="col-md-4">';
+                        listitem += '<div class="box-item"><strong>Stage</strong>: </div >';
+                        listitem += '</div>';
+
+                        listitem += '<div class="col-md-8">';
+                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-primary">' + response[i].stages + '</span></div>';
+                        listitem += '</div>';
+                        listitem += '</div>';
+
+                        listitem += '<div class="row">';
+                        listitem += '<div class="col-md-4">';
+                        listitem += '<div class="box-item"><strong>Sub Stage</strong>: </div >';
+                        listitem += '</div>';
+
+                        listitem += '<div class="col-md-8">';
+                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-warning text-dark">' + response[i].toUnitName + ' For Comments</span></div>'; /*+ response[i].status + */
+                        listitem += '</div>';
+                        listitem += '</div>';
+
+
+                        listitem += '<div class="row">';
+                        listitem += '<div class="col-md-4">';
+                        listitem += '<div class="box-item"><strong>From</strong>: </div >';
+                        listitem += '</div>';
+
+                        listitem += '<div class="col-md-8">';
+                        listitem += '<div class="box-item"><span class="rounded-pill bg-secondary" style="color: white;">' + response[i].fromUnitName + '</span></div>';
+                        listitem += '</div>';
+                        listitem += '</div>';
+
+
+                        listitem += '<div class="row">';
+                        listitem += '<div class="col-md-4">';
+                        listitem += '<div class="box-item"><strong>TO</strong>: </div >';
+                        listitem += '</div>';
+
+                        listitem += '<div class="col-md-8">';
+                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-secondary">' + response[i].toUnitName + '</span></div>';
+                        listitem += '</div>';
+                        listitem += '</div>';
+
+
+                        listitem += '</div>';
+                        listitem += '<div class="box-footer">' + response[i].userDetails + '</div>';
+                        listitem += '</div></div>';
                     }
-                    listitem += '<div class="box-content">';
-
-                    listitem += '<div class="row">';
-                    listitem += '<div class="col-md-4">';
-                    listitem += '<div class="box-item"><strong>Stage</strong>: </div >';
-                    listitem += '</div>';
-
-                    listitem += '<div class="col-md-8">';
-                    listitem += '<div class="box-item"><span class="badge rounded-pill bg-primary">' + response[i].stages + '</span></div>';
-                    listitem += '</div>';
-                    listitem += '</div>';
-
-                    listitem += '<div class="row">';
-                    listitem += '<div class="col-md-4">';
-                    listitem += '<div class="box-item"><strong>Sub Stage</strong>: </div >';
-                    listitem += '</div>';
-
-                    listitem += '<div class="col-md-8">';
-                    listitem += '<div class="box-item"><span class="badge rounded-pill bg-warning text-dark">' + response[i].status + '</span></div>';
-                    listitem += '</div>';
-                    listitem += '</div>';
-
-
-                    listitem += '<div class="row">';
-                    listitem += '<div class="col-md-4">';
-                    listitem += '<div class="box-item"><strong>From</strong>: </div >';
-                    listitem += '</div>';
-
-                    listitem += '<div class="col-md-8">';
-                    listitem += '<div class="box-item"><span class="rounded-pill bg-secondary" style="color: white;">' + response[i].fromUnitName + '</span></div>';
-                    listitem += '</div>';
-                    listitem += '</div>';
-
-
-                    listitem += '<div class="row">';
-                    listitem += '<div class="col-md-4">';
-                    listitem += '<div class="box-item"><strong>TO</strong>: </div >';
-                    listitem += '</div>';
-
-                    listitem += '<div class="col-md-8">';
-                    listitem += '<div class="box-item"><span class="badge rounded-pill bg-secondary">' + response[i].toUnitName + '</span></div>';
-                    listitem += '</div>';
-                    listitem += '</div>';
-
-
-                    listitem += '</div>';
-                    listitem += '<div class="box-footer">' + response[i].userDetails + '</div>';
-                    listitem += '</div></div>';
+                    
+                    
 
 
 

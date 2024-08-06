@@ -37,8 +37,7 @@ namespace swas.BAL.Repository
             }
             else
             {
-                return await _context.TrnStatusActionsMapping
-                .FirstOrDefaultAsync(usm => usm.ActionsId == actionsId && usm.StatusId == statusId );
+                return await _context.TrnStatusActionsMapping.FirstOrDefaultAsync(usm => usm.ActionsId == actionsId && usm.StatusId == statusId );
             }
             
         }

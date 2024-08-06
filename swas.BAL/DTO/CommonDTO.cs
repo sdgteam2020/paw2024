@@ -508,6 +508,13 @@ namespace swas.BAL.DTO
         public int Total { get; set; }
     }
 
+    public class StatusStageDTO
+    {
+        public int StatusId { get; set; }
+        public int StageId { get; set; }
+        public string Status { get; set; }
+        public string Stages { get; set; }
+    }
 
 
 }
