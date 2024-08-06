@@ -23,44 +23,48 @@ namespace swas.BAL.Repository
             _dbContext = context;
         }
 
-      
+
         public async Task<List<DTODDLComman>> GetAllByStages_takeHolder(int ParentId, int UnitId, bool IsOwnProj)
         {
-            // var retisdte=await _dbContext.mUnitBranch.Where()
+            
             List<DTODDLComman> lst = new List<DTODDLComman>();
-            var ret = (from Status in _dbContext.mStatus
-                       join Stages in _dbContext.mStages on Status.StageId equals Stages.StagesId
-                       join StatusMapping in _dbContext.TrnUnitStatusMapping on Status.StatusId equals StatusMapping.StatusId
-                       where StatusMapping.UnitId == UnitId && Status.StageId == ParentId
-                       select new DTODDLComman
-                       {
-                           Name = Status.Status,
-                           Id = Status.StatusId,
-                       }
-                ).ToListAsync();
-            lst.AddRange(ret.Result);
-            if (IsOwnProj)
+            if(ParentId==2)
             {
-                var ret1 = (from Status in _dbContext.mStatus
-                            join Stages in _dbContext.mStages on Status.StageId equals Stages.StagesId
-                            join StatusMapping in _dbContext.TrnUnitStatusMapping on Status.StatusId equals StatusMapping.StatusId
-                            //join re1 in ret.Result on ret1.Id equals Status.StatusId
-                            where StatusMapping.UnitId == 0 && Status.StageId == ParentId
-                            select new DTODDLComman
-                            {
-                                Name = Status.Status,
-                                Id = Status.StatusId,
-                            }
-                  ).ToListAsync();
+                var ret = (from Status in _dbContext.mStatus
+                           join Stages in _dbContext.mStages on Status.StageId equals Stages.StagesId
 
-                lst.AddRange(ret1.Result);
-                //var ss=  lst.GroupBy(x => x.Name).ToDictionary(x => x.Key, x => x.Select(e => e.Id).ToList());
+                           where Status.StageId == ParentId && Status.StatusId == 20 || Status.StatusId == 21 || Status.StatusId == 22
+                           select new DTODDLComman
+                           {
+                               Name = Status.Status,
+                               Id = Status.StatusId,
+                           }
+             ).ToListAsync();
+                lst = (ret.Result);
             }
+            else 
+            {
+                var ret = (from Status in _dbContext.mStatus
+                           join Stages in _dbContext.mStages on Status.StageId equals Stages.StagesId
+
+                           where Status.StageId == ParentId 
+                           select new DTODDLComman
+                           {
+                               Name = Status.Status,
+                               Id = Status.StatusId,
+                           }
+             ).ToListAsync();
+                lst = (ret.Result);
+            }
+         
+            
+            
 
             return lst;
         }
 
 
+        
 
         public async Task<List<DTODDLComman>> GetAllbyParentId(int ParentId)
         {

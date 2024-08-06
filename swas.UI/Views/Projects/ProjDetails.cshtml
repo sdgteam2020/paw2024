@@ -227,7 +227,8 @@
                                     {
                                         if (project.IsRead == true)
                                         {
-                                            <tr>
+                                            <tr style="font-weight: bold;">
+>
 
 
                                                 <td class="s-no-column">
@@ -244,7 +245,10 @@
                                                     <span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
                                                     <span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
                                                     <span class="d-none" id="SpnTimeStampId">@project.TimeStamp</span>
-                                                    <span class="d-none" id="SpnTimeStampId">@project.StageId</span>
+                                                    <span class="d-none" id="SpnStageId">@project.StageId</span>
+                                                    <span class="d-none" id="SpnTimeStatusId">@project.StatusId</span>
+                                                    <span class="d-none" id="SpnTimeActionId">@project.ActionId</span>
+                                                    <span class="d-none" id="SpnTimeToUnitId">@project.ToUnitId</span>
                                                     <span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
                                                     <a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID">
                                                         <div class="tooltip-container" data-tooltip="@project.ProjName">
@@ -269,8 +273,9 @@
 
                                                 <td>@project.ToUnitName</td>
                                                 <td>@project.TimeStamp</td>
-                                                <td>@project.Status</td>
                                                 <td>@project.Stage</td>
+                                                <td>@project.Status</td>
+
                                                 <td>@project.Action</td>
 
 
@@ -286,6 +291,7 @@
                                                             else
                                                             {
                                                                 <button type="button" class="btn btn-success btn-Fwd" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
+
                                                             }
                                                         </div>
                                                         <div class="col-md-4">
@@ -320,8 +326,12 @@
                                                     <span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
                                                     <span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
                                                     <span class="d-none" id="SpnTimeStampId">@project.TimeStamp</span>
-                                                    <span class="d-none" id="SpnTimeStampId">@project.StageId</span>
+                                                    <span class="d-none" id="SpnStageId">@project.StageId</span>
+                                                    <span class="d-none" id="SpnTimeStatusId">@project.StatusId</span>
+
                                                     <span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
+                                                    <span class="d-none" id="SpnTimeActionId">@project.ActionId</span>
+                                                    <span class="d-none" id="SpnTimeToUnitId">@project.ToUnitId</span>
 
                                                     <a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID">
                                                         <div class="tooltip-container" data-tooltip="@project.ProjName">
@@ -348,8 +358,8 @@
 
                                                 <td>@project.ToUnitName</td>
                                                 <td>@project.TimeStamp</td>
-                                                <td>@project.Status</td>
                                                 <td>@project.Stage</td>
+                                                <td>@project.Status</td>
                                                 <td>@project.Action</td>
 
 
@@ -785,10 +795,13 @@
                                             <label for="SubStage">Remarks</label>
                                             <textarea class="form-control requiredField" id="txtRemarksfwd" style="width: 100%;"></textarea>
                                         </div>
+
                                         <div class="form-group col-md-6 ProjectsFwd">
                                             <label>Date of Fwd:</label>
                                             <input id="TimeStampToProjfwd" type="datetime-local" class="datePicker  form-control requiredField" />
                                         </div>
+
+
                                         <div class="form-group col-md-6 Attmenthistory d-none">
                                             <label for="SubStage">Attach Document Description</label>
                                             <textarea class="form-control requiredFieldAttch" id="Reamarks"></textarea>
@@ -998,5 +1011,21 @@
         const datePicker = document.getElementById('datepicker');
         const today = new Date().toISOString().slice(0, 16);
         datePicker.max = today;
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const datePicker = document.getElementById('TimeStampToProjfwd');
+        if (datePicker) {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
+            datePicker.max = formattedDate;
+        }
     });
 </script>

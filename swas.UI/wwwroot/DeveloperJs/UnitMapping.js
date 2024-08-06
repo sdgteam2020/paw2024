@@ -66,7 +66,7 @@ $(document).ready(function () {
                 var tableRows = '';
                 for (var i = 0; i < data.length; i++) {
                     tableRows += '<tr>';
-                    tableRows += '<td id="mapingUnit">' + data[i].unitName + '</td>';
+/*                    tableRows += '<td id="mapingUnit">' + data[i].unitName + '</td>';*/
                     tableRows += '<td>' + data[i].stagesName + '</td>';
                     tableRows += '<td>' + data[i].subStagesName + '</td>';
                     tableRows += '<td>' + data[i].actionsName + '</td>';
@@ -114,9 +114,9 @@ $(document).ready(function () {
 
         debugger;
 
-        var UnitId = $('#Spnmodalunitid').html();
+        /*var UnitId = $('#Spnmodalunitid').html();*/
         var StagesId = $('#ddlStage').val();
-        var SubStagesId = $('#ddlSubStage').val();
+         var SubStagesId = $('#ddlSubStage').val();
         var ActionsId = $('#ddlAction').val();
         var StatusActionsMappingId = $("#spanmodalStatusActionsMappingId").html();
         var UnitStatusMappingId = $("#spanmodalUnitStatusMappingId").html();

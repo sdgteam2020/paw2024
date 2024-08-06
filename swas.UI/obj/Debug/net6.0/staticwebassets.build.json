@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "MaTmKUIscb3LMWygX/tHWgaX4Q5iw4B/EEyyZ29Heus=",
+  "Hash": "ZKyh5EXNVQ0ydm0ObzuV0OHynxddIfqs1fC3NPxf2EI=",
   "Source": "swas.UI",
   "BasePath": "_content/swas.UI",
   "Mode": "Default",
@@ -21743,6 +21743,23 @@
       "OriginalItemSpec": "wwwroot\\Uploads\\Swas_35576217-1671-4d70-beed-37b19c92fe96.pdf"
     },
     {
+      "Identity": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\Uploads\\Swas_355f0110-2fbc-42e0-b062-729127b46115.pdf",
+      "SourceId": "swas.UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\",
+      "BasePath": "_content/swas.UI",
+      "RelativePath": "Uploads/Swas_355f0110-2fbc-42e0-b062-729127b46115.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\Swas_355f0110-2fbc-42e0-b062-729127b46115.pdf"
+    },
+    {
       "Identity": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\Uploads\\Swas_367038b9-7159-40a9-8551-22726ed3d2bf.pdf",
       "SourceId": "swas.UI",
       "SourceType": "Discovered",
@@ -21809,6 +21826,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Uploads\\Swas_39ecacbc-c2c5-4c5c-b570-c7a7b5bee6b7.pdf"
+    },
+    {
+      "Identity": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\Uploads\\Swas_3ac2ea50-b2a8-4bbc-b3f9-ac7b18ca95a1.pdf",
+      "SourceId": "swas.UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\",
+      "BasePath": "_content/swas.UI",
+      "RelativePath": "Uploads/Swas_3ac2ea50-b2a8-4bbc-b3f9-ac7b18ca95a1.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\Swas_3ac2ea50-b2a8-4bbc-b3f9-ac7b18ca95a1.pdf"
     },
     {
       "Identity": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\Uploads\\Swas_3d8f60e6-2703-45b6-933c-3d47ab050f21.pdf",
@@ -22744,6 +22778,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Uploads\\Swas_97a7ebda-ecfb-48f1-82eb-438d48aab215.pdf"
+    },
+    {
+      "Identity": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\Uploads\\Swas_98dfd1aa-bad2-42a8-8182-226b35362338.pdf",
+      "SourceId": "swas.UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\",
+      "BasePath": "_content/swas.UI",
+      "RelativePath": "Uploads/Swas_98dfd1aa-bad2-42a8-8182-226b35362338.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\Swas_98dfd1aa-bad2-42a8-8182-226b35362338.pdf"
     },
     {
       "Identity": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\Uploads\\Swas_9dd65be7-34d2-4783-b668-67a74ab7d835.pdf",
