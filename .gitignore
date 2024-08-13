@@ -2,6 +2,7 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
+
 /.vs/swas/DesignTimeBuild/.dtbcache.v2
 /.vs/ProjectEvaluation/swas.metadata.v5.1
 /.vs/ProjectEvaluation/swas.projects.v5.1
@@ -113,4 +114,11 @@
 /swas.UI/Properties/PublishProfiles/FolderProfile.pubxml.user
 /swas.UI/wwwroot/Uploads/Swas_1954c3a6-dc30-476b-b495-9c4de866b4f2.pdf
 /swas.UI/wwwroot/Uploads/Swas_3de6f134-47ac-4b46-8ded-26f75f55af57.pdf
-/swas.UI/swas.UI.csproj
+/.vs/swas/FileContentIndex
+/swas.UI/.vs/ProjectEvaluation/swas.metadata.v7.bin
+/swas.UI/.vs/ProjectEvaluation/swas.projects.v7.bin
+/swas.UI/.vs/swas/DesignTimeBuild/.dtbcache.v2
+/swas.UI/.vs/swas/v17/.futdcache.v2
+/swas.UI/.vs/swas/v17/.suo
+/swas.UI/.vs/swas/v17/fileList.bin
+/swasUnitTest/obj/Debug/net6.0/swasUnitTest.csproj.AssemblyReference.cache
