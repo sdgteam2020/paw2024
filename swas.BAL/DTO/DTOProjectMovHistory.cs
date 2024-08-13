@@ -9,6 +9,11 @@ namespace swas.BAL.DTO
 {
     public class DTOProjectMovHistory
     {
+        public List<DTOProjectMovHistorycmd> DTOProjectMovHistorycmdlst { get; set; }
+        public List<DTOProjectMovHistorypsm> DTOProjectMovHistorypsmlst { get; set; }
+    }
+    public class DTOProjectMovHistorypsm
+    {
         public int PsmId { get; set; }
         public string? Stages { get; set; }
         public string? Status { get; set; }
@@ -24,8 +29,13 @@ namespace swas.BAL.DTO
 
         public int? AttCnt { get; set; }
         public string? UserDetails { get; set; }
-        
 
-
+    }
+    public class DTOProjectMovHistorycmd
+    {
+        public int PsmId { get; set; }
+        public string? Comments { get; set; }
+        public string? Status { get; set; }
+        public DateTime? DateTimeOfUpdate { get; set; }
     }
 }

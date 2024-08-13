@@ -11,6 +11,7 @@ namespace swas.BAL.DTO
         public List<DTODashboardCount> DTODashboardCountlst { get; set; }
         public List<DTODashboardHeader> DTODashboardHeaderlst { get; set; }
         public List<DTODashboardAction> DTODashboardActionlst { get; set; }
+        public List<DTOApprovedCount> DTOApprovedCountlst { get; set; }
     }
     public class DTODashboardCount
     {
@@ -38,5 +39,12 @@ namespace swas.BAL.DTO
         public int StatusId { get; set; }
         public int ActionId { get; set; }
         public string? Action { get; set; }
+    }
+    public class DTOApprovedCount
+    {
+        public int ProjId { get; set; }
+        public int StatusActionsMappingId { get; set; }
+        public int StatusId { get; set; }
+        public int Total { get; set; }
     }
 }

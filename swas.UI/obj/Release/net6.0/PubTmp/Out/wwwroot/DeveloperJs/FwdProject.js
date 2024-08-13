@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 
-    mMsater(0, "ddlfwdStage", 5, 0)
+    mMsaterfwdStage(0, "ddlfwdStage", 5, 0)
     
     $("#ddlfwdStage").change(function () {
        
@@ -49,8 +49,17 @@
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
         GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentProjId").html());
     });
-        $(".btn-Fwd").click(function () {
-            reset();
+    $(".btn-Fwd").click(function () {
+        
+        mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 1)
+        mMsaterStage($(this).closest("tr").find("#SpnTimeStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#SpnStageId").html(), $("#SpnStakeHolderId").html())
+        /* mMsater(0, "ddlfwdAction", 9, $("#ddlfwdSubStage").val())*/
+        
+        mMsater($(this).closest("tr").find("#SpnTimeActionId").html(), "ddlfwdAction", 9, $(this).closest("tr").find("#SpnTimeStatusId").html())
+
+        mMsaterFwdTo($(this).closest("tr").find("#SpnTimeToUnitId").html(), "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html());
+        
+
         $("#spanFwdCurrentPslmId").html($(this).closest("tr").find("#SpnCurrentpsmId").html())
         $("#spanFwdProjectId").html($(this).closest("tr").find("#SpnCurrentProjId").html())
         $("#SpnFwdStakeHolderId").html($(this).closest("tr").find("#SpnStakeHolderId").html())
@@ -61,19 +70,19 @@
         $(".Fwdtitle").html("Projects Move Details");
         $(".ProjectsFwd").removeClass("d-none");
         $(".Attmenthistory").addClass("d-none");
+          
+           
 
-        if ($(this).closest("tr").find("#SpnprojectIsProcess").html() == 'False') {
-            $("#ddlfwdStage option[value='2']").remove();
-            $("#ddlfwdStage option[value='3']").remove();
-        }
-        else {
-            $("#ddlfwdStage option[value='1']").remove();
-
-        }
        // alert($(this).closest("tr").find("#SpnprojectStageId").html())
         //GetAllComments($(this).closest("tr").find("#SpnCurrentProjId").html());
     });
     $(".btn-Obsn").click(function () {
+        
+        mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 2)
+        mMsaterStage($(this).closest("tr").find("#SpnTimeStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#SpnStageId").html(), $("#SpnStakeHolderId").html())
+
+        mMsater($(this).closest("tr").find("#SpnTimeActionId").html(), "ddlfwdAction", 9, $(this).closest("tr").find("#SpnTimeStatusId").html())
+        mMsaterFwdTo($(this).closest("tr").find("#SpnTimeToUnitId").html(), "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html());
 
         $("#spanFwdCurrentPslmId").html($(this).closest("tr").find("#SpnCurrentpsmId").html())
         $("#spanFwdProjectId").html($(this).closest("tr").find("#SpnCurrentProjId").html())
@@ -87,9 +96,10 @@
         $(".ProjectsFwd").removeClass("d-none");
         $(".Attmenthistory").addClass("d-none");
 
+      
         
-        $("#ddlfwdStage option[value='2']").remove();
-        $("#ddlfwdStage option[value='3']").remove();
+   
+       
         //GetAllComments($(this).closest("tr").find("#SpnCurrentProjId").html());
     });
 

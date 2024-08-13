@@ -12,7 +12,7 @@ namespace swas.DAL.Models
 	{
 		[Key]
 		public int ProjId { get; set; }
-
+         
 
         [StringLength(200)]
 		[Column(TypeName = "varchar(200)")]

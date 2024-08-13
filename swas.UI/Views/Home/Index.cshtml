@@ -287,6 +287,9 @@
                 color: white;
             }
 
+        .cursorpointer{
+            cursor: pointer;
+        }
        
     </style>
 
@@ -308,7 +311,7 @@
             </div>
 
             <div class="modal-body scroll">
-                    <table id="dashboard"  class="table table-striped table-bordered">
+                    <table id="dashboardDeatils"  class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>Ser No</th>
@@ -317,14 +320,65 @@
                             <th>From UnitName</th>
                             <th>To UnitName</th>
                             <th>Action Taken</th>
+                            <th>DateTime</th>
                             <th>Status</th>
                         </tr>
                     </thead>
 
-                        <tbody id="DetailBodysummary">
+                        <tbody id="DetailBodysummary1">
 
                     </tbody>
 
+                </table>
+            </div>
+
+        </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+</div>
+<div class="modal fade" id="ProjApproved" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content modalSize">
+            <div class="modal-header">
+
+                <h4 class="modal-title" id="ProjectApprovedTittle">Project Details</h4>
+                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body scroll">
+                <table id="dashboardApproved" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Ser No</th>
+                            <th>Proj Name</th>
+                            <th>Stake Holder</th>
+                            <th>DateTime</th>
+                            
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="DetailBodyApproved">
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+</div>
+<div class="modal fade" id="modalProjectWiseStatus" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content modalSize">
+            <div class="modal-header">
+
+                <h4 class="modal-title" id=""> Project Wise Status</h4>
+                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body scroll">
+                <table id="tblProjectWiseStatus" class="table table-striped table-bordered">
+                   
+                    
                 </table>
             </div>
 

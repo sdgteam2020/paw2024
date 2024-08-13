@@ -65,6 +65,87 @@
         }
     });
 }
+
+function mMsaterfwdStage(sectid = '', ddl, TableId, ParentId,type) {
+
+    var userdata =
+    {
+        "id": TableId,
+        "ParentId": ParentId,
+
+    };
+    $.ajax({
+        url: '/Master/GetAllMasterTableforddl',
+        contentType: 'application/x-www-form-urlencoded',
+        data: userdata,
+        type: 'POST',
+
+        success: function (response) {
+            if (response != "null" && response != null) {
+                if (response == 0) {
+                    listItemddl += '<option value="">Please Select</option>';
+                    $("#" + ddl + "").html(listItemddl);
+                }
+
+                else {
+
+                    var listItemddl = "";
+
+                    listItemddl += '<option value="">Please Select</option>';
+
+
+                    for (var i = 0; i < response.length; i++) {
+                        listItemddl += '<option value="' + response[i].id + '">' + response[i].name + '</option>';
+                    }
+                    $("#" + ddl + "").html(listItemddl);
+
+                    //if (TableId == 5 || TableId == 7 || TableId == 8) {
+
+                    //    if (sectid != '') {
+                    //        $("#" + ddl + " option").filter(function () {
+                    //            return this.text == sectid;
+                    //        }).attr('selected', true);
+
+                    //    }
+                    //}
+                    //else
+                    //{
+                    if (sectid != '') {
+                        $("#" + ddl + "").val(sectid);
+
+                    }
+                    if (type == 1) {
+                        if ($(this).closest("tr").find("#SpnprojectIsProcess").html() == 'False') {
+                            $("#ddlfwdStage option[value='2']").remove();
+                            $("#ddlfwdStage option[value='3']").remove();
+                        }
+                        else {
+                           /* $("#ddlfwdStage option[value='1']").remove();*/   /*ajayUpdate*/
+
+                        }
+                    }
+                    else if (type == 2) {
+                        $("#ddlfwdStage option[value='2']").remove();
+                        $("#ddlfwdStage option[value='3']").remove();
+                    }
+                    //}
+
+
+                }
+            }
+            else {
+                //Swal.fire({
+                //    text: "No data found Offrs"
+                //});
+            }
+        },
+        error: function (result) {
+            Swal.fire({
+                text: "Error"
+            });
+        }
+    });
+}
 function mMsaterStage(sectid = '', ddl, TableId, ParentId, StakeHolderId)
 {
 

@@ -7,13 +7,13 @@
         $("#loading").hide();
     });
     
-    setInterval(function () {
-        GetAllUsers()
-        if ($("#spnUserMapChatId").html() != 0)
+    //setInterval(function () {
+    //    GetAllUsers()
+    //    if ($("#spnUserMapChatId").html() != 0)
            
-            UserChat($("#spnUserMapChatId").html(), $("#spnToUserIdMapChatId").html());
+    //        UserChat($("#spnUserMapChatId").html(), $("#spnToUserIdMapChatId").html(), $("#profsortname").html());
 
-    }, 3000);
+    //}, 3000);
     
    
     $(".img_cont_msg").click(function () {
@@ -205,82 +205,34 @@ function UserChat(userMapChatId, FromUserId, sortname) {
         }
     });
 }
-function DateFormateddMMyyyyhhmmss(date) {
 
-    var todaysDate = new Date();
-    var datef1 = new Date(date);
-    //if (datef1.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
-    //    // Date equals today's date
-
-    //    return 'Today';
-    //}
-    //else {
-        var datef2 = new Date(date);
-        var months = "" + `${(datef2.getMonth() + 1)}`;
-        var days = "" + `${(datef2.getDate())}`;
-        var pad = "00"
-        var monthsans = pad.substring(0, pad.length - months.length) + months
-        var dayans = pad.substring(0, pad.length - days.length) + days
-        var year = `${datef2.getFullYear()}`;
-        var hh = `${datef2.getHours()}`;
-        var mm = `${datef2.getMinutes()}`;
-        var ss = `${datef2.getSeconds()}`;
-        if (year > 1902) {
-
-            var datemmddyyyy = dayans + `/` + monthsans + `/` + year + ` ` + hh + `:` + mm + `:` + ss
-            return datemmddyyyy;
-        }
-        else {
-            return '';
-        }
-   // }
-
-    //`${datef2.getFullYear()}/` + monthsans + `/` + dayans ;
-}
-function DateCalculateago(fmDate) {
-    ////////ago///////////
-    var ago = "";
-    var start_actual_time = fmDate;
-    var end_actual_time = new Date();
-
-    start_actual_time = new Date(start_actual_time);
-    end_actual_time = new Date(end_actual_time);
-
-    var diff = end_actual_time - start_actual_time;
-
-    var diffSeconds = diff / 1000;
-    var HH = Math.floor(diffSeconds / 3600);
-    var MM = Math.floor(diffSeconds % 3600) / 60;
-
-    var formatted = ((HH < 10) ? ("0" + HH) : HH) + ":" + ((MM < 10) ? ("0" + MM) : MM)
-
-    var futureDate = new Date();
-    var todayDate = new Date(fmDate);
-    var milliseconds = futureDate.getTime() - todayDate.getTime();
-    var hours = Math.floor(milliseconds / (60 * 60 * 1000));
-    var formatted1 = formatted.substring(0, 2);
-    if (parseInt(formatted1) == 00) {
-        ago = formatted.substring(0, 5) + ' Minutes ago</h6>';;
-    }
-    else if (hours <= 24) {
-        ago = hours + ' Hours ago</h6>';
-    }
-    else if (hours <= 730) {
-        ago = Math.floor(hours / 24) + ' Days ago</h6>';;
-    }
-    else if (hours <= 8766) {
-        ago = Math.floor(Math.floor(hours / 24) / 30) + ' Months ago</h6>';;
-    }
-    else {
-        ago = Math.floor(Math.floor(Math.floor(hours / 24) / 30) / 12) + ' Years ago</h6>';;
-    }
-    return ago;
-}
 const colors = [
-    '#FF0000', '#FF7F00', '#FFFF00', '#7FFF00', '#00FF00', '#00FF7F', '#00FFFF', '#007FFF',
-    '#0000FF', '#7F00FF', '#FF00FF', '#FF007F', '#FF1493', '#FF4500', '#2E8B57', '#32CD32',
-    '#4682B4', '#8A2BE2', '#D2691E', '#DC143C', '#FF8C00', '#B22222', '#ADFF2F', '#4B0082',
-    '#FFD700', '#20B2AA'
+    '#759c84',
+    '#d6dbdf',
+    '#5d6d7e',
+    '#5b7382',
+    '#3498db',
+    '#2c3e50',
+    '#fdfefe',
+    '#6495ED',
+    '#000080',
+    '#0000FF',
+    '#008080',
+    '#C0C0C0',
+    '#999999',
+    '#FFFFFF',
+    '#008000',
+    '#454545',
+    '#52be80',
+    '#283747',
+    '#1b4f72',
+    '#1b4f72',
+    '#d6dbdf',
+    '#b3b6b7',
+    '#28b463',
+    '#aed6f1',
+    '#17202a',
+    '#73c6b6'
 ];
 
 // Function to display a to z with fixed colors

@@ -173,7 +173,7 @@ namespace swas.UI.Controllers
                     var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
                     var watermarkText = $" {ipAddress}\n  {currentDatetime}";
                     TempData["ipadd"] = watermarkText;
-                    ViewBag.SubmitCde = false;
+                    ViewBag.SubmitCde = "0";
 
                     MailBox mbx = new MailBox();
 

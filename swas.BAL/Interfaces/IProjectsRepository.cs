@@ -26,6 +26,8 @@ namespace swas.BAL.Interfaces
         Task<bool> DeleteProjectAsync(int projectId);
         Task<List<DTOProjectsFwd>> GetActInboxAsync();
         Task<List<DTOProjectsFwd>> GetDashboardStatusDetails(int StatuId,int UnitId);
+        Task<List<DTOProjectsFwd>> GetDashboardApproved(int StatuId,int statusActionsMappingId);
+        Task<DTOProjectWiseStatus> GetProjectWiseStatus();
         Task<List<DTOProjectsFwd>> GetActSendItemsAsync();
         Task<List<tbl_Projects>> GetActComplettemsAsync();
         Task<List<tbl_Projects>> GetActDraftItemsAsync();
