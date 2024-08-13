@@ -1,5 +1,8 @@
 ﻿$(document).ready(function () {
-
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
     //$(".processDetail").click(function () {
 
     //    var ProjId = $(this).closest("tr").find("#SpnCurrentProjId").html();
@@ -134,35 +137,36 @@ function FwdProjConfirm(psmId) {
 
 function GetProjectMovHistory(ProjId) {
     var listitem = "";
-     
+   
     $.ajax({
         url: '/Projects/ProjectMovHistory',
         type: 'POST',
         data: { "ProjectId": ProjId },
         success: function (response) {
           console.log(response);
-            if (response.length) {
+            if (response.dtoProjectMovHistorypsmlst.length) {
                 listitem += '<div class="timeline-month">';
 
                 /*listitem += '  ' + DateTimeFormatedd_mm_yyyy(new Date($.now())) + '';*/
-
+                DTOProjectMovHistorypsmlst = response.dtoProjectMovHistorypsmlst;
+                DTOProjectMovHistorycmdlst = response.dtoProjectMovHistorycmdlst;
                 listitem += '  ' + DateTimeFormatedd_mm_yyyy(new Date($.now())) + '';
-                listitem += '<span>' + response.length + ' Entries</span>';
+                listitem += '<span>' + DTOProjectMovHistorypsmlst.length + ' Entries</span>';
                 listitem += '</div>';
-                for (var i = 0; i < response.length; i++) {
+                for (var i = 0; i < DTOProjectMovHistorypsmlst.length; i++) {
 
-                    listitem += '<div class="timeline-section"> <div class="timeline-date"> ' + DateTimeFormatedd_mm_yyyy(response[i].date) + '</div>';
+                    listitem += '<div class="timeline-section"> <div class="timeline-date"> ' + DateTimeFormatedd_mm_yyyy(DTOProjectMovHistorypsmlst[i].date) + '</div>';
 
-                   /* listitem += '<div class="timeline-section"> <div class="timeline-date"> ' + DateFormatedd_mm_yyyy(response[i].date) + '</div>';*/
+                   /* listitem += '<div class="timeline-section"> <div class="timeline-date"> ' + DateFormatedd_mm_yyyy(DTOProjectMovHistorypsmlst[i].date) + '</div>';*/
                     listitem += '<div class="row"><div class="col-sm-4">';
                     listitem += '<div class="timeline-box">';
-                    if (response[i].isComment == false) {
-                        if (response[i].actions == "FWD" && (response[i].undoRemarks == "" || response[i].undoRemarks == null))
-                            listitem += '<div class="box-title bg-warning  text-white"><i class="fa-solid fa-forward" style="color: #FFD43B;"></i> ' + response[i].actions + '</div>';
-                        else if (response[i].undoRemarks == "" || response[i].undoRemarks == null)
-                            listitem += '<div class="box-title bg-success text-white"><i class="fa-solid fa-circle-check fa-xl" style="color: #3adb00;"></i> ' + response[i].actions + '</div>';
+                    if (DTOProjectMovHistorypsmlst[i].isComment == false) {
+                        if (DTOProjectMovHistorypsmlst[i].actions == "FWD" && (DTOProjectMovHistorypsmlst[i].undoRemarks == "" || DTOProjectMovHistorypsmlst[i].undoRemarks == null))
+                            listitem += '<div class="box-title bg-warning  text-white"><i class="fa-solid fa-forward" style="color: #FFD43B;"></i> ' + DTOProjectMovHistorypsmlst[i].actions + '</div>';
+                        else if (DTOProjectMovHistorypsmlst[i].undoRemarks == "" || DTOProjectMovHistorypsmlst[i].undoRemarks == null)
+                            listitem += '<div class="box-title bg-success text-white"><i class="fa-solid fa-circle-check fa-xl" style="color: #3adb00;"></i> ' + DTOProjectMovHistorypsmlst[i].actions + '</div>';
                         else
-                            listitem += '<div class="box-title bg-danger text-white"><i class="fa-solid fa-rotate-left fa-xl" style="color: #ffff;"></i> ' + response[i].actions + '</div>';
+                            listitem += '<div class="box-title bg-danger text-white"><i class="fa-solid fa-rotate-left fa-xl" style="color: #ffff;"></i> ' + DTOProjectMovHistorypsmlst[i].actions + '</div>';
 
 
 
@@ -174,7 +178,7 @@ function GetProjectMovHistory(ProjId) {
                         listitem += '</div>';
 
                         listitem += '<div class="col-md-8">';
-                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-primary">' + response[i].stages + '</span></div>';
+                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-primary">' + DTOProjectMovHistorypsmlst[i].stages + '</span></div>';
                         listitem += '</div>';
                         listitem += '</div>';
 
@@ -184,7 +188,7 @@ function GetProjectMovHistory(ProjId) {
                         listitem += '</div>';
 
                         listitem += '<div class="col-md-8">';
-                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-warning text-dark">' + response[i].status + '</span></div>'; /*+ response[i].status + */
+                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-warning text-dark">' + DTOProjectMovHistorypsmlst[i].status + '</span></div>'; /*+ DTOProjectMovHistorypsmlst[i].status + */
                         listitem += '</div>';
                         listitem += '</div>';
 
@@ -195,7 +199,7 @@ function GetProjectMovHistory(ProjId) {
                         listitem += '</div>';
 
                         listitem += '<div class="col-md-8">';
-                        listitem += '<div class="box-item"><span class="rounded-pill bg-secondary" style="color: white;">' + response[i].fromUnitName + '</span></div>';
+                        listitem += '<div class="box-item"><span class="rounded-pill bg-secondary" style="color: white;">' + DTOProjectMovHistorypsmlst[i].fromUnitName + '</span></div>';
                         listitem += '</div>';
                         listitem += '</div>';
 
@@ -206,21 +210,21 @@ function GetProjectMovHistory(ProjId) {
                         listitem += '</div>';
 
                         listitem += '<div class="col-md-8">';
-                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-secondary">' + response[i].toUnitName + '</span></div>';
+                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-secondary">' + DTOProjectMovHistorypsmlst[i].toUnitName + '</span></div>';
                         listitem += '</div>';
                         listitem += '</div>';
 
 
                         listitem += '</div>';
-                        listitem += '<div class="box-footer">' + response[i].userDetails + '</div>';
+                        listitem += '<div class="box-footer">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
                         listitem += '</div></div>';
 
 
 
 
                     }
-                    else if (response[i].isComment == true) {
-                        listitem += '<div class="box-title bg-danger text-white"><i class="fa-solid fa-comments fa-xl" style="color: #ffff;"></i> ' + response[i].toUnitName +' For Comments</div>';
+                    else if (DTOProjectMovHistorypsmlst[i].isComment == true) {
+                        listitem += '<div class="box-title bg-danger text-white"><i class="fa-solid fa-comments fa-xl" style="color: #ffff;"></i> ' + DTOProjectMovHistorypsmlst[i].toUnitName +' For Comments</div>';
 
 
                         listitem += '<div class="box-content">';
@@ -231,7 +235,7 @@ function GetProjectMovHistory(ProjId) {
                         listitem += '</div>';
 
                         listitem += '<div class="col-md-8">';
-                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-primary">' + response[i].stages + '</span></div>';
+                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-primary">' + DTOProjectMovHistorypsmlst[i].stages + '</span></div>';
                         listitem += '</div>';
                         listitem += '</div>';
 
@@ -241,7 +245,7 @@ function GetProjectMovHistory(ProjId) {
                         listitem += '</div>';
 
                         listitem += '<div class="col-md-8">';
-                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-warning text-dark">' + response[i].toUnitName + ' For Comments</span></div>'; /*+ response[i].status + */
+                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-warning text-dark">' + DTOProjectMovHistorypsmlst[i].toUnitName + ' For Comments</span></div>'; /*+ DTOProjectMovHistorypsmlst[i].status + */
                         listitem += '</div>';
                         listitem += '</div>';
 
@@ -252,7 +256,7 @@ function GetProjectMovHistory(ProjId) {
                         listitem += '</div>';
 
                         listitem += '<div class="col-md-8">';
-                        listitem += '<div class="box-item"><span class="rounded-pill bg-secondary" style="color: white;">' + response[i].fromUnitName + '</span></div>';
+                        listitem += '<div class="box-item"><span class="rounded-pill bg-secondary" style="color: white;">' + DTOProjectMovHistorypsmlst[i].fromUnitName + '</span></div>';
                         listitem += '</div>';
                         listitem += '</div>';
 
@@ -263,21 +267,40 @@ function GetProjectMovHistory(ProjId) {
                         listitem += '</div>';
 
                         listitem += '<div class="col-md-8">';
-                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-secondary">' + response[i].toUnitName + '</span></div>';
+                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-secondary">' + DTOProjectMovHistorypsmlst[i].toUnitName + '</span></div>';
                         listitem += '</div>';
                         listitem += '</div>';
-
-
                         listitem += '</div>';
-                        listitem += '<div class="box-footer">' + response[i].userDetails + '</div>';
+                        listitem += '<div class="box-footer">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
                         listitem += '</div></div>';
+
+                        var DTODashboardCount = DTOProjectMovHistorycmdlst.filter(function (element) { return element.psmId == DTOProjectMovHistorypsmlst[i].psmId; });
+
+                        
+                        for (var c = 0; c < DTODashboardCount.length; c++) {
+                            listitem += '<div class="col-sm-4">';
+                            listitem += '<div class="timeline-box">';
+                            listitem += '<div class="box-title">';
+                            listitem += '<i class="fa fa-pencil text-info" aria-hidden="true"></i>  Comment On ' + DateFormateddMMyyyyhhmmss(DTODashboardCount[c].dateTimeOfUpdate) + '';
+                            listitem += '</div>';
+                            listitem += '<div class="box-content">';
+                            if (DTODashboardCount[c].comments.length>75)
+                                listitem += '<div class="box-item" data-toggle="tooltip" data-placement="top" title="' + DTODashboardCount[c].comments + '">' + DTODashboardCount[c].comments.substring(0, 75) + ' ........</div>';
+                            else
+                                listitem += '<div class="box-item" >' + DTODashboardCount[c].comments + ' </div>';
+
+                            listitem += '</div>';
+                            if (DTODashboardCount[c].status == "Observation" || DTODashboardCount[c].status == "Rejected")
+                                listitem += '<div class="box-footer bg-danger">' + DTODashboardCount[c].status + '</div>';
+                            else if (DTODashboardCount[c].status == "Accepted")
+                                listitem += '<div class="box-footer bg-success ">' + DTODashboardCount[c].status + '</div>';
+                            else
+                                listitem += '<div class="box-footer">' + DTODashboardCount[c].status + '</div>';
+                            listitem += '</div></div>';
+                        }
                     }
                     
-                    
-
-
-
-                    if (response[i].remarks != "") {
+                    if (DTOProjectMovHistorypsmlst[i].remarks != "") {
                         listitem += '<div class="col-sm-4">';
                         listitem += '<div class="timeline-box">';
                         listitem += '<div class="box-title">';
@@ -285,12 +308,12 @@ function GetProjectMovHistory(ProjId) {
                         listitem += '</div>';
                         listitem += '<div class="box-content">';
                         /*listitem += ' <a class="btn btn-xs btn-default pull-right">Remarks</a>';*/
-                        listitem += '<div class="box-item">' + response[i].remarks + '</div>';
+                        listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
                         listitem += '</div>';
-                        listitem += '<div class="box-footer">' + response[i].userDetails + '</div>';
+                        listitem += '<div class="box-footer">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
                         listitem += '</div></div>';
                     }
-                    if (response[i].undoRemarks != null) {
+                    if (DTOProjectMovHistorypsmlst[i].undoRemarks != null) {
                         listitem += '<div class="col-sm-4">';
                         listitem += '<div class="timeline-box">';
                         listitem += '<div class="box-title">';
@@ -298,9 +321,9 @@ function GetProjectMovHistory(ProjId) {
                         listitem += '</div>';
                         listitem += '<div class="box-content">';
                         /*listitem += ' <a class="btn btn-xs btn-default pull-right">Remarks</a>';*/
-                        listitem += '<div class="box-item">' + response[i].undoRemarks + '</div>';
+                        listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].undoRemarks + '</div>';
                         listitem += '</div>';
-                        listitem += '<div class="box-footer">' + response[i].userDetails + '</div>';
+                        listitem += '<div class="box-footer">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
                         listitem += '</div></div>';
                     }
                     listitem += '</div></div>';

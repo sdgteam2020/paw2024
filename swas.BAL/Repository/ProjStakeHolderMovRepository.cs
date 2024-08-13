@@ -45,10 +45,10 @@ namespace swas.BAL.Repository
         }
 
 
-        public async Task<List<DTOProjectMovHistory>> ProjectMovHistory(int? ProjectId)
+        public async Task<DTOProjectMovHistory> ProjectMovHistory(int? ProjectId)
         {
+            DTOProjectMovHistory lst=new DTOProjectMovHistory();
 
-           
             var query = await (from a in _dbContext.Projects
                                join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
                                join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid
@@ -61,7 +61,7 @@ namespace swas.BAL.Repository
 
                                where b.ProjId == ProjectId
                                orderby b.TimeStamp descending
-                               select new DTOProjectMovHistory
+                               select new DTOProjectMovHistorypsm
                                {
                                    PsmId = b.PsmId,
                                    Stages = stge.Stages,
@@ -80,16 +80,128 @@ namespace swas.BAL.Repository
                                    UserDetails = b.UserDetails,
 
                                }).ToListAsync();
-
+            lst.DTOProjectMovHistorypsmlst = query;
+            var comments = await (from mov in _dbContext.ProjStakeHolderMov
+                                  join stk in _dbContext.StkComment on mov.PsmId equals stk.PsmId
+                                  join stksts in _dbContext.StkStatus on stk.StkStatusId equals stksts.StkStatusId
+                                  where mov.ProjId == ProjectId
+                                  select new DTOProjectMovHistorycmd
+                                  {
+                                      PsmId = mov.PsmId,
+                                      Status =stksts.Status,
+                                      Comments = stk.Comments,
+                                      DateTimeOfUpdate = stk.DateTimeOfUpdate,
+                                  }).ToListAsync();
             //var lastInitialStageRecord = query.LastOrDefault(record => record.Stages == "Initial Stage");
 
             //if (lastInitialStageRecord != null)
             //{
             //    lastInitialStageRecord.Status = lastInitialStageRecord.ToUnitName;
             //}
+            lst.DTOProjectMovHistorycmdlst = comments;
+           
+            return lst;
+        }
+        public async Task<List<DTOProjectHold>> ProjectHolsTimeCalculate(int ProjectId)
+        {
+            List<DTOProjectHold> lst=new List<DTOProjectHold>();
+            var databyprojectid = await (from mov in _dbContext.ProjStakeHolderMov
+                                         join munit1 in _dbContext.tbl_mUnitBranch on mov.ToUnitId equals munit1.unitid
+                                         join munit2 in _dbContext.tbl_mUnitBranch on mov.FromUnitId equals munit2.unitid
+                                         join stsmap in _dbContext.TrnStatusActionsMapping on mov.StatusActionsMappingId equals stsmap.StatusActionsMappingId  
+                                         join act in _dbContext.mActions on stsmap.ActionsId equals act.ActionsId
+                                         join sts in _dbContext.mStatus on stsmap.StatusId equals sts.StatusId
+                                         where 
+                                        // mov.IsComment==false &&
+                                         mov.ProjId==ProjectId
+                                         orderby mov.PsmId
+                                         select new DTOProjectHold
+                                         {
+                                           PsmId=mov.PsmId,
+                                           TounitId = mov.ToUnitId,
+                                           Tounit= munit1.UnitName,
+                                           FromunitId = mov.FromUnitId,
+                                           Fromunit = munit2.UnitName,
+                                           TimeStamp = mov.TimeStamp,
+                                           DateTimeOfUpdate = mov.DateTimeOfUpdate,
+                                           Status= sts.Status,
+                                           Action= act.ActionDesc,
+                                           IsComment=mov.IsComment,
+                                           IsComplete = mov.IsComplete
+                                         }).ToListAsync();
+           
+           
+            for (int i=0;i< databyprojectid.Count();i++ )
+            {
+                DTOProjectHold db = new DTOProjectHold();
+                db.PsmId = databyprojectid[i].PsmId;
+                if (databyprojectid[i].IsComment == false)
+                {
 
 
-            return query;
+                  
+                    if(i==0)
+                    {
+                        db.FromunitId = databyprojectid[i].FromunitId;
+                        db.Fromunit = databyprojectid[i].Fromunit;
+                        db.TimeStampfrom = databyprojectid[i].TimeStamp;
+                        db.IsComment = databyprojectid[i].IsComment;
+                    
+                        db.IsComplete = databyprojectid[i].IsComplete;
+                        db.TimeStampTo = databyprojectid[i].DateTimeOfUpdate;
+                        db.TounitId = databyprojectid[i].TounitId;
+                        db.Tounit = databyprojectid[i].Tounit;
+                        db.Status = databyprojectid[i].Status;
+                        db.Action = databyprojectid[i].Action;
+                        
+                    }
+                    else
+                    {
+                        db.FromunitId = databyprojectid[i].FromunitId;
+                        db.Fromunit = databyprojectid[i].Fromunit;
+                        db.TimeStampfrom = databyprojectid[i].TimeStamp;
+                        db.IsComment = databyprojectid[i].IsComment;
+                        db.TimeStampTo = DateTime.Now;
+                        db.IsComplete = databyprojectid[i].IsComplete;
+                        int j = i;
+                        j++;
+                       
+                        db.TounitId = databyprojectid[i].TounitId;
+                        db.Tounit = databyprojectid[i].Tounit;
+                        db.Status = databyprojectid[i].Status;
+                        db.Action = databyprojectid[i].Action;
+                        if (j < databyprojectid.Count())
+                        {
+                            int @psmid1 = databyprojectid[j].PsmId;
+                            db.TimeStampTo = databyprojectid[j].TimeStamp;
+                           
+                        }
+                    }
+                   
+                }
+                else
+                {
+                    db.FromunitId = databyprojectid[i].FromunitId;
+                    db.Fromunit = databyprojectid[i].Fromunit;
+                    db.TimeStampfrom = databyprojectid[i].TimeStamp;
+                    if(databyprojectid[i].IsComplete==true)
+                    db.TimeStampTo = databyprojectid[i].DateTimeOfUpdate;
+                    else
+                        db.TimeStampTo = DateTime.Now;
+                    db.IsComment = databyprojectid[i].IsComment;
+                    db.IsComplete = databyprojectid[i].IsComplete;
+
+                   
+                    db.TounitId = databyprojectid[i].TounitId;
+                    db.Tounit = databyprojectid[i].Tounit;
+                    db.Status = databyprojectid[i].Status;
+                    db.Action = databyprojectid[i].Action;
+                }
+                lst.Add(db);
+            }
+           
+
+            return lst;
         }
         public int GetLastRecProjectMov(int ProjectId)
         {
@@ -107,7 +219,7 @@ namespace swas.BAL.Repository
         {
             DTODashboard db=new DTODashboard();
            
-
+ 
             var query = await (from mov in _dbContext.ProjStakeHolderMov
                                join proj in _dbContext.Projects on mov.ProjId equals proj.ProjId
                                join actmap in _dbContext.TrnStatusActionsMapping on mov.StatusActionsMappingId equals actmap.StatusActionsMappingId
@@ -215,8 +327,56 @@ namespace swas.BAL.Repository
             //                        Action=act.Actions
             //                    }).ToListAsync();
             //db.DTODashboardActionlst = query2;
+           
+            var approvedcount = await (from mov in _dbContext.ProjStakeHolderMov
+                                       join pro in _context.Projects on mov.ProjId equals pro.ProjId
+                                       join stsmap in _context.TrnStatusActionsMapping on mov.StatusActionsMappingId equals stsmap.StatusActionsMappingId
+                                       where pro.IsProcess==true &&
+                                       stsmap.StatusActionsMappingId == 1 ||    //New Projects
+                                       stsmap.StatusActionsMappingId==9 ||      //Obsn
+                                       stsmap.StatusActionsMappingId== 113 ||   //Obsn Rectified
+                                       stsmap.StatusActionsMappingId==48 ||     //Auto Committee
+                                       stsmap.StatusActionsMappingId==53 ||     //IPA Stage
+                                       stsmap.StatusActionsMappingId==60 ||     //Closed
+                                       stsmap.StatusActionsMappingId==68 ||     //ACG (Lab Test)
+                                       stsmap.StatusActionsMappingId==73 ||     //AHCC (IAM Integ)
+                                       stsmap.StatusActionsMappingId==78 ||     //ACG (Remote Test)
+                                       stsmap.StatusActionsMappingId==83 ||     //MI-11 Clearance
+                                       stsmap.StatusActionsMappingId==88 ||     //Whitelisting Completed
+                                        // ---CommentAttribute----
+                                       ((stsmap.StatusActionsMappingId == 26 ||//ASDC Vetting
+                                       stsmap.StatusActionsMappingId == 31 ||// ACG Vetting
+                                       stsmap.StatusActionsMappingId == 37) && mov.IsComplete==true) //AHCC Vetting
+                                       group mov by new
+                                       {
+                                          stsmap.StatusId,
+                                          stsmap.StatusActionsMappingId,
+                                          pro.ProjId
+
+                                       } into gr
+                                       select new DTOApprovedCount
+                                       {
+                                           ProjId = gr.Key.ProjId,
+                                           StatusId= gr.Key.StatusId,
+                                           StatusActionsMappingId = gr.Key.StatusActionsMappingId,
+                                           Total = gr.Count()
+
+                                       }).ToListAsync();
+            db.DTOApprovedCountlst = approvedcount
+                .GroupBy(p => new { p.StatusId, p.StatusActionsMappingId })
+                .Select(g => new DTOApprovedCount
+                {
+                    StatusId = g.Key.StatusId,
+                    StatusActionsMappingId = g.Key.StatusActionsMappingId,
+                    Total = g.Count()
+                }).ToList();
+           
+
+
+
             return db;
         }
+      
         //public async Task<int> IsReadInbox(int psmId)
         //{
 

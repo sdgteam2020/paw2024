@@ -223,3 +223,18 @@ C:\Users\Administrator\Desktop\final paw code 28Jun 24_1635Hrs\swas.BAL\obj\Rele
 C:\Users\Administrator\Desktop\final paw code 28Jun 24_1635Hrs\swas.BAL\obj\Release\net6.0\refint\swas.BAL.dll
 C:\Users\Administrator\Desktop\final paw code 28Jun 24_1635Hrs\swas.BAL\obj\Release\net6.0\swas.BAL.pdb
 C:\Users\Administrator\Desktop\final paw code 28Jun 24_1635Hrs\swas.BAL\obj\Release\net6.0\ref\swas.BAL.dll
+K:\Projects\paw2024\swas.BAL\bin\Release\net6.0\swas.BAL.deps.json
+K:\Projects\paw2024\swas.BAL\bin\Release\net6.0\swas.BAL.dll
+K:\Projects\paw2024\swas.BAL\bin\Release\net6.0\swas.BAL.pdb
+K:\Projects\paw2024\swas.BAL\bin\Release\net6.0\swas.DAL.dll
+K:\Projects\paw2024\swas.BAL\bin\Release\net6.0\swas.DAL.pdb
+K:\Projects\paw2024\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.AssemblyReference.cache
+K:\Projects\paw2024\swas.BAL\obj\Release\net6.0\swas.BAL.GeneratedMSBuildEditorConfig.editorconfig
+K:\Projects\paw2024\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfoInputs.cache
+K:\Projects\paw2024\swas.BAL\obj\Release\net6.0\swas.BAL.AssemblyInfo.cs
+K:\Projects\paw2024\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CoreCompileInputs.cache
+K:\Projects\paw2024\swas.BAL\obj\Release\net6.0\swas.BAL.csproj.CopyComplete
+K:\Projects\paw2024\swas.BAL\obj\Release\net6.0\swas.BAL.dll
+K:\Projects\paw2024\swas.BAL\obj\Release\net6.0\refint\swas.BAL.dll
+K:\Projects\paw2024\swas.BAL\obj\Release\net6.0\swas.BAL.pdb
+K:\Projects\paw2024\swas.BAL\obj\Release\net6.0\ref\swas.BAL.dll

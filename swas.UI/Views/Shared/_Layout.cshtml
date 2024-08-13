@@ -167,7 +167,6 @@
     <link href="~/css/main.css" rel="stylesheet" />
 
 
-
     <script language="JavaScript" type="text/javascript" src="~/assets/js/jquery.min.js"></script>
 
     <script language="JavaScript" type="text/javascript" src="~/assets/js/bootstrap.bundle.min.js"></script>
@@ -207,6 +206,7 @@
 
 
     <script src="~/DeveloperJs/ddlSanal.js"></script>
+    <script src="~/developerjs/comman.js"></script>
 
     <script>
         function ValInData(input) {
@@ -1559,7 +1559,7 @@
 
 <body class="sidebar-collapsed sidebar-hover">
     <div class="wrapper">
-        <div id="loading" class="loader">
+        <div id="loading1" class="loader d-none">
             <div class="loader-container">
                 @*<img src="/images/loads.gif" width="600px" height="200px">*@
                 <img src="/assets/images/loadsss.gif" height="100">
@@ -1665,6 +1665,16 @@
                         </a>
                     </li>
                     <li>
+                        <a href="/Home/ProjectWiseReport">
+                            <div class="icon-container">
+
+                                <ion-icon name="ellipse-outline"></ion-icon>
+                                <span class="icon-name">Project Wise Status</span>
+                            </div>
+
+                        </a>
+                    </li>
+                    <li>
                         <a href="/Home/AllProjectDetails">
                             <div class="icon-container">
 
@@ -1674,7 +1684,16 @@
 
                         </a>
                     </li>
+                    <li>
+                        <a href="/Chat/Index" @*onclick="createNotification(event)"*@>
+                            <div class="icon-container">
 
+                                <ion-icon name="ellipse-outline"></ion-icon>
+                                <span class="icon-name">Chat</span>
+                                @*<span class="inbox-alertsub1"></span>*@
+                            </div>
+                        </a>
+                    </li>
                     @if (Logins != null && Logins.Role == "Dte" && Logins.unitid == 1)
                     {
 
@@ -1793,7 +1812,8 @@
                                 <div class="text-white mr-2">
                                     Welcome :  @Logins.UserName.ToLower()
                                     <div class="text-white mr-2 text-capitalize">@Logins.Rank @Logins.Offr_Name</div>
-                            </li>
+                                    <span class="spnOffr_Name d-none">@Logins.Offr_Name</span>
+                             </li> 
                             <li class="nav-item dropdown dropdown-user-setting">
                                 @*               <div class="user-setting" style="margin-right:100px;">
                             <a href="/Account/Logout">
@@ -1965,6 +1985,16 @@
                         </li>
                     }
                     <li>
+                        <a href="/Home/ProjectWiseReport">
+                            <div class="icon-container">
+
+                                <ion-icon name="ellipse-outline"></ion-icon>
+                                <span class="icon-name">Project Wise Status</span>
+                            </div>
+
+                        </a>
+                    </li>
+                    <li>
                         <a href="/Home/AllProjectDetails">
                             <div class="icon-container">
 
@@ -1974,7 +2004,16 @@
 
                         </a>
                     </li>
+                    <li>
+                        <a href="/Chat/Index" @*onclick="createNotification(event)"*@>
+                            <div class="icon-container">
 
+                                <ion-icon name="ellipse-outline"></ion-icon>
+                                <span class="icon-name">Chat</span>
+                                @*<span class="inbox-alertsub1"></span>*@
+                            </div>
+                        </a>
+                    </li>
 
                 </ul>
 
@@ -2007,6 +2046,7 @@
                                 <div class="text-white mr-2">
                                     Welcome :  @Logins.UserName.ToLower()
                                     <div class="text-white mr-2 text-capitalize">@Logins.Rank @Logins.Offr_Name</div>
+                                    <span class="spnOffr_Name d-none">@Logins.Offr_Name</span>
                             </li>
 
                         </ul>

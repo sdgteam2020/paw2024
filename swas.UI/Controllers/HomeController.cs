@@ -134,6 +134,31 @@ namespace swas.UI.Controllers
             return Json(ss);
             
         }
+        public async Task<IActionResult> GetDashboardApproved(int StatusId,int statusActionsMappingId)
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
+            var ss = await _projectsRepository.GetDashboardApproved(StatusId, statusActionsMappingId);
+
+            return Json(ss);
+
+        }
+        public async Task<IActionResult> GetProjectWiseStatus(int Id)
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
+            var ss = await _projectsRepository.GetProjectWiseStatus();
+
+            return Json(ss);
+
+        }
+        public async Task<IActionResult> GetProjHoldStatus(int ProjId)
+        {
+            var ss=await _stkholdmove.ProjectHolsTimeCalculate(ProjId);
+            return Json(ss);
+        }
+        public async Task<IActionResult> ProjectWiseReport()
+        {
+            return View();
+        }
         public async Task<IActionResult> GetDashboardCount(int Id)
         {
             try

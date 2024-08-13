@@ -82,6 +82,10 @@ builder.Services.AddScoped<IStkCommentRepository, StkCommentRepository>();
 builder.Services.AddScoped<IUnitStatusMapping, UnitStatusMapping>();
 builder.Services.AddScoped<IStatusActionsMapping, StatusActionsMapping>();
 
+builder.Services.AddScoped<IChatRepository, ChatRepository>();
+builder.Services.AddScoped<IUserMapChatRepository, UserMapChatRepository>();
+builder.Services.AddScoped<ITrnChatMsgRepository, TrnChatMsgRepository>();
+
 
 
 builder.Services.AddAntiforgery(o => o.SuppressXFrameOptionsHeader = true);

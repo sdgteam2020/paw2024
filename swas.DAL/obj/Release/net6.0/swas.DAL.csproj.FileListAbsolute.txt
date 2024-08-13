@@ -208,3 +208,17 @@ C:\Users\Administrator\Desktop\final paw code 28Jun 24_1635Hrs\swas.DAL\obj\Rele
 C:\Users\Administrator\Desktop\final paw code 28Jun 24_1635Hrs\swas.DAL\obj\Release\net6.0\swas.DAL.pdb
 C:\Users\Administrator\Desktop\final paw code 28Jun 24_1635Hrs\swas.DAL\obj\Release\net6.0\swas.DAL.genruntimeconfig.cache
 C:\Users\Administrator\Desktop\final paw code 28Jun 24_1635Hrs\swas.DAL\obj\Release\net6.0\ref\swas.DAL.dll
+K:\Projects\paw2024\swas.DAL\bin\Release\net6.0\swas.DAL.deps.json
+K:\Projects\paw2024\swas.DAL\bin\Release\net6.0\swas.DAL.runtimeconfig.json
+K:\Projects\paw2024\swas.DAL\bin\Release\net6.0\swas.DAL.dll
+K:\Projects\paw2024\swas.DAL\bin\Release\net6.0\swas.DAL.pdb
+K:\Projects\paw2024\swas.DAL\obj\Release\net6.0\swas.DAL.csproj.AssemblyReference.cache
+K:\Projects\paw2024\swas.DAL\obj\Release\net6.0\swas.DAL.GeneratedMSBuildEditorConfig.editorconfig
+K:\Projects\paw2024\swas.DAL\obj\Release\net6.0\swas.DAL.AssemblyInfoInputs.cache
+K:\Projects\paw2024\swas.DAL\obj\Release\net6.0\swas.DAL.AssemblyInfo.cs
+K:\Projects\paw2024\swas.DAL\obj\Release\net6.0\swas.DAL.csproj.CoreCompileInputs.cache
+K:\Projects\paw2024\swas.DAL\obj\Release\net6.0\swas.DAL.dll
+K:\Projects\paw2024\swas.DAL\obj\Release\net6.0\refint\swas.DAL.dll
+K:\Projects\paw2024\swas.DAL\obj\Release\net6.0\swas.DAL.pdb
+K:\Projects\paw2024\swas.DAL\obj\Release\net6.0\swas.DAL.genruntimeconfig.cache
+K:\Projects\paw2024\swas.DAL\obj\Release\net6.0\ref\swas.DAL.dll
