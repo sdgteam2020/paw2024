@@ -1234,7 +1234,7 @@ namespace swas.UI.Controllers
         [HttpGet]
         public async Task<JsonResult> GetProjectCommentCount()
         
-        {
+       {
             try
             {
                 int count = await _commentRepository.GetNotificationCommentCount();
