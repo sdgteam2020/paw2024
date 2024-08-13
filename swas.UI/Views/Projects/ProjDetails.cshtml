@@ -29,6 +29,9 @@
         font-size: 15px;
     }
 
+    
+
+
 </style>
 
 <style>
@@ -169,6 +172,11 @@
     body {
         font-size: 15px !important;
     }
+
+        .bold-text {
+        font-weight: bold;
+    }
+
 </style>
 
 
@@ -225,11 +233,10 @@
 
                                     @foreach (var project in Model.InBox)
                                     {
-                                        if (project.IsRead == true)
+                                       
+                                        if( project.IsRead == false)
                                         {
-                                            <tr style="font-weight: bold;">
->
-
+                                            <tr style="font-weight: bold;"> 
 
                                                 <td class="s-no-column">
 
@@ -250,7 +257,7 @@
                                                     <span class="d-none" id="SpnTimeActionId">@project.ActionId</span>
                                                     <span class="d-none" id="SpnTimeToUnitId">@project.ToUnitId</span>
                                                     <span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
-                                                    <a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID">
+                                                    <a data-proj-name="@project.ProjName" class="ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID">
                                                         <div class="tooltip-container" data-tooltip="@project.ProjName">
                                                             <span class="short-text">@truncateText(project.ProjName, 6)</span>
                                                             <span class="tooltip tooltip-text">@project.ProjName</span>
@@ -290,14 +297,14 @@
                                                             }
                                                             else
                                                             {
-                                                                <button type="button" class="btn btn-success btn-Fwd" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
+                                                                <button type="button" class="btn btn-success btn-Fwd" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
 
                                                             }
                                                         </div>
                                                         <div class="col-md-4">
                                                             @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
                                                             {
-                                                                <button type="button" class="btn btn-success btn-Obsn" style="padding: 1px !important;font-size: 13px !important;">Obsn</button>
+                                                                <button type="button" class="btn btn-success btn-Obsn" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;">Obsn</button>
                                                             }
                                                         </div>
                                                         <div class="col-md-4">
@@ -309,7 +316,7 @@
                                         }
                                         else
                                         {
-                                            <tr class="">
+                                            <tr>
 
                                                 <td>
 
@@ -376,13 +383,13 @@
                                                             }
                                                             else
                                                             {
-                                                                <button type="button" class="btn btn-success btn-Fwd" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
+                                                                <button type="button" class="btn btn-success btn-Fwd" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
                                                             }
                                                         </div>
                                                         <div class="col-md-4">
                                                             @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
                                                             {
-                                                                <button type="button" class="btn btn-success btn-Obsn" style="padding: 1px !important;font-size: 13px !important;">Obsn</button>
+                                                                <button type="button" class="btn btn-success btn-Obsn" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;">Obsn</button>
                                                             }
                                                         </div>
                                                         <div class="col-md-4">
@@ -747,7 +754,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Project Fwd</h5>
+                    <h5 class="modal-title" id="fwdModal">Project Fwd</h5>
                     <span class="d-none" id="spanCurrentPslmId">0</span>
                     <span class="d-none" id="spanFwdCurrentPslmId">0</span>
                     <span class="d-none" id="spanFwdProjectId">0</span>
@@ -759,7 +766,10 @@
                         <div class="col-md-12">
 
                             <div class="card">
-                                <div class="modal-header"><h5 class="card-title Fwdtitle">Projects Move Details</h5></div>
+                                <div class="modal-header">
+                                    <h6 class="card-title">Pl select appropriate details Before Dispatch of Project to Next Stakeholder </h6>
+
+                                </div>
                                 <div class="card-body">
 
                                     <div class="form-row">
@@ -849,11 +859,9 @@
                         </div>
                     </div>
                     <div class="form-group col-md-12 mt-4 text-center">
-                        <input type="button" id="btnFwdNext" value="Fwd Next For Attch" class="btn btn-primary btn-lg ProjectsFwd" />
+                        <input type="button" id="btnFwdNext" value="Send & Att Docu (s)" class="btn btn-primary btn-lg ProjectsFwd" />
                         <input type="button" id="btnFwdConfirm" value="Confirm" class="btn btn-primary btn-lg Attmenthistory d-none" />
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -1029,3 +1037,21 @@
         }
     });
 </script>
+
+@*
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var projects = @Html.Raw(Json.Serialize(Model.InBox));
+
+        projects.forEach(function (project) {
+            var row = document.getElementById("project-row-" + project.ProjId);
+            if (project.IsRead) {
+                row.classList.remove("bold-text");
+            } else {
+                row.classList.add("bold-text");
+            }
+        });
+    });
+</script>*@
+
+   

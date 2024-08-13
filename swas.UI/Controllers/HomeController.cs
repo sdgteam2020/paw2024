@@ -228,6 +228,18 @@ namespace swas.UI.Controllers
             }
         }
 
+        public async Task<IActionResult> GetNotification(int ProjId)
+        {
+            List<Notification> notifications = await _commentRepository.GetNotificationAsync(ProjId);
+            return View();
+
+            
+        }
+
+
+        
+
+
 
         ///Developer Name :- Sub Maj M Sanal Kumar
 
@@ -906,7 +918,7 @@ s.IsDashboard,
                 tbl_Projects stkc = new tbl_Projects();
                 stkc = await _projectsRepository.GetProjectByPsmIdAsync(psmId);
 
-                //int cntcomment = await _commentRepository.GetNotificationAsync(projId);
+                //int cntcomment = await _commentRepository.GetNotificationAsync(projId);   //    12/08/24
 
                 ViewBag.ProjDetl = stkc;
                 ViewBag.query = query.OrderByDescending(s => s.CommentId).ToList();
@@ -1346,16 +1358,11 @@ s.IsDashboard,
             }
         }
 
-        public async Task<IActionResult> GetNotification(int stakeHolderId)
-        {
-
-            List<Notification> notifications = await _commentRepository.GetNotificationAsync(stakeHolderId);
-
-
-
-
-            return View();
-        }
+        //public async Task<IActionResult> GetNotification(int stakeHolderId)
+        //{
+        //    List<Notification> notifications = await _commentRepository.GetNotificationAsync(stakeHolderId);
+        //    return View();
+        //}
 
         [HttpGet]
         public async Task<IActionResult> AllProjectDetails()

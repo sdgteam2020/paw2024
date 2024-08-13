@@ -24,6 +24,7 @@ namespace swas.BAL.DTO
         public string? EncyID { get; set; }
 
         public DateTime? TimeStamp { get; set; }
+        public bool IsComment { get; set; }
 
         
     }

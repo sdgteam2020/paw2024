@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace swas.BAL.Repository
@@ -61,48 +62,77 @@ namespace swas.BAL.Repository
            .CountAsync();
            return totalCount;
          }
+        
+
+        //public async Task<int> GetNotificationCount()
+        //{
+        //    int notificationCount = await  _dbContext.Notification.CountAsync();
+        //    return notificationCount;
 
 
-        public async Task<List<Notification>> GetNotificationAsync(int stkhol)
+        //}
+        public async Task<int> GetNotificationCommentCount()
         {
-            //var Commentdata = from comment in _dbContext.StkComment
-            //                  join projMov in _dbContext.ProjStakeHolderMov on comment.ProjId equals projMov.ProjId
-            //                  where comment.ProjId == stkcom.ProjId
-            //                  select new Notification
-            //                  {
-            //                      ProjId = projMov.ProjId,
-            //                      NotificationFrom = projMov.FromStakeHolderId,
-            //                      NotificationTo = projMov.ToStakeHolderId,
+            int notificationCount = await _dbContext.Notification
+                .Where(n => n.NotificationType == true)
+                .CountAsync();
+            return notificationCount;
+        }
 
-            //                  };
-
-            //List<Notification> notifications = new List<Notification>();
-
-            //foreach (var item in Commentdata)
-            //{
-            //    int projId = item.ProjId;
-
-            //    var commentsForProj = await _dbContext.ProjStakeHolderMov.Where(sc => sc.ProjId == projId).ToListAsync();
-
-            //    foreach (var comment in commentsForProj)
-            //    {
-            //        _dbContext.Notification.Add(new Notification
-            //        {
-            //            ProjId = projId,
-            //            NotificationFrom = comment.FromStakeHolderId,
-            //            NotificationTo = comment.ToStakeHolderId,
-            //            ReadDateTime = DateTime.Now,
-
-            //        });
-
-            //        _dbContext.SaveChanges();
-            //    }
-            //}
-
-            return null;
+        public async Task<int> GetNotificationInboxCount()
+        {
+            int notificationCount = await _dbContext.Notification
+                .Where(n => n.NotificationType == false)
+                .CountAsync();
+            return notificationCount;
         }
 
 
+        public async Task<List<Notification>> GetNotificationAsync(int ProjId)
+        {
+            // Retrieve the latest project stakeholder movement record
+            var commentData = await (from projMov in _dbContext.ProjStakeHolderMov
+                                     join project in _dbContext.Projects on projMov.ProjId equals project.ProjId
+                                     where projMov.ProjId == ProjId
+                                     orderby projMov.PsmId descending
+                                     select new
+                                     {
+                                         projMov.ProjId,
+                                         NotificationFrom = projMov.FromUnitId,
+                                         NotificationTo = projMov.ToUnitId,
+                                         projMov.IsRead
+                                     })
+                                    .Take(1)
+                                    .FirstOrDefaultAsync(); // Use async version
+
+            // Check if there is any data
+            if (commentData == null)
+            {
+                return new List<Notification>(); // Return an empty list if no data is found
+            }
+
+            // Create a list to hold notifications to be added
+            var notifications = new List<Notification>
+    {
+        new Notification
+        {
+            ProjId = commentData.ProjId,
+            NotificationFrom = commentData.NotificationFrom,
+            NotificationTo = commentData.NotificationTo,
+            IsRead = commentData.IsRead,
+            ReadDateTime = DateTime.Now,
+            NotificationType = true
+
+        }
+    };
+
+            // Add the notification to the database
+            await _dbContext.Notification.AddRangeAsync(notifications);
+            await _dbContext.SaveChangesAsync();
+
+            return notifications;
+        }
+          
 
         public async Task<List<tbl_Comment>> GetAllCommentsAsync()
         {

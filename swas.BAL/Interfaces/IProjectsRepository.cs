@@ -42,6 +42,9 @@ namespace swas.BAL.Interfaces
         Task<List<ProjHistory>> GetProjectHistorybyID(int? dtaProjID);
         Task<bool> UpdateTxnAsync(tbl_ProjStakeHolderMov psmov);
         Task<tbl_Projects> GetProjectByIdAsync1(int? dataProjId);
+
+
+        Task<List<tbl_ProjStakeHolderMov>> GetInboxByProjIdAsync(int projId);
     }
 
 

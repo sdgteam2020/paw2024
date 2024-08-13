@@ -22,7 +22,7 @@ namespace swas.BAL
             _dataProtector = dataProtector.CreateProtector("swas.UI.Controllers.ProjectsController"); 
         }
         public async Task<List<DTOProComments>> GetAllStkForComment(int UnitId)
-        {
+         {
             List<DTOProComments> lst = new List<DTOProComments>();
             var queryes = await (from proj in _context.Projects
                                  join mov in _context.ProjStakeHolderMov on proj.ProjId equals mov.ProjId
@@ -46,7 +46,8 @@ namespace swas.BAL
                                      PsmId = mov.PsmId,
                                      EncyID = _dataProtector.Protect(proj.ProjId.ToString()),
                                      TimeStamp = mov.TimeStamp,
-                                     UnitId = mov.ToUnitId
+                                     UnitId = mov.ToUnitId,
+                                     IsComment = mov.IsRead 
                                  }
                                   by new { proj.ProjId, mov.ToUnitId } into g  // Group by both ProjId and ToUnitId
                                  select g.First()).ToListAsync();

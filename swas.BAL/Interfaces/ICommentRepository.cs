@@ -23,10 +23,10 @@ namespace swas.BAL.Interfaces
 
         Task<int> CountCommentAsync(int stkhol);
 
-        Task<List<Notification>> GetNotificationAsync(int stakeHolderId);
+        Task<List<Notification>> GetNotificationAsync(int ProjId);
 
-      
-
+        Task<int> GetNotificationCommentCount();
+        Task<int> GetNotificationInboxCount();
         //
     }
 

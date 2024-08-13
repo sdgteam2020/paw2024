@@ -352,7 +352,7 @@ select * into mHostType    from mAppType
             $('input[name="selectedStacks"]:checked').each(function () {
                 selectedStackHolders.push($(this).val());
             });
-            debugger;
+             
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("SearchstackResluts", "Search")', // Replace "ControllerName" with your actual controller name

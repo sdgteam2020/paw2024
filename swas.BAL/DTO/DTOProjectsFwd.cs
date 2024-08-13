@@ -42,5 +42,7 @@ namespace swas.BAL.DTO
         public int StkStatusId { get; set; }
         public DateTime? DateTimeOfUpdate { get; set; }
 
+        public bool IsCommentRead { get; set; }
+
     }
 }

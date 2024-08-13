@@ -442,7 +442,7 @@ function getStatusByStage(stageIds, currentstakeholderid)
 }
 
 function getActionsByStatus(selectedStatusId) {
-    debugger;
+     
     $.ajax({
 
         url: '/Ddl/GetActionsByStatus',

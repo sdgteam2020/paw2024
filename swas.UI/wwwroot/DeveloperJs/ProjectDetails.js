@@ -28,6 +28,7 @@
             SentForComment(ProjId, psmId, 0, FwdDateForComment);
             ProcessProjConfirm(ProjId);
         });
+        IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
     });
 
     $('#confirmationModal').on('hidden.bs.modal', function () {
@@ -133,7 +134,7 @@ function FwdProjConfirm(psmId) {
 
 function GetProjectMovHistory(ProjId) {
     var listitem = "";
-    debugger;
+     
     $.ajax({
         url: '/Projects/ProjectMovHistory',
         type: 'POST',
@@ -309,6 +310,10 @@ function GetProjectMovHistory(ProjId) {
 
 
                 $("#projectmovfistory").html(listitem);
+
+                $(document).on('click', function () {
+                    location.reload();
+                });
             }
         }
     });
@@ -335,3 +340,4 @@ function IsReadInbox(psmId) {
         }
     });
 }
+

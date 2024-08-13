@@ -1,4 +1,5 @@
-﻿using swas.BAL.DTO;
+﻿using Grpc.Core;
+using swas.BAL.DTO;
 using swas.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace swas.BAL.Interfaces
 
         Task<List<DTOUnitMapping>> GetallUnitwithmap();
 
-        Task<List<DTOUnitMapping>> GetallUnitwithmap1(int unitId);
+        Task<List<DTOUnitMapping>> GetallUnitwithmap1(int StageId ,int StatusId);
 
 
         Task<List<UnitDtl>> GetAllStakeHolderComment();

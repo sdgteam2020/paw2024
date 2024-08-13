@@ -7,7 +7,7 @@
         formData.append("Reamarks", $("#Reamarks").val());
         formData.append("PsmId", $("#spanCurrentPslmId").html());
     }
-
+    
     $.ajax({
         type: "POST",
         url: '/Projects/UploadMultiFile',

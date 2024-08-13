@@ -46,7 +46,7 @@ namespace swas.DAL.Models
    
         public string InitialRemark { get; set; }
 		public bool IsDeleted { get; set; }
-		public bool IsActive { get; set; }
+		public bool IsActive  { get; set; }
 
 		[Display(Name = "Edit/Delete By")]
 		public int? EditDeleteBy { get; set; }
@@ -126,7 +126,7 @@ namespace swas.DAL.Models
         [ForeignKey("mHostType")]
         public int HostTypeID { get; set; }
 
-
+        
 
         //16/07/24
 

@@ -521,6 +521,7 @@ namespace swas.BAL.Repository
                                 EncyPsmID = _dataProtector.Protect(b.PsmId.ToString()),
                                 IsProcess = a.IsProcess,
                                 IsRead = b.IsRead,
+                                //IsCommentRead =a.IsComment,
                                 TimeStamp = b.TimeStamp
                             };
 
@@ -1012,15 +1013,10 @@ namespace swas.BAL.Repository
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
             if (Logins != null)
             {
-
                 // tbl_ProjStakeHolderMov psmove = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == project.CurrentPslmId);
-
                 _dbContext.Entry(project).State = EntityState.Modified;
                 await _dbContext.SaveChangesAsync();
                 return true;
-
-
-
             }
             else
             {
@@ -1036,6 +1032,7 @@ namespace swas.BAL.Repository
 
             return true;
         }
+       
         public async Task<List<tbl_Projects>> GetActProjectsAsync()
         {
 
@@ -1685,6 +1682,23 @@ namespace swas.BAL.Repository
             return query;
 
         }
-    }
+
+
+        //public async Task<tbl_ProjStakeHolderMov> GetInboxByProjIdAsync (int projId)
+        //{
+        //    return await _dbContext.ProjStakeHolderMov
+        //       .FirstOrDefaultAsync(a => a.ProjId == projId);
+        //}
+
+        
+
+        public async Task<List<tbl_ProjStakeHolderMov>> GetInboxByProjIdAsync(int projId)
+        {
+            return await _dbContext.ProjStakeHolderMov
+                .Where(a => a.ProjId == projId)
+                .ToListAsync();
+        }
 
     }
+
+}
