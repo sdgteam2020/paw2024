@@ -206,7 +206,7 @@ function SendMsg() {
                     FwdProjConfirm($("#ProjectcommentPsmId").html());
                 }
 
-                alert($("#ProjectcommentprojId").html());
+                
                 GetNotification($("#ProjectcommentprojId").html());
 
                 reset();
@@ -343,9 +343,21 @@ function IsReadComment(ProjId) {
 }
 
 function GetNotification(ProjId) {
-    alert("Hii");
+ 
     $.ajax({
         url: '/Home/GetNotification',
+        type: 'POST',
+        data: { "ProjId": ProjId },
+        success: function (response) {
+
+        }
+    })
+}
+
+function GetNotificationInbox(ProjId) {
+    alert("om");
+    $.ajax({
+        url: '/Home/GetNotificationInbox',
         type: 'POST',
         data: { "ProjId": ProjId },
         success: function (response) {

@@ -425,8 +425,8 @@ function ProjectSubmited(thisdata) {
 
                 current_fs = $(thisdata).parent();
                 next_fs = $(thisdata).parent().next();
-
-
+                alert("jonshon");
+                GetNotificationInbox($("#spanProjectId").html());
                 //Add Class Active
                 $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
 
