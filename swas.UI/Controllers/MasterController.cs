@@ -120,7 +120,7 @@ namespace swas.UI.Controllers
                 {
                     var ret = await _stagesRepository.GetAll();
 
-                    foreach (var cmd in ret)
+                    foreach (var cmd  in ret)
                     {
 
                         DTODDLComman db = new DTODDLComman();
@@ -153,20 +153,20 @@ namespace swas.UI.Controllers
                 }
                 else if (id == Mastertablenmumcs.mActions)
                 {
-                    var ret = await _actionsRepository.GetActionByStatusId(ParentId);
+                    //var ret = await _actionsRepository.GetActionByStatusId(ParentId);
 
-
+                    var ret = await _actionsRepository.GetActionByStatusIdlogin(ParentId, Convert.ToInt32(Logins.unitid));
                     return Json(ret);
 
                 }
-                else if (id == Mastertablenmumcs.mMappingActions)
-                {
-                    var ret = await _actionsRepository.GetActionsMappingIdByStatusId(ParentId);
+                //else if (id == Mastertablenmumcs.mMappingActions)
+                //{
+                //    var ret = await _actionsRepository.GetActionsMappingIdByStatusId(ParentId);
 
 
-                    return Json(ret);
+                //    return Json(ret);
 
-                }
+                //}
                 return Json(null);
             }
             catch(Exception ex)

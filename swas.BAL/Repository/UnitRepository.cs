@@ -169,8 +169,8 @@ namespace swas.BAL
         }
 
        
-
-        public async Task<List<DTOUnitMapping>> GetallUnitwithmap1(int unitId)
+         
+        public async Task<List<DTOUnitMapping>> GetallUnitwithmap1(int StageId , int StatusId)
         {
             //var ret1 = await(from usm in _context.TrnUnitStatusMapping
             //                 join ms in _context.mStatus on usm.StatusId equals ms.StatusId
@@ -201,13 +201,16 @@ namespace swas.BAL
                          join ms in _context.mStatus on sam.StatusId equals ms.StatusId
                          join s in _context.mStages on ms.StageId equals s.StagesId
                          join a in _context.mActions on sam.ActionsId equals a.ActionsId
+                         where s.StagesId == StageId && ms.StatusId == StatusId
                          select new DTOUnitMapping
                          {
-                             StatusActionsMappingId = sam.StatusActionsMappingId,
+                             StatusActionsMappingId = sam.StatusActionsMappingId, 
                              StagesName = s.Stages,
+                             StagesId = s.StagesId,
                              SubStagesName = ms.Status,
                              SubStagesId = ms.StatusId,
-                             ActionsName = a.Actions
+                             ActionsName = a.Actions,
+                             ActionsId = a.ActionsId
                          };
 
             var resultList = await result.ToListAsync();

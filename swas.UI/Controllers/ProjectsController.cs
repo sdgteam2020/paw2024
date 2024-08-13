@@ -29,6 +29,8 @@ using swas.BAL.Repository;
 using Microsoft.EntityFrameworkCore;
 using swas.UI.Helpers;
 using System.Threading;
+using System.Security.Cryptography.Xml;
+using iText.Commons.Actions.Contexts;
 
 namespace swas.UI.Controllers
 {
@@ -177,7 +179,13 @@ namespace swas.UI.Controllers
 
                     MailBox mbx = new MailBox();
 
-                    ViewBag.unitid = Logins.unitid;
+                    //ViewBag.unitid = Logins.unitid;
+
+                    if (Logins != null && Logins.unitid != null)
+                    {
+                        ViewBag.unitid = Logins.unitid;
+                    }
+
 
                     mbx.InBox = await _projectsRepository.GetActInboxAsync();
 
@@ -460,6 +468,9 @@ namespace swas.UI.Controllers
                 return Redirect("/Identity/Account/login");
             }
         }
+        
+        
+        
         [HttpPost]
         public async Task<IActionResult> IsProcessProjConfirm(int ProjId)
         {
@@ -481,6 +492,7 @@ namespace swas.UI.Controllers
                     proj = await _projectsRepository.GetProjectByIdAsync(ProjId);
                     proj.DateTimeOfUpdate = DateTime.Now;
                     proj.IsProcess = true;
+                    
                     await _projectsRepository.UpdateProjectAsync(proj);
 
 
@@ -726,7 +738,7 @@ namespace swas.UI.Controllers
             {
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
-                return Json(await _projComments.GetAllStkForComment(Convert.ToInt32(Logins.unitid)));
+                 return Json(await _projComments.GetAllStkForComment(Convert.ToInt32(Logins.unitid)));
             }
             catch (Exception ex)
             {
@@ -1151,6 +1163,111 @@ namespace swas.UI.Controllers
         #endregion
 
 
+        [HttpPost]
+        public async Task<IActionResult> IsUnReadInbox (int PsmId)
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+
+
+            if (Logins != null)
+            {
+
+                try
+                {
+
+                    tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
+                    psmove = await _projectsRepository.GettXNByPsmIdAsync(PsmId);
+                    psmove.DateTimeOfUpdate = DateTime.Now;
+                    psmove.IsRead = false;
+                    await _projectsRepository.UpdateTxnAsync(psmove);
+
+                    return Json(PsmId);
+                }
+                catch (Exception ex)
+                {
+                    swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                    return Json(0);
+                }
+            }
+            else
+            {
+                return Redirect("/Identity/Account/login");
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> IsUnReadComment(int Projid)
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            if (Logins != null)
+            {
+                try
+                {
+                    // Get all records for the given Projid
+                    List<tbl_ProjStakeHolderMov> inboxComments = await _projectsRepository.GetInboxByProjIdAsync(Projid);
+
+                    // Update IsRead to false for all records
+                    foreach (var comment in inboxComments)
+                    {
+                        comment.DateTimeOfUpdate = DateTime.Now;
+                        comment.IsRead = false;
+                        await _projectsRepository.UpdateTxnAsync(comment);
+                    }
+
+                    return Json(Projid);
+                }
+                catch (Exception ex)
+                {
+                    swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                    return Json(0);
+                }
+            }
+            else
+            {
+                return Redirect("/Identity/Account/login");
+            }
+        }
+
+
+
+        [HttpGet]
+        public async Task<JsonResult> GetProjectCommentCount()
+        
+       {
+            try
+            {
+                int count = await _commentRepository.GetNotificationCommentCount();
+                return new JsonResult(count); // Returns the count as JSON
+            }
+            catch (Exception ex)
+            {
+                // Handle exception and return an appropriate JSON error response
+                return new JsonResult(new { message = ex.Message })
+                {
+                    StatusCode = 500 // HTTP 500 Internal Server Error
+                };
+            }
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetProjectInboxCount()
+
+        {
+            try
+            {
+                int count = await _commentRepository.GetNotificationInboxCount();
+                return new JsonResult(count); // Returns the count as JSON
+            }
+            catch (Exception ex)
+            {
+                // Handle exception and return an appropriate JSON error response
+                return new JsonResult(new { message = ex.Message })
+                {
+                    StatusCode = 500 // HTTP 500 Internal Server Error
+                };
+            }
+        }
 
 
     }

@@ -52,56 +52,87 @@
     </style>
     <style>
 
-        .loader-container {
+                .loader-container {
+                    position: relative;
+                    display: table-cell;
+                    vertical-align: middle;
+                    z-index: 12;
+                    text-align: center;
+                }
+
+                    .loader-container img {
+                        width: 60px;
+                    }
+
+                .loader {
+                    vertical-align: top;
+                }
+
+
+                .loader {
+                    overflow-x: hidden;
+                    overflow-y: hidden;
+                    vertical-align: middle;
+                    background-color: rgba(255, 255, 255, 0.75);
+                    position: fixed;
+                    display: table;
+                    width: 100%;
+                    top: 0;
+                    height: 100%;
+                    min-height: 100%;
+                    z-index: 99999;
+                    left: 0;
+                }
+
+                .loader-container {
+                    position: relative;
+                    display: table-cell;
+                    vertical-align: middle;
+                    z-index: 12;
+                    text-align: center;
+                }
+
+                    .loader-container img {
+                        width: 60px;
+                    }
+
+                .loader {
+                    vertical-align: top;
+                }
+
+
+                .sidebar .nav-link {
             position: relative;
-            display: table-cell;
-            vertical-align: middle;
-            z-index: 12;
+            display: inline-block;
+        }
+
+        .badge3 {
+            position: absolute;
+            top: -5px;
+            right: -33px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 5px 10px;
+            font-size: 12px;
+            line-height: 1;
             text-align: center;
+            min-width: 20px;
         }
 
-            .loader-container img {
-                width: 60px;
-            }
-
-        .loader {
-            vertical-align: top;
-        }
-
-
-        .loader {
-            overflow-x: hidden;
-            overflow-y: hidden;
-            vertical-align: middle;
-            background-color: rgba(255, 255, 255, 0.75);
-            position: fixed;
-            display: table;
-            width: 100%;
-            top: 0;
-            height: 100%;
-            min-height: 100%;
-            z-index: 99999;
-            left: 0;
-        }
-
-        .loader-container {
-            position: relative;
-            display: table-cell;
-            vertical-align: middle;
-            z-index: 12;
-            text-align: center;
-        }
-
-            .loader-container img {
-                width: 60px;
-            }
-
-        .loader {
-            vertical-align: top;
-        }
-
-     
-
+        .badge5 {
+    position: absolute;
+    top: 0px;
+    right: 78px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1;
+    text-align: center;
+    min-width: 20px;
+}
     </style>
 
 
@@ -109,17 +140,17 @@
 
 
     <!-- CSS Files -->
-   
-   
+
+
     <link href="~/css/select2.min.css" rel="stylesheet" />
-    
+
     <link href="~/assets/css/icons.css" rel="stylesheet">
     <link href="~/assets/css/font-awesome.min.css" rel="stylesheet">
     <!--data Table-->
     <link rel="stylesheet" href="~/assets/dataTable/css/bootstrap.css">
     <link rel="stylesheet" href="~/assets/dataTable/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="~/assets/dataTable/css/buttons.bootstrap4.min.css">
-    
+
     <link rel="stylesheet" href="~/assets/dataTable/css/all.min.css">
     <link href="~/assets/dataTable/css/searchbuilder.datatables.min.css" rel="stylesheet" />
     <link href="~/assets/dataTable/css/all.min.css" rel="stylesheet" />
@@ -244,30 +275,30 @@
                 popupWin.document.open();
 
                 var tableStyles = `
-                                        <style type="text/css">
-                                            table {
-                                                      width: 100%;
-                                                      border-collapse: collapse;
-                                                      margin-bottom: 20px;
-                                                  }
+                                                <style type="text/css">
+                                                    table {
+                                                              width: 100%;
+                                                              border-collapse: collapse;
+                                                              margin-bottom: 20px;
+                                                          }
 
-                                                  .table > thead {
-                                                      vertical-align: bottom;
-                                                      background-color: red;
-                                                  }
+                                                          .table > thead {
+                                                              vertical-align: bottom;
+                                                              background-color: red;
+                                                          }
 
-                                                  th, td {
-                                                      padding: 8px;
-                                                      border: 1px solid #ddd;
-                                                      text-align: center;
-                                                  }
+                                                          th, td {
+                                                              padding: 8px;
+                                                              border: 1px solid #ddd;
+                                                              text-align: center;
+                                                          }
 
-                                                  th {
-                                                      background-color: #f2f2f2;
-                                                      color: black;
-                                                  }
-                                              </style>
-                                                  `;
+                                                          th {
+                                                              background-color: #f2f2f2;
+                                                              color: black;
+                                                          }
+                                                      </style>
+                                                          `;
 
                 var table = $('#Software').DataTable();
 
@@ -363,30 +394,30 @@
                 popupWin.document.open();
 
                 var tableStyles = `
-                                               <style type="text/css">
-                                                    table {
-                                                        width: 100%;
-                                                        border-collapse: collapse;
-                                                        margin-bottom: 20px;
-                                                    }
+                                                       <style type="text/css">
+                                                            table {
+                                                                width: 100%;
+                                                                border-collapse: collapse;
+                                                                margin-bottom: 20px;
+                                                            }
 
-                                                    .table > thead {
-                                                        vertical-align: bottom;
-                                                        background-color: red;
-                                                    }
+                                                            .table > thead {
+                                                                vertical-align: bottom;
+                                                                background-color: red;
+                                                            }
 
-                                                    th, td {
-                                                        padding: 8px;
-                                                        border: 1px solid #ddd;
-                                                        text-align: center;
-                                                    }
+                                                            th, td {
+                                                                padding: 8px;
+                                                                border: 1px solid #ddd;
+                                                                text-align: center;
+                                                            }
 
-                                                    th {
-                                                        background-color: #f2f2f2;
-                                                        color: black;
-                                                    }
-                                                </style>
-                                            `;
+                                                            th {
+                                                                background-color: #f2f2f2;
+                                                                color: black;
+                                                            }
+                                                        </style>
+                                                    `;
 
                 var table = $('#SoftwareType1').DataTable();
 
@@ -483,30 +514,30 @@
                 popupWin.document.open();
 
                 var tableStyles = `
-                                                       <style type="text/css">
-                                                            table {
-                                                                width: 100%;
-                                                                border-collapse: collapse;
-                                                                margin-bottom: 20px;
-                                                            }
+                                                               <style type="text/css">
+                                                                    table {
+                                                                        width: 100%;
+                                                                        border-collapse: collapse;
+                                                                        margin-bottom: 20px;
+                                                                    }
 
-                                                            .table > thead {
-                                                                vertical-align: bottom;
-                                                                background-color: red;
-                                                            }
+                                                                    .table > thead {
+                                                                        vertical-align: bottom;
+                                                                        background-color: red;
+                                                                    }
 
-                                                            th, td {
-                                                                padding: 8px;
-                                                                border: 1px solid #ddd;
-                                                                text-align: center;
-                                                            }
+                                                                    th, td {
+                                                                        padding: 8px;
+                                                                        border: 1px solid #ddd;
+                                                                        text-align: center;
+                                                                    }
 
-                                                            th {
-                                                                background-color: #f2f2f2;
-                                                                color: black;
-                                                            }
-                                                        </style>
-                                                    `;
+                                                                    th {
+                                                                        background-color: #f2f2f2;
+                                                                        color: black;
+                                                                    }
+                                                                </style>
+                                                            `;
 
                 var table = $('#mapunit').DataTable();
 
@@ -602,30 +633,30 @@
                 popupWin.document.open();
 
                 var tableStyles = `
-                                         <style type="text/css">
-                                             table {
-                                                 width: 100%;
-                                                 border-collapse: collapse;
-                                                 margin-bottom: 20px;
-                                             }
+                                                 <style type="text/css">
+                                                     table {
+                                                         width: 100%;
+                                                         border-collapse: collapse;
+                                                         margin-bottom: 20px;
+                                                     }
 
-                                             .table > thead {
-                                                 vertical-align: bottom;
-                                                 background-color: red;
-                                             }
+                                                     .table > thead {
+                                                         vertical-align: bottom;
+                                                         background-color: red;
+                                                     }
 
-                                             th, td {
-                                                 padding: 8px;
-                                                 border: 1px solid #ddd;
-                                                 text-align: center;
-                                             }
+                                                     th, td {
+                                                         padding: 8px;
+                                                         border: 1px solid #ddd;
+                                                         text-align: center;
+                                                     }
 
-                                             th {
-                                                 background-color: #f2f2f2;
-                                                 color: black;
-                                             }
-                                         </style>
-                                     `;
+                                                     th {
+                                                         background-color: #f2f2f2;
+                                                         color: black;
+                                                     }
+                                                 </style>
+                                             `;
 
                 var table = $('#SoftwareType').DataTable();
 
@@ -721,30 +752,30 @@
                 popupWin.document.open();
 
                 var tableStyles = `
-                                                 <style type="text/css">
-                                                     table {
-                                                         width: 100%;
-                                                         border-collapse: collapse;
-                                                         margin-bottom: 20px;
-                                                     }
+                                                         <style type="text/css">
+                                                             table {
+                                                                 width: 100%;
+                                                                 border-collapse: collapse;
+                                                                 margin-bottom: 20px;
+                                                             }
 
-                                                     .table > thead {
-                                                         vertical-align: bottom;
-                                                         background-color: red;
-                                                     }
+                                                             .table > thead {
+                                                                 vertical-align: bottom;
+                                                                 background-color: red;
+                                                             }
 
-                                                     th, td {
-                                                         padding: 8px;
-                                                         border: 1px solid #ddd;
-                                                         text-align: center;
-                                                     }
+                                                             th, td {
+                                                                 padding: 8px;
+                                                                 border: 1px solid #ddd;
+                                                                 text-align: center;
+                                                             }
 
-                                                     th {
-                                                         background-color: #f2f2f2;
-                                                         color: black;
-                                                     }
-                                                 </style>
-                                             `;
+                                                             th {
+                                                                 background-color: #f2f2f2;
+                                                                 color: black;
+                                                             }
+                                                         </style>
+                                                     `;
 
                 var table = $('#Inbox1').DataTable();
 
@@ -840,30 +871,30 @@
                 popupWin.document.open();
 
                 var tableStyles = `
-                                    <style type="text/css">
-                                        table {
-                                            width: 100%;
-                                            border-collapse: collapse;
-                                            margin-bottom: 20px;
-                                        }
+                                            <style type="text/css">
+                                                table {
+                                                    width: 100%;
+                                                    border-collapse: collapse;
+                                                    margin-bottom: 20px;
+                                                }
 
-                                        .table > thead {
-                                            vertical-align: bottom;
-                                            background-color: red;
-                                        }
+                                                .table > thead {
+                                                    vertical-align: bottom;
+                                                    background-color: red;
+                                                }
 
-                                        th, td {
-                                            padding: 8px;
-                                            border: 1px solid #ddd;
-                                            text-align: center;
-                                        }
+                                                th, td {
+                                                    padding: 8px;
+                                                    border: 1px solid #ddd;
+                                                    text-align: center;
+                                                }
 
-                                        th {
-                                            background-color: #f2f2f2;
-                                            color: black;
-                                        }
-                                    </style>
-                                `;
+                                                th {
+                                                    background-color: #f2f2f2;
+                                                    color: black;
+                                                }
+                                            </style>
+                                        `;
 
                 var table = $('#SoftwareType3').DataTable();
 
@@ -908,6 +939,251 @@
             var table = $('#Inbox').DataTable({
                 lengthChange: true,
                 order: [[1, 'desc']]
+                        dom: 'lBfrtip',
+                buttons: [
+                    'copy',
+                    'excel',
+                    'csv',
+                    {
+                        text: 'PDF',
+                        extend: 'pdfHtml5',
+                        action: function (e, dt, node, config) {
+                            PdfDiv();
+                        }
+                    },
+                ],
+                searchBuilder: {
+                    conditions: {
+                        num: {
+                            'MultipleOf': {
+                                conditionName: 'Multiple Of',
+                                init: function (that, fn, preDefined = null) {
+                                    var el = $('<input/>').on('input', function () { fn(that, this) });
+
+                                    if (preDefined !== null) {
+                                        $(el).val(preDefined[0]);
+                                    }
+
+                                    return el;
+                                },
+                                inputValue: function (el) {
+                                    return $(el[0]).val();
+                                },
+                                isInputValid: function (el, that) {
+                                    return $(el[0]).val().length !== 0;
+                                },
+                                search: function (value, comparison) {
+                                    return value % comparison === 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            //var buttonContainer = table.buttons().container();
+            //var searchBuilderContainer = table.searchBuilder.container();
+            //buttonContainer.insertBefore(table.table().container());
+            //searchBuilderContainer.insertBefore(table.table().container());
+
+            function PdfDiv() {
+                var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+                popupWin.document.open();
+
+                var tableStyles = `
+                                                       <style type="text/css">
+                                                           table {
+                                                               width: 100%;
+                                                               border-collapse: collapse;
+                                                               margin-bottom: 20px;
+                                                           }
+
+                                                           .table > thead {
+                                                               vertical-align: bottom;
+                                                               background-color: red;
+                                                           }
+
+                                                           th, td {
+                                                               padding: 8px;
+                                                               border: 1px solid #ddd;
+                                                               text-align: center;
+                                                           }
+
+                                                           th {
+                                                          background-color: #f2f2f2;
+                                                                      color: black;
+                                                                  }
+                                                              </style>
+                                                          `;
+
+                var table = $('#Inbox').DataTable();
+
+                var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+                var tableHTML = '<table>';
+
+                tableHTML += '<thead>';
+                tableHTML += '<tr>';
+                table.columns().header().each(function (header) {
+                    tableHTML += '<th>' + header.innerHTML + '</th>';
+                });
+                tableHTML += '</tr>';
+                tableHTML += '</thead>';
+
+                tableHTML += '<tbody>';
+                for (var i = 0; i < filteredData.length; i++) {
+                    tableHTML += '<tr>';
+                    for (var j = 0; j < filteredData[i].length; j++) {
+                        tableHTML += '<td>' + filteredData[i][j] + '</td>';
+                    }
+                    tableHTML += '</tr>';
+                }
+                tableHTML += '</tbody>';
+
+                tableHTML += '</table>';
+
+                var watermarkText = '@(TempData["ipadd"])';
+
+                popupWin.document.write('<html><head>'
+                    + tableStyles + '</head><body onload="window.print()">'
+                    + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
+                    + watermarkText + '</div></body></html>');
+
+                popupWin.document.close();
+            }
+        });
+    </script>
+
+
+
+
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#Sents').DataTable({
+                lengthChange: true,
+                order: [[1, 'desc']]
+                        dom: 'lBfrtip',
+                buttons: [
+                    'copy',
+                    'excel',
+                    'csv',
+                    {
+                        text: 'PDF',
+                        extend: 'pdfHtml5',
+                        action: function (e, dt, node, config) {
+                            PdfDiv();
+                        }
+                    },
+                ],
+                searchBuilder: {
+                    conditions: {
+                        num: {
+                            'MultipleOf': {
+                                conditionName: 'Multiple Of',
+                                init: function (that, fn, preDefined = null) {
+                                    var el = $('<input/>').on('input', function () { fn(that, this) });
+
+                                    if (preDefined !== null) {
+                                        $(el).val(preDefined[0]);
+                                    }
+
+                                    return el;
+                                },
+                                inputValue: function (el) {
+                                    return $(el[0]).val();
+                                },
+                                isInputValid: function (el, that) {
+                                    return $(el[0]).val().length !== 0;
+                                },
+                                search: function (value, comparison) {
+                                    return value % comparison === 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            //var buttonContainer = table.buttons().container();
+            //var searchBuilderContainer = table.searchBuilder.container();
+            //buttonContainer.insertBefore(table.table().container());
+            //searchBuilderContainer.insertBefore(table.table().container());
+
+            function PdfDiv() {
+                var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+                popupWin.document.open();
+
+                var tableStyles = `
+                                             <style type="text/css">
+                                                  table {
+                                                      width: 100%;
+                                                      border-collapse: collapse;
+                                                      margin-bottom: 20px;
+                                                  }
+
+                                                 .table > thead {
+                                                     vertical-align: bottom;
+                                                     background-color: red;
+                                                 }
+
+                                                 th, td {
+                                                     padding: 8px;
+                                                     border: 1px solid #ddd;
+                                                     text-align: center;
+                                                 }
+
+                                                 th {
+                                                     background-color: #f2f2f2;
+                                                     color: black;
+                                                 }
+                                             </style>
+                                               `;
+
+                var table = $('#Sents').DataTable();
+
+                var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+                var tableHTML = '<table>';
+
+                tableHTML += '<thead>';
+                tableHTML += '<tr>';
+                table.columns().header().each(function (header) {
+                    tableHTML += '<th>' + header.innerHTML + '</th>';
+                });
+                tableHTML += '</tr>';
+                tableHTML += '</thead>';
+
+                tableHTML += '<tbody>';
+                for (var i = 0; i < filteredData.length; i++) {
+                    tableHTML += '<tr>';
+                    for (var j = 0; j < filteredData[i].length; j++) {
+                        tableHTML += '<td>' + filteredData[i][j] + '</td>';
+                    }
+                    tableHTML += '</tr>';
+                }
+                tableHTML += '</tbody>';
+
+                tableHTML += '</table>';
+
+                var watermarkText = '@(TempData["ipadd"])';
+
+                popupWin.document.write('<html><head>'
+                    + tableStyles + '</head><body onload="window.print()">'
+                    + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
+                    + watermarkText + '</div></body></html>');
+
+                popupWin.document.close();
+            }
+        });
+    </script>
+
+
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#IndexTable').DataTable({
+                lengthChange: true,
                 dom: 'lBfrtip',
                 buttons: [
                     'copy',
@@ -979,256 +1255,11 @@
                                                    }
 
                                                    th {
-                                                  background-color: #f2f2f2;
-                                                              color: black;
-                                                          }
-                                                      </style>
-                                                  `;
-
-                var table = $('#Inbox').DataTable();
-
-                var filteredData = table.rows({ search: 'applied' }).data().toArray();
-
-                var tableHTML = '<table>';
-
-                tableHTML += '<thead>';
-                tableHTML += '<tr>';
-                table.columns().header().each(function (header) {
-                    tableHTML += '<th>' + header.innerHTML + '</th>';
-                });
-                tableHTML += '</tr>';
-                tableHTML += '</thead>';
-
-                tableHTML += '<tbody>';
-                for (var i = 0; i < filteredData.length; i++) {
-                    tableHTML += '<tr>';
-                    for (var j = 0; j < filteredData[i].length; j++) {
-                        tableHTML += '<td>' + filteredData[i][j] + '</td>';
-                    }
-                    tableHTML += '</tr>';
-                }
-                tableHTML += '</tbody>';
-
-                tableHTML += '</table>';
-
-                var watermarkText = '@(TempData["ipadd"])';
-
-                popupWin.document.write('<html><head>'
-                    + tableStyles + '</head><body onload="window.print()">'
-                    + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
-                    + watermarkText + '</div></body></html>');
-
-                popupWin.document.close();
-            }
-        });
-    </script>
-
-
-
-
-
-    <script>
-        $(document).ready(function () {
-            var table = $('#Sents').DataTable({
-                lengthChange: true,
-                order: [[1, 'desc']]
-                dom: 'lBfrtip',
-                buttons: [
-                    'copy',
-                    'excel',
-                    'csv',
-                    {
-                        text: 'PDF',
-                        extend: 'pdfHtml5',
-                        action: function (e, dt, node, config) {
-                            PdfDiv();
-                        }
-                    },
-                ],
-                searchBuilder: {
-                    conditions: {
-                        num: {
-                            'MultipleOf': {
-                                conditionName: 'Multiple Of',
-                                init: function (that, fn, preDefined = null) {
-                                    var el = $('<input/>').on('input', function () { fn(that, this) });
-
-                                    if (preDefined !== null) {
-                                        $(el).val(preDefined[0]);
-                                    }
-
-                                    return el;
-                                },
-                                inputValue: function (el) {
-                                    return $(el[0]).val();
-                                },
-                                isInputValid: function (el, that) {
-                                    return $(el[0]).val().length !== 0;
-                                },
-                                search: function (value, comparison) {
-                                    return value % comparison === 0;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            //var buttonContainer = table.buttons().container();
-            //var searchBuilderContainer = table.searchBuilder.container();
-            //buttonContainer.insertBefore(table.table().container());
-            //searchBuilderContainer.insertBefore(table.table().container());
-
-            function PdfDiv() {
-                var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
-                popupWin.document.open();
-
-                var tableStyles = `
-                                     <style type="text/css">
-                                          table {
-                                              width: 100%;
-                                              border-collapse: collapse;
-                                              margin-bottom: 20px;
-                                          }
-
-                                         .table > thead {
-                                             vertical-align: bottom;
-                                             background-color: red;
-                                         }
-
-                                         th, td {
-                                             padding: 8px;
-                                             border: 1px solid #ddd;
-                                             text-align: center;
-                                         }
-
-                                         th {
-                                             background-color: #f2f2f2;
-                                             color: black;
-                                         }
-                                     </style>
-                                       `;
-
-                var table = $('#Sents').DataTable();
-
-                var filteredData = table.rows({ search: 'applied' }).data().toArray();
-
-                var tableHTML = '<table>';
-
-                tableHTML += '<thead>';
-                tableHTML += '<tr>';
-                table.columns().header().each(function (header) {
-                    tableHTML += '<th>' + header.innerHTML + '</th>';
-                });
-                tableHTML += '</tr>';
-                tableHTML += '</thead>';
-
-                tableHTML += '<tbody>';
-                for (var i = 0; i < filteredData.length; i++) {
-                    tableHTML += '<tr>';
-                    for (var j = 0; j < filteredData[i].length; j++) {
-                        tableHTML += '<td>' + filteredData[i][j] + '</td>';
-                    }
-                    tableHTML += '</tr>';
-                }
-                tableHTML += '</tbody>';
-
-                tableHTML += '</table>';
-
-                var watermarkText = '@(TempData["ipadd"])';
-
-                popupWin.document.write('<html><head>'
-                    + tableStyles + '</head><body onload="window.print()">'
-                    + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
-                    + watermarkText + '</div></body></html>');
-
-                popupWin.document.close();
-            }
-        });
-    </script>
-
-   
-
-    <script>
-        $(document).ready(function () {
-            var table = $('#IndexTable').DataTable({
-                lengthChange: true,
-                dom: 'lBfrtip',
-                buttons: [
-                    'copy',
-                    'excel',
-                    'csv',
-                    {
-                        text: 'PDF',
-                        extend: 'pdfHtml5',
-                        action: function (e, dt, node, config) {
-                            PdfDiv();
-                        }
-                    },
-                ],
-                searchBuilder: {
-                    conditions: {
-                        num: {
-                            'MultipleOf': {
-                                conditionName: 'Multiple Of',
-                                init: function (that, fn, preDefined = null) {
-                                    var el = $('<input/>').on('input', function () { fn(that, this) });
-
-                                    if (preDefined !== null) {
-                                        $(el).val(preDefined[0]);
-                                    }
-
-                                    return el;
-                                },
-                                inputValue: function (el) {
-                                    return $(el[0]).val();
-                                },
-                                isInputValid: function (el, that) {
-                                    return $(el[0]).val().length !== 0;
-                                },
-                                search: function (value, comparison) {
-                                    return value % comparison === 0;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            //var buttonContainer = table.buttons().container();
-            //var searchBuilderContainer = table.searchBuilder.container();
-            //buttonContainer.insertBefore(table.table().container());
-            //searchBuilderContainer.insertBefore(table.table().container());
-
-            function PdfDiv() {
-                var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
-                popupWin.document.open();
-
-                var tableStyles = `
-                                       <style type="text/css">
-                                           table {
-                                               width: 100%;
-                                               border-collapse: collapse;
-                                               margin-bottom: 20px;
-                                           }
-
-                                           .table > thead {
-                                               vertical-align: bottom;
-                                               background-color: red;
-                                           }
-
-                                           th, td {
-                                               padding: 8px;
-                                               border: 1px solid #ddd;
-                                               text-align: center;
-                                           }
-
-                                           th {
-                                               background-color: #f2f2f2;
-                                               color: black;
-                                           }
-                                       </style>
-                                   `;
+                                                       background-color: #f2f2f2;
+                                                       color: black;
+                                                   }
+                                               </style>
+                                           `;
 
                 var table = $('#IndexTable').DataTable();
 
@@ -1325,30 +1356,30 @@
                 popupWin.document.open();
 
                 var tableStyles = `
-                                          <style type="text/css">
-                                              table {
-                                                  width: 100%;
-                                                  border-collapse: collapse;
-                                                  margin-bottom: 20px;
-                                              }
+                                                  <style type="text/css">
+                                                      table {
+                                                          width: 100%;
+                                                          border-collapse: collapse;
+                                                          margin-bottom: 20px;
+                                                      }
 
-                                              .table > thead {
-                                                  vertical-align: bottom;
-                                                  background-color: red;
-                                              }
+                                                      .table > thead {
+                                                          vertical-align: bottom;
+                                                          background-color: red;
+                                                      }
 
-                                              th, td {
-                                                  padding: 8px;
-                                                  border: 1px solid #ddd;
-                                                  text-align: center;
-                                              }
+                                                      th, td {
+                                                          padding: 8px;
+                                                          border: 1px solid #ddd;
+                                                          text-align: center;
+                                                      }
 
-                                              th {
-                                                  background-color: #f2f2f2;
-                                                  color: black;
-                                              }
-                                          </style>
-                                      `;
+                                                      th {
+                                                          background-color: #f2f2f2;
+                                                          color: black;
+                                                      }
+                                                  </style>
+                                              `;
 
                 var table = $('#SoftwareType5').DataTable();
 
@@ -1456,30 +1487,30 @@
                 popupWin.document.open();
 
                 var tableStyles = `
-                                 <style type="text/css">
-                                     table {
-                                         width: 100%;
-                                         border-collapse: collapse;
-                                         margin-bottom: 20px;
-                                     }
+                                         <style type="text/css">
+                                             table {
+                                                 width: 100%;
+                                                 border-collapse: collapse;
+                                                 margin-bottom: 20px;
+                                             }
 
-                                     .table > thead {
-                                         vertical-align: bottom;
-                                         background-color: red;
-                                     }
+                                             .table > thead {
+                                                 vertical-align: bottom;
+                                                 background-color: red;
+                                             }
 
-                                     th, td {
-                                         padding: 8px;
-                                         border: 1px solid #ddd;
-                                         text-align: center;
-                                     }
+                                             th, td {
+                                                 padding: 8px;
+                                                 border: 1px solid #ddd;
+                                                 text-align: center;
+                                             }
 
-                                     th {
-                                         background-color: #f2f2f2;
-                                         color: black;
-                                     }
-                                 </style>
-                             `;
+                                             th {
+                                                 background-color: #f2f2f2;
+                                                 color: black;
+                                             }
+                                         </style>
+                                     `;
 
                 var table = $('#Soft').DataTable();
 
@@ -1554,7 +1585,7 @@
                         <ion-icon name="menu-sharp" id=" menusharp"></ion-icon>
                         <img src="~/assets/images/menu-sharp.256x172.png" style="width: 16px;" />
                     </div>
-                 
+
                 </div>
                 <!--navigation-->
 
@@ -1572,7 +1603,7 @@
 
                         </a>
                     </li>
-                    
+
                     @* <li>
                 <a href="/Home/UnitDashbard">
                 <div class="icon-container">
@@ -1586,7 +1617,7 @@
                     <li>
                         <a href="/Projects/Create">
                             <div class="icon-container">
-                               
+
                                 <ion-icon name="ellipse-outline"></ion-icon>
                                 <span class="icon-name">Add New Project</span>
                             </div>
@@ -1598,34 +1629,24 @@
                             <div class="inbox-container" style="margin-left : 46px !important">
 
                                 <div class="icon-container" style="margin-left:-43px;">
-                                   
+
                                     <ion-icon name="ellipse-outline"></ion-icon>
                                     <span class="icon-name">Inbox</span>
-
-                                    @*<span class="inbox-alertsub"> @Logins.totmsgin</span>*@
-
+                                    <span id="InboxCount" class="badge3">0</span>
                                 </div>
                             </div>
                         </a>
                     </li>
-                    @*  <li>
 
-                <a href="/Documents/Index">
-                <div class="icon-container">
-                <img src="/assets/images/icons/documents.png" alt="Icon">
-                <ion-icon name="ellipse-outline"></ion-icon>
-                <span class="icon-name">Proj Docu</span>
-                </div>
-                </a>
-                </li> *@
 
                     <li>
                         <a href="/Projects/ProjComments" @*onclick="createNotification(event)"*@>
                             <div class="icon-container">
-                              
+
                                 <ion-icon name="ellipse-outline"></ion-icon>
                                 <span class="icon-name">Proj Comments</span>
-                                @*<span class="inbox-alertsub1"></span>*@
+                              @*  <span class="inbox-alertsub1"></span>*@
+                                <span id="ProjectCommentCount" class="badge5">0</span>
                             </div>
                         </a>
                     </li>
@@ -1633,32 +1654,10 @@
 
 
 
-                   @* <li>
-                        <a href="/Search/CurrentSearch">
-                            <div class="icon-container">
-                                
-                                <ion-icon name="ellipse-outline"></ion-icon>
-                                <span class="icon-name">Search</span>
-                            </div>
-                        </a>
-
-                    </li>*@
-
-                   @* <li>
-                        <a href="/Home/StratgicAnalysis">
-                            <div class="icon-container">
-                               
-                                <ion-icon name="ellipse-outline"></ion-icon>
-                                <span class="icon-name">Statistic Analysis</span>
-                            </div>
-                        </a>
-
-                    </li>*@
-
                     <li>
                         <a href="/Search/GetProjLogview">
                             <div class="icon-container">
-                                
+
                                 <ion-icon name="ellipse-outline"></ion-icon>
                                 <span class="icon-name">Proj Log</span>
                             </div>
@@ -1700,7 +1699,7 @@
 
                         <li class="dropdown">
                             <div class="icon-container" style="margin-top: 10px; margin-left: 13px;">
-                               
+
                                 <ion-icon name="ellipse-outline"></ion-icon>
                                 <span class="icon-name">User Setting</span>
                             </div>
@@ -1708,7 +1707,7 @@
                                 <li class="selected">
                                     <a href="/Actions/Index">
                                         <div class="icon-container">
-                                            
+
                                             <ion-icon name="ellipse-outline"></ion-icon>
                                             <span class="icon-name">View Actions</span>
                                         </div>
@@ -1717,7 +1716,7 @@
                                 <li class="selected">
                                     <a href="/UnitDtls/AddOrEdit">
                                         <div class="icon-container">
-                                            
+
                                             <ion-icon name="ellipse-outline"></ion-icon>
                                             <span class="icon-name">View Units</span>
                                         </div>
@@ -1727,36 +1726,36 @@
                                 <li class="selected">
                                     <a href="/Stages/Create">
                                         <div class="icon-container">
-                                           @* <img src="/assets/images/icons/stakeholder.png" alt="Icon">*@
+                                            @* <img src="/assets/images/icons/stakeholder.png" alt="Icon">*@
 
                                             <ion-icon name="ellipse-outline"></ion-icon>
                                             <span class="icon-name">View Stage</span>
                                         </div>
                                     </a>
                                 </li>
-                                <li class="selected">
-                                    <a href="/Status/Index">
-                                        <div class="icon-container">
-                                       
-                                            <ion-icon name="ellipse-outline"></ion-icon>
-                                            <span class="icon-name">View Sub Stage</span>
-                                        </div>
-                                    </a>
-                                </li>
+                                @*<li class="selected">
+                        <a href="/Status/Index">
+                        <div class="icon-container">
 
-                              @*  <li class="selected">
-                                    <a href="/Rank/Index">
-                                        <div class="icon-container">
-                                           
-                                            <ion-icon name="ellipse-outline"></ion-icon>
-                                            <span class="icon-name">View Rank</span>
-                                        </div>
-                                    </a>
-                                </li>*@
+                        <ion-icon name="ellipse-outline"></ion-icon>
+                        <span class="icon-name">View Sub Stage</span>
+                        </div>
+                        </a>
+                        </li>*@
+
+                                @*  <li class="selected">
+                        <a href="/Rank/Index">
+                        <div class="icon-container">
+
+                        <ion-icon name="ellipse-outline"></ion-icon>
+                        <span class="icon-name">View Rank</span>
+                        </div>
+                        </a>
+                        </li>*@
                                 <li class="selected">
                                     <a href="/Identity/Account/Register" target="_new">
                                         <div class="icon-container">
-                                            
+
                                             <ion-icon name="ellipse-outline"></ion-icon>
                                             <span class="icon-name">Register New User</span>
                                         </div>
@@ -1766,7 +1765,7 @@
                                 <li class="selected">
                                     <a href="/Account/GetsAllUsers">
                                         <div class="icon-container">
-                                           
+
                                             <ion-icon name="ellipse-outline"></ion-icon>
                                             <span class="icon-name">View Users</span>
                                         </div>
@@ -1811,23 +1810,23 @@
                             <li class="nav-item dropdown">
                                 <span class="d-none" id="IpAddress">@Logins.IpAddress</span>
                                 <div class="text-white mr-2">
-                                   Welcome :  @Logins.UserName.ToLower()
+                                    Welcome :  @Logins.UserName.ToLower()
                                     <div class="text-white mr-2 text-capitalize">@Logins.Rank @Logins.Offr_Name</div>
                                     <span class="spnOffr_Name d-none">@Logins.Offr_Name</span>
                              </li> 
                             <li class="nav-item dropdown dropdown-user-setting">
-                  @*               <div class="user-setting" style="margin-right:100px;">
-                                    <a href="/Account/Logout">
-                                        <img src="~/assets/images/icons/logout.png" class="user-img" alt="">
-                                    </a>
-                                </div> *@
+                                @*               <div class="user-setting" style="margin-right:100px;">
+                            <a href="/Account/Logout">
+                            <img src="~/assets/images/icons/logout.png" class="user-img" alt="">
+                            </a>
+                            </div> *@
 
 
-                          @*       <div class="user-setting" style="float:right">
+                                @*       <div class="user-setting" style="float:right">
 
-                                    <img src="~/assets/images/dgis_logo.png" class="dgislogo">
+                            <img src="~/assets/images/dgis_logo.png" class="dgislogo">
 
-                                </div> *@
+                            </div> *@
 
 
                             </li>
@@ -1870,7 +1869,7 @@
                     </div>
 
 
-                
+
                 </div>
                 <!--navigation-->
 
@@ -1884,13 +1883,13 @@
                         </div>
                         <a href="/Home/Index">
                             <div class="menu-title" style="margin-left: 0px !important;">
-                               Dashboard : @Logins.Unit
+                                Dashboard : @Logins.Unit
                             </div>
 
                         </a>
 
 
-                  
+
                     </li>
 
                     @if (isAdmin)
@@ -1914,7 +1913,7 @@
                         <li>
                             <a href="/Projects/Create">
                                 <div class="icon-container">
-                                    
+
                                     <ion-icon name="ellipse-outlinProj Commentse"></ion-icon>
                                     <span class="icon-name">Add New Project</span>
                                 </div>
@@ -1926,7 +1925,7 @@
                                 <div class="inbox-container" style="margin-left : 46px !important">
 
                                     <div class="icon-container" style="margin-left:-43px;">
-                                       
+
                                         <ion-icon name="ellipse-outline"></ion-icon>
                                         <span class="icon-name">Inbox</span>
 
@@ -1951,10 +1950,10 @@
                         <li>
                             <a href="/Projects/ProjComments">
                                 <div class="icon-container">
-                                    
+
                                     <ion-icon name="ellipse-outline"></ion-icon>
                                     <span class="icon-name">Proj Comments</span>
-                                   @* <span class="inbox-alertsub1"> @Logins.tocommentin</span>*@
+                                    @* <span class="inbox-alertsub1"> @Logins.tocommentin</span>*@
                                 </div>
                             </a>
                         </li>
@@ -1962,7 +1961,7 @@
                         <li>
                             <a href="/Actions/ActionSeqView">
                                 <div class="icon-container">
-                                   
+
                                     <ion-icon name="ellipse-outline"></ion-icon>
                                     <span class="icon-name"> How to Move Proj</span>
 
@@ -1978,7 +1977,7 @@
                         <li>
                             <a href="/Identity/Account/Register" target="_new">
                                 <div class="icon-container">
-                                   
+
                                     <ion-icon name="ellipse-outline"></ion-icon>
                                     <span class="icon-name">Register New User</span>
                                 </div>
@@ -2070,11 +2069,11 @@
             {
                 <div class="switcher-body" style="visibility: hidden;">
                     <button class="btn btn-primary btn-switcher shadow-sm" type="button" data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+                        data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
                         <ion-icon name="color-palette-sharp" class="me-0"></ion-icon>
                     </button>
                     <div class="offcanvas offcanvas-end shadow border-start-0 p-2" data-bs-scroll="true" data-bs-backdrop="false"
-                         tabindex="-1" id="offcanvasScrolling">
+                     tabindex="-1" id="offcanvasScrolling">
                         <div class="offcanvas-header border-bottom">
                             <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Theme Customizer</h5>
                             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
@@ -2092,7 +2091,7 @@
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="SemiDark" value="option3"
-                                       checked>
+                                   checked>
                                 <label class="form-check-label" for="SemiDark">Semi Dark</label>
                             </div>
                             <hr />
@@ -2188,9 +2187,10 @@
 </script>
 
 <script>
+    
     function createNotification(event) {
         event.preventDefault();
-
+         
 
         var stakeHolderId = document.getElementById('btnid').innerText;
 
@@ -2304,7 +2304,60 @@
         $(".dropdown-menu.selected").addClass("visible");
     });
 </script>
+<script>
+    function updateInboxCount() {
+        $.ajax({
+            url: '/Projects/GetProjectInboxCount', // Adjust this URL to match your endpoint
+            type: 'GET',
+            success: function (count) {
+                // Assuming count is a number, update the badge text
+                $('#InboxCount').text(count);
 
+                // Optionally, hide the badge if count is 0
+                if (count > 0) {
+                    $('#InboxCount').show();
+                } else {
+                    $('#InboxCount').hide();
+                }
+            },
+            error: function () {
+                console.error('Could not retrieve project count.');
+            }
+        });
+    }
+
+    function updateProjectCount() {
+        $.ajax({
+            url: '/Projects/GetProjectCommentCount', // Adjust this URL to match your endpoint
+            type: 'GET',
+            success: function (count) {
+                // Assuming count is a number, update the badge text
+                $('#ProjectCommentCount').text(count);
+
+                // Optionally, hide the badge if count is 0
+                if (count > 0) {
+                    $('#ProjectCommentCount').show();
+                } else {
+                    $('#ProjectCommentCount').hide();
+                }
+            },
+            error: function () {
+                console.error('Could not retrieve project count.');
+            }
+        });
+    }
+
+    
+
+    // Call the function on page load
+    $(document).ready(function () {
+        updateProjectCount();
+        updateInboxCount();
+        // Optional: Refresh the count every X seconds (e.g., every 10 seconds)
+        setInterval(updateProjectCount, 10000);
+    });
+</script>
+<script src="~/developerjs/projectstkholdercomments.js"></script>
 
 @RenderSection("scripts", required: false)
 

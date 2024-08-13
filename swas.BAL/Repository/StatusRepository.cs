@@ -28,7 +28,21 @@ namespace swas.BAL.Repository
         {
             
             List<DTODDLComman> lst = new List<DTODDLComman>();
-            if(ParentId==2)
+            if (ParentId == 1)
+            {
+                var ret = (from Status in _dbContext.mStatus
+                           join Stages in _dbContext.mStages on Status.StageId equals Stages.StagesId
+
+                           where Status.StageId == ParentId && Status.StatusId == 1 
+                           select new DTODDLComman
+                           {
+                               Name = Status.Status,
+                               Id = Status.StatusId,
+                           }
+             ).ToListAsync();
+                lst = (ret.Result);
+            }
+            else if (ParentId==2)
             {
                 var ret = (from Status in _dbContext.mStatus
                            join Stages in _dbContext.mStages on Status.StageId equals Stages.StagesId

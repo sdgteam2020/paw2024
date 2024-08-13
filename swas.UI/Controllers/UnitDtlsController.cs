@@ -436,11 +436,11 @@ namespace swas.UI.Controllers
                 return Redirect("/Identity/Account/Login");
         }
         [HttpPost]
-        public async Task<IActionResult> GetMappingByUnitId(int UnitId)
+        public async Task<IActionResult> GetMappingByUnitId(int StageId,int StatusId)
         {
 
 
-            var unitmap = await _unitRepository.GetallUnitwithmap1(UnitId);
+            var unitmap = await _unitRepository.GetallUnitwithmap1(StageId , StatusId);
 
             ViewBag.unitmapww = unitmap;
 

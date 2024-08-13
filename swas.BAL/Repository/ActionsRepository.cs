@@ -34,22 +34,12 @@ namespace swas.BAL.Repository
             return _dbContext.mActions.FirstOrDefault(a => a.Actions == name);
         }
 
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
+        
 
         ///Created by : Ajay
         ///Reviewed Date : 30 Aug 23
         ///Revied by Sub Maj Sanal
         ///01 Sep 23
-
-
-
-
-
-
 
 
 
@@ -91,17 +81,17 @@ namespace swas.BAL.Repository
 
 
 
-
+        //join map in _dbContext.TrnStatusActionsMapping on act.ActionsId equals map.ActionsId
+        //where map.StatusId == StatusId 
 
 
 
 
         public async Task<List<DTODDLComman>> GetActionByStatusId(int StatusId)
         {
-            var query = await (from act in _dbContext.mActions
-                        //join map in _dbContext.TrnStatusActionsMapping on act.ActionsId equals map.ActionsId
-                        //where map.StatusId == StatusId 
-                        select new DTODDLComman
+            var query = await (from act in _dbContext.mActions 
+                               
+                               select new DTODDLComman
                         {
                             Id=act.ActionsId,
                             Name=act.Actions,
@@ -110,7 +100,41 @@ namespace swas.BAL.Repository
             return query.ToList();
         }
 
-      
+        public async Task<List<DTODDLComman>> GetActionByStatusIdlogin (int StatusId, int UnitId)
+        {
+            List<DTODDLComman> lst = new List<DTODDLComman>();
+            if (UnitId != 1)
+            {
+                var ret = (from act  in _dbContext.mActions
+                           where act.ActionsId == 1  || act.ActionsId == 2 || act.ActionsId == 3 || act.ActionsId == 10
+                           select new DTODDLComman
+                           {
+                               Id = act.ActionsId,
+                              Name = act.Actions,
+                           }
+             ).ToListAsync();
+                lst = (ret.Result);
+            }
+            
+            else
+            {
+                var ret = (from act in _dbContext.mActions
+                           select new DTODDLComman
+                           {
+                               Id = act.ActionsId,
+                               Name = act.Actions,
+                           }
+             ).ToListAsync();
+                lst = (ret.Result);
+            }
+            return lst;
+            
+
+            //return await query.ToListAsync();
+        }
+
+
+
 
         public async Task<List<DTODDLComman>> GetActionsMappingIdByStatusId(int StatusId)
         {

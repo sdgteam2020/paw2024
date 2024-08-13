@@ -1,3 +1,9 @@
+Date : 4/12/2024 11:59:16 AM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/16/2024 12:06:52 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
 Date : 4/16/2024 12:38:28 PM
 A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
 -----------------------------------------------------------------------------
@@ -740,161 +746,155 @@ Request failed & Status Code : 200
 Date : 06-08-2024 09:44:26
 An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
 -----------------------------------------------------------------------------
-Date : 07-08-2024 15:52:10
+Date : 06-08-2024 16:17:33
 Unable to cast object of type 'System.Int32' to type 'System.String'.
 -----------------------------------------------------------------------------
-Date : 07-08-2024 16:01:51
+Date : 06-08-2024 16:17:33
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-08-2024 09:50:14
 Unable to cast object of type 'System.Int32' to type 'System.String'.
 -----------------------------------------------------------------------------
-Date : 07-08-2024 16:02:53
+Date : 07-08-2024 09:50:14
 Unable to cast object of type 'System.Int32' to type 'System.String'.
 -----------------------------------------------------------------------------
-Date : 07-08-2024 16:03:58
+Date : 07-08-2024 09:50:14
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 07-08-2024 11:05:01
 Unable to cast object of type 'System.Int32' to type 'System.String'.
 -----------------------------------------------------------------------------
-Date : 07-08-2024 16:06:04
+Date : 07-08-2024 11:05:41
 Unable to cast object of type 'System.Int32' to type 'System.String'.
 -----------------------------------------------------------------------------
-Date : 07-08-2024 16:15:08
+Date : 08-08-2024 14:38:24
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 08-08-2024 14:48:35
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 09-08-2024 09:50:29
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 09-08-2024 09:50:50
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 09-08-2024 09:54:12
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 09-08-2024 09:56:24
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 09-08-2024 10:48:56
 'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
 -----------------------------------------------------------------------------
-Date : 07-08-2024 16:15:08
+Date : 09-08-2024 10:48:56
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 07-08-2024 16:15:10
+Date : 09-08-2024 10:50:57
 'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
 -----------------------------------------------------------------------------
-Date : 07-08-2024 16:15:10
+Date : 09-08-2024 10:50:57
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 07-08-2024 16:16:08
-Unable to cast object of type 'System.Int32' to type 'System.String'.
+Date : 09-08-2024 10:51:01
+'System.Dynamic.DynamicObject' does not contain a definition for 'Projects'
 -----------------------------------------------------------------------------
-Date : 07-08-2024 16:17:23
-Unable to cast object of type 'System.Int32' to type 'System.String'.
+Date : 09-08-2024 10:51:01
+Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 08-08-2024 09:37:27
+Date : 09-08-2024 10:51:03
+'System.Dynamic.DynamicObject' does not contain a definition for 'Projects'
+-----------------------------------------------------------------------------
+Date : 09-08-2024 10:51:03
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 09-08-2024 10:51:13
+'System.Dynamic.DynamicObject' does not contain a definition for 'Projects'
+-----------------------------------------------------------------------------
+Date : 09-08-2024 10:51:13
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 09-08-2024 10:51:17
 'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
 -----------------------------------------------------------------------------
-Date : 08-08-2024 09:37:27
+Date : 09-08-2024 10:51:17
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 08-08-2024 09:38:18
+Date : 09-08-2024 10:51:43
 'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
 -----------------------------------------------------------------------------
-Date : 08-08-2024 09:38:18
+Date : 09-08-2024 10:51:50
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 08-08-2024 09:38:30
+Date : 09-08-2024 11:46:09
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 09-08-2024 11:46:10
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 09-08-2024 11:46:10
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 12-08-2024 10:30:43
 'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
 -----------------------------------------------------------------------------
-Date : 08-08-2024 09:38:30
+Date : 12-08-2024 10:30:43
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 08-08-2024 09:38:31
+Date : 12-08-2024 11:14:08
 'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
 -----------------------------------------------------------------------------
-Date : 08-08-2024 09:38:31
+Date : 12-08-2024 11:14:08
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 08-08-2024 09:38:32
+Date : 12-08-2024 11:14:14
 'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
 -----------------------------------------------------------------------------
-Date : 08-08-2024 09:38:32
+Date : 12-08-2024 11:14:14
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 08-08-2024 09:38:33
+Date : 12-08-2024 11:14:24
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-08-2024 12:51:59
+'System.Dynamic.DynamicObject' does not contain a definition for 'Projects'
+-----------------------------------------------------------------------------
+Date : 13-08-2024 12:51:59
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-08-2024 12:52:16
+'System.Dynamic.DynamicObject' does not contain a definition for 'Projects'
+-----------------------------------------------------------------------------
+Date : 13-08-2024 12:52:16
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 13-08-2024 12:52:19
 'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
 -----------------------------------------------------------------------------
-Date : 08-08-2024 09:38:33
+Date : 13-08-2024 12:52:19
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 08-08-2024 09:38:33
+Date : 13-08-2024 12:52:21
 'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
 -----------------------------------------------------------------------------
-Date : 08-08-2024 09:38:34
+Date : 13-08-2024 12:52:21
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 08-08-2024 09:38:48
+Date : 13-08-2024 12:52:22
 'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
 -----------------------------------------------------------------------------
-Date : 08-08-2024 09:38:48
+Date : 13-08-2024 12:52:22
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 08-08-2024 09:39:47
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 08-08-2024 09:39:49
+Date : 13-08-2024 12:52:24
 'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
 -----------------------------------------------------------------------------
-Date : 08-08-2024 09:39:49
+Date : 13-08-2024 12:52:24
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 08-08-2024 09:39:50
+Date : 13-08-2024 12:52:27
 'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
 -----------------------------------------------------------------------------
-Date : 08-08-2024 09:39:50
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 08-08-2024 09:39:51
-'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
------------------------------------------------------------------------------
-Date : 08-08-2024 09:39:51
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 08-08-2024 09:39:51
-'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
------------------------------------------------------------------------------
-Date : 08-08-2024 09:39:51
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 08-08-2024 09:39:52
-'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
------------------------------------------------------------------------------
-Date : 08-08-2024 09:39:52
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 08-08-2024 09:39:54
-'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
------------------------------------------------------------------------------
-Date : 08-08-2024 09:39:54
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 12-08-2024 11:49:25
-This SqlTransaction has completed; it is no longer usable.
------------------------------------------------------------------------------
-Date : 12-08-2024 12:15:39
-'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
------------------------------------------------------------------------------
-Date : 12-08-2024 12:15:39
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 12-08-2024 12:15:41
-'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
------------------------------------------------------------------------------
-Date : 12-08-2024 12:15:41
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 12-08-2024 12:15:50
-'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
------------------------------------------------------------------------------
-Date : 12-08-2024 12:15:50
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 12-08-2024 12:15:51
-'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
------------------------------------------------------------------------------
-Date : 12-08-2024 12:15:51
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 12-08-2024 12:15:52
-'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
------------------------------------------------------------------------------
-Date : 12-08-2024 12:15:52
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 12-08-2024 12:17:01
-'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
------------------------------------------------------------------------------
-Date : 12-08-2024 12:17:02
+Date : 13-08-2024 12:52:27
 Request failed & Status Code : 200

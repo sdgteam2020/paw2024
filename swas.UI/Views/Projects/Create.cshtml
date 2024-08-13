@@ -523,14 +523,19 @@
                                             @Html.ValidationMessageFor(model => model.DetlsofUserBase, "This Field is Required", new { @class = "text-danger" })
                                         </div>
                                     </td>
-
+                                     <td>
+                                        @Html.LabelFor(model => model.EnvisagedCost, new { id = "AddNWBandWidthReqmt" })
+                                    </td>
                                     <td>
+                                        @Html.TextAreaFor(model => model.EnvisagedCost, new { @class = "form-control requiredField" })
+                                    </td>
+                                   @* <td>
                                         @Html.LabelFor(model => model.EnvisagedCost, new { id = "AddEnvisagedCost" })
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(model => model.EnvisagedCost, new { @class = "form-control requiredField", type = "number", min = "0" })
+                                        @Html.TextBoxFor(model => model.EnvisagedCost, new { @class = "form-control requiredField"})
                                         @Html.ValidationMessageFor(model => model.EnvisagedCost, "", new { @class = "text-danger" })
-                                    </td>
+                                    </td>*@
 
                                     <td>
                                         @Html.LabelFor(model => model.NWBandWidthReqmt, new { id = "AddNWBandWidthReqmt" })
