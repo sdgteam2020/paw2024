@@ -122,3 +122,5 @@
 /swas.UI/.vs/swas/v17/.suo
 /swas.UI/.vs/swas/v17/fileList.bin
 /swasUnitTest/obj/Debug/net6.0/swasUnitTest.csproj.AssemblyReference.cache
+/swas.BAL/obj/Debug/net6.0/swas.BAL.csproj.AssemblyReference.cache
+/swas.UI/obj/Debug/net6.0/swas.UI.csproj.AssemblyReference.cache
