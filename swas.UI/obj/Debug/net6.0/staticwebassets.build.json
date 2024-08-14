@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "jqbuIKh7GfFCO4CTY3OFIGsjlx28Ncv4O4JdNmds9ag=",
+  "Hash": "/IOrz2xj56YMtfP0Nr2F4PaNOYdKfmoA2p0o0tPgVaE=",
   "Source": "swas.UI",
   "BasePath": "_content/swas.UI",
   "Mode": "Default",
@@ -16675,6 +16675,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\DeveloperJs\\ProjectDetails.js"
+    },
+    {
+      "Identity": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\DeveloperJs\\ProjectMovement.js",
+      "SourceId": "swas.UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\",
+      "BasePath": "_content/swas.UI",
+      "RelativePath": "DeveloperJs/ProjectMovement.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\DeveloperJs\\ProjectMovement.js"
     },
     {
       "Identity": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\DeveloperJs\\ProjectstckholdercommentforProjHistory.js",
