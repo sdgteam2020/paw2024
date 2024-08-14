@@ -2,7 +2,7 @@
 
 
     $('.delete-btn').click(function () {
-        debugger;
+         
         var stageId = $(this).data('id');
 
         var url = $(this).data('url');
@@ -36,7 +36,7 @@
 
 
     $('.btnupdate').click(function () {
-        debugger;
+         
         var stageId = $(this).data('id');
         var Stages = $(this).data('name');
 

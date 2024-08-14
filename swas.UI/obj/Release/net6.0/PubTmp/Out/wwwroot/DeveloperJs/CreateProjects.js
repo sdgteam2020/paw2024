@@ -12,11 +12,8 @@ $(document).ready(function () {
     var current_fs, next_fs, previous_fs; //fieldsets
     var opacity;
 
-   
 
     $("#uploadButton").click(function () {
-
-       
 
       var  requiredFields = $('#fwduploaditems').find('.requiredField');
         var allFieldsComplete = true;
@@ -408,7 +405,7 @@ function FwdProjConfirm(thisdata) {
 }
 
 function ProjectSubmited(thisdata) {
-    debugger;
+     
     $.ajax({
         url: '/Projects/ProjectSubmited',
         type: 'POST',
@@ -491,16 +488,7 @@ function DateFormateyyy_mm_dd(date) {
     //`${datef2.getFullYear()}/` + monthsans + `/` + dayans ;
 }
 
-//function checkFileSize(input) {
-//    const maxFileSizeInBytes = 500000;
-//    if (input.files.length > 0) {
-//        const fileSize = input.files[0].size;
-//        if (fileSize > maxFileSizeInBytes) {
-//            alert("File size exceeds the maximum limit of 5MB.");
-//            input.value = '';
-//        }
-//    }
-//}
+
 
 function DeleteProject(ProjectId) {
     $.ajax({

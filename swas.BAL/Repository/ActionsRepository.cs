@@ -103,29 +103,37 @@ namespace swas.BAL.Repository
         public async Task<List<DTODDLComman>> GetActionByStatusIdlogin (int StatusId, int UnitId)
         {
             List<DTODDLComman> lst = new List<DTODDLComman>();
-            if (UnitId != 1)
+            var acttoallow = (from map in _dbContext.TrnStatusActionsMapping
+                              join sts in _dbContext.TrnUnitStatusMapping on map.StatusActionsMappingId equals sts.StatusActionsMappingId
+                              where map.StatusId == StatusId
+                              select new DTOActionAllow
+                              {
+                                  ActionsId= map.StatusActionsMappingId,
+                                  UnitId= sts.UnitId
+                              });
+
+
+            var ret =await (from act in _dbContext.mActions
+                       join map in _dbContext.TrnStatusActionsMapping on act.ActionsId equals map.ActionsId
+                       where map.StatusId == StatusId
+                       select new DTODDLComman
+                       {
+                           Id = map.StatusActionsMappingId,
+                           Name = act.Actions,
+                       }
+              ).ToListAsync();
+
+            lst=ret;
+            var ret1=  acttoallow.Where(i => i.UnitId == UnitId).ToList();
+            if(ret1.Count()==0)
             {
-                var ret = (from act  in _dbContext.mActions
-                           where act.ActionsId == 1  || act.ActionsId == 2 || act.ActionsId == 3 || act.ActionsId == 10
-                           select new DTODDLComman
-                           {
-                               Id = act.ActionsId,
-                              Name = act.Actions,
-                           }
-             ).ToListAsync();
-                lst = (ret.Result);
-            }
-            
-            else
-            {
-                var ret = (from act in _dbContext.mActions
-                           select new DTODDLComman
-                           {
-                               Id = act.ActionsId,
-                               Name = act.Actions,
-                           }
-             ).ToListAsync();
-                lst = (ret.Result);
+                foreach(var item in acttoallow)
+                {
+                    DTODDLComman db = new DTODDLComman();
+                    db = lst.Where(i => i.Id == item.ActionsId).FirstOrDefault();
+                    lst.Remove(db);
+                }
+                
             }
             return lst;
             
@@ -133,7 +141,7 @@ namespace swas.BAL.Repository
             //return await query.ToListAsync();
         }
 
-
+         
 
 
         public async Task<List<DTODDLComman>> GetActionsMappingIdByStatusId(int StatusId)
@@ -157,35 +165,35 @@ namespace swas.BAL.Repository
         {
 
 
-            var query = from a in _dbContext.mActions
-                        join sam in _dbContext.TrnStatusActionsMapping on a.ActionsId equals sam.ActionsId
-                        join usm in _dbContext.TrnUnitStatusMapping on sam.StatusId equals usm.StatusId
-                        join c in _dbContext.tbl_mUnitBranch on usm.UnitId equals c.unitid into unitGroup
-                        from c in unitGroup.DefaultIfEmpty()
-                    
-                        join d in _dbContext.mStatus on sam.StatusId equals d.StatusId into statusGroup
-                        from d in statusGroup.DefaultIfEmpty()
-                        join e in _dbContext.mStages on d.StageId equals e.StagesId into stagesGroup
-                        from e in stagesGroup.DefaultIfEmpty()
-                        where c.UnitName != null
-                        orderby a.ActionDesc
-                        select new ActionsSeq
-                        {
-                            Stages = e.Stages,
-                            Status = d.Status,
-                            Actions = a.Actions,
-                            ActionDesc = a.ActionDesc,
-                            UnitName = c.UnitName
-                        };
+            //var query = from a in _dbContext.mActions
+            //            join sam in _dbContext.TrnStatusActionsMapping on a.ActionsId equals sam.ActionsId
+            //            join usm in _dbContext.TrnUnitStatusMapping on sam.StatusId equals usm.StatusId
+            //            join c in _dbContext.tbl_mUnitBranch on usm.UnitId equals c.unitid into unitGroup
+            //            from c in unitGroup.DefaultIfEmpty()
+
+            //            join d in _dbContext.mStatus on sam.StatusId equals d.StatusId into statusGroup
+            //            from d in statusGroup.DefaultIfEmpty()
+            //            join e in _dbContext.mStages on d.StageId equals e.StagesId into stagesGroup
+            //            from e in stagesGroup.DefaultIfEmpty()
+            //            where c.UnitName != null
+            //            orderby a.ActionDesc
+            //            select new ActionsSeq
+            //            {
+            //                Stages = e.Stages,
+            //                Status = d.Status,
+            //                Actions = a.Actions,
+            //                ActionDesc = a.ActionDesc,
+            //                UnitName = c.UnitName
+            //            };
 
 
-            var actionsList = await query.ToListAsync();
+            //var actionsList = await query.ToListAsync();
 
 
 
-            return actionsList;
+            //return actionsList;
 
-
+            return null;
         }
 
     }

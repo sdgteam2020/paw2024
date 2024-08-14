@@ -31,6 +31,7 @@ using swas.UI.Helpers;
 using System.Threading;
 using System.Security.Cryptography.Xml;
 using iText.Commons.Actions.Contexts;
+using Grpc.Core;
 
 namespace swas.UI.Controllers
 {
@@ -645,8 +646,12 @@ namespace swas.UI.Controllers
             catch (Exception ex) { return Json(-1); }
         }
 
-
-        public async Task<IActionResult> FwdToProject(tbl_ProjStakeHolderMov psmove)
+        public async Task<IActionResult> CheckFwdCondition(int ProjId, int StatusId)
+        {
+            var Ret = await _psmRepository.CheckFwdCondition(ProjId, StatusId);
+            return Json(Ret);
+        }
+            public async Task<IActionResult> FwdToProject(tbl_ProjStakeHolderMov psmove)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 

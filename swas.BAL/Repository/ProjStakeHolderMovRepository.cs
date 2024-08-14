@@ -413,7 +413,30 @@ namespace swas.BAL.Repository
 
             return db;
         }
-      
+
+        public async Task<bool> CheckFwdCondition(int ProjId, int StatusId)
+        {
+
+            //select act.StatusActionsMappingId,sts.StatusId,sts.Status from TrnStatusActionsMapping act
+            //inner join mStatus sts on act.StatusId=sts.StatusId
+            //inner join ProjStakeHolderMov mov on mov.StatusActionsMappingId=act.StatusActionsMappingId
+            //where act.ActionsId=2 and act.StatusId=20 and mov.ProjId=1
+            var ret =await (from act in _dbContext.TrnStatusActionsMapping
+                       join sts in _dbContext.mStatus on act.StatusId equals sts.StatusId
+                       join mov in _dbContext.ProjStakeHolderMov on act.StatusActionsMappingId equals mov.StatusActionsMappingId
+                       where act.ActionsId == 2 && act.StatusId == StatusId && mov.ProjId == ProjId
+                       select new TrnStatusActionsMapping
+                       {
+                           StatusActionsMappingId = act.StatusActionsMappingId
+                       }).FirstOrDefaultAsync();
+            if(ret != null )
+            {
+                return true;
+            }
+            return false;
+        }
+
+
         //public async Task<int> IsReadInbox(int psmId)
         //{
 
