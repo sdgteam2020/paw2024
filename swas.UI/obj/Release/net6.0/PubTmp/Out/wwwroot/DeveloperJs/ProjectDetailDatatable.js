@@ -4,18 +4,7 @@
         dom: 'lBfrtip',
         pageLength: -1, // Show all entries by default
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
-        //buttons: [
-        //    'copy',
-        //    'excel',
-        //    'csv',
-        //    {
-        //        text: 'PDF',
-        //        extend: 'pdfHtml5',
-        //        action: function (e, dt, node, config) {
-        //            PdfDiv();
-        //        }
-        //    },
-        //],
+        
         buttons: [
             { extend: "excel", className: "buttonsToHide" },
             { extend: "pdf", className: "buttonsToHide" },

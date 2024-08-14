@@ -16,7 +16,7 @@ function GetAllComments() {
             "ProjId": $(".ProjectcommentprojId").html()
         },
         success: function (data) {
-            debugger;
+             
             var tableHTML = '<table class="table" style="width:100%; border: 1px solid black; border-collapse:collapse;">';
             tableHTML += '<thead>';
             tableHTML += '<tr>';

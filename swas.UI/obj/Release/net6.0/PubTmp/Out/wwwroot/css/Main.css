@@ -69,6 +69,14 @@
     font-size: 14px;
     color: #777777;
 }
+/* 09/08/24*/
+.font-weight-bold {
+    font-weight: bold;
+}
+body{
+    font-size:15px !important;
+}
+
 
 .formated-text {
     white-space: pre-wrap;

@@ -83,7 +83,8 @@ function ProjectWiseStatus() {
 
                     $("body").unbind().on("click", ".btn-clsprojName", function () {
                         $('#ProjHoldHistory').modal('show');
-                        GetProjHold($(this).closest("div").find(".clsspnprojId").html())
+                       // alert($(this).closest("tr").find(".clsspnprojId").html())
+                        GetProjHold($(this).closest("tr").find(".clsspnprojId").html())
                     });
                     
                     var table = $('#tblProjectWiseStatus').DataTable({
