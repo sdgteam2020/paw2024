@@ -56,19 +56,20 @@ function DateCalculateago(fmDate, end_actual_time) {
     var hours = Math.floor(milliseconds / (60 * 60 * 1000));
     var formatted1 = formatted.substring(0, 2);
     if (parseInt(formatted1) == 00) {
-        ago = formatted.substring(0, 5) + ' Minutes </h6>';;
+        ago = formatted.substring(0, 5) + ' Min </h6>';;
     }
     else if (hours <= 24) {
-        ago = hours + ' Hours </h6>';
+        ago = formatted.substring(0, 5) + ' Min </h6>';
     }
-    else if (hours <= 730) {
-        ago = Math.floor(hours / 24) + ' Days (' + formatted.substring(0, 5) +' Minutes)</h6>';;
+    else /*if (hours <= 730)*/
+    {
+        ago = Math.floor(hours / 24) + ' Days (' + formatted.substring(0, 5) +' Min)</h6>';;
     }
-    else if (hours <= 8766) {
-        ago = Math.floor(Math.floor(hours / 24) / 30) + ' Months</h6>';;
-    }
-    else {
-        ago = Math.floor(Math.floor(Math.floor(hours / 24) / 30) / 12) + ' Years</h6>';;
-    }
+    //else if (hours <= 8766) {
+    //    ago = Math.floor(Math.floor(hours / 24) / 30) + ' Months</h6>';;
+    //}
+    //else {
+    //    ago = Math.floor(Math.floor(Math.floor(hours / 24) / 30) / 12) + ' Years</h6>';;
+    //}
     return ago;
 }

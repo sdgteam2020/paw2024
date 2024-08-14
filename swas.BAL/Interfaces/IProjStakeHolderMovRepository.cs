@@ -22,6 +22,7 @@ namespace swas.BAL.Interfaces
         int GetLastRecProjectMov(int ProjectId);
         Task<DTODashboard> DashboardCount(int UserId);
 
+        Task<bool> CheckFwdCondition(int ProjId, int StatusId);
         //Task<int> IsReadInbox(int psmId);
 
         //Task<int> UpdateUndoProjectMov(int ProjectId,int PsmId);

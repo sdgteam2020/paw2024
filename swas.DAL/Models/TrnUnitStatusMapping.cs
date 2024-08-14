@@ -12,6 +12,6 @@ namespace swas.DAL.Models
         [Key]
         public int UnitStatusMappingId { get; set; }
         public int UnitId { get; set; }
-        public int StatusId { get; set; }
+        public int StatusActionsMappingId { get; set; }
     }
 }

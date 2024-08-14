@@ -183,10 +183,40 @@
         $('#ProjFwd').modal('hide');
     });
 });
-function CheckFwdCondition(CurrentPslmId,) {
-   
-    AttechHistory();
-    SaveFwdTo(CurrentPslmId);
+function CheckFwdCondition(CurrentPslmId) {
+    var userdata =
+    {
+        "ProjId": $("#spanFwdProjectId").html(),
+        "StatusId": $("#ddlfwdSubStage").val(),
+    };
+
+    $.ajax({
+        url: '/Projects/CheckFwdCondition',
+        type: 'POST',
+        data: userdata,
+        success: function (response) {
+            console.log(response);
+            if (response != null) {
+
+                if (response == true) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Sub Stage Allready Approved / Completed!",
+
+                    });
+                }
+                else if (response == false) {
+
+                      AttechHistory();
+                     SaveFwdTo(CurrentPslmId);
+                }
+            }
+
+        }
+    });
+
+  
 }
 function SaveFwdTo(CurrentPslmId) {
     
