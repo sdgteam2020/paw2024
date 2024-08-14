@@ -18,6 +18,10 @@ namespace swas.BAL.Interfaces
     {
         Task<int> AddProjStakeHolderMovAsync(tbl_ProjStakeHolderMov psmove);
         Task<DTOProjectMovHistory> ProjectMovHistory(int? ProjectId);
+
+        Task<int> GetProjectId(string? ProjName);
+        Task<List<DTOProjectsFwd>> ProjectMovement(int? ProjectId);
+        //Task<DTOpR>
         Task<List<DTOProjectHold>> ProjectHolsTimeCalculate(int ProjectId );
         int GetLastRecProjectMov(int ProjectId);
         Task<DTODashboard> DashboardCount(int UserId);

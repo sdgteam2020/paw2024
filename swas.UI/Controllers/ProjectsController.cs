@@ -936,9 +936,7 @@ namespace swas.UI.Controllers
 
                 int statgeIDMAx = await _stkholdmove.GetlaststageId(dataProjId);
                 ViewBag.stageid = statgeIDMAx;
-
                 var projdetails = await _projectsRepository.GetProjectByIdAsync1(dataProjId);
-
 
 
                 var dto3 = await _commentRepository.GetCommentByPsmIdAsync(projdetails.CurrentPslmId);
@@ -947,8 +945,6 @@ namespace swas.UI.Controllers
 
                 var ProjMovementHist = await _projStakeHolderMovRepository.ProjectMovHistory(dataProjId);
                 ViewBag.ProjMovementHist = ProjMovementHist;
-
-
 
 
 
@@ -1266,6 +1262,31 @@ namespace swas.UI.Controllers
                 {
                     StatusCode = 500 // HTTP 500 Internal Server Error
                 };
+            }
+        }
+
+
+        [HttpGet]
+
+        public async Task<IActionResult> ProjectMovement(string? ProjName )
+        {
+            //var ProjectMovementDetail  = await _projStakeHolderMovRepository.ProjectMovement(ProjId);
+            return View();
+           
+        }
+        public async Task<IActionResult> GetProjectMov(int Id)
+        {
+
+            try
+            {
+               // int ProjId = await _projStakeHolderMovRepository.GetProjectId(ProjName);
+
+                var ret = await _projStakeHolderMovRepository.ProjectMovement(Id);
+                return Json(ret);
+            }
+            catch (Exception ex)
+            {
+                return Json(-1);
             }
         }
 
