@@ -79,6 +79,7 @@ namespace swas.BAL.Repository
                                 (mov.StatusActionsMappingId == 48) ? 20 ://Auto Committee
                                 (mov.StatusActionsMappingId == 53) ? 21 ://IPA Stage
                                 //(mov.StatusActionsMappingId == 60) ? 22 ://Closed
+                                (mov.StatusActionsMappingId == 63) ? 24 ://AHCC (Arch Vetting)
                                 (mov.StatusActionsMappingId == 68) ? 25 ://ACG (Lab Test)
                                 (mov.StatusActionsMappingId == 73) ? 26 ://AHCC (IAM Integ)
                                 (mov.StatusActionsMappingId == 78) ? 27 ://ACG (Remote Test)
@@ -161,7 +162,7 @@ namespace swas.BAL.Repository
                               }).ToListAsync();
             }
             else if (statusActionsMappingId==9|| statusActionsMappingId==15|| statusActionsMappingId==48|| 
-                statusActionsMappingId==53|| statusActionsMappingId==60|| statusActionsMappingId==68||
+                statusActionsMappingId==53|| statusActionsMappingId==60|| statusActionsMappingId == 63 || statusActionsMappingId ==68||
                 statusActionsMappingId==73|| statusActionsMappingId==78|| statusActionsMappingId==83|| 
                 statusActionsMappingId==88)
             {
