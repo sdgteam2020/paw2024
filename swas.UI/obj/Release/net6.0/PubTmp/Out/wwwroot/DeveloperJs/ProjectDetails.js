@@ -31,6 +31,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             SentForComment(ProjId, psmId, 0, FwdDateForComment);
             ProcessProjConfirm(ProjId);
         });
+        IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
     });
 
     $('#confirmationModal').on('hidden.bs.modal', function () {
@@ -332,6 +333,10 @@ function GetProjectMovHistory(ProjId) {
 
 
                 $("#projectmovfistory").html(listitem);
+
+                $(document).on('click', function () {
+                    location.reload();
+                });
             }
         }
     });
@@ -358,3 +363,4 @@ function IsReadInbox(psmId) {
         }
     });
 }
+

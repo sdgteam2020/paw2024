@@ -142,7 +142,7 @@ $(document).ready(function () {
                 //     colors.push(getRandomColorss()); // Another color for TotalOut
                 // });
 
-                // debugger;
+                //  
 
                 var totalInColor = getRandomColorss(); // Get a random color for TotalIn bars
                 var totalOutColor = getRandomColorss(); // Get a random color for TotalOut bars

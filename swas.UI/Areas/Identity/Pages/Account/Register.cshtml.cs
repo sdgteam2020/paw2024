@@ -582,26 +582,26 @@ namespace swas.Areas.Identity.Pages.Account
 
                 var newunit = await _unitRepository.GetUnitDtlwithname(UnitData.UnitName);
 
-                if (UnitData.unitid == newunit.unitid)
-                {
-                    List<int> statusIds = new List<int> { 33, 2, 3, 24, 25, 26, 27, 28, 29, 22, 31 };
+                //if (UnitData.unitid == newunit.unitid)
+                //{
+                //    List<int> statusIds = new List<int> { 33, 2, 3, 24, 25, 26, 27, 28, 29, 22, 31 };
 
 
-                    foreach (var statusId in statusIds)
-                    {
-                        TrnUnitStatusMapping trnUnitStatusMapping = new TrnUnitStatusMapping
-                        {
-                            UnitId = UnitData.unitid,
-                            StatusId = statusId,
-                            UnitStatusMappingId = 0
-                        };
+                //    foreach (var statusId in statusIds)
+                //    {
+                //        TrnUnitStatusMapping trnUnitStatusMapping = new TrnUnitStatusMapping
+                //        {
+                //            UnitId = UnitData.unitid,
+                //            StatusId = statusId,
+                //            UnitStatusMappingId = 0
+                //        };
 
-                        if (trnUnitStatusMapping.UnitStatusMappingId == 0)
-                        {
-                            var ret = await _unitStatusMapping.AddWithReturn(trnUnitStatusMapping);
-                        }
-                    }
-                }
+                //        if (trnUnitStatusMapping.UnitStatusMappingId == 0)
+                //        {
+                //            var ret = await _unitStatusMapping.AddWithReturn(trnUnitStatusMapping);
+                //        }
+                //    }
+                //}
 
 
                 if (result == 1)
@@ -657,26 +657,26 @@ namespace swas.Areas.Identity.Pages.Account
 
                 var newunit = await _unitRepository.GetUnitDtlwithname(UnitData.UnitName);
 
-                if (UnitData.unitid == newunit.unitid)
-                {
-                    List<int> statusIds = new List<int> { 33, 2, 3, 24, 25, 26, 27, 28, 29, 22, 31 };
+                //if (UnitData.unitid == newunit.unitid)
+                //{
+                //    List<int> statusIds = new List<int> { 33, 2, 3, 24, 25, 26, 27, 28, 29, 22, 31 };
 
 
-                    foreach (var statusId in statusIds)
-                    {
-                        TrnUnitStatusMapping trnUnitStatusMapping = new TrnUnitStatusMapping
-                        {
-                            UnitId = UnitData.unitid,
-                            StatusId = statusId,
-                            UnitStatusMappingId = 0
-                        };
+                //    foreach (var statusId in statusIds)
+                //    {
+                //        TrnUnitStatusMapping trnUnitStatusMapping = new TrnUnitStatusMapping
+                //        {
+                //            UnitId = UnitData.unitid,
+                //            StatusId = statusId,
+                //            UnitStatusMappingId = 0
+                //        };
 
-                        if (trnUnitStatusMapping.UnitStatusMappingId == 0)
-                        {
-                            var ret = await _unitStatusMapping.AddWithReturn(trnUnitStatusMapping);
-                        }
-                    }
-                }
+                //        if (trnUnitStatusMapping.UnitStatusMappingId == 0)
+                //        {
+                //            var ret = await _unitStatusMapping.AddWithReturn(trnUnitStatusMapping);
+                //        }
+                //    }
+                //}
 
                 if (result == 1)
                 {
