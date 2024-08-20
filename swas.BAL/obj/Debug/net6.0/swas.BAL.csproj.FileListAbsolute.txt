@@ -368,7 +368,8 @@ D:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\swas.BAL.GeneratedMSBuildEditorCon
 D:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\swas.BAL.AssemblyInfoInputs.cache
 D:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\swas.BAL.AssemblyInfo.cs
 D:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\swas.BAL.csproj.CoreCompileInputs.cache
-D:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\swas.BAL.csproj.CopyComplete
+D:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\swas.BAL.sourcelink.json
+D:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\swas.BAL.csproj.Up2Date
 D:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\swas.BAL.dll
 D:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\refint\swas.BAL.dll
 D:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\swas.BAL.pdb

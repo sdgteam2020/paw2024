@@ -409,3 +409,13 @@ AppPackages/
 /swas.UI/obj/Debug/net6.0/swas.UI.dll
 /swas.UI/obj/Debug/net6.0/swas.UI.genruntimeconfig.cache
 /swas.UI/obj/Debug/net6.0/swas.UI.pdb
+/.vs/swas/v17/.futdcache.v2
+/.vs/swas/v17/.suo
+/.vs/swas/v17/DocumentLayout.json
+/.vs/swas/v17/fileList.bin
+/swas.BAL/bin/Debug/net6.0/swas.BAL.deps.json
+/swas.BAL/bin/Debug/net6.0/swas.BAL.dll
+/swas.BAL/bin/Debug/net6.0/swas.BAL.pdb
+/swas.BAL/obj/Debug/net6.0/ref/swas.BAL.dll
+/swas.BAL/obj/Debug/net6.0/refint/swas.BAL.dll
+/swas.UI/appsettings.json
