@@ -108,11 +108,11 @@ namespace swas.BAL.Repository
                              let datetime = (from mov1 in _dbContext.ProjStakeHolderMov
                                              join pro1 in _dbContext.Projects on mov1.ProjId equals pro1.ProjId
                                              where pro1.IsProcess == true && mov1.StatusActionsMappingId == statusActionsMappingId
-                                            && pro1.ProjId == a.ProjId
+                                            && pro1.ProjId == a.ProjId && mov.IsActive==true
                                              orderby mov1.PsmId
                                              select mov1.TimeStamp).FirstOrDefault()
                              where a.IsProcess == true && mov.StatusActionsMappingId == statusActionsMappingId
-                             && mov.IsComplete==true
+                             && mov.IsComplete==true && mov.IsActive == true
                              group mov by new
                              {
                                  a.ProjId,
@@ -139,11 +139,11 @@ namespace swas.BAL.Repository
                               let datetime = (from mov1 in _dbContext.ProjStakeHolderMov
                                              join pro1 in _dbContext.Projects on mov1.ProjId equals pro1.ProjId
                                              where pro1.IsProcess == true && mov1.StatusActionsMappingId == statusActionsMappingId
-                                            && pro1.ProjId==a.ProjId
+                                            && pro1.ProjId==a.ProjId && mov.IsActive == true
                                               orderby mov1.PsmId
                                              select mov1.TimeStamp).FirstOrDefault()
 
-                              where a.IsProcess==true && mov.StatusActionsMappingId == statusActionsMappingId
+                              where a.IsProcess==true && mov.StatusActionsMappingId == statusActionsMappingId && mov.IsActive == true
                               group mov by new
                               {
                                   a.ProjId,
@@ -170,13 +170,15 @@ namespace swas.BAL.Repository
                              join mov in _dbContext.ProjStakeHolderMov on a.ProjId equals mov.ProjId
                              join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
                              from stackcs in cs1.DefaultIfEmpty()
+
                              let datetime = (from mov1 in _dbContext.ProjStakeHolderMov
                                              join pro1 in _dbContext.Projects on mov1.ProjId equals pro1.ProjId
                                              where pro1.IsProcess == true && mov1.StatusActionsMappingId == statusActionsMappingId
-                                            && pro1.ProjId == a.ProjId
+                                            && pro1.ProjId == a.ProjId && mov.IsActive == true
                                              orderby mov1.PsmId
                                              select mov1.TimeStamp).FirstOrDefault()
                              where a.IsProcess == true && mov.StatusActionsMappingId==statusActionsMappingId
+                             && mov.IsActive == true
                              group mov by new
                              {
                                  a.ProjId,

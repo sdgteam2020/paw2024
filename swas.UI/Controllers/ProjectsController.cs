@@ -951,7 +951,8 @@ namespace swas.UI.Controllers
                 ViewBag.CommentByStakeholderList = dto3;
 
                 var ProjMovementHist = await _projStakeHolderMovRepository.ProjectMovHistory(dataProjId);
-                ViewBag.ProjMovementHist = ProjMovementHist;
+                ViewBag.ProjMovementHist = ProjMovementHist.DTOProjectMovHistorypsmlst;
+                ViewBag.ProjMovementHistcomd = ProjMovementHist.DTOProjectMovHistorycmdlst;
 
 
 

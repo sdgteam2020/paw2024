@@ -4,7 +4,7 @@ $(document).ready(function () {
 
     GetProjCommentsByUnitId();
      
-    $("#StatusUpdate").click(function () {
+    $("#btnStatusUpdate").unbind().click(function () {
        
         requiredFields = $('#StatusUpdateForm').find('.requiredField');
         var allFieldsComplete = true;
@@ -22,6 +22,8 @@ $(document).ready(function () {
         }
         else {
             SendMsg();
+
+           
         }
     });
 
@@ -198,16 +200,16 @@ function SendMsg() {
                     timer: 1500
                 });
 
-                IsUnReadComment($("#ProjectcommentprojId").html());
-
-                GetAllComments($("#ProjectcommentprojId").html());
-                GetProjCommentsByUnitId();
+              
                 if ($("#ddlStatus").val() == 1) {
                     FwdProjConfirm($("#ProjectcommentPsmId").html());
                 }
+                
 
-                alert($("#ProjectcommentprojId").html());
-                GetNotification($("#ProjectcommentprojId").html());
+                GetAllComments($("#ProjectcommentprojId").html());
+                GetProjCommentsByUnitId();
+              //IsUnReadComment($("#ProjectcommentprojId").html());
+                //GetNotification($("#ProjectcommentprojId").html());
 
                 reset();
             }
@@ -343,7 +345,7 @@ function IsReadComment(ProjId) {
 }
 
 function GetNotification(ProjId) {
-    alert("Hii");
+  
     $.ajax({
         url: '/Home/GetNotification',
         type: 'POST',
