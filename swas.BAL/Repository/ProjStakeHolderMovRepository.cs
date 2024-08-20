@@ -63,6 +63,7 @@ namespace swas.BAL.Repository
                                    PsmIds = b.PsmId,
                                    Stage = stge.Stages,
                                    StageId = stge.StagesId,
+                                   ProjId =a.ProjId,
                                    //Status = tounit.UnitName + " " + "For Comments",
                                    Status = ststus.Status,
                                    StatusId = ststus.StatusId,
@@ -436,6 +437,8 @@ namespace swas.BAL.Repository
             return false;
         }
 
+
+        
 
         //public async Task<int> IsReadInbox(int psmId)
         //{

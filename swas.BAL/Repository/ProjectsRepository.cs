@@ -1851,8 +1851,22 @@ namespace swas.BAL.Repository
                 .ToListAsync();
         }
 
+        //public async Task<bool> UpdateProjectStakeholderMov(tbl_ProjStakeHolderMov psmove)
+        //{
+        //    Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+        //    if (Logins != null)
+        //    {
+        //        // tbl_ProjStakeHolderMov psmove = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == project.CurrentPslmId);
+        //        _dbContext.Entry(psmove).State = EntityState.Modified;
+        //        await _dbContext.SaveChangesAsync();
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        return false;
+        //    }
+        //}
 
-       
     }
 
 }

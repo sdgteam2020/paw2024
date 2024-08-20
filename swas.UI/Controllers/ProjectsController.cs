@@ -1286,13 +1286,42 @@ namespace swas.UI.Controllers
             {
                // int ProjId = await _projStakeHolderMovRepository.GetProjectId(ProjName);
 
-                var ret = await _projStakeHolderMovRepository.ProjectMovement(Id);
+                var ret = await _projStakeHolderMovRepository.ProjectMovement(1);
                 return Json(ret);
             }
             catch (Exception ex)
             {
                 return Json(-1);
             }
+        }
+
+        public async Task<IActionResult> UpdateProjectMovement()
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            if (Logins != null)
+            {
+                try
+                {
+                    tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
+
+
+                    var ret = await _projectsRepository.UpdateTxnAsync(psmove);
+
+                    return Json(ret);
+                }
+                catch (Exception ex)
+                {
+                    swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                    return Json(0);
+                }
+
+            }
+            else
+            {
+                return Redirect("/Identity/Account/login");
+            }
+
+
         }
 
 

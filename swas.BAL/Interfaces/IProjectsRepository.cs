@@ -47,6 +47,9 @@ namespace swas.BAL.Interfaces
 
 
         Task<List<tbl_ProjStakeHolderMov>> GetInboxByProjIdAsync(int projId);
+
+
+        //Task<bool> UpdateProjectStakeholderMov (tbl_ProjStakeHolderMov psmove);
     }
 
 

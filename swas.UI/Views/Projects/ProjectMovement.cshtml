@@ -72,12 +72,14 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="ProjFwdEdit" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+@* <div class="modal fade" id="ProjFwdEdit" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="fwdModal">Project Fwd</h5>
+                <span class="d-none" id="spanProjectId">0</span>
                 <span class="d-none1" id="spanEditPslmId">0</span>
+                
               
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -132,6 +134,24 @@
                                     </div>
 
 
+                                    <div class="form-group col-md-6 Attmenthistory d-none">
+                                        <label for="SubStage">Attach Document Description</label>
+                                        <textarea class="form-control requiredFieldAttch" id="Reamarks"></textarea>
+                                    </div>
+                                    <div class="form-group col-md-6 Attmenthistory d-none">
+                                        <label for="SubStage">Upload Pdf File</label>
+                                        <input class="form-control requiredFieldAttch" type="file" id="pdfFileInput">
+                                    </div>
+                                    <div class="form-group col-md-12 Attmenthistory d-none text-center">
+
+                                        <button class="btn btn-warning" type="button" id="btnAttchMultiforpsmid">Upload File</button>
+
+                                    </div>
+                                   @*  <div class="">
+
+                                        <button class="btn btn-warning" type="button" id="UpdateProjectMovement">Update</button>
+
+                                    </div> 
                                 </div>
 
                             </div>
@@ -139,13 +159,165 @@
                     </div>
 
                 </div>
-               
-              
+                <div class="col-md-12 Attmenthistory d-none">
+                    <div class="card">
+                        <div class="modal-header"><h5 class="card-title">Projects Move Att Details</h5></div>
+                        <div class="card-body">
+                            <table class="table table-striped table-bordered">
+
+
+                                <thead>
+                                    <tr>
+
+
+                                        <th>Delete</th>
+
+                                        <th>Docu Desc</th>
+                                        <th>File Name</th>
+                                        <th>Timestamp</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="DetailBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-12 mt-4 text-center">
+                    <input type="button" id="btnFwdNext" value="Send & Att Docu (s)" class="btn btn-primary btn-lg ProjectsFwd" />
+                    <input type="button" id="btnFwdConfirm" value="Confirm" class="btn btn-primary btn-lg Attmenthistory d-none" />
+                </div>
             </div>
         </div>
     </div>
 </div>
+ *@
+<div class="modal fade" id="ProjFwdEdit" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fwdModal">Project Fwd</h5>
+                <span class="d-none" id="spanProjectId">0</span>
+                <span class="d-none1" id="spanEditPslmId">0</span>
+
+                @* <span class="d-none" id="spanFwdCurrentPslmId">0</span>
+                
+                <span class="d-none" id="SpnFwdStakeHolderId">0</span> *@
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="card">
+                            <div class="modal-header">
+                                <h6 class="card-title">Pl select appropriate details Before Dispatch of Project to Next Stakeholder </h6>
+
+                            </div>
+                            <div class="card-body">
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6 ProjectsFwd ">
+                                        <label for="inputEmail4">Stage</label>
+                                        <select class="form-control requiredField" style="width: 100%;" tabindex="-1"
+                                                name="fwdoffrs" required id="ddlfwdStage">
+                                            <option value="0">Select Stage</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6 ProjectsFwd">
+                                        <label for="SubStage">Sub Stage</label>
+                                        <select class="form-control requiredField" style="width: 100%;" tabindex="-1"
+                                                name="fwdoffrs" required id="ddlfwdSubStage">
+                                            <option value="0">Select Sub Stage</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6 ProjectsFwd">
+                                        <label for="SubStage">Action</label>
+                                        <select class="form-control requiredField" style="width: 100%;" tabindex="-1"
+                                                name="fwdoffrs" required id="ddlfwdAction">
+                                            <option value="0">Select Action</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6 ProjectsFwd">
+                                        <label for="SubStage">Fwd To</label>
+                                        <select class="form-control requiredField" style="width: 100%;" tabindex="-1"
+                                                name="fwdoffrs" required id="ddlfwdFwdTo">
+                                            <option value="0">Select Fwd To</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-6 ProjectsFwd">
+                                        <label for="SubStage">Remarks</label>
+                                        <textarea class="form-control requiredField" id="txtRemarksfwd" style="width: 100%;"></textarea>
+                                    </div>
+
+                                    <div class="form-group col-md-6 ProjectsFwd">
+                                        <label>Date of Fwd:</label>
+                                        <input id="TimeStampToProjfwd" type="datetime-local" class="datePicker  form-control requiredField" />
+                                    </div>
 
 
+                                    <div class="form-group col-md-6 Attmenthistory d-none">
+                                        <label for="SubStage">Attach Document Description</label>
+                                        <textarea class="form-control requiredFieldAttch" id="Reamarks"></textarea>
+                                    </div>
+                                    <div class="form-group col-md-6 Attmenthistory d-none">
+                                        <label for="SubStage">Upload Pdf File</label>
+                                        <input class="form-control requiredFieldAttch" type="file" id="pdfFileInput">
+                                    </div>
+                                    <div class="form-group col-md-12 Attmenthistory d-none text-center">
+
+                                        <button class="btn btn-warning" type="button" id="btnAttchMultiforpsmid">Upload File</button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-12 Attmenthistory d-none">
+                    <div class="card">
+                        <div class="modal-header"><h5 class="card-title">Projects Move Att Details</h5></div>
+                        <div class="card-body">
+                            <table class="table table-striped table-bordered">
+
+
+                                <thead>
+                                    <tr>
+
+
+                                        <th>Delete</th>
+
+                                        <th>Docu Desc</th>
+                                        <th>File Name</th>
+                                        <th>Timestamp</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="DetailBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-12 mt-4 text-center">
+                    <input type="button" id="btnFwdNext" value="Send & Att Docu (s)" class="btn btn-primary btn-lg ProjectsFwd" />
+                    <input type="button" id="btnFwdConfirm" value="Confirm" class="btn btn-primary btn-lg Attmenthistory d-none" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(document).on('click', '.pdf', function () {
+            $('#AttHistoryView').modal('show');
+        });
+    });
+</script>
 <script src="~/DeveloperJs/ProjectMovement.js"></script>
 <script src="~/developerjs/mtable.js"></script>
+@* <script src="~/developerjs/projectdetails.js"></script> *@
