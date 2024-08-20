@@ -32,8 +32,9 @@ namespace swas.DAL.Models
 		[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
 		public DateTime? DateTimeOfUpdate { get; set; }
 
+        public int OrderBy { get; set; }
 
-	}
+    }
 
 
 }

@@ -114,6 +114,7 @@ namespace swas.BAL.Repository
                                          where 
                                         // mov.IsComment==false &&
                                          mov.ProjId==ProjectId
+                                        
                                          orderby mov.PsmId
                                          select new DTOProjectHold
                                          {
@@ -331,8 +332,8 @@ namespace swas.BAL.Repository
             var approvedcount = await (from mov in _dbContext.ProjStakeHolderMov
                                        join pro in _context.Projects on mov.ProjId equals pro.ProjId
                                        join stsmap in _context.TrnStatusActionsMapping on mov.StatusActionsMappingId equals stsmap.StatusActionsMappingId
-                                       where pro.IsProcess==true &&
-                                       stsmap.StatusActionsMappingId == 1 ||    //New Projects
+                                       where mov.IsActive == true && pro.IsProcess==true && 
+                                       (stsmap.StatusActionsMappingId == 1 ||    //New Projects
                                        stsmap.StatusActionsMappingId==9 ||      //Obsn
                                        stsmap.StatusActionsMappingId== 113 ||   //Obsn Rectified
                                        stsmap.StatusActionsMappingId==48 ||     //Auto Committee
@@ -346,7 +347,7 @@ namespace swas.BAL.Repository
                                         // ---CommentAttribute----
                                        ((stsmap.StatusActionsMappingId == 26 ||//ASDC Vetting
                                        stsmap.StatusActionsMappingId == 31 ||// ACG Vetting
-                                       stsmap.StatusActionsMappingId == 37) && mov.IsComplete==true) //AHCC Vetting
+                                       stsmap.StatusActionsMappingId == 37) && mov.IsComplete==true)) //AHCC Vetting
                                        group mov by new
                                        {
                                           stsmap.StatusId,
@@ -379,24 +380,44 @@ namespace swas.BAL.Repository
 
         public async Task<bool> CheckFwdCondition(int ProjId, int StatusId)
         {
-
-            //select act.StatusActionsMappingId,sts.StatusId,sts.Status from TrnStatusActionsMapping act
-            //inner join mStatus sts on act.StatusId=sts.StatusId
-            //inner join ProjStakeHolderMov mov on mov.StatusActionsMappingId=act.StatusActionsMappingId
-            //where act.ActionsId=2 and act.StatusId=20 and mov.ProjId=1
-            var ret =await (from act in _dbContext.TrnStatusActionsMapping
-                       join sts in _dbContext.mStatus on act.StatusId equals sts.StatusId
-                       join mov in _dbContext.ProjStakeHolderMov on act.StatusActionsMappingId equals mov.StatusActionsMappingId
-                       where act.ActionsId == 2 && act.StatusId == StatusId && mov.ProjId == ProjId
-                       select new TrnStatusActionsMapping
-                       {
-                           StatusActionsMappingId = act.StatusActionsMappingId
-                       }).FirstOrDefaultAsync();
-            if(ret != null )
+            if (StatusId != 1)
             {
-                return true;
+                //select act.StatusActionsMappingId,sts.StatusId,sts.Status from TrnStatusActionsMapping act
+                //inner join mStatus sts on act.StatusId=sts.StatusId
+                //inner join ProjStakeHolderMov mov on mov.StatusActionsMappingId=act.StatusActionsMappingId
+                //where act.ActionsId=2 and act.StatusId=20 and mov.ProjId=1
+                var ret = await (from act in _dbContext.TrnStatusActionsMapping
+                                 join sts in _dbContext.mStatus on act.StatusId equals sts.StatusId
+                                 join mov in _dbContext.ProjStakeHolderMov on act.StatusActionsMappingId equals mov.StatusActionsMappingId
+                                 where act.ActionsId == 2 && act.StatusId == StatusId && mov.ProjId == ProjId
+                                 && mov.IsActive == true
+                                 select new TrnStatusActionsMapping
+                                 {
+                                     StatusActionsMappingId = act.StatusActionsMappingId
+                                 }).FirstOrDefaultAsync();
+                if (ret != null)
+                {
+                    return true;
+                }
+                return false;
             }
-            return false;
+            else
+            {
+                var ret = await (from act in _dbContext.TrnStatusActionsMapping
+                                 join sts in _dbContext.mStatus on act.StatusId equals sts.StatusId
+                                 join mov in _dbContext.ProjStakeHolderMov on act.StatusActionsMappingId equals mov.StatusActionsMappingId
+                                 where act.ActionsId == 1 && mov.ProjId == ProjId && mov.ToUnitId == 1 && mov.IsComment == true
+                                 && mov.IsActive == true
+                                 select new TrnStatusActionsMapping
+                                 {
+                                     StatusActionsMappingId = act.StatusActionsMappingId
+                                 }).FirstOrDefaultAsync();
+                if (ret != null)
+                {
+                    return true;
+                }
+                return false;
+            }
         }
 
 
