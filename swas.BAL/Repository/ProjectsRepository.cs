@@ -46,7 +46,7 @@ namespace swas.BAL.Repository
             _DBContext = DBContext;
             _dataProtector = dataProtector.CreateProtector("swas.UI.Controllers.ProjectsController");
             _psmRepository = psmRepository;
-        }
+        } 
         public async Task<DTOProjectWiseStatus> GetProjectWiseStatus()
         {
             DTOProjectWiseStatus lst = new DTOProjectWiseStatus();
@@ -73,7 +73,7 @@ namespace swas.BAL.Repository
                                     ProjId = proj.ProjId,
                                     ProjName = proj.ProjName,
                                     TimeStamp = mov.TimeStamp,
-                                    StatusId = (mov.StatusActionsMappingId == 1) ? 1 ://New Projects
+                                    StatusId = (mov.StatusActionsMappingId == 21) ? 1 ://New Projects
                                // (mov.StatusActionsMappingId == 9) ? 2 ://Obsn
                                // (mov.StatusActionsMappingId == 113) ? 3 ://Obsn Rectified
                                 (mov.StatusActionsMappingId == 48) ? 20 ://Auto Committee
@@ -98,6 +98,8 @@ namespace swas.BAL.Repository
         }
         public async Task<List<DTOProjectsFwd>> GetDashboardApproved(int StatuId, int statusActionsMappingId)
         {
+            if (statusActionsMappingId == 1)
+                statusActionsMappingId = 21;
             List<DTOProjectsFwd> lst = new List<DTOProjectsFwd>();
             if (statusActionsMappingId == 26 || statusActionsMappingId == 31 || statusActionsMappingId == 37)
             {
@@ -108,11 +110,11 @@ namespace swas.BAL.Repository
                              let datetime = (from mov1 in _dbContext.ProjStakeHolderMov
                                              join pro1 in _dbContext.Projects on mov1.ProjId equals pro1.ProjId
                                              where pro1.IsProcess == true && mov1.StatusActionsMappingId == statusActionsMappingId
-                                            && pro1.ProjId == a.ProjId
+                                            && pro1.ProjId == a.ProjId && mov.IsActive==true
                                              orderby mov1.PsmId
                                              select mov1.TimeStamp).FirstOrDefault()
                              where a.IsProcess == true && mov.StatusActionsMappingId == statusActionsMappingId
-                             && mov.IsComplete==true
+                             && mov.IsComplete==true && mov.IsActive == true
                              group mov by new
                              {
                                  a.ProjId,
@@ -130,7 +132,7 @@ namespace swas.BAL.Repository
                                  TimeStamp = gr.Key.datetime
                              }).ToListAsync();
             }
-            else if (statusActionsMappingId == 1)
+            else if (statusActionsMappingId == 21)
             {
                  lst = await (from a in _dbContext.Projects
                               join mov in _dbContext.ProjStakeHolderMov on a.ProjId equals mov.ProjId
@@ -139,11 +141,11 @@ namespace swas.BAL.Repository
                               let datetime = (from mov1 in _dbContext.ProjStakeHolderMov
                                              join pro1 in _dbContext.Projects on mov1.ProjId equals pro1.ProjId
                                              where pro1.IsProcess == true && mov1.StatusActionsMappingId == statusActionsMappingId
-                                            && pro1.ProjId==a.ProjId
+                                            && pro1.ProjId==a.ProjId && mov.IsActive == true
                                               orderby mov1.PsmId
                                              select mov1.TimeStamp).FirstOrDefault()
 
-                              where a.IsProcess==true && mov.StatusActionsMappingId == statusActionsMappingId
+                              where a.IsProcess==true && mov.StatusActionsMappingId == statusActionsMappingId && mov.IsActive == true
                               group mov by new
                               {
                                   a.ProjId,
@@ -170,13 +172,15 @@ namespace swas.BAL.Repository
                              join mov in _dbContext.ProjStakeHolderMov on a.ProjId equals mov.ProjId
                              join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
                              from stackcs in cs1.DefaultIfEmpty()
+
                              let datetime = (from mov1 in _dbContext.ProjStakeHolderMov
                                              join pro1 in _dbContext.Projects on mov1.ProjId equals pro1.ProjId
                                              where pro1.IsProcess == true && mov1.StatusActionsMappingId == statusActionsMappingId
-                                            && pro1.ProjId == a.ProjId
+                                            && pro1.ProjId == a.ProjId && mov.IsActive == true
                                              orderby mov1.PsmId
                                              select mov1.TimeStamp).FirstOrDefault()
                              where a.IsProcess == true && mov.StatusActionsMappingId==statusActionsMappingId
+                             && mov.IsActive == true
                              group mov by new
                              {
                                  a.ProjId,
@@ -196,14 +200,14 @@ namespace swas.BAL.Repository
             }
            
 
-            return lst;
+            return lst.OrderByDescending(i=>i.TimeStamp).ToList();
         }
         public async Task<List<DTOProjectsFwd>> GetDashboardStatusDetails(int StatuId, int UnitId)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
             List<DTOProjectsFwd> lst = new List<DTOProjectsFwd>();
-
+           
             if (Logins != null)
             {
                 int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
@@ -239,11 +243,11 @@ namespace swas.BAL.Repository
                                    select cr1.StkStatusId
                                   ).FirstOrDefault()
 
-                                  
+
 
 
                                    where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true //&& b.IsComplete == false
-                                    //&& b.ToUnitId == Logins.unitid 
+                                                                                                                          //&& b.ToUnitId == Logins.unitid 
                                     && actm.StatusId == StatuId
 
                                    orderby a.ProjName, b.DateTimeOfUpdate descending
@@ -270,7 +274,7 @@ namespace swas.BAL.Repository
                                        IsRead = b.IsRead,
                                        IsComplete = b.IsComplete,
                                        StkStatusId = Convert.ToInt32(StkStatusId),
-                                       DateTimeOfUpdate= _dbContext.ProjStakeHolderMov.Where(i=>i.ProjId==a.ProjId).Select(x => x.DateTimeOfUpdate).Max()
+                                       DateTimeOfUpdate = _dbContext.ProjStakeHolderMov.Where(i=>i.ProjId==a.ProjId).Select(x => x.DateTimeOfUpdate).Max()
                                    }).ToListAsync();
 
                 lst = query;
@@ -475,7 +479,7 @@ namespace swas.BAL.Repository
                              join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId into ks
                              from eWithAction in ks.DefaultIfEmpty()
                              where b.IsSubmited == true
-                             && actm.StatusActionsMappingId == 29 && a.IsComplete == false
+                             && actm.StatusActionsMappingId == 103 
                              // where a.ActionId == dft.ActionId
                              select new tbl_Projects
 

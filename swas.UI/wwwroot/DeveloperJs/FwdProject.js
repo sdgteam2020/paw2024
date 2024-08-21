@@ -200,12 +200,22 @@ function CheckFwdCondition(CurrentPslmId) {
             if (response != null) {
 
                 if (response == true) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Sub Stage Allready Approved / Completed!",
+                    if ($("#ddlfwdSubStage").val() != 1) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Sub Stage Already Approved / Completed!",
 
-                    });
+                        });
+                    }
+                    else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Project Already Sent For Comments!",
+
+                        });
+                    }
                 }
                 else if (response == false) {
 

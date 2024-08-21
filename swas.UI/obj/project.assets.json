@@ -13460,23 +13460,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\lanmanager\\.nuget\\packages\\": {},
+    "C:\\Users\\master\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\paw2024\\swas.UI\\swas.UI.csproj",
+      "projectUniqueName": "K:\\Projects\\paw2024\\swas.UI\\swas.UI.csproj",
       "projectName": "swas.UI",
-      "projectPath": "D:\\Projects\\paw2024\\swas.UI\\swas.UI.csproj",
-      "packagesPath": "C:\\Users\\lanmanager\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\paw2024\\swas.UI\\obj\\",
+      "projectPath": "K:\\Projects\\paw2024\\swas.UI\\swas.UI.csproj",
+      "packagesPath": "C:\\Users\\master\\.nuget\\packages\\",
+      "outputPath": "K:\\Projects\\paw2024\\swas.UI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\lanmanager\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\master\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -13486,15 +13486,19 @@
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "C:\\Program Files\\dotnet\\library-packs": {},
+<<<<<<< HEAD
         "C:\\Users\\master\\AppData\\Local\\NuGet\\Cache": {},
         "C:\\Users\\master\\AppData\\Local\\NuGet\\Cache": {}
+=======
+        "https://api.nuget.org/v3/index.json": {}
+>>>>>>> 696c4cb7b635adbfceb6ea5a07ac05c5f59f706f
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\Projects\\paw2024\\swas.BAL\\swas.BAL.csproj": {
-              "projectPath": "D:\\Projects\\paw2024\\swas.BAL\\swas.BAL.csproj"
+            "K:\\Projects\\paw2024\\swas.BAL\\swas.BAL.csproj": {
+              "projectPath": "K:\\Projects\\paw2024\\swas.BAL\\swas.BAL.csproj"
             }
           }
         }
@@ -13610,7 +13614,11 @@
             "privateAssets": "all"
           }
         },
+<<<<<<< HEAD
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
+=======
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+>>>>>>> 696c4cb7b635adbfceb6ea5a07ac05c5f59f706f
       }
     }
   }

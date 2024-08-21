@@ -15,7 +15,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("swas.UI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
+<<<<<<< HEAD
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ca8813684d09ca5090a457cb284214a94b628d68")]
+=======
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+>>>>>>> 696c4cb7b635adbfceb6ea5a07ac05c5f59f706f
 [assembly: System.Reflection.AssemblyProductAttribute("swas.UI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("swas.UI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

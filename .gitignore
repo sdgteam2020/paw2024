@@ -409,3 +409,8 @@ AppPackages/
 /swas.UI/obj/Debug/net6.0/swas.UI.dll
 /swas.UI/obj/Debug/net6.0/swas.UI.genruntimeconfig.cache
 /swas.UI/obj/Debug/net6.0/swas.UI.pdb
+/swas.UI/obj/Release/net6.0/PubTmp/Out/wwwroot/DeveloperJs/FwdProject.js
+/swas.UI/obj/Release/net6.0/PubTmp/Out/wwwroot/DeveloperJs/ProjectDetails.js
+/swas.UI/obj/Release/net6.0/PubTmp/Out/wwwroot/DeveloperJs/ProjectstkholderComments.js
+/swas.UI/obj/Release/net6.0/PubTmp/Out/wwwroot/DeveloperJs/ProjectWiseReport.js
+/swas.UI/obj/Debug/net6.0/swas.UI.csproj.AssemblyReference.cache

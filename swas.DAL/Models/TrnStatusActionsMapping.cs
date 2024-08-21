@@ -13,5 +13,6 @@ namespace swas.DAL.Models
         public int StatusActionsMappingId { get; set; }
         public int StatusId { get; set; }
         public int ActionsId { get; set; }
+        public bool IsActive { get; set; }
     }
 }

@@ -80,7 +80,7 @@ function GetAllUsers() {
                     if ($("#chatProfileSearch").val() == "" || response[i].offr_Name.toLowerCase().indexOf($("#chatProfileSearch").val().toLowerCase()) !== -1) {
 
                         listitem += '<li class="">';
-                        listitem += '<div class="d-flex bd-highlight chatrequest">';
+                        listitem += '<div class="d-flex bd-highlight chatrequest " style="padding: 5px 5px 0px 5px;">';
                         listitem += ' <div class="img_cont">';
                         //listitem += '<img src="/assets/images/icons/profilechat.png" class="rounded-circle user_img">';
                         listitem += '<div class="circleimg" style="background-color:' + displayFixedColorAlphabet(response[i].offr_Name.replace(/^\s+|\s+$/gm, '').substr(0, 1).toUpperCase()) + ';color:#ffff">' + response[i].offr_Name.replace(/^\s+|\s+$/gm, '').substr(0, 2).toUpperCase() +'</div>';
@@ -104,8 +104,12 @@ function GetAllUsers() {
                 $(".contacts").html(listitem);
 
                 $("body").unbind().on("click", ".chatrequest", function () {
+
+                    $(".chatrequest").removeClass('active');
                     $(".btnforchat").removeClass('d-none');
                     $(".bd-highlight").removeClass('d-none');
+                    $(this).addClass("active");
+
                     $("#profsortname").html($(this).closest("div").find(".circleimg").html())
                     UserMapChat($(this).closest("div").find("#chatprofileId").html(), $(this).closest("div").find("#profName").html(), $(this).closest("div").find(".circleimg").html());
                 });
@@ -144,7 +148,7 @@ function UserChat(userMapChatId, FromUserId, sortname) {
         success: function (response) {
             var listitem = "";
             if (response != null) {
-                GetAllUsers();
+                
                 if (response.length > 0) {
                     for (var i = 0; i < response.length; i++) {
                         if (response[i].type == 1) {
@@ -153,7 +157,7 @@ function UserChat(userMapChatId, FromUserId, sortname) {
                             /*listitem += '<img src="/assets/images/icons/profilechat.png" class="rounded-circle user_img_msg">';*/
                             listitem += '<div class="circleimgchat" style="background-color:' + displayFixedColorAlphabet($(".spnOffr_Name").html().replace(/^\s+|\s+$/gm, '').substr(0, 1).toUpperCase()) + ';color:#ffff">' + $(".spnOffr_Name").html().substr(0, 2).toUpperCase() + '</div>';
                             listitem += '</div>';
-                            listitem += '<div class="msg_cotainer"><span class="spnmsgchatId">' + response[i].chatId + '</span>';
+                            listitem += '<div class="msg_cotainer"><span class="spnmsgchatId d-none">' + response[i].chatId + '</span>';
                             if (response[i].isRead == false) {
                                 listitem += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">';
                                 listitem += '<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"/>';

@@ -33,7 +33,7 @@ namespace swas.BAL.Repository
                 var ret = (from Status in _dbContext.mStatus
                            join Stages in _dbContext.mStages on Status.StageId equals Stages.StagesId
 
-                           where Status.StageId == ParentId && Status.StatusId == 1 
+                           where Status.StageId == ParentId && Status.StatusId == 1 && Status.IsActive == true
                            select new DTODDLComman
                            {
                                Name = Status.Status,
@@ -49,6 +49,7 @@ namespace swas.BAL.Repository
 
 
                            where Status.StageId == ParentId && Status.StatusId == 20 || Status.StatusId == 21 || Status.StatusId == 22
+                           && Status.IsActive==true
                            select new DTODDLComman
                            {
                                Name = Status.Status,
@@ -62,7 +63,7 @@ namespace swas.BAL.Repository
                 var ret = (from Status in _dbContext.mStatus
                            join Stages in _dbContext.mStages on Status.StageId equals Stages.StagesId
 
-                           where Status.StageId == ParentId 
+                           where Status.StageId == ParentId && Status.IsActive == true
                            select new DTODDLComman
                            {
                                Name = Status.Status,
