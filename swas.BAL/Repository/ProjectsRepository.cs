@@ -479,7 +479,7 @@ namespace swas.BAL.Repository
                              join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId into ks
                              from eWithAction in ks.DefaultIfEmpty()
                              where b.IsSubmited == true
-                             && actm.StatusActionsMappingId == 29 && a.IsComplete == false
+                             && actm.StatusActionsMappingId == 103 
                              // where a.ActionId == dft.ActionId
                              select new tbl_Projects
 
