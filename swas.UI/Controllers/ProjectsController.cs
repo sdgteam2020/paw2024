@@ -93,7 +93,7 @@ namespace swas.UI.Controllers
 
         {
             CommonDTO dto = new CommonDTO();
-            //dto.Projects = projects;
+            
             dto.Projects = await _projectsRepository.GetAllProjectsAsync();
 
             return View(dto);
@@ -101,8 +101,7 @@ namespace swas.UI.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            //TempData["Tabshift"] = 12;
-            //ViewBag.Tabshift = 12;
+           
             var project = await _projectsRepository.GetProjectByIdAsync(id);
             if (project == null)
             {
@@ -941,9 +940,7 @@ namespace swas.UI.Controllers
 
                 int statgeIDMAx = await _stkholdmove.GetlaststageId(dataProjId);
                 ViewBag.stageid = statgeIDMAx;
-
                 var projdetails = await _projectsRepository.GetProjectByIdAsync1(dataProjId);
-
 
 
                 var dto3 = await _commentRepository.GetCommentByPsmIdAsync(projdetails.CurrentPslmId);
@@ -952,8 +949,6 @@ namespace swas.UI.Controllers
 
                 var ProjMovementHist = await _projStakeHolderMovRepository.ProjectMovHistory(dataProjId);
                 ViewBag.ProjMovementHist = ProjMovementHist;
-
-
 
 
 
@@ -1272,6 +1267,60 @@ namespace swas.UI.Controllers
                     StatusCode = 500 // HTTP 500 Internal Server Error
                 };
             }
+        }
+
+
+        [HttpGet]
+
+        public async Task<IActionResult> ProjectMovement(string? ProjName )
+        {
+            //var ProjectMovementDetail  = await _projStakeHolderMovRepository.ProjectMovement(ProjId);
+            return View();
+           
+        }
+        public async Task<IActionResult> GetProjectMov(int Id)
+        {
+
+            try
+            {
+               // int ProjId = await _projStakeHolderMovRepository.GetProjectId(ProjName);
+
+                var ret = await _projStakeHolderMovRepository.ProjectMovement(1);
+                return Json(ret);
+            }
+            catch (Exception ex)
+            {
+                return Json(-1);
+            }
+        }
+
+        public async Task<IActionResult> UpdateProjectMovement()
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            if (Logins != null)
+            {
+                try
+                {
+                    tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
+
+
+                    var ret = await _projectsRepository.UpdateTxnAsync(psmove);
+
+                    return Json(ret);
+                }
+                catch (Exception ex)
+                {
+                    swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                    return Json(0);
+                }
+
+            }
+            else
+            {
+                return Redirect("/Identity/Account/login");
+            }
+
+
         }
 
 

@@ -143,7 +143,7 @@
         });
         if (allFieldsComplete) {
             
-            CheckFwdCondition($("#spanFwdCurrentPslmId").html())
+            CheckFwdCondition($("#spanFwdCurrentPslmId").html());
            
         }
     });
@@ -184,6 +184,7 @@
     });
 });
 function CheckFwdCondition(CurrentPslmId) {
+    debugger;
     var userdata =
     {
         "ProjId": $("#spanFwdProjectId").html(),

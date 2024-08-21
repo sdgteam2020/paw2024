@@ -24,7 +24,7 @@ namespace swas.BAL.Interfaces
         Task<int> CountCommentAsync(int stkhol);
 
         Task<List<Notification>> GetNotificationAsync(int ProjId);
-
+        Task<List<Notification>> GetNotificationInbox (int ProjId);
         Task<int> GetNotificationCommentCount();
         Task<int> GetNotificationInboxCount();
         //
