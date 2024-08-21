@@ -35,7 +35,7 @@ function ProjectWiseStatus() {
                     listItem += '<thead>';
                     listItem += '<tr>';
                     listItem += '<th class="d-none"></th>';
-                    listItem += '<th>Ser No</th>';
+                    listItem += '<th class="text-center">Ser No</th>';
                     listItem += '<th>Project Name</th>';
                     for (var i = 0; i < StatusProjectlst.length; i++) {
                         listItem += '<th>' + StatusProjectlst[i].status + '</th>';
@@ -54,8 +54,8 @@ function ProjectWiseStatus() {
                             }
                             listItem += '<tr>';
                             listItem += '<td class="clsspnprojId d-none">' + MovProjectlst[j].projId + '</td>';
-                            listItem += '<td class="align-middle">' + count + '</td>';
-                            listItem += '<td class="btn-clsprojName"><u>' + MovProjectlst[j].projName + '</u></td>';
+                            listItem += '<td class="align-middle text-center">' + count + '</td>';
+                            listItem += '<td class="btn-clsprojName">' + MovProjectlst[j].projName + '</td>';
 
                             for (var i = 0; i < StatusProjectlst.length; i++) {
                                 var isstatus = MovProjectlst.filter(function (element) { return element.statusId == StatusProjectlst[i].statusId && element.projId == MovProjectlst[j].projId; });
@@ -188,7 +188,7 @@ function GetProjHold(ProjId) {
                             else
                                 listItem += '<tr class="table-success">';
 
-                            listItem += '<td class="align-middle">' + count + '</td>';
+                            listItem += '<td class="align-middle text-center">' + count + '</td>';
                             listItem += '<td class="align-middle">' + response[j].fromunit + '</td>';
                             if (response[j].tounit != null)
                                 listItem += '<td class="align-middle">' + response[j].tounit + '</td>';
@@ -230,7 +230,7 @@ function GetProjHold(ProjId) {
                                 else
                                     listItemc += '<tr class="table-success">';
 
-                            listItemc += '<td class="align-middle">' + countc + '</td>';
+                            listItemc += '<td class="align-middle text-center">' + countc + '</td>';
                                 listItemc += '<td class="align-middle">' + response[j].fromunit + '</td>';
                                 if (response[j].tounit != null)
                                     listItemc += '<td class="align-middle">' + response[j].tounit + '</td>';
@@ -287,7 +287,7 @@ function GetProjHold(ProjId) {
                         searching: true,
                         stateSave: true,
                         "order": [[0, "asc"]],
-                        "ordering": true,
+                        "ordering": false,
                         "paging": true,
                         dom: 'lBfrtip',
                         buttons: [
@@ -338,7 +338,7 @@ function GetProjHold(ProjId) {
                         searching: true,
                         stateSave: true,
                         "order": [[0, "asc"]],
-                        "ordering": true,
+                    "ordering": false,
                         "paging": true,
                         dom: 'lBfrtip',
                         buttons: [

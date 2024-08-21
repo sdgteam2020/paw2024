@@ -93,7 +93,7 @@ namespace swas.UI.Controllers
 
         {
             CommonDTO dto = new CommonDTO();
-            //dto.Projects = projects;
+            
             dto.Projects = await _projectsRepository.GetAllProjectsAsync();
 
             return View(dto);
@@ -101,8 +101,7 @@ namespace swas.UI.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            //TempData["Tabshift"] = 12;
-            //ViewBag.Tabshift = 12;
+           
             var project = await _projectsRepository.GetProjectByIdAsync(id);
             if (project == null)
             {
@@ -949,9 +948,8 @@ namespace swas.UI.Controllers
                 ViewBag.CommentByStakeholderList = dto3;
 
                 var ProjMovementHist = await _projStakeHolderMovRepository.ProjectMovHistory(dataProjId);
-                ViewBag.ProjMovementHist = ProjMovementHist;
-
-
+                ViewBag.ProjMovementHist = ProjMovementHist.DTOProjectMovHistorypsmlst;
+                ViewBag.ProjMovementHistcomd = ProjMovementHist.DTOProjectMovHistorycmdlst;
 
                 ViewBag.PsmId = psmid ?? 0;
                 ViewBag.PjIR = Projpin;

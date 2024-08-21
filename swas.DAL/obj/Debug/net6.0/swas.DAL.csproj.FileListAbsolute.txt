@@ -349,3 +349,21 @@ D:\Projects\paw2024\swas.DAL\obj\Debug\net6.0\refint\swas.DAL.dll
 D:\Projects\paw2024\swas.DAL\obj\Debug\net6.0\swas.DAL.pdb
 D:\Projects\paw2024\swas.DAL\obj\Debug\net6.0\swas.DAL.genruntimeconfig.cache
 D:\Projects\paw2024\swas.DAL\obj\Debug\net6.0\ref\swas.DAL.dll
+<<<<<<< HEAD
+=======
+D:\Projects\paw2024 - Copy\swas.DAL\bin\Debug\net6.0\swas.DAL.deps.json
+D:\Projects\paw2024 - Copy\swas.DAL\bin\Debug\net6.0\swas.DAL.runtimeconfig.json
+D:\Projects\paw2024 - Copy\swas.DAL\bin\Debug\net6.0\swas.DAL.dll
+D:\Projects\paw2024 - Copy\swas.DAL\bin\Debug\net6.0\swas.DAL.pdb
+D:\Projects\paw2024 - Copy\swas.DAL\obj\Debug\net6.0\swas.DAL.csproj.AssemblyReference.cache
+D:\Projects\paw2024 - Copy\swas.DAL\obj\Debug\net6.0\swas.DAL.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\paw2024 - Copy\swas.DAL\obj\Debug\net6.0\swas.DAL.AssemblyInfoInputs.cache
+D:\Projects\paw2024 - Copy\swas.DAL\obj\Debug\net6.0\swas.DAL.AssemblyInfo.cs
+D:\Projects\paw2024 - Copy\swas.DAL\obj\Debug\net6.0\swas.DAL.csproj.CoreCompileInputs.cache
+D:\Projects\paw2024 - Copy\swas.DAL\obj\Debug\net6.0\swas.DAL.sourcelink.json
+D:\Projects\paw2024 - Copy\swas.DAL\obj\Debug\net6.0\swas.DAL.dll
+D:\Projects\paw2024 - Copy\swas.DAL\obj\Debug\net6.0\refint\swas.DAL.dll
+D:\Projects\paw2024 - Copy\swas.DAL\obj\Debug\net6.0\swas.DAL.pdb
+D:\Projects\paw2024 - Copy\swas.DAL\obj\Debug\net6.0\swas.DAL.genruntimeconfig.cache
+D:\Projects\paw2024 - Copy\swas.DAL\obj\Debug\net6.0\ref\swas.DAL.dll
+>>>>>>> main

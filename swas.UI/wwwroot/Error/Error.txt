@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> main
 Date : 4/16/2024 12:45:43 PM
 'System.Dynamic.DynamicObject' does not contain a definition for 'stakeholders'
 -----------------------------------------------------------------------------
@@ -31,6 +35,8 @@ A second operation was started on this context instance before a previous operat
 Date : 4/18/2024 9:06:34 AM
 A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
 -----------------------------------------------------------------------------
+=======
+>>>>>>> 696c4cb7b635adbfceb6ea5a07ac05c5f59f706f
 Date : 4/18/2024 9:27:30 AM
 A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
 -----------------------------------------------------------------------------
@@ -898,3 +904,21 @@ Date : 14-08-2024 16:03:22
 -----------------------------------------------------------------------------
 Date : 14-08-2024 16:03:22
 Request failed & Status Code : 200
+<<<<<<< HEAD
+=======
+-----------------------------------------------------------------------------
+Date : 16-08-2024 11:48:01
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 16-08-2024 11:48:01
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 16-08-2024 11:48:03
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 16-08-2024 11:48:03
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 20-08-2024 15:51:20
+Incorrect syntax near ')'.
+>>>>>>> main

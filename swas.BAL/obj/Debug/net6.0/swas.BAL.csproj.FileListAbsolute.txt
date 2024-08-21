@@ -374,3 +374,22 @@ D:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\swas.BAL.dll
 D:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\refint\swas.BAL.dll
 D:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\swas.BAL.pdb
 D:\Projects\paw2024\swas.BAL\obj\Debug\net6.0\ref\swas.BAL.dll
+<<<<<<< HEAD
+=======
+D:\Projects\paw2024 - Copy\swas.BAL\bin\Debug\net6.0\swas.BAL.deps.json
+D:\Projects\paw2024 - Copy\swas.BAL\bin\Debug\net6.0\swas.BAL.dll
+D:\Projects\paw2024 - Copy\swas.BAL\bin\Debug\net6.0\swas.BAL.pdb
+D:\Projects\paw2024 - Copy\swas.BAL\bin\Debug\net6.0\swas.DAL.dll
+D:\Projects\paw2024 - Copy\swas.BAL\bin\Debug\net6.0\swas.DAL.pdb
+D:\Projects\paw2024 - Copy\swas.BAL\obj\Debug\net6.0\swas.BAL.csproj.AssemblyReference.cache
+D:\Projects\paw2024 - Copy\swas.BAL\obj\Debug\net6.0\swas.BAL.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\paw2024 - Copy\swas.BAL\obj\Debug\net6.0\swas.BAL.AssemblyInfoInputs.cache
+D:\Projects\paw2024 - Copy\swas.BAL\obj\Debug\net6.0\swas.BAL.AssemblyInfo.cs
+D:\Projects\paw2024 - Copy\swas.BAL\obj\Debug\net6.0\swas.BAL.csproj.CoreCompileInputs.cache
+D:\Projects\paw2024 - Copy\swas.BAL\obj\Debug\net6.0\swas.BAL.sourcelink.json
+D:\Projects\paw2024 - Copy\swas.BAL\obj\Debug\net6.0\swas.BAL.csproj.Up2Date
+D:\Projects\paw2024 - Copy\swas.BAL\obj\Debug\net6.0\swas.BAL.dll
+D:\Projects\paw2024 - Copy\swas.BAL\obj\Debug\net6.0\refint\swas.BAL.dll
+D:\Projects\paw2024 - Copy\swas.BAL\obj\Debug\net6.0\swas.BAL.pdb
+D:\Projects\paw2024 - Copy\swas.BAL\obj\Debug\net6.0\ref\swas.BAL.dll
+>>>>>>> main

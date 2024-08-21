@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("swas.UI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f4ebecf99ef53fa2b0bc1e44875ae7c33af68cc3")]
 [assembly: System.Reflection.AssemblyProductAttribute("swas.UI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("swas.UI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

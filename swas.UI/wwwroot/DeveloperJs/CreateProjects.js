@@ -509,3 +509,15 @@ function DeleteProject(ProjectId) {
         }
     });
 }
+
+function GetNotificationInbox(ProjId) {
+    alert("om");
+    $.ajax({
+        url: '/Home/GetNotificationInbox',
+        type: 'POST',
+        data: { "ProjId": ProjId },
+        success: function (response) {
+
+        }
+    })
+}

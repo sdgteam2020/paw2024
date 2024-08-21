@@ -1,18 +1,3 @@
-Date : 4/16/2024 2:10:39 PM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/18/2024 8:59:59 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/18/2024 9:02:59 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/18/2024 9:05:58 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/18/2024 9:06:34 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
 Date : 4/18/2024 9:27:30 AM
 A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
 -----------------------------------------------------------------------------
@@ -898,3 +883,18 @@ Request failed & Status Code : 200
 -----------------------------------------------------------------------------
 Date : 13-08-2024 15:00:35
 Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 16-08-2024 11:48:01
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 16-08-2024 11:48:01
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 16-08-2024 11:48:03
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 16-08-2024 11:48:03
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 20-08-2024 15:51:20
+Incorrect syntax near ')'.

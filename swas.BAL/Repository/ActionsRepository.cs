@@ -105,7 +105,9 @@ namespace swas.BAL.Repository
             List<DTODDLComman> lst = new List<DTODDLComman>();
             var acttoallow = (from map in _dbContext.TrnStatusActionsMapping
                               join sts in _dbContext.TrnUnitStatusMapping on map.StatusActionsMappingId equals sts.StatusActionsMappingId
-                              where map.StatusId == StatusId
+                              join act in _dbContext.mActions on map.ActionsId equals act.ActionsId
+                              where map.StatusId == StatusId && map.IsActive == true
+                              orderby act.OrderBy
                               select new DTOActionAllow
                               {
                                   ActionsId= map.StatusActionsMappingId,
@@ -115,15 +117,19 @@ namespace swas.BAL.Repository
 
             var ret =await (from act in _dbContext.mActions
                        join map in _dbContext.TrnStatusActionsMapping on act.ActionsId equals map.ActionsId
-                       where map.StatusId == StatusId
-                       select new DTODDLComman
+                       where map.StatusId == StatusId && map.IsActive == true
+                            orderby act.OrderBy
+                            select new DTODDLComman
                        {
                            Id = map.StatusActionsMappingId,
                            Name = act.Actions,
                        }
               ).ToListAsync();
 
-            lst=ret;
+
+
+
+            lst = ret;
             var ret1=  acttoallow.Where(i => i.UnitId == UnitId).ToList();
             if(ret1.Count()==0)
             {
@@ -135,6 +141,24 @@ namespace swas.BAL.Repository
                 }
                 
             }
+            var ret2 = acttoallow.Where(i => i.UnitId != UnitId).ToList();
+
+            if (ret2.Count() > 0)
+            {
+                foreach (var item in ret2)
+                {
+                    DTODDLComman db = new DTODDLComman();
+                    var ert=ret1.Where(i => i.ActionsId==item.ActionsId).FirstOrDefault();  
+                    if(ert==null)
+                    {
+                        db = lst.Where(i => i.Id == item.ActionsId).FirstOrDefault();
+
+                        lst.Remove(db);
+                    }
+                }
+
+            }
+            
             return lst;
             
 
