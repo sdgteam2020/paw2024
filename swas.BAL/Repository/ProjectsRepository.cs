@@ -1871,6 +1871,36 @@ namespace swas.BAL.Repository
         //    }
         //}
 
+        public async Task<Notification> GetNotificationByProjId (int ProjId)
+        {
+            return await _dbContext.Notification
+               .FirstOrDefaultAsync(a => a.ProjId == ProjId);
+        }
+
+        public async Task<bool> UpdateNotification(Notification notify)
+        {
+            _dbContext.Notification.Update(notify);
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+        }
+
+        //public async Task<tbl_ProjStakeHolderMov> GetNextPsmMoveAsync(int projId, int currentPsmId)
+        //{
+        //    return await _context.tbl_ProjStakeHolderMov
+        //        .Where(x => x.ProjId == projId && x.PsmId > currentPsmId)
+        //        .OrderBy(x => x.PsmId)
+        //        .FirstOrDefaultAsync();
+        //}
+
+        public async Task<tbl_ProjStakeHolderMov> GetNextPsmMoveAsync(int projId,int currentPsmId)
+        {
+            return await _DBContext.ProjStakeHolderMov
+                .Where(x => x.ProjId == projId && x.PsmId > currentPsmId)
+                .OrderBy(x => x.PsmId)
+                .FirstOrDefaultAsync();
+        }
+
     }
 
 }

@@ -142,6 +142,8 @@ function GetProjCommentsByUnitId() {
 
                     $("body").on("click", ".projNameDetail", function () {
                         IsReadInbox($(this).closest("tr").find("#spnpsmId").html());
+                        IsReadNotification($(this).closest("tr").find("#spnProjId").html());
+                      /*  IsReadInbox($(this).closest("tr").find("#spnpsmId").html());*/
                     });
 
 
@@ -222,6 +224,9 @@ function SendMsg() {
                     
                 });
             }
+
+            IsUnReadComment($("#ProjectcommentprojId").html());
+            GetNotification($("#ProjectcommentprojId").html());
         },
         error: function (error) {
            
@@ -393,6 +398,20 @@ function IsReadInbox(psmId) {
     });
 }
 
+
+
+function IsReadNotification(ProjId) {
+
+    $.ajax({
+        url: '/Projects/IsReadNotification',
+        type: 'POST',
+        data: { "ProjId": ProjId },
+        success: function (response) {
+            console.log(response);
+
+        }
+    });
+}
 
 function reset() {
     $("#Comments").val("");

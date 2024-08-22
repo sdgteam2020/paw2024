@@ -52,10 +52,10 @@
     });
     $(".btn-FwdHistory").click(function () {
         $('#ProjFwdHistory').modal('show');
-        IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html()); 
         
         GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentProjId").html());
-        /*window.location.reload();*/
+        IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html()); 
+        
     });
     $(".btn-Fwd").click(function () {
 

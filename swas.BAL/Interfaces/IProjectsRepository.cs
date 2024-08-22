@@ -49,6 +49,14 @@ namespace swas.BAL.Interfaces
         Task<List<tbl_ProjStakeHolderMov>> GetInboxByProjIdAsync(int projId);
 
 
+        Task<Notification> GetNotificationByProjId(int projId);
+
+        Task<bool> UpdateNotification(Notification notify);
+
+    
+
+        Task<tbl_ProjStakeHolderMov> GetNextPsmMoveAsync(int projId, int currentPsmId);
+
         //Task<bool> UpdateProjectStakeholderMov (tbl_ProjStakeHolderMov psmove);
     }
 

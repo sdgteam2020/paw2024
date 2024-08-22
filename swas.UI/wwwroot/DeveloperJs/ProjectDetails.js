@@ -337,9 +337,9 @@ function GetProjectMovHistory(ProjId) {
 
                 $("#projectmovfistory").html(listitem);
 
-                $(document).on('click', function () {
-                    location.reload();
-                });
+                //$(document).on('click', function () {
+                //    location.reload();
+                //});
             }
         }
     });

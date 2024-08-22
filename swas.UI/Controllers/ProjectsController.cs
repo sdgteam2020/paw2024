@@ -468,9 +468,44 @@ namespace swas.UI.Controllers
                 return Redirect("/Identity/Account/login");
             }
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> IsReadNotification(int ProjId)
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+
+
+            if (Logins != null)
+            {
+
+                try
+                {
+
+                    Notification notify  = new Notification();
+                    // var project = await _projectsRepository.GetProjectByIdAsync(projid);
+                    notify = await _projectsRepository.GetNotificationByProjId(ProjId);
+                    notify.ReadDateTime = DateTime.Now;
+                    notify.IsRead = true;
+                    await _projectsRepository.UpdateNotification(notify);
+
+                    return Json(ProjId);
+
+                }
+                catch (Exception ex)
+                {
+                    swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                    return Json(0);
+                }
+            }
+            else
+            {
+                return Redirect("/Identity/Account/login");
+            }
+        }
+
         
-        
-        
+
         [HttpPost]
         public async Task<IActionResult> IsProcessProjConfirm(int ProjId)
         {
@@ -650,6 +685,8 @@ namespace swas.UI.Controllers
             var Ret = await _psmRepository.CheckFwdCondition(ProjId, StatusId);
             return Json(Ret);
         }
+
+
             public async Task<IActionResult> FwdToProject(tbl_ProjStakeHolderMov psmove)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
@@ -681,7 +718,7 @@ namespace swas.UI.Controllers
                 return Json(nmum.NotSave);
             }
 
-        }
+        }   
 
         public async Task<IActionResult> ProjectMovHistory(int ProjectId)
         {
@@ -1284,7 +1321,7 @@ namespace swas.UI.Controllers
             {
                // int ProjId = await _projStakeHolderMovRepository.GetProjectId(ProjName);
 
-                var ret = await _projStakeHolderMovRepository.ProjectMovement(1);
+                var ret = await _projStakeHolderMovRepository.ProjectMovement(3);
                 return Json(ret);
             }
             catch (Exception ex)
@@ -1293,33 +1330,49 @@ namespace swas.UI.Controllers
             }
         }
 
-        public async Task<IActionResult> UpdateProjectMovement()
+        public async Task<IActionResult> ProjectMovementUpdate(tbl_ProjStakeHolderMov psmove)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-            if (Logins != null)
+
+            psmove.ProjId = psmove.ProjId;
+            psmove.StatusActionsMappingId = psmove.StatusActionsMappingId;
+            psmove.Remarks = psmove.Remarks;
+            psmove.FromUnitId = Logins.unitid ?? 0;
+            psmove.ToUnitId = psmove.ToUnitId;
+            psmove.UserDetails = Helper.LoginDetails(Logins);
+            psmove.UpdatedByUserId = Logins.UserIntId;
+            psmove.DateTimeOfUpdate = psmove.TimeStamp;
+            psmove.IsActive = true;
+            psmove.EditDeleteDate = psmove.TimeStamp;
+            psmove.EditDeleteBy = Logins.UserIntId;
+            psmove.TimeStamp = psmove.TimeStamp;
+            psmove.IsComplete = false;
+            psmove.IsComment = false;
+
+            // Save the current psmove record
+            var Ret = await _psmRepository.UpdateWithReturn(psmove);
+
+            if (Ret != null)
             {
-                try
+              
+                var nextPsmMove = await _projectsRepository.GetNextPsmMoveAsync(psmove.ProjId, psmove.PsmId);
+                
+
+                if (nextPsmMove != null)
                 {
-                    tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
+                    // Update the FromUnitId of the next psmId based on the current ToUnitId
+                    nextPsmMove.FromUnitId = psmove.ToUnitId;
 
-
-                    var ret = await _projectsRepository.UpdateTxnAsync(psmove);
-
-                    return Json(ret);
-                }
-                catch (Exception ex)
-                {
-                    swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                    return Json(0);
+                    // Save the updated next psmMove record
+                    await _psmRepository.UpdateWithReturn(nextPsmMove);
                 }
 
+                return Json(Ret);
             }
             else
             {
-                return Redirect("/Identity/Account/login");
+                return Json(nmum.NotSave);
             }
-
-
         }
 
 

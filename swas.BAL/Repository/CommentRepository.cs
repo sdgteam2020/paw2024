@@ -74,7 +74,7 @@ namespace swas.BAL.Repository
         public async Task<int> GetNotificationCommentCount()
         {
             int notificationCount = await _dbContext.Notification
-                .Where(n => n.NotificationType == true)
+                .Where(n => n.NotificationType == true && n.IsRead == false)
                 .CountAsync();
             return notificationCount;
         }
@@ -82,7 +82,7 @@ namespace swas.BAL.Repository
         public async Task<int> GetNotificationInboxCount()
         {
             int notificationCount = await _dbContext.Notification
-                .Where(n => n.NotificationType == false)
+                .Where(n => n.NotificationType == false && n.IsRead == false)
                 .CountAsync();
             return notificationCount;
         }
