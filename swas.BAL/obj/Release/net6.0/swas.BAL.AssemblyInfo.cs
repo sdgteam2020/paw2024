@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("swas.BAL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+75db57159b582b7618a4109f108345fcc6b4edfe")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+51862c2a85160cd034a6a20f651eb6313bcb18b1")]
 [assembly: System.Reflection.AssemblyProductAttribute("swas.BAL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("swas.BAL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
