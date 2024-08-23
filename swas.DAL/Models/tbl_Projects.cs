@@ -9,7 +9,7 @@ namespace swas.DAL.Models
 	///Tested Date : 
 	///Start
 	public class tbl_Projects
-	{
+	{ 
 		[Key]
 		public int ProjId { get; set; }
          
@@ -84,8 +84,10 @@ namespace swas.DAL.Models
         [StringLength(1500)]
         [Display(Name = "Details of user base")]
 		public string? DetlsofUserBase { get; set; }
+
 		[Display(Name = "Envisage cost of entire proj incl license fees and maint")]
-		public string? EnvisagedCost { get; set; }
+		public string EnvisagedCost { get; set; }
+
 		[Display(Name = "Brief details of proposed network and bandwidth reqmts")]
 		[StringLength(10)]
 		public string? NWBandWidthReqmt { get; set; }

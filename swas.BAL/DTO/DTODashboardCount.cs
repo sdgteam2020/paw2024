@@ -12,6 +12,7 @@ namespace swas.BAL.DTO
         public List<DTODashboardHeader> DTODashboardHeaderlst { get; set; }
         public List<DTODashboardAction> DTODashboardActionlst { get; set; }
         public List<DTOApprovedCount> DTOApprovedCountlst { get; set; }
+        public List<DTODashboardCount> DTODashboardCountlstForAction { get; set; }
     }
     public class DTODashboardCount
     {

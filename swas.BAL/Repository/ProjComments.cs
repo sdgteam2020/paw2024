@@ -35,6 +35,7 @@ namespace swas.BAL
                               select cr1.StkStatusId
                              ).FirstOrDefault()/*.Count()*/
                                  where mov.ToUnitId == UnitId && mov.IsComment == true //&& mov.StatusId==5
+                                
                                  group new DTOProComments
                                  {
                                      ProjectName = proj.ProjName,
@@ -45,14 +46,14 @@ namespace swas.BAL
                                      ProjId = proj.ProjId,
                                      PsmId = mov.PsmId,
                                      EncyID = _dataProtector.Protect(proj.ProjId.ToString()),
-                                     TimeStamp = mov.TimeStamp,
+                                     TimeStamp = _context.StkComment.Where(i => i.StkStatusId == StkStatusId).Select(i => i.DateTimeOfUpdate).SingleOrDefault()?? mov.TimeStamp,
                                      UnitId = mov.ToUnitId,
                                      IsComment = mov.IsRead 
                                  }
                                   by new { proj.ProjId, mov.ToUnitId } into g  // Group by both ProjId and ToUnitId
                                  select g.First()).ToListAsync();
             lst.AddRange(queryes);
-            return lst;
+            return lst.OrderByDescending(i=>i.TimeStamp).ToList();
 
         }
 

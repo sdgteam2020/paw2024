@@ -124,7 +124,7 @@ namespace swas.BAL.Repository
                                            FromunitId = mov.FromUnitId,
                                            Fromunit = munit2.UnitName,
                                            TimeStamp = mov.TimeStamp,
-                                           DateTimeOfUpdate = mov.DateTimeOfUpdate,
+                                           DateTimeOfUpdate = mov.DateTimeOfUpdate, 
                                            Status= sts.Status,
                                            Action= act.ActionDesc,
                                            IsComment=mov.IsComment,
@@ -217,7 +217,7 @@ namespace swas.BAL.Repository
           
         }
         public async Task<DTODashboard> DashboardCount(int UserId)
-        {
+        { 
             DTODashboard db=new DTODashboard();
            
  
@@ -298,6 +298,51 @@ namespace swas.BAL.Repository
             
             db.DTODashboardCountlst.AddRange(query11);
             db.DTODashboardCountlst= db.DTODashboardCountlst.OrderBy(x => x.StagesId).OrderBy(x => x.StatusId).ToList();
+
+            var queryForAction = await (from mov in _dbContext.ProjStakeHolderMov
+                               join proj in _dbContext.Projects on mov.ProjId equals proj.ProjId
+                               join actmap in _dbContext.TrnStatusActionsMapping on mov.StatusActionsMappingId equals actmap.StatusActionsMappingId
+                               join ststus in _dbContext.mStatus on actmap.StatusId equals ststus.StatusId
+                               join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
+                               //join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
+                               where
+                              //mov.ToUnitId == UserId &&
+                              // mov.IsComplete == false &&
+                             ( mov.StatusActionsMappingId==4 || mov.StatusActionsMappingId == 118)
+                              && mov.IsActive == true
+                               /*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
+                               && ststus.IsDashboard == true
+                               && proj.IsSubmited == true
+                               orderby stge.StagesId ascending
+                               group mov by new
+                               {
+                                   ststus.StatusId,
+                                   QStages = stge.Stages,
+                                   QStagesId = stge.StagesId,
+                                   QStatus = ststus.Status,
+                                   QActionsId = actmap.ActionsId,
+                                   QIsComplete = mov.IsComplete,
+                                   QprojId = proj.ProjId
+
+                               } into gr  //,QActionId= actmap.ActionsId
+
+                               select new DTODashboardCount
+                               {
+
+                                   StatusId = gr.Key.StatusId,
+                                   Stages = gr.Key.QStages,
+                                   StagesId = gr.Key.QStagesId,
+                                   Status = gr.Key.QStatus,
+                                   IsComplete = gr.Key.QIsComplete,
+                                   ActionId = gr.Key.QActionsId,
+                                   Tot = gr.Count(),
+
+                               }).ToListAsync();
+
+            db.DTODashboardCountlstForAction = (queryForAction);
+
+
+
 
             var query1 = await (from ststus in _dbContext.mStatus
                                join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId

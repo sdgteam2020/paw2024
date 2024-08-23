@@ -159,7 +159,7 @@ function GetProjHold(ProjId) {
     var userdata = {
         "ProjId": ProjId
     };
-
+    var currentdate = new Date();
     $.ajax({
         url: '/Home/GetProjHoldStatus',
         contentType: 'application/x-www-form-urlencoded',
@@ -258,9 +258,10 @@ function GetProjHold(ProjId) {
                                     listItemc += '<td class="align-middle">' + DateFormateddMMyyyyhhmmss(response[j].timeStampTo) + '</td>';
 
                                 }
-
+                            if (response[j].isComplete == true)
                                 listItemc += '<td class="align-middle">' + DateCalculateago(response[j].timeStampfrom, response[j].timeStampTo) + '</td>';
-
+                            else
+                                listItemc += '<td class="align-middle">' + DateCalculateago(response[j].timeStampfrom, currentdate) + '</td>';
 
                                 listItemc += '</tr>';
                                 countc++;

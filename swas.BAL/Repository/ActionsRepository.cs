@@ -122,7 +122,7 @@ namespace swas.BAL.Repository
                             select new DTODDLComman
                        {
                            Id = map.StatusActionsMappingId,
-                           Name = act.Actions,
+                           Name = act.ActionDesc,
                        }
               ).ToListAsync();
 

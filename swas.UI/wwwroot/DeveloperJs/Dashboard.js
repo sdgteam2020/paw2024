@@ -21,6 +21,7 @@ function GetAllDashbaordCount() {
             
             var dtoDashboardHeaderlst = data.dtoDashboardHeaderlst;
             var dTOApprovedCountlst = data.dtoApprovedCountlst;
+            var dTODashboardCountlstForAction = data.dtoDashboardCountlstForAction;
 
             var listitem = '';
             var stageId = 0;
@@ -76,29 +77,58 @@ function GetAllDashbaordCount() {
                     sent = 0;
                     var icons = "";
                     var DTODashboardCount = data.dtoDashboardCountlst.filter(function (element) { return element.stagesId == dtoDashboardHeaderlst[i].stageId && element.statusId == dtoDashboardHeaderlst[i].statusId; });
-                    for (var j = 0; j < DTODashboardCount.length; j++) {
+                    if (parseInt(dtoDashboardHeaderlst[i].statusId) == 2 || parseInt(dtoDashboardHeaderlst[i].statusId) == 3) {
 
+                        if (parseInt(dtoDashboardHeaderlst[i].statusId) == 2)
+                            var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 10 });
+                        else
+                            var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 11 });
 
-                        tot += DTODashboardCount[j].tot;
+                        for (var j = 0; j < ForAction.length; j++) {
 
-                        if (DTODashboardCount[j].isComplete == false) {
-                            peding += DTODashboardCount[j].tot;
+                            tot += ForAction[j].tot;
+
+                            if (ForAction[j].isComplete == false) {
+                                peding += ForAction[j].tot;
+                            }
+                            if (ForAction[j].isComplete == true) {
+                                sent += ForAction[j].tot;
+                            }
                         }
-                        if (DTODashboardCount[j].isComplete == true) {
-                            sent += DTODashboardCount[j].tot;
+                       
+                    }
+                    else {
+                        for (var j = 0; j < DTODashboardCount.length; j++) {
+
+
+                            tot += DTODashboardCount[j].tot;
+
+                            if (DTODashboardCount[j].isComplete == false) {
+                                peding += DTODashboardCount[j].tot;
+                            }
+                            if (DTODashboardCount[j].isComplete == true) {
+                                sent += DTODashboardCount[j].tot;
+                            }
+
                         }
-                      
                     }
                    
                     listitem += '<div class="icon-container ApprovedProj cursorpointer"><span class="d-none" id="spnstatusId">' + dtoDashboardHeaderlst[i].statusId +'</span>';
                    /* listitem += '<img src="/assets/images/icons/' + dtoDashboardHeaderlst[i].icons +'" alt="Icon" style="height:25px">';*/
-                    listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" style="height:25px">';
-                    var approvedcount = dTOApprovedCountlst.filter(function (element) { return  element.statusId == dtoDashboardHeaderlst[i].statusId; });
-                    if (approvedcount.length>0)
-                        listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId +'</span><h5 style="margin-top: 8px;" >' + approvedcount[0].total +' </h5>';
-                    else
-                        listitem += '<span class="d-none" id="spnstatusActionsMappingId">0</span><h5 style="margin-top: 8px;" >0 </h5>';
-                    listitem += '<div class="t-1 statusprojsummry d-none">' + dtoDashboardHeaderlst[i].status + '</div> ';
+                    if (dtoDashboardHeaderlst[i].statusId == 2 || dtoDashboardHeaderlst[i].statusId == 3 || dtoDashboardHeaderlst[i].statusId == 22) {
+                        if (dtoDashboardHeaderlst[i].statusId == 3)
+                            listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" style="height:25px">';
+                       else listitem += '<img src="/assets/images/icons/rejec.png" alt="Icon" style="height:25px">';
+                        listitem += '<h5 style="margin-top: 25px;" > </h5>';
+                    } else {
+                        listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" style="height:25px">';
+                        var approvedcount = dTOApprovedCountlst.filter(function (element) { return element.statusId == dtoDashboardHeaderlst[i].statusId; });
+                        if (approvedcount.length > 0)
+                            listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span><h5 style="margin-top: 8px;" >' + approvedcount[0].total + ' </h5>';
+                        else
+                            listitem += '<span class="d-none" id="spnstatusActionsMappingId">0</span><h5 style="margin-top: 8px;" >0 </h5>';
+                    }
+                        listitem += '<div class="t-1 statusprojsummry d-none">' + dtoDashboardHeaderlst[i].status + '</div> ';
                     listitem += '</div>';
                     listitem += '<div class="cursorpointer btnGetsummay "><span class="d-none" id="spnstatusId">' + dtoDashboardHeaderlst[i].statusId +'</span>';
                     listitem += '<div class="">';
@@ -179,9 +209,15 @@ function GetAllDashbaordCount() {
                             
                         });
                     } else {
-                        $('#ProjectApprovedTittle').html(tittle);
-                        $('#ProjApproved').modal('show');
-                        getProjApproved(spnstatusId, spnstatusActionsMappingId);
+                        
+                        if (spnstatusId == 2 || spnstatusId == 3 || spnstatusId == 22) {
+
+                        } else {
+                            $('#ProjectApprovedTittle').html(tittle);
+                            $('#ProjApproved').modal('show');
+
+                            getProjApproved(spnstatusId, spnstatusActionsMappingId);
+                        }
                     }
                 });
                     $("body").on("click", ".btnGetsummay", function () {

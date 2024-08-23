@@ -15,7 +15,7 @@
 .card {
     height: 700px;
     border-radius: 15px !important;
-    background-color: rgb(0 0 0 / 59%) !important;
+    background-color: rgb(255 255 255 / 59%) !important;
 }
 
 .contacts_body {
@@ -30,7 +30,7 @@
 
 .card-header {
     border-radius: 15px 15px 0 0 !important;
-    border-bottom: 0 !important;
+    /*border-bottom: 0 !important;*/
 }
 
 .card-footer {
@@ -55,9 +55,9 @@
     }
 
 .type_msg {
-    background-color: rgba(0,0,0,0.3) !important;
-    border: 0 !important;
-    color: white !important;
+    background-color: rgb(255 255 255) !important;
+   /* border: 0 !important;*/
+    color: black !important;
     height: 60px !important;
     overflow-y: auto;
 }
@@ -152,12 +152,12 @@
 
     .user_info span {
         font-size: 20px;
-        color: white;
+        color: rgb(0 0 0);
     }
 
     .user_info p {
         font-size: 10px;
-        color: rgba(255,255,255,0.6);
+        color: rgb(0 0 0)
     }
 
 .video_cam {
