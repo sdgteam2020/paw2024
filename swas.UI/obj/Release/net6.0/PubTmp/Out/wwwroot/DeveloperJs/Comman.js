@@ -48,22 +48,20 @@ function DateCalculateago(fmDate, end_actual_time) {
     var HH = Math.floor(diffSeconds / 3600);
     var MM = Math.floor(diffSeconds % 3600) / 60;
 
-    var formatted = ((HH < 10) ? ("0" + HH) : HH) + ":" + ((MM < 10) ? ("0" + MM) : MM)
+    var formatted = ((HH < 10) ? ("0" + HH) : HH) + ":" + ((MM < 10) ? ("0" + MM.toFixed(0)) : MM.toFixed(0))
 
     var futureDate = new Date();
     var todayDate = new Date(fmDate);
     var milliseconds = end_actual_time.getTime() - start_actual_time.getTime();
     var hours = Math.floor(milliseconds / (60 * 60 * 1000));
     var formatted1 = formatted.substring(0, 2);
-    if (parseInt(formatted1) == 00) {
-        ago = formatted.substring(0, 5) + ' Min </h6>';;
-    }
-    else if (hours <= 24) {
-        ago = formatted.substring(0, 5) + ' Min </h6>';
+    if (hours <= 24) {
+        ago = formatted +' Min </h6>';
     }
     else /*if (hours <= 730)*/
     {
-        ago = Math.floor(hours / 24) + ' Days (' + formatted.substring(0, 5) +' Min)</h6>';;
+        
+        ago = Math.floor(hours / 24) + ' Days (' + formatted  +')</h6>';;
     }
     //else if (hours <= 8766) {
     //    ago = Math.floor(Math.floor(hours / 24) / 30) + ' Months</h6>';;

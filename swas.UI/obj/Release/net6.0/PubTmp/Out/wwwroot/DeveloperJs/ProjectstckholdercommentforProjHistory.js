@@ -1,12 +1,13 @@
 ﻿$(document).ready(function () {
    
-    GetAllComments();
+    GetAllComments2();
 
     GetAllComments1();
 
 });
 
-function GetAllComments() {
+function GetAllComments2() {
+  
     $.ajax({
         type: "POST",
         url: '/Projects/GetAllCommentBypsmId_UnitId',
@@ -78,7 +79,7 @@ function GetAllComments() {
 
 
 function GetAllComments1() {
-
+   
     $.ajax({
         type: "POST",
         url: '/Projects/GetAllCommentBypsmId_UnitId',

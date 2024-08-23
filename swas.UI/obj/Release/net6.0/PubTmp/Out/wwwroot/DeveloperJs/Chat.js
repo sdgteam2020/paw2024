@@ -32,6 +32,23 @@
       
         $("#type_msg").removeClass('is-invalid');
     });
+
+    $('#type_msg').keypress(function (e) {
+        var key = e.which;
+        if (key == 13 && !e.shiftKey)  // the enter key code
+        {
+          
+            if ($("textarea#type_msg").val() == "") {
+                $("textarea#type_msg").addClass('is-invalid');
+
+            }
+            else {
+
+                SaveChat($("textarea#type_msg").val());
+            }
+        }
+    });   
+
         $("#send_btn").click(function () {
             if ($("textarea#type_msg").val() == "") {
                 $("textarea#type_msg").addClass('is-invalid');
