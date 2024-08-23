@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "KD0/ErSMli038Im1PZCwfAZIUfoenjlFuB58IsNWbBY=",
+  "Hash": "GPs5K9u6Qo+pEwrCpQuEteLfL4nTJW8OR6/yr/TW/cM=",
   "Source": "swas.UI",
   "BasePath": "_content/swas.UI",
   "Mode": "Default",
@@ -18029,6 +18029,25 @@
       "OriginalItemSpec": "wwwroot\\css\\jquery.dataTables.min.css"
     },
     {
+      "Identity": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\css\\jquery-ui.min.css",
+      "SourceId": "swas.UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\",
+      "BasePath": "_content/swas.UI",
+      "RelativePath": "css/jquery-ui.min.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\jquery-ui.min.css"
+    },
+    {
       "Identity": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\css\\Main.css",
       "SourceId": "swas.UI",
       "SourceType": "Discovered",
@@ -21335,6 +21354,25 @@
       "OriginalItemSpec": "wwwroot\\js\\jquery.min.js"
     },
     {
+      "Identity": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\js\\jquery-ui.min.js",
+      "SourceId": "swas.UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\",
+      "BasePath": "_content/swas.UI",
+      "RelativePath": "js/jquery-ui.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\jquery-ui.min.js"
+    },
+    {
       "Identity": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\js\\jszip.min.js",
       "SourceId": "swas.UI",
       "SourceType": "Discovered",
@@ -24128,6 +24166,25 @@
       "OriginalItemSpec": "wwwroot\\Uploads\\Swas_159415fd-32f7-45ba-b089-0216b6dc8d8a.pdf"
     },
     {
+      "Identity": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\Uploads\\Swas_159bfb14-6260-439a-9309-e0f83a53de0c.pdf",
+      "SourceId": "swas.UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\",
+      "BasePath": "_content/swas.UI",
+      "RelativePath": "Uploads/Swas_159bfb14-6260-439a-9309-e0f83a53de0c.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\Swas_159bfb14-6260-439a-9309-e0f83a53de0c.pdf"
+    },
+    {
       "Identity": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\Uploads\\Swas_17e69218-c504-4fcd-a58a-eb6e47ea9460.pdf",
       "SourceId": "swas.UI",
       "SourceType": "Discovered",
@@ -25798,6 +25855,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Uploads\\Swas_8cbed2ab-fbef-468a-acdf-3619f5348198.pdf"
+    },
+    {
+      "Identity": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\Uploads\\Swas_8ce87f0e-3b3e-49d2-bcc6-41f697cbbaeb.pdf",
+      "SourceId": "swas.UI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\",
+      "BasePath": "_content/swas.UI",
+      "RelativePath": "Uploads/Swas_8ce87f0e-3b3e-49d2-bcc6-41f697cbbaeb.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\Swas_8ce87f0e-3b3e-49d2-bcc6-41f697cbbaeb.pdf"
     },
     {
       "Identity": "D:\\Projects\\paw2024\\swas.UI\\wwwroot\\Uploads\\Swas_8d1fbdc0-cefc-4598-a8d4-8692ae4c9100.pdf",
