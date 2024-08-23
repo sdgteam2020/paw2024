@@ -89,7 +89,7 @@ function compareArrays(array1, array2) {
     if (file) {
 
             
-            const maxSizeInBytes = 10 * 1024 * 1024;
+            const maxSizeInBytes = 25 * 1024 * 1024;
             if (file.size > maxSizeInBytes) {
         $('#uploadButton').hide();
     pdfFileInput.value = '';

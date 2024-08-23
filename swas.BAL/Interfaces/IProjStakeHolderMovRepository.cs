@@ -56,6 +56,10 @@ namespace swas.BAL.Interfaces
         Task<List<ProjLogView>> GetProjLogviewAsync(string startDate, string endDate);
 
         string GetSponsorUnitName(int StakeHolderId);
+
+
+        Task<int> AddNotificationCommentAsync(Notification notifications);
+
     }
 
 

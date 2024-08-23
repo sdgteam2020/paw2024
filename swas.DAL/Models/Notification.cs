@@ -17,7 +17,7 @@ namespace swas.DAL.Models
         public bool IsRead { get; set; }
         public DateTime ReadDateTime { get; set; }
 
-        public bool NotificationType   { get; set; }
+        public int NotificationType   { get; set; }
 
     }
 }
