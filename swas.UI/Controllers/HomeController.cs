@@ -253,16 +253,22 @@ namespace swas.UI.Controllers
             }
         }
 
-        public async Task<IActionResult> GetNotification(int ProjId)
-        {
-            List<Notification> notifications = await _commentRepository.GetNotificationAsync(ProjId);
-            return View();
+        //public async Task<IActionResult> GetNotification(int ProjId)
+        //{
+        //    List<Notification> notifications = await _commentRepository.GetNotificationAsync(ProjId);
+        //    return View();
 
             
+        //}
+
+        public async Task<IActionResult> GetNotificationInbox (int ProjId)
+        {
+            List<Notification> notifications = await _commentRepository.GetNotificationInbox(ProjId);
+            return View();
+
+
         }
 
-
-        
 
 
 

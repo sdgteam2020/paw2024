@@ -18,11 +18,17 @@ namespace swas.BAL.Interfaces
     {
         Task<int> AddProjStakeHolderMovAsync(tbl_ProjStakeHolderMov psmove);
         Task<DTOProjectMovHistory> ProjectMovHistory(int? ProjectId);
+
+        Task<int> GetProjectId(string? ProjName);
+        Task<List<DTOProjectsFwd>> ProjectMovement(int? ProjectId);
+        //Task<DTOpR>
         Task<List<DTOProjectHold>> ProjectHolsTimeCalculate(int ProjectId );
         int GetLastRecProjectMov(int ProjectId);
         Task<DTODashboard> DashboardCount(int UserId);
 
-        Task<bool> CheckFwdCondition(int ProjId, int StatusId);
+        Task<bool> CheckFwdCondition(int ProjId, int StatusId); 
+
+        
         //Task<int> IsReadInbox(int psmId);
 
         //Task<int> UpdateUndoProjectMov(int ProjectId,int PsmId);
@@ -50,6 +56,10 @@ namespace swas.BAL.Interfaces
         Task<List<ProjLogView>> GetProjLogviewAsync(string startDate, string endDate);
 
         string GetSponsorUnitName(int StakeHolderId);
+
+
+        Task<int> AddNotificationCommentAsync(Notification notifications);
+
     }
 
 

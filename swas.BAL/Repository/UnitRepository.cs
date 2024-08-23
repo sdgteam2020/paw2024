@@ -118,7 +118,7 @@ namespace swas.BAL
             select ord;
 
                 _context.SaveChanges();
-                return Convert.ToInt32(EnumHelper.SaveData.Delete); ;
+                return Convert.ToInt32(EnumHelper.SaveData.Delete); 
             
         }
 

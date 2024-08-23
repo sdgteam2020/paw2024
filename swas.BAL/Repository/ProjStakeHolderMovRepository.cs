@@ -44,6 +44,44 @@ namespace swas.BAL.Repository
 
         }
 
+        public async Task<List<DTOProjectsFwd>> ProjectMovement(int? ProjectId)
+        {
+            var query = await (from a in _dbContext.Projects
+                               join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
+                               join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid
+                               join tounit in _dbContext.tbl_mUnitBranch on b.ToUnitId equals tounit.unitid
+                               join fromunit in _dbContext.tbl_mUnitBranch on b.FromUnitId equals fromunit.unitid
+                               join actmap in _dbContext.TrnStatusActionsMapping on b.StatusActionsMappingId equals actmap.StatusActionsMappingId
+                               join ststus in _dbContext.mStatus on actmap.StatusId equals ststus.StatusId
+                               join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
+                               join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
+
+                               where b.ProjId == ProjectId
+                               orderby b.TimeStamp descending
+                               select new DTOProjectsFwd
+                               {
+                                   PsmIds = b.PsmId,
+                                   Stage = stge.Stages,
+                                   StageId = stge.StagesId,
+                                   ProjId =a.ProjId,
+                                   //Status = tounit.UnitName + " " + "For Comments",
+                                   Status = ststus.Status,
+                                   StatusId = ststus.StatusId,
+                                   Action = act.Actions,
+                                   ActionId = b.StatusActionsMappingId,
+                                   FromUnitName = " " + b.UserDetails + " ( " + fromunit.UnitName + ")",
+                                   ToUnitName = tounit.UnitName,
+                                   ToUnitId=tounit.unitid,
+                                   DateTimeOfUpdate = b.TimeStamp,
+                                   Remarks = b.Remarks,
+                                 
+
+                               }).ToListAsync();
+        
+
+            return query;
+        }
+
 
         public async Task<DTOProjectMovHistory> ProjectMovHistory(int? ProjectId)
         {
@@ -466,6 +504,8 @@ namespace swas.BAL.Repository
         }
 
 
+        
+
         //public async Task<int> IsReadInbox(int psmId)
         //{
 
@@ -698,6 +738,30 @@ namespace swas.BAL.Repository
             }
         }
 
-       
+
+        public async Task<int> GetProjectId(string? ProjName)
+        {
+            //var data = from a in _dbContext.Projects where a.ProjName == ProjName
+            //           select a.ProjId;
+            //int data1 = Convert.ToInt32(data);
+            //return data1;
+
+            int? ProjId  = _dbContext.Projects
+           .Where(p => p.ProjName == ProjName)
+            .Select(p => (int?)p.ProjId)
+           .Max();
+
+            int result = ProjId ?? 0;
+            return result;
+        }
+
+
+
+        public async Task<int> AddNotificationCommentAsync (Notification notifications )
+        {
+            _dbContext.Notification.Add(notifications);
+            return await _dbContext.SaveChangesAsync();
+
+        }
     }
 }

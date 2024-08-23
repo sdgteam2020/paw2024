@@ -833,44 +833,28 @@ Date : 13-08-2024 12:52:27
 Date : 13-08-2024 12:52:27
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 13-08-2024 15:00:24
+Date : 14-08-2024 10:22:42
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 14-08-2024 10:22:42
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 14-08-2024 10:22:45
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 14-08-2024 12:46:27
 'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
 -----------------------------------------------------------------------------
-Date : 13-08-2024 15:00:24
+Date : 14-08-2024 12:46:27
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 13-08-2024 15:00:26
-'System.Dynamic.DynamicObject' does not contain a definition for 'Projects'
------------------------------------------------------------------------------
-Date : 13-08-2024 15:00:26
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 13-08-2024 15:00:27
+Date : 14-08-2024 16:03:22
 'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
 -----------------------------------------------------------------------------
-Date : 13-08-2024 15:00:27
+Date : 14-08-2024 16:03:22
 Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 13-08-2024 15:00:28
-'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
------------------------------------------------------------------------------
-Date : 13-08-2024 15:00:28
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 13-08-2024 15:00:29
-'System.Dynamic.DynamicObject' does not contain a definition for 'Projects'
------------------------------------------------------------------------------
-Date : 13-08-2024 15:00:29
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 13-08-2024 15:00:33
-'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
------------------------------------------------------------------------------
-Date : 13-08-2024 15:00:33
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 13-08-2024 15:00:35
-Request failed & Status Code : 200
+<<<<<<< HEAD
+=======
 -----------------------------------------------------------------------------
 Date : 16-08-2024 11:48:01
 'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
@@ -886,6 +870,7 @@ Request failed & Status Code : 200
 -----------------------------------------------------------------------------
 Date : 20-08-2024 15:51:20
 Incorrect syntax near ')'.
+<<<<<<< HEAD
 -----------------------------------------------------------------------------
 Date : 22-08-2024 12:02:01
 'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
@@ -898,3 +883,33 @@ Date : 22-08-2024 12:02:03
 -----------------------------------------------------------------------------
 Date : 22-08-2024 12:02:03
 Request failed & Status Code : 200
+=======
+>>>>>>> main
+-----------------------------------------------------------------------------
+Date : 21-08-2024 15:27:48
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 21-08-2024 15:28:57
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 21-08-2024 15:29:02
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 21-08-2024 15:30:23
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 21-08-2024 15:32:10
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 21-08-2024 15:32:11
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 21-08-2024 15:32:54
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 21-08-2024 15:34:21
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 21-08-2024 15:34:22
+An error occurred while saving the entity changes. See the inner exception for details.
+>>>>>>> 21d7d2418c4cd80617422b415921fe36980c24a2

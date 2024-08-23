@@ -52,10 +52,11 @@
     });
     $(".btn-FwdHistory").click(function () {
         $('#ProjFwdHistory').modal('show');
-        IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html()); 
         
         GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentProjId").html());
-        /*window.location.reload();*/
+        IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html()); 
+        IsReadNotificationInbox($(this).closest("tr").find("#SpnCurrentProjId").html());
+        
     });
     $(".btn-Fwd").click(function () {
 
@@ -78,7 +79,8 @@
         $("#spanFwdProjectId").html($(this).closest("tr").find("#SpnCurrentProjId").html())
         $("#SpnFwdStakeHolderId").html($(this).closest("tr").find("#SpnStakeHolderId").html())
            
-            IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
+        IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
+        IsReadNotificationInbox($(this).closest("tr").find("#SpnCurrentProjId").html());
         $('#ProjFwd').modal('show');
 
         $(".Fwdtitle").html("Projects Move Details");
@@ -125,8 +127,9 @@
     });
 
     $(".ProjName").click(function () {
-       
+        alert("Raj");
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
+        IsReadNotificationInbox($(this).closest("tr").find("#SpnCurrentProjId").html());
     });
 
     $("#btnFwdNext").click(function () {
@@ -143,7 +146,7 @@
         });
         if (allFieldsComplete) {
             
-            CheckFwdCondition($("#spanFwdCurrentPslmId").html())
+            CheckFwdCondition($("#spanFwdCurrentPslmId").html());
            
         }
     });
@@ -184,6 +187,7 @@
     });
 });
 function CheckFwdCondition(CurrentPslmId) {
+    debugger;
     var userdata =
     {
         "ProjId": $("#spanFwdProjectId").html(),
@@ -300,4 +304,33 @@ function reset() {
     $("#ddlfwdFwdTo").val('');
     $("#txtRemarksfwd").val('');
     $("#TimeStampToProjfwd").val('');
+}
+
+
+
+function IsReadNotificationInbox(psmId) {
+    alert("Hii");
+    debugger;
+    $.ajax({
+        url: '/Projects/IsReadNotificationInbox',
+        type: 'POST',
+        data: { "ProjId": psmId },
+        success: function (response) {
+            console.log(response);
+
+        }
+    });
+}
+
+function IsReadInbox(psmId) {
+
+    $.ajax({
+        url: '/Projects/IsReadInbox',
+        type: 'POST',
+        data: { "PsmId": psmId },
+        success: function (response) {
+            console.log(response);
+
+        }
+    });
 }
