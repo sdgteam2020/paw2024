@@ -36,6 +36,7 @@ namespace swas.BAL.Interfaces
         Task<List<tbl_Projects>> GetMyProjectsAsync();
         Task<List<tbl_Projects>> GetActProjectsAsync();
         Task<tbl_ProjStakeHolderMov> GettXNByPsmIdAsync(int psmId);
+
         Task<List<DToWhiteListed>> GetWhiteListedActionProj();
 
         Task<List<DTOUnderProcessProj>> GetHoldActionProj();
@@ -53,11 +54,20 @@ namespace swas.BAL.Interfaces
 
         Task<bool> UpdateNotification(Notification notify);
 
-    
+        Task<bool> UpdateUnReadNotification(Notification notify);
 
         Task<tbl_ProjStakeHolderMov> GetNextPsmMoveAsync(int projId, int currentPsmId);
 
-        //Task<bool> UpdateProjectStakeholderMov (tbl_ProjStakeHolderMov psmove);
+        Task<List<DTODDLComman>> GetALLByProjectName(string ProjName);
+
+        Task<bool> UpdateNotificationByProjID(Notification notify);
+
+        Task<int> GetNotificationCommentCount();
+
+        Task<bool> UpdateCommentedUnReadNotification(Notification notify);
+
+        Task<List<tbl_ProjStakeHolderMov>> GetInboxByProjIdExcludingPsmIdAsync(int projId, int psmId);
+
     }
 
 

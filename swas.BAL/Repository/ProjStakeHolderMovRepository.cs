@@ -710,5 +710,13 @@ namespace swas.BAL.Repository
             return result;
         }
 
+
+
+        public async Task<int> AddNotificationCommentAsync (Notification notifications )
+        {
+            _dbContext.Notification.Add(notifications);
+            return await _dbContext.SaveChangesAsync();
+
+        }
     }
 }

@@ -22,8 +22,6 @@ $(document).ready(function () {
         }
         else {
             SendMsg();
-
-           
         }
     });
 
@@ -128,11 +126,6 @@ function GetProjCommentsByUnitId() {
                         $("#ProjectcommentprojId").html($(this).closest("tr").find("#spnProjId").html());
                         $("#ProjectcommentPsmId").html($(this).closest("tr").find("#spnpsmId").html());
 
-                        
-                        //08/08/24
-                        //var $row = $(this).closest("tr");
-                        //var psmId = $row.find("#spnpsmId").html().trim();
-                        //globalPsmId = psmId;
                         reset()
                         mMsater(0, "ddlStatus", 4, 0)
                         $("#ProjCommentModal").modal('show');
@@ -141,7 +134,8 @@ function GetProjCommentsByUnitId() {
 
 
                     $("body").on("click", ".projNameDetail", function () {
-                        IsReadInbox($(this).closest("tr").find("#spnpsmId").html());
+                    
+                       /* IsReadComment($("#ProjectcommentprojId").html());*/
                         IsReadNotification($(this).closest("tr").find("#spnProjId").html());
                       /*  IsReadInbox($(this).closest("tr").find("#spnpsmId").html());*/
                     });
@@ -225,8 +219,11 @@ function SendMsg() {
                 });
             }
 
-            IsUnReadComment($("#ProjectcommentprojId").html());
-            GetNotification($("#ProjectcommentprojId").html());
+           
+            /*IsReadComment($("#ProjectcommentprojId").html());*/
+            IsCommentedUnreadNotification($("#ProjectcommentprojId").html());
+            IsUnReadComment($("#ProjectcommentprojId").html(), $("#ProjectcommentPsmId").html());
+           /* GetNotification($("#ProjectcommentprojId").html());*/
         },
         error: function (error) {
            
@@ -290,41 +287,7 @@ function GetAllComments()
                 commentContainer += '</div>'; // Close the container
                 $('#ChatBox').empty().html(commentContainer);
 
-                //for (var i = 0; i < data.length; i++) {
-                //    var date = new Date(data[i].date);
-                //    var formattedDate = ("0" + date.getDate()).slice(-2) + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
-
-                //    commentContainer += '<div class="comment-box" style="text-align: justify;">'; // Use text-align: justify for justified text
-                //    commentContainer += '<div class="comment-header">';
-                //    commentContainer += '<div>';
-                //    commentContainer += '<span style="font-family: Arial; font-weight: bold; color: #0793f7;">' + data[i].stakeholder + '</span>';
-                //    commentContainer += '<span style="margin-left: 10px;" class="comment-meta">' + formattedDate + '</span>';
-                //    commentContainer += '</div>';
-                //    commentContainer += '<div>';
-                //    if (data[i].status =="Accepted")
-                //        commentContainer += '<span class="comment-meta badge badge-success text-white">' + data[i].status + '</span>';
-                //    else
-                //        commentContainer += '<span class="comment-meta badge badge-danger text-white">' + data[i].status + '</span>';
-
-                //    commentContainer += '<span class="pdf-link">'; // Move the PDF link to the same line as status
-
-                //    if (data[i].state !== null) {
-
-                //        commentContainer += '<a href="/Home/WaterMark3?id=' + data[i].attpath + '" target="_blank">';
-                //        commentContainer += '&nbsp;&nbsp; &nbsp;&nbsp;<img src="/assets/images/icons/pdfimg.png" alt="PDF icon" style="width: 24px; height: 24px;">';
-                //        commentContainer += '</a>';
-                //    }
-
-
-                //    commentContainer += '</span>';
-                //    commentContainer += '</div>';
-                //    commentContainer += '</div>';
-                //    commentContainer += '<div class="comment-content">' + data[i].comments + '</div>';
-                //    commentContainer += '</div>';
-                //}
-
-                //commentContainer += '</div>'; // Close the container
-                //$('#ChatBox').empty().html(commentContainer);
+              
 
 
             }
@@ -349,17 +312,6 @@ function IsReadComment(ProjId) {
     })
 }
 
-function GetNotification(ProjId) {
- 
-    $.ajax({
-        url: '/Home/GetNotification',
-        type: 'POST',
-        data: { "ProjId": ProjId },
-        success: function (response) {
-
-        }
-    })
-}
 
 function GetNotificationInbox(ProjId) {
     alert("om");
@@ -373,7 +325,7 @@ function GetNotificationInbox(ProjId) {
     })
 }
 
-function IsUnReadComment(ProjId) {
+function IsUnReadComment(ProjId,PsmId) {
     $.ajax({
         url:'/Projects/IsUnReadComment',
         type: 'POST',
@@ -398,7 +350,31 @@ function IsReadInbox(psmId) {
     });
 }
 
+function IsUnReadNotification(ProjId) {
 
+    $.ajax({
+        url: '/Projects/IsUnReadNotification',
+        type: 'POST',
+        data: { "ProjId": ProjId },
+        success: function (response) {
+            console.log(response);
+
+        }
+    });
+}
+
+function IsCommentedUnreadNotification(ProjId) {
+
+    $.ajax({
+        url: '/Projects/IsCommentedUnreadNotification',
+        type: 'POST',
+        data: { "ProjId": ProjId },
+        success: function (response) {
+            console.log(response);
+
+        }
+    });
+}
 
 function IsReadNotification(ProjId) {
 
@@ -435,6 +411,20 @@ function FwdProjConfirm(psmid) {
 
 
             }
+
+        }
+    });
+}
+
+
+function IsCommentedUnreadNotification(ProjId) {
+
+    $.ajax({
+        url: '/Projects/IsCommentedUnreadNotification',
+        type: 'POST',
+        data: { "ProjId": ProjId },
+        success: function (response) {
+            console.log(response);
 
         }
     });

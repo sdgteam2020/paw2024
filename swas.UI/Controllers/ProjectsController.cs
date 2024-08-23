@@ -32,6 +32,7 @@ using System.Threading;
 using System.Security.Cryptography.Xml;
 using iText.Commons.Actions.Contexts;
 using Grpc.Core;
+using System.Linq;
 
 namespace swas.UI.Controllers
 {
@@ -449,48 +450,7 @@ namespace swas.UI.Controllers
                     psmove.DateTimeOfUpdate = DateTime.Now;
                     psmove.IsRead = true;
                     await _projectsRepository.UpdateTxnAsync(psmove);
-
-
-
                     return Json(PsmId);
-
-
-
-                }
-                catch (Exception ex)
-                {
-                    swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                    return Json(0);
-                }
-            }
-            else
-            {
-                return Redirect("/Identity/Account/login");
-            }
-        }
-
-
-        [HttpPost]
-        public async Task<IActionResult> IsReadNotification(int ProjId)
-        {
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
-
-            if (Logins != null)
-            {
-
-                try
-                {
-
-                    Notification notify  = new Notification();
-                    // var project = await _projectsRepository.GetProjectByIdAsync(projid);
-                    notify = await _projectsRepository.GetNotificationByProjId(ProjId);
-                    notify.ReadDateTime = DateTime.Now;
-                    notify.IsRead = true;
-                    await _projectsRepository.UpdateNotification(notify);
-
-                    return Json(ProjId);
-
                 }
                 catch (Exception ex)
                 {
@@ -505,6 +465,72 @@ namespace swas.UI.Controllers
         }
 
         
+        [HttpPost]
+        public async Task<IActionResult> IsReadNotificationInbox(int ProjId)
+        {
+            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            if (loginUser == null)
+            {
+                return Redirect("/Identity/Account/login");
+            }
+
+            try
+            {
+                var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
+                if (notify != null)
+                {
+                    notify.ReadDateTime = DateTime.Now;
+                    notify.IsRead = true;
+
+                    var updateResult = await _projectsRepository.UpdateNotificationByProjID(notify);
+                    if (updateResult)
+                    {
+                        return Json(ProjId);
+                    }
+                }
+
+                return Json(0);
+            }
+            catch (Exception ex)
+            {
+                swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                return Json(0);
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> IsReadNotification(int ProjId)
+        {
+            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            if (loginUser == null)
+            {
+                return Redirect("/Identity/Account/login");
+            }
+
+            try
+            {
+                var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
+                if (notify != null)
+                {
+                    //notify.ReadDateTime = DateTime.Now;
+                    //notify.IsRead = true;
+
+                    var updateResult = await _projectsRepository.UpdateNotification(notify);
+                    if (updateResult)
+                    {
+                        return Json(ProjId);
+                    }
+                }
+
+                return Json(0);
+            }
+            catch (Exception ex)
+            {
+                swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                return Json(0);
+            }
+        }
 
         [HttpPost]
         public async Task<IActionResult> IsProcessProjConfirm(int ProjId)
@@ -1233,7 +1259,7 @@ namespace swas.UI.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> IsUnReadComment(int Projid)
+        public async Task<IActionResult> IsUnReadComment(int Projid ,int PsmId)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
             if (Logins != null)
@@ -1241,7 +1267,7 @@ namespace swas.UI.Controllers
                 try
                 {
                     // Get all records for the given Projid
-                    List<tbl_ProjStakeHolderMov> inboxComments = await _projectsRepository.GetInboxByProjIdAsync(Projid);
+                    List<tbl_ProjStakeHolderMov> inboxComments = await _projectsRepository.GetInboxByProjIdExcludingPsmIdAsync(Projid, PsmId);
 
                     // Update IsRead to false for all records
                     foreach (var comment in inboxComments)
@@ -1273,7 +1299,7 @@ namespace swas.UI.Controllers
        {
             try
             {
-                int count = await _commentRepository.GetNotificationCommentCount();
+                int count = await _projectsRepository.GetNotificationCommentCount();
                 return new JsonResult(count); // Returns the count as JSON
             }
             catch (Exception ex)
@@ -1308,11 +1334,11 @@ namespace swas.UI.Controllers
 
         [HttpGet]
 
-        public async Task<IActionResult> ProjectMovement(string? ProjName )
+        public async Task<IActionResult> ProjectMovement(string? ProjName)
         {
             //var ProjectMovementDetail  = await _projStakeHolderMovRepository.ProjectMovement(ProjId);
             return View();
-           
+
         }
         public async Task<IActionResult> GetProjectMov(int Id)
         {
@@ -1376,6 +1402,186 @@ namespace swas.UI.Controllers
         }
 
 
+        public async Task<IActionResult> GetALLByProjectName(string? ProjName)
+        {
+            var ProjectName  = await _projectsRepository.GetALLByProjectName(ProjName);
+            return Json(ProjectName);
+        }
+
+
+        public async Task<IActionResult> ProcessNotification(int ProjId, int unitid, DateTime FwdDateForComment)
+        {
+            //**
+            try
+            {
+                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+                if (Logins != null)
+                {
+                    if (ProjId != null)
+                    {
+                        var project = await _projectsRepository.GetProjectByIdAsync(ProjId);
+
+                        unitid = project.StakeHolderId;
+                        if(unitid == 1)
+                        {
+                            int[] stausid = { 26, 31, 37, 21 };
+                            int[] unitids = { 4, 3, 5, 1};
+                            for (int i = 0; i < stausid.Length; i++)
+                            {
+                                Notification notify = new Notification();
+
+                                notify.ProjId = ProjId;
+                                notify.NotificationFrom = Logins.unitid ?? 0;
+                                notify.NotificationTo = unitids[i];
+                                notify.IsRead = false;
+                                notify.ReadDateTime = FwdDateForComment;
+                                notify.NotificationType = 1;
+
+                                await _psmRepository.AddNotificationCommentAsync(notify);
+
+                            }
+                        }
+                        else
+                        {
+                            int[] stausid = { 26, 31, 37, 21, 21 };
+                            int[] unitids = { 4, 3, 5, 1, unitid };
+                            for (int i = 0; i < stausid.Length; i++)
+                            {
+                                Notification notify = new Notification();
+
+                                notify.ProjId = ProjId;
+                                notify.NotificationFrom = Logins.unitid ?? 0;
+                                notify.NotificationTo = unitids[i];
+                                notify.IsRead = false;
+                                notify.ReadDateTime = FwdDateForComment;
+                                notify.NotificationType = 1;
+
+                                await _psmRepository.AddNotificationCommentAsync(notify);
+
+                            }
+                        }
+                        
+                        
+                        return Json(1);
+                    }
+                    else
+                    {
+                        return Json(0);
+                    }
+                }
+                else
+                {
+                    return Redirect("/Identity/Account/login");
+                }
+            }
+            catch (Exception ex) { return Json(-1); }
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> IsUnReadNotification(int ProjId)
+        {
+            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            if (loginUser == null)
+            {
+                return Redirect("/Identity/Account/login");
+            }
+
+            try
+            {
+                var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
+                if (notify != null)
+                {
+                    notify.ReadDateTime = DateTime.Now;
+                    notify.IsRead = false;
+
+                    var updateResult = await _projectsRepository.UpdateUnReadNotification(notify);
+                    if (updateResult)
+                    {
+                        return Json(ProjId);
+                    }
+                }
+
+                return Json(0);
+            }
+            catch (Exception ex)
+            {
+                swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                return Json(0);
+            }
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> IsCommentedUnreadNotification (int ProjId)
+        {
+            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            if (loginUser == null)
+            {
+                return Redirect("/Identity/Account/login");
+            }
+
+            try
+            {
+                var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
+                if (notify != null)
+                {
+                    notify.ReadDateTime = DateTime.Now;
+                    notify.IsRead = false;
+
+                    var updateResult = await _projectsRepository.UpdateCommentedUnReadNotification(notify);
+                    if (updateResult)
+                    {
+                        return Json(ProjId);
+                    }
+                }
+
+                return Json(0);
+            }
+            catch (Exception ex)
+            {
+                swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                return Json(0);
+            }
+        }
+
+
+       
+
+        [HttpPost]
+        public async Task<IActionResult> IsReadComment(int ProjId)
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            if (Logins != null)
+            {
+                try
+                {
+                    // Get all records for the given Projid
+                    List<tbl_ProjStakeHolderMov> inboxComments = await _projectsRepository.GetInboxByProjIdAsync(ProjId);
+
+                    // Update IsRead to false for all records
+                    foreach (var comment in inboxComments)
+                    {
+                        comment.DateTimeOfUpdate = DateTime.Now;
+                        comment.IsRead = true;
+                        await _projectsRepository.UpdateTxnAsync(comment);
+                    }
+
+                    return Json(ProjId);
+                }
+                catch (Exception ex)
+                {
+                    swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                    return Json(0);
+                }
+            }
+            else
+            {
+                return Redirect("/Identity/Account/login");
+            }
+        }
     }
 
 }

@@ -1308,66 +1308,6 @@ namespace swas.BAL.Repository
                                       }).ToListAsync();
 
 
-                //var projects = await (from a in _DBContext.Projects
-                //                      join b in _DBContext.ProjStakeHolderMov on a.CurrentPslmId equals b.PsmId into bs
-                //                      from e in bs.DefaultIfEmpty()
-                //                      join d in _DBContext.mStatus on e.StatusId equals d.StatusId into ds
-                //                      from eWithStatus in ds.DefaultIfEmpty()
-                //                      join c in _DBContext.tbl_mUnitBranch on a.StakeHolderId equals c.unitid into cs
-                //                      from eWithUnit in cs.DefaultIfEmpty()
-
-
-                //                      join g in _DBContext.tbl_mUnitBranch on e.ToUnitId equals g.unitid into csh
-                //                      from curstk in csh.DefaultIfEmpty()
-
-                //                      join f in _DBContext.Comment on a.CurrentPslmId equals f.PsmId into fs
-                //                      from eWithComment in fs.DefaultIfEmpty()
-                //                      where a.IsActive && !a.IsDeleted
-                //                      && e.ActionCde > 0
-                //                      orderby e.TimeStamp descending
-                //                      select new tbl_Projects
-                //                      {
-                //                          ProjId = a.ProjId,
-                //                          ProjName = a.ProjName,
-                //                          StakeHolderId = a.StakeHolderId,
-                //                          CurrentPslmId = a.CurrentPslmId,
-                //                          InitiatedDate = a.InitiatedDate,
-                //                          CompletionDate = a.CompletionDate,
-                //                          IsWhitelisted = a.IsWhitelisted,
-                //                          InitialRemark = a.InitialRemark,
-                //                          IsDeleted = a.IsDeleted,
-                //                          IsActive = a.IsActive,
-                //                          EditDeleteBy = a.EditDeleteBy,
-                //                          EditDeleteDate = a.EditDeleteDate,
-                //                          UpdatedByUserId = a.UpdatedByUserId,
-                //                          DateTimeOfUpdate = e.DateTimeOfUpdate,
-                //                          ToUnitId = a.ToUnitId,
-                //                          StakeHolder = eWithUnit.UnitName,
-                //                          FwdtoUser = curstk.UnitName,
-                //                          Status = eWithStatus.Status,
-                //                          Comments = eWithComment.Comment,
-                //                          ActionCde = e.ActionCde,
-                //                          AimScope = a.AimScope,
-                //                          AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == a.CurrentPslmId),
-                //                          DynamicColumns = _DBContext.tbl_mUnitBranch
-                //                                              .Where(u => u.commentreqdid && u.unitid == a.StakeHolderId)
-                //                                              .Select(u => new UnitDtl
-                //                                              {
-                //                                                  unitid = u.unitid,
-                //                                                  UnitName = u.UnitName,
-                //                                                  commentreqdid = u.commentreqdid,
-                //                                                  Remarks = _DBContext.PorjIniStat
-                //                                                              .Where(p => p.StakeHolderId == u.unitid && p.psmid == a.CurrentPslmId)
-                //                                                              .Select(p => p.Remarks)
-                //                                                              .FirstOrDefault(),
-                //                                                  InitialStatus = _DBContext.PorjIniStat
-                //                                                                  .Where(p => p.StakeHolderId == u.unitid && p.psmid == a.CurrentPslmId)
-                //                                                                  .Select(p => p.InitialStatus)
-                //                                                                  .FirstOrDefault()
-                //                                              })
-                //                                              .ToList()
-                //                      }).ToListAsync();
-
 
                 return projects;
 
@@ -1380,46 +1320,6 @@ namespace swas.BAL.Repository
             }
 
 
-
-
-
-            //var query = from a in _dbContext.Projects
-            //            join e in _dbContext.ProjStakeHolderMov on a.CurrentPslmId equals e.PsmId
-            //            join d in _dbContext.mStatus on e.StatusId equals d.StatusId into ds
-            //            from eWithStatus in ds.DefaultIfEmpty()
-            //            join c in _dbContext.mStakeHolder on e.ToUnitId equals c.StakeHolderId into cs
-            //            from eWithStakeHolder in cs.DefaultIfEmpty()
-            //            join msh in _dbContext.mStakeHolder on e.ToUnitId equals msh.StakeHolderId into mshs
-            //            from eWithMStakeHolder in mshs.DefaultIfEmpty()
-            //            where a.IsActive && !a.IsDeleted
-
-
-
-            //select new tbl_Projects
-            //            {
-            //                ProjId = a.ProjId,
-            //                ProjName = a.ProjName,
-            //                StakeHolderId = a.StakeHolderId,
-            //                CurrentPslmId = a.CurrentPslmId,
-            //                InitiatedDate = a.InitiatedDate,
-            //                CompletionDate = a.CompletionDate,
-            //                IsWhitelisted = a.IsWhitelisted,
-            //                InitialRemark = a.InitialRemark,
-            //                IsDeleted = a.IsDeleted,
-            //                IsActive = a.IsActive,
-            //                EditDeleteBy = a.EditDeleteBy,
-            //                EditDeleteDate = a.EditDeleteDate,
-            //                UpdatedByUserId = a.UpdatedByUserId,
-            //                DateTimeOfUpdate = e.DateTimeOfUpdate,
-            //                ToUnitId = a.ToUnitId,
-            //                StakeHolder = eWithStakeHolder.StakeHolder,
-            //                Status = eWithStatus.Status
-
-            //            };
-
-            //var projectsWithDetails = await query.ToListAsync();
-
-            //return projectsWithDetails;
 
         }
         public async Task<List<DToWhiteListed>> GetWhiteListedActionProj()
@@ -1840,12 +1740,7 @@ namespace swas.BAL.Repository
         }
 
 
-        //public async Task<tbl_ProjStakeHolderMov> GetInboxByProjIdAsync (int projId)
-        //{
-        //    return await _dbContext.ProjStakeHolderMov
-        //       .FirstOrDefaultAsync(a => a.ProjId == projId);
-        //}
-
+        
         
 
         public async Task<List<tbl_ProjStakeHolderMov>> GetInboxByProjIdAsync(int projId)
@@ -1855,43 +1750,72 @@ namespace swas.BAL.Repository
                 .ToListAsync();
         }
 
-        //public async Task<bool> UpdateProjectStakeholderMov(tbl_ProjStakeHolderMov psmove)
-        //{
-        //    Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-        //    if (Logins != null)
-        //    {
-        //        // tbl_ProjStakeHolderMov psmove = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == project.CurrentPslmId);
-        //        _dbContext.Entry(psmove).State = EntityState.Modified;
-        //        await _dbContext.SaveChangesAsync();
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
+        
 
         public async Task<Notification> GetNotificationByProjId (int ProjId)
         {
             return await _dbContext.Notification
                .FirstOrDefaultAsync(a => a.ProjId == ProjId);
+
+        }
+
+
+        public async Task<int> GetNotificationCommentCount()
+        {
+            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+
+            int notificationCount = await _dbContext.Notification
+                .Where(n => n.NotificationType == 1 && n.IsRead == false && n.NotificationTo == loginUser.unitid)
+                .CountAsync();
+            return notificationCount;
         }
 
         public async Task<bool> UpdateNotification(Notification notify)
         {
-            _dbContext.Notification.Update(notify);
-            await _dbContext.SaveChangesAsync();
+            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            if (loginUser == null)
+            {
+                return false;
+            }
 
-            return true;
+            var existingNotification = await _dbContext.Notification
+                .FirstOrDefaultAsync(x => x.NotificationTo == loginUser.unitid && x.ProjId == notify.ProjId && x.NotificationType == 1);
+
+            if (existingNotification != null)
+            {
+                existingNotification.IsRead = true;
+                existingNotification.ReadDateTime = notify.ReadDateTime; // Update ReadDateTime here
+                _dbContext.Notification.Update(existingNotification);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
         }
 
-        //public async Task<tbl_ProjStakeHolderMov> GetNextPsmMoveAsync(int projId, int currentPsmId)
-        //{
-        //    return await _context.tbl_ProjStakeHolderMov
-        //        .Where(x => x.ProjId == projId && x.PsmId > currentPsmId)
-        //        .OrderBy(x => x.PsmId)
-        //        .FirstOrDefaultAsync();
-        //}
+        public async Task<bool> UpdateUnReadNotification (Notification notify)
+        {
+            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            if (loginUser == null)
+            {
+                return false;
+            }
+
+            var existingNotification = await _dbContext.Notification
+                .FirstOrDefaultAsync(x => x.NotificationTo == loginUser.unitid && x.ProjId == notify.ProjId);
+
+            if (existingNotification != null)
+            {
+                existingNotification.IsRead = false;
+                existingNotification.ReadDateTime = notify.ReadDateTime; // Update ReadDateTime here
+                _dbContext.Notification.Update(existingNotification);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
+        }
+
 
         public async Task<tbl_ProjStakeHolderMov> GetNextPsmMoveAsync(int projId,int currentPsmId)
         {
@@ -1901,6 +1825,75 @@ namespace swas.BAL.Repository
                 .FirstOrDefaultAsync();
         }
 
+
+        public async Task<List<DTODDLComman>> GetALLByProjectName (string ProjName)
+        {
+            try
+            {
+                var GetALL = (from A in _DBContext.Projects
+                              where A.ProjName.Contains(ProjName)
+                              select new DTODDLComman
+                              {
+                                  Id = A.ProjId,
+                                  Name = A.ProjName,
+                              }).Take(5).ToList();
+                return await Task.FromResult(GetALL);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+        }
+
+
+
+        public async Task<bool> UpdateNotificationByProjID (Notification notify)
+        {
+            _dbContext.Notification.Update(notify);
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
+
+        public async Task<List<tbl_ProjStakeHolderMov>> GetInboxByProjIdExcludingPsmIdAsync(int projId, int psmId)
+        {
+            return await _dbContext.ProjStakeHolderMov
+                                   .Where(c => c.ProjId == projId && c.PsmId != psmId)
+                                   .ToListAsync();
+
+           
+        }
+
+
+
+        public async Task<bool> UpdateCommentedUnReadNotification(Notification notify)
+        {
+            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            if (loginUser == null)
+            {
+                return false;
+            }
+            // Fetch all notifications for the given ProjId where NotificationTo does not match the logged-in user's unitid
+            var notifications = await _dbContext.Notification
+                .Where(x => x.ProjId == notify.ProjId && x.NotificationTo != loginUser.unitid)
+                .ToListAsync();
+
+            if (notifications.Any())
+            {
+                foreach (var notification in notifications)
+                {
+                    notification.IsRead = false;
+                    notification.ReadDateTime = notify.ReadDateTime; 
+                    _dbContext.Notification.Update(notification);
+                }
+
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
+        }
     }
 
 }

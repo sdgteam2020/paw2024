@@ -3,16 +3,7 @@
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl)
 })
-    //$(".processDetail").click(function () {
-
-    //    var ProjId = $(this).closest("tr").find("#SpnCurrentProjId").html();
-    //    var psmId = $(this).closest("tr").find("#SpnCurrentpsmId").html();
-    //    var FwdDateForComment = $(this).closest("tr").find("#SpnTimeStampId").text();
-
-    //    //  GetForCommentStakeHolder(ProjId, psmId);
-    //    SentForComment(ProjId, psmId, 0, FwdDateForComment)
-    //    ProcessProjConfirm(ProjId)
-    //});
+   
 
     $(".processDetail").click(function () {
         var $row = $(this).closest('tr');
@@ -29,9 +20,11 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             $('#confirmationModal').modal('hide');
 
             SentForComment(ProjId, psmId, 0, FwdDateForComment);
+            SentForNotification(ProjId, psmId, 0, FwdDateForComment);
             ProcessProjConfirm(ProjId);
         });
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
+        IsReadNotificationInbox(ProjId);
     });
 
     $('#confirmationModal').on('hidden.bs.modal', function () {
@@ -93,7 +86,35 @@ function SentForComment(ProjId, psmId, unitid, FwdDateForComment) {
         }
     });
 }
+function SentForNotification(ProjId, psmId, unitid, FwdDateForComment) {
+    $.ajax({
+        url: '/Projects/ProcessNotification',
+        type: 'POST',
+        data: {
+            "ProjId": ProjId,
+            "FwdDateForComment": FwdDateForComment,
+            "unitid": unitid, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+        },
+        success: function (response) {
+            console.log(response);
+            if (response && response === 1) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Project Notification Added  successfully',
+                    showConfirmButton: false,
+                    timer: 700
+                });
+            }
 
+            window.location.reload();
+        },
+        error: function (error) {
+            console.error('Error occurred:', error);
+            // Handle error if needed
+        }
+    });
+}
 function ProcessProjConfirm(ProjId) {
     $.ajax({
         url: '/Projects/IsProcessProjConfirm',
@@ -363,6 +384,19 @@ function IsReadInbox(psmId) {
         success: function (response) {
             console.log(response);
             
+        }
+    });
+}
+
+function IsReadNotificationInbox(ProjId) {
+
+    $.ajax({
+        url: '/Projects/IsReadNotificationInbox',
+        type: 'POST',
+        data: { "PsmId": ProjId },
+        success: function (response) {
+            console.log(response);
+
         }
     });
 }

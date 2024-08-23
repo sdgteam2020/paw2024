@@ -1684,16 +1684,7 @@
 
                         </a>
                     </li>
-                    <li>
-                            <a href="/Projects/ProjectMovement">
-                                <div class="icon-container">
-
-                                    <ion-icon name="ellipse-outline"></ion-icon>
-                                    <span class="icon-name">Edit Project Movement</span>
-                                </div>
-
-                            </a>
-                        </li>
+                   
 
                     <li>
                         <a href="/Chat/Index" @*onclick="createNotification(event)"*@>
@@ -1745,25 +1736,7 @@
                                         </div>
                                     </a>
                                 </li>
-                                @*<li class="selected">
-                        <a href="/Status/Index">
-                        <div class="icon-container">
-
-                        <ion-icon name="ellipse-outline"></ion-icon>
-                        <span class="icon-name">View Sub Stage</span>
-                        </div>
-                        </a>
-                        </li>*@
-
-                                @*  <li class="selected">
-                        <a href="/Rank/Index">
-                        <div class="icon-container">
-
-                        <ion-icon name="ellipse-outline"></ion-icon>
-                        <span class="icon-name">View Rank</span>
-                        </div>
-                        </a>
-                        </li>*@
+                                
                                 <li class="selected">
                                     <a href="/Identity/Account/Register" target="_new">
                                         <div class="icon-container">
@@ -1794,6 +1767,22 @@
 
                         </li>
 
+                    }
+
+                    @if (Logins != null && Logins.Role == "Dte" && Logins.unitid == 4)
+                    {
+                       
+                            <li>
+                                <a href="/Projects/ProjectMovement">
+                                    <div class="icon-container">
+
+                                        <ion-icon name="ellipse-outline"></ion-icon>
+                                        <span class="icon-name">Edit Project Movement</span>
+                                    </div>
+
+                                </a>
+                            </li>
+                       
                     }
 
                 </ul>
@@ -1846,9 +1835,7 @@
 
 
         }
-
-
-
+        
 
         <!--end top header-->
         <!-- unit level users menu start  -->
@@ -1868,8 +1855,6 @@
                         <ion-icon name="menu-sharp"></ion-icon>
                         <img src="~/assets/images/menu-sharp.256x172.png" style="width: 16px;" />
                     </div>
-
-
 
                 </div>
                 <!--navigation-->
@@ -2007,16 +1992,7 @@
                         </a>
                     </li>
 
-                    <li>
-                        <a href="/Projects/ProjectMovement">
-                            <div class="icon-container">
-
-                                <ion-icon name="ellipse-outline"></ion-icon>
-                                <span class="icon-name">Edit Project Movement</span>
-                            </div>
-
-                        </a>
-                    </li>
+                   
                     <li>
                         <a href="/Chat/Index" @*onclick="createNotification(event)"*@>
                             <div class="icon-container">
@@ -2076,6 +2052,7 @@
 
         }
 
+        
 
         <div class="page-content-wrapper">
             @if (Logins != null)
@@ -2259,17 +2236,7 @@
 
 
 
-<script>
-    @*
-        var pageRefreshed = localStorage.getItem('pageRefreshed');
-        if (pageRefreshed) {
 
-        localStorage.removeItem('pageRefreshed');
-
-
-        window.location.href = '/Home/Index';
-        } *@
-</script>
 
 <script>
 

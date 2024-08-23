@@ -343,51 +343,5 @@ function GetProjectMovement()
 }
 
 
-    $("#txtProjectName").autocomplete({
-        source: function (request, response) {
-            if (request.term.length > 1) {
-                $("#spnProjIdMap").html('');
-                var param = { "ProjectName": request.term };
-                $("#spnProjIdMap").html(0);
-                $.ajax({
-                    url: '/Projects/GetALLByProjectName',
-                    contentType: 'application/x-www-form-urlencoded',
-                    data: param,
-                    type: 'POST',
-                    success: function (data) {
-                        if (data.length != 0) {
-                            response($.map(data, function (item) {
-
-                                $("#loading").addClass("d-none");
-                                return { label: item.AppointmentName, value: item.ApptId };
-
-                            }))
-                        }
-                        else {
-
-                            $("#txtProjectName").val("");
-                            $("#spnProjIdMap").html("");
-                            $("#ProjId").val("");
-                            alert("Project not found.")
-                        }
-                    },
-                    error: function (response) {
-                        alert(response.responseText);
-                    },
-                    failure: function (response) {
-                        alert(response.responseText);
-                    }
-                });
-            }
-        },
-        select: function (e, i) {
-            e.preventDefault();
-            $("#txtProjectName").val(i.item.label);
-            $("#spnProjIdMap").html(i.item.value);
-            $("#ProjId").val(i.item.value);
-            //alert(i.item.value)
-        },
-        appendTo: '#suggesstion-box'
-    });
 
 
