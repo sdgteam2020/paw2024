@@ -25,7 +25,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         });
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
        
-        IsReadNotification1($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
+        IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
     });
 
     $('#confirmationModal').on('hidden.bs.modal', function () {
@@ -87,35 +87,7 @@ function SentForComment(ProjId, psmId, unitid, FwdDateForComment) {
         }
     });
 }
-function AddNotification(ProjId, type, unitid) {
-    $.ajax({
-        url: '/Notification/AddNotification',
-        type: 'POST',
-        data: {
-            "ProjId": ProjId,
-            "type": type,
-            "unitid": unitid, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
-        },
-        success: function (response) {
-            console.log(response);
-            if (response && response === 1) {
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Project Notification Added  successfully',
-                    showConfirmButton: false,
-                    timer: 700
-                });
-            }
 
-            window.location.reload();
-        },
-        error: function (error) {
-            console.error('Error occurred:', error);
-            // Handle error if needed
-        }
-    });
-}
 function ProcessProjConfirm(ProjId) {
     $.ajax({
         url: '/Projects/IsProcessProjConfirm',
@@ -385,21 +357,6 @@ function IsReadInbox(psmId) {
         success: function (response) {
             console.log(response);
             
-        }
-    });
-}
-
-function IsReadNotification1() {
-    $.ajax({
-        url: '/Notification/IsReadNotification',
-        type: 'POST',
-        data: {
-            "ProjId": ProjId,
-            "type": type
-            },
-        success: function (response) {
-            console.log(response);
-
         }
     });
 }

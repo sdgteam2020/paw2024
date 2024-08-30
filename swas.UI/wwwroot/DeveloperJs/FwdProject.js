@@ -50,7 +50,7 @@
         GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentProjId").html());
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html()); 
         
-        IsReadNotification1($(this).closest("tr").find("#SpnCurrentProjId").html(),2);
+        IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(),2);
        
         
     });
@@ -75,7 +75,7 @@
         $("#SpnFwdStakeHolderId").html($(this).closest("tr").find("#SpnStakeHolderId").html())
            
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
-        IsReadNotification1($(this).closest("tr").find("#SpnCurrentProjId").html(),2);
+        IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(),2);
 
         $('#ProjFwd').modal('show');
 
@@ -114,7 +114,7 @@
 
     $(".ProjName").click(function () {
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
-        IsReadNotification1($(this).closest("tr").find("#SpnCurrentProjId").html(),2);
+        IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(),2);
     });
 
     $("#btnFwdNext").click(function () {
@@ -243,7 +243,7 @@ function SaveFwdTo(CurrentPslmId) {
                 $(".ProjectsFwd").addClass("d-none");
                 $(".Attmenthistory").removeClass("d-none");
                 AddNotification($("#spanFwdProjectId").html(), 2, $("#ddlfwdFwdTo").val());
-                IsReadNotification1($("#spanFwdProjectId").html(),2);
+                IsReadNotification($("#spanFwdProjectId").html(),2);
             }
 
         }
@@ -306,51 +306,7 @@ function IsReadInbox(psmId) {
         }
     });
 }
-function IsReadNotification1(ProjId,type) {
-    
-    $.ajax({
-        url: '/Notification/IsReadNotification',
-        type: 'POST',
-        data: {
-            "ProjId": ProjId,
-            "type": type
-        },
-        success: function (response) {
-            console.log(response);
 
-        }
-    });
-}
 
-function AddNotification(ProjId, type, unitid) {
-    
-    $.ajax({
-        url: '/Notification/AddNotification',
-        type: 'POST',
-        data: {
-            "ProjId": ProjId,
-            "type": type,
-            "unitid": unitid, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
-        },
-        success: function (response) {
-            console.log(response);
-            if (response && response === 1) {
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Project Notification Added  successfully',
-                    showConfirmButton: false,
-                    timer: 700
-                });
-            }
-
-            window.location.reload();
-        },
-        error: function (error) {
-            console.error('Error occurred:', error);
-            // Handle error if needed
-        }
-    });
-}
 
 

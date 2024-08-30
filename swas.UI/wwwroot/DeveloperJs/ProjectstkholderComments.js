@@ -215,6 +215,7 @@ function SendMsg() {
             }
 
             UnReadNotification($("#ProjectcommentprojId").html(), 1);
+            IsReadComment($(this).closest("tr").find("#spnProjId").html());
             IsUnReadComment($("#ProjectcommentprojId").html(), $("#ProjectcommentPsmId").html());
             
         },
@@ -345,49 +346,21 @@ function IsReadInbox(psmId) {
     });
 }
 
-function IsUnReadNotification(ProjId) {
+//function IsUnReadNotification(ProjId) {
 
-    $.ajax({
-        url: '/Projects/IsUnReadNotification',
-        type: 'POST',
-        data: { "ProjId": ProjId },
-        success: function (response) {
-            console.log(response);
+//    $.ajax({
+//        url: '/Projects/IsUnReadNotification',
+//        type: 'POST',
+//        data: { "ProjId": ProjId },
+//        success: function (response) {
+//            console.log(response);
 
-        }
-    });
-}
+//        }
+//    });
+//}
 
 
 
-function UnReadNotification(ProjId, type) {
-    $.ajax({
-        url: '/Notification/UnReadNotification',
-        type: 'POST',
-        data: {
-            "ProjId": ProjId,
-            "type": type
-        },
-        success: function (response) {
-            console.log(response);
-
-        }
-    });
-}
-function IsReadNotification(ProjId, type) {
-    $.ajax({
-        url: '/Notification/IsReadNotification',
-        type: 'POST',
-        data: {
-            "ProjId": ProjId,
-            "type": type
-        },
-        success: function (response) {
-            console.log(response);
-
-        }
-    });
-}
 
 function reset() {
     $("#Comments").val("");
@@ -417,15 +390,15 @@ function FwdProjConfirm(psmid) {
 }
 
 
-function IsCommentedUnreadNotification(ProjId) {
+//function IsCommentedUnreadNotification(ProjId) {
 
-    $.ajax({
-        url: '/Projects/IsCommentedUnreadNotification',
-        type: 'POST',
-        data: { "ProjId": ProjId },
-        success: function (response) {
-            console.log(response);
+//    $.ajax({
+//        url: '/Projects/IsCommentedUnreadNotification',
+//        type: 'POST',
+//        data: { "ProjId": ProjId },
+//        success: function (response) {
+//            console.log(response);
 
-        }
-    });
-}
+//        }
+//    });
+//}
