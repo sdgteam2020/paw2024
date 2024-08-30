@@ -440,3 +440,4 @@ AppPackages/
 /swas.UI/obj/Debug/net6.0/swas.UI.csproj.AssemblyReference.cache
 /swas.UI/obj/Debug/net6.0/swas.UI.dll
 /swas.UI/obj/Debug/net6.0/swas.UI.pdb
+/swas.UI/bin/Debug/net6.0/swas.UI.deps.json
