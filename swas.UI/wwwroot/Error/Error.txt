@@ -1,36 +1,3 @@
-Date : 4/18/2024 11:56:03 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/18/2024 11:56:05 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/18/2024 11:56:07 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/18/2024 11:56:08 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/18/2024 11:56:08 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/18/2024 11:56:08 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/18/2024 11:56:09 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/18/2024 11:56:09 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/18/2024 11:56:09 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/18/2024 11:56:10 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
-Date : 4/18/2024 11:56:10 AM
-A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
------------------------------------------------------------------------------
 Date : 4/18/2024 11:56:10 AM
 A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
 -----------------------------------------------------------------------------
@@ -898,3 +865,36 @@ Object reference not set to an instance of an object.
 -----------------------------------------------------------------------------
 Date : 23-08-2024 14:13:14
 Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 28-08-2024 16:52:05
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 28-08-2024 16:52:05
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 28-08-2024 16:52:18
+'System.Dynamic.DynamicObject' does not contain a definition for 'Projects'
+-----------------------------------------------------------------------------
+Date : 28-08-2024 16:52:18
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 29-08-2024 11:40:54
+'System.Dynamic.DynamicObject' does not contain a definition for 'Projects'
+-----------------------------------------------------------------------------
+Date : 29-08-2024 11:40:55
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 29-08-2024 11:41:00
+'System.Dynamic.DynamicObject' does not contain a definition for 'Projects'
+-----------------------------------------------------------------------------
+Date : 29-08-2024 11:41:00
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 29-08-2024 11:41:13
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 29-08-2024 18:34:04
+Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+-----------------------------------------------------------------------------
+Date : 29-08-2024 18:34:04
+Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.

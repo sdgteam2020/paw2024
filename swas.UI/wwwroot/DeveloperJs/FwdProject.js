@@ -7,19 +7,13 @@
         mMsaterStage(0, "ddlfwdSubStage", 6, $("#ddlfwdStage").val(), $("#SpnStakeHolderId").html())
     });
 
-    //$("#ddlfwdSubStage").change(function () {
-
-    //    mMsater(0, "ddlfwdAction", 9, $("#ddlfwdSubStage").val())
-    //});
+   
     $("#ddlfwdSubStage").change(function () {
 
         mMsater(0, "ddlfwdAction", 7, $("#ddlfwdSubStage").val())
     });
    
-    //$("#ddlfwdAction").change(function () {
-
-    //    mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnStakeHolderId").html())
-    //});
+   
     $("#ddlfwdAction").change(function () {
 
         mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html());
@@ -55,7 +49,9 @@
         
         GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentProjId").html());
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html()); 
-        IsReadNotificationInbox($(this).closest("tr").find("#SpnCurrentProjId").html());
+        
+        IsReadNotification1($(this).closest("tr").find("#SpnCurrentProjId").html(),2);
+       
         
     });
     $(".btn-Fwd").click(function () {
@@ -68,10 +64,9 @@
 
         mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 1)
         mMsaterStage($(this).closest("tr").find("#SpnTimeStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#SpnStageId").html(), $("#SpnStakeHolderId").html())
-        /* mMsater(0, "ddlfwdAction", 9, $("#ddlfwdSubStage").val())*/
+        
         
         mMsater($(this).closest("tr").find("#SpnTimeActionId").html(), "ddlfwdAction", 7, $(this).closest("tr").find("#SpnTimeStatusId").html())
-        /*mMsater($(this).closest("tr").find("#SpnTimeActionId").html(), "ddlfwdAction", 9, $(this).closest("tr").find("#SpnTimeStatusId").html())*/
         mMsaterFwdTo($(this).closest("tr").find("#SpnTimeToUnitId").html(), "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html());
         
 
@@ -80,17 +75,14 @@
         $("#SpnFwdStakeHolderId").html($(this).closest("tr").find("#SpnStakeHolderId").html())
            
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
-        IsReadNotificationInbox($(this).closest("tr").find("#SpnCurrentProjId").html());
+        IsReadNotification1($(this).closest("tr").find("#SpnCurrentProjId").html(),2);
+
         $('#ProjFwd').modal('show');
 
         $(".Fwdtitle").html("Projects Move Details");
         $(".ProjectsFwd").removeClass("d-none");
         $(".Attmenthistory").addClass("d-none");
-          
-           
-
-       // alert($(this).closest("tr").find("#SpnprojectStageId").html())
-        //GetAllComments($(this).closest("tr").find("#SpnCurrentProjId").html());
+       
     });
     $(".btn-Obsn").click(function () {
         
@@ -103,14 +95,13 @@
         mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 2)
         mMsaterStage($(this).closest("tr").find("#SpnTimeStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#SpnStageId").html(), $("#SpnStakeHolderId").html())
 
-        /*mMsater($(this).closest("tr").find("#SpnTimeActionId").html(), "ddlfwdAction", 9, $(this).closest("tr").find("#SpnTimeStatusId").html())*/
+        
         mMsater($(this).closest("tr").find("#SpnTimeActionId").html(), "ddlfwdAction", 7, $(this).closest("tr").find("#SpnTimeStatusId").html())
         mMsaterFwdTo($(this).closest("tr").find("#SpnTimeToUnitId").html(), "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html());
 
         $("#spanFwdCurrentPslmId").html($(this).closest("tr").find("#SpnCurrentpsmId").html())
         $("#spanFwdProjectId").html($(this).closest("tr").find("#SpnCurrentProjId").html())
         $("#SpnFwdStakeHolderId").html($(this).closest("tr").find("#SpnStakeHolderId").html())
-
 
         $('#ProjFwd').modal('show');
 
@@ -119,17 +110,11 @@
         $(".ProjectsFwd").removeClass("d-none");
         $(".Attmenthistory").addClass("d-none");
 
-      
-        
-   
-       
-        //GetAllComments($(this).closest("tr").find("#SpnCurrentProjId").html());
     });
 
     $(".ProjName").click(function () {
-        alert("Raj");
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
-        IsReadNotificationInbox($(this).closest("tr").find("#SpnCurrentProjId").html());
+        IsReadNotification1($(this).closest("tr").find("#SpnCurrentProjId").html(),2);
     });
 
     $("#btnFwdNext").click(function () {
@@ -187,7 +172,6 @@
     });
 });
 function CheckFwdCondition(CurrentPslmId) {
-    debugger;
     var userdata =
     {
         "ProjId": $("#spanFwdProjectId").html(),
@@ -223,7 +207,8 @@ function CheckFwdCondition(CurrentPslmId) {
                 else if (response == false) {
 
                       AttechHistory();
-                     SaveFwdTo(CurrentPslmId);
+                    SaveFwdTo(CurrentPslmId);
+                    
                 }
             }
 
@@ -257,7 +242,8 @@ function SaveFwdTo(CurrentPslmId) {
                 $(".Fwdtitle").html("Projects Attch Details");
                 $(".ProjectsFwd").addClass("d-none");
                 $(".Attmenthistory").removeClass("d-none");
-
+                AddNotification($("#spanFwdProjectId").html(), 2, $("#ddlfwdFwdTo").val());
+                IsReadNotification1($("#spanFwdProjectId").html(),2);
             }
 
         }
@@ -308,20 +294,6 @@ function reset() {
 
 
 
-function IsReadNotificationInbox(psmId) {
-    alert("Hii");
-    debugger;
-    $.ajax({
-        url: '/Projects/IsReadNotificationInbox',
-        type: 'POST',
-        data: { "ProjId": psmId },
-        success: function (response) {
-            console.log(response);
-
-        }
-    });
-}
-
 function IsReadInbox(psmId) {
 
     $.ajax({
@@ -334,3 +306,51 @@ function IsReadInbox(psmId) {
         }
     });
 }
+function IsReadNotification1(ProjId,type) {
+    
+    $.ajax({
+        url: '/Notification/IsReadNotification',
+        type: 'POST',
+        data: {
+            "ProjId": ProjId,
+            "type": type
+        },
+        success: function (response) {
+            console.log(response);
+
+        }
+    });
+}
+
+function AddNotification(ProjId, type, unitid) {
+    
+    $.ajax({
+        url: '/Notification/AddNotification',
+        type: 'POST',
+        data: {
+            "ProjId": ProjId,
+            "type": type,
+            "unitid": unitid, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+        },
+        success: function (response) {
+            console.log(response);
+            if (response && response === 1) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Project Notification Added  successfully',
+                    showConfirmButton: false,
+                    timer: 700
+                });
+            }
+
+            window.location.reload();
+        },
+        error: function (error) {
+            console.error('Error occurred:', error);
+            // Handle error if needed
+        }
+    });
+}
+
+

@@ -348,87 +348,95 @@ namespace swas.BAL.Repository
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
-
-            tbl_Comment cmt = new tbl_Comment();
-            _dbContext.Projects.Add(project);
-            await _dbContext.SaveChangesAsync();
-
-            ProjIDRes PjIR = new ProjIDRes();
-            PjIR = swas.BAL.Utility.ExtensionMethods.FirstSecond(project.ProjName, project.ProjId, 0);
-
-            if (PjIR.PorjPin == null)
+            try
             {
-
-                project.ProjCode = "Error";
-
-            }
-            else
-            {
-                project.ProjCode = PjIR.PorjPin;
-
-            }
-
-            tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
-
-
-            psmove.ProjId = project.ProjId;
-            psmove.StatusActionsMappingId = 1; //21  //ajayupdate
-            //psmove.ActionId = 1;
-            psmove.Remarks = project.InitialRemark;
-            psmove.FromUnitId = Logins.unitid ?? 0;
-            psmove.ToUnitId = 1; //  
-                                 //psmove.TostackholderDt = DateTime.Now;  
-            psmove.UserDetails = Helper1.LoginDetails(Logins);
-            psmove.UpdatedByUserId = Logins.unitid; // change with userid
-            psmove.DateTimeOfUpdate = project.InitiatedDate;
-            psmove.IsActive = true;
-
-            psmove.EditDeleteDate = project.InitiatedDate;
-            psmove.EditDeleteBy = Logins.unitid;
-            psmove.TimeStamp = project.InitiatedDate;
-            psmove.IsComplete = false;
-            psmove.IsComment = false;
-            _dbContext.ProjStakeHolderMov.Add(psmove);
-            await _dbContext.SaveChangesAsync();
-
-            var projectToUpdate = await _dbContext.Projects.FirstOrDefaultAsync(a => a.ProjId == project.ProjId);
-            if (projectToUpdate != null)
-            {
-                projectToUpdate.CurrentPslmId = psmove.PsmId;
+                tbl_Comment cmt = new tbl_Comment();
+                _dbContext.Projects.Add(project);
                 await _dbContext.SaveChangesAsync();
-            }
 
-            cmt.EditDeleteDate = project.InitiatedDate;
-            cmt.IsDeleted = false;
-            cmt.IsActive = true;
-            cmt.DateTimeOfUpdate = project.InitiatedDate;
-            cmt.Comment = project.InitialRemark;
-            cmt.PsmId = psmove.PsmId;
-            cmt.UpdatedByUserId = Logins.UserIntId;
-            cmt.EditDeleteBy = 0;
-            _dbContext.Comment.Add(cmt);
-            await _dbContext.SaveChangesAsync();
-            if (project.UploadedFile != null)
-            {
-                tbl_AttHistory atthis = new tbl_AttHistory();
-                atthis.AttPath = project.UploadedFile;
-                atthis.ActFileName = project.ActFileName;
-                atthis.PsmId = psmove.PsmId;
-                atthis.UpdatedByUserId = Logins.unitid;
-                atthis.DateTimeOfUpdate = project.InitiatedDate;
-                atthis.IsDeleted = false;
-                atthis.IsActive = true;
-                atthis.EditDeleteBy = Logins.unitid;
-                atthis.ActionId = 1;
-                atthis.TimeStamp = project.InitiatedDate;
-                atthis.Reamarks = psmove.Remarks ?? "File Attached";
+                ProjIDRes PjIR = new ProjIDRes();
+                PjIR = swas.BAL.Utility.ExtensionMethods.FirstSecond(project.ProjName, project.ProjId, 0);
 
-                _dbContext.AttHistory.Add(atthis);
+                if (PjIR.PorjPin == null)
+                {
+
+                    project.ProjCode = "Error";
+
+                }
+                else
+                {
+                    project.ProjCode = PjIR.PorjPin;
+
+                }
+
+                tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
+
+
+                psmove.ProjId = project.ProjId;
+                psmove.StatusActionsMappingId = 1; //21  //ajayupdate
+                                                   //psmove.ActionId = 1;
+                psmove.Remarks = project.InitialRemark;
+                psmove.FromUnitId = Logins.unitid ?? 0;
+                psmove.ToUnitId = 1; //  
+                                     //psmove.TostackholderDt = DateTime.Now;  
+                psmove.UserDetails = Helper1.LoginDetails(Logins);
+                psmove.UpdatedByUserId = Logins.unitid; // change with userid
+                psmove.DateTimeOfUpdate = project.InitiatedDate;
+                psmove.IsActive = true;
+
+                psmove.EditDeleteDate = project.InitiatedDate;
+                psmove.EditDeleteBy = Logins.unitid;
+                psmove.TimeStamp = project.InitiatedDate;
+                psmove.IsComplete = false;
+                psmove.IsComment = false;
+                _dbContext.ProjStakeHolderMov.Add(psmove);
                 await _dbContext.SaveChangesAsync();
-            }
-            project.CurrentPslmId = psmove.PsmId;
 
-            return project.ProjId;
+                var projectToUpdate = await _dbContext.Projects.FirstOrDefaultAsync(a => a.ProjId == project.ProjId);
+                if (projectToUpdate != null)
+                {
+                    projectToUpdate.CurrentPslmId = psmove.PsmId;
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                cmt.EditDeleteDate = project.InitiatedDate;
+                cmt.IsDeleted = false;
+                cmt.IsActive = true;
+                cmt.DateTimeOfUpdate = project.InitiatedDate;
+                cmt.Comment = project.InitialRemark;
+                cmt.PsmId = psmove.PsmId;
+                cmt.UpdatedByUserId = Logins.UserIntId;
+                cmt.EditDeleteBy = 0;
+                _dbContext.Comment.Add(cmt);
+                await _dbContext.SaveChangesAsync();
+                if (project.UploadedFile != null)
+                {
+                    tbl_AttHistory atthis = new tbl_AttHistory();
+                    atthis.AttPath = project.UploadedFile;
+                    atthis.ActFileName = project.ActFileName;
+                    atthis.PsmId = psmove.PsmId;
+                    atthis.UpdatedByUserId = Logins.unitid;
+                    atthis.DateTimeOfUpdate = project.InitiatedDate;
+                    atthis.IsDeleted = false;
+                    atthis.IsActive = true;
+                    atthis.EditDeleteBy = Logins.unitid;
+                    atthis.ActionId = 1;
+                    atthis.TimeStamp = project.InitiatedDate;
+                    atthis.Reamarks = psmove.Remarks ?? "File Attached";
+
+                    _dbContext.AttHistory.Add(atthis);
+                    await _dbContext.SaveChangesAsync();
+                }
+                project.CurrentPslmId = psmove.PsmId;
+
+                return project.ProjId;
+            }
+            catch (Exception ex)
+            {
+                
+                return project.ProjId;
+            }
+
         }
 
         public async Task<bool> DeleteProjectAsync(int projectId)
@@ -944,9 +952,16 @@ namespace swas.BAL.Repository
 
         public async Task<tbl_Projects> GetProjectByIdAsync(int projectId)
         {
+            try
+            {
+                return await _dbContext.Projects.FindAsync(projectId);
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
 
-
-            return await _dbContext.Projects.FindAsync(projectId);
+            
         }
 
         public async Task<tbl_Projects> GetProjectByIdAsync1(int? dataProjId)
@@ -1010,44 +1025,7 @@ namespace swas.BAL.Repository
 
                     var result = query.ToList();
 
-                    //where proj.ProjName.Length > 1 && (p.FromStakeHolderId == stkholder || p.ToStakeHolderId == stkholder || p.CurrentStakeHolderId == stkholder)
-
-
-                    //var query = from a in _dbContext.ProjStakeHolderMov
-                    //            join b in _dbContext.mStages on a.StageId equals b.StagesId into stageJoin
-                    //            from b in stageJoin.DefaultIfEmpty()
-                    //            join c in _dbContext.mStatus on a.StatusId equals c.StatusId into statusJoin
-                    //            from c in statusJoin.DefaultIfEmpty()
-                    //            join d in _dbContext.Comment on a.PsmId equals d.PsmId into commentJoin
-                    //            from d in commentJoin.DefaultIfEmpty()
-                    //            join f in _dbContext.Projects on a.ProjId equals f.ProjId into projectJoin
-                    //            from f in projectJoin.DefaultIfEmpty()
-                    //            join g in _dbContext.tbl_mUnitBranch on a.FromStakeHolderId equals g.Id into fromStakeHolderJoin
-                    //            from g in fromStakeHolderJoin.DefaultIfEmpty()
-                    //            join h in _dbContext.tbl_mUnitBranch on a.ToStakeHolderId equals h.Id into toStakeHolderJoin
-                    //            from h in toStakeHolderJoin.DefaultIfEmpty()
-                    //            join i in _dbContext.tbl_mUnitBranch on a.CurrentStakeHolderId equals i.Id into currentStakeHolderJoin
-                    //            from i in currentStakeHolderJoin.DefaultIfEmpty()
-                    //            join j in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals j.Id into stakeHolderJoin
-                    //            from j in stakeHolderJoin.DefaultIfEmpty()
-
-                    //            orderby a.ProjId, a.PsmId
-                    //            select new ProjHistory
-                    //            {
-                    //                ProjId = f.ProjId,
-                    //                PsmId = a.PsmId,
-                    //                ProjName = f.ProjName,
-                    //                Stages = b.Stages,
-                    //                Status = c.Status,
-                    //                Comment = d.Comment,
-                    //                FromStakeHolder = g.UnitName,
-                    //                ToStakeHolder = h.UnitName,
-                    //                CurrentStakeHolder = i.UnitName,
-                    //                InitiatedBy = j.UnitName,
-                    //                TimeStamp = a.TimeStamp.HasValue ? a.TimeStamp.Value.ToString("dd-MM-yyyy") : "",
-                    //                InitialRemarks = a.AddRemarks,
-                    //                Attachments = ""
-                    //            };
+                    
 
                     var projHistory = await query.ToListAsync();
                     return projHistory;
@@ -1348,12 +1326,6 @@ namespace swas.BAL.Repository
 
 
             return results;
-
-            // 'results' contains the list of TimeExceeds objects with the specified conditions.
-            // Actions = "YourActionsValue", 
-            //TimeLimit = b.TimeLimit, // Assuming TimeLimit is a property in ProjStakeHolderMov
-            //                   dayss = 15, // You can set this to 15 as it is a constant value
-            //                   exceeds = (b.TimeLimit - 15) // Calculation for exceeds
         }
         public async Task<List<tbl_Projects>> GetProcProjAsync()
         {
@@ -1750,72 +1722,7 @@ namespace swas.BAL.Repository
                 .ToListAsync();
         }
 
-        
-
-        public async Task<Notification> GetNotificationByProjId (int ProjId)
-        {
-            return await _dbContext.Notification
-               .FirstOrDefaultAsync(a => a.ProjId == ProjId);
-
-        }
-
-
-        public async Task<int> GetNotificationCommentCount()
-        {
-            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
-            int notificationCount = await _dbContext.Notification
-                .Where(n => n.NotificationType == 1 && n.IsRead == false && n.NotificationTo == loginUser.unitid)
-                .CountAsync();
-            return notificationCount;
-        }
-
-        public async Task<bool> UpdateNotification(Notification notify)
-        {
-            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-            if (loginUser == null)
-            {
-                return false;
-            }
-
-            var existingNotification = await _dbContext.Notification
-                .FirstOrDefaultAsync(x => x.NotificationTo == loginUser.unitid && x.ProjId == notify.ProjId && x.NotificationType == 1);
-
-            if (existingNotification != null)
-            {
-                existingNotification.IsRead = true;
-                existingNotification.ReadDateTime = notify.ReadDateTime; // Update ReadDateTime here
-                _dbContext.Notification.Update(existingNotification);
-                await _dbContext.SaveChangesAsync();
-                return true;
-            }
-
-            return false;
-        }
-
-        public async Task<bool> UpdateUnReadNotification (Notification notify)
-        {
-            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-            if (loginUser == null)
-            {
-                return false;
-            }
-
-            var existingNotification = await _dbContext.Notification
-                .FirstOrDefaultAsync(x => x.NotificationTo == loginUser.unitid && x.ProjId == notify.ProjId);
-
-            if (existingNotification != null)
-            {
-                existingNotification.IsRead = false;
-                existingNotification.ReadDateTime = notify.ReadDateTime; // Update ReadDateTime here
-                _dbContext.Notification.Update(existingNotification);
-                await _dbContext.SaveChangesAsync();
-                return true;
-            }
-
-            return false;
-        }
-
+       
 
         public async Task<tbl_ProjStakeHolderMov> GetNextPsmMoveAsync(int projId,int currentPsmId)
         {
@@ -1826,74 +1733,24 @@ namespace swas.BAL.Repository
         }
 
 
-        public async Task<List<DTODDLComman>> GetALLByProjectName (string ProjName)
-        {
-            try
-            {
-                var GetALL = (from A in _DBContext.Projects
-                              where A.ProjName.Contains(ProjName)
-                              select new DTODDLComman
-                              {
-                                  Id = A.ProjId,
-                                  Name = A.ProjName,
-                              }).Take(5).ToList();
-                return await Task.FromResult(GetALL);
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
 
-        }
-
-
-
-        public async Task<bool> UpdateNotificationByProjID (Notification notify)
-        {
-            _dbContext.Notification.Update(notify);
-            await _dbContext.SaveChangesAsync();
-            return true;
-        }
-
-
-        public async Task<List<tbl_ProjStakeHolderMov>> GetInboxByProjIdExcludingPsmIdAsync(int projId, int psmId)
+        public async Task<List<tbl_ProjStakeHolderMov>> GetInboxByProjIdExcludingPsmIdAsync(int projId, int? ToUnitId)
         {
             return await _dbContext.ProjStakeHolderMov
-                                   .Where(c => c.ProjId == projId && c.PsmId != psmId)
+                                   .Where(c => c.ProjId == projId && c.ToUnitId != ToUnitId)
                                    .ToListAsync();
 
            
         }
 
 
-
-        public async Task<bool> UpdateCommentedUnReadNotification(Notification notify)
+        public async Task<List<tbl_ProjStakeHolderMov>> GetProjbyToUnitId(int projId , int? ToUnitId)
         {
-            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-            if (loginUser == null)
-            {
-                return false;
-            }
-            // Fetch all notifications for the given ProjId where NotificationTo does not match the logged-in user's unitid
-            var notifications = await _dbContext.Notification
-                .Where(x => x.ProjId == notify.ProjId && x.NotificationTo != loginUser.unitid)
+            return await _dbContext.ProjStakeHolderMov
+                .Where(a => a.ProjId == projId && a.ToUnitId == ToUnitId)
                 .ToListAsync();
-
-            if (notifications.Any())
-            {
-                foreach (var notification in notifications)
-                {
-                    notification.IsRead = false;
-                    notification.ReadDateTime = notify.ReadDateTime; 
-                    _dbContext.Notification.Update(notification);
-                }
-
-                await _dbContext.SaveChangesAsync();
-                return true;
-            }
-
-            return false;
         }
+
     }
 
 }

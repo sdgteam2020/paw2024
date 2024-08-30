@@ -189,35 +189,35 @@ namespace swas.BAL.Repository
         {
 
 
-            //var query = from a in _dbContext.mActions
-            //            join sam in _dbContext.TrnStatusActionsMapping on a.ActionsId equals sam.ActionsId
-            //            join usm in _dbContext.TrnUnitStatusMapping on sam.StatusId equals usm.StatusId
-            //            join c in _dbContext.tbl_mUnitBranch on usm.UnitId equals c.unitid into unitGroup
-            //            from c in unitGroup.DefaultIfEmpty()
+            var query = from a in _dbContext.mActions
+                        join sam in _dbContext.TrnStatusActionsMapping on a.ActionsId equals sam.ActionsId
+                        join usm in _dbContext.TrnUnitStatusMapping on sam.StatusId equals usm.StatusActionsMappingId
+                        join c in _dbContext.tbl_mUnitBranch on usm.UnitId equals c.unitid into unitGroup
+                        from c in unitGroup.DefaultIfEmpty()
 
-            //            join d in _dbContext.mStatus on sam.StatusId equals d.StatusId into statusGroup
-            //            from d in statusGroup.DefaultIfEmpty()
-            //            join e in _dbContext.mStages on d.StageId equals e.StagesId into stagesGroup
-            //            from e in stagesGroup.DefaultIfEmpty()
-            //            where c.UnitName != null
-            //            orderby a.ActionDesc
-            //            select new ActionsSeq
-            //            {
-            //                Stages = e.Stages,
-            //                Status = d.Status,
-            //                Actions = a.Actions,
-            //                ActionDesc = a.ActionDesc,
-            //                UnitName = c.UnitName
-            //            };
-
-
-            //var actionsList = await query.ToListAsync();
+                        join d in _dbContext.mStatus on sam.StatusId equals d.StatusId into statusGroup
+                        from d in statusGroup.DefaultIfEmpty()
+                        join e in _dbContext.mStages on d.StageId equals e.StagesId into stagesGroup
+                        from e in stagesGroup.DefaultIfEmpty()
+                        where c.UnitName != null
+                        orderby a.ActionDesc
+                        select new ActionsSeq
+                        {
+                            Stages = e.Stages,
+                            Status = d.Status,
+                            Actions = a.Actions,
+                            ActionDesc = a.ActionDesc,
+                            UnitName = c.UnitName
+                        };
 
 
+            var actionsList = await query.ToListAsync();
 
-            //return actionsList;
 
-            return null;
+
+            return actionsList;
+
+            //return null;
         }
 
     }

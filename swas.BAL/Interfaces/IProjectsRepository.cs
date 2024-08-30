@@ -48,25 +48,22 @@ namespace swas.BAL.Interfaces
 
 
         Task<List<tbl_ProjStakeHolderMov>> GetInboxByProjIdAsync(int projId);
+        //Task<Notification> GetNotificationByProjId(int projId);
 
+        //Task<bool> UpdateNotification(Notification notify);
 
-        Task<Notification> GetNotificationByProjId(int projId);
-
-        Task<bool> UpdateNotification(Notification notify);
-
-        Task<bool> UpdateUnReadNotification(Notification notify);
+        //Task<bool> UpdateUnReadNotification(Notification notify);
+        //Task<List<DTODDLComman>> GetALLByProjectName(string ProjName);
+        //Task<bool> UpdateNotificationByProjID(Notification notify);
+        //Task<bool> UpdateCommentedUnReadNotification(Notification notify);
 
         Task<tbl_ProjStakeHolderMov> GetNextPsmMoveAsync(int projId, int currentPsmId);
+        Task<List<tbl_ProjStakeHolderMov>> GetInboxByProjIdExcludingPsmIdAsync(int projId, int? ToUnitId);
 
-        Task<List<DTODDLComman>> GetALLByProjectName(string ProjName);
 
-        Task<bool> UpdateNotificationByProjID(Notification notify);
+        Task<List<tbl_ProjStakeHolderMov>> GetProjbyToUnitId(int projId, int? ToUnitId);
 
-        Task<int> GetNotificationCommentCount();
 
-        Task<bool> UpdateCommentedUnReadNotification(Notification notify);
-
-        Task<List<tbl_ProjStakeHolderMov>> GetInboxByProjIdExcludingPsmIdAsync(int projId, int psmId);
 
     }
 

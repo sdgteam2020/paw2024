@@ -1,7 +1,6 @@
 ﻿var memberTable = "";
 
 $(document).ready(function () {
-
     GetProjCommentsByUnitId();
      
     $("#btnStatusUpdate").unbind().click(function () {
@@ -40,9 +39,8 @@ function IsUnReadInbox(psmId) {
     });
 }
 function GetProjCommentsByUnitId() {
+    
     var listItem = "";
-     
-    /*let boldCount = 0;*/
     $.ajax({
         url: '/Projects/GetProjCommentsByUnitId',
         type: 'POST',
@@ -119,8 +117,6 @@ function GetProjCommentsByUnitId() {
 
                     $("#DetailBody").html(listItem);
                     
-                   /* $('#ProjectCommentCount').html(boldCount);*/
-                    
                     $("body").on("click", ".cls-btncomment", function () {
                        
                         $("#ProjectcommentprojId").html($(this).closest("tr").find("#spnProjId").html());
@@ -135,9 +131,9 @@ function GetProjCommentsByUnitId() {
 
                     $("body").on("click", ".projNameDetail", function () {
                     
-                       /* IsReadComment($("#ProjectcommentprojId").html());*/
-                        IsReadNotification($(this).closest("tr").find("#spnProjId").html());
-                      /*  IsReadInbox($(this).closest("tr").find("#spnpsmId").html());*/
+                        IsReadComment($(this).closest("tr").find("#spnProjId").html());
+                       IsReadNotification($(this).closest("tr").find("#spnProjId").html(),1);
+                      
                     });
 
 
@@ -204,8 +200,7 @@ function SendMsg() {
 
                 GetAllComments($("#ProjectcommentprojId").html());
                 GetProjCommentsByUnitId();
-              //IsUnReadComment($("#ProjectcommentprojId").html());
-                //GetNotification($("#ProjectcommentprojId").html());
+              
 
                 reset();
             }
@@ -219,11 +214,9 @@ function SendMsg() {
                 });
             }
 
-           
-            /*IsReadComment($("#ProjectcommentprojId").html());*/
-            IsCommentedUnreadNotification($("#ProjectcommentprojId").html());
+            UnReadNotification($("#ProjectcommentprojId").html(), 1);
             IsUnReadComment($("#ProjectcommentprojId").html(), $("#ProjectcommentPsmId").html());
-           /* GetNotification($("#ProjectcommentprojId").html());*/
+            
         },
         error: function (error) {
            
@@ -314,7 +307,6 @@ function IsReadComment(ProjId) {
 
 
 function GetNotificationInbox(ProjId) {
-    alert("om");
     $.ajax({
         url: '/Home/GetNotificationInbox',
         type: 'POST',
@@ -329,7 +321,10 @@ function IsUnReadComment(ProjId,PsmId) {
     $.ajax({
         url:'/Projects/IsUnReadComment',
         type: 'POST',
-        data: { "ProjId": ProjId },
+        data: {
+            "ProjId": ProjId,
+            "PsmId": PsmId
+        },
         success: function (response) {
             console.log(response);
             window.location.reload();
@@ -363,25 +358,30 @@ function IsUnReadNotification(ProjId) {
     });
 }
 
-function IsCommentedUnreadNotification(ProjId) {
 
+
+function UnReadNotification(ProjId, type) {
     $.ajax({
-        url: '/Projects/IsCommentedUnreadNotification',
+        url: '/Notification/UnReadNotification',
         type: 'POST',
-        data: { "ProjId": ProjId },
+        data: {
+            "ProjId": ProjId,
+            "type": type
+        },
         success: function (response) {
             console.log(response);
 
         }
     });
 }
-
-function IsReadNotification(ProjId) {
-
+function IsReadNotification(ProjId, type) {
     $.ajax({
-        url: '/Projects/IsReadNotification',
+        url: '/Notification/IsReadNotification',
         type: 'POST',
-        data: { "ProjId": ProjId },
+        data: {
+            "ProjId": ProjId,
+            "type": type
+        },
         success: function (response) {
             console.log(response);
 

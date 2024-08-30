@@ -1,7 +1,5 @@
 ﻿var current = 1;
 $(document).ready(function () {
-    //$("#1").hide();
-    //$("#3").show();
     $("#sponsorNameInput").val($("#SponsorName").html());
     
     $("#spanProjectId").html($("#ProjId").val());
@@ -9,12 +7,11 @@ $(document).ready(function () {
     mMsater($("#HostTypeID").val(),"ddlHostTypeID",2,0)
     mMsater($("#Apptype").val(), "ddlApptype", 3, 0)
    
-    var current_fs, next_fs, previous_fs; //fieldsets
+    var current_fs, next_fs, previous_fs; 
     var opacity;
 
 
     $("#uploadButton").click(function () {
-
       var  requiredFields = $('#fwduploaditems').find('.requiredField');
         var allFieldsComplete = true;
         requiredFields.each(function (index) {
@@ -46,7 +43,7 @@ $(document).ready(function () {
 
     });
     $("#submitUpload").click(function () {
-
+        alert("Hii");
         var requiredFields = $('#tablebasic2').find('.requiredField');
          var allFieldsComplete = true;
          requiredFields.each(function (index) {
@@ -77,17 +74,12 @@ $(document).ready(function () {
 
         current_fs = $(this).parent();
         prev_fs = $(this).parent().prev();
-
-        //Add Class Active
         $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
         $("#progressbar li").eq($("fieldset").index(prev_fs)).addClass("active");
 
-        //show the next fieldset
         prev_fs.show();
-        //hide the current fieldset with style
         current_fs.animate({ opacity: 0 }, {
             step: function (now) {
-                // for making fielset appear animation
                 opacity = 1 - now;
 
                 current_fs.css({
@@ -123,7 +115,7 @@ $(document).ready(function () {
 
 
         $("#DetlsofUserBase").val("DetlsofUserBase" + number);
-        $("#EnvisagedCost").val(number);
+        $("#EnvisagedCost").val("Cost"+ number);
         $("#NWBandWidthReqmt").val("NWBa" + number);
         $("#MajTimeLines").val("MajTimeLines" + number);
         $("#TechStackProposed").val("TechStackProposed" + number);
@@ -181,16 +173,10 @@ $(document).ready(function () {
             current_fs = $(this).parent();
             next_fs = $(this).parent().next();
 
-
-            //Add Class Active
             $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-
-            //show the next fieldset
             next_fs.show();
-            //hide the current fieldset with style
             current_fs.animate({ opacity: 0 }, {
                 step: function (now) {
-                    // for making fielset appear animation
                     opacity = 1 - now;
 
                     current_fs.css({
@@ -229,9 +215,7 @@ $(document).ready(function () {
     });
 });
 function AddProject(thistag) {
-
-   
-  
+    
     $.ajax({
         url: '/Projects/AddProject',
         type: 'POST',
@@ -273,7 +257,7 @@ function AddProject(thistag) {
             "Enhancement_upgradation": $("#Enhancement_upgradation").val(),
             "Details_licensing": $("#Details_licensing").val()
            
-        }, //get the search string
+        }, 
         success: function (result) {
 
 
@@ -375,17 +359,10 @@ function FwdProjConfirm(thisdata) {
 
                 current_fs = $(thisdata).parent();
                 next_fs = $(thisdata).parent().next();
-
-
-                //Add Class Active
                 $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-
-                //show the next fieldset
                 next_fs.show();
-                //hide the current fieldset with style
                 current_fs.animate({ opacity: 0 }, {
                     step: function (now) {
-                        // for making fielset appear animation
                         opacity = 1 - now;
 
                         current_fs.css({
@@ -405,7 +382,7 @@ function FwdProjConfirm(thisdata) {
 }
 
 function ProjectSubmited(thisdata) {
-     
+   
     $.ajax({
         url: '/Projects/ProjectSubmited',
         type: 'POST',
@@ -425,17 +402,11 @@ function ProjectSubmited(thisdata) {
 
                 current_fs = $(thisdata).parent();
                 next_fs = $(thisdata).parent().next();
-               
-                GetNotificationInbox($("#spanProjectId").html());
-                //Add Class Active
+                AddNotification($("#spanProjectId").html(),2,1);
                 $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-
-                //show the next fieldset
                 next_fs.show();
-                //hide the current fieldset with style
                 current_fs.animate({ opacity: 0 }, {
                     step: function (now) {
-                        // for making fielset appear animation
                         opacity = 1 - now;
 
                         current_fs.css({
@@ -455,15 +426,10 @@ function ProjectSubmited(thisdata) {
 }
 
 function validationIsSuccessful() {
-    // Your validation logic goes here
-    // Return true if validation passes, false otherwise
-    // Example:
     var inputVal = $("#ProjEdit_DetlsofUserBase").val();
     if (inputVal === "") {
-        // Validation fails
         return false;
     }
-    // Validation passes
     return true;
 }
 function DateFormateyyy_mm_dd(date) {
@@ -485,7 +451,6 @@ function DateFormateyyy_mm_dd(date) {
         return '';
     }
 
-    //`${datef2.getFullYear()}/` + monthsans + `/` + dayans ;
 }
 
 
@@ -510,14 +475,32 @@ function DeleteProject(ProjectId) {
     });
 }
 
-function GetNotificationInbox(ProjId) {
-    alert("om");
-    $.ajax({
-        url: '/Home/GetNotificationInbox',
-        type: 'POST',
-        data: { "ProjId": ProjId },
-        success: function (response) {
 
+function AddNotification(ProjId, type, unitid) {
+    $.ajax({
+        url: '/Notification/AddNotification',
+        type: 'POST',
+        data: {
+            "ProjId": ProjId,
+            "type": type,
+            "unitid": unitid, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+        },
+        success: function (response) {
+            console.log(response);
+            if (response && response === 1) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Project Notification Added  successfully',
+                    showConfirmButton: false,
+                    timer: 700
+                });
+            }
+
+            window.location.reload();
+        },
+        error: function (error) {
+            console.error('Error occurred:', error);
         }
-    })
+    });
 }

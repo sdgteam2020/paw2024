@@ -60,7 +60,6 @@
 
     $("#btnAttchMultiforpsmid").click(function () {
 
-        alert("Amit3");
         requiredFields = $('#ProjFwd').find('.requiredFieldAttch');
         var allFieldsComplete = true;
         requiredFields.each(function (index) {
@@ -137,7 +136,6 @@ function UploadFiles() {
 }
 
 function AttechHistory() {
-    debugger;
     var listItem = "";
     var userdata =
     {

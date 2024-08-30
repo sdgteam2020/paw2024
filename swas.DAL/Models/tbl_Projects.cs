@@ -86,15 +86,19 @@ namespace swas.DAL.Models
 		public string? DetlsofUserBase { get; set; }
 		[Display(Name = "Envisage cost of entire proj incl license fees and maint")]
 		public string? EnvisagedCost { get; set; }
+
 		[Display(Name = "Brief details of proposed network and bandwidth reqmts")]
 		[StringLength(10)]
 		public string? NWBandWidthReqmt { get; set; }
+
         [StringLength(200)]
         [Display(Name = "Project dt completion incl broad timelines")]
 		public string? MajTimeLines { get; set; }
+
         [StringLength(700)]
         [Display(Name = "Brief details of SW platform and tech stack proposed for devp of  appl incl op sys dependencies (if any)")]
 		public string? TechStackProposed { get; set; }
+
         [StringLength(300)]
         [Display(Name = "Brief details of proposed data security measures incl backup of data")]
 		public string? DataSecurity_backup { get; set; }

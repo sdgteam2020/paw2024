@@ -295,7 +295,7 @@
 
                                         </td>
                                         <td>
-                                            @Html.TextBoxFor(model => model.ProjEdit.EnvisagedCost, new { @class = "form-control", type = "number", id = "envisagedCostInput",onkeyup="ValInData(this)" })
+                                            @Html.TextBoxFor(model => model.ProjEdit.EnvisagedCost, new { htmlAttributes = new { @class = "form-control", onkeyup = "ValInData(this)" } })
 
                                         </td>
 

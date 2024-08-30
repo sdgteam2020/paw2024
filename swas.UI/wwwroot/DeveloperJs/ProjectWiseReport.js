@@ -5,8 +5,6 @@
 function ProjectWiseStatus() {
     var listItem = "";
 
-    //table.destroy();
-    /* alert(spnstatusActionsMappingId)*/
     var userdata = {
         "Id": 0
     };
@@ -83,7 +81,6 @@ function ProjectWiseStatus() {
 
                     $("body").unbind().on("click", ".btn-clsprojName", function () {
                         $('#ProjHoldHistory').modal('show');
-                       // alert($(this).closest("tr").find(".clsspnprojId").html())
                         GetProjHold($(this).closest("tr").find(".clsspnprojId").html())
                     });
                     

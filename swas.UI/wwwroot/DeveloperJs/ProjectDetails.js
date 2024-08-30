@@ -20,11 +20,12 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             $('#confirmationModal').modal('hide');
 
             SentForComment(ProjId, psmId, 0, FwdDateForComment);
-            SentForNotification(ProjId, psmId, 0, FwdDateForComment);
+            AddNotification(ProjId,1,0);
             ProcessProjConfirm(ProjId);
         });
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
-        IsReadNotificationInbox(ProjId);
+       
+        IsReadNotification1($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
     });
 
     $('#confirmationModal').on('hidden.bs.modal', function () {
@@ -86,13 +87,13 @@ function SentForComment(ProjId, psmId, unitid, FwdDateForComment) {
         }
     });
 }
-function SentForNotification(ProjId, psmId, unitid, FwdDateForComment) {
+function AddNotification(ProjId, type, unitid) {
     $.ajax({
-        url: '/Projects/ProcessNotification',
+        url: '/Notification/AddNotification',
         type: 'POST',
         data: {
             "ProjId": ProjId,
-            "FwdDateForComment": FwdDateForComment,
+            "type": type,
             "unitid": unitid, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
         },
         success: function (response) {
@@ -388,12 +389,14 @@ function IsReadInbox(psmId) {
     });
 }
 
-function IsReadNotificationInbox(ProjId) {
-
+function IsReadNotification1() {
     $.ajax({
-        url: '/Projects/IsReadNotificationInbox',
+        url: '/Notification/IsReadNotification',
         type: 'POST',
-        data: { "PsmId": ProjId },
+        data: {
+            "ProjId": ProjId,
+            "type": type
+            },
         success: function (response) {
             console.log(response);
 

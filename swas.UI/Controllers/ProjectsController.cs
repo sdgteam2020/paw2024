@@ -179,9 +179,6 @@ namespace swas.UI.Controllers
                     ViewBag.SubmitCde = "0";
 
                     MailBox mbx = new MailBox();
-
-                    //ViewBag.unitid = Logins.unitid;
-
                     if (Logins != null && Logins.unitid != null)
                     {
                         ViewBag.unitid = Logins.unitid;
@@ -198,10 +195,6 @@ namespace swas.UI.Controllers
 
 
                     return View(mbx);
-
-
-                    //var projects = await _projectsRepository.GetActProjectsAsync();
-                    //return View(projects);
                 }
                 else
                 {
@@ -227,7 +220,6 @@ namespace swas.UI.Controllers
 
         #region CreateProject
         [HttpGet]
-        //[Authorize(Policy = "StakeHolders")]
         public async Task<IActionResult> Create(string id)
         {
             try
@@ -248,7 +240,7 @@ namespace swas.UI.Controllers
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
                 if (Logins != null)
                 {
-                    //UnitDdlGet(); projpsmided
+                   
                     var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
                     var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
                     var watermarkText = $" {ipAddress}\n  {currentDatetime}";
@@ -269,7 +261,7 @@ namespace swas.UI.Controllers
 
 
         }
-        //[Authorize(Policy = "StakeHolders")]
+      
         [HttpPost]
         [RequestFormLimits(MultipartBodyLengthLimit = 26214400)]
         public async Task<IActionResult> UploadMultiFile(IFormFile uploadfile, string Reamarks, int PsmId)
@@ -288,7 +280,7 @@ namespace swas.UI.Controllers
                     uploadfile.CopyTo(stream);
                 }
 
-                // var project = await _projectsRepository.GetProjectByIdAsync(ProjectId);
+                
                 if (PsmId != null && PsmId != 0)
                 {
                     tbl_AttHistory atthis = new tbl_AttHistory();
@@ -391,10 +383,18 @@ namespace swas.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> ProjectSubmited(int projid)
         {
-            var project = await _projectsRepository.GetProjectByIdAsync(projid);
-            project.IsSubmited = true;
-            await _projectsRepository.UpdateProjectAsync(project);
-            return Json(project.ProjId);
+            try
+            {
+                var project = await _projectsRepository.GetProjectByIdAsync(projid);
+                project.IsSubmited = true;
+                await _projectsRepository.UpdateProjectAsync(project);
+                return Json(project.ProjId);
+            }
+            catch(Exception ex)
+            {
+                return Json(ex.Message);
+            }
+            
         }
         [HttpPost]
         public async Task<IActionResult> FwdProjConfirm(int PslmId)
@@ -410,7 +410,7 @@ namespace swas.UI.Controllers
                 try
                 {
                     tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
-                    // var project = await _projectsRepository.GetProjectByIdAsync(projid);
+                    
                     psmove = await _projectsRepository.GettXNByPsmIdAsync(PslmId);
                     psmove.DateTimeOfUpdate = DateTime.Now;
                     psmove.IsComplete = true;
@@ -445,7 +445,7 @@ namespace swas.UI.Controllers
                 {
 
                     tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
-                    // var project = await _projectsRepository.GetProjectByIdAsync(projid);
+                    
                     psmove = await _projectsRepository.GettXNByPsmIdAsync(PsmId);
                     psmove.DateTimeOfUpdate = DateTime.Now;
                     psmove.IsRead = true;
@@ -465,72 +465,7 @@ namespace swas.UI.Controllers
         }
 
         
-        [HttpPost]
-        public async Task<IActionResult> IsReadNotificationInbox(int ProjId)
-        {
-            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-            if (loginUser == null)
-            {
-                return Redirect("/Identity/Account/login");
-            }
-
-            try
-            {
-                var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
-                if (notify != null)
-                {
-                    notify.ReadDateTime = DateTime.Now;
-                    notify.IsRead = true;
-
-                    var updateResult = await _projectsRepository.UpdateNotificationByProjID(notify);
-                    if (updateResult)
-                    {
-                        return Json(ProjId);
-                    }
-                }
-
-                return Json(0);
-            }
-            catch (Exception ex)
-            {
-                swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                return Json(0);
-            }
-        }
-
-
-        [HttpPost]
-        public async Task<IActionResult> IsReadNotification(int ProjId)
-        {
-            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-            if (loginUser == null)
-            {
-                return Redirect("/Identity/Account/login");
-            }
-
-            try
-            {
-                var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
-                if (notify != null)
-                {
-                    //notify.ReadDateTime = DateTime.Now;
-                    //notify.IsRead = true;
-
-                    var updateResult = await _projectsRepository.UpdateNotification(notify);
-                    if (updateResult)
-                    {
-                        return Json(ProjId);
-                    }
-                }
-
-                return Json(0);
-            }
-            catch (Exception ex)
-            {
-                swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                return Json(0);
-            }
-        }
+        
 
         [HttpPost]
         public async Task<IActionResult> IsProcessProjConfirm(int ProjId)
@@ -549,7 +484,6 @@ namespace swas.UI.Controllers
                 try
                 {
                     tbl_Projects proj = new tbl_Projects();
-                    // var project = await _projectsRepository.GetProjectByIdAsync(projid);
                     proj = await _projectsRepository.GetProjectByIdAsync(ProjId);
                     proj.DateTimeOfUpdate = DateTime.Now;
                     proj.IsProcess = true;
@@ -637,7 +571,6 @@ namespace swas.UI.Controllers
             catch (Exception ex)
             {
                 swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                //Comman.ExceptionHandle(ex.Message);
                 return "";
             }
 
@@ -660,7 +593,7 @@ namespace swas.UI.Controllers
                     {
                         var project = await _projectsRepository.GetProjectByIdAsync(ProjId);
                         unitid = project.StakeHolderId;
-                        int[] stausid = { 26, 31, 37, 21,21 }; /*  23, 22, 25, 27, 27*/ //ajayupdate
+                        int[] stausid = { 26, 31, 37, 21,21 }; 
                         int[] unitids = { 4, 3, 5, 1, unitid };
                         for (int i = 0; i < stausid.Length; i++)
                         {
@@ -668,13 +601,10 @@ namespace swas.UI.Controllers
 
                             psmove.ProjId = ProjId;
                             psmove.StatusActionsMappingId = stausid[i];
-                            //psmove.ActionId = 1;
                             psmove.Remarks = "";
                             psmove.FromUnitId = Logins.unitid ?? 0;
                             psmove.UserDetails= Helper1.LoginDetails(Logins);
-                            //psmove.TostackholderDt = DateTime.Now;  
-
-                            psmove.UpdatedByUserId = Logins.unitid; // change with userid
+                            psmove.UpdatedByUserId = Logins.unitid;
                             psmove.DateTimeOfUpdate = FwdDateForComment;
                             psmove.IsActive = true;
 
@@ -686,9 +616,6 @@ namespace swas.UI.Controllers
                             psmove.IsComment = true;
 
                             await _psmRepository.AddProjStakeHolderMovAsync(psmove);
-
-
-
 
                         }
                         return Json(1);
@@ -719,13 +646,11 @@ namespace swas.UI.Controllers
 
             psmove.ProjId = psmove.ProjId;
             psmove.StatusActionsMappingId = psmove.StatusActionsMappingId;
-            // psmove.ActionId = psmove.ActionId;
             psmove.Remarks = psmove.Remarks;
             psmove.FromUnitId = Logins.unitid ?? 0;
-            psmove.ToUnitId = psmove.ToUnitId; //  
-            //psmove.TostackholderDt = DateTime.Now;  
+            psmove.ToUnitId = psmove.ToUnitId;
             psmove.UserDetails = Helper.LoginDetails(Logins);
-            psmove.UpdatedByUserId = Logins.UserIntId; // change with userid
+            psmove.UpdatedByUserId = Logins.UserIntId; 
             psmove.DateTimeOfUpdate = psmove.TimeStamp;
             psmove.IsActive = true;
 
@@ -748,7 +673,6 @@ namespace swas.UI.Controllers
 
         public async Task<IActionResult> ProjectMovHistory(int ProjectId)
         {
-            //  var Ret1 = await _psmRepository.UndoProjectMov(ProjectId);
             var Ret = await _psmRepository.ProjectMovHistory(ProjectId);
             return Json(Ret);
         }
@@ -763,8 +687,6 @@ namespace swas.UI.Controllers
                     proj.IsSubmited = false;
 
                     await _projectsRepository.UpdateProjectAsync(proj);
-
-                    // var ret = await _psmRepository.DeleteProjStakeHolderMovAsync(PsmId);
                 }
                 else
                 {
@@ -814,7 +736,6 @@ namespace swas.UI.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Policy = "StakeHolders")]
         [RequestFormLimits(MultipartBodyLengthLimit = 26214400)]
         public async Task<IActionResult> SendCommentonProject(IFormFile uploadfile, string Comments, int StkStatusId, int ProjectId, int psmid, DateTime CommentDate)
         {
@@ -885,8 +806,6 @@ namespace swas.UI.Controllers
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
                 StkComment stkComment = new StkComment();
                 stkComment.ProjId = projId;
-                //stkComment.StakeHolderId = Logins.unitid;
-
                 var ret = await _stkCommentRepository.GetAllCommentBypsmId_UnitId(stkComment);
                 return Json(ret);
 
@@ -943,7 +862,6 @@ namespace swas.UI.Controllers
                 if (encryModel.EncryItem != null)
                 {
                     var UnprotectedValue = _dataProtector.Unprotect(encryModel.EncryItem.ToString() ?? "");
-                    // Assuming your model type is MyModelClass
                     var originalData = JsonConvert.DeserializeObject<MyRequestModel>(UnprotectedValue);
                     dtaProjID = originalData.DtaProjID;
                     if (dtaProjID == 0)
@@ -972,7 +890,7 @@ namespace swas.UI.Controllers
                 }
                 else
                 {
-                    //ViewBag.SubmitCde = false;
+                   
                     dataProjId = dataProjId;
                 }
 
@@ -1028,7 +946,6 @@ namespace swas.UI.Controllers
                         prohis[0].Attachments = AttPath;
                         prohis[0].ActFileName = actufilename;
                         prohis[0].DocumentDesc = AttDocuDescs;
-                        //prohis[0].ActFileName = uplo
                     }
 
                     atthis = await _attHistoryRepository.GetAttHistoryByIdAsync(psmid ?? 0);
@@ -1179,7 +1096,6 @@ namespace swas.UI.Controllers
 
 
                     aTimer = new System.Timers.Timer(60000);
-                    // Hook up the Elapsed event for the timer.
                     aTimer.Elapsed += OnTimer;
 
                     aTimer.Enabled = true;
@@ -1188,7 +1104,6 @@ namespace swas.UI.Controllers
                 catch (Exception ex)
                 {
                     swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                    //Comman.ExceptionHandle(ex.Message);
                     return Json(0);
                 }
             }
@@ -1209,11 +1124,7 @@ namespace swas.UI.Controllers
 
                 if (System.IO.File.Exists(filePath1))
                 {
-                    // If file found, delete it    
-
                     System.IO.File.Delete(filePath1);
-
-
                 }
             }
             catch (Exception ex)
@@ -1266,10 +1177,7 @@ namespace swas.UI.Controllers
             {
                 try
                 {
-                    // Get all records for the given Projid
-                    List<tbl_ProjStakeHolderMov> inboxComments = await _projectsRepository.GetInboxByProjIdExcludingPsmIdAsync(Projid, PsmId);
-
-                    // Update IsRead to false for all records
+                    List<tbl_ProjStakeHolderMov> inboxComments = await _projectsRepository.GetInboxByProjIdExcludingPsmIdAsync(Projid, Logins.unitid);
                     foreach (var comment in inboxComments)
                     {
                         comment.DateTimeOfUpdate = DateTime.Now;
@@ -1293,50 +1201,12 @@ namespace swas.UI.Controllers
 
 
 
-        [HttpGet]
-        public async Task<JsonResult> GetProjectCommentCount()
         
-       {
-            try
-            {
-                int count = await _projectsRepository.GetNotificationCommentCount();
-                return new JsonResult(count); // Returns the count as JSON
-            }
-            catch (Exception ex)
-            {
-                // Handle exception and return an appropriate JSON error response
-                return new JsonResult(new { message = ex.Message })
-                {
-                    StatusCode = 500 // HTTP 500 Internal Server Error
-                };
-            }
-        }
-
-        [HttpGet]
-        public async Task<JsonResult> GetProjectInboxCount()
-
-        {
-            try
-            {
-                int count = await _commentRepository.GetNotificationInboxCount();
-                return new JsonResult(count); // Returns the count as JSON
-            }
-            catch (Exception ex)
-            {
-                // Handle exception and return an appropriate JSON error response
-                return new JsonResult(new { message = ex.Message })
-                {
-                    StatusCode = 500 // HTTP 500 Internal Server Error
-                };
-            }
-        }
-
 
         [HttpGet]
 
         public async Task<IActionResult> ProjectMovement(string? ProjName)
         {
-            //var ProjectMovementDetail  = await _projStakeHolderMovRepository.ProjectMovement(ProjId);
             return View();
 
         }
@@ -1345,8 +1215,6 @@ namespace swas.UI.Controllers
 
             try
             {
-               // int ProjId = await _projStakeHolderMovRepository.GetProjectId(ProjName);
-
                 var ret = await _projStakeHolderMovRepository.ProjectMovement(3);
                 return Json(ret);
             }
@@ -1374,8 +1242,6 @@ namespace swas.UI.Controllers
             psmove.TimeStamp = psmove.TimeStamp;
             psmove.IsComplete = false;
             psmove.IsComment = false;
-
-            // Save the current psmove record
             var Ret = await _psmRepository.UpdateWithReturn(psmove);
 
             if (Ret != null)
@@ -1386,10 +1252,7 @@ namespace swas.UI.Controllers
 
                 if (nextPsmMove != null)
                 {
-                    // Update the FromUnitId of the next psmId based on the current ToUnitId
                     nextPsmMove.FromUnitId = psmove.ToUnitId;
-
-                    // Save the updated next psmMove record
                     await _psmRepository.UpdateWithReturn(nextPsmMove);
                 }
 
@@ -1402,153 +1265,6 @@ namespace swas.UI.Controllers
         }
 
 
-        public async Task<IActionResult> GetALLByProjectName(string? ProjName)
-        {
-            var ProjectName  = await _projectsRepository.GetALLByProjectName(ProjName);
-            return Json(ProjectName);
-        }
-
-
-        public async Task<IActionResult> ProcessNotification(int ProjId, int unitid, DateTime FwdDateForComment)
-        {
-            //**
-            try
-            {
-                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-                if (Logins != null)
-                {
-                    if (ProjId != null)
-                    {
-                        var project = await _projectsRepository.GetProjectByIdAsync(ProjId);
-
-                        unitid = project.StakeHolderId;
-                        if(unitid == 1)
-                        {
-                            int[] stausid = { 26, 31, 37, 21 };
-                            int[] unitids = { 4, 3, 5, 1};
-                            for (int i = 0; i < stausid.Length; i++)
-                            {
-                                Notification notify = new Notification();
-
-                                notify.ProjId = ProjId;
-                                notify.NotificationFrom = Logins.unitid ?? 0;
-                                notify.NotificationTo = unitids[i];
-                                notify.IsRead = false;
-                                notify.ReadDateTime = FwdDateForComment;
-                                notify.NotificationType = 1;
-
-                                await _psmRepository.AddNotificationCommentAsync(notify);
-
-                            }
-                        }
-                        else
-                        {
-                            int[] stausid = { 26, 31, 37, 21, 21 };
-                            int[] unitids = { 4, 3, 5, 1, unitid };
-                            for (int i = 0; i < stausid.Length; i++)
-                            {
-                                Notification notify = new Notification();
-
-                                notify.ProjId = ProjId;
-                                notify.NotificationFrom = Logins.unitid ?? 0;
-                                notify.NotificationTo = unitids[i];
-                                notify.IsRead = false;
-                                notify.ReadDateTime = FwdDateForComment;
-                                notify.NotificationType = 1;
-
-                                await _psmRepository.AddNotificationCommentAsync(notify);
-
-                            }
-                        }
-                        
-                        
-                        return Json(1);
-                    }
-                    else
-                    {
-                        return Json(0);
-                    }
-                }
-                else
-                {
-                    return Redirect("/Identity/Account/login");
-                }
-            }
-            catch (Exception ex) { return Json(-1); }
-        }
-
-
-
-        [HttpPost]
-        public async Task<IActionResult> IsUnReadNotification(int ProjId)
-        {
-            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-            if (loginUser == null)
-            {
-                return Redirect("/Identity/Account/login");
-            }
-
-            try
-            {
-                var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
-                if (notify != null)
-                {
-                    notify.ReadDateTime = DateTime.Now;
-                    notify.IsRead = false;
-
-                    var updateResult = await _projectsRepository.UpdateUnReadNotification(notify);
-                    if (updateResult)
-                    {
-                        return Json(ProjId);
-                    }
-                }
-
-                return Json(0);
-            }
-            catch (Exception ex)
-            {
-                swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                return Json(0);
-            }
-        }
-
-
-
-        [HttpPost]
-        public async Task<IActionResult> IsCommentedUnreadNotification (int ProjId)
-        {
-            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-            if (loginUser == null)
-            {
-                return Redirect("/Identity/Account/login");
-            }
-
-            try
-            {
-                var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
-                if (notify != null)
-                {
-                    notify.ReadDateTime = DateTime.Now;
-                    notify.IsRead = false;
-
-                    var updateResult = await _projectsRepository.UpdateCommentedUnReadNotification(notify);
-                    if (updateResult)
-                    {
-                        return Json(ProjId);
-                    }
-                }
-
-                return Json(0);
-            }
-            catch (Exception ex)
-            {
-                swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                return Json(0);
-            }
-        }
-
-
-       
 
         [HttpPost]
         public async Task<IActionResult> IsReadComment(int ProjId)
@@ -1558,10 +1274,7 @@ namespace swas.UI.Controllers
             {
                 try
                 {
-                    // Get all records for the given Projid
-                    List<tbl_ProjStakeHolderMov> inboxComments = await _projectsRepository.GetInboxByProjIdAsync(ProjId);
-
-                    // Update IsRead to false for all records
+                    List<tbl_ProjStakeHolderMov> inboxComments = await _projectsRepository.GetProjbyToUnitId(ProjId,Logins.unitid);
                     foreach (var comment in inboxComments)
                     {
                         comment.DateTimeOfUpdate = DateTime.Now;
@@ -1582,6 +1295,7 @@ namespace swas.UI.Controllers
                 return Redirect("/Identity/Account/login");
             }
         }
+
     }
 
 }

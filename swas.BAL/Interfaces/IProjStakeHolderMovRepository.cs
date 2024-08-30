@@ -21,25 +21,12 @@ namespace swas.BAL.Interfaces
 
         Task<int> GetProjectId(string? ProjName);
         Task<List<DTOProjectsFwd>> ProjectMovement(int? ProjectId);
-        //Task<DTOpR>
+        
         Task<List<DTOProjectHold>> ProjectHolsTimeCalculate(int ProjectId );
         int GetLastRecProjectMov(int ProjectId);
         Task<DTODashboard> DashboardCount(int UserId);
 
         Task<bool> CheckFwdCondition(int ProjId, int StatusId); 
-
-        
-        //Task<int> IsReadInbox(int psmId);
-
-        //Task<int> UpdateUndoProjectMov(int ProjectId,int PsmId);
-
-
-
-
-
-
-
-
 
         Task<tbl_ProjStakeHolderMov> GetProjStakeHolderMovByIdAsync(int psmId);
         Task<List<tbl_ProjStakeHolderMov>> GetAllProjStakeHolderMovAsync();
