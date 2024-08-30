@@ -20,11 +20,12 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             $('#confirmationModal').modal('hide');
 
             SentForComment(ProjId, psmId, 0, FwdDateForComment);
-            SentForNotification(ProjId, psmId, 0, FwdDateForComment);
+            AddNotification(ProjId, 1, 0);
             ProcessProjConfirm(ProjId);
         });
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
-        IsReadNotificationInbox(ProjId);
+
+        IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
     });
 
     $('#confirmationModal').on('hidden.bs.modal', function () {

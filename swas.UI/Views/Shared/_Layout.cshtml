@@ -207,7 +207,7 @@
 
     <script src="~/DeveloperJs/ddlSanal.js"></script>
     <script src="~/developerjs/comman.js"></script>
-
+    <script src="~/developerjs/notification.js"></script>
     <script>
         function ValInData(input) {
 
@@ -2284,57 +2284,38 @@
         $(".dropdown-menu.selected").addClass("visible");
     });
 </script>
+
 <script>
-    function updateInboxCount() {
+    function updateNotificationCount(type, elementId) {
         $.ajax({
-            url: '/Projects/GetProjectInboxCount', // Adjust this URL to match your endpoint
+            url: `/Notification/GetNotificationCount?type=${type}`, // Pass the notification type as a query parameter
             type: 'GET',
             success: function (count) {
-                // Assuming count is a number, update the badge text
-                $('#InboxCount').text(count);
+                // Check if the count is valid, if not, set it to 0
+                count = count || 0;
 
-                // Optionally, hide the badge if count is 0
+                // Update the badge text based on the count
+                $(`#${elementId}`).text(count);
+
+                // Show or hide the badge based on the count
                 if (count > 0) {
-                    $('#InboxCount').show();
+                    $(`#${elementId}`).show();
                 } else {
-                    $('#InboxCount').hide();
+                    $(`#${elementId}`).hide();
                 }
             },
             error: function () {
-                console.error('Could not retrieve project count.');
+                console.error(`Could not retrieve ${elementId} count.`);
+                // In case of an error, set the count to 0 and hide the badge
+                $(`#${elementId}`).text(0).hide();
             }
         });
     }
-
-    function updateProjectCount() {
-        $.ajax({
-            url: '/Projects/GetProjectCommentCount', // Adjust this URL to match your endpoint
-            type: 'GET',
-            success: function (count) {
-                // Assuming count is a number, update the badge text
-                $('#ProjectCommentCount').text(count);
-
-                // Optionally, hide the badge if count is 0
-                if (count > 0) {
-                    $('#ProjectCommentCount').show();
-                } else {
-                    $('#ProjectCommentCount').hide();
-                }
-            },
-            error: function () {
-                console.error('Could not retrieve project count.');
-            }
-        });
-    }
-
-
 
     // Call the function on page load
     $(document).ready(function () {
-        updateProjectCount();
-        updateInboxCount();
-        // Optional: Refresh the count every X seconds (e.g., every 10 seconds)
-        setInterval(updateProjectCount, 10000);
+        updateNotificationCount(1, 'ProjectCommentCount'); // For project comments
+        updateNotificationCount(2, 'InboxCount'); // For inbox
     });
 </script>
 <script src="~/developerjs/projectstkholdercomments.js"></script>

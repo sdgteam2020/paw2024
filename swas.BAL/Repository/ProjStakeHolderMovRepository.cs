@@ -660,9 +660,9 @@ namespace swas.BAL.Repository
                              join j in _dbContext.Comment on b.PsmId equals j.PsmId into commentGroup
                              from j in commentGroup.DefaultIfEmpty()
                              join k in _dbContext.tbl_mUnitBranch on c.StakeHolderId equals k.unitid
-                             where b.DateTimeOfUpdate >= DateTime.Parse(startDate) &&
-                                   b.DateTimeOfUpdate <= DateTime.Parse(endDate) 
-                             orderby b.ProjId, b.DateTimeOfUpdate descending
+                             where b.TimeStamp >= DateTime.Parse(startDate) &&
+                                   b.TimeStamp <= DateTime.Parse(endDate) 
+                             orderby b.ProjId, b.TimeStamp descending
                              select new
                              {
                                  b.PsmId,

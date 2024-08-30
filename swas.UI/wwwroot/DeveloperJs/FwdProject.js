@@ -54,8 +54,9 @@
         $('#ProjFwdHistory').modal('show');
         
         GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentProjId").html());
-        IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html()); 
-        IsReadNotificationInbox($(this).closest("tr").find("#SpnCurrentProjId").html());
+        IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
+
+        IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
         
     });
     $(".btn-Fwd").click(function () {
@@ -80,7 +81,7 @@
         $("#SpnFwdStakeHolderId").html($(this).closest("tr").find("#SpnStakeHolderId").html())
            
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
-        IsReadNotificationInbox($(this).closest("tr").find("#SpnCurrentProjId").html());
+        IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
         $('#ProjFwd').modal('show');
 
         $(".Fwdtitle").html("Projects Move Details");
@@ -129,7 +130,7 @@
     $(".ProjName").click(function () {
        
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
-        IsReadNotificationInbox($(this).closest("tr").find("#SpnCurrentProjId").html());
+        IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
     });
     $("#btn-ibutton").click(function () {
         $('#Projibutton').modal('show');
@@ -311,18 +312,6 @@ function reset() {
 
 
 
-function IsReadNotificationInbox(psmId) {
-   
-    $.ajax({
-        url: '/Projects/IsReadNotificationInbox',
-        type: 'POST',
-        data: { "ProjId": psmId },
-        success: function (response) {
-            console.log(response);
-
-        }
-    });
-}
 
 function IsReadInbox(psmId) {
 

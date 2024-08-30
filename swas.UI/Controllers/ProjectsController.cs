@@ -480,72 +480,72 @@ namespace swas.UI.Controllers
         }
 
         
-        [HttpPost]
-        public async Task<IActionResult> IsReadNotificationInbox(int ProjId)
-        {
-            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-            if (loginUser == null)
-            {
-                return Redirect("/Identity/Account/login");
-            }
+        //[HttpPost]
+        //public async Task<IActionResult> IsReadNotificationInbox(int ProjId)
+        //{
+        //    var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+        //    if (loginUser == null)
+        //    {
+        //        return Redirect("/Identity/Account/login");
+        //    }
 
-            try
-            {
-                var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
-                if (notify != null)
-                {
-                    notify.ReadDateTime = DateTime.Now;
-                    notify.IsRead = true;
+        //    try
+        //    {
+        //        var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
+        //        if (notify != null)
+        //        {
+        //            notify.ReadDateTime = DateTime.Now;
+        //            notify.IsRead = true;
 
-                    var updateResult = await _projectsRepository.UpdateNotificationByProjID(notify);
-                    if (updateResult)
-                    {
-                        return Json(ProjId);
-                    }
-                }
+        //            var updateResult = await _projectsRepository.UpdateNotificationByProjID(notify);
+        //            if (updateResult)
+        //            {
+        //                return Json(ProjId);
+        //            }
+        //        }
 
-                return Json(0);
-            }
-            catch (Exception ex)
-            {
-                swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                return Json(0);
-            }
-        }
+        //        return Json(0);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+        //        return Json(0);
+        //    }
+        //}
 
 
-        [HttpPost]
-        public async Task<IActionResult> IsReadNotification(int ProjId)
-        {
-            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-            if (loginUser == null)
-            {
-                return Redirect("/Identity/Account/login");
-            }
+        //[HttpPost]
+        //public async Task<IActionResult> IsReadNotification(int ProjId)
+        //{
+        //    var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+        //    if (loginUser == null)
+        //    {
+        //        return Redirect("/Identity/Account/login");
+        //    }
 
-            try
-            {
-                var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
-                if (notify != null)
-                {
-                    //notify.ReadDateTime = DateTime.Now;
-                    //notify.IsRead = true;
+        //    try
+        //    {
+        //        var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
+        //        if (notify != null)
+        //        {
+        //            //notify.ReadDateTime = DateTime.Now;
+        //            //notify.IsRead = true;
 
-                    var updateResult = await _projectsRepository.UpdateNotification(notify);
-                    if (updateResult)
-                    {
-                        return Json(ProjId);
-                    }
-                }
+        //            var updateResult = await _projectsRepository.UpdateNotification(notify);
+        //            if (updateResult)
+        //            {
+        //                return Json(ProjId);
+        //            }
+        //        }
 
-                return Json(0);
-            }
-            catch (Exception ex)
-            {
-                swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                return Json(0);
-            }
-        }
+        //        return Json(0);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+        //        return Json(0);
+        //    }
+        //}
 
         [HttpPost]
         public async Task<IActionResult> IsProcessProjConfirm(int ProjId)
@@ -1416,11 +1416,11 @@ namespace swas.UI.Controllers
         }
 
 
-        public async Task<IActionResult> GetALLByProjectName(string? ProjName)
-        {
-            var ProjectName  = await _projectsRepository.GetALLByProjectName(ProjName);
-            return Json(ProjectName);
-        }
+        //public async Task<IActionResult> GetALLByProjectName(string? ProjName)
+        //{
+        //    var ProjectName  = await _projectsRepository.GetALLByProjectName(ProjName);
+        //    return Json(ProjectName);
+        //}
 
 
         public async Task<IActionResult> ProcessNotification(int ProjId, int unitid, DateTime FwdDateForComment)
@@ -1493,73 +1493,73 @@ namespace swas.UI.Controllers
 
 
 
-        [HttpPost]
-        public async Task<IActionResult> IsUnReadNotification(int ProjId)
-        {
-            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-            if (loginUser == null)
-            {
-                return Redirect("/Identity/Account/login");
-            }
+        //[HttpPost]
+        //public async Task<IActionResult> IsUnReadNotification(int ProjId)
+        //{
+        //    var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+        //    if (loginUser == null)
+        //    {
+        //        return Redirect("/Identity/Account/login");
+        //    }
 
-            try
-            {
-                var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
-                if (notify != null)
-                {
-                    notify.ReadDateTime = DateTime.Now;
-                    notify.IsRead = false;
+        //    try
+        //    {
+        //        var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
+        //        if (notify != null)
+        //        {
+        //            notify.ReadDateTime = DateTime.Now;
+        //            notify.IsRead = false;
 
-                    var updateResult = await _projectsRepository.UpdateUnReadNotification(notify);
-                    if (updateResult)
-                    {
-                        return Json(ProjId);
-                    }
-                }
+        //            var updateResult = await _projectsRepository.UpdateUnReadNotification(notify);
+        //            if (updateResult)
+        //            {
+        //                return Json(ProjId);
+        //            }
+        //        }
 
-                return Json(0);
-            }
-            catch (Exception ex)
-            {
-                swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                return Json(0);
-            }
-        }
+        //        return Json(0);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+        //        return Json(0);
+        //    }
+        //}
 
 
 
-        [HttpPost]
-        public async Task<IActionResult> IsCommentedUnreadNotification (int ProjId)
-        {
-            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-            if (loginUser == null)
-            {
-                return Redirect("/Identity/Account/login");
-            }
+        //[HttpPost]
+        //public async Task<IActionResult> IsCommentedUnreadNotification (int ProjId)
+        //{
+        //    var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+        //    if (loginUser == null)
+        //    {
+        //        return Redirect("/Identity/Account/login");
+        //    }
 
-            try
-            {
-                var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
-                if (notify != null)
-                {
-                    notify.ReadDateTime = DateTime.Now;
-                    notify.IsRead = false;
+        //    try
+        //    {
+        //        var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
+        //        if (notify != null)
+        //        {
+        //            notify.ReadDateTime = DateTime.Now;
+        //            notify.IsRead = false;
 
-                    var updateResult = await _projectsRepository.UpdateCommentedUnReadNotification(notify);
-                    if (updateResult)
-                    {
-                        return Json(ProjId);
-                    }
-                }
+        //            var updateResult = await _projectsRepository.UpdateCommentedUnReadNotification(notify);
+        //            if (updateResult)
+        //            {
+        //                return Json(ProjId);
+        //            }
+        //        }
 
-                return Json(0);
-            }
-            catch (Exception ex)
-            {
-                swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                return Json(0);
-            }
-        }
+        //        return Json(0);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+        //        return Json(0);
+        //    }
+        //}
 
 
        
