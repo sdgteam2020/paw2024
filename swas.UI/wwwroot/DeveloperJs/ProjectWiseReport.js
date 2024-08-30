@@ -288,7 +288,7 @@ function GetProjHold(ProjId) {
                         searching: true,
                         stateSave: true,
                         "order": [[0, "asc"]],
-                        "ordering": false,
+                        "ordering": true,
                         "paging": true,
                         dom: 'lBfrtip',
                         buttons: [
@@ -338,8 +338,8 @@ function GetProjHold(ProjId) {
 
                         searching: true,
                         stateSave: true,
-                        "order": [[0, "asc"]],
-                    "ordering": false,
+                    "order": [[0, "asc"]],
+                    "ordering": true,
                         "paging": true,
                         dom: 'lBfrtip',
                         buttons: [

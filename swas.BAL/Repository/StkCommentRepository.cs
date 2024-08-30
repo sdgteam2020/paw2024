@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using swas.BAL.DTO;
 using swas.BAL.Interfaces;
 using swas.DAL;
@@ -26,7 +27,8 @@ namespace swas.BAL.Repository
                          join status in _context.StkStatus on comment.StkStatusId equals status.StkStatusId into statusGroup
                          from status in statusGroup.DefaultIfEmpty() // Left Join
                          join project in _context.Projects on comment.ProjId equals project.ProjId // Assuming 'ProjId' is in the 'Stk_Comments' table
-                         where comment.ProjId == Data.ProjId //&& comment.StakeHolderId==Data.StakeHolderId // && comment.StakeHolderId == stakeholderId
+                         join users in _context.Users on comment.UpdatedByUserId equals users.UserIntId
+                              where comment.ProjId == Data.ProjId //&& comment.StakeHolderId==Data.StakeHolderId // && comment.StakeHolderId == stakeholderId
                               orderby comment.StkCommentId descending
                          select new DTOProComments
                          {
@@ -39,9 +41,12 @@ namespace swas.BAL.Repository
                              StkCommentId = comment.StkCommentId,
                              UnitId = comment.StakeHolderId,
                              Attpath = comment.Attpath,
-                            
+                             DomainId = users.domain_iam
 
-                         }).ToListAsync();  
+
+                         }).ToListAsync();
+           
+
 
             return query.ToList();
         }

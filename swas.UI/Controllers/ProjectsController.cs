@@ -33,6 +33,8 @@ using System.Security.Cryptography.Xml;
 using iText.Commons.Actions.Contexts;
 using Grpc.Core;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
+using ASPNetCoreIdentityCustomFields.Data;
 
 namespace swas.UI.Controllers
 {
@@ -40,7 +42,7 @@ namespace swas.UI.Controllers
     {
 
         private readonly IProjectsRepository _projectsRepository;
-
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IDdlRepository _DDLRepository;
         private readonly IDdlRepository _dlRepository;
         private readonly IProjStakeHolderMovRepository _psmRepository;
@@ -65,8 +67,8 @@ namespace swas.UI.Controllers
             IDataProtectionProvider DataProtector, IWebHostEnvironment _webHostEnvironment,
             ICommentRepository commentRepository, IActionsRepository actionsRepository,
             IProjComments projComments, IStkCommentRepository stkCommentRepository,
-            IProjStakeHolderMovRepository projStakeHolderMovRepository
-
+            IProjStakeHolderMovRepository projStakeHolderMovRepository,
+            UserManager<ApplicationUser> userManager
 
             )
         {
@@ -86,6 +88,7 @@ namespace swas.UI.Controllers
             _projComments = projComments;
             _stkCommentRepository = stkCommentRepository;
             _projStakeHolderMovRepository = projStakeHolderMovRepository;
+            _userManager = userManager;
         }
 
 
@@ -273,44 +276,51 @@ namespace swas.UI.Controllers
         [HttpPost]
         [RequestFormLimits(MultipartBodyLengthLimit = 26214400)]
         public async Task<IActionResult> UploadMultiFile(IFormFile uploadfile, string Reamarks, int PsmId)
-        {
+        { 
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
             if (uploadfile != null && uploadfile.Length > 0)
             {
+
                 string uniqueFileName = $"{"Swas"}_{Guid.NewGuid()}{System.IO.Path.GetExtension(uploadfile.FileName)}";
-
-                string filePath = System.IO.Path.Combine(_environment.ContentRootPath, "wwwroot/Uploads/", uniqueFileName);
-
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                if (System.IO.Path.GetExtension(uniqueFileName).ToLower() == ".pdf")
                 {
-                    uploadfile.CopyTo(stream);
-                }
+                    string filePath = System.IO.Path.Combine(_environment.ContentRootPath, "wwwroot/Uploads/", uniqueFileName);
 
-                // var project = await _projectsRepository.GetProjectByIdAsync(ProjectId);
-                if (PsmId != null && PsmId != 0)
-                {
-                    tbl_AttHistory atthis = new tbl_AttHistory();
-                    atthis.ActionId = 0;
-                    atthis.AttPath = uniqueFileName;
 
-                    atthis.Reamarks = Reamarks;
-                    atthis.PsmId = PsmId;
-                    atthis.UpdatedByUserId = Logins.unitid;
-                    atthis.DateTimeOfUpdate = DateTime.Now;
-                    atthis.IsDeleted = false;
-                    atthis.IsActive = true;
-                    atthis.EditDeleteBy = Logins.unitid;
-                    atthis.EditDeleteDate = DateTime.Now;
-                    atthis.TimeStamp = DateTime.Now;
-                    atthis.ActFileName = uploadfile.FileName;
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        uploadfile.CopyTo(stream);
+                    }
 
-                    await _attHistoryRepository.AddAttHistoryAsync(atthis);
+                    // var project = await _projectsRepository.GetProjectByIdAsync(ProjectId);
+                    if (PsmId != null && PsmId != 0)
+                    {
+                        tbl_AttHistory atthis = new tbl_AttHistory();
+                        atthis.ActionId = 0;
+                        atthis.AttPath = uniqueFileName;
+
+                        atthis.Reamarks = Reamarks;
+                        atthis.PsmId = PsmId;
+                        atthis.UpdatedByUserId = Logins.unitid;
+                        atthis.DateTimeOfUpdate = DateTime.Now;
+                        atthis.IsDeleted = false;
+                        atthis.IsActive = true;
+                        atthis.EditDeleteBy = Logins.unitid;
+                        atthis.EditDeleteDate = DateTime.Now;
+                        atthis.TimeStamp = DateTime.Now;
+                        atthis.ActFileName = uploadfile.FileName;
+
+                        await _attHistoryRepository.AddAttHistoryAsync(atthis);
+                    }
+                    else
+                    {
+                        return Json(-1);
+                    }
                 }
                 else
                 {
-                    return Json(-1);
+                    return Json(-2);
                 }
             }
             return Json(1);
@@ -362,7 +372,7 @@ namespace swas.UI.Controllers
             }
             catch (Exception ex)
             {
-                return Json(5);
+                return Json(-5);
             }
         }
 
@@ -446,11 +456,16 @@ namespace swas.UI.Controllers
 
                     tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
                     // var project = await _projectsRepository.GetProjectByIdAsync(projid);
-                    psmove = await _projectsRepository.GettXNByPsmIdAsync(PsmId);
-                    psmove.DateTimeOfUpdate = DateTime.Now;
-                    psmove.IsRead = true;
-                    await _projectsRepository.UpdateTxnAsync(psmove);
-                    return Json(PsmId);
+                    psmove = await _projectsRepository.GettXNByPsmIdwithUnitId(PsmId, Convert.ToInt32(Logins.unitid));
+                    if (psmove != null)
+                    {
+                        psmove.DateTimeOfUpdate = DateTime.Now;
+                        psmove.IsRead = true;
+                        await _projectsRepository.UpdateTxnAsync(psmove);
+                        return Json(PsmId);
+                    }
+                    else
+                        return Json(0);
                 }
                 catch (Exception ex)
                 {
@@ -759,12 +774,13 @@ namespace swas.UI.Controllers
 
                 if (StageId == 1)
                 {
-                    var proj = await _projectsRepository.GetProjectByIdAsync(ProjectId);
-                    proj.IsSubmited = false;
+                    //var proj = await _projectsRepository.GetProjectByIdAsync(ProjectId);
+                    //proj.IsSubmited = false;
 
-                    await _projectsRepository.UpdateProjectAsync(proj);
+                    //await _projectsRepository.UpdateProjectAsync(proj);
 
                     // var ret = await _psmRepository.DeleteProjStakeHolderMovAsync(PsmId);
+                    return Json(nmum.NotSave);
                 }
                 else
                 {
@@ -886,8 +902,8 @@ namespace swas.UI.Controllers
                 StkComment stkComment = new StkComment();
                 stkComment.ProjId = projId;
                 //stkComment.StakeHolderId = Logins.unitid;
-
                 var ret = await _stkCommentRepository.GetAllCommentBypsmId_UnitId(stkComment);
+               
                 return Json(ret);
 
             }
@@ -1295,7 +1311,6 @@ namespace swas.UI.Controllers
 
         [HttpGet]
         public async Task<JsonResult> GetProjectCommentCount()
-        
        {
             try
             {
@@ -1314,7 +1329,6 @@ namespace swas.UI.Controllers
 
         [HttpGet]
         public async Task<JsonResult> GetProjectInboxCount()
-
         {
             try
             {
@@ -1347,7 +1361,7 @@ namespace swas.UI.Controllers
             {
                // int ProjId = await _projStakeHolderMovRepository.GetProjectId(ProjName);
 
-                var ret = await _projStakeHolderMovRepository.ProjectMovement(3);
+                var ret = await _projStakeHolderMovRepository.ProjectMovement(Id);
                 return Json(ret);
             }
             catch (Exception ex)

@@ -1,7 +1,51 @@
 ﻿$(document).ready(function () {
 
-    GetProjectMovement();
+   // GetProjectMovement();
+    $("#txtProjectName").autocomplete({
+        source: function (request, response) {
 
+            if (request.term.length > 1) {
+                var projName = request.term;
+                var param = { "ProjName": projName };
+                $.ajax({
+                    url: '/Projects/GetALLByProjectName',
+                    contentType: 'application/x-www-form-urlencoded',
+                    data: param,
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.length != 0) {
+                            response($.map(data, function (item) {
+
+                                return { label: item.name, value: item.id };
+
+                            }))
+                        }
+                        else {
+
+                            $("#txtProjectName").val("");
+
+                           
+                            alert("Project not found.")
+                        }
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            }
+        },
+        select: function (e, i) {
+            e.preventDefault();
+            $("#txtProjectName").val(i.item.label);
+            
+            GetProjectMovement(i.item.value);
+            
+        },
+        appendTo: '#suggesstion-box'
+    });
  
     $("#btnFwdNext").click(function () {
         requiredFields = $('#ProjFwd').find('.requiredField');
@@ -124,6 +168,15 @@ function UploadFiles() {
                     title: "Upload success",
                     showConfirmButton: false,
                     timer: 1500
+                });
+            }
+          else  if (response == -2) {
+
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Only Pdf File Upload!",
+                    
                 });
             }
 
@@ -258,7 +311,7 @@ function Deleteattechment(AttechId) {
         }
     });
 }
-function GetProjectMovement()
+function GetProjectMovement(ProjectId)
 {
 
         var listItem = "";
@@ -267,7 +320,7 @@ function GetProjectMovement()
         url: '/Projects/GetProjectMov',
         type: 'Post',
         data: {
-            "Id": 0
+            "Id": ProjectId
         },
         success: function (response) {
            

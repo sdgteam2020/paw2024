@@ -17,11 +17,11 @@
         <div class="row justify-content-center">
             <div class="col-md-auto">
                 <label>From Date:</label>&nbsp;
-                <input name="fromDate" id="fromDate" type="date" class="datePicker" />
+                <input name="fromDate" id="fromDate" type="date" class="datePicker" value="@TempData["fromDate"]" />
             </div>
             <div class="col-md-auto">
                 <label>To Date:</label>&nbsp;
-                <input name="toDate" id="toDate" type="date" class="datePicker" />
+                <input name="toDate" id="toDate" type="date" class="datePicker" value="@TempData["toDate"]" />
             </div>
         </div>
         
@@ -85,7 +85,16 @@
 
 <script>
     $(document).ready(function () {
+        var todaysDate = new Date();
+        if ($("#fromDate").val() == "") {
+            $("#fromDate").val(DateFormateyyy_mm_dd(todaysDate));
+            $("#toDate").val(DateFormateyyy_mm_dd(todaysDate));
+        }
+       
+
         $('#SearchData').click(function (event) {
+
+
             var fromTimeStamp = $('#fromDate').val();
             var toTimeStamp = $('#toDate').val();
 

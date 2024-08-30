@@ -50,22 +50,25 @@ namespace swas.UI.Controllers
 				{
 					foreach (var user in userdet)
 					{
-						DTOApplicationUserWithChatRead db = new DTOApplicationUserWithChatRead();
-						db.Id = user.Id;
-						db.Rank = user.Rank;
-						db.Offr_Name = user.Offr_Name;
-						db.UserName = user.UserName;
-						if (ischat != null && ischat.Count > 0)
-						{
-							DTOIsChat dTOIsChat = new DTOIsChat();
-							dTOIsChat = ischat.Where(i => i.FromUserID == user.Id).FirstOrDefault();
-							if (dTOIsChat != null)
-							{
-								db.Total = dTOIsChat.Total;
-								db.CreatedOn = dTOIsChat.CreatedOn;
-							}
-						}
-						lstuser.Add(db);
+                        if (id != user.Id)
+                        {
+                            DTOApplicationUserWithChatRead db = new DTOApplicationUserWithChatRead();
+                            db.Id = user.Id;
+                            db.Rank = user.Rank;
+                            db.Offr_Name = user.Offr_Name;
+                            db.UserName = user.UserName;
+                            if (ischat != null && ischat.Count > 0)
+                            {
+                                DTOIsChat dTOIsChat = new DTOIsChat();
+                                dTOIsChat = ischat.Where(i => i.FromUserID == user.Id).FirstOrDefault();
+                                if (dTOIsChat != null)
+                                {
+                                    db.Total = dTOIsChat.Total;
+                                    db.CreatedOn = dTOIsChat.CreatedOn;
+                                }
+                            }
+                            lstuser.Add(db);
+                        }
 					}
 				}
 

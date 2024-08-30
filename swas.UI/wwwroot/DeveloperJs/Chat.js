@@ -7,13 +7,13 @@
         $("#loading").hide();
     });
     
-    //setInterval(function () {
-    //    GetAllUsers()
-    //    if ($("#spnUserMapChatId").html() != 0)
+    setInterval(function () {
+       // GetAllUsers()
+        if ($("#spnUserMapChatId").html() != 0)
            
-    //        UserChat($("#spnUserMapChatId").html(), $("#spnToUserIdMapChatId").html(), $("#profsortname").html());
+            UserChat($("#spnUserMapChatId").html(), $("#spnToUserIdMapChatId").html(), $("#profsortname").html());
 
-    //}, 3000);
+    }, 3000);
     
    
     $(".img_cont_msg").click(function () {
@@ -148,7 +148,7 @@ function UserMapChat(ToUserId, profName,sortname) {
                
                 $("#spnUserMapChatId").html(response.userMapChatId);
                 $("#spnToUserIdMapChatId").html(ToUserId);
-                $(".img_cont").html('<div class="circleimg" style="background-color:' + displayFixedColorAlphabet(sortname.replace(/^\s+|\s+$/gm, '').substr(0, 1).toUpperCase()) + ';color:#ffff" >' + sortname.toUpperCase() +'</div>');
+                $("#img_contuser").html('<div class="circleimg" style="background-color:' + displayFixedColorAlphabet(sortname.replace(/^\s+|\s+$/gm, '').substr(0, 1).toUpperCase()) + ';color:#ffff" >' + sortname.toUpperCase() +'</div>');
 
                 UserChat(response.userMapChatId, ToUserId, sortname);
                
@@ -234,14 +234,14 @@ const colors = [
     '#5b7382',
     '#3498db',
     '#2c3e50',
-    '#fdfefe',
+    '#6da8a8',
     '#6495ED',
     '#000080',
     '#0000FF',
     '#008080',
     '#C0C0C0',
     '#999999',
-    '#FFFFFF',
+    '#a85e5e',
     '#008000',
     '#454545',
     '#52be80',

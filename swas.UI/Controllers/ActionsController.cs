@@ -182,7 +182,7 @@ namespace swas.UI.Controllers
         #region Action Seq
 
         public async Task<IActionResult> ActionSeqView()
-        {
+        { 
             var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
             var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
             var watermarkText = $" {ipAddress}\n  {currentDatetime}";

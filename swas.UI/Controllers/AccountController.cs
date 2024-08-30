@@ -813,7 +813,7 @@ namespace swas.UI.Controllers
                 var roles = await userManager.GetRolesAsync(user);
                 var userRole = roles.FirstOrDefault();
 
-                ViewData["ty"] = userRole;
+                ViewData["ty"] = RoleName;
 
                 var type = _context.tbl_Type.ToList();
                 ViewBag.Type = type;

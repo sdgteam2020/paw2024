@@ -31,25 +31,26 @@
 <div id="searchContainer" class="search-container">
     <form class="form-group" asp-action="GetProjLogview" method="post" id="searchFormProjName">
 
-        <div class="row justify-content-center">
+        <div class="row justify-content-left">
            
 
             <div class="form-group row mb-2" id="suggesstion-box">
                 <span class="d-none" id="ProjectId">0</span>
-                <span class="d-none1" id="PslmId">0</span>
+                <span class="d-none" id="PslmId">0</span>
 
-                <label class="col-form-label col-sm-4 fw-bold">Project Name <i class="fas fa-asterisk mand1"></i></label>
-                <div class="col-sm-8">
+                <label class="col-form-label col-sm-2 fw-bold">Project Name <i class="fas fa-asterisk mand1"></i></label>
+                <div class="col-sm-2">
                     <input class="form-control" placeholder="Type Project Name" id="txtProjectName" name="txtProjectName" data-val="true" />
                     <span class="text-danger field-validation-valid" data-valmsg-for="txtProjectName" data-valmsg-replace="true"></span>
+                </div>
+                .<div class="col-sm-2">
+                    <button type="button" class="btn btn-primary btn-sm" id="SearchData">Search</button>
                 </div>
             </div>
             
         </div>
 
-        <div class="col-md-auto" style="text-align:center">
-            <button type="button" class="btn btn-primary btn-sm" id="SearchData">Search</button>
-        </div>
+    
     </form>
 </div>
 
@@ -211,53 +212,3 @@
 </script>
 <script src="~/DeveloperJs/ProjectMovement.js"></script>
 <script src="~/developerjs/mtable.js"></script>
-
-<script>
-
-    $("#txtProjectName").autocomplete({
-        source: function (request, response) {
-           
-            if (request.term.length > 1) {
-                var projName = request.term;
-                var param = { "ProjName": projName };
-                $.ajax({
-                    url: '/Projects/GetALLByProjectName',
-                    contentType: 'application/x-www-form-urlencoded',
-                    data: param,
-                    type: 'POST',
-                    success: function (data) {
-                        if (data.length != 0) {
-                            response($.map(data, function (item) {
-
-                                $("#loading").addClass("d-none");
-                                return { label: item.txtProjectName, value: item.ProjId };
-
-                            }))
-                        }
-                        else {
-
-                            $("#txtProjectName").val("");
-                           
-                            $("#ProjId").val("");
-                            alert("Project not found.")
-                        }
-                    },
-                    error: function (response) {
-                        alert(response.responseText);
-                    },
-                    failure: function (response) {
-                        alert(response.responseText);
-                    }
-                });
-            }
-        },
-        select: function (e, i) {
-            e.preventDefault();
-            $("#txtProjectName").val(i.item.label);
-            $("#spnProjIdMap").html(i.item.value);
-            $("#ProjId").val(i.item.value);
-            alert(i.item.value)
-        },
-        appendTo: '#suggesstion-box'
-    });
-</script>

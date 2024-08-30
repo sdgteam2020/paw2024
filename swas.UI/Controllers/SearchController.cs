@@ -22,6 +22,7 @@ using System.Globalization;
 using System;
 using NuGet.Packaging.Signing;
 using Microsoft.AspNetCore.DataProtection;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace swas.UI.Controllers
 {
@@ -207,7 +208,8 @@ namespace swas.UI.Controllers
             var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
             var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
             var watermarkText = $" {ipAddress}\n  {currentDatetime}";
-
+            TempData["fromDate"] = "";
+            TempData["toDate"] = "";
             TempData["ipadd"] = watermarkText;
             List<ProjLogView> ProjLVs = new List<ProjLogView>();
             return View(ProjLVs);
@@ -219,6 +221,8 @@ namespace swas.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> GetProjLogview(string fromDate, string toDate)
         {
+            TempData["fromDate"] = fromDate;
+            TempData["toDate"] = toDate;
             var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
             var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
             var watermarkText = $" {ipAddress}\n  {currentDatetime}";

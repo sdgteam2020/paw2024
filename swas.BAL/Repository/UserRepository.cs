@@ -4,6 +4,7 @@ using swas.BAL.Utility;
 using swas.BAL.Interfaces;
 using swas.DAL;
 using Microsoft.EntityFrameworkCore;
+using ASPNetCoreIdentityCustomFields.Data;
 
 namespace swas.BAL
 {
@@ -46,7 +47,7 @@ namespace swas.BAL
        
 
       
-        public async Task<List<tbl_users>> GetAllUsersAsync()
+        public async Task<List<ApplicationUser>> GetAllUsersAsync()
         {
             var users = await _dbContext.Users.ToListAsync();
             return users;

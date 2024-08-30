@@ -74,7 +74,7 @@ namespace swas.BAL.Repository
                                    ToUnitId=tounit.unitid,
                                    DateTimeOfUpdate = b.TimeStamp,
                                    Remarks = b.Remarks,
-                                 
+                                    
 
                                }).ToListAsync();
         
@@ -240,7 +240,7 @@ namespace swas.BAL.Repository
             }
            
 
-            return lst;
+            return lst.OrderByDescending(i=>i.PsmId).ToList();
         }
         public int GetLastRecProjectMov(int ProjectId)
         {
@@ -255,7 +255,7 @@ namespace swas.BAL.Repository
           
         }
         public async Task<DTODashboard> DashboardCount(int UserId)
-        { 
+        {   
             DTODashboard db=new DTODashboard();
            
  
@@ -346,10 +346,15 @@ namespace swas.BAL.Repository
                                where
                               //mov.ToUnitId == UserId &&
                               // mov.IsComplete == false &&
-                             ( mov.StatusActionsMappingId==4 || mov.StatusActionsMappingId == 118)
+                             ( mov.StatusActionsMappingId==4 || mov.StatusActionsMappingId == 118 || mov.StatusActionsMappingId == 3   //-----stage1
+                            || mov.StatusActionsMappingId == 49 || mov.StatusActionsMappingId == 54 //-----stage2
+                            || mov.StatusActionsMappingId == 64 || mov.StatusActionsMappingId == 69 //-----stage3
+                            || mov.StatusActionsMappingId == 74 || mov.StatusActionsMappingId == 79 //-----stage3
+                            || mov.StatusActionsMappingId == 84 || mov.StatusActionsMappingId == 89 //-----stage3
+                            )
                               && mov.IsActive == true
                                /*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
-                               && ststus.IsDashboard == true
+                             
                                && proj.IsSubmited == true
                                orderby stge.StagesId ascending
                                group mov by new
@@ -422,6 +427,7 @@ namespace swas.BAL.Repository
                                        stsmap.StatusActionsMappingId==48 ||     //Auto Committee
                                        stsmap.StatusActionsMappingId==53 ||     //IPA Stage
                                        stsmap.StatusActionsMappingId==60 ||     //Closed
+                                       stsmap.StatusActionsMappingId==63 ||     //AHCC (Arch Vetting)
                                        stsmap.StatusActionsMappingId==68 ||     //ACG (Lab Test)
                                        stsmap.StatusActionsMappingId==73 ||     //AHCC (IAM Integ)
                                        stsmap.StatusActionsMappingId==78 ||     //ACG (Remote Test)
@@ -654,9 +660,9 @@ namespace swas.BAL.Repository
                              join j in _dbContext.Comment on b.PsmId equals j.PsmId into commentGroup
                              from j in commentGroup.DefaultIfEmpty()
                              join k in _dbContext.tbl_mUnitBranch on c.StakeHolderId equals k.unitid
-                             where b.EditDeleteDate >= DateTime.Parse(startDate) &&
-                                   b.EditDeleteDate <= DateTime.Parse(endDate) 
-                             orderby b.ProjId, b.EditDeleteDate
+                             where b.DateTimeOfUpdate >= DateTime.Parse(startDate) &&
+                                   b.DateTimeOfUpdate <= DateTime.Parse(endDate) 
+                             orderby b.ProjId, b.DateTimeOfUpdate descending
                              select new
                              {
                                  b.PsmId,

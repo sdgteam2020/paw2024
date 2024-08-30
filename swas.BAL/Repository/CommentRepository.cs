@@ -33,7 +33,7 @@ namespace swas.BAL.Repository
             await _dbContext.SaveChangesAsync();
             return comment.CommentId;
         }
-
+         
         public async Task<tbl_Comment> GetCommentByIdAsync(int commentId)
         {
             return await _dbContext.Comment.FindAsync(commentId);

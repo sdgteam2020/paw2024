@@ -25,7 +25,7 @@ namespace swas.BAL.Interfaces
         Task<List<tbl_Projects>> GetAllProjectsAsync();
         Task<bool> DeleteProjectAsync(int projectId);
         Task<List<DTOProjectsFwd>> GetActInboxAsync();
-        Task<List<DTOProjectsFwd>> GetDashboardStatusDetails(int StatuId,int UnitId);
+        Task<List<DTOProjectsFwd>> GetDashboardStatusDetails(int StatuId,int UnitId, bool IsDuplicate);
         Task<List<DTOProjectsFwd>> GetDashboardApproved(int StatuId,int statusActionsMappingId);
         Task<DTOProjectWiseStatus> GetProjectWiseStatus();
         Task<List<DTOProjectsFwd>> GetActSendItemsAsync();
@@ -36,6 +36,7 @@ namespace swas.BAL.Interfaces
         Task<List<tbl_Projects>> GetMyProjectsAsync();
         Task<List<tbl_Projects>> GetActProjectsAsync();
         Task<tbl_ProjStakeHolderMov> GettXNByPsmIdAsync(int psmId);
+        Task<tbl_ProjStakeHolderMov> GettXNByPsmIdwithUnitId(int psmId,int unitid);
 
         Task<List<DToWhiteListed>> GetWhiteListedActionProj();
 

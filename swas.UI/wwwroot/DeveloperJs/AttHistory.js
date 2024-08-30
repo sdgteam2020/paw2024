@@ -27,6 +27,14 @@
                     showConfirmButton: false,
                     timer: 1500
                 });
+            } else if (response == -2) {
+
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Only Pdf File Upload!",
+
+                });
             }
 
         },

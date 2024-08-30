@@ -126,10 +126,10 @@ namespace swas.UI.Controllers
                 return Redirect("/Home/Error");
             }
         }
-        public async Task<IActionResult> GetDashboardStatusDetails(int StatusId)
+        public async Task<IActionResult> GetDashboardStatusDetails(int StatusId,bool IsDuplicate)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
-            var ss = await _projectsRepository.GetDashboardStatusDetails(StatusId,Convert.ToInt32(Logins.unitid));
+            var ss = await _projectsRepository.GetDashboardStatusDetails(StatusId,Convert.ToInt32(Logins.unitid), IsDuplicate);
 
             return Json(ss);
             

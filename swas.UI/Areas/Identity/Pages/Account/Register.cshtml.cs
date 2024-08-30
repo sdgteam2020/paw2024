@@ -216,7 +216,7 @@ namespace swas.Areas.Identity.Pages.Account
                 ViewData["unitdtl"] = _context.tbl_mUnitBranch.ToList();
                 ViewData["Unit"] = _context.tbl_mUnitBranch.ToList();
                 Input = new InputModel();
-                Input.UserName = userName;
+                //Input.UserName = userName;
 
                 ViewData["IAMUser"] = tasks.ToList();
 

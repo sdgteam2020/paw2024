@@ -19,7 +19,10 @@
     int snodraft = 0;
     int snocompleted = 0;
 }
+
+
 <link href="~/assets/css/tooltip.css" rel="stylesheet" />
+
 <style>
     .red-text {
         color: red;
@@ -29,7 +32,11 @@
         font-size: 15px;
     }
 
-    
+    @@media (min-width: 1200px) {
+    .modal-xl {
+        --bs-modal-width: 1400px;
+    }
+}
 
 
 </style>
@@ -181,6 +188,8 @@
 
 
 <link href="~/css/timeline.css" rel="stylesheet" />
+
+
 <body>
     <div class="tabs" id="tabs">
         <ul class="tabs__head">
@@ -539,7 +548,11 @@
                                                     <div class="col-md-6">
                                                         @if (project.PsmIds == project.undopsmId)
                                                         {
-                                                            <button type="button" class="btn btn-success btn-Undo ml-2" style="padding: 1px !important;font-size: 13px !important;">Undo </button>
+                                                            if(project.StageId!=1)
+                                                            {
+                                                                <button type="button" class="btn btn-success btn-Undo ml-2" style="padding: 1px !important;font-size: 13px !important;">Undo </button>
+                                                            }
+                                                            
                                                         }
                                                     </div>
                                                     <div class="col-md-6">
@@ -816,9 +829,14 @@
                                             <textarea class="form-control requiredField" id="txtRemarksfwd" style="width: 100%;"></textarea>
                                         </div>
 
-                                        <div class="form-group col-md-6 ProjectsFwd">
+                                        <div class="form-group col-md-4 ProjectsFwd">
                                             <label>Date of Fwd:</label>
-                                            <input id="TimeStampToProjfwd" type="datetime-local" class="datePicker  form-control requiredField" />
+                                            <input id="TimeStampToProjfwd" type="datetime-local" style="width: 200px;" class="datePicker  form-control requiredField" />
+                                        </div> 
+                                        <div class="form-group col-md-2 ProjectsFwd mt-4">
+                                            <button type="button" class="btn btn-danger" id="btn-ibutton" style="margin-top: 1px;" title="Process Step Wise">
+                                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                            </button>
                                         </div>
 
 
@@ -894,6 +912,22 @@
                            
                        
                     </div>
+                </div>
+
+            </div><!-- modal-content -->
+        </div><!-- modal-dialog -->
+    </div>
+        <div class="modal fade right" id="Projibutton" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document" >
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h4 class="modal-title" id="lblHistory">Project Fwd History</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                   <img src="~/assets/images/flow.png" class="FlowImg" />
                 </div>
 
             </div><!-- modal-content -->

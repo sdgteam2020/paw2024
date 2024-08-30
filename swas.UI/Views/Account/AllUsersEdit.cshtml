@@ -130,7 +130,15 @@
                                     <select asp-for="RoleName" class="ms form-control inputs dropdownsearch ">
                                         @foreach (var Role in typesList)
                                         {
-                                            <option value="@Role.Id">@Role.Name</option>
+                                            if (ViewData["ty"].ToString() == Role.Name)
+                                            {
+                                                <option selected value="@Role.Id">@Role.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@Role.Id">@Role.Name</option>
+                                            }
+                                            
                                         }
 
                                     </select>

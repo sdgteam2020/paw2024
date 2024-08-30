@@ -1,4 +1,5 @@
-﻿using swas.DAL.Models;
+﻿using ASPNetCoreIdentityCustomFields.Data;
+using swas.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace swas.BAL.Interfaces
         Task<int> Save(tbl_users Db);
         bool CheckUserExist(string UserName);
         Task<int> DeleteUserAsync(tbl_users Db);
-        Task<List<tbl_users>> GetAllUsersAsync();
+        Task<List<ApplicationUser>> GetAllUsersAsync();
 
         Task<int> Add(tbl_LoginLog Db);
 

@@ -1,4 +1,55 @@
-﻿function DateFormateddMMyyyyhhmmss(date) {
+﻿$(document).ready(function () {
+
+    $('.form-control').keypress(function (e) {
+        // Get the key code of the pressed key
+        // Get the key code of the pressed key
+        var keyCode = e.which;
+
+        // Allow only alphabets (A-Z, a-z) and numbers (0-9)
+        if ((keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (keyCode >= 48 && keyCode <= 57) || (keyCode == 32)) {
+            return true; // Allow the keypress
+        } else {
+            alert('Only Alphabets and Numbers allowed');
+            return false; // Block the keypress
+        }
+    });
+});
+function DateFormateyyy_mm_dd(date) {
+
+    var todaysDate = new Date();
+    var datef1 = new Date(date);
+    //if (datef1.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
+    //    // Date equals today's date
+
+    //    return 'Today';
+    //}
+    //else {
+    var datef2 = new Date(date);
+    var months = "" + `${(datef2.getMonth() + 1)}`;
+    var days = "" + `${(datef2.getDate())}`;
+    var pad = "00"
+    var monthsans = pad.substring(0, pad.length - months.length) + months
+    var dayans = pad.substring(0, pad.length - days.length) + days
+    var year = `${datef2.getFullYear()}`;
+    var hh = `${datef2.getHours()}`;
+    var mm = `${datef2.getMinutes()}`;
+    var ss = `${datef2.getSeconds()}`;
+    if (hh < 10) hh = "0" + hh;
+    if (mm < 10) mm = "0" + mm;
+    if (ss < 10) ss = "0" + ss;
+    if (year > 1902) {
+
+        var datemmddyyyy = year + `-` + monthsans + `-` + dayans
+        return datemmddyyyy;
+    }
+    else {
+        return '';
+    }
+    // }
+
+    //`${datef2.getFullYear()}/` + monthsans + `/` + dayans ;
+}
+function DateFormateddMMyyyyhhmmss(date) {
 
     var todaysDate = new Date();
     var datef1 = new Date(date);

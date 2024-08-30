@@ -25,7 +25,9 @@ namespace swas.BAL.DTO
 
         public DateTime? TimeStamp { get; set; }
         public bool IsComment { get; set; }
+        public string? DomainId { get; set; }
+        public string? UpdatedByUserId { get; set; }
 
-        
+
     }
 }

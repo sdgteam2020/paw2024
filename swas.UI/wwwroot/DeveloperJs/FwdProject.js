@@ -127,11 +127,13 @@
     });
 
     $(".ProjName").click(function () {
-        alert("Raj");
+       
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
         IsReadNotificationInbox($(this).closest("tr").find("#SpnCurrentProjId").html());
     });
-
+    $("#btn-ibutton").click(function () {
+        $('#Projibutton').modal('show');
+    });
     $("#btnFwdNext").click(function () {
        
         requiredFields = $('#ProjFwd').find('.requiredField');
@@ -286,6 +288,7 @@ function Updateundo(ProjId, PslmId, UndoRemarks,StageId) {
                     location.reload();
                 }
 
+
             }
 
         }
@@ -309,8 +312,7 @@ function reset() {
 
 
 function IsReadNotificationInbox(psmId) {
-    alert("Hii");
-    debugger;
+   
     $.ajax({
         url: '/Projects/IsReadNotificationInbox',
         type: 'POST',
