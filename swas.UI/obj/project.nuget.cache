@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "V+PCivpRoaY=",
+  "dgSpecHash": "4/9FkhbTEjw=",
   "success": true,
-  "projectFilePath": "D:\\Projects\\paw2024\\swas.UI\\swas.UI.csproj",
+  "projectFilePath": "D:\\Projects\\PAW24\\paw2024\\swas.UI\\swas.UI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lanmanager\\.nuget\\packages\\bootstrap\\5.3.0\\bootstrap.5.3.0.nupkg.sha512",
     "C:\\Users\\lanmanager\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",
