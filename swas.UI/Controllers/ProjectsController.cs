@@ -35,6 +35,7 @@ using Grpc.Core;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using ASPNetCoreIdentityCustomFields.Data;
+using System.Globalization;
 
 namespace swas.UI.Controllers
 {
@@ -242,6 +243,8 @@ namespace swas.UI.Controllers
                     ids = int.Parse(decryptedValue);
                     tbl_Projects tbl_Projects = new tbl_Projects();
                     tbl_Projects = await _projectsRepository.GetProjectByPsmIdAsync(ids);
+                
+                   
                     ViewBag.Projects = await _projectsRepository.GetMyProjectsAsync();
                     return View(tbl_Projects);
 

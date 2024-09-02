@@ -17,6 +17,7 @@ namespace swas.BAL.DTO
         public int PsmId { get; set; }
         public string? Stages { get; set; }
         public string? Status { get; set; }
+        public int StatusId { get; set; }
         public string? Actions { get; set; }
         public string? FromUnitName { get; set; }
         public string? ToUnitName { get; set; }
@@ -29,7 +30,7 @@ namespace swas.BAL.DTO
 
         public int? AttCnt { get; set; }
         public string? UserDetails { get; set; }
-
+        public bool isComment { get; set; }
     }
     public class DTOProjectMovHistorycmd
     {

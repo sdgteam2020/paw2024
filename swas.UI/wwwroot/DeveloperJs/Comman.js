@@ -1,16 +1,25 @@
 ﻿$(document).ready(function () {
 
+    $('.datetimepicker1').datepicker();
+
+
     $('.form-control').keypress(function (e) {
         // Get the key code of the pressed key
         // Get the key code of the pressed key
         var keyCode = e.which;
-
+       
         // Allow only alphabets (A-Z, a-z) and numbers (0-9)
         if ((keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (keyCode >= 48 && keyCode <= 57) || (keyCode == 32)) {
             return true; // Allow the keypress
         } else {
-            alert('Only Alphabets and Numbers allowed');
+
+            if (keyCode == 46 || keyCode == 44 || keyCode == 40 || keyCode == 41 || keyCode == 45 || keyCode == 58 || keyCode == 47)
+                return true; // Allow the keypress
+            else {
+                alert('Only Alphabets and Numbers allowed');
             return false; // Block the keypress
+            }
+            
         }
     });
 });

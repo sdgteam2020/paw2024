@@ -105,6 +105,7 @@ namespace swas.BAL.Repository
                                    Stages = stge.Stages,
                                    //Status = tounit.UnitName + " " + "For Comments",
                                    Status = ststus.Status,
+                                   StatusId= ststus.StatusId,
                                    Actions = act.Actions,
                                    FromUnitName = " " + b.UserDetails + " ( " + fromunit.UnitName + ")",
                                    ToUnitName = tounit.UnitName,
@@ -116,6 +117,7 @@ namespace swas.BAL.Repository
                                    IsComment = b.IsComment,
                                    AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == b.PsmId),
                                    UserDetails = b.UserDetails,
+                                   isComment=b.IsComment,
 
                                }).ToListAsync();
             lst.DTOProjectMovHistorypsmlst = query;

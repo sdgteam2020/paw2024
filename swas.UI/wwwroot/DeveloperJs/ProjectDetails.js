@@ -250,7 +250,7 @@ function GetProjectMovHistory(ProjId) {
 
                     }
                     else if (DTOProjectMovHistorypsmlst[i].isComment == true) {
-                        listitem += '<div class="box-title bg-danger text-white"><i class="fa-solid fa-comments fa-xl" style="color: #ffff;"></i> ' + DTOProjectMovHistorypsmlst[i].toUnitName +' For Comments</div>';
+                        listitem += '<div class="box-title bg-danger text-white"><i class="fa-solid fa-comments fa-xl" style="color: #ffff;"></i> ' + DTOProjectMovHistorypsmlst[i].toUnitName +' for Comments</div>';
 
 
                         listitem += '<div class="box-content">';

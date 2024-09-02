@@ -22,7 +22,8 @@
 @{
     var today = DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
 }
-
+<script src="~/js/jquery-ui.min.js"></script>
+<link href="~/css/jquery-ui.min.css" rel="stylesheet" />
 <div hidden id="SponsorName">@Logins.Unit @Logins.UserName.Trim() (@Logins.Rank.Trim() @Logins.Offr_Name.Trim()) </div>
 <div class="container-fluid">
 
@@ -120,17 +121,18 @@
                                     <td>
                                         @* @Html.TextBoxFor(model => model.CompletionDate, new { @class = "form-control", type = "date", required = "required"})
                                     *@
+                                        @Html.TextBoxFor(model => model.CompletionDate,"{0:dd-MM-yyyy}", new { @class = "form-control datepicker1 requiredField", type = "text", required = "required"})
 
-                                        @if (Model != null)
+                                    @*     @if (Model != null)
                                         {
-                                            <input asp-for="@Model.CompletionDate" type="date" asp-format="{0:dd-MM-yyyy}" class="form-control" />
+                                            <input id="CompletionDate" type="text" class="form-control datepicker1" />
                                         }
                                         else
                                         {
-                                            @Html.TextBoxFor(model => model.CompletionDate, new { @class = "form-control requiredField", type = "date", required = "required"})
+                                            @Html.TextBoxFor(model => model.CompletionDate,"{0:yyyy-MM-dd}", new { @class = "form-control datepicker1 requiredField", type = "text", required = "required"})
 
 
-                                        }
+                                        } *@
                                         @*                                     <input asp-for="@Model.CompletionDate" type="date" asp-format="{0:dd-MM-yyyy}" class="form-control" />
                                     *@
                                         @* @Html.EditorFor(model => model.CompletionDate, new { htmlAttributes = new { @class = "form-control", type = "date", required = "required", value="@Model.CompletionDate?.ToString('yyyy-MM-dd')" } }) *@
@@ -851,3 +853,9 @@
 <script src="~/DeveloperJs/CreateProjects.js"></script>
 <script src="~/developerjs/atthistory.js"></script>
 <script src="~/developerjs/mtable.js"></script>
+
+<script>
+    $(function () {
+        $(".datepicker1").datepicker();
+    });
+</script>

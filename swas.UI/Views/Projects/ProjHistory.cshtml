@@ -747,7 +747,18 @@
                             <td>@history.FromUnitName</td>
                             <td>@history.ToUnitName</td>
                             <td>@history.Stages</td>
-                            <td>@history.Status</td>
+                            <td>
+                            @if (history.isComment==true)
+
+                            {
+                                <spna>@history.ToUnitName for Comments</spna>
+                            }else
+                            {
+                                @history.Status
+                             }
+
+
+                                </td>
                             <td style="color: @((history.Actions == "Approved") ? "green" : "inherit")">
                                 @history.Actions
                             </td>
