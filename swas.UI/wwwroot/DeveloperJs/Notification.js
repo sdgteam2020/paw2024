@@ -32,7 +32,7 @@ function AddNotification(ProjId, type, unitid) {
 }
 
 function IsReadNotification(ProjId, type) {
-    alert(1)
+    
     $.ajax({
         url: '/Notification/IsReadNotification',
         type: 'POST',
@@ -46,6 +46,27 @@ function IsReadNotification(ProjId, type) {
         }
     });
 }
+
+
+function UndoNotification(ProjId, type, ToUnitId) {
+    alert(1)
+    $.ajax({
+        url: '/Notification/UndoNotification',
+        type: 'POST',
+        data: {
+            "ProjId": ProjId,
+            "type": type,
+            "ToUnitId": ToUnitId
+        },
+        success: function (response) {
+            console.log(response);
+
+        }
+    });
+}
+
+
+
 
 function UnReadNotification(ProjId, type) {
     $.ajax({

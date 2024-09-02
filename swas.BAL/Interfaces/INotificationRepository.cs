@@ -12,6 +12,7 @@ namespace swas.BAL.Interfaces
         Task<int> GetNotificationCountByType(int Type , int? ToUnitId);
         Task<Notification> GetNotificationByProjId(int projId);
         Task<Notification> GetNotifByToUnitAndType(int Type, int? ToUnitId, int projId);
+        Task<Notification> GetNotifByToAndFormId(int Type,int ToUnitId,int ProjId, int? FromUnitId);
         Task<List<Notification>> GetNotifExcludingToUnit(int? ToUnitId, int projId);
 
         Task<int> AddNotification (Notification notifications);

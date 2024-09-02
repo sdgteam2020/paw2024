@@ -242,5 +242,50 @@ namespace swas.UI.Controllers
             }
         }
 
+
+
+        [HttpPost]
+        public async Task<IActionResult> UndoNotification(int ProjId, int type ,int ToUnitId)
+        {
+            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            if (loginUser != null)
+            {
+                try
+                {
+                    if (ProjId != null)
+                    {
+
+                        if (type == 2)
+                        {
+                            var notify = await _notificationRepository.GetNotifByToAndFormId(type, ToUnitId, ProjId, loginUser.unitid);
+
+                            if (notify != null)
+                            {
+                                notify.ReadDateTime = DateTime.Now;
+                                notify.IsDeleted = true;
+
+                                var updateResult = await _notificationRepository.UpdateNotification(notify);
+                                if (updateResult)
+                                {
+                                    return Json(ProjId);
+                                }
+                            }
+                        }
+
+                    }
+
+                    return Json(0);
+                }
+                catch (Exception ex)
+                {
+                    swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                    return Json(0);
+                }
+            }
+            else
+            {
+                return Redirect("/Identity/Account/login");
+            }
+        }
     }
 }
