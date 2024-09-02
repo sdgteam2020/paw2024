@@ -23,8 +23,9 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             AddNotification(ProjId, 1, 0);
             ProcessProjConfirm(ProjId);
         });
+       
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
-
+       
         IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
     });
 
@@ -392,16 +393,16 @@ function IsReadInbox(psmId) {
     });
 }
 
-function IsReadNotificationInbox(ProjId) {
+//function IsReadNotificationInbox(ProjId) {
 
-    $.ajax({
-        url: '/Projects/IsReadNotificationInbox',
-        type: 'POST',
-        data: { "PsmId": ProjId },
-        success: function (response) {
-            console.log(response);
+//    $.ajax({
+//        url: '/Projects/IsReadNotificationInbox',
+//        type: 'POST',
+//        data: { "PsmId": ProjId },
+//        success: function (response) {
+//            console.log(response);
 
-        }
-    });
-}
+//        }
+//    });
+//}
 

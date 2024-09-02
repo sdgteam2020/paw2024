@@ -85,6 +85,7 @@ builder.Services.AddScoped<IStatusActionsMapping, StatusActionsMapping>();
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
 builder.Services.AddScoped<IUserMapChatRepository, UserMapChatRepository>();
 builder.Services.AddScoped<ITrnChatMsgRepository, TrnChatMsgRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 
 
 
