@@ -2,6 +2,10 @@
 $(document).ready(function () {
     //$("#1").hide();
     //$("#3").show();
+    $(function () {
+        $(".datepicker1").datepicker({ dateFormat: 'dd-mm-yy' });
+    });
+
     $("#sponsorNameInput").val($("#SponsorName").html());
     
     $("#spanProjectId").html($("#ProjId").val());

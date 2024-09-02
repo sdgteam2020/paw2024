@@ -117,7 +117,7 @@ namespace swas.BAL.Repository
                                    IsComment = b.IsComment,
                                    AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == b.PsmId),
                                    UserDetails = b.UserDetails,
-                                   isComment=b.IsComment,
+
 
                                }).ToListAsync();
             lst.DTOProjectMovHistorypsmlst = query;

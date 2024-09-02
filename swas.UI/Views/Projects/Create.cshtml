@@ -166,7 +166,7 @@
                                     new SelectListItem { Text = "--Select--", Value = "" },
                                     new SelectListItem { Text = "Yes", Value = "Yes" },
                                     new SelectListItem { Text = "No", Value = "No" }
-                                    }, "Value", "Text"), new { @class = "form-control requiredField", required = "required" })
+                                    }, "Value", "Text"), new { @class = "form-select requiredField", required = "required" })
 
                                         <div class="invalid-feedback">
                                             Whitelist Status Required
@@ -853,9 +853,3 @@
 <script src="~/DeveloperJs/CreateProjects.js"></script>
 <script src="~/developerjs/atthistory.js"></script>
 <script src="~/developerjs/mtable.js"></script>
-
-<script>
-    $(function () {
-        $(".datepicker1").datepicker();
-    });
-</script>

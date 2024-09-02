@@ -27,10 +27,8 @@ namespace swas.BAL.DTO
         public string? Remarks { get; set; }
         public string? UndoRemarks { get; set; }
         public bool IsComment { get; set; }
-
         public int? AttCnt { get; set; }
         public string? UserDetails { get; set; }
-        public bool isComment { get; set; }
     }
     public class DTOProjectMovHistorycmd
     {
