@@ -19,5 +19,7 @@ namespace swas.DAL.Models
 
         public int NotificationType   { get; set; }
 
+        public bool IsDeleted  { get; set; }
+
     }
 }
