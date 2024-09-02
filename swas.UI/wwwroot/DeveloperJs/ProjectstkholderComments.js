@@ -238,12 +238,11 @@ function GetProjCommentsByUnitId() {
                         GetAllComments();
                     });
 
-
                     $("body").on("click", ".projNameDetail", function () {
-                    
-                       /* IsReadComment($("#ProjectcommentprojId").html());*/
-                        IsReadNotification($(this).closest("tr").find("#spnProjId").html());
-                      /*  IsReadInbox($(this).closest("tr").find("#spnpsmId").html());*/
+
+                        IsReadComment($(this).closest("tr").find("#spnProjId").html());
+                        IsReadNotification($(this).closest("tr").find("#spnProjId").html(), 1);
+
                     });
 
 
@@ -325,11 +324,9 @@ function SendMsg() {
                 });
             }
 
-           
-            /*IsReadComment($("#ProjectcommentprojId").html());*/
-            IsCommentedUnreadNotification($("#ProjectcommentprojId").html());
+
+            UnReadNotification($("#ProjectcommentprojId").html(), 1);
             IsUnReadComment($("#ProjectcommentprojId").html(), $("#ProjectcommentPsmId").html());
-           /* GetNotification($("#ProjectcommentprojId").html());*/
         },
         error: function (error) {
            
@@ -456,44 +453,44 @@ function IsReadInbox(psmId) {
     });
 }
 
-function IsUnReadNotification(ProjId) {
+//function IsUnReadNotification(ProjId) {
 
-    $.ajax({
-        url: '/Projects/IsUnReadNotification',
-        type: 'POST',
-        data: { "ProjId": ProjId },
-        success: function (response) {
-            console.log(response);
+//    $.ajax({
+//        url: '/Projects/IsUnReadNotification',
+//        type: 'POST',
+//        data: { "ProjId": ProjId },
+//        success: function (response) {
+//            console.log(response);
 
-        }
-    });
-}
+//        }
+//    });
+//}
 
-function IsCommentedUnreadNotification(ProjId) {
+//function IsCommentedUnreadNotification(ProjId) {
 
-    $.ajax({
-        url: '/Projects/IsCommentedUnreadNotification',
-        type: 'POST',
-        data: { "ProjId": ProjId },
-        success: function (response) {
-            console.log(response);
+//    $.ajax({
+//        url: '/Projects/IsCommentedUnreadNotification',
+//        type: 'POST',
+//        data: { "ProjId": ProjId },
+//        success: function (response) {
+//            console.log(response);
 
-        }
-    });
-}
+//        }
+//    });
+//}
 
-function IsReadNotification(ProjId) {
+//function IsReadNotification(ProjId) {
 
-    $.ajax({
-        url: '/Projects/IsReadNotification',
-        type: 'POST',
-        data: { "ProjId": ProjId },
-        success: function (response) {
-            console.log(response);
+//    $.ajax({
+//        url: '/Projects/IsReadNotification',
+//        type: 'POST',
+//        data: { "ProjId": ProjId },
+//        success: function (response) {
+//            console.log(response);
 
-        }
-    });
-}
+//        }
+//    });
+//}
 
 function reset() {
     $("#Comments").val("");

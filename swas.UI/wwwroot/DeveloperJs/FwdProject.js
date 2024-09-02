@@ -79,7 +79,7 @@
         $("#spanFwdCurrentPslmId").html($(this).closest("tr").find("#SpnCurrentpsmId").html())
         $("#spanFwdProjectId").html($(this).closest("tr").find("#SpnCurrentProjId").html())
         $("#SpnFwdStakeHolderId").html($(this).closest("tr").find("#SpnStakeHolderId").html())
-           
+
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
         IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
         $('#ProjFwd').modal('show');
@@ -260,7 +260,8 @@ function SaveFwdTo(CurrentPslmId) {
                 $(".Fwdtitle").html("Projects Attch Details");
                 $(".ProjectsFwd").addClass("d-none");
                 $(".Attmenthistory").removeClass("d-none");
-
+                AddNotification($("#spanFwdProjectId").html(), 2, $("#ddlfwdFwdTo").val());
+                IsReadNotification($("#spanFwdProjectId").html(), 2);
             }
 
         }

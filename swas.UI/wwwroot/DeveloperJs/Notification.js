@@ -32,6 +32,7 @@ function AddNotification(ProjId, type, unitid) {
 }
 
 function IsReadNotification(ProjId, type) {
+    alert(1)
     $.ajax({
         url: '/Notification/IsReadNotification',
         type: 'POST',
