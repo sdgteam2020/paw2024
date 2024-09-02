@@ -662,7 +662,7 @@ namespace swas.BAL.Repository
                              join k in _dbContext.tbl_mUnitBranch on c.StakeHolderId equals k.unitid
                              where b.TimeStamp >= DateTime.Parse(startDate) &&
                                    b.TimeStamp <= DateTime.Parse(endDate) 
-                             orderby b.ProjId, b.TimeStamp descending
+                             orderby b.TimeStamp descending
                              select new
                              {
                                  b.PsmId,
