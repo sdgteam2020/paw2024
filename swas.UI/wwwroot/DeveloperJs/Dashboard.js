@@ -596,7 +596,7 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                 } else if (response == 0) {
                     
                     $('#DetailBodysummary1').empty();
-                    listItem += "<tr><td class='text-center' colspan='8'>No Record Found</td></tr>";
+                    listItem += "<tr><td class='text-center' colspan='10'>No Record Found</td></tr>";
                     $("#DetailBodysummary1").html(listItem);
                     $("#lblTotal").html(0);
                    
@@ -702,7 +702,7 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
             else {
                
                 $('#DetailBodysummary1').empty();
-                listItem += "<tr><td class='text-center' colspan='8'>No Record Found</td></tr>";
+                listItem += "<tr><td class='text-center' colspan='10'>No Record Found</td></tr>";
                 $("#DetailBodysummary1").html(listItem);
 
                
