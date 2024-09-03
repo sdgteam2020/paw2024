@@ -200,7 +200,7 @@
     });
 });
 function CheckFwdCondition(CurrentPslmId) {
-    debugger;
+  
     var userdata =
     {
         "ProjId": $("#spanFwdProjectId").html(),
