@@ -23,7 +23,7 @@
 @{
     var today = DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
 }
-<<<<<<< HEAD
+
 <style>
     #btn-Initiation .fa-eye {
         color: white !important;
@@ -87,10 +87,10 @@
         });
     </script>
 
-=======
+
 <script src="~/js/jquery-ui.min.js"></script>
 <link href="~/css/jquery-ui.min.css" rel="stylesheet" />
->>>>>>> c12ffe46dd019a371d81822a7354313b62a04766
+
 <div hidden id="SponsorName">@Logins.Unit @Logins.UserName.Trim() (@Logins.Rank.Trim() @Logins.Offr_Name.Trim()) </div>
 <div class="container-fluid">
 
@@ -163,9 +163,12 @@
                                     <td>
                                         @Html.LabelFor(model => model.InitiatedDate, "Initiation Date", new { id = "AddInitiatedDate" })
                                         <font style="color:red;"><b>*</b></font>
-                                            <button type="button" class="btn btn-info btn-sm" id="btn-Initiation" title="Click for more details">
-                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                            <button type="button" class="btn btn-danger" id="btn-Initiation" style="margin-top: 1px;" title="Initiation Date">
+                                                <i class="fa fa-info-circle" aria-hidden="true"></i>
                                             </button>
+                                          @*   <button type="button" class="btn btn-info btn-sm" id="btn-Initiation" title="Click for more details">
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                            </button> *@
                                     </td>
                                     <td>
                                         @Html.TextBoxFor(model => model.InitiatedDate, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control requiredField", type = "datetime-local", required = "required", max = today })
@@ -179,8 +182,11 @@
 
                                     <td>
                                         @Html.LabelFor(model => model.CompletionDate, "Completion Date",  new { id = "AddCompletionDate " })<font style="color:red;"><b>*</b></font>
-                                            <button type="button" class="btn btn-info btn-sm" id="btn-complition" title="Click for more details">
+                                           @*  <button type="button" class="btn btn-info btn-sm" id="btn-complition" title="Click for more details">
                                                 <i class="fa fa-eye" aria-hidden="true"></i>
+                                            </button> *@
+                                            <button type="button" class="btn btn-danger" id="btn-complition" style="margin-top: 1px;" title="Completion Date">
+                                                <i class="fa fa-info-circle" aria-hidden="true"></i>
                                             </button>
                                     </td>
                                     <td>
