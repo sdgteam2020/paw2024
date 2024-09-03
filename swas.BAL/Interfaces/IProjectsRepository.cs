@@ -69,6 +69,8 @@ namespace swas.BAL.Interfaces
 
         Task<List<tbl_ProjStakeHolderMov>> GetInboxByProjIdExcludingPsmIdAsync(int projId, int psmId);
 
+        Task<List<tbl_ProjStakeHolderMov>> GetCommentByExcludingPsmId(int projId, int? ToUnitId);
+
     }
 
 

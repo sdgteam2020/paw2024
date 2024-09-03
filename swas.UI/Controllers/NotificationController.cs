@@ -24,7 +24,6 @@ namespace swas.UI.Controllers
             return View();
         }
 
-
         [HttpGet]
         public async Task<JsonResult> GetNotificationCount(int type)
         {
@@ -128,8 +127,6 @@ namespace swas.UI.Controllers
             }
             catch (Exception ex) { return Json(-1); }
         }
-
-
 
         [HttpPost]
         public async Task<IActionResult> IsReadNotification(int ProjId , int type)
@@ -241,8 +238,6 @@ namespace swas.UI.Controllers
                 return Redirect("/Identity/Account/login");
             }
         }
-
-
 
         [HttpPost]
         public async Task<IActionResult> UndoNotification(int ProjId, int type ,int ToUnitId)

@@ -1,4 +1,5 @@
 ﻿var current = 1;
+
 $(document).ready(function () {
     //$("#1").hide();
     //$("#3").show();

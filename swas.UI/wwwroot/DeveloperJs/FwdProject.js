@@ -129,9 +129,13 @@
     });
 
     $(".ProjName").click(function () {
-       
+        var row = $(this).closest('tr');
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
         IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
+
+        $(this).css("font-weight", "normal"); // Make the text normal weight
+        row.removeClass("font-weight-bold");  // Remove the bold class from the row
+        
     });
     $("#btn-ibutton").click(function () {
         $('#Projibutton').modal('show');

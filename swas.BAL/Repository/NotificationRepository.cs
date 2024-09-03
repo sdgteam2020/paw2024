@@ -63,12 +63,31 @@ namespace swas.BAL.Repository
 
         public async Task<List<Notification>> GetNotifExcludingToUnit(int? unitId, int projId)
         {
-            var notifications = await _context.Notification
-                .Where(n => n.NotificationTo != unitId && n.ProjId == projId && n.IsDeleted == false)
+            // Fetch the latest notification of type 2 for each ProjId where NotificationTo is not the excluded unit and is not deleted
+            var latestType2 = await _context.Notification
+                .Where(n => n.NotificationType == 2
+                            && n.NotificationTo != unitId
+                            && n.IsDeleted == false)
+                .GroupBy(n => n.ProjId)
+                .Select(g => g.OrderByDescending(n => n.NotificationId).FirstOrDefault())
                 .ToListAsync();
 
-            return notifications;
+            // Fetch notifications of type 1 where NotificationTo is not the excluded unit and is not deleted
+            var notifications = await _context.Notification
+                .Where(n => n.NotificationType == 1
+                            && n.NotificationTo != unitId
+                            && n.IsDeleted == false)
+                .ToListAsync();
+
+            // Combine results and order by NotificationId
+            var combinedResults = notifications
+                .Union(latestType2)
+                .OrderBy(n => n.NotificationId)
+                .ToList();
+
+            return combinedResults;
         }
+
 
         public async Task<int> AddNotification(Notification notifications)
         {

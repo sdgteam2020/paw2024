@@ -19,11 +19,78 @@
     Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor.HttpContext.Session, "User");
 }
 
+
 @{
     var today = DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
 }
+<<<<<<< HEAD
+<style>
+    #btn-Initiation .fa-eye {
+        color: white !important;
+    }
+
+    #btn-complition .fa-eye {
+        color: white !important;
+    }
+</style>
+<script language="JavaScript" type="text/javascript" src="~/js/sweetalert2.all.min.js"></script>
+<body>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+           
+            
+            Swal.fire({
+                title: 'Before you begin filling out the form, please ensure you have the following documents ready for uploading:',
+                html: `
+            <div style="width: 799px; text-align: left;">
+                <h3 style="margin-bottom: 15px; font-size: 18px; color: #333;">1. 3 x Scanned PDF Documents</h3>
+                <ul style="margin-left: 20px; list-style-type: disc; font-size: 16px; color: #555;">
+                    <li><strong>(a) Statement of Case</strong>: Prepared and saved as a PDF file, including permission of Head of Dept.</li>
+                    <li><strong>(b) Completed Signed Appx</strong>: As per paragraph _____ of the SOP on Software Whitelisting.</li>
+                    <li><strong>(c) Head of Department Approval</strong>: A scanned PDF of the formal approval from your Head of Department (rank of Major General or Lieutenant General).</li>
+                </ul>
+                <h3 style="margin-top: 30px; margin-bottom: 15px; font-size: 18px; color: #333;">2. Declaration</h3>
+                <p style="margin-left: 20px; font-size: 16px; color: #555;">I declare that all the information which I will be providing is correct to the best of my knowledge.</p>
+            </div>
+        `,
+                icon: 'info',
+                confirmButtonText: 'OK',
+                width: '861px',  // Increased width for a more landscape feel
+                padding: '20px',
+                background: '#f9f9f9',  // Light background color for better readability
+                customClass: {
+                    container: 'swal-container'
+                }
+            });
+
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('btn-Initiation').addEventListener('click', function () {
+                Swal.fire({
+                    title: 'Initiation Date Details',
+                    text: 'Date of Initiation of Project for Whitelisting (To DDGIT)',
+                    icon: 'info',
+                    confirmButtonText: 'OK'
+                });
+            });
+            document.getElementById('btn-complition').addEventListener('click', function () {
+                Swal.fire({
+                    title: 'Completion Date  Details',
+                    text: 'Date of Initiation of Project for Whitelisting (To DDGIT)',
+                    icon: 'info',
+                    confirmButtonText: 'OK'
+                });
+            });
+        });
+    </script>
+
+=======
 <script src="~/js/jquery-ui.min.js"></script>
 <link href="~/css/jquery-ui.min.css" rel="stylesheet" />
+>>>>>>> c12ffe46dd019a371d81822a7354313b62a04766
 <div hidden id="SponsorName">@Logins.Unit @Logins.UserName.Trim() (@Logins.Rank.Trim() @Logins.Offr_Name.Trim()) </div>
 <div class="container-fluid">
 
@@ -91,20 +158,14 @@
                                             Project Name Required
                                         </div>
                                     </td>
-                                    @*<td>
-                                @Html.LabelFor(model => model.InitiatedDate, "Initiation Date", new { id = "AddInitiatedDate" })<font style="color:red;"><b>*</b></font>
-                                </td>
-                                <td>
-                                @Html.TextBoxFor(model => model.InitiatedDate, "{0:yyyy-MM-dd}", new { @class = "form-control requiredField", type = "datetime-local", required = "required" })
-
-                                <div class="invalid-feedback">
-                                Initiation Date Required
-                                </div>
-                                </td>*@
+                                   
 
                                     <td>
                                         @Html.LabelFor(model => model.InitiatedDate, "Initiation Date", new { id = "AddInitiatedDate" })
                                         <font style="color:red;"><b>*</b></font>
+                                            <button type="button" class="btn btn-info btn-sm" id="btn-Initiation" title="Click for more details">
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                            </button>
                                     </td>
                                     <td>
                                         @Html.TextBoxFor(model => model.InitiatedDate, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control requiredField", type = "datetime-local", required = "required", max = today })
@@ -114,9 +175,13 @@
                                         </div>
                                     </td>
 
+
+
                                     <td>
                                         @Html.LabelFor(model => model.CompletionDate, "Completion Date",  new { id = "AddCompletionDate " })<font style="color:red;"><b>*</b></font>
-
+                                            <button type="button" class="btn btn-info btn-sm" id="btn-complition" title="Click for more details">
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                            </button>
                                     </td>
                                     <td>
                                         @* @Html.TextBoxFor(model => model.CompletionDate, new { @class = "form-control", type = "date", required = "required"})
@@ -847,6 +912,7 @@
 @Html.HiddenFor(model => model.ProjEdit.IsActive, new { htmlAttributes = new { @class = "form-control" } })
 @Html.EditorFor(model => model.ProjEdit.DateTimeOfUpdate, new { htmlAttributes = new { @class = "hidden-date form-control", type = "date" } })*@
 
+</body>
 
 
 

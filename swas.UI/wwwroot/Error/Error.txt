@@ -1,3 +1,71 @@
+-----------------------------------------------------------------------------
+<<<<<<< HEAD
+Date : 4/24/2024 4:15:38 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 4:19:42 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 4:30:20 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 4:31:06 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 4:31:39 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 4:32:23 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 4:37:18 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 4:37:45 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 4:38:06 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 4:38:29 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 4:39:11 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:00:41 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:00:51 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:02:44 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:22:35 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:23:52 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:24:19 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:24:49 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:25:32 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:27:44 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+=======
+>>>>>>> c12ffe46dd019a371d81822a7354313b62a04766
+Date : 4/24/2024 5:28:06 PM
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 4/24/2024 5:28:27 PM
 A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
 -----------------------------------------------------------------------------
 Date : 4/24/2024 5:29:08 PM
@@ -744,6 +812,97 @@ Request failed & Status Code : 200
 Date : 29-08-2024 10:57:59
 Object reference not set to an instance of an object.
 -----------------------------------------------------------------------------
+<<<<<<< HEAD
+Date : 02-09-2024 15:08:01
+The LINQ expression 'DbSet<tbl_ProjStakeHolderMov>()
+    .Where(n => n.IsComment == False && n.PsmId != __psmId_0)
+    .GroupBy(n => n.ProjId)
+    .SelectMany(g => g
+        .AsQueryable()
+        .OrderByDescending(n => n.PsmId)
+        .Take(1))' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 15:12:00
+The LINQ expression 'DbSet<Notification>()
+    .Where(n => n.NotificationType == 2 && (int?)n.NotificationTo != __unitId_0 && n.IsDeleted == False)
+    .GroupBy(n => n.ProjId)
+    .SelectMany(g => g
+        .AsQueryable()
+        .OrderByDescending(n => n.NotificationId)
+        .Take(1))' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 15:12:00
+The LINQ expression 'DbSet<tbl_ProjStakeHolderMov>()
+    .Where(n => n.IsComment == False && n.PsmId != __psmId_0)
+    .GroupBy(n => n.ProjId)
+    .SelectMany(g => g
+        .AsQueryable()
+        .OrderByDescending(n => n.PsmId)
+        .Take(1))' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 15:17:37
+The LINQ expression 'DbSet<Notification>()
+    .Where(n => n.NotificationType == 2 && (int?)n.NotificationTo != __unitId_0 && n.IsDeleted == False)
+    .GroupBy(n => n.ProjId)
+    .SelectMany(g => g
+        .AsQueryable()
+        .OrderByDescending(n => n.NotificationId)
+        .Take(1))' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 15:19:52
+The LINQ expression 'DbSet<tbl_ProjStakeHolderMov>()
+    .Where(n => n.IsComment == False && n.PsmId != __psmId_0)
+    .GroupBy(n => n.ProjId)
+    .SelectMany(g => g
+        .AsQueryable()
+        .OrderByDescending(n => n.PsmId)
+        .Take(1))' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 15:21:39
+The LINQ expression 'DbSet<Notification>()
+    .Where(n => n.NotificationType == 2 && (int?)n.NotificationTo != __unitId_0 && n.IsDeleted == False)
+    .GroupBy(n => n.ProjId)
+    .SelectMany(g => g
+        .AsQueryable()
+        .OrderByDescending(n => n.NotificationId)
+        .Take(1))' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 15:25:28
+The LINQ expression 'DbSet<Notification>()
+    .Where(n => n.NotificationType == 2 && (int?)n.NotificationTo != __unitId_0 && n.IsDeleted == False)
+    .GroupBy(n => n.ProjId)
+    .SelectMany(g => g
+        .AsQueryable()
+        .OrderByDescending(n => n.NotificationId)
+        .Take(1))' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 15:28:19
+The LINQ expression 'DbSet<Notification>()
+    .Where(n => n.NotificationType == 2 && (int?)n.NotificationTo != __unitId_0 && n.IsDeleted == False)
+    .GroupBy(n => n.ProjId)
+    .SelectMany(g => g
+        .AsQueryable()
+        .OrderByDescending(n => n.NotificationId)
+        .Take(1))' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 17:49:36
+This SqlTransaction has completed; it is no longer usable.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 17:49:41
+An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 17:49:43
+An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 17:49:45
+This SqlTransaction has completed; it is no longer usable.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 17:49:45
+An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 17:49:46
+An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+=======
 Date : 02-09-2024 11:44:41
 String '07-12-2024 00:00:00' was not recognized as a valid DateTime.
 -----------------------------------------------------------------------------
@@ -895,8 +1054,4 @@ Date : 03-09-2024 09:33:30
 Invalid column name 'IsDeleted'.
 Invalid column name 'IsDeleted'.
 Statement(s) could not be prepared.
------------------------------------------------------------------------------
-Date : 03-09-2024 10:59:08
-Invalid column name 'IsDeleted'.
-Invalid column name 'IsDeleted'.
-Statement(s) could not be prepared.
+>>>>>>> c12ffe46dd019a371d81822a7354313b62a04766

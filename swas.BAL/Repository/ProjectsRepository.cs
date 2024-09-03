@@ -2032,34 +2032,58 @@ namespace swas.BAL.Repository
         }
 
 
-
-        public async Task<bool> UpdateCommentedUnReadNotification(Notification notify)
+        public async Task<List<tbl_ProjStakeHolderMov>> GetCommentByExcludingPsmId(int projId,int? ToUnitId)
         {
-            var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-            if (loginUser == null)
-            {
-                return false;
-            }
-            // Fetch all notifications for the given ProjId where NotificationTo does not match the logged-in user's unitid
-            var notifications = await _dbContext.Notification
-                .Where(x => x.ProjId == notify.ProjId && x.NotificationTo != loginUser.unitid)
+            // Fetch latest records for each ProjId where IsComment is false and PsmId is not excluded
+            // Fetch the latest records for each ProjId where IsComment is false and ToUnitId is not excluded
+            var latestType2 = await _dbContext.ProjStakeHolderMov
+                .Where(n => n.IsComment == false && n.ToUnitId != ToUnitId) // Replace psmId with toUnitId
+                .GroupBy(n => n.ProjId)
+                .Select(g => g.OrderByDescending(n => n.ToUnitId).FirstOrDefault()) // Replace psmId with toUnitId
                 .ToListAsync();
 
-            if (notifications.Any())
-            {
-                foreach (var notification in notifications)
-                {
-                    notification.IsRead = false;
-                    notification.ReadDateTime = notify.ReadDateTime; 
-                    _dbContext.Notification.Update(notification);
-                }
+            // Fetch comments where IsComment is true and ToUnitId is not excluded
+            var comments = await _dbContext.ProjStakeHolderMov
+                .Where(n => n.IsComment == true && n.ToUnitId != ToUnitId) // Replace psmId with toUnitId
+                .ToListAsync();
 
-                await _dbContext.SaveChangesAsync();
-                return true;
-            }
+            // Combine results
+            var result = comments
+                .Union(latestType2)
+                .OrderBy(n => n.ToUnitId) // Replace psmId with toUnitId
+                .ToList();
 
-            return false;
+            return result;
+
         }
+
+        //public async Task<bool> UpdateCommentedUnReadNotification(Notification notify)
+        //{
+        //    var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+        //    if (loginUser == null)
+        //    {
+        //        return false;
+        //    }
+        //    // Fetch all notifications for the given ProjId where NotificationTo does not match the logged-in user's unitid
+        //    var notifications = await _dbContext.Notification
+        //        .Where(x => x.ProjId == notify.ProjId && x.NotificationTo != loginUser.unitid)
+        //        .ToListAsync();
+
+        //    if (notifications.Any())
+        //    {
+        //        foreach (var notification in notifications)
+        //        {
+        //            notification.IsRead = false;
+        //            notification.ReadDateTime = notify.ReadDateTime; 
+        //            _dbContext.Notification.Update(notification);
+        //        }
+
+        //        await _dbContext.SaveChangesAsync();
+        //        return true;
+        //    }
+
+        //    return false;
+        //}
     }
 
 }

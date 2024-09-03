@@ -41,7 +41,7 @@ function IsUnReadInbox(psmId) {
 }
 function GetProjCommentsByUnitId() {
     var listItem = "";
-     
+    debugger;
     /*let boldCount = 0;*/
     $.ajax({
         url: '/Projects/GetProjCommentsByUnitId',
@@ -78,7 +78,7 @@ function GetProjCommentsByUnitId() {
                             ("0" + date.getSeconds()).slice(-2); 
 
                         
-                        if (response[i].isComment == false) {
+                        if (response[i].isComment === false) {
                             listItem += "<tr class='font-weight-bold'>";
                            /* boldCount++;*/
                         } else {
@@ -232,6 +232,9 @@ function GetProjCommentsByUnitId() {
                         $("#ProjectcommentprojId").html($(this).closest("tr").find("#spnProjId").html());
                         $("#ProjectcommentPsmId").html($(this).closest("tr").find("#spnpsmId").html());
 
+                        IsReadComment($(this).closest("tr").find("#spnProjId").html());
+                        IsReadNotification($(this).closest("tr").find("#spnProjId").html(), 1);
+
                         reset()
                         mMsater(0, "ddlStatus", 4, 0)
                         $("#ProjCommentModal").modal('show');
@@ -324,9 +327,12 @@ function SendMsg() {
                 });
             }
 
+           
 
             UnReadNotification($("#ProjectcommentprojId").html(), 1);
             IsUnReadComment($("#ProjectcommentprojId").html(), $("#ProjectcommentPsmId").html());
+           
+            //IsReadComment($("#ProjectcommentprojId").html());
         },
         error: function (error) {
            
@@ -428,11 +434,14 @@ function GetNotificationInbox(ProjId) {
     })
 }
 
-function IsUnReadComment(ProjId,PsmId) {
+function IsUnReadComment(ProjId, PsmId) {
     $.ajax({
         url:'/Projects/IsUnReadComment',
         type: 'POST',
-        data: { "ProjId": ProjId },
+        data: {
+            "ProjId": ProjId,
+            "PsmId": PsmId
+        },
         success: function (response) {
             console.log(response);
             window.location.reload();

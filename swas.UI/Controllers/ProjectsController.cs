@@ -1286,7 +1286,7 @@ namespace swas.UI.Controllers
                 try
                 {
                     // Get all records for the given Projid
-                    List<tbl_ProjStakeHolderMov> inboxComments = await _projectsRepository.GetInboxByProjIdExcludingPsmIdAsync(Projid, PsmId);
+                    List<tbl_ProjStakeHolderMov> inboxComments = await _projectsRepository.GetCommentByExcludingPsmId(Projid, Logins.unitid);
 
                     // Update IsRead to false for all records
                     foreach (var comment in inboxComments)
