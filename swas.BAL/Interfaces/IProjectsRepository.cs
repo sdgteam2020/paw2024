@@ -59,7 +59,7 @@ namespace swas.BAL.Interfaces
 
         Task<tbl_ProjStakeHolderMov> GetNextPsmMoveAsync(int projId, int currentPsmId);
 
-        //Task<List<DTODDLComman>> GetALLByProjectName(string ProjName);
+        Task<List<DTODDLComman>> GetALLByProjectName(string ProjName);
 
         //Task<bool> UpdateNotificationByProjID(Notification notify);
 

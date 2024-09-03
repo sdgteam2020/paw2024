@@ -1419,11 +1419,11 @@ namespace swas.UI.Controllers
         }
 
 
-        //public async Task<IActionResult> GetALLByProjectName(string? ProjName)
-        //{
-        //    var ProjectName  = await _projectsRepository.GetALLByProjectName(ProjName);
-        //    return Json(ProjectName);
-        //}
+        public async Task<IActionResult> GetALLByProjectName(string? ProjName)
+        {
+            var ProjectName = await _projectsRepository.GetALLByProjectName(ProjName);
+            return Json(ProjectName);
+        }
 
 
         public async Task<IActionResult> ProcessNotification(int ProjId, int unitid, DateTime FwdDateForComment)
