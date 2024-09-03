@@ -53,12 +53,14 @@
     });
     $(".btn-FwdHistory").click(function () {
         $('#ProjFwdHistory').modal('show');
-        
+
+
         GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentProjId").html());
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
 
         IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
-        
+
+        $(this).closest("tr").removeClass("bold-text")
     });
     $(".btn-Fwd").click(function () {
 
@@ -83,6 +85,9 @@
 
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
         IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
+
+        $(this).closest("tr").removeClass("bold-text")
+
         $('#ProjFwd').modal('show');
 
         $(".Fwdtitle").html("Projects Move Details");

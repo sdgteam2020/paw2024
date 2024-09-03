@@ -41,7 +41,7 @@ function IsUnReadInbox(psmId) {
 }
 function GetProjCommentsByUnitId() {
     var listItem = "";
-    debugger;
+  
     /*let boldCount = 0;*/
     $.ajax({
         url: '/Projects/GetProjCommentsByUnitId',
@@ -78,7 +78,7 @@ function GetProjCommentsByUnitId() {
                             ("0" + date.getSeconds()).slice(-2); 
 
                         
-                        if (response[i].isComment === false) {
+                        if (response[i].isComment == false) {
                             listItem += "<tr class='font-weight-bold'>";
                            /* boldCount++;*/
                         } else {
@@ -234,7 +234,7 @@ function GetProjCommentsByUnitId() {
 
                         IsReadComment($(this).closest("tr").find("#spnProjId").html());
                         IsReadNotification($(this).closest("tr").find("#spnProjId").html(), 1);
-
+                        $(this).closest("tr").removeClass("font-weight-bold")
                         reset()
                         mMsater(0, "ddlStatus", 4, 0)
                         $("#ProjCommentModal").modal('show');
