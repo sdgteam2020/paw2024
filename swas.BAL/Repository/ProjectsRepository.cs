@@ -2057,33 +2057,13 @@ namespace swas.BAL.Repository
 
         }
 
-        //public async Task<bool> UpdateCommentedUnReadNotification(Notification notify)
-        //{
-        //    var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-        //    if (loginUser == null)
-        //    {
-        //        return false;
-        //    }
-        //    // Fetch all notifications for the given ProjId where NotificationTo does not match the logged-in user's unitid
-        //    var notifications = await _dbContext.Notification
-        //        .Where(x => x.ProjId == notify.ProjId && x.NotificationTo != loginUser.unitid)
-        //        .ToListAsync();
+        public async Task<List<tbl_ProjStakeHolderMov>> GetInboxByProjAndUnitId(int projId, int? ToUnitId)
+        {
+            return await _dbContext.ProjStakeHolderMov
+                .Where(a => a.ProjId == projId && a.ToUnitId == ToUnitId)
+                .ToListAsync();
+        }
 
-        //    if (notifications.Any())
-        //    {
-        //        foreach (var notification in notifications)
-        //        {
-        //            notification.IsRead = false;
-        //            notification.ReadDateTime = notify.ReadDateTime; 
-        //            _dbContext.Notification.Update(notification);
-        //        }
-
-        //        await _dbContext.SaveChangesAsync();
-        //        return true;
-        //    }
-
-        //    return false;
-        //}
     }
 
 }
