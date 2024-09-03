@@ -1376,24 +1376,24 @@ namespace swas.UI.Controllers
         public async Task<IActionResult> ProjectMovementUpdate(tbl_ProjStakeHolderMov psmove)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
-            psmove.ProjId = psmove.ProjId;
-            psmove.StatusActionsMappingId = psmove.StatusActionsMappingId;
-            psmove.Remarks = psmove.Remarks;
-            psmove.FromUnitId = Logins.unitid ?? 0;
-            psmove.ToUnitId = psmove.ToUnitId;
-            psmove.UserDetails = Helper.LoginDetails(Logins);
-            psmove.UpdatedByUserId = Logins.UserIntId;
-            psmove.DateTimeOfUpdate = psmove.TimeStamp;
-            psmove.IsActive = true;
-            psmove.EditDeleteDate = psmove.TimeStamp;
-            psmove.EditDeleteBy = Logins.UserIntId;
-            psmove.TimeStamp = psmove.TimeStamp;
-            psmove.IsComplete = false;
-            psmove.IsComment = false;
+            var data = await _projectsRepository.GettXNByPsmIdAsync(psmove.PsmId);
+            data.ProjId = psmove.ProjId;
+            data.StatusActionsMappingId = psmove.StatusActionsMappingId;
+            data.Remarks = psmove.Remarks;
+            data.FromUnitId = Logins.unitid ?? 0;
+            data.ToUnitId = psmove.ToUnitId;
+            data.UserDetails = Helper.LoginDetails(Logins);
+            data.UpdatedByUserId = Logins.UserIntId;
+            data.DateTimeOfUpdate = psmove.TimeStamp;
+            data.IsActive = true;
+            data.EditDeleteDate = psmove.TimeStamp;
+            data.EditDeleteBy = Logins.UserIntId;
+            data.TimeStamp = psmove.TimeStamp;
+            data.IsComplete = false;
+            data.IsComment = false;
 
             // Save the current psmove record
-            var Ret = await _psmRepository.UpdateWithReturn(psmove);
+            var Ret = await _psmRepository.UpdateWithReturn(data);
 
             if (Ret != null)
             {

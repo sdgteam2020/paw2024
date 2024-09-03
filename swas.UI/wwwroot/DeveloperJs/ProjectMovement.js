@@ -1,4 +1,17 @@
 ﻿$(document).ready(function () {
+    mMsaterfwdStage(0, "ddlfwdStage", 5, 0)
+
+    $("#ddlfwdStage").change(function () {
+        mMsaterStage(0, "ddlfwdSubStage", 6, $("#ddlfwdStage").val(), 0)
+    });
+    $("#ddlfwdSubStage").change(function () {
+
+        mMsater(0, "ddlfwdAction", 7, $("#ddlfwdSubStage").val())
+    });
+    $("#ddlfwdAction").change(function () {
+
+        mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html());
+    });
 
    // GetProjectMovement();
     $("#txtProjectName").autocomplete({
@@ -354,7 +367,7 @@ function GetProjectMovement(ProjectId)
                        
                         listItem += "</td>";
                         listItem += "<td>" + count +"</td>";
-                        listItem += "<td class=''><span id='Date'>" + response[i].dateTimeOfUpdate + "</span></td>";
+                        listItem += "<td class=''><span id='spnDate' class='d-none'>" + response[i].dateTimeOfUpdate + "</span><span id=''>" + DateFormateddMMyyyyhhmmss(response[i].dateTimeOfUpdate) + "</span></td>";
                         listItem += "<td class='align-middle'><span id='FromUnitName'>" + response[i].fromUnitName + "</span></td>";
                         listItem += "<td class='align-middle'><span id='FromUnitName'>" + response[i].toUnitName + "</span></td>";
                         listItem += "<td class='align-middle'><span id='FromUnitName'>" + response[i].stage + "</span></td>";
@@ -376,6 +389,7 @@ function GetProjectMovement(ProjectId)
                         $("#spanProjectId").html($(this).closest("tr").find("#spanProjId").html());
                         $("#spanEditPslmId").html($(this).closest("tr").find("#spnpsmId").html());
                         $("#txtRemarksfwd").val($(this).closest("tr").find("#spnremarks").html());
+                        $("#TimeStampToProjfwd").val($(this).closest("tr").find("#spnDate").html());
 
                         mMsaterfwdStage($(this).closest("tr").find("#spnStageId").html(), "ddlfwdStage", 5, 0, 1)
                         mMsaterStage($(this).closest("tr").find("#spnStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#spnStageId").html(), 0)
