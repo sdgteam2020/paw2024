@@ -752,6 +752,11 @@ namespace swas.UI.Controllers
             psmove.TimeStamp = psmove.TimeStamp;
             psmove.IsComplete = false;
             psmove.IsComment = false;
+            if(psmove.FromUnitId== psmove.ToUnitId)
+            {
+                psmove.IsRead= true;
+            }
+
             var Ret = await _psmRepository.AddWithReturn(psmove);
             if (Ret != null)
             {

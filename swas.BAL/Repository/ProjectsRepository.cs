@@ -2037,14 +2037,14 @@ namespace swas.BAL.Repository
             // Fetch latest records for each ProjId where IsComment is false and PsmId is not excluded
             // Fetch the latest records for each ProjId where IsComment is false and ToUnitId is not excluded
             var latestType2 = await _dbContext.ProjStakeHolderMov
-                .Where(n => n.IsComment == false && n.ToUnitId != ToUnitId) // Replace psmId with toUnitId
+                .Where(n => n.IsComment == false && n.ToUnitId != ToUnitId && n.ProjId==projId) // Replace psmId with toUnitId
                 .GroupBy(n => n.ProjId)
                 .Select(g => g.OrderByDescending(n => n.ToUnitId).FirstOrDefault()) // Replace psmId with toUnitId
                 .ToListAsync();
 
             // Fetch comments where IsComment is true and ToUnitId is not excluded
             var comments = await _dbContext.ProjStakeHolderMov
-                .Where(n => n.IsComment == true && n.ToUnitId != ToUnitId) // Replace psmId with toUnitId
+                .Where(n => n.IsComment == true && n.ToUnitId != ToUnitId && n.ProjId == projId) // Replace psmId with toUnitId
                 .ToListAsync();
 
             // Combine results

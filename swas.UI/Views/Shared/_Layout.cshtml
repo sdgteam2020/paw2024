@@ -446,7 +446,7 @@
 
                 tableHTML += '</table>';
 
-                var watermarkText = '@(TempData["ipadd"])';
+                var watermarkText = '';
 
                 popupWin.document.write('<html><head>'
                     + tableStyles + '</head><body onload="window.print()">'
@@ -1633,7 +1633,7 @@
 
                                     <ion-icon name="ellipse-outline"></ion-icon>
                                     <span class="icon-name">Inbox</span>
-                                    <span id="InboxCount" class="badge3">0</span>
+                                    <span id="InboxCount" class="badge3 d-none InboxCount">0</span>
                                 </div>
                             </div>
                         </a>
@@ -1647,7 +1647,7 @@
                                 <ion-icon name="ellipse-outline"></ion-icon>
                                 <span class="icon-name">Proj Comments</span>
                                 @*  <span class="inbox-alertsub1"></span>*@
-                                <span id="ProjectCommentCount" class="badge5">0</span>
+                                <span id="ProjectCommentCount" class="badge5 d-none ProjectCommentCount">0</span>
                             </div>
                         </a>
                     </li>
@@ -1907,6 +1907,7 @@
                             </a>
                         </li>
 
+
                         <li>
                             <a href="/Projects/ProjDetails">
                                 <div class="inbox-container" style="margin-left : 46px !important">
@@ -1915,32 +1916,21 @@
 
                                         <ion-icon name="ellipse-outline"></ion-icon>
                                         <span class="icon-name">Inbox</span>
-
-                                        @*<span class="inbox-alertsub"> @Logins.totmsgin</span>*@
-
+                                        <span id="InboxCount" class="badge3 d-none InboxCount">0</span>
                                     </div>
                                 </div>
                             </a>
                         </li>
 
-                        @* <li>
-
-                <a href="/Index/ProjEdit">
-                <div class="icon-container">
-                <img src="/assets/images/icons/comment.png" alt="Icon">
-                <ion-icon name="ellipse-outline"></ion-icon>
-                <span class="icon-name">Proj Edit</span>
-                </div>
-                </a>
-                </li>*@
 
                         <li>
-                            <a href="/Projects/ProjComments">
+                            <a href="/Projects/ProjComments" @*onclick="createNotification(event)"*@>
                                 <div class="icon-container">
 
                                     <ion-icon name="ellipse-outline"></ion-icon>
                                     <span class="icon-name">Proj Comments</span>
-                                    @* <span class="inbox-alertsub1"> @Logins.tocommentin</span>*@
+                                    @*  <span class="inbox-alertsub1"></span>*@
+                                    <span id="ProjectCommentCount" class="badge5 d-none ProjectCommentCount">0</span>
                                 </div>
                             </a>
                         </li>
@@ -2286,39 +2276,7 @@
     });
 </script>
 
-<script>
-    function updateNotificationCount(type, elementId) {
-        $.ajax({
-            url: `/Notification/GetNotificationCount?type=${type}`, // Pass the notification type as a query parameter
-            type: 'GET',
-            success: function (count) {
-                // Check if the count is valid, if not, set it to 0
-                count = count || 0;
 
-                // Update the badge text based on the count
-                $(`#${elementId}`).text(count);
-
-                // Show or hide the badge based on the count
-                if (count > 0) {
-                    $(`#${elementId}`).show();
-                } else {
-                    $(`#${elementId}`).hide();
-                }
-            },
-            error: function () {
-                console.error(`Could not retrieve ${elementId} count.`);
-                // In case of an error, set the count to 0 and hide the badge
-                $(`#${elementId}`).text(0).hide();
-            }
-        });
-    }
-
-    // Call the function on page load
-    $(document).ready(function () {
-        updateNotificationCount(1, 'ProjectCommentCount'); // For project comments
-        updateNotificationCount(2, 'InboxCount'); // For inbox
-    });
-</script>
 <script src="~/developerjs/projectstkholdercomments.js"></script>
 
 @RenderSection("scripts", required: false)

@@ -45,7 +45,7 @@
             allowOutsideClick: () => !Swal.isLoading()
         }).then((result) => {
             if (result.isConfirmed) {
-                alert("undo");
+              
                 Updateundo($(this).closest("tr").find("#SpnCurrentProjId").html(), $(this).closest("tr").find("#SpnCurrentpsmId").html(), result.value, $(this).closest("tr").find("#SpnprojectStageId").html() );
                 UndoNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2, $(this).closest("tr").find("#SpnprojectToUnitId").html());
             }
@@ -61,6 +61,8 @@
         IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
 
         $(this).closest("tr").removeClass("bold-text")
+
+      
     });
     $(".btn-Fwd").click(function () {
 
@@ -87,7 +89,7 @@
         IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
 
         $(this).closest("tr").removeClass("bold-text")
-
+       
         $('#ProjFwd').modal('show');
 
         $(".Fwdtitle").html("Projects Move Details");

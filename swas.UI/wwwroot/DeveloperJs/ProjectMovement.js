@@ -146,8 +146,14 @@
     });
 
     $("#btnFwdConfirm").click(function () {
-        location.reload();
-        $('#ProjFwd').modal('hide');
+
+        $('#ProjFwdEdit').modal('hide');
+        
+      
+
+        
+        GetProjectMovement($("#spanProjectId").html());
+       
     });
 
 });
@@ -203,7 +209,7 @@ function UploadFiles() {
 }
 
 function AttechHistory() {
-    debugger;
+   
     var listItem = "";
     var userdata =
     {
@@ -382,14 +388,57 @@ function GetProjectMovement(ProjectId)
                     }
 
                     $("#ProjectMovement").html(listItem);
+                    var table = $('#moventdata').DataTable({
+                        lengthChange: true,
+                        dom: 'lBfrtip',
+                        buttons: [
+                            'copy',
+                            'excel',
+                            'csv',
+                           
+                        ],
+                        searchBuilder: {
+                            conditions: {
+                                num: {
+                                    'MultipleOf': {
+                                        conditionName: 'Multiple Of',
+                                        init: function (that, fn, preDefined = null) {
+                                            var el = $('<input/>').on('input', function () { fn(that, this) });
+
+                                            if (preDefined !== null) {
+                                                $(el).val(preDefined[0]);
+                                            }
+
+                                            return el;
+                                        },
+                                        inputValue: function (el) {
+                                            return $(el[0]).val();
+                                        },
+                                        isInputValid: function (el, that) {
+                                            return $(el[0]).val().length !== 0;
+                                        },
+                                        search: function (value, comparison) {
+                                            return value % comparison === 0;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
 
 
                     $("body").unbind().on("click", ".cls-btnedit", function () {
                         $('#ProjFwdEdit').modal('show');
+
+                        $(".ProjectsFwd").removeClass("d-none");
+                        $(".Attmenthistory").addClass("d-none");
+
                         $("#spanProjectId").html($(this).closest("tr").find("#spanProjId").html());
                         $("#spanEditPslmId").html($(this).closest("tr").find("#spnpsmId").html());
                         $("#txtRemarksfwd").val($(this).closest("tr").find("#spnremarks").html());
                         $("#TimeStampToProjfwd").val($(this).closest("tr").find("#spnDate").html());
+
+
 
                         mMsaterfwdStage($(this).closest("tr").find("#spnStageId").html(), "ddlfwdStage", 5, 0, 1)
                         mMsaterStage($(this).closest("tr").find("#spnStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#spnStageId").html(), 0)

@@ -67,7 +67,7 @@ namespace swas.BAL.Repository
             var latestType2 = await _context.Notification
                 .Where(n => n.NotificationType == 2
                             && n.NotificationTo != unitId
-                            && n.IsDeleted == false)
+                            && n.IsDeleted == false && n.ProjId== projId)
                 .GroupBy(n => n.ProjId)
                 .Select(g => g.OrderByDescending(n => n.NotificationId).FirstOrDefault())
                 .ToListAsync();
@@ -76,7 +76,7 @@ namespace swas.BAL.Repository
             var notifications = await _context.Notification
                 .Where(n => n.NotificationType == 1
                             && n.NotificationTo != unitId
-                            && n.IsDeleted == false)
+                            && n.IsDeleted == false && n.ProjId == projId)
                 .ToListAsync();
 
             // Combine results and order by NotificationId

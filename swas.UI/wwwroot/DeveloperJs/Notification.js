@@ -1,4 +1,7 @@
-﻿
+﻿$(document).ready(function () {
+    updateNotificationCount(1, 'ProjectCommentCount'); // For project comments
+    updateNotificationCount(2, 'InboxCount'); // For inbox
+});
 
 function AddNotification(ProjId, type, unitid) {
 
@@ -21,8 +24,9 @@ function AddNotification(ProjId, type, unitid) {
                     timer: 700
                 });
             }
-
-            window.location.reload();
+            updateNotificationCount(1, 'ProjectCommentCount'); // For project comments
+            updateNotificationCount(2, 'InboxCount'); // For inbox
+           
         },
         error: function (error) {
             console.error('Error occurred:', error);
@@ -42,14 +46,15 @@ function IsReadNotification(ProjId, type) {
         },
         success: function (response) {
             console.log(response);
-
+            updateNotificationCount(1, 'ProjectCommentCount'); // For project comments
+            updateNotificationCount(2, 'InboxCount'); // For inbox
         }
     });
 }
 
 
 function UndoNotification(ProjId, type, ToUnitId) {
-    alert(1)
+    
     $.ajax({
         url: '/Notification/UndoNotification',
         type: 'POST',
@@ -79,6 +84,33 @@ function UnReadNotification(ProjId, type) {
         success: function (response) {
             console.log(response);
 
+        }
+    });
+}
+function updateNotificationCount(type, elementId) {
+    $.ajax({
+        url: `/Notification/GetNotificationCount?type=${type}`, // Pass the notification type as a query parameter
+        type: 'GET',
+        success: function (count) {
+            // Check if the count is valid, if not, set it to 0
+            count = count || 0;
+
+            // Update the badge text based on the count
+            $('.' + elementId).html(count);
+
+            // Show or hide the badge based on the count
+            if (count > 0) {
+                /*  $(`#${elementId}`).show();*/
+                $("." + elementId).removeClass("d-none")
+            } else {
+                /* $(`#${elementId}`).hide();*/
+                $("." + elementId).addClass("d-none")
+            }
+        },
+        error: function () {
+            console.error(`Could not retrieve ${elementId} count.`);
+            // In case of an error, set the count to 0 and hide the badge
+            $(`#${elementId}`).text(0).hide();
         }
     });
 }

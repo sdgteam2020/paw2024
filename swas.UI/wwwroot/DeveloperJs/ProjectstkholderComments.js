@@ -79,7 +79,7 @@ function GetProjCommentsByUnitId() {
 
                         
                         if (response[i].isComment == false) {
-                            listItem += "<tr class='font-weight-bold'>";
+                            listItem += "<tr class='bold-text'>";
                            /* boldCount++;*/
                         } else {
                             listItem += "<tr>";
@@ -234,7 +234,7 @@ function GetProjCommentsByUnitId() {
 
                         IsReadComment($(this).closest("tr").find("#spnProjId").html());
                         IsReadNotification($(this).closest("tr").find("#spnProjId").html(), 1);
-                        $(this).closest("tr").removeClass("font-weight-bold")
+                        $(this).closest("tr").removeClass("bold-text")
                         reset()
                         mMsater(0, "ddlStatus", 4, 0)
                         $("#ProjCommentModal").modal('show');
