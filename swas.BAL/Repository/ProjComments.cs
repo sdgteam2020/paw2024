@@ -27,6 +27,7 @@ namespace swas.BAL
             var queryes = await (from proj in _context.Projects
                                  join mov in _context.ProjStakeHolderMov on proj.ProjId equals mov.ProjId
                                  join stakeholder in _context.tbl_mUnitBranch on proj.StakeHolderId equals stakeholder.unitid
+
                                  let StkStatusId =
                              (from cr1 in _context.StkComment
                               join Stdkst in _context.StkStatus on cr1.StkStatusId equals Stdkst.StkStatusId

@@ -1573,7 +1573,7 @@ namespace swas.UI.Controllers
        
 
         [HttpPost]
-        public async Task<IActionResult> IsReadComment(int ProjId)
+        public async Task<IActionResult> IsReadComment(int ProjId,int PsmId)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
             if (Logins != null)
@@ -1581,15 +1581,19 @@ namespace swas.UI.Controllers
                 try
                 {
                     // Get all records for the given Projid
-                    List<tbl_ProjStakeHolderMov> inboxComments = await _projectsRepository.GetInboxByProjIdAsync(ProjId);
+                    tbl_ProjStakeHolderMov inboxComments = await _projectsRepository.GettXNByPsmIdAsync(PsmId);
 
                     // Update IsRead to false for all records
-                    foreach (var comment in inboxComments)
+                    //foreach (var comment in inboxComments)
+                    //{
+                    inboxComments.DateTimeOfUpdate = DateTime.Now;
+                    if(inboxComments.IsRead==false)
                     {
-                        comment.DateTimeOfUpdate = DateTime.Now;
-                        comment.IsRead = true;
-                        await _projectsRepository.UpdateTxnAsync(comment);
+                        inboxComments.IsRead = true;
+                        await _projectsRepository.UpdateTxnAsync(inboxComments);
                     }
+                   
+                   // }
 
                     return Json(ProjId);
                 }

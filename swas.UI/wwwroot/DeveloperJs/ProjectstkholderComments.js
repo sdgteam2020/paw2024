@@ -232,7 +232,7 @@ function GetProjCommentsByUnitId() {
                         $("#ProjectcommentprojId").html($(this).closest("tr").find("#spnProjId").html());
                         $("#ProjectcommentPsmId").html($(this).closest("tr").find("#spnpsmId").html());
 
-                        IsReadComment($(this).closest("tr").find("#spnProjId").html());
+                        IsReadComment($(this).closest("tr").find("#spnProjId").html(), $(this).closest("tr").find("#spnpsmId").html());
                         IsReadNotification($(this).closest("tr").find("#spnProjId").html(), 1);
                         $(this).closest("tr").removeClass("bold-text")
                         reset()
@@ -243,7 +243,7 @@ function GetProjCommentsByUnitId() {
 
                     $("body").on("click", ".projNameDetail", function () {
 
-                        IsReadComment($(this).closest("tr").find("#spnProjId").html());
+                        IsReadComment($(this).closest("tr").find("#spnProjId").html(), $(this).closest("tr").find("#spnpsmId").html());
                         IsReadNotification($(this).closest("tr").find("#spnProjId").html(), 1);
 
                     });
@@ -410,11 +410,13 @@ function GetAllComments()
 
 
 
-function IsReadComment(ProjId) {
+function IsReadComment(ProjId, PsmId) {
     $.ajax({
         url: '/Projects/IsReadComment',
         type: 'POST',
-        data: { "ProjId": ProjId },
+        data: {
+            "ProjId": ProjId,
+            "PsmId": PsmId        },
         success: function (response) {
             console.log(response);
         }
