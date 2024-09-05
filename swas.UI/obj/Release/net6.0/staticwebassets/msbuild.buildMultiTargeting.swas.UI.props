@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\swas.UI.props" />
-</Project>
