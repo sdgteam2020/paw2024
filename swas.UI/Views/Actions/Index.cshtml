@@ -21,6 +21,8 @@
             margin-bottom: 0.5rem;
             height: -1px;
         }
+
+      
     </style>
 
 <button type="button" class="btn btn-success btn-Mapping">Add Actions</button>
@@ -46,7 +48,7 @@
                 {
                     
                     <tr>
-                        <td>@(Model.IndexOf(models) + 1)</td>
+                        <td class="srno">@(Model.IndexOf(models) + 1)</td>
                         <td id="spnActionsId">@models.ActionsId</td>
                         <td id="ActionNames">@models.Actions</td>
 

@@ -419,9 +419,7 @@ function IsReadComment(ProjId, PsmId) {
     $.ajax({
         url: '/Projects/IsReadComment',
         type: 'POST',
-        data: {
-            "ProjId": ProjId,
-            "PsmId": PsmId        },
+        data: { "ProjId": ProjId, "PsmId": PsmId },
         success: function (response) {
             console.log(response);
         }

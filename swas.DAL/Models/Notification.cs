@@ -15,7 +15,9 @@ namespace swas.DAL.Models
         public int NotificationFrom { get; set; }
         public int NotificationTo { get; set; }
         public bool IsRead { get; set; }
-        public DateTime ReadDateTime { get; set; }
+        [Display(Name = "Date of Update")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? ReadDateTime { get; set; }
 
         public int NotificationType   { get; set; }
 
