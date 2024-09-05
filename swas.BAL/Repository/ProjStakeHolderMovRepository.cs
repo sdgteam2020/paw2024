@@ -74,7 +74,7 @@ namespace swas.BAL.Repository
                                    ToUnitId=tounit.unitid,
                                    DateTimeOfUpdate = b.TimeStamp,
                                    Remarks = b.Remarks,
-                                    
+                                   StakeHolderId=a.StakeHolderId
 
                                }).ToListAsync();
         
@@ -131,6 +131,10 @@ namespace swas.BAL.Repository
                                       Status =stksts.Status,
                                       Comments = stk.Comments,
                                       DateTimeOfUpdate = stk.DateTimeOfUpdate,
+                                      UserDetails = stk.UserDetails != null ? stk.UserDetails : "____",
+                                      
+                                      
+                                      
                                   }).ToListAsync();
             //var lastInitialStageRecord = query.LastOrDefault(record => record.Stages == "Initial Stage");
 

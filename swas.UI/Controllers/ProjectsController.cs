@@ -877,7 +877,7 @@ namespace swas.UI.Controllers
                     cmmets.EditDeleteBy = Logins.unitid;
                     cmmets.EditDeleteDate = CommentDate;
                     cmmets.StkStatusId = StkStatusId;
-
+                    cmmets.UserDetails = Helper.LoginDetails(Logins);
                     cmmets.StakeHolderId = Logins.unitid; ;
 
                     var ret = await _stkCommentRepository.AddWithReturn(cmmets);

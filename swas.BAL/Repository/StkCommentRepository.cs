@@ -41,7 +41,7 @@ namespace swas.BAL.Repository
                              StkCommentId = comment.StkCommentId,
                              UnitId = comment.StakeHolderId,
                              Attpath = comment.Attpath,
-                             DomainId = ""
+                             UserDetails = comment.UserDetails!= null ? comment.UserDetails.ToString() :"____"
 
 
                          }).ToListAsync();
