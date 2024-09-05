@@ -362,9 +362,9 @@ function GetProjectMovement(ProjectId)
                 else {
                     var count = 1;
                     for (var i = 0; i < response.length; i++) {
-
+                        
                         listItem += "<tr>";
-                        listItem += "<td class='d-none'><span id='spnpsmId' class='d-none'>" + response[i].psmIds + "</span>";
+                        listItem += "<td class='d-none'><span id='spnpsmId' class='d-none'>" + response[i].psmIds + "</span><span id='spneditstakeHolderId' class='d-none'>" + response[i].stakeHolderId + "</span>";
                         listItem += "<span id='spnStageId' class='d-none'>" + response[i].stageId + "</span>";
                         listItem += "<span id='spanProjId' class='d-none'>" + response[i].projId + "</span>";
                         listItem += "<span id='spnStatusId' class='d-none'>" + response[i].statusId + "</span>";
@@ -437,8 +437,9 @@ function GetProjectMovement(ProjectId)
                         $("#spanEditPslmId").html($(this).closest("tr").find("#spnpsmId").html());
                         $("#txtRemarksfwd").val($(this).closest("tr").find("#spnremarks").html());
                         $("#TimeStampToProjfwd").val($(this).closest("tr").find("#spnDate").html());
+                        $("#SpnFwdStakeHolderId").html($(this).closest("tr").find("#spneditstakeHolderId").html());
 
-
+                        
 
                         mMsaterfwdStage($(this).closest("tr").find("#spnStageId").html(), "ddlfwdStage", 5, 0, 1)
                         mMsaterStage($(this).closest("tr").find("#spnStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#spnStageId").html(), 0)

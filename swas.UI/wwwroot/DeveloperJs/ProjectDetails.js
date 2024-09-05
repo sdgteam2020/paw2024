@@ -317,11 +317,11 @@ function GetProjectMovHistory(ProjId) {
 
                             listitem += '</div>';
                             if (DTODashboardCount[c].status == "Observation" || DTODashboardCount[c].status == "Rejected")
-                                listitem += '<div class="box-footer bg-danger">' + DTODashboardCount[c].status + '</div>';
+                                listitem += '<div class="box-footer bg-danger">' + DTODashboardCount[c].status + ' by ' + DTODashboardCount[c].userDetails +'</div>';
                             else if (DTODashboardCount[c].status == "Accepted")
-                                listitem += '<div class="box-footer bg-success ">' + DTODashboardCount[c].status + '</div>';
+                                listitem += '<div class="box-footer bg-success ">' + DTODashboardCount[c].status + ' by ' + DTODashboardCount[c].userDetails +'</div>';
                             else 
-                                listitem += '<div class="box-footer">' + DTODashboardCount[c].status + '</div>';
+                                listitem += '<div class="box-footer">' + DTODashboardCount[c].status + ' by ' + DTODashboardCount[c].userDetails +'</div>';
                             listitem += '</div></div>';
                         }
                     }

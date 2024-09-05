@@ -35,6 +35,7 @@ namespace swas.BAL.DTO
         public int PsmId { get; set; }
         public string? Comments { get; set; }
         public string? Status { get; set; }
+        public string? UserDetails { get; set; }
         public DateTime? DateTimeOfUpdate { get; set; }
     }
 }

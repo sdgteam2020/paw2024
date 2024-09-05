@@ -43,7 +43,7 @@ function GetAllComments2() {
 
                     tableHTML += '<tr>';
                     tableHTML += '<td style="border: 1px solid black;width:1% !important">' + (i + 1) + '</td>';
-                    tableHTML += '<td style="border: 1px solid black;">' + data[i].stakeholder + '</td>';
+                    tableHTML += '<td style="border: 1px solid black;">' + data[i].stakeholder + ' (' + data[i].userDetails +')</td>';
                     tableHTML += '<td style="border: 1px solid black;">' + formattedDate + '</td>';
                     tableHTML += '<td style="border: 1px solid black;">' + data[i].comments + '</td>';
                     tableHTML += '<td style="border: 1px solid black;">' + (data[i].status == "Accepted" ? '<span class="badge badge-success text-white">' + data[i].status + '</span>' : '<span class="badge badge-danger text-white">' + data[i].status + '</span>') + '</td>';
