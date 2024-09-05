@@ -94,7 +94,8 @@ function ProjectWiseStatus() {
 
                         searching: true,
                         stateSave: true,
-                        "order": [[0, "asc"]],
+                        /*"order": [[0, "asc"]],*/
+                        order: [[1, 'desc']],
                         "ordering": true,
                         "paging": true,
                         dom: 'lBfrtip',
@@ -283,7 +284,7 @@ function GetProjHold(ProjId) {
                     var table = $('#tblprojComments').DataTable({
                         lengthChange: true,
                         retrieve: true,
-                        bDestroy: true,
+                        Destroy: true,
 
                         searching: true,
                         stateSave: true,

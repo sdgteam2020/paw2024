@@ -2,7 +2,17 @@
 var Status = "";
 $(document).ready(function () {
     GetAllDashbaordCount();
-    var myChart1;
+
+    $("#IsNotduplicate").change(function () {
+
+        
+        var ischecked = $(this).is(':checked');      
+        if (ischecked)
+            getProjGetsummay($("#spndashboardstatusId").html(), false);
+        else
+            getProjGetsummay($("#spndashboardstatusId").html(), true);
+    }); 
+  
 });
 
 
@@ -77,12 +87,20 @@ function GetAllDashbaordCount() {
                     sent = 0;
                     var icons = "";
                     var DTODashboardCount = data.dtoDashboardCountlst.filter(function (element) { return element.stagesId == dtoDashboardHeaderlst[i].stageId && element.statusId == dtoDashboardHeaderlst[i].statusId; });
-                    if (parseInt(dtoDashboardHeaderlst[i].statusId) == 2 || parseInt(dtoDashboardHeaderlst[i].statusId) == 3) {
+                    if (parseInt(dtoDashboardHeaderlst[i].statusId) == 2 || parseInt(dtoDashboardHeaderlst[i].statusId) == 3
+                        || parseInt(dtoDashboardHeaderlst[i].statusId) == 22 || parseInt(dtoDashboardHeaderlst[i].statusId) == 31
+                        || parseInt(dtoDashboardHeaderlst[i].statusId) == 37) {
 
                         if (parseInt(dtoDashboardHeaderlst[i].statusId) == 2)
                             var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 10 });
-                        else
+                        else if (parseInt(dtoDashboardHeaderlst[i].statusId) == 3)
                             var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 11 });
+                        else if (parseInt(dtoDashboardHeaderlst[i].statusId) == 22)
+                            var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 3 && e.stagesId==2 });
+                        else if (parseInt(dtoDashboardHeaderlst[i].statusId) == 31)
+                            var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 3 && e.stagesId == 3});
+                        else if (parseInt(dtoDashboardHeaderlst[i].statusId) == 37)
+                            var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 3 && e.stagesId == 1 });
 
                         for (var j = 0; j < ForAction.length; j++) {
 
@@ -115,7 +133,7 @@ function GetAllDashbaordCount() {
                    
                     listitem += '<div class="icon-container ApprovedProj cursorpointer"><span class="d-none" id="spnstatusId">' + dtoDashboardHeaderlst[i].statusId +'</span>';
                    /* listitem += '<img src="/assets/images/icons/' + dtoDashboardHeaderlst[i].icons +'" alt="Icon" style="height:25px">';*/
-                    if (dtoDashboardHeaderlst[i].statusId == 2 || dtoDashboardHeaderlst[i].statusId == 3 || dtoDashboardHeaderlst[i].statusId == 22) {
+                    if (dtoDashboardHeaderlst[i].statusId == 2 || dtoDashboardHeaderlst[i].statusId == 3 || dtoDashboardHeaderlst[i].statusId == 22 || dtoDashboardHeaderlst[i].statusId == 31 || dtoDashboardHeaderlst[i].statusId == 37) {
                         if (dtoDashboardHeaderlst[i].statusId == 3)
                             listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" style="height:25px">';
                        else listitem += '<img src="/assets/images/icons/rejec.png" alt="Icon" style="height:25px">';
@@ -192,7 +210,7 @@ function GetAllDashbaordCount() {
                             tittle = "Closed Project";
                             Status = 'Closed';
                         }
-                        else if (parseInt(spnstatusActionsMappingId) == 68 || parseInt(spnstatusActionsMappingId) == 73
+                        else if (parseInt(spnstatusActionsMappingId) == 68 || parseInt(spnstatusActionsMappingId) == 73 || parseInt(spnstatusActionsMappingId) == 63
                             || parseInt(spnstatusActionsMappingId) == 78 || parseInt(spnstatusActionsMappingId) == 83 || parseInt(spnstatusActionsMappingId) == 88) {
                             Status = 'Completed';
                         }
@@ -225,8 +243,9 @@ function GetAllDashbaordCount() {
                     var spnstatusId = $(this).closest("div").find("#spnstatusId").html();
                    
                     $('#ProjGetsummay').modal('show');
-                    $('#ProjectSummaryTittle').html($(this).closest("div").find(".statusprojsummry").html());
-                    getProjGetsummay(spnstatusId);
+                        $('#ProjectSummaryTittle').html($(this).closest("div").find(".statusprojsummry").html());
+                        $('#IsNotduplicate').prop('checked', false);
+                        getProjGetsummay(spnstatusId, true);
 
 
                 })
@@ -459,6 +478,8 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                     
                     
                     $('#DetailBodyApproved').empty();
+                    $('#dashboardApproved').dataTable().fnClearTable();
+                    $('#dashboardApproved').dataTable().fnDestroy();
                     for (var i = 0; i < response.length; i++) {
                         listItem += "<tr>";
                         listItem += "<td class='align-middle'>" + count + "</td>";
@@ -553,10 +574,13 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
         }
     });
 }
-function getProjGetsummay(spnstatusId) {
+function getProjGetsummay(spnstatusId, IsDuplicate) {
     var listItem = "";
+   
+    $("#spndashboardstatusId").html(spnstatusId);
     var userdata = {
         "StatusId": spnstatusId,
+        "IsDuplicate": IsDuplicate
     };
 
     $.ajax({
@@ -572,15 +596,16 @@ function getProjGetsummay(spnstatusId) {
                 } else if (response == 0) {
                     
                     $('#DetailBodysummary1').empty();
-                    listItem += "<tr><td class='text-center' colspan='8'>No Record Found</td></tr>";
+                    listItem += "<tr><td class='text-center' colspan='10'>No Record Found</td></tr>";
                     $("#DetailBodysummary1").html(listItem);
                     $("#lblTotal").html(0);
                    
 
                 } else {
                     var count = 1;
-                  
-                    $('#DetailBodysummary1').empty();
+                    $('#dashboardDeatils').dataTable().fnClearTable();
+                    $('#dashboardDeatils').dataTable().fnDestroy();
+                   
                     for (var i = 0; i < response.length; i++) {
                         listItem += "<tr>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + count + "</span></td>";
@@ -588,6 +613,8 @@ function getProjGetsummay(spnstatusId) {
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].fromUnitName + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].toUnitName + "</span></td>";
+                        listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stage + "</span></td>";
+                        listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].status + "</span></td>";
                         listItem += "<td class='align-middle'><span id='divName'>" + response[i].action + "</span></td>";
                         listItem += "<td class='align-middle'><span id='divName'>" + DateFormateddMMyyyyhhmmss(response[i].dateTimeOfUpdate) + "</span></td>";
 
@@ -616,9 +643,9 @@ function getProjGetsummay(spnstatusId) {
                         lengthChange: true,
                         retrieve: true,
                         bDestroy: true,
-
+                        destroy: true,
                         searching: true,
-                        stateSave: true,
+                       /* stateSave: true,*/
                         "order": [[0, "asc"]],
                         "ordering": true,
                         "paging": true,
@@ -663,13 +690,19 @@ function getProjGetsummay(spnstatusId) {
                             }
                         }
                     });
-                    
+
+                    //setTimeout(function () {   //calls click event after a certain time
+                    //    $('input[type=search]').val('');
+                    //    $('input[type=search]').trigger("click");
+                    //    $('input[type=search]').focus();
+                    //}, 1000);
+                   
                 }
             }
             else {
                
                 $('#DetailBodysummary1').empty();
-                listItem += "<tr><td class='text-center' colspan='8'>No Record Found</td></tr>";
+                listItem += "<tr><td class='text-center' colspan='10'>No Record Found</td></tr>";
                 $("#DetailBodysummary1").html(listItem);
 
                

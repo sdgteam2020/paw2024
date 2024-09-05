@@ -388,8 +388,17 @@ function GetProjectMovement(ProjectId)
                     }
 
                     $("#ProjectMovement").html(listItem);
+
                     var table = $('#moventdata').DataTable({
                         lengthChange: true,
+                        retrieve: true,
+                        Destroy: true,
+
+                        searching: true,
+                        stateSave: true,
+                        "order": [[0, "asc"]],
+                        "ordering": true,
+                        "paging": true,
                         dom: 'lBfrtip',
                         buttons: [
                             'copy',

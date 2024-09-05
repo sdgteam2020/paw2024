@@ -2064,6 +2064,13 @@ namespace swas.BAL.Repository
                 .ToListAsync();
         }
 
+        //public async Task<List<tbl_ProjStakeHolderMov>> GetCommentByProjAndUnitId(int projId, int? ToUnitId)
+        //{
+        //    return await _dbContext.ProjStakeHolderMov
+        //        .Where(a => a.ProjId == projId && a.ToUnitId == ToUnitId && a.IsComment == 1)
+        //        .ToListAsync();
+        //}
+
     }
 
 }

@@ -1540,7 +1540,7 @@ ul.categories-list li {
     .tabs__head li a {
         flex-direction: row;
         align-items: center;
-        width: 130px;
+        width: 200px;
         color: white;
         padding-right: 20px;
         padding-left: 15px;
@@ -2632,3 +2632,7 @@ ul.categories-list li {
     
 }
 
+.FlowImg{
+    width:100%;
+
+}

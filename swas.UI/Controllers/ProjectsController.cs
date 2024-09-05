@@ -1592,8 +1592,7 @@ namespace swas.UI.Controllers
                         inboxComments.IsRead = true;
                         await _projectsRepository.UpdateTxnAsync(inboxComments);
                     }
-                   
-                   // }
+                    //}
 
                     return Json(ProjId);
                 }
