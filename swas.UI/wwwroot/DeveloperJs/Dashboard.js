@@ -483,7 +483,7 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                     for (var i = 0; i < response.length; i++) {
                         listItem += "<tr>";
                         listItem += "<td class='align-middle'>" + count + "</td>";
-                        listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].projName + "</span></td>";
+                        listItem += "<td class='align-middle nowrap'><span id='ProjName'>" + response[i].projName + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + DateFormateddMMyyyyhhmmss(response[i].timeStamp) + "</span></td>";
 

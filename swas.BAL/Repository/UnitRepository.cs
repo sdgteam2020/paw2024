@@ -76,6 +76,22 @@ namespace swas.BAL
 
         }
 
+        public async Task<int> GetIdCalendar()
+        {
+            int ret = 0;
+            try
+            {
+
+                ret = await _context.mCalendar.Select(i=>i.Type).FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+            return ret;
+
+        }
+
 
 
         public async Task<UnitDtl> GetUnitDtlwithname(string unitname)

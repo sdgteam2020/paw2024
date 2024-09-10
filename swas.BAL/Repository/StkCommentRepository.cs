@@ -37,7 +37,7 @@ namespace swas.BAL.Repository
                              Comments = comment.Comments,
                              ProjId = Convert.ToInt32(comment.ProjId),
                              PsmId = project.CurrentPslmId,
-                             Date = (DateTime)comment.DateTimeOfUpdate,
+                             Date = comment.DateTimeOfUpdate,
                              StkCommentId = comment.StkCommentId,
                              UnitId = comment.StakeHolderId,
                              Attpath = comment.Attpath,

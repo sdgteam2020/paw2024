@@ -20,6 +20,7 @@ namespace swas.BAL.DTO
 
         public string? Status { get; set; }
         public string? Action { get; set; }
+        public string? UndoRemarks { get; set; }
         public bool IsComment { get; set; }
         public bool IsComplete { get; set; }
     }

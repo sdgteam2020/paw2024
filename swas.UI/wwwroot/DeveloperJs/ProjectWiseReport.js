@@ -184,8 +184,13 @@ function GetProjHold(ProjId) {
                   
                     for (var j = 0; j < response.length; j++) {
                         if (response[j].isComment == false) {
-                            if (response[j].isComplete == false)
+                            if (response[j].isComplete == false )
+                            {
+                                if (response[j].undoRemarks != null)
+                                    listItem += '<tr class="table-success">';
+                                    else
                                 listItem += '<tr class="table-danger">';
+                            }
                             else
                                 listItem += '<tr class="table-success">';
 

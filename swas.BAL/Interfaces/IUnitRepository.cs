@@ -32,6 +32,7 @@ namespace swas.BAL.Interfaces
         //bool GetFindUnitAsync(string UserName);
 
         Task<UnitDtl> GetUnitDtl(int unitid);
+        Task<int> GetIdCalendar();
 
         Task<UnitDtl> GetUnitDtlwithname(string UnitName);
         Task<UnitDtl> GetUnitDtls(int unitid);

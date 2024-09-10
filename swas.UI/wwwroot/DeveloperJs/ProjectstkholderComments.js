@@ -373,7 +373,7 @@ function GetAllComments()
                     commentContainer += '<div class="comment-header">';
                     commentContainer += '<div>';
                     commentContainer += '<span style="font-family: Arial; font-weight: bold; color: #0793f7;">' + data[i].stakeholder + ' (' + userDetails +') </span>';
-                    commentContainer += '<div style="margin-left: 10px;" class="comment-meta">' + DateFormateddMMyyyyhhmmss(formattedDate) + '</div>';
+                    commentContainer += '<div style="margin-left: 0px;" class="comment-meta">' + DateFormateddMMyyyyhhmmss(data[i].date) + '</div>';
                     commentContainer += '</div>';
                     commentContainer += '<div>';
                     if (data[i].status == "Accepted")

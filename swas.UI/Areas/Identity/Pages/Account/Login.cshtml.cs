@@ -190,6 +190,7 @@ namespace swas.Areas.Identity.Pages.Account
                             if (userdet != null)
                             {
                                 var unitdetl = await _unitRepository.GetUnitDtl(userdet.unitid);
+                                int cla = await _unitRepository.GetIdCalendar();
                                 if (unitdetl != null)
                                 {
                                     Login Db = new Login();
@@ -211,6 +212,7 @@ namespace swas.Areas.Identity.Pages.Account
                                         var usroles = await _userManager.GetRolesAsync(users);
                                         Db.Role = usroles.Any() ? usroles[0] : "Unit";
                                         Db.IpAddress = watermarkText;
+                                        Db.cla=cla;
                                         if (Db.ActualUserName == null)
                                         {
                                             Db.ActualUserName = Input.UserName;

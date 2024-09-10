@@ -1,7 +1,39 @@
 ﻿$(document).ready(function () {
+    var pad = "00"
+    var datef2 = new Date();
+    var months = "" + `${(datef2.getMonth() + 1)}`;
+    var days = "" + `${(datef2.getDate())}`;
+    var monthsans = pad.substring(0, pad.length - months.length) + months
+    var dayans = pad.substring(0, pad.length - days.length) + days
+    var year = `${datef2.getFullYear()}`;
+    var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+    var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+   // var mm = `${datef2.getMinutes()}`;
+    var ss = `${datef2.getSeconds()}`;
 
+    //var today = new Date().toISOString().split('T');  // Get today's date in YYYY-MM-DD format
+
+    //today = today[0] + 'T' + today[1].substring(0,5);
+    var today = year + `-` + monthsans + `-` + dayans + `T` + hh + `:` + mm
+
+    if ($("#isclaneder").html() == 1) {
+       
+        // yyyy-MM-ddTHH:mm//2024-09-06T15:42
+        $('input[type=datetime-local]').attr('max', today);
+        $('input[type=datetime-local]').attr('min', today);
+        $('input[type=datetime-local]').val(today)
+
+        $('.datepicker1').datepicker({
+            minDate: 0
+        });
+    }
+    else {
+        $('input[type=datetime-local]').attr('max', today);
+        $('.datepicker1').datepicker();
+       
+    }
+    
     $('.datetimepicker1').datepicker();
-
 
     $('.form-control').keypress(function (e) {
         // Get the key code of the pressed key
