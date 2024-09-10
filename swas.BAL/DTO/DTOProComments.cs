@@ -19,7 +19,7 @@ namespace swas.BAL.DTO
         public string Attpath { get; set; }
         public string ActFileName { get; set; }
         public string Comments { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
 
         public string? EncyID { get; set; }
 
