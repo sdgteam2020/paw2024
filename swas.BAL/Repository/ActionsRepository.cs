@@ -89,15 +89,17 @@ namespace swas.BAL.Repository
 
         public async Task<List<DTODDLComman>> GetActionByStatusId(int StatusId)
         {
-            var query = await (from act in _dbContext.mActions 
-                               
-                               select new DTODDLComman
-                        {
-                            Id=act.ActionsId,
-                            Name=act.Actions,
-
-                        }).ToArrayAsync();
-            return query.ToList();
+            var ret = await (from act in _dbContext.mActions
+                             join map in _dbContext.TrnStatusActionsMapping on act.ActionsId equals map.ActionsId
+                             where map.StatusId == StatusId && map.IsActive == true
+                             orderby act.OrderBy
+                             select new DTODDLComman
+                             {
+                                 Id = map.StatusActionsMappingId,
+                                 Name = act.ActionDesc,
+                             }
+             ).ToListAsync();
+            return ret.ToList();
         }
 
         public async Task<List<DTODDLComman>> GetActionByStatusIdlogin (int StatusId, int UnitId)

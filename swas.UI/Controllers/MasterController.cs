@@ -153,11 +153,15 @@ namespace swas.UI.Controllers
                 }
                 else if (id == Mastertablenmumcs.mActions)
                 {
-                    //var ret = await _actionsRepository.GetActionByStatusId(ParentId);
-
                     var ret = await _actionsRepository.GetActionByStatusIdlogin(ParentId, Convert.ToInt32(Logins.unitid));
                     return Json(ret);
 
+                }
+
+                else if (id == Mastertablenmumcs.mMappingActionsException)
+                {
+                    var ret = await _actionsRepository.GetActionByStatusId(ParentId);
+                    return Json(ret);
                 }
                 //else if (id == Mastertablenmumcs.mMappingActions)
                 //{

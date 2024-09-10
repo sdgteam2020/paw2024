@@ -67,7 +67,6 @@
 }
 
 function mMsaterfwdStage(sectid = '', ddl, TableId, ParentId,type) {
-
     var userdata =
     {
         "id": TableId,

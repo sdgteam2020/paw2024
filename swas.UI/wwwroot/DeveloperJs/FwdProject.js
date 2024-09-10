@@ -7,23 +7,27 @@
         mMsaterStage(0, "ddlfwdSubStage", 6, $("#ddlfwdStage").val(), $("#SpnStakeHolderId").html())
     });
 
-    //$("#ddlfwdSubStage").change(function () {
-
-    //    mMsater(0, "ddlfwdAction", 9, $("#ddlfwdSubStage").val())
-    //});
+   
     $("#ddlfwdSubStage").change(function () {
 
         mMsater(0, "ddlfwdAction", 7, $("#ddlfwdSubStage").val())
     });
    
-    //$("#ddlfwdAction").change(function () {
-
-    //    mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnStakeHolderId").html())
-    //});
+  
     $("#ddlfwdAction").change(function () {
 
         mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html());
     });
+
+    //$("#ddlfwdSubStage").change(function () {
+
+    //    mMsater(0, "ddlfwdAction", 9, $("#ddlfwdSubStage").val())
+    //});
+
+    //$("#ddlfwdAction").change(function () {
+
+    //    mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnStakeHolderId").html())
+    //});
     $(".btn-Undo").click(function () {
        
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
