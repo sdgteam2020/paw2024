@@ -517,6 +517,21 @@ namespace swas.BAL.DTO
     }
 
 
+    public class ActionExceptionDTO
+    {
+        public int UnitStatusMappingId { get; set; }
+        public string UnitName  { get; set; }
+        public string Stage { get; set; }
+        public string SubStage  { get; set; }
+        public string Action  { get; set; }
+
+        public int StageId { get; set; }
+        public int SubStageId  { get; set; }
+        public int ActionId { get; set; }
+        public int UnitId { get; set; }
+
+    }
+
 }
 
 

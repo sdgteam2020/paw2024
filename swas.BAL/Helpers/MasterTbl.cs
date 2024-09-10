@@ -18,6 +18,8 @@ namespace swas.BAL.Helpers
         public const int mMappingActions = 9;
         public const int mFwd = 8;
 
+        public const int mMappingActionsException  = 10;
+
 
     }
 }

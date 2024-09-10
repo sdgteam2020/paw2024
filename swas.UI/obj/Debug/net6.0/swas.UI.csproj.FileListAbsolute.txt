@@ -7098,6 +7098,8 @@ C:\Users\Administrator\Desktop\PAW_03092024\paw2024\swas.UI\obj\Debug\net6.0\ref
 C:\Users\Administrator\Desktop\PAW_03092024\paw2024\swas.UI\obj\Debug\net6.0\swas.UI.pdb
 C:\Users\Administrator\Desktop\PAW_03092024\paw2024\swas.UI\obj\Debug\net6.0\swas.UI.genruntimeconfig.cache
 C:\Users\Administrator\Desktop\PAW_03092024\paw2024\swas.UI\obj\Debug\net6.0\ref\swas.UI.dll
+D:\Projects\paw2024\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+D:\Projects\paw2024\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
 D:\Projects\paw2024\swas.UI\bin\Debug\net6.0\appsettings.Development.json
 D:\Projects\paw2024\swas.UI\bin\Debug\net6.0\appsettings.json
 D:\Projects\paw2024\swas.UI\bin\Debug\net6.0\libman.json
@@ -7153,10 +7155,8 @@ D:\Projects\paw2024\swas.UI\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
 D:\Projects\paw2024\swas.UI\bin\Debug\net6.0\Microsoft.DiaSymReader.dll
 D:\Projects\paw2024\swas.UI\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbstractions.dll
 D:\Projects\paw2024\swas.UI\bin\Debug\net6.0\Microsoft.DotNet.Scaffolding.Shared.dll
-D:\Projects\paw2024\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
 D:\Projects\paw2024\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
 D:\Projects\paw2024\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
-D:\Projects\paw2024\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
 D:\Projects\paw2024\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
 D:\Projects\paw2024\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
 D:\Projects\paw2024\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll

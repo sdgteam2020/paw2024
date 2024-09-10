@@ -1367,8 +1367,6 @@ namespace swas.UI.Controllers
 
             try
             {
-               // int ProjId = await _projStakeHolderMovRepository.GetProjectId(ProjName);
-
                 var ret = await _projStakeHolderMovRepository.ProjectMovement(Id);
                 return Json(ret);
             }

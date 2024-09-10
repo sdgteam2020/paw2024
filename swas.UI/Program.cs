@@ -87,6 +87,7 @@ builder.Services.AddScoped<IUserMapChatRepository, UserMapChatRepository>();
 builder.Services.AddScoped<ITrnChatMsgRepository, TrnChatMsgRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 
+builder.Services.AddScoped<IActionExceptionRepository, ActionExceptionRepository>();
 
 
 builder.Services.AddAntiforgery(o => o.SuppressXFrameOptionsHeader = true);
