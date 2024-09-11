@@ -48,7 +48,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddSingleton<IAuthorizationHandler, CustomAuthorizationHandler>();
 builder.Services.AddScoped<AccountController, AccountController>();
 builder.Services.AddScoped<HomeController, HomeController>();
-
 builder.Services.AddScoped<CommentController, CommentController>();
 builder.Services.AddScoped<ActionsController, ActionsController>();
 builder.Services.AddScoped<StagesController, StagesController>();
@@ -59,7 +58,6 @@ builder.Services.AddScoped<DdlController, DdlController>();
 builder.Services.AddScoped<ProjStakeHolderMovController, ProjStakeHolderMovController>();
 builder.Services.AddScoped<StakeHolderController, StakeHolderController>();
 builder.Services.AddScoped<UnitDtlsController, UnitDtlsController>();
-
 builder.Services.AddScoped<IActionsRepository, ActionsRepository>();
 builder.Services.AddScoped<IAttHistoryRepository, AttHistoryRepository>();
 builder.Services.AddScoped<IChartService, ChartService>();
@@ -75,18 +73,15 @@ builder.Services.AddScoped<IUnitRepository, UnitRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IRankRepository, RankRepository>();
 builder.Services.AddScoped<IAttHistComment, AttHistCommentRepository>();
-
 builder.Services.AddScoped<IProjComments, ProjComments>();
 builder.Services.AddScoped<IStkStatusRepository, StkStatusRepository>();
 builder.Services.AddScoped<IStkCommentRepository, StkCommentRepository>();
 builder.Services.AddScoped<IUnitStatusMapping, UnitStatusMapping>();
 builder.Services.AddScoped<IStatusActionsMapping, StatusActionsMapping>();
-
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
 builder.Services.AddScoped<IUserMapChatRepository, UserMapChatRepository>();
 builder.Services.AddScoped<ITrnChatMsgRepository, TrnChatMsgRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
-
 builder.Services.AddScoped<IActionExceptionRepository, ActionExceptionRepository>();
 
 
