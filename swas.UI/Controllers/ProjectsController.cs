@@ -36,6 +36,8 @@ using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using ASPNetCoreIdentityCustomFields.Data;
 using System.Globalization;
+using System.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace swas.UI.Controllers
 {
@@ -60,6 +62,9 @@ namespace swas.UI.Controllers
         private System.Timers.Timer aTimer;
         private readonly IStkCommentRepository _stkCommentRepository;
         private readonly IProjStakeHolderMovRepository _stkholdmove;
+        
+
+        private readonly IConfiguration _configuration;
 
         public ProjectsController(IProjectsRepository projectsRepository, IDdlRepository ddlRepository,
             IProjStakeHolderMovRepository psmRepository, IHttpContextAccessor httpContextAccessor,
@@ -69,7 +74,8 @@ namespace swas.UI.Controllers
             ICommentRepository commentRepository, IActionsRepository actionsRepository,
             IProjComments projComments, IStkCommentRepository stkCommentRepository,
             IProjStakeHolderMovRepository projStakeHolderMovRepository,
-            UserManager<ApplicationUser> userManager
+            UserManager<ApplicationUser> userManager , IConfiguration configuration
+            
 
             )
         {
@@ -90,6 +96,9 @@ namespace swas.UI.Controllers
             _stkCommentRepository = stkCommentRepository;
             _projStakeHolderMovRepository = projStakeHolderMovRepository;
             _userManager = userManager;
+
+            _configuration = configuration;
+            
         }
 
 
@@ -251,6 +260,32 @@ namespace swas.UI.Controllers
                 }
                 TempData["SubCde"] = false;
                 TempData.Keep("SubCde");
+
+                var options = _configuration.GetSection("WhitelistStatusOptions").Get<List<SelectListItem>>();
+                options.Insert(0, new SelectListItem { Text = "--Select--", Value = "" });
+                ViewBag.WhitelistOptions = options;
+
+
+                var TypeofSW = _configuration.GetSection("TypeofSWOptions").Get<List<SelectListItem>>();
+                TypeofSW.Insert(0, new SelectListItem { Text = "--Select--", Value = "" });
+                ViewBag.TypeofSWOption = TypeofSW;
+
+                var BeingDevpInhouse = _configuration.GetSection("BeingDevpInhouseOptions").Get<List<SelectListItem>>();
+                BeingDevpInhouse.Insert(0, new SelectListItem { Text = "--Select--", Value = "" });
+                ViewBag.BeingDevpInhouseOption = BeingDevpInhouse;
+
+                
+                var EndorsmentbyHeadof  = _configuration.GetSection("EndorsmentbyHeadofOptions").Get<List<SelectListItem>>();
+                EndorsmentbyHeadof.Insert(0, new SelectListItem { Text = "--Select--", Value = "" });
+                ViewBag.EndorsmentbyHeadofOption = EndorsmentbyHeadof;
+
+
+
+
+                var notificationContent = _configuration.GetSection("NotificationContent").Get<NotificationContent>();
+                ViewBag.NotificationContent = notificationContent;
+                
+
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
                 if (Logins != null)
                 {
@@ -260,12 +295,14 @@ namespace swas.UI.Controllers
                     var watermarkText = $" {ipAddress}\n  {currentDatetime}";
 
                     ViewBag.Projects = await _projectsRepository.GetMyProjectsAsync();
-                    return View(null);
+                    return View(null); 
+                       
                 }
                 else
                 {
                     return Redirect("/Identity/Account/login");
                 }
+
             }
             catch (Exception ex)
             {

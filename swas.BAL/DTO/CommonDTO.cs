@@ -532,6 +532,14 @@ namespace swas.BAL.DTO
 
     }
 
+    public class NotificationContent
+    {
+        public string Title { get; set; }
+        public string Html { get; set; }
+    }
+
+
+
 }
 
 

@@ -14,11 +14,12 @@ namespace swas.DAL.Models
 		public int ProjId { get; set; }
          
 
-        [StringLength(200)]
+       
 		[Column(TypeName = "varchar(200)")]
 		[Display(Name = "Project Name")]
       
         public string ProjName { get; set; }
+
 		[ForeignKey("tbl_mStakeHolder")]
         [Display(Name = "Stake Holder")]
 
@@ -35,12 +36,12 @@ namespace swas.DAL.Models
         [Display(Name = "Completed On")]
         public DateTime? CompletionDate { get; set; }
 
-		[StringLength(200)]
+		
 		[Column(TypeName = "varchar(200)")]
 
         [Display(Name = "Whitelisted")]
         public string IsWhitelisted { get; set; }
-		[StringLength(200)]
+		
 		[Column(TypeName = "varchar(200)")]
 		[Display(Name = "Initial Remarks")]
    
@@ -59,54 +60,55 @@ namespace swas.DAL.Models
 		[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
 		public DateTime? DateTimeOfUpdate { get; set; }
 
-        [StringLength(1500)]
-        // new properties added by Sub Maj Sanal on 08-Aug-2023
+        
         [Display(Name = "Aim & Scope")]
     
         public string? AimScope { get; set; }
 		[Display(Name = "IT infra reqd")]
-		[StringLength(200)]
-
+		
 		public string? HQandITinfraReqd { get; set; }
 		[Display(Name = "Hosted On (ADN/Internet)")]
 		[StringLength(10)]
  
         public string? Hostedon { get; set; }
-        [StringLength(600)]
+        
         [Display(Name = "Brief details of content of the proposed SW appl")]
 		public string? ContentofSWApp { get; set; }
-        [StringLength(1500)]
+      
         [Display(Name = "Brief justification")]
 		public string? ReqmtJustification { get; set; }
-        [StringLength(1500)]
-        [Display(Name = "Usability of proposed appl by others")]
+       
+        [Display(Name = "Usability of proposed appl by others arms/services/org/est ")]
 		public string? UsabilityofProposedAppln { get; set; }
-        [StringLength(1500)]
+      
         [Display(Name = "Details of user base")]
 		public string? DetlsofUserBase { get; set; }
 
-		[Display(Name = "Envisage cost of entire proj incl license fees and maint")]
-		public string EnvisagedCost { get; set; }
+		[Display(Name = "Envisage cost of entire proj incl license fees and maint (Rupees)")]
+       
+        public string EnvisagedCost { get; set; }
 
 		[Display(Name = "Brief details of proposed network and bandwidth reqmts")]
-		[StringLength(10)]
+		
 		public string? NWBandWidthReqmt { get; set; }
-        [StringLength(200)]
-        [Display(Name = "Project dt completion incl broad timelines")]
+       
+        [Display(Name = "Projected dt of completion incl broad timelines")]
 		public string? MajTimeLines { get; set; }
-        [StringLength(700)]
+       
         [Display(Name = "Brief details of SW platform and tech stack proposed for devp of  appl incl op sys dependencies (if any)")]
 		public string? TechStackProposed { get; set; }
-        [StringLength(300)]
+       
         [Display(Name = "Brief details of proposed data security measures incl backup of data")]
 		public string? DataSecurity_backup { get; set; }
-        [StringLength(200)]
+        
         [Display(Name = "Type of Software")]
 		public string? TypeofSW { get; set; }
+
+
 		[Display(Name = "Being devp in house or through Outsourced")]
-		[StringLength(200)]
 		public string? BeingDevpInhouse { get; set; }
-        [StringLength(200)]
+
+       
         [Display(Name = "Endorsement by Head of Dept")]
 		public string? EndorsmentbyHeadof { get; set; }
         public string? ProjCode { get; set; }
@@ -119,7 +121,7 @@ namespace swas.DAL.Models
         public bool IsProcess { get; set; }
 
         [Display(Name = "Deployment Mode")]
-        [StringLength(100)]
+       
         public string? Deplytype { get; set; }
 		
         public bool IsSubmited { get; set; }
@@ -133,36 +135,45 @@ namespace swas.DAL.Models
         //16/07/24
 
         [Display(Name = "Brief details of OS & Sys software reqmts")]
+        
         public string? Detlsof_OS { get; set; }
 
         [Display(Name = "Brief details of proposed DB Engine to be Used in the Appl.")]
+       
         public string? ProposedDB_Engine { get; set; }
 
 
         [Display(Name = "Detls of Sw Architecture and COTS Sw proposed to be utilised")]
+       
         public string? DetlsofSw_Architecture { get; set; }
 
 
         [Display(Name = "Detls of proposed architecture")]
+      
         public string? DetlsofProposed_Architecture { get; set; }
 
         [Display(Name = "Brief details of proposed utilisation of Public Key Infra(PKI) and Iden and Access Mgt(IAM)")]
+        
         public string? DetlsPki_IAM { get; set; }
 
 
         [Display(Name = "Technology dependencies(if any)")]
+        
         public string? Technology_dependencies { get; set; }
 
 
         [Display(Name = "Database reqmts")]
+        
         public string? Database_reqmts { get; set; }
 
         [Display(Name = "Enhancement/upgradation(incl patch mgt/Sw updt procedure and mechanism")]
+       
         public string? Enhancement_upgradation { get; set; }
 
         [Display(Name = "Details of licensing(if any)")]
+        
         public string? Details_licensing { get; set; }
-        // end new properties
+       
 
         [NotMapped]
         public int CurrentStakeHolderId { get; set; } 

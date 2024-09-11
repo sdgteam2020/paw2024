@@ -20,8 +20,13 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using BAL;
+using swas.BAL.DTO;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+
+
 
 //var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 //{
@@ -163,6 +168,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
 //builder.Services.AddSession(options => {
 //    options.IdleTimeout = TimeSpan.FromMinutes(15);
 //});
+
 
 var app = builder.Build();
 
