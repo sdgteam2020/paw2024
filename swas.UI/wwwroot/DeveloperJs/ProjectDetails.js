@@ -1,4 +1,45 @@
 ﻿$(document).ready(function () {
+
+    var param = sessionStorage.getItem("spntabType");
+    
+    if (param != null) {
+        if (param == "XR12") {
+            $("#tabinbox").removeClass("active-link");
+            $("#tabsent").addClass("active-link");
+            
+            $("#tabcompleted").removeClass("active-link");
+            $("#tabdraft").removeClass("active-link");
+
+            $("#sent").addClass("active-tab");
+            $("#inbox").removeClass("active-tab");
+            $("#Completed").removeClass("active-tab");
+        } else if (param == "XRDC") {
+            $("#tabinbox").addClass("active-link");
+            $("#tabsent").removeClass("active-link");
+           
+            $("#tabcompleted").removeClass("active-link");
+            
+            $("#tabdraft").removeClass("active-link");
+
+            $("#sent").removeClass("active-tab");
+            $("#inbox").addClass("active-tab");
+            $("#Completed").removeClass("active-tab");
+           
+        } else if (param == "XR") {
+            $("#tabinbox").removeClass("active-link");
+            $("#tabsent").removeClass("active-link");
+            $("#tabcompleted").addClass("active-link");
+            $("#tabdraft").removeClass("active-link");
+
+            $("#sent").removeClass("active-tab");
+            $("#inbox").removeClass("active-tab");
+            $("#completed").addClass("active-tab");
+           
+        }
+        sessionStorage.setItem("spntabType", null);
+    }
+
+
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl)
@@ -317,11 +358,11 @@ function GetProjectMovHistory(ProjId) {
 
                             listitem += '</div>';
                             if (DTODashboardCount[c].status == "Observation" || DTODashboardCount[c].status == "Rejected")
-                                listitem += '<div class="box-footer bg-danger">' + DTODashboardCount[c].status + '</div>';
+                                listitem += '<div class="box-footer bg-danger">' + DTODashboardCount[c].status + ' by ' + DTODashboardCount[c].userDetails +'</div>';
                             else if (DTODashboardCount[c].status == "Accepted")
-                                listitem += '<div class="box-footer bg-success ">' + DTODashboardCount[c].status + '</div>';
+                                listitem += '<div class="box-footer bg-success ">' + DTODashboardCount[c].status + ' by ' + DTODashboardCount[c].userDetails +'</div>';
                             else 
-                                listitem += '<div class="box-footer">' + DTODashboardCount[c].status + '</div>';
+                                listitem += '<div class="box-footer">' + DTODashboardCount[c].status + ' by ' + DTODashboardCount[c].userDetails +'</div>';
                             listitem += '</div></div>';
                         }
                     }

@@ -1,6 +1,46 @@
 ﻿var UnitStatusMappingId = 0;
 $(document).ready(function () {
-    
+
+
+    var table = $('#tblactionEx').DataTable({
+        lengthChange: true,
+        dom: 'lBfrtip',
+        buttons: [
+            'copy',
+            'excel',
+            'csv'
+            
+           
+        ],
+        searchBuilder: {
+            conditions: {
+                num: {
+                    'MultipleOf': {
+                        conditionName: 'Multiple Of',
+                        init: function (that, fn, preDefined = null) {
+                            var el = $('<input/>').on('input', function () { fn(that, this) });
+
+                            if (preDefined !== null) {
+                                $(el).val(preDefined[0]);
+                            }
+
+                            return el;
+                        },
+                        inputValue: function (el) {
+                            return $(el[0]).val();
+                        },
+                        isInputValid: function (el, that) {
+                            return $(el[0]).val().length !== 0;
+                        },
+                        search: function (value, comparison) {
+                            return value % comparison === 0;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
         mMsaterfwdStage(0, "ddlfwdStage", 5, 0);
         $("#ddlfwdStage").change(function () {
             mMsaterStage(0, "ddlfwdSubStage", 6, $("#ddlfwdStage").val(), $("#SpnStakeHolderId").html());

@@ -92,6 +92,7 @@ namespace swas.BAL.DTO
         public string? Offr_Name { get; set; }
         public string? Rank { get; set; }
         public string? IpAddress { get; set; }
+        public int cla { get; set; }
     }
     public class DefaultValueID
     {

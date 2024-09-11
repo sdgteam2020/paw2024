@@ -74,7 +74,7 @@ namespace swas.BAL.Repository
                                    ToUnitId=tounit.unitid,
                                    DateTimeOfUpdate = b.TimeStamp,
                                    Remarks = b.Remarks,
-                                    
+                                   StakeHolderId=a.StakeHolderId
 
                                }).ToListAsync();
         
@@ -131,6 +131,10 @@ namespace swas.BAL.Repository
                                       Status =stksts.Status,
                                       Comments = stk.Comments,
                                       DateTimeOfUpdate = stk.DateTimeOfUpdate,
+                                      UserDetails = stk.UserDetails != null ? stk.UserDetails : "____",
+                                      
+                                      
+                                      
                                   }).ToListAsync();
             //var lastInitialStageRecord = query.LastOrDefault(record => record.Stages == "Initial Stage");
 
@@ -168,7 +172,8 @@ namespace swas.BAL.Repository
                                            Status= sts.Status,
                                            Action= act.ActionDesc,
                                            IsComment=mov.IsComment,
-                                           IsComplete = mov.IsComplete
+                                           IsComplete = mov.IsComplete,
+                                             UndoRemarks = mov.UndoRemarks,
                                          }).ToListAsync();
            
            
@@ -194,7 +199,7 @@ namespace swas.BAL.Repository
                         db.Tounit = databyprojectid[i].Tounit;
                         db.Status = databyprojectid[i].Status;
                         db.Action = databyprojectid[i].Action;
-                        
+                        db.UndoRemarks = databyprojectid[i].UndoRemarks;
                     }
                     else
                     {
@@ -204,6 +209,7 @@ namespace swas.BAL.Repository
                         db.IsComment = databyprojectid[i].IsComment;
                         db.TimeStampTo = DateTime.Now;
                         db.IsComplete = databyprojectid[i].IsComplete;
+                        db.UndoRemarks = databyprojectid[i].UndoRemarks;
                         int j = i;
                         j++;
                        
@@ -225,7 +231,8 @@ namespace swas.BAL.Repository
                     db.FromunitId = databyprojectid[i].FromunitId;
                     db.Fromunit = databyprojectid[i].Fromunit;
                     db.TimeStampfrom = databyprojectid[i].TimeStamp;
-                    if(databyprojectid[i].IsComplete==true)
+                    db.UndoRemarks = databyprojectid[i].UndoRemarks;
+                    if (databyprojectid[i].IsComplete==true)
                     db.TimeStampTo = databyprojectid[i].DateTimeOfUpdate;
                     else
                         db.TimeStampTo = DateTime.Now;

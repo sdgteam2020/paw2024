@@ -914,7 +914,7 @@ namespace swas.UI.Controllers
                     cmmets.EditDeleteBy = Logins.unitid;
                     cmmets.EditDeleteDate = CommentDate;
                     cmmets.StkStatusId = StkStatusId;
-
+                    cmmets.UserDetails = Helper.LoginDetails(Logins);
                     cmmets.StakeHolderId = Logins.unitid; ;
 
                     var ret = await _stkCommentRepository.AddWithReturn(cmmets);
@@ -969,7 +969,7 @@ namespace swas.UI.Controllers
         #region Project History
         [HttpGet]
 
-        public async Task<IActionResult> ProjHistory(string userid, int? dataProjId, int? dtaProjID, string? AttPath, int? psmid, string? Projpin, string? EncyID, EncryModel? encryModel)
+        public async Task<IActionResult> ProjHistory(string userid, int? dataProjId, int? dtaProjID, string? AttPath, int? psmid, string? Projpin, string? EncyID, EncryModel? encryModel,string Type)
         {
             try
             {
@@ -982,7 +982,7 @@ namespace swas.UI.Controllers
                 {
                     ViewBag.SubmitCde = true;
                     ViewBag.EncyID = EncyID;
-
+                    ViewBag.Type = Type;
                 }
                 if (userid == null && dataProjId == null && dtaProjID == null && AttPath == null && psmid == null && EncyID == null)
                 {

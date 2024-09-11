@@ -31,8 +31,8 @@ namespace swas.DAL.Models
             public DateTime? EditDeleteDate { get; set; }
             public int? UpdatedByUserId { get; set; }
             public DateTime? DateTimeOfUpdate { get; set; }
-
-            [NotMapped]
+            public string? UserDetails { get; set; }
+        [NotMapped]
             public string? Reamarks { get; set; }
 
             public string? ActFileName { get; set; }

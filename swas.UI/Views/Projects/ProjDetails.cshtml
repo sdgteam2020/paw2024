@@ -196,15 +196,17 @@
         <ul class="tabs__head">
 
             <li>
-                <a class="active-link" href="#" data-tab="inbox">
+                <a class="active-link" href="#" data-tab="inbox" id="tabinbox">
 
 
                     <img src="~/assets/images/inbox.png" width="20px;" height="20px;" />&nbsp;Inbox
                 </a>
             </li>
-            <li><a href="#" data-tab="sent">@*<span class="fa fa-edit"></span>*@<img src="~/assets/images/sentmail.png" width="20px;" height="20px;" />&nbsp;Sent</a></li>
-            <li><a href="#" data-tab="completed">@*<span class="fa fa-camera"></span>*@<img src="~/assets/images/completed.png" width="20px;" height="20px;" />&nbsp;Completed</a></li>
-            <li><a href="#" data-tab="draft"><img src="~/assets/images/draft.png" width="20px;" height="20px;" />&nbsp;Draft Projects</a></li>
+            <li><a href="#" data-tab="sent" id="tabsent">@*<span class="fa fa-edit"></span>*@
+                <img src="~/assets/images/sentmail.png" width="20px;" height="20px;" />
+                &nbsp;Sent</a></li>
+            <li><a href="#" data-tab="completed" id="tabcompleted">@*<span class="fa fa-camera"></span>*@<img src="~/assets/images/completed.png" width="20px;" height="20px;" />&nbsp;Completed</a></li>
+            <li><a href="#" data-tab="draft" id="tabdraft"><img src="~/assets/images/draft.png" width="20px;" height="20px;" />&nbsp;Draft Projects</a></li>
             <li class="red-text" id="blinking-li">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 Inbox -->> click on project name for Add Comments, Attach file and Fwd to Stakeholders/Units
@@ -276,7 +278,7 @@
                                                     <span class="d-none" id="SpnTimeActionId">@project.ActionId</span>
                                                     <span class="d-none" id="SpnTimeToUnitId">@project.ToUnitId</span>
 
-                                                <a data-proj-name="@project.ProjName"  class="ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID">
+                                                <a data-proj-name="@project.ProjName"  class="ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XRDC">
                                                         <div class="tooltip-container" data-tooltip="@project.ProjName">
                                                             <span class="short-text">@truncateText(project.ProjName, 6)</span>
                                                             <span class="tooltip tooltip-text">@project.ProjName</span>
@@ -445,7 +447,7 @@
                                                 <span class="d-none" id="SpnprojectStageId">@project.StageId</span>
                                                 <span class="d-none" id="SpnprojectToUnitId">@project.ToUnitId</span>
 
-                                                <a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID">
+                                                <a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XR12">
                                                     <div class="tooltip-container" data-tooltip="@project.ProjName">
                                                         <span class="short-text">@truncateText(project.ProjName, 6)</span>
                                                         <span class="tooltip tooltip-text">@project.ProjName</span>
@@ -537,7 +539,7 @@
                                             </td>
                                             <span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
                                             <td>
-                                                <a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?dataProjId=@project.ProjId">
+                                                <a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XR">
                                                     @project.ProjName
                                                 </a>
                                             </td>
@@ -759,7 +761,7 @@
 
                                         <div class="form-group col-md-4 ProjectsFwd">
                                             <label>Date of Fwd:</label>
-                                            <input id="TimeStampToProjfwd" type="datetime-local" style="width: 200px;" class="datePicker  form-control requiredField" />
+                                            <input id="TimeStampToProjfwd" type="datetime-local" style="width: 200px;" class="  form-control requiredField" />
                                         </div> 
                                         <div class="form-group col-md-2 ProjectsFwd mt-4">
                                             <button type="button" class="btn btn-danger" id="btn-ibutton" style="margin-top: 1px;" title="Process Step Wise">
@@ -986,7 +988,7 @@
 
 
 
-<script>
+@* <script>
     document.addEventListener('DOMContentLoaded', (event) => {
         const datePicker = document.getElementById('datepicker');
         const today = new Date().toISOString().slice(0, 16);
@@ -1009,7 +1011,7 @@
         }
     });
 </script>
-
+ *@
 @*
 <script>
     document.addEventListener("DOMContentLoaded", function () {

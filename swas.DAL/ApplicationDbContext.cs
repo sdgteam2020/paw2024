@@ -59,6 +59,7 @@ namespace swas.DAL
 
         public DbSet<mUserMapChat> mUserMapChat { get; set; }
         public DbSet<TrnChatMsg> TrnChatMsg { get; set; }
+        public DbSet<mCalendar> mCalendar { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Resultss>().HasNoKey();

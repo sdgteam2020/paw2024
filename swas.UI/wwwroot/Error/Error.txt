@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
 Date : 05-08-2024 11:27:48
+=======
+>>>>>>> ea0e6f499d6a9b31302a84c03f86283025c81f52
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
 Date : 05-08-2024 11:27:51
@@ -896,5 +899,13 @@ A network-related or instance-specific error occurred while establishing a conne
 Date : 05-09-2024 12:03:56
 A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SNI_PN11, error: 26 - Error Locating Server/Instance Specified)
 -----------------------------------------------------------------------------
+<<<<<<< HEAD
 Date : 11-09-2024 10:00:02
 This SqlTransaction has completed; it is no longer usable.
+=======
+Date : 05-09-2024 15:46:26
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 05-09-2024 15:46:26
+Request failed & Status Code : 200
+>>>>>>> ea0e6f499d6a9b31302a84c03f86283025c81f52

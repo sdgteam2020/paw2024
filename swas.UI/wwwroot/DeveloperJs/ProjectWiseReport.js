@@ -180,12 +180,18 @@ function GetProjHold(ProjId) {
                     var count = 1;
                     var countc = 1;
 
-
+                    $('#tblprojhold').dataTable().fnClearTable();
+                    $('#tblprojhold').dataTable().fnDestroy();
                   
                     for (var j = 0; j < response.length; j++) {
                         if (response[j].isComment == false) {
-                            if (response[j].isComplete == false)
+                            if (response[j].isComplete == false )
+                            {
+                                if (response[j].undoRemarks != null)
+                                    listItem += '<tr class="table-success">';
+                                    else
                                 listItem += '<tr class="table-danger">';
+                            }
                             else
                                 listItem += '<tr class="table-success">';
 
@@ -281,7 +287,7 @@ function GetProjHold(ProjId) {
                 $("#DetailBodyhold").html(listItem);
 
                    
-                    var table = $('#tblprojComments').DataTable({
+                    var table11 = $('#tblprojComments').DataTable({
                         lengthChange: true,
                         retrieve: true,
                         Destroy: true,

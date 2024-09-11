@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
    
+    sessionStorage.setItem("spntabType", $("#spntabType").html());
+   
     GetAllComments2();
 
     GetAllComments1();
@@ -30,21 +32,21 @@ function GetAllComments2() {
             tableHTML += '</tr>';
             tableHTML += '</thead>';
             tableHTML += '<tbody>';
-
+           
             if (data != null) {
                 for (var i = 0; i < data.length; i++) {
-                    var date = new Date(data[i].date);
-                    var formattedDate = ("0" + date.getDate()).slice(-2) + '-' +
-                        ("0" + (date.getMonth() + 1)).slice(-2) + '-' +
-                        date.getFullYear() + ' ' +
-                        ("0" + date.getHours()).slice(-2) + ':' +
-                        ("0" + date.getMinutes()).slice(-2) + ':' +
-                        ("0" + date.getSeconds()).slice(-2);
-
+                    ////var date = new Date(data[i].date);
+                    ////var formattedDate = ("0" + date.getDate()).slice(-2) + '-' +
+                    ////    ("0" + (date.getMonth() + 1)).slice(-2) + '-' +
+                    ////    date.getFullYear() + ' ' +
+                    ////    ("0" + date.getHours()).slice(-2) + ':' +
+                    ////    ("0" + date.getMinutes()).slice(-2) + ':' +
+                    ////    ("0" + date.getSeconds()).slice(-2);
+                    
                     tableHTML += '<tr>';
                     tableHTML += '<td style="border: 1px solid black;width:1% !important">' + (i + 1) + '</td>';
-                    tableHTML += '<td style="border: 1px solid black;">' + data[i].stakeholder + '</td>';
-                    tableHTML += '<td style="border: 1px solid black;">' + formattedDate + '</td>';
+                    tableHTML += '<td style="border: 1px solid black;">' + data[i].stakeholder + ' (' + data[i].userDetails +')</td>';
+                    tableHTML += '<td style="border: 1px solid black;">' + DateFormateddMMyyyyhhmmss(data[i].date) + '</td>';
                     tableHTML += '<td style="border: 1px solid black;">' + data[i].comments + '</td>';
                     tableHTML += '<td style="border: 1px solid black;">' + (data[i].status == "Accepted" ? '<span class="badge badge-success text-white">' + data[i].status + '</span>' : '<span class="badge badge-danger text-white">' + data[i].status + '</span>') + '</td>';
                     tableHTML += '<td style="border: 1px solid black;">';

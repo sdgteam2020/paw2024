@@ -353,6 +353,7 @@ function GetAllComments()
         success: function (data) {
 
             var commentContainer = '';
+            var userDetails = '';
             if (data != null) {
                 for (var i = 0; i < data.length; i++) {
                     var date = new Date(data[i].date);
@@ -363,12 +364,16 @@ function GetAllComments()
                         ("0" + date.getHours()).slice(-2) + ':' +
                         ("0" + date.getMinutes()).slice(-2) + ':' +
                         ("0" + date.getSeconds()).slice(-2); 
+                    if (data[i].userDetails == null)
+                        userDetails = '';
+                    else
+                        userDetails = data[i].userDetails
 
                     commentContainer += '<div class="comment-box" style="text-align: justify;">'; // Use text-align: justify for justified text
                     commentContainer += '<div class="comment-header">';
                     commentContainer += '<div>';
-                    commentContainer += '<span style="font-family: Arial; font-weight: bold; color: #0793f7;">' + data[i].stakeholder + ' </span>';
-                    commentContainer += '<span style="margin-left: 10px;" class="comment-meta">' + formattedDate + '</span>';
+                    commentContainer += '<span style="font-family: Arial; font-weight: bold; color: #0793f7;">' + data[i].stakeholder + ' (' + userDetails +') </span>';
+                    commentContainer += '<div style="margin-left: 0px;" class="comment-meta">' + DateFormateddMMyyyyhhmmss(data[i].date) + '</div>';
                     commentContainer += '</div>';
                     commentContainer += '<div>';
                     if (data[i].status == "Accepted")

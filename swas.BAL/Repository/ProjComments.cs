@@ -36,7 +36,7 @@ namespace swas.BAL
                              ).FirstOrDefault()/*.Count()*/
                                  where mov.ToUnitId == UnitId && mov.IsComment == true //&& mov.StatusId==5
                                 
-                                 group new DTOProComments
+                                 group new DTOProComments 
                                  {
                                      ProjectName = proj.ProjName,
                                      Stakeholder = stakeholder.UnitName,
@@ -46,7 +46,8 @@ namespace swas.BAL
                                      ProjId = proj.ProjId,
                                      PsmId = mov.PsmId,
                                      EncyID = _dataProtector.Protect(proj.ProjId.ToString()),
-                                     TimeStamp = _context.StkComment.Where(i => i.StkStatusId == StkStatusId).Select(i => i.DateTimeOfUpdate).SingleOrDefault()?? mov.TimeStamp,
+                                     //TimeStamp = _context.StkComment.Where(i => i.StkStatusId == StkStatusId).Select(i => i.DateTimeOfUpdate).SingleOrDefault()?? mov.TimeStamp,
+                                     TimeStamp= mov.TimeStamp,
                                      UnitId = mov.ToUnitId,
                                      IsComment = mov.IsRead 
                                  }
