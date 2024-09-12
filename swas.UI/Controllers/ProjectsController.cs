@@ -245,6 +245,26 @@ namespace swas.UI.Controllers
         {
             try
             {
+                var notificationContent = _configuration.GetSection("NotificationContent").Get<NotificationContent>();
+                ViewBag.NotificationContent = notificationContent;
+
+                var options = _configuration.GetSection("WhitelistStatusOptions").Get<List<SelectListItem>>();
+                options.Insert(0, new SelectListItem { Text = "--Select--", Value = "" });
+                ViewBag.WhitelistOptions = options;
+
+
+                var TypeofSW = _configuration.GetSection("TypeofSWOptions").Get<List<SelectListItem>>();
+                TypeofSW.Insert(0, new SelectListItem { Text = "--Select--", Value = "" });
+                ViewBag.TypeofSWOption = TypeofSW;
+
+                var BeingDevpInhouse = _configuration.GetSection("BeingDevpInhouseOptions").Get<List<SelectListItem>>();
+                BeingDevpInhouse.Insert(0, new SelectListItem { Text = "--Select--", Value = "" });
+                ViewBag.BeingDevpInhouseOption = BeingDevpInhouse;
+
+
+                var EndorsmentbyHeadof = _configuration.GetSection("EndorsmentbyHeadofOptions").Get<List<SelectListItem>>();
+                EndorsmentbyHeadof.Insert(0, new SelectListItem { Text = "--Select--", Value = "" });
+                ViewBag.EndorsmentbyHeadofOption = EndorsmentbyHeadof;
                 int ids = 0;
                 if (id != null)
                 {
@@ -261,29 +281,12 @@ namespace swas.UI.Controllers
                 TempData["SubCde"] = false;
                 TempData.Keep("SubCde");
 
-                var options = _configuration.GetSection("WhitelistStatusOptions").Get<List<SelectListItem>>();
-                options.Insert(0, new SelectListItem { Text = "--Select--", Value = "" });
-                ViewBag.WhitelistOptions = options;
-
-
-                var TypeofSW = _configuration.GetSection("TypeofSWOptions").Get<List<SelectListItem>>();
-                TypeofSW.Insert(0, new SelectListItem { Text = "--Select--", Value = "" });
-                ViewBag.TypeofSWOption = TypeofSW;
-
-                var BeingDevpInhouse = _configuration.GetSection("BeingDevpInhouseOptions").Get<List<SelectListItem>>();
-                BeingDevpInhouse.Insert(0, new SelectListItem { Text = "--Select--", Value = "" });
-                ViewBag.BeingDevpInhouseOption = BeingDevpInhouse;
-
-                
-                var EndorsmentbyHeadof  = _configuration.GetSection("EndorsmentbyHeadofOptions").Get<List<SelectListItem>>();
-                EndorsmentbyHeadof.Insert(0, new SelectListItem { Text = "--Select--", Value = "" });
-                ViewBag.EndorsmentbyHeadofOption = EndorsmentbyHeadof;
+              
 
 
 
 
-                var notificationContent = _configuration.GetSection("NotificationContent").Get<NotificationContent>();
-                ViewBag.NotificationContent = notificationContent;
+               
                 
 
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
