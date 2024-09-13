@@ -855,6 +855,9 @@ namespace swas.UI.Controllers
 
         public async Task<IActionResult> UpdateUserEdit(InputModel input)
         {
+            input.Tele_Army = input.Tele_Army.Trim();
+            input.OfficerName = input.OfficerName.Trim();
+            
             if (input.RoleName == "1")
             {
                 input.RoleName = "bc74ba2f-6cee-4936-800d-337b6e39d01a";

@@ -819,7 +819,7 @@ namespace swas.BAL.Repository
                                 Action = k.Actions,
                                 TotalDays = 0,
 
-                                ActionId = k.ActionsId,
+                                ActionId = actm.StatusActionsMappingId,
 
                                 Sponsor = a.Sponsor,
 

@@ -370,7 +370,7 @@ namespace swas.BAL.DTO
         public string? RoleName { get; set; }
 
         [Required(ErrorMessage = "OfficerName is required.")]
-        [RegularExpression(@"^[a-zA-Z/S]*$", ErrorMessage = "OfficerName should contain only letters.")]
+        //[RegularExpression(@"^[a-zA-Z/S]*$", ErrorMessage = "OfficerName should contain only letters.")]
         [Display(Name = "OfficerName")]
         public string? OfficerName { get; set; }
 
@@ -392,14 +392,14 @@ namespace swas.BAL.DTO
 
 
         [Required(ErrorMessage = "Rank is required.")]
-        [RegularExpression(@"^[a-zA-Z]*$", ErrorMessage = "Rank should contain only letters.")]
+        //[RegularExpression(@"^[a-zA-Z]*$", ErrorMessage = "Rank should contain only letters.")]
         [Display(Name = "Rank")]
         public int? RankId { get; set; }
 
 
         public string RankName { get; set; }
 
-        [RegularExpression(@"^\d{0,5}$", ErrorMessage = "Tele_Army should be a maximum of 10-digit number.")]
+        //[RegularExpression(@"^\d{0,5}$", ErrorMessage = "Tele_Army should be a maximum of 10-digit number.")]
         [Display(Name = "Tele No (Army)")]
         public string? Tele_Army { get; set; }
 
