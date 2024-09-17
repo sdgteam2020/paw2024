@@ -201,13 +201,13 @@ function FwdProjConfirm(psmId) {
 
 function GetProjectMovHistory(ProjId) {
     var listitem = "";
-   
+
     $.ajax({
         url: '/Projects/ProjectMovHistory',
         type: 'POST',
         data: { "ProjectId": ProjId },
         success: function (response) {
-          console.log(response);
+            console.log(response);
             if (response.dtoProjectMovHistorypsmlst.length) {
                 listitem += '<div class="timeline-month">';
 
@@ -221,7 +221,7 @@ function GetProjectMovHistory(ProjId) {
 
                     listitem += '<div class="timeline-section"> <div class="timeline-date"> ' + DateTimeFormatedd_mm_yyyy(DTOProjectMovHistorypsmlst[i].date) + '</div>';
 
-                   /* listitem += '<div class="timeline-section"> <div class="timeline-date"> ' + DateFormatedd_mm_yyyy(DTOProjectMovHistorypsmlst[i].date) + '</div>';*/
+                    /* listitem += '<div class="timeline-section"> <div class="timeline-date"> ' + DateFormatedd_mm_yyyy(DTOProjectMovHistorypsmlst[i].date) + '</div>';*/
                     listitem += '<div class="row"><div class="col-sm-4">';
                     listitem += '<div class="timeline-box">';
                     if (DTOProjectMovHistorypsmlst[i].isComment == false) {
@@ -232,7 +232,7 @@ function GetProjectMovHistory(ProjId) {
 
                         else if (DTOProjectMovHistorypsmlst[i].undoRemarks == "" || DTOProjectMovHistorypsmlst[i].undoRemarks == null)
                             listitem += '<div class="box-title bg-success text-white"><i class="fa-solid fa-circle-check fa-xl" style="color: #3adb00;"></i> ' + DTOProjectMovHistorypsmlst[i].actions + '</div>';
-                         else
+                        else
                             listitem += '<div class="box-title bg-danger text-white"><i class="fa-solid fa-rotate-left fa-xl" style="color: #ffff;"></i> ' + DTOProjectMovHistorypsmlst[i].actions + '</div>';
 
 
@@ -291,7 +291,7 @@ function GetProjectMovHistory(ProjId) {
 
                     }
                     else if (DTOProjectMovHistorypsmlst[i].isComment == true) {
-                        listitem += '<div class="box-title bg-danger text-white"><i class="fa-solid fa-comments fa-xl" style="color: #ffff;"></i> ' + DTOProjectMovHistorypsmlst[i].toUnitName +' for Comments</div>';
+                        listitem += '<div class="box-title bg-danger text-white"><i class="fa-solid fa-comments fa-xl" style="color: #ffff;"></i> ' + DTOProjectMovHistorypsmlst[i].toUnitName + ' for Comments</div>';
 
 
                         listitem += '<div class="box-content">';
@@ -343,7 +343,7 @@ function GetProjectMovHistory(ProjId) {
 
                         var DTODashboardCount = DTOProjectMovHistorycmdlst.filter(function (element) { return element.psmId == DTOProjectMovHistorypsmlst[i].psmId; });
 
-                        
+
                         for (var c = 0; c < DTODashboardCount.length; c++) {
                             listitem += '<div class="col-sm-4">';
                             listitem += '<div class="timeline-box">';
@@ -351,22 +351,24 @@ function GetProjectMovHistory(ProjId) {
                             listitem += '<i class="fa fa-pencil text-info" aria-hidden="true"></i>  Comment On ' + DateFormateddMMyyyyhhmmss(DTODashboardCount[c].dateTimeOfUpdate) + '';
                             listitem += '</div>';
                             listitem += '<div class="box-content">';
-                            if (DTODashboardCount[c].comments.length>75)
+                            if (DTODashboardCount[c].comments.length > 75)
                                 listitem += '<div class="box-item" data-toggle="tooltip" data-placement="top" title="' + DTODashboardCount[c].comments + '">' + DTODashboardCount[c].comments.substring(0, 75) + ' ........</div>';
                             else
                                 listitem += '<div class="box-item" >' + DTODashboardCount[c].comments + ' </div>';
 
                             listitem += '</div>';
-                            if (DTODashboardCount[c].status == "Observation" || DTODashboardCount[c].status == "Rejected")
-                                listitem += '<div class="box-footer bg-danger">' + DTODashboardCount[c].status + ' by ' + DTODashboardCount[c].userDetails +'</div>';
+                            if (DTODashboardCount[c].status == "Obsn")
+                                listitem += '<div class="box-footer bg-warning">' + DTODashboardCount[c].status + ' by ' + DTODashboardCount[c].userDetails + '</div>'
+                            else if (DTODashboardCount[c].status == "Observation" || DTODashboardCount[c].status == "Rejected")
+                                listitem += '<div class="box-footer bg-danger">' + DTODashboardCount[c].status + ' by ' + DTODashboardCount[c].userDetails + '</div>';
                             else if (DTODashboardCount[c].status == "Accepted")
-                                listitem += '<div class="box-footer bg-success ">' + DTODashboardCount[c].status + ' by ' + DTODashboardCount[c].userDetails +'</div>';
-                            else 
-                                listitem += '<div class="box-footer">' + DTODashboardCount[c].status + ' by ' + DTODashboardCount[c].userDetails +'</div>';
+                                listitem += '<div class="box-footer bg-success ">' + DTODashboardCount[c].status + ' by ' + DTODashboardCount[c].userDetails + '</div>';
+                            else
+                                listitem += '<div class="box-footer">' + DTODashboardCount[c].status + ' by ' + DTODashboardCount[c].userDetails + '</div>';
                             listitem += '</div></div>';
                         }
                     }
-                    
+
                     if (DTOProjectMovHistorypsmlst[i].remarks != "") {
                         listitem += '<div class="col-sm-4">';
                         listitem += '<div class="timeline-box">';
@@ -377,7 +379,7 @@ function GetProjectMovHistory(ProjId) {
                         /*listitem += ' <a class="btn btn-xs btn-default pull-right">Remarks</a>';*/
                         listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
                         listitem += '</div>';
-                        if (DTOProjectMovHistorypsmlst[i].actions =="Obsn")
+                        if (DTOProjectMovHistorypsmlst[i].actions == "Obsn")
                             listitem += '<div class="box-footer bg-warning">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
                         else
                             listitem += '<div class="box-footer ">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';

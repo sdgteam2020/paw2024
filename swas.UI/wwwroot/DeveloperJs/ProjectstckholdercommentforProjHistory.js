@@ -48,7 +48,13 @@ function GetAllComments2() {
                     tableHTML += '<td style="border: 1px solid black;">' + data[i].stakeholder + ' (' + data[i].userDetails +')</td>';
                     tableHTML += '<td style="border: 1px solid black;">' + DateFormateddMMyyyyhhmmss(data[i].date) + '</td>';
                     tableHTML += '<td style="border: 1px solid black;">' + data[i].comments + '</td>';
-                    tableHTML += '<td style="border: 1px solid black;">' + (data[i].status == "Accepted" ? '<span class="badge badge-success text-white">' + data[i].status + '</span>' : '<span class="badge badge-danger text-white">' + data[i].status + '</span>') + '</td>';
+                    if (data[i].status == "Accepted")
+                        tableHTML += '<td style="border: 1px solid black;"><span class="badge badge-success text-white">' + data[i].status + '</span></td>';
+                    else if (data[i].status == "Obsn")
+                        tableHTML += '<td style="border: 1px solid black;"><span class="badge badge-warning text-white">' + data[i].status + '</span></td>';
+                    else
+                        tableHTML += '<td style="border: 1px solid black;"><span class="badge badge-danger text-white">' + data[i].status + '</span></td>';
+
                     tableHTML += '<td style="border: 1px solid black;">';
                     if (data[i].state !== null && data[i].attpath !== null && data[i].attpath !== '') {
                         tableHTML += '<a href="/Home/WaterMark3?id=' + data[i].attpath + '" target="_blank">';

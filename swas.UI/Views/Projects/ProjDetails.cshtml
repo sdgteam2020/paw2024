@@ -185,6 +185,11 @@
         font-weight: bold;
     }
 
+
+    .column-width {
+        flex: 0 0 auto;
+        width: 24.333333%;
+    }
 </style>
 
 
@@ -312,7 +317,7 @@
 
                                                 <td>
                                                     <div class="row">
-                                                        <div class="col-md-4">
+                                                    <div class="col-md-4 column-width">
                                                             @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
                                                             {
                                                                 <a href="javascript:void(0);" class="processDetail" data-id="@project.EncyPsmID">
@@ -324,7 +329,7 @@
                                                                 <button type="button" class="btn btn-success btn-Fwd" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
                                                             }
                                                         </div>
-                                                        <div class="col-md-4">
+                                                    <div class="col-md-4 column-width">
                                                             @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
                                                             {
                                                                 <button type="button" class="btn btn-success btn-Obsn" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;">Obsn</button>

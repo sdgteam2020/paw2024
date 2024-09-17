@@ -23,16 +23,26 @@
             margin: 10px;
             background-color: #f7f7f7;
         }
+
+        .custom-width {
+            width: 150px; /* Adjust to your preferred width */
+        }
+/* 
+        .ui-state-active {
+            top: 173.033px;
+            left: 594.809px;
+            width: 252px !important;
+        } */
     </style>
 </head>
 
 
- 
+
 <div id="searchContainer" class="search-container">
     <form class="form-group" asp-action="GetProjLogview" method="post" id="searchFormProjName">
 
         <div class="row justify-content-left">
-           
+
 
             <div class="form-group row mb-2" id="suggesstion-box">
                 <span class="d-none" id="ProjectId">0</span>
@@ -43,18 +53,18 @@
                     <input class="form-control" placeholder="Type Project Name" id="txtProjectName" name="txtProjectName" data-val="true" />
                     <span class="text-danger field-validation-valid" data-valmsg-for="txtProjectName" data-valmsg-replace="true"></span>
                 </div>
-                .<div class="col-sm-2">
-                    <button type="button" class="btn btn-primary btn-sm" id="SearchData">Search</button>
-                </div>
+                @* .<div class="col-sm-2">
+                <button type="button" class="btn btn-primary btn-sm" id="SearchData">Search</button>
+                </div> *@
             </div>
-            
+
         </div>
 
-    
+
     </form>
 </div>
 
- @* data-val-regex="This special chars not allowed for security reasons." data-val-required="Project  Name is required." data-val-regex-pattern="^[\w \& \()]*$" *@
+@* data-val-regex="This special chars not allowed for security reasons." data-val-required="Project  Name is required." data-val-regex-pattern="^[\w \& \()]*$" *@
 
 
 <div id="tableProjContainer">
@@ -79,7 +89,6 @@
                 </thead>
 
                 <tbody id="ProjectMovement">
-                   
                 </tbody>
 
             </table>
@@ -96,7 +105,7 @@
                 <span class="d-none" id="spanEditPslmId">0</span>
                 <span class="d-none" id="SpnFwdStakeHolderId">0</span>
 
-                
+
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -197,7 +206,7 @@
                     </div>
                 </div>
                 <div class="form-group col-md-12 mt-4 text-center">
-                    <input type="button" id="btnFwdNext" value="Send & Att Docu (s)" class="btn btn-primary btn-lg ProjectsFwd" />
+                    <input type="button" id="btnFwdNext" value="Update and Upload Docu's" class="btn btn-primary btn-lg ProjectsFwd" />
                     <input type="button" id="btnFwdConfirm" value="Confirm" class="btn btn-primary btn-lg Attmenthistory d-none" />
                 </div>
             </div>

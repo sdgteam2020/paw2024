@@ -17,22 +17,18 @@
     var today = year + `-` + monthsans + `-` + dayans + `T` + hh + `:` + mm
 
     if ($("#isclaneder").html() == 1) {
+       
+        // yyyy-MM-ddTHH:mm//2024-09-06T15:42
+        $('input[type=datetime-local]').attr('max', today);
+        $('input[type=datetime-local]').attr('min', today);
+        $('input[type=datetime-local]').val(today)
 
-        if ($('input[type=datetime-local]').val() == "") {
-            // yyyy-MM-ddTHH:mm//2024-09-06T15:42
-            $('input[type=datetime-local]').attr('max', today);
-            $('input[type=datetime-local]').attr('min', today);
-            $('input[type=datetime-local]').val(today)
-
-            $('.datepicker1').datepicker({
-                minDate: 0
-            });
-        }
+        $('.datepicker1').datepicker({
+            minDate: 0
+        });
     }
     else {
-        if ($('input[type=datetime-local]').val() == "") {
-            $('input[type=datetime-local]').attr('max', today);
-        }
+        $('input[type=datetime-local]').attr('max', today);
         $('.datepicker1').datepicker();
        
     }

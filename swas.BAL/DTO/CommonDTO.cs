@@ -386,7 +386,7 @@ namespace swas.BAL.DTO
         [Display(Name = "Unit")]
         public int unitId { get; set; }
 
-        [RegularExpression(@"^[a-zA-Z0-9\s]*$", ErrorMessage = "Appointment should contain only letters and numbers.")]
+        //[RegularExpression(@"^[a-zA-Z0-9\s]*$", ErrorMessage = "Appointment should contain only letters and numbers.")]
         [Display(Name = "Appointment")]
         public string? appointment { get; set; }
 

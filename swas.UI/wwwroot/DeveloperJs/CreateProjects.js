@@ -179,7 +179,7 @@ $(document).ready(function () {
     });
     $("#btnbasic").click(function () {
 
-        debugger;
+        
         requiredFields = $('#tablebasic').find('.requiredField');
         var allFieldsComplete = true;
         requiredFields.each(function (index) {
@@ -191,6 +191,7 @@ $(document).ready(function () {
             }
         });
         // Validate character limits
+        
         $('.char-limit').each(function () {
             var inputField = $(this);
             var maxLength = inputField.data('maxlength'); // Get max length from data-maxlength attribute
@@ -270,7 +271,7 @@ $(document).ready(function () {
 });
 function AddProject(thistag) {
 
-   
+     debugger;
   
     $.ajax({
         url: '/Projects/AddProject',

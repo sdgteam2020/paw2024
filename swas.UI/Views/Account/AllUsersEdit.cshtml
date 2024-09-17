@@ -65,7 +65,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                   @*  <input hidden asp-for="RankName" class="form-control" maxlength="100" aria-required="true" placeholder="Offrs Name" /> *@
+                                    <input hidden asp-for="RankName" class="form-control" maxlength="100" aria-required="true" placeholder="Offrs Name" />
                                     <label asp-for="OfficerName" class="label control-label" style="margin: 5px;"> Name</label>
                                 </td>
                                 <td>
@@ -247,7 +247,7 @@
         var regex = /[^a-zA-Z0-9 ]/g;
         input.value = input.value.replace(regex, "");
     }
-    // $(document).ready(function () {
-    //     $('.dropdownsearch').select2();
-    // });
+    $(document).ready(function () {
+        $('.dropdownsearch').select2();
+    });
 </script>

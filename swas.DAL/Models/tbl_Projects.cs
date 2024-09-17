@@ -68,7 +68,7 @@ namespace swas.DAL.Models
 		
 		public string? HQandITinfraReqd { get; set; }
 		[Display(Name = "Hosted On (ADN/Internet)")]
-		[StringLength(10)]
+		
  
         public string? Hostedon { get; set; }
         

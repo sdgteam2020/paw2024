@@ -372,7 +372,7 @@ function GetAllComments()
                     commentContainer += '<div class="comment-box" style="text-align: justify;">'; // Use text-align: justify for justified text
                     commentContainer += '<div class="comment-header">';
                     commentContainer += '<div>';
-                    commentContainer += '<span style="font-family: Arial; font-weight: bold; color: #0793f7;">' + data[i].stakeholder + ' (' + userDetails +') </span>';
+                    commentContainer += '<span style="font-family: Arial; color: #0793f7;">' + data[i].stakeholder + ' (' + userDetails +') </span>';
                     commentContainer += '<div style="margin-left: 0px;" class="comment-meta">' + DateFormateddMMyyyyhhmmss(data[i].date) + '</div>';
                     commentContainer += '</div>';
                     commentContainer += '<div>';

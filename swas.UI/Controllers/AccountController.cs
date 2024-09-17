@@ -169,7 +169,7 @@ namespace swas.UI.Controllers
             {
                 ApplicationUser userdet = new ApplicationUser();
                 IdentityRole ss = new IdentityRole();
-
+                int cla = await _unitRepository.GetIdCalendar();
                 var userId = userManager.GetUserId(User);
                 userdet = await userManager.FindByNameAsync(selectedValue);
                 var unitget = await _unitRepository.GetUnitDtl(userdet.unitid);
@@ -185,7 +185,7 @@ namespace swas.UI.Controllers
                 Dbs.UserName = selectedValue;
                 Dbs.Role = usrole[0].ToString();
                 Dbs.Iamuserid = userdet.domain_iam;
-
+                Dbs.cla = cla;
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
                 Dbs.ActualUserName = Logins.ActualUserName;
 
@@ -340,7 +340,8 @@ namespace swas.UI.Controllers
                                 Db.Role = "Guest";
 
                             }
-
+                            int cla = await _unitRepository.GetIdCalendar();
+                            Db.cla = cla;
                             SessionHelper.SetObjectAsJson(HttpContext.Session, "User", Db);
 
                            
@@ -849,15 +850,20 @@ namespace swas.UI.Controllers
                 RankName = UserUnitRank
 
             };
-
+            users.UserName = user.UserName.Trim();
+            users.OfficerName = user.Offr_Name.Trim();
+            users.appointment = user.appointment.Trim();
+            users.Tele_Army = user.Tele_Army.Trim();
             return View(users);
         }
 
         public async Task<IActionResult> UpdateUserEdit(InputModel input)
         {
-            input.Tele_Army = input.Tele_Army.Trim();
+            input.UserName = input.UserName.Trim();
             input.OfficerName = input.OfficerName.Trim();
-            
+            input.appointment = input.appointment.Trim();
+            input.Tele_Army = input.Tele_Army.Trim();
+
             if (input.RoleName == "1")
             {
                 input.RoleName = "bc74ba2f-6cee-4936-800d-337b6e39d01a";

@@ -195,6 +195,10 @@ namespace swas.UI.Controllers
 
                     //ViewBag.unitid = Logins.unitid;
 
+                    var notificationContent = _configuration.GetSection("NotificationContent").Get<NotificationContent>();
+                    ViewBag.NotificationContent = notificationContent;
+
+
                     if (Logins != null && Logins.unitid != null)
                     {
                         ViewBag.unitid = Logins.unitid;
@@ -245,9 +249,6 @@ namespace swas.UI.Controllers
         {
             try
             {
-                var notificationContent = _configuration.GetSection("NotificationContent").Get<NotificationContent>();
-                ViewBag.NotificationContent = notificationContent;
-
                 var options = _configuration.GetSection("WhitelistStatusOptions").Get<List<SelectListItem>>();
                 options.Insert(0, new SelectListItem { Text = "--Select--", Value = "" });
                 ViewBag.WhitelistOptions = options;
@@ -265,6 +266,13 @@ namespace swas.UI.Controllers
                 var EndorsmentbyHeadof = _configuration.GetSection("EndorsmentbyHeadofOptions").Get<List<SelectListItem>>();
                 EndorsmentbyHeadof.Insert(0, new SelectListItem { Text = "--Select--", Value = "" });
                 ViewBag.EndorsmentbyHeadofOption = EndorsmentbyHeadof;
+
+
+
+
+                var notificationContent = _configuration.GetSection("NotificationContent").Get<NotificationContent>();
+                ViewBag.NotificationContent = notificationContent;
+
                 int ids = 0;
                 if (id != null)
                 {
@@ -282,12 +290,6 @@ namespace swas.UI.Controllers
                 TempData.Keep("SubCde");
 
               
-
-
-
-
-               
-                
 
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
                 if (Logins != null)
