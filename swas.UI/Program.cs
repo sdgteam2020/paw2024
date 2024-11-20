@@ -161,7 +161,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.CheckConsentNeeded = context => true;
 });
 
-
+builder.Services.AddSignalR();
 builder.Services.AddHttpContextAccessor();
 
 // Configure logging to use the custom database logger provider
@@ -205,6 +205,10 @@ app.UseEndpoints(endpoints =>
         pattern: "{controller=Home}/{action=Index}/{id?}");
 
     endpoints.MapRazorPages();
+});
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<ChatHub>("/chatHub");
 });
 
 app.MapRazorPages();

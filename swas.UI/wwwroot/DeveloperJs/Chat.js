@@ -6,30 +6,30 @@
     }).ajaxError(function () {
         $("#loading").hide();
     });
-    
+
     setInterval(function () {
-       // GetAllUsers()
+        // GetAllUsers()
         if ($("#spnUserMapChatId").html() != 0)
-           
+
             UserChat($("#spnUserMapChatId").html(), $("#spnToUserIdMapChatId").html(), $("#profsortname").html());
 
     }, 3000);
-    
-   
+
+
     $(".img_cont_msg").click(function () {
         alert(1)
     });
     $("#chatProfileSearch").keyup(function () {
 
         var armyno = $("#chatProfileSearch").val()
-       
+
         GetAllUsers()
 
     });
     GetAllUsers()
 
     $("#type_msg").keypress(function () {
-      
+
         $("#type_msg").removeClass('is-invalid');
     });
 
@@ -37,7 +37,7 @@
         var key = e.which;
         if (key == 13 && !e.shiftKey)  // the enter key code
         {
-          
+
             if ($("textarea#type_msg").val() == "") {
                 $("textarea#type_msg").addClass('is-invalid');
 
@@ -47,17 +47,17 @@
                 SaveChat($("textarea#type_msg").val());
             }
         }
-    });   
+    });
 
-        $("#send_btn").click(function () {
-            if ($("textarea#type_msg").val() == "") {
-                $("textarea#type_msg").addClass('is-invalid');
+    $("#send_btn").click(function () {
+        if ($("textarea#type_msg").val() == "") {
+            $("textarea#type_msg").addClass('is-invalid');
 
-            }
-            else {
-               
-                SaveChat($("textarea#type_msg").val());
-            }
+        }
+        else {
+
+            SaveChat($("textarea#type_msg").val());
+        }
     });
 });
 function SaveChat(Msg) {
@@ -68,10 +68,11 @@ function SaveChat(Msg) {
         success: function (response) {
             var listitem = "";
             if (response != null) {
-                $("#type_msg").html(""); 
-                
+                $("#type_msg").html("");
+
                 UserChat($("#spnUserMapChatId").html(), $("#spnToUserIdMapChatId").html(), $("#profsortname").html());
                 $("textarea#type_msg").val("");
+                GetAllUsers();
                 //Swal.fire({
                 //    position: "top-end",
                 //    icon: "success",
@@ -89,18 +90,19 @@ function GetAllUsers() {
         type: 'POST',
         data: { "Id": 0 },
         success: function (response) {
-            console.log(response);
+            /*console.log(response);*/
             if (response.length) {
                 var listitem = "";
                 for (var i = 0; i < response.length; i++) {
-                   
-                    if ($("#chatProfileSearch").val() == "" || response[i].offr_Name.toLowerCase().indexOf($("#chatProfileSearch").val().toLowerCase()) !== -1) {
 
+                    /* if ($("#chatProfileSearch").val() == "" || response[i].offr_Name.toLowerCase().indexOf($("#chatProfileSearch").val().toLowerCase()) !== -1) {*/
+                    if ($("#chatProfileSearch").val() == "" || response[i].offr_Name.toLowerCase().indexOf($("#chatProfileSearch").val().toLowerCase()) !== -1 ||
+                        response[i].userName.toLowerCase().indexOf($("#chatProfileSearch").val().toLowerCase()) !== -1) {
                         listitem += '<li class="">';
                         listitem += '<div class="d-flex bd-highlight chatrequest " style="padding: 5px 5px 0px 5px;">';
                         listitem += ' <div class="img_cont">';
                         //listitem += '<img src="/assets/images/icons/profilechat.png" class="rounded-circle user_img">';
-                        listitem += '<div class="circleimg" style="background-color:' + displayFixedColorAlphabet(response[i].offr_Name.replace(/^\s+|\s+$/gm, '').substr(0, 1).toUpperCase()) + ';color:#ffff">' + response[i].offr_Name.replace(/^\s+|\s+$/gm, '').substr(0, 2).toUpperCase() +'</div>';
+                        listitem += '<div class="circleimg" style="background-color:' + displayFixedColorAlphabet(response[i].offr_Name.replace(/^\s+|\s+$/gm, '').substr(0, 1).toUpperCase()) + ';color:#ffff">' + response[i].offr_Name.replace(/^\s+|\s+$/gm, '').substr(0, 2).toUpperCase() + '</div>';
                         if (parseInt(response[i].total) > 0)
                             listitem += ' <span class="online_icon"></span>';
                         listitem += '</div>';
@@ -113,11 +115,7 @@ function GetAllUsers() {
                         listitem += ' </li>';
 
                     }
-
-
                 }
-
-
                 $(".contacts").html(listitem);
 
                 $("body").unbind().on("click", ".chatrequest", function () {
@@ -132,9 +130,9 @@ function GetAllUsers() {
                 });
             }
         }
-        });
+    });
 }
-function UserMapChat(ToUserId, profName,sortname) {
+function UserMapChat(ToUserId, profName, sortname) {
     $.ajax({
         url: '/Chat/SaveUserMapChat',
         type: 'POST',
@@ -145,13 +143,13 @@ function UserMapChat(ToUserId, profName,sortname) {
 
                 $("#profnamechat").html(profName);
                 $("#profsortname").html(sortname);
-               
+
                 $("#spnUserMapChatId").html(response.userMapChatId);
                 $("#spnToUserIdMapChatId").html(ToUserId);
-                $("#img_contuser").html('<div class="circleimg" style="background-color:' + displayFixedColorAlphabet(sortname.replace(/^\s+|\s+$/gm, '').substr(0, 1).toUpperCase()) + ';color:#ffff" >' + sortname.toUpperCase() +'</div>');
+                $("#img_contuser").html('<div class="circleimg" style="background-color:' + displayFixedColorAlphabet(sortname.replace(/^\s+|\s+$/gm, '').substr(0, 1).toUpperCase()) + ';color:#ffff" >' + sortname.toUpperCase() + '</div>');
 
                 UserChat(response.userMapChatId, ToUserId, sortname);
-               
+
             }
         }
     });
@@ -165,7 +163,7 @@ function UserChat(userMapChatId, FromUserId, sortname) {
         success: function (response) {
             var listitem = "";
             if (response != null) {
-                
+
                 if (response.length > 0) {
                     for (var i = 0; i < response.length; i++) {
                         if (response[i].type == 1) {
@@ -203,7 +201,7 @@ function UserChat(userMapChatId, FromUserId, sortname) {
                             listitem += ' </div>';
                             listitem += ' <div class="img_cont_msg">';
                             listitem += '<div class="circleimgchat" style="background-color:' + displayFixedColorAlphabet(sortname.replace(/^\s+|\s+$/gm, '').substr(0, 1).toUpperCase()) + ';color:#ffff">' + sortname.toUpperCase() + '</div>';
-                           /* listitem += '	<img src="/assets/images/icons/profilechat.png" class="rounded-circle user_img_msg">';*/
+                            /* listitem += '	<img src="/assets/images/icons/profilechat.png" class="rounded-circle user_img_msg">';*/
                             listitem += '</div>';
                             listitem += '</div>';
                         }
@@ -220,9 +218,9 @@ function UserChat(userMapChatId, FromUserId, sortname) {
                     $(".msg_card_body").html(listitem);
                 }
 
-                
+
             }
-            
+
         }
     });
 }
@@ -258,16 +256,13 @@ const colors = [
 
 // Function to display a to z with fixed colors
 function displayFixedColorAlphabet(latter) {
-   
+
     const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-    
+
     for (let i = 0; i < alphabet.length; i++) {
         if (latter.toUpperCase() == alphabet[i].toUpperCase()) {
 
             return colors[i]
         }
-       
-        
     }
 }
-

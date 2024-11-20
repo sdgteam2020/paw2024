@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using swas.BAL.DTO;
 using static Grpc.Core.Metadata;
 using System.Collections;
+using System.Security.Cryptography;
 
 namespace swas.BAL.Repository
 {
@@ -77,18 +78,97 @@ namespace swas.BAL.Repository
 
 		public async Task<List<DTOIsChat>> GetIsChat(string ToUserId)
 		{
-			var ret =await (from map in _context.mUserMapChat
-					 join chat in _context.TrnChatMsg on map.UserMapChatId equals chat.UserMapChatId
-					 where chat.IsRead == false && map.ToUserId == ToUserId
-							group map by new { map.FromUserId, chat.CreatedOn } into g
-					 select new DTOIsChat
-					 {
-						 FromUserID = g.Key.FromUserId,
-						 CreatedOn=g.Key.CreatedOn,
-						 Total = g.Count()
-					 }).ToListAsync();
-
-			return ret;
+			var ret = await (from map in _context.mUserMapChat
+							 join chat in _context.TrnChatMsg on map.UserMapChatId equals chat.UserMapChatId
+							 where chat.IsRead == false && map.ToUserId == ToUserId
+							 group map by new { map.FromUserId, chat.CreatedOn } into g
+							 select new DTOIsChat
+							 {
+								 FromUserID = g.Key.FromUserId,
+								 CreatedOn = g.Key.CreatedOn,
+								 Total = g.Count()
+							 }).ToListAsync();
+            var data = ret.OrderByDescending(i => i.CreatedOn).ToList();
+			return data;
 		}
-	}
+		public async Task<List<DTOTrnChatOrderby>> GetAllUserLastchatDateFororderBy()
+		{
+			var ret =await (from map in _context.mUserMapChat
+							join trnchat in _context.TrnChatMsg on map.UserMapChatId equals trnchat.UserMapChatId
+                            let datetime = (from map1 in _context.mUserMapChat
+                                            join trnchat1 in _context.TrnChatMsg on map1.UserMapChatId equals trnchat1.UserMapChatId
+											where map1.ToUserId== map.ToUserId
+                                            orderby trnchat1.CreatedOn descending
+                                            select trnchat1.CreatedOn).FirstOrDefault()
+                            group map by new
+                            {
+                                map.ToUserId,
+                                datetime
+
+                            } into gr
+                             select new DTOTrnChatOrderby
+                             {
+                                 ToUserId = gr.Key.ToUserId,
+								 CreatedOn = gr.Key.datetime,               
+                             }).ToListAsync();
+            return ret;
+        }
+        //public async Task<List<DTOApplicationUserWithChatRead>> GetAllUsers()
+        //{
+        //	try
+        //	{
+        //              var ret = await (from users in _context.Users
+        //                                   //join mapchat in _context.mUserMapChat on users.Id equals mapchat.ToUserId
+        //                               let datetime = (from map1 in _context.mUserMapChat
+        //                                               join trnchat1 in _context.TrnChatMsg on map1.UserMapChatId equals trnchat1.UserMapChatId
+        //                                               orderby trnchat1.CreatedOn descending
+        //                                               where users.Id == map1.ToUserId
+        //                                               select trnchat1.CreatedOn).FirstOrDefault()
+
+        //                               select new DTOApplicationUserWithChatRead
+        //                               {
+        //                                   Id = users.Id,
+        //                                   Rank = users.Rank,
+        //                                   Offr_Name = users.Offr_Name,
+        //                                   UserName = users.UserName,
+
+        //                                   CreatedDate = datetime
+        //                               }).ToListAsync();
+        //              return ret;
+
+        //          }
+        //          catch (Exception ex	)
+        //	{
+
+        //		throw ex;
+        //	}			
+        //}
+        public async Task<List<DTOApplicationUserWithChatRead>> GetAllUsers()
+        {
+            try
+            {
+                var ret = await (from users in _context.Users
+                                 let datetime = (from map1 in _context.mUserMapChat
+                                                 join trnchat1 in _context.TrnChatMsg on map1.UserMapChatId equals trnchat1.UserMapChatId
+                                                 where (users.Id == map1.ToUserId ) || (users.Id == map1.FromUserId )
+                                                 orderby trnchat1.ChatId descending
+                                                 select (DateTime?)trnchat1.CreatedOn).FirstOrDefault()
+
+                                 select new DTOApplicationUserWithChatRead
+                                 {
+                                     Id = users.Id,
+                                     Rank = users.Rank,
+                                     Offr_Name = users.Offr_Name,
+                                     UserName = users.UserName,
+                                     CreatedDate = datetime  
+                                 }).ToListAsync();
+
+                return ret.OrderByDescending(i => i.CreatedDate).ToList();
+            }
+            catch (Exception)
+            {
+                return new List<DTOApplicationUserWithChatRead>();
+            }
+        }
+    }
 }

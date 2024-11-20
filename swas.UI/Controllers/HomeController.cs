@@ -1551,8 +1551,10 @@ s.IsDashboard,
                 }
                 string outputFilePath = Path.Combine(_env.ContentRootPath, "wwwroot/Download", outputFileName + ".pdf");
                 var fileStream = new FileStream(outputFilePath, FileMode.Open, FileAccess.Read);
-                return new FileStreamResult(fileStream, "application/pdf");
-                
+                return new FileStreamResult(fileStream, "application/pdf")
+                {
+                    FileDownloadName = outputFileName + ".pdf"
+                };
             }
             catch
             {

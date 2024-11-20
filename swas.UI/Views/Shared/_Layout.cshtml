@@ -143,10 +143,23 @@
         }
 
         body {
-            font-weight: bold !important;
+            font-weight: bold ;
         }
-    </style>
 
+        .new-badge-icon {
+            color: red; /* Badge color */
+            font-size: 10px; /* Adjust size as needed */
+        }
+
+    </style>
+    <style>
+    
+
+    .new-badge {
+        display: inline-block;
+        animation: bounce 1s infinite;
+    }
+</style>
 
     <link rel="stylesheet" href="~/" asp-append-version="true" />
 
@@ -1604,7 +1617,7 @@
                 <!--navigation-->
 
 
-                <ul class="metismenu sidebar-menu" id="menu">
+                <ul class="metismenu sidebar-menu" style="font-weight: bold;" id="menu">
 
                     <li>
                         <div class="parent-icon">
@@ -1698,18 +1711,76 @@
 
                         </a>
                     </li>
-                   
 
-                    <li>
-                        <a href="/Chat/Index" @*onclick="createNotification(event)"*@>
+
+                    @* <a href="/Chat/Index" @*onclick="createNotification(event)"*@
+                   @*  <li>
+                        <a href="/Chat/Index">
                             <div class="icon-container">
 
                                 <ion-icon name="ellipse-outline"></ion-icon>
                                 <span class="icon-name">Inter-User Msg</span>
-                                @*<span class="inbox-alertsub1"></span>*@
+                                <span id="InterUserMsgCount" class="badge3 d-none InterUserMsgCount">0</span>
+                            </div>
+                        </a>
+                    </li> *@
+
+                    <li>
+                        <a href="/Chat/Index">
+                            <div class="inbox-container" style="margin-left : 46px !important">
+
+                               @*  <div class="icon-container" style="margin-left:-43px;">
+                                    <ion-icon name="ellipse-outline"></ion-icon>
+                                    <span class="icon-name">Inter-User Msg</span>
+                                    <span id="InterUserMsgCount" class="badge3 d-none InterUserMsgCount">
+                                        <ion-icon name="ellipse" class="new-badge-icon"></ion-icon>
+                                    </span>
+                                </div> *@
+
+                                <div class="icon-container" style="margin-left: -43px;">
+                                    <ion-icon name="ellipse-outline"></ion-icon>
+                                    <span class="icon-name">Inter-User Msg</span>
+                                    <span id="InterUserMsgCount" class="badge3 d-none InterUserMsgCount">
+                                        <ion-icon name="ellipse" class="new-badge-icon"></ion-icon>
+                                        <span class="new-text">new</span>
+                                    </span>
+                                </div>
+
                             </div>
                         </a>
                     </li>
+
+                    @* <li>
+                        <a href="/Chat/Index">
+                            <div class="inbox-container" style="margin-left: 46px; position: relative;">
+                                <div class="icon-container" style="margin-left: -43px; display: flex; align-items: center;">
+                                    <ion-icon name="ellipse-outline" style="font-size: 24px; color: #007bff;"></ion-icon>
+                                    <span class="icon-name" style="margin-left: 10px; font-weight: bold; font-size: 16px;">Inter-User Msg</span>
+
+                                    <!-- New Badge -->
+                                    <span class="new-badge" style="margin-left: 10px; padding: 5px 10px; background-color: #ff4757; color: white; border-radius: 12px; font-size: 14px; font-weight: bold; text-transform: uppercase; animation: bounce 1s infinite;">
+                                        New
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
+                    </li> *@
+                   @*  <li>
+                        <a href="/Chat/Index">
+                            <div class="inbox-container" style="margin-left : 46px !important">
+
+                                <div class="icon-container" style="margin-left:-43px;">
+
+                                    <ion-icon name="ellipse-outline"></ion-icon>
+                                    <span class="icon-name">Inter-User Msg</span>
+                                    <span id="InterUserMsgCount" class="new-badge d-none InterUserMsgCount" style="margin-left: 10px; padding: 5px 10px; background-color: #ff4757; color: white; border-radius: 12px; font-size: 14px; font-weight: bold; text-transform: uppercase; animation: bounce 1s infinite;" >0</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li> *@
+
+
+
                     @if (Logins != null && Logins.Role == "Dte" && Logins.unitid == 1)
                     {
 
@@ -2006,14 +2077,29 @@
                         </a>
                     </li>
 
-                   
-                    <li>
-                        <a href="/Chat/Index" @*onclick="createNotification(event)"*@>
+                    @* <a href="/Chat/Index" @*onclick="createNotification(event)"*@
+                    @* <li>
+                        <a href="/Chat/Index" >
                             <div class="icon-container">
 
                                 <ion-icon name="ellipse-outline"></ion-icon>
                                 <span class="icon-name">Inter-User Msg</span>
-                                @*<span class="inbox-alertsub1"></span>*@
+                                <span id="InterUserMsgCount" class="badge3 d-none InterUserMsgCount">0</span>
+                            </div>
+                        </a>
+                    </li> *@
+
+
+                    <li>
+                        <a href="/Chat/Index">
+                            <div class="inbox-container" style="margin-left : 46px !important">
+
+                                <div class="icon-container" style="margin-left:-43px;">
+
+                                    <ion-icon name="ellipse-outline"></ion-icon>
+                                    <span class="icon-name">Inter-User Msg</span>
+                                    <span id="InterUserMsgCount" class="badge3 d-none InterUserMsgCount">0</span>
+                                </div>
                             </div>
                         </a>
                     </li>

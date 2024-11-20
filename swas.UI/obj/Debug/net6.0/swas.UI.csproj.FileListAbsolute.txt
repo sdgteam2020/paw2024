@@ -8958,313 +8958,1241 @@ C:\Users\Administrator\Desktop\paw_21 Oct 2024 1016Hrs\final paw code 12Sep 24_1
 C:\Users\Administrator\Desktop\paw_21 Oct 2024 1016Hrs\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\swas.UI.pdb
 C:\Users\Administrator\Desktop\paw_21 Oct 2024 1016Hrs\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\swas.UI.genruntimeconfig.cache
 C:\Users\Administrator\Desktop\paw_21 Oct 2024 1016Hrs\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\ref\swas.UI.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\appsettings.Development.json
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\libman.json
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\appsettings.json
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\swas.UI.staticwebassets.runtime.json
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\swas.UI.exe
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\swas.UI.deps.json
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\swas.UI.runtimeconfig.json
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\swas.UI.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\swas.UI.pdb
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\BouncyCastle.Cryptography.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\BouncyCastle.Crypto.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Grpc.Core.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Grpc.Core.Api.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Humanizer.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\itext.barcodes.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\itext.bouncy-castle-connector.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\itext.forms.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\itext.io.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\itext.kernel.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\itext.layout.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\itext.pdfa.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\itext.sign.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\itext.styledxmlparser.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\itext.svg.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\itext.bouncy-castle-adapter.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\itext.commons.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\MessagePack.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\MessagePack.Annotations.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.DataProtection.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.DataProtection.Abstractions.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.UI.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Razor.Language.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.Build.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.Build.Framework.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.AnalyzerUtilities.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.Features.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.Features.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.Razor.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.Scripting.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.Workspaces.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.DiaSymReader.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbstractions.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.DotNet.Scaffolding.Shared.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Abstractions.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Embedded.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Hosting.Abstractions.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.Identity.Client.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.NET.StringTools.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.OpenApi.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Debugger.Contracts.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\dotnet-aspnet-codegenerator-design.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Newtonsoft.Json.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\NuGet.Common.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\NuGet.Configuration.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\NuGet.DependencyResolver.Core.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\NuGet.Frameworks.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\NuGet.LibraryModel.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\NuGet.Packaging.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\NuGet.ProjectModel.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\NuGet.Protocol.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\NuGet.Versioning.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\System.Composition.AttributedModel.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\System.Composition.Convention.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\System.Composition.Hosting.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\System.Composition.Runtime.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\System.Composition.TypedParts.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\System.Drawing.Common.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\System.Formats.Asn1.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\System.Reflection.MetadataLoadContext.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\System.Runtime.Caching.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\System.Security.Cryptography.Pkcs.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\System.Security.Cryptography.Xml.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\System.Security.Permissions.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\System.Windows.Extensions.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\af\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ar\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\az\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\bg\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\bn-BD\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\cs\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\da\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\de\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\el\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\es\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\fa\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\fi-FI\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\fr\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\fr-BE\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\he\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\hr\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\hu\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\hy\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\id\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\is\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\it\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ja\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ko-KR\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ku\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\lv\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ms-MY\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\mt\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\nb\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\nb-NO\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\nl\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\pl\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\pt\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ro\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ru\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\sk\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\sl\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\sr\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\sr-Latn\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\sv\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\th-TH\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\tr\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\uk\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\uz-Cyrl-UZ\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\uz-Latn-UZ\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\vi\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\zh-CN\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\zh-Hans\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\zh-Hant\Humanizer.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Features.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Scripting.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Scripting.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Scripting.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Scripting.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Scripting.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Scripting.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Scripting.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Scripting.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Scripting.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Scripting.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Scripting.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Scripting.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Scripting.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\runtimes\linux-arm64\native\libgrpc_csharp_ext.arm64.so
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\runtimes\linux-x64\native\libgrpc_csharp_ext.x64.so
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\runtimes\osx-x64\native\libgrpc_csharp_ext.x64.dylib
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\runtimes\win-x64\native\grpc_csharp_ext.x64.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\runtimes\win-x86\native\grpc_csharp_ext.x86.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\SAMLSignatureVerification.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\swas.BAL.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\swas.DAL.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\swas.BAL.pdb
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\bin\Debug\net6.0\swas.DAL.pdb
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\swas.UI.csproj.AssemblyReference.cache
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\swas.UI.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\swas.UI.AssemblyInfoInputs.cache
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\swas.UI.AssemblyInfo.cs
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\swas.UI.csproj.CoreCompileInputs.cache
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\swas.UI.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\swas.UI.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\swas.UI.RazorAssemblyInfo.cache
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\swas.UI.RazorAssemblyInfo.cs
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\swas.UI.sourcelink.json
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\staticwebassets.build.json
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\staticwebassets.development.json
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\staticwebassets\msbuild.swas.UI.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\staticwebassets\msbuild.build.swas.UI.props
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.swas.UI.props
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.swas.UI.props
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\staticwebassets.pack.json
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\scopedcss\Views\Shared\_Layoutreg.cshtml.rz.scp.css
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\scopedcss\bundle\swas.UI.styles.css
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\scopedcss\projectbundle\swas.UI.bundle.scp.css
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\swas.UI.csproj.Up2Date
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\swas.UI.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\refint\swas.UI.dll
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\swas.UI.pdb
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\swas.UI.genruntimeconfig.cache
-C:\Users\master\Desktop\final paw code 20 Nov 24\swas.UI\obj\Debug\net6.0\ref\swas.UI.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\appsettings.Development.json
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\appsettings.json
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\libman.json
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\swas.UI.staticwebassets.runtime.json
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\swas.UI.exe
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\swas.UI.deps.json
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\swas.UI.runtimeconfig.json
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\swas.UI.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\swas.UI.pdb
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\BouncyCastle.Cryptography.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\BouncyCastle.Crypto.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Grpc.Core.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Grpc.Core.Api.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Humanizer.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\itext.barcodes.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\itext.bouncy-castle-connector.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\itext.forms.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\itext.io.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\itext.kernel.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\itext.layout.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\itext.pdfa.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\itext.sign.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\itext.styledxmlparser.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\itext.svg.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\itext.bouncy-castle-adapter.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\itext.commons.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\MessagePack.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\MessagePack.Annotations.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.DataProtection.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.DataProtection.Abstractions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.UI.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Razor.Language.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.Build.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.Build.Framework.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.AnalyzerUtilities.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.Features.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.Features.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.Razor.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.Scripting.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.Workspaces.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.DiaSymReader.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbstractions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.DotNet.Scaffolding.Shared.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Embedded.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Hosting.Abstractions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.NET.StringTools.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.OpenApi.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Debugger.Contracts.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\dotnet-aspnet-codegenerator-design.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\NuGet.Common.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\NuGet.Configuration.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\NuGet.DependencyResolver.Core.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\NuGet.Frameworks.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\NuGet.LibraryModel.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\NuGet.Packaging.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\NuGet.ProjectModel.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\NuGet.Protocol.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\NuGet.Versioning.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\System.Composition.AttributedModel.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\System.Composition.Convention.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\System.Composition.Hosting.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\System.Composition.Runtime.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\System.Composition.TypedParts.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\System.Drawing.Common.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\System.Formats.Asn1.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\System.Net.WebSockets.WebSocketProtocol.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\System.Reflection.MetadataLoadContext.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\System.Runtime.Caching.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\System.Security.Cryptography.Pkcs.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\System.Security.Cryptography.Xml.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\System.Security.Permissions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\System.Windows.Extensions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\af\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ar\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\az\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\bg\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\bn-BD\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\cs\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\da\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\de\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\el\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\es\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\fa\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\fi-FI\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\fr\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\fr-BE\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\he\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\hr\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\hu\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\hy\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\id\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\is\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\it\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ja\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ko-KR\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ku\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\lv\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ms-MY\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\mt\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\nb\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\nb-NO\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\nl\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\pl\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\pt\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ro\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ru\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\sk\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\sl\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\sr\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\sr-Latn\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\sv\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\th-TH\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\tr\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\uk\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\uz-Cyrl-UZ\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\uz-Latn-UZ\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\vi\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\zh-CN\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\zh-Hans\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\zh-Hant\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\runtimes\linux-arm64\native\libgrpc_csharp_ext.arm64.so
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\runtimes\linux-x64\native\libgrpc_csharp_ext.x64.so
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\runtimes\osx-x64\native\libgrpc_csharp_ext.x64.dylib
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\runtimes\win-x64\native\grpc_csharp_ext.x64.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\runtimes\win-x86\native\grpc_csharp_ext.x86.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\SAMLSignatureVerification.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\swas.BAL.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\swas.DAL.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\swas.BAL.pdb
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\bin\Debug\net6.0\swas.DAL.pdb
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\swas.UI.csproj.AssemblyReference.cache
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\swas.UI.GeneratedMSBuildEditorConfig.editorconfig
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\swas.UI.AssemblyInfoInputs.cache
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\swas.UI.AssemblyInfo.cs
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\swas.UI.csproj.CoreCompileInputs.cache
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\swas.UI.MvcApplicationPartsAssemblyInfo.cs
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\swas.UI.MvcApplicationPartsAssemblyInfo.cache
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\swas.UI.RazorAssemblyInfo.cache
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\swas.UI.RazorAssemblyInfo.cs
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\swas.UI.sourcelink.json
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\staticwebassets.build.json
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\staticwebassets.development.json
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\staticwebassets\msbuild.swas.UI.Microsoft.AspNetCore.StaticWebAssets.props
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\staticwebassets\msbuild.build.swas.UI.props
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.swas.UI.props
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.swas.UI.props
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\staticwebassets.pack.json
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\scopedcss\Views\Shared\_Layoutreg.cshtml.rz.scp.css
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\scopedcss\bundle\swas.UI.styles.css
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\scopedcss\projectbundle\swas.UI.bundle.scp.css
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\swas.UI.csproj.Up2Date
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\swas.UI.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\refint\swas.UI.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\swas.UI.pdb
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\swas.UI.genruntimeconfig.cache
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs\swas.UI\obj\Debug\net6.0\ref\swas.UI.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\appsettings.Development.json
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\appsettings.json
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\libman.json
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\swas.UI.staticwebassets.runtime.json
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\swas.UI.exe
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\swas.UI.deps.json
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\swas.UI.runtimeconfig.json
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\swas.UI.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\swas.UI.pdb
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\BouncyCastle.Cryptography.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\BouncyCastle.Crypto.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Grpc.Core.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Grpc.Core.Api.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Humanizer.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\itext.barcodes.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\itext.bouncy-castle-connector.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\itext.forms.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\itext.io.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\itext.kernel.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\itext.layout.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\itext.pdfa.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\itext.sign.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\itext.styledxmlparser.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\itext.svg.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\itext.bouncy-castle-adapter.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\itext.commons.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\MessagePack.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\MessagePack.Annotations.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.DataProtection.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.DataProtection.Abstractions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.UI.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Razor.Language.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.Build.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.Build.Framework.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.AnalyzerUtilities.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.Features.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.Features.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.Razor.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.Scripting.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.Workspaces.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.DiaSymReader.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbstractions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.DotNet.Scaffolding.Shared.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Embedded.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Hosting.Abstractions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.NET.StringTools.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.OpenApi.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Debugger.Contracts.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\dotnet-aspnet-codegenerator-design.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\NuGet.Common.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\NuGet.Configuration.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\NuGet.DependencyResolver.Core.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\NuGet.Frameworks.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\NuGet.LibraryModel.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\NuGet.Packaging.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\NuGet.ProjectModel.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\NuGet.Protocol.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\NuGet.Versioning.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\System.Composition.AttributedModel.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\System.Composition.Convention.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\System.Composition.Hosting.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\System.Composition.Runtime.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\System.Composition.TypedParts.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\System.Drawing.Common.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\System.Formats.Asn1.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\System.Net.WebSockets.WebSocketProtocol.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\System.Reflection.MetadataLoadContext.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\System.Runtime.Caching.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\System.Security.Cryptography.Pkcs.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\System.Security.Cryptography.Xml.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\System.Security.Permissions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\System.Windows.Extensions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\af\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ar\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\az\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\bg\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\bn-BD\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\cs\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\da\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\de\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\el\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\es\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\fa\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\fi-FI\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\fr\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\fr-BE\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\he\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\hr\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\hu\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\hy\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\id\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\is\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\it\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ja\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ko-KR\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ku\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\lv\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ms-MY\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\mt\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\nb\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\nb-NO\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\nl\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\pl\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\pt\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ro\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ru\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\sk\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\sl\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\sr\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\sr-Latn\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\sv\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\th-TH\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\tr\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\uk\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\uz-Cyrl-UZ\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\uz-Latn-UZ\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\vi\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\zh-CN\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\zh-Hans\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\zh-Hant\Humanizer.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\runtimes\linux-arm64\native\libgrpc_csharp_ext.arm64.so
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\runtimes\linux-x64\native\libgrpc_csharp_ext.x64.so
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\runtimes\osx-x64\native\libgrpc_csharp_ext.x64.dylib
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\runtimes\win-x64\native\grpc_csharp_ext.x64.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\runtimes\win-x86\native\grpc_csharp_ext.x86.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\SAMLSignatureVerification.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\swas.BAL.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\swas.DAL.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\swas.BAL.pdb
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\bin\Debug\net6.0\swas.DAL.pdb
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\swas.UI.csproj.AssemblyReference.cache
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\swas.UI.GeneratedMSBuildEditorConfig.editorconfig
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\swas.UI.AssemblyInfoInputs.cache
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\swas.UI.AssemblyInfo.cs
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\swas.UI.csproj.CoreCompileInputs.cache
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\swas.UI.MvcApplicationPartsAssemblyInfo.cs
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\swas.UI.MvcApplicationPartsAssemblyInfo.cache
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\swas.UI.RazorAssemblyInfo.cache
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\swas.UI.RazorAssemblyInfo.cs
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\swas.UI.sourcelink.json
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\staticwebassets.build.json
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\staticwebassets.development.json
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\staticwebassets\msbuild.swas.UI.Microsoft.AspNetCore.StaticWebAssets.props
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\staticwebassets\msbuild.build.swas.UI.props
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.swas.UI.props
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.swas.UI.props
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\staticwebassets.pack.json
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\scopedcss\Views\Shared\_Layoutreg.cshtml.rz.scp.css
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\scopedcss\bundle\swas.UI.styles.css
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\scopedcss\projectbundle\swas.UI.bundle.scp.css
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\swas.UI.csproj.Up2Date
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\swas.UI.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\refint\swas.UI.dll
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\swas.UI.pdb
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\swas.UI.genruntimeconfig.cache
+D:\Project\PAW\Latest\final paw code 12Sep 24_1632Hrs - Copy\swas.UI\obj\Debug\net6.0\ref\swas.UI.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\appsettings.Development.json
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\appsettings.json
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\libman.json
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\swas.UI.staticwebassets.runtime.json
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\swas.UI.exe
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\swas.UI.deps.json
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\swas.UI.runtimeconfig.json
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\swas.UI.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\swas.UI.pdb
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\BouncyCastle.Cryptography.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\BouncyCastle.Crypto.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Grpc.Core.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Grpc.Core.Api.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Humanizer.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\itext.barcodes.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\itext.bouncy-castle-connector.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\itext.forms.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\itext.io.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\itext.kernel.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\itext.layout.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\itext.pdfa.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\itext.sign.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\itext.styledxmlparser.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\itext.svg.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\itext.bouncy-castle-adapter.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\itext.commons.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\MessagePack.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\MessagePack.Annotations.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.DataProtection.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.DataProtection.Abstractions.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.UI.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Razor.Language.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Build.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Build.Framework.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.AnalyzerUtilities.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.Features.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.Features.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.Razor.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.Workspaces.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.DiaSymReader.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbstractions.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.DotNet.Scaffolding.Shared.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Embedded.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Hosting.Abstractions.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.NET.StringTools.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.OpenApi.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Debugger.Contracts.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\dotnet-aspnet-codegenerator-design.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\NuGet.Common.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\NuGet.Configuration.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\NuGet.DependencyResolver.Core.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\NuGet.Frameworks.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\NuGet.LibraryModel.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\NuGet.Packaging.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\NuGet.ProjectModel.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\NuGet.Protocol.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\NuGet.Versioning.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\System.Composition.AttributedModel.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\System.Composition.Convention.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\System.Composition.Hosting.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\System.Composition.Runtime.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\System.Composition.TypedParts.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\System.Drawing.Common.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\System.Formats.Asn1.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\System.Net.WebSockets.WebSocketProtocol.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\System.Reflection.MetadataLoadContext.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\System.Runtime.Caching.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\System.Security.Cryptography.Xml.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\System.Security.Permissions.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\System.Windows.Extensions.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\af\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ar\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\az\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\bg\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\bn-BD\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\cs\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\da\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\de\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\el\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\es\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\fa\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\fi-FI\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\fr\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\fr-BE\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\he\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\hr\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\hu\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\hy\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\id\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\is\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\it\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ja\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ko-KR\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ku\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\lv\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ms-MY\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\mt\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\nb\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\nb-NO\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\nl\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\pl\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\pt\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ro\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ru\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\sk\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\sl\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\sr\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\sr-Latn\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\sv\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\th-TH\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\tr\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\uk\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\uz-Cyrl-UZ\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\uz-Latn-UZ\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\vi\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\zh-CN\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\zh-Hans\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\zh-Hant\Humanizer.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Features.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Scripting.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\runtimes\linux-arm64\native\libgrpc_csharp_ext.arm64.so
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\runtimes\linux-x64\native\libgrpc_csharp_ext.x64.so
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\runtimes\osx-x64\native\libgrpc_csharp_ext.x64.dylib
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\runtimes\win-x64\native\grpc_csharp_ext.x64.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\runtimes\win-x86\native\grpc_csharp_ext.x86.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\SAMLSignatureVerification.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\swas.BAL.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\swas.DAL.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\swas.BAL.pdb
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\bin\Debug\net6.0\swas.DAL.pdb
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\obj\Debug\net6.0\swas.UI.csproj.AssemblyReference.cache
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\obj\Debug\net6.0\swas.UI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\obj\Debug\net6.0\swas.UI.AssemblyInfoInputs.cache
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\obj\Debug\net6.0\swas.UI.AssemblyInfo.cs
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\obj\Debug\net6.0\swas.UI.csproj.CoreCompileInputs.cache
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\obj\Debug\net6.0\swas.UI.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\obj\Debug\net6.0\swas.UI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\obj\Debug\net6.0\swas.UI.RazorAssemblyInfo.cache
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\obj\Debug\net6.0\swas.UI.RazorAssemblyInfo.cs
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\obj\Debug\net6.0\staticwebassets.build.json
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\obj\Debug\net6.0\staticwebassets.development.json
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\obj\Debug\net6.0\scopedcss\Views\Shared\_Layoutreg.cshtml.rz.scp.css
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\obj\Debug\net6.0\scopedcss\bundle\swas.UI.styles.css
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\obj\Debug\net6.0\scopedcss\projectbundle\swas.UI.bundle.scp.css
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\obj\Debug\net6.0\swas.UI.csproj.Up2Date
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\obj\Debug\net6.0\swas.UI.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\obj\Debug\net6.0\refint\swas.UI.dll
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\obj\Debug\net6.0\swas.UI.pdb
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\obj\Debug\net6.0\swas.UI.genruntimeconfig.cache
+C:\Users\lanmanager\Desktop\aks\Final_PAW_8_Nov\swas.UI\obj\Debug\net6.0\ref\swas.UI.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\appsettings.Development.json
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\appsettings.json
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\libman.json
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\swas.UI.staticwebassets.runtime.json
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\swas.UI.exe
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\swas.UI.deps.json
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\swas.UI.runtimeconfig.json
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\swas.UI.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\swas.UI.pdb
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\BouncyCastle.Cryptography.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\BouncyCastle.Crypto.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Grpc.Core.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Grpc.Core.Api.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Humanizer.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\itext.barcodes.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\itext.bouncy-castle-connector.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\itext.forms.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\itext.io.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\itext.kernel.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\itext.layout.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\itext.pdfa.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\itext.sign.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\itext.styledxmlparser.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\itext.svg.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\itext.bouncy-castle-adapter.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\itext.commons.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\MessagePack.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\MessagePack.Annotations.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.DataProtection.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.DataProtection.Abstractions.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.UI.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.AspNetCore.Razor.Language.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Build.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Build.Framework.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.AnalyzerUtilities.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.Features.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.Features.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.Razor.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.Scripting.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.CodeAnalysis.Workspaces.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.DiaSymReader.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbstractions.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.DotNet.Scaffolding.Shared.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Embedded.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Hosting.Abstractions.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Options.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.NET.StringTools.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.OpenApi.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Debugger.Contracts.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\dotnet-aspnet-codegenerator-design.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\NuGet.Common.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\NuGet.Configuration.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\NuGet.DependencyResolver.Core.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\NuGet.Frameworks.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\NuGet.LibraryModel.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\NuGet.Packaging.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\NuGet.ProjectModel.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\NuGet.Protocol.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\NuGet.Versioning.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\System.Composition.AttributedModel.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\System.Composition.Convention.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\System.Composition.Hosting.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\System.Composition.Runtime.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\System.Composition.TypedParts.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\System.Drawing.Common.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\System.Formats.Asn1.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\System.Net.WebSockets.WebSocketProtocol.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\System.Reflection.MetadataLoadContext.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\System.Runtime.Caching.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\System.Security.Cryptography.Pkcs.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\System.Security.Cryptography.Xml.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\System.Security.Permissions.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\System.Windows.Extensions.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\af\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ar\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\az\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\bg\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\bn-BD\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\cs\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\da\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\de\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\el\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\es\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\fa\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\fi-FI\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\fr\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\fr-BE\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\he\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\hr\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\hu\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\hy\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\id\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\is\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\it\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ja\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ko-KR\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ku\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\lv\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ms-MY\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\mt\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\nb\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\nb-NO\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\nl\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\pl\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\pt\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ro\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ru\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\sk\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\sl\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\sr\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\sr-Latn\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\sv\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\th-TH\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\tr\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\uk\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\uz-Cyrl-UZ\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\uz-Latn-UZ\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\vi\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\zh-CN\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\zh-Hans\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\zh-Hant\Humanizer.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Features.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Scripting.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\cs\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\de\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\es\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\fr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\it\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ja\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ko\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\pl\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\pt-BR\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\ru\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\runtimes\linux-arm64\native\libgrpc_csharp_ext.arm64.so
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\runtimes\linux-x64\native\libgrpc_csharp_ext.x64.so
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\runtimes\osx-x64\native\libgrpc_csharp_ext.x64.dylib
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\runtimes\win-x64\native\grpc_csharp_ext.x64.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\runtimes\win-x86\native\grpc_csharp_ext.x86.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\SAMLSignatureVerification.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\swas.BAL.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\swas.DAL.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\swas.BAL.pdb
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\bin\Debug\net6.0\swas.DAL.pdb
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\swas.UI.csproj.AssemblyReference.cache
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\swas.UI.GeneratedMSBuildEditorConfig.editorconfig
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\swas.UI.AssemblyInfoInputs.cache
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\swas.UI.AssemblyInfo.cs
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\swas.UI.csproj.CoreCompileInputs.cache
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\swas.UI.MvcApplicationPartsAssemblyInfo.cs
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\swas.UI.MvcApplicationPartsAssemblyInfo.cache
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\swas.UI.RazorAssemblyInfo.cache
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\swas.UI.RazorAssemblyInfo.cs
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\swas.UI.sourcelink.json
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\staticwebassets.build.json
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\staticwebassets.development.json
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\staticwebassets\msbuild.swas.UI.Microsoft.AspNetCore.StaticWebAssets.props
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\staticwebassets\msbuild.build.swas.UI.props
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.swas.UI.props
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.swas.UI.props
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\staticwebassets.pack.json
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\scopedcss\Views\Shared\_Layoutreg.cshtml.rz.scp.css
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\scopedcss\bundle\swas.UI.styles.css
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\scopedcss\projectbundle\swas.UI.bundle.scp.css
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\swas.UI.csproj.Up2Date
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\swas.UI.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\refint\swas.UI.dll
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\swas.UI.pdb
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\swas.UI.genruntimeconfig.cache
+D:\Project\PAW\Final_PAW_12_Nov\swas.UI\obj\Debug\net6.0\ref\swas.UI.dll

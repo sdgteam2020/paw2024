@@ -837,8 +837,9 @@ namespace swas.UI.Controllers
                 else
                 {
                     var movent = await _psmRepository.GetByByte(PsmId);
-                    movent.IsActive = false;
-                    movent.IsDeleted = true;
+                    //movent.IsActive = false; removed by 12th nov
+                    //movent.IsDeleted = true; removed by 12th nov
+                    movent.IsRead = false;
                     movent.UndoRemarks = Remarks;
                     var Ret = await _psmRepository.UpdateWithReturn(movent);
 

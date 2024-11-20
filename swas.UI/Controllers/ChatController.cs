@@ -12,9 +12,9 @@ namespace swas.UI.Controllers
 {
     public class ChatController : Controller
     {
-       
+
         private readonly IUserMapChatRepository _userMapChatRepository;
-        private readonly ITrnChatMsgRepository  _trnChatMsg;
+        private readonly ITrnChatMsgRepository _trnChatMsg;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
         public ChatController(
@@ -24,32 +24,32 @@ namespace swas.UI.Controllers
             ITrnChatMsgRepository trnChatMsg
             )
         {
-          
+
             _userManager = userManager;
-            _userMapChatRepository=userMapChatRepository;
+            _userMapChatRepository = userMapChatRepository;
             _httpContextAccessor = httpContextAccessor;
-            _trnChatMsg=trnChatMsg;
+            _trnChatMsg = trnChatMsg;
         }
         public async Task<IActionResult> Index()
         {
-			
-
-			return View();
+            return View();
         }
 
         public async Task<IActionResult> GetAllUsers(int Id)
         {
             try
             {
-				//var userdet = await _userManager.Users.ToListAsync();
-				string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-				var userdet = await _userManager.Users.ToListAsync();
-				var ischat = await _trnChatMsg.GetIsChat(id);
-				List<DTOApplicationUserWithChatRead> lstuser = new List<DTOApplicationUserWithChatRead>();
-				if (userdet.Count > 0)
-				{
-					foreach (var user in userdet)
-					{
+                //var userdet = await _userManager.Users.ToListAsync();
+                string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                //var userdet = await _userManager.Users.ToListAsync();
+                var userdet = await _trnChatMsg.GetAllUsers();
+                var ischat = await _trnChatMsg.GetIsChat(id);
+                //  var orderby = await _trnChatMsg.GetAllUserLastchatDateFororderBy();
+                List<DTOApplicationUserWithChatRead> lstuser = new List<DTOApplicationUserWithChatRead>();
+                if (userdet.Count > 0)
+                {
+                    foreach (var user in userdet)
+                    {
                         if (id != user.Id)
                         {
                             DTOApplicationUserWithChatRead db = new DTOApplicationUserWithChatRead();
@@ -57,7 +57,7 @@ namespace swas.UI.Controllers
                             db.Rank = user.Rank;
                             db.Offr_Name = user.Offr_Name;
                             db.UserName = user.UserName;
-                            if (ischat != null && ischat.Count > 0)
+                            if (ischat != null && ischat.Count > 0) 
                             {
                                 DTOIsChat dTOIsChat = new DTOIsChat();
                                 dTOIsChat = ischat.Where(i => i.FromUserID == user.Id).FirstOrDefault();
@@ -67,17 +67,72 @@ namespace swas.UI.Controllers
                                     db.CreatedOn = dTOIsChat.CreatedOn;
                                 }
                             }
+                            db.CreatedDate = user.CreatedDate;
                             lstuser.Add(db);
                         }
-					}
-				}
-
-				return Json(lstuser.OrderByDescending(i => i.Total).OrderByDescending(i => i.CreatedOn));
-			}
-            catch (Exception ex) {
+                    }
+                }
+                return Json(lstuser.OrderByDescending(i => i.Total).OrderByDescending(i => i.CreatedOn));
+            }
+            catch (Exception ex)
+            {
                 return Json(nmum.Exception);
             }
-		}
+        }
+        //public async Task<IActionResult> GetAllUsers(int Id)
+        //{
+        //    try
+        //    {
+        //        string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //        var userdet = await _userManager.Users.ToListAsync();
+        //        var ischat = await _trnChatMsg.GetIsChat(id);
+
+        //        List<DTOApplicationUserWithChatRead> lstuser = new List<DTOApplicationUserWithChatRead>();
+
+        //        if (userdet.Count > 0)
+        //        {
+        //            foreach (var user in userdet)
+        //            {
+        //                if (id != user.Id)
+        //                {
+        //                    DTOApplicationUserWithChatRead db = new DTOApplicationUserWithChatRead
+        //                    {
+        //                        Id = user.Id,
+        //                        Rank = user.Rank,
+        //                        Offr_Name = user.Offr_Name,
+        //                        UserName = user.UserName
+        //                    };
+
+        //                    if (ischat != null && ischat.Count > 0)
+        //                    {
+        //                        var dTOIsChat = ischat.FirstOrDefault(i => i.FromUserID == user.Id);
+
+        //                        if (dTOIsChat != null)
+        //                        {
+        //                            db.Total = dTOIsChat.Total;
+        //                            db.CreatedOn = dTOIsChat.CreatedOn;
+        //                        }
+        //                    }
+
+        //                    lstuser.Add(db);
+        //                }
+        //            }
+        //        }
+
+        //        // Sort users: first by unread messages, then by most recent message timestamp (descending)
+        //        var sortedUsers = lstuser
+        //            .OrderByDescending(i => i.Total)      // First sort by unread message count
+        //            .ThenByDescending(i => i.CreatedOn)   // Then sort by the latest message timestamp
+        //            .ToList();
+
+        //        return Json(sortedUsers);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(ex);
+        //    }
+        //}
+
         public async Task<IActionResult> SaveUserMapChat(mUserMapChat mUserMapChat)
         {
             try
@@ -86,13 +141,14 @@ namespace swas.UI.Controllers
                 string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
                 mUserMapChat.FromUserId = id.ToString().ToLower();
-				mUserMapChat.ToUserId = mUserMapChat.ToUserId.ToString().ToLower();
-				var getret = await _userMapChatRepository.GetMapDetails(mUserMapChat);
-                if (getret==null)
+                mUserMapChat.ToUserId = mUserMapChat.ToUserId.ToString().ToLower();
+                var getret = await _userMapChatRepository.GetMapDetails(mUserMapChat);
+                if (getret == null)
                 {
                     var ret = await _userMapChatRepository.AddWithReturn(mUserMapChat);
                     return Json(ret);
-                }else
+                }
+                else
                 {
                     return Json(getret);
                 }
@@ -106,15 +162,15 @@ namespace swas.UI.Controllers
         public async Task<IActionResult> SaveChat(TrnChatMsg trnChatMsg)
         {
             trnChatMsg.ChatId = 0;
-			trnChatMsg.CreatedOn = DateTime.Now;
+            trnChatMsg.CreatedOn = DateTime.Now;
             trnChatMsg.IsRead = false;
-			return Json(await _trnChatMsg.AddWithReturn(trnChatMsg));
+            return Json(await _trnChatMsg.AddWithReturn(trnChatMsg));
         }
-        public async Task<IActionResult> GetUserMapChat(int UserMapChatId,string FromUserId)
+        public async Task<IActionResult> GetUserMapChat(int UserMapChatId, string FromUserId)
         {
             string ToUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             return Json(await _trnChatMsg.GetChat(UserMapChatId, FromUserId, ToUserId));
         }
-       }
+    }
 }

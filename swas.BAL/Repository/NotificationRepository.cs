@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using swas.BAL.DTO;
+using swas.BAL.Helpers;
 using swas.BAL.Interfaces;
 using swas.DAL;
 using swas.DAL.Models;
@@ -13,6 +15,7 @@ namespace swas.BAL.Repository
     public class NotificationRepository : INotificationRepository
     {
         private readonly ApplicationDbContext _context;
+
         public NotificationRepository(ApplicationDbContext context)
         {
             _context = context;
@@ -20,6 +23,7 @@ namespace swas.BAL.Repository
 
         public async Task<int> GetNotificationCountByType(int Type, int? ToUnitId)
         {
+            
             int notificationCount = await _context.Notification
                 .Where(n => n.NotificationType == Type && n.IsRead == false && n.NotificationTo == ToUnitId && n.IsDeleted == false)
                 .CountAsync();

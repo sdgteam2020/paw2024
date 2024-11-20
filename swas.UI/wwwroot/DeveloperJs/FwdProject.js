@@ -140,9 +140,12 @@
     });
 
     $(".ProjName").click(function () {
+       
         var row = $(this).closest('tr');
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
         IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
+        window.location.reload();
+        /*$(this).closest("tr").removeClass("bold-text");*/
 
 
     });
@@ -281,7 +284,6 @@ function SaveFwdTo(CurrentPslmId) {
         }
     });
 }
-
 function Updateundo(ProjId, PslmId, UndoRemarks, StageId) {
     var userdata =
     {
@@ -311,10 +313,6 @@ function Updateundo(ProjId, PslmId, UndoRemarks, StageId) {
     });
 
 }
-
-
-
-
 function reset() {
 
     $("#ddlfwdStage").val('');
@@ -324,16 +322,28 @@ function reset() {
     $("#txtRemarksfwd").val('');
     $("#TimeStampToProjfwd").val('');
 }
-
-
-
-
 function IsReadInbox(psmId) {
 
     $.ajax({
         url: '/Projects/IsReadInbox',
         type: 'POST',
         data: { "PsmId": psmId },
+        success: function (response) {
+            console.log(response);
+
+        }
+    });
+}
+function UndoNotification(ProjId, type, ToUnitId) {
+
+    $.ajax({
+        url: '/Notification/UndoNotification',
+        type: 'POST',
+        data: {
+            "ProjId": ProjId,
+            "type": type,
+            "ToUnitId": ToUnitId
+        },
         success: function (response) {
             console.log(response);
 

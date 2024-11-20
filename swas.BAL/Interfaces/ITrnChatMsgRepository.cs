@@ -13,5 +13,7 @@ namespace swas.BAL.Interfaces
         public Task<List<TrnChatMsg>> GetChat(int UserMapChatId, string FromUserId, string ToUserId);
 
         public Task<List<DTOIsChat>> GetIsChat(string ToUserId);
+        public Task<List<DTOTrnChatOrderby>> GetAllUserLastchatDateFororderBy();
+        public Task<List<DTOApplicationUserWithChatRead>> GetAllUsers();
     }
 }

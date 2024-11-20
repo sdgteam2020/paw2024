@@ -10,6 +10,7 @@ namespace swas.BAL.DTO
 	{
         public string FromUserID { get; set; }
         public int Total { get; set; }
+        //public bool IsRead { get; set; }
         public DateTime CreatedOn { get; set; }
     }
 }

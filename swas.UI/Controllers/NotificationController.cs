@@ -5,6 +5,7 @@ using swas.BAL.Helpers;
 using swas.BAL.Interfaces;
 using swas.BAL.Repository;
 using swas.DAL.Models;
+using System.Security.Claims;
 
 namespace swas.UI.Controllers
 {
@@ -13,11 +14,15 @@ namespace swas.UI.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly INotificationRepository _notificationRepository;
         private readonly IProjectsRepository _projectsRepository;
-        public NotificationController(IHttpContextAccessor httpContextAccessor, INotificationRepository notificationRepository, IProjectsRepository projectsRepository)
+        private readonly ITrnChatMsgRepository _trnChatMsg;
+
+        public NotificationController(IHttpContextAccessor httpContextAccessor, INotificationRepository notificationRepository, IProjectsRepository projectsRepository,
+              ITrnChatMsgRepository trnChatMsg)
         {
             _httpContextAccessor = httpContextAccessor;
             _notificationRepository = notificationRepository;
             _projectsRepository = projectsRepository;
+            _trnChatMsg = trnChatMsg;
         }
         public IActionResult Index()
         {
@@ -27,10 +32,21 @@ namespace swas.UI.Controllers
         [HttpGet]
         public async Task<JsonResult> GetNotificationCount(int type)
         {
+            int count = 0;
             try
             {
+                //if (type == 3)
+                //{
+                //    string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                //    var data = await _trnChatMsg.GetIsChat(id);
+                //    if (data != null)
+                //    {
+                //        count = data.Count;
+                //    }
+                //    return new JsonResult(count);
+                //}
                 var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-                int count = await _notificationRepository.GetNotificationCountByType(type, loginUser.unitid);
+                count = await _notificationRepository.GetNotificationCountByType(type, loginUser.unitid);
                 return new JsonResult(count);
             }
             catch (Exception ex)
@@ -39,7 +55,7 @@ namespace swas.UI.Controllers
                 {
                     StatusCode = 500
                 };
-            } 
+            }
         }
 
         public async Task<IActionResult> AddNotification(int type, int ProjId, int unitid)
@@ -100,7 +116,7 @@ namespace swas.UI.Controllers
 
                             return Json(1);
                         }
-                        else 
+                        else
                         {
                             Notification notify = new Notification();
                             notify.ProjId = ProjId;
@@ -129,7 +145,7 @@ namespace swas.UI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> IsReadNotification(int ProjId , int type)
+        public async Task<IActionResult> IsReadNotification(int ProjId, int type)
         {
             var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
             if (loginUser != null)
@@ -158,7 +174,7 @@ namespace swas.UI.Controllers
 
                         else if (type == 2)
                         {
-                            var notify = await _notificationRepository.GetNotifByToUnitAndType(type, loginUser.unitid,ProjId);
+                            var notify = await _notificationRepository.GetNotifByToUnitAndType(type, loginUser.unitid, ProjId);
 
                             if (notify != null)
                             {
@@ -201,7 +217,7 @@ namespace swas.UI.Controllers
 
                         if (type == 1)
                         {
-                            var notifications  = await _notificationRepository.GetNotifExcludingToUnit(loginUser.unitid, ProjId);
+                            var notifications = await _notificationRepository.GetNotifExcludingToUnit(loginUser.unitid, ProjId);
                             if (notifications != null && notifications.Any())
                             {
                                 foreach (var notify in notifications)
@@ -222,7 +238,7 @@ namespace swas.UI.Controllers
                             }
                         }
 
-                        
+
                     }
 
                     return Json(0);
@@ -240,7 +256,7 @@ namespace swas.UI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UndoNotification(int ProjId, int type ,int ToUnitId)
+        public async Task<IActionResult> UndoNotification(int ProjId, int type, int ToUnitId)
         {
             var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
             if (loginUser != null)
@@ -249,7 +265,6 @@ namespace swas.UI.Controllers
                 {
                     if (ProjId != null)
                     {
-
                         if (type == 2)
                         {
                             var notify = await _notificationRepository.GetNotifByToAndFormId(type, ToUnitId, ProjId, loginUser.unitid);
@@ -257,7 +272,8 @@ namespace swas.UI.Controllers
                             if (notify != null)
                             {
                                 notify.ReadDateTime = DateTime.Now;
-                                notify.IsDeleted = true;
+                                //notify.IsDeleted = true;
+                                notify.IsRead = false;  // Added 12thNov
 
                                 var updateResult = await _notificationRepository.UpdateNotification(notify);
                                 if (updateResult)
@@ -280,6 +296,29 @@ namespace swas.UI.Controllers
             else
             {
                 return Redirect("/Identity/Account/login");
+            }
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetNotificationCountForChat()
+        {
+            int count = 0;
+            try
+            {
+                string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var data = await _trnChatMsg.GetIsChat(id);
+                if (data != null && data.Count > 0)
+                {
+                    count = data.Count;
+                }
+                return new JsonResult(count);
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult(new { message = ex.Message })
+                {
+                    StatusCode = 500
+                };
             }
         }
     }

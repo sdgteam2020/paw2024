@@ -12,5 +12,6 @@ namespace swas.BAL.DTO
 		public string FromUserID { get; set; }
 		public int Total { get; set; }
 		public DateTime CreatedOn { get; set; }
+		public string? sorton { get; set; }
 	}
 }
