@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using BAL;
 using swas.BAL.DTO;
+using swas.DAL.Logger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -160,10 +161,12 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.CheckConsentNeeded = context => true;
 });
 
-//builder.Services.AddSession(options => {
-//    options.IdleTimeout = TimeSpan.FromMinutes(15);
-//});
 
+builder.Services.AddHttpContextAccessor();
+
+// Configure logging to use the custom database logger provider
+builder.Logging.ClearProviders();
+builder.Logging.AddProvider(new DbLoggerProvider(builder.Services.BuildServiceProvider()));
 
 var app = builder.Build();
 

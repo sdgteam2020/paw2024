@@ -17,6 +17,8 @@
     bool isAdmin = User.Identity.IsAuthenticated && User.IsInRole("Dte");
 }
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -138,6 +140,10 @@
 
         .srno {
             width: 33.625px;
+        }
+
+        body {
+            font-weight: bold !important;
         }
     </style>
 
@@ -1576,7 +1582,7 @@
                 </div>
             </div>
         </div>
-        <span id="isclaneder">@Logins.cla</span>
+        <span id="isclaneder">Logins.cla</span>
 
         @if (Logins != null && Logins.Role == "Dte")
         {

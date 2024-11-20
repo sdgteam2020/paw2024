@@ -3,6 +3,7 @@ using ASPNetCoreIdentityCustomFields.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using swas.DAL.Logger;
 using swas.DAL.Models;
 
 namespace swas.DAL
@@ -60,6 +61,9 @@ namespace swas.DAL
         public DbSet<mUserMapChat> mUserMapChat { get; set; }
         public DbSet<TrnChatMsg> TrnChatMsg { get; set; }
         public DbSet<mCalendar> mCalendar { get; set; }
+
+        public DbSet<LogEntry> Errors { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Resultss>().HasNoKey();

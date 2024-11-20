@@ -333,7 +333,7 @@ function AddProject(thistag) {
 
                 Swal.fire({
                     title: "Error!",
-                    text: "Project Name Already Exit!",
+                    text: "Project Name Already Exists!",
                     icon: "Error"
                 });
 

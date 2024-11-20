@@ -15,7 +15,8 @@
         success: function (response) {
             if (response != "null" && response != null) {
                 if (response == 0) {
-                    listItemddl += '<option value="">Please Select</option>';
+                    listItemddl += '<option  Value = "", Disabled = true, Selected = true>--Select--</option>';
+                   /* listItemddl += '<option value="">Please Select</option>';*/
                     $("#" + ddl + "").html(listItemddl);
                 }
 
@@ -23,7 +24,8 @@
 
                     var listItemddl = "";
                    
-                        listItemddl += '<option value="">Please Select</option>';
+                    /* listItemddl += '<option value="">Please Select</option>';*/
+                    listItemddl += '<option  Value = "", Disabled = true, Selected = true>--Select--</option>';
                     
 
                     for (var i = 0; i < response.length; i++) {

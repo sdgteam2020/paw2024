@@ -21,6 +21,7 @@ namespace swas.BAL.Interfaces
 
         Task<List<ActionsSeq>> GetActionresp();
 
+        Task<List<DTODDLComman>> ProjMovement_GetActionByStatusIdlogin(int StatusId, int UnitId);
 
     }
 }

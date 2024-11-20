@@ -62,8 +62,8 @@ namespace swas.UI.Controllers
         private System.Timers.Timer aTimer;
         private readonly IStkCommentRepository _stkCommentRepository;
         private readonly IProjStakeHolderMovRepository _stkholdmove;
-        
 
+        private readonly IUnitRepository _unitRepository;
         private readonly IConfiguration _configuration;
 
         public ProjectsController(IProjectsRepository projectsRepository, IDdlRepository ddlRepository,
@@ -74,7 +74,7 @@ namespace swas.UI.Controllers
             ICommentRepository commentRepository, IActionsRepository actionsRepository,
             IProjComments projComments, IStkCommentRepository stkCommentRepository,
             IProjStakeHolderMovRepository projStakeHolderMovRepository,
-            UserManager<ApplicationUser> userManager , IConfiguration configuration
+            UserManager<ApplicationUser> userManager , IUnitRepository unitRepository, IConfiguration configuration
             
 
             )
@@ -96,7 +96,7 @@ namespace swas.UI.Controllers
             _stkCommentRepository = stkCommentRepository;
             _projStakeHolderMovRepository = projStakeHolderMovRepository;
             _userManager = userManager;
-
+            _unitRepository = unitRepository;
             _configuration = configuration;
             
         }
@@ -249,29 +249,31 @@ namespace swas.UI.Controllers
         {
             try
             {
+                
+
                 var options = _configuration.GetSection("WhitelistStatusOptions").Get<List<SelectListItem>>();
-                options.Insert(0, new SelectListItem { Text = "--Select--", Value = "" });
+                options.Insert(0, new SelectListItem { Text = "--Select--", Value = "", Disabled = true, Selected = true });
                 ViewBag.WhitelistOptions = options;
 
 
                 var TypeofSW = _configuration.GetSection("TypeofSWOptions").Get<List<SelectListItem>>();
-                TypeofSW.Insert(0, new SelectListItem { Text = "--Select--", Value = "" });
+                TypeofSW.Insert(0, new SelectListItem { Text = "--Select--", Value = "", Disabled = true, Selected = true });
                 ViewBag.TypeofSWOption = TypeofSW;
 
                 var BeingDevpInhouse = _configuration.GetSection("BeingDevpInhouseOptions").Get<List<SelectListItem>>();
-                BeingDevpInhouse.Insert(0, new SelectListItem { Text = "--Select--", Value = "" });
+                BeingDevpInhouse.Insert(0, new SelectListItem { Text = "--Select--", Value = "", Disabled = true, Selected = true });
                 ViewBag.BeingDevpInhouseOption = BeingDevpInhouse;
 
 
                 var EndorsmentbyHeadof = _configuration.GetSection("EndorsmentbyHeadofOptions").Get<List<SelectListItem>>();
-                EndorsmentbyHeadof.Insert(0, new SelectListItem { Text = "--Select--", Value = "" });
+                EndorsmentbyHeadof.Insert(0, new SelectListItem { Text = "--Select--", Value = "", Disabled = true, Selected = true });
                 ViewBag.EndorsmentbyHeadofOption = EndorsmentbyHeadof;
-
-
-
 
                 var notificationContent = _configuration.GetSection("NotificationContent").Get<NotificationContent>();
                 ViewBag.NotificationContent = notificationContent;
+
+
+               
 
                 int ids = 0;
                 if (id != null)
@@ -1425,38 +1427,46 @@ namespace swas.UI.Controllers
             data.ProjId = psmove.ProjId;
             data.StatusActionsMappingId = psmove.StatusActionsMappingId;
             data.Remarks = psmove.Remarks;
-            data.FromUnitId = Logins.unitid ?? 0;
             data.ToUnitId = psmove.ToUnitId;
-            data.UserDetails = Helper.LoginDetails(Logins);
             data.UpdatedByUserId = Logins.UserIntId;
             data.DateTimeOfUpdate = psmove.TimeStamp;
             data.IsActive = true;
             data.EditDeleteDate = psmove.TimeStamp;
             data.EditDeleteBy = Logins.UserIntId;
             data.TimeStamp = psmove.TimeStamp;
-            data.IsComplete = false;
-            data.IsComment = false;
 
-            // Save the current psmove record
             var Ret = await _psmRepository.UpdateWithReturn(data);
 
             if (Ret != null)
             {
-              
+
                 var nextPsmMove = await _projectsRepository.GetNextPsmMoveAsync(psmove.ProjId, psmove.PsmId);
-                
+
 
                 if (nextPsmMove != null)
                 {
-                    // Update the FromUnitId of the next psmId based on the current ToUnitId
+
+                    UnitDtl unitDetail = new UnitDtl();
+                    unitDetail = await _unitRepository.GetUnitDtl(psmove.ToUnitId);
+                    if (unitDetail != null)
+                    {
+                        ApplicationUser userdet = await _userManager.FindByNameAsync(unitDetail.UnitName);
+                        if (userdet != null)
+                        {
+                            nextPsmMove.UserDetails = Helper.UserInfoDetails(userdet);
+                        }
+
+                    }
+
                     nextPsmMove.FromUnitId = psmove.ToUnitId;
 
-                    // Save the updated next psmMove record
                     await _psmRepository.UpdateWithReturn(nextPsmMove);
                 }
 
                 return Json(Ret);
             }
+
+
             else
             {
                 return Json(nmum.NotSave);

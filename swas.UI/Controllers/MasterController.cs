@@ -157,6 +157,13 @@ namespace swas.UI.Controllers
                     return Json(ret);
 
                 }
+                else if (id == Mastertablenmumcs.ProjMovement_mActions)
+                {
+                    var ret = await _actionsRepository.ProjMovement_GetActionByStatusIdlogin(ParentId, Convert.ToInt32(Logins.unitid));
+                    return Json(ret);
+
+                }
+
 
                 else if (id == Mastertablenmumcs.mMappingActionsException)
                 {

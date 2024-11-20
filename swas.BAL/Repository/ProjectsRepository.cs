@@ -501,7 +501,7 @@ namespace swas.BAL.Repository
         }
         public async Task<bool> ProjectNameExists(tbl_Projects project)
         {
-            var ret =await _dbContext.Projects.AnyAsync(i => i.ProjName.ToUpper() == project.ProjName.ToUpper() && i.ProjId != project.ProjId);
+            var ret =await _dbContext.Projects.AnyAsync(i => i.ProjName.Trim().ToUpper() == project.ProjName.Trim().ToUpper() && i.ProjId != project.ProjId);
             return ret;
         }
         public async Task<int> AddProjectAsync(tbl_Projects project)

@@ -1,14 +1,18 @@
 ﻿var table1 = $('#HeldTable').DataTable({
     lengthChange: true,
+    retrieve: true,
+    bDestroy: true,
+
+    searching: true,
+    stateSave: true,
+    /*"order": [[0, "asc"]],*/
+    order: [[1, 'desc']],
+    "ordering": true,
+    "paging": true,
     dom: 'lBfrtip',
-    pageLength: -1, // Show all entries by default
-    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
     buttons: [
-        { extend: "excel", className: "buttonsToHide" },
-        { extend: "pdf", className: "buttonsToHide" },
-        { extend: "print", className: "buttonsToHide" }
+        'excel'
     ],
-    
     searchBuilder: {
         conditions: {
             num: {

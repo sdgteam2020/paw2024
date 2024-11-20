@@ -222,6 +222,78 @@ namespace swas.BAL.Repository
             
         }
 
+
+        public async Task<List<DTODDLComman>> ProjMovement_GetActionByStatusIdlogin(int StatusId, int UnitId)
+        {
+            List<DTODDLComman> lst = new List<DTODDLComman>();
+            var acttoallow = (from map in _dbContext.TrnStatusActionsMapping
+                              join sts in _dbContext.TrnUnitStatusMapping on map.StatusActionsMappingId equals sts.StatusActionsMappingId
+                              join act in _dbContext.mActions on map.ActionsId equals act.ActionsId
+                              where map.StatusId == StatusId && map.IsActive == true
+                              orderby act.OrderBy
+                              select new DTOActionAllow
+                              {
+                                  ActionsId = map.StatusActionsMappingId,
+                                  UnitId = sts.UnitId
+                              });
+
+
+            var ret = await (from act in _dbContext.mActions
+                             join map in _dbContext.TrnStatusActionsMapping on act.ActionsId equals map.ActionsId
+                             where map.StatusId == StatusId && map.IsActive == true
+                             orderby act.OrderBy
+                             select new DTODDLComman
+                             {
+                                 Id = map.StatusActionsMappingId,
+                                 Name = act.ActionDesc,
+                             }
+              ).ToListAsync();
+
+
+
+
+            lst = ret;
+            //.Where(i => i.UnitId == UnitId)
+            var ret1 = acttoallow.ToList();
+            if (ret1.Count() == 0)
+            {
+                foreach (var item in acttoallow)
+                {
+                    DTODDLComman db = new DTODDLComman();
+                    db = lst.Where(i => i.Id == item.ActionsId).FirstOrDefault();
+                    lst.Remove(db);
+                }
+
+            }
+            //.Where(i => i.UnitId != UnitId)
+            var ret2 = acttoallow.ToList();
+
+            if (ret2.Count() > 0)
+            {
+                foreach (var item in ret2)
+                {
+                    DTODDLComman db = new DTODDLComman();
+                    var ert = ret1.Where(i => i.ActionsId == item.ActionsId).FirstOrDefault();
+                    if (ert == null)
+                    {
+                        db = lst.Where(i => i.Id == item.ActionsId).FirstOrDefault();
+
+                        lst.Remove(db);
+                    }
+                }
+
+            }
+
+            return lst;
+
+
+            //return await query.ToListAsync();
+        }
+
+
+
+
+
     }
 
 

@@ -1537,5 +1537,29 @@ s.IsDashboard,
         }
 
 
+
+        public IActionResult SOPDownload()
+        {
+            try
+            {
+                string inputPdfPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/SOP/dgis.pdf");
+                string ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+                string outputFileName = generate3(inputPdfPath, ipAddress);
+                if (string.IsNullOrEmpty(outputFileName))
+                {
+                    return View("Error");
+                }
+                string outputFilePath = Path.Combine(_env.ContentRootPath, "wwwroot/Download", outputFileName + ".pdf");
+                var fileStream = new FileStream(outputFilePath, FileMode.Open, FileAccess.Read);
+                return new FileStreamResult(fileStream, "application/pdf");
+                
+            }
+            catch
+            {
+                return View("Error");
+            }
+        }
+
+
     }
 }

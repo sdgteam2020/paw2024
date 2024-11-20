@@ -53,8 +53,10 @@ function ProjectWiseStatus() {
 
                             }
                             listItem += '<tr>';
-                            listItem += '<td class="clsspnprojId d-none">' + MovProjectlst[j].projId + '</td>';
                             listItem += '<td class="align-middle text-center">' + count + '</td>';
+                            listItem += '<td class="clsspnprojId d-none">' + MovProjectlst[j].projId + '</td>';
+                            //listItem += '<td class="clsspnprojId d-none">' + MovProjectlst[j].projId + '</td>';
+                            //listItem += '<td class="align-middle text-center">' + count + '</td>';
                             listItem += '<td class="btn-clsprojName">' + MovProjectlst[j].projName + '</td>';
 
                             for (var i = 0; i < StatusProjectlst.length; i++) {
@@ -94,8 +96,9 @@ function ProjectWiseStatus() {
 
                         searching: true,
                         stateSave: true,
+                        order: [[0, 'asc']],
                         /*"order": [[0, "asc"]],*/
-                        order: [[1, 'desc']],
+                        /*order: [[1, 'desc']],*/
                         "ordering": true,
                         "paging": true,
                         dom: 'lBfrtip',

@@ -4,10 +4,17 @@
     $("#ddlfwdStage").change(function () {
         mMsaterStage(0, "ddlfwdSubStage", 6, $("#ddlfwdStage").val(), 0)
     });
+    //$("#ddlfwdSubStage").change(function () {
+
+    //    mMsater(0, "ddlfwdAction", 7, $("#ddlfwdSubStage").val())
+    //});
+
     $("#ddlfwdSubStage").change(function () {
 
-        mMsater(0, "ddlfwdAction", 7, $("#ddlfwdSubStage").val())
+        mMsater(0, "ddlfwdAction", 11, $("#ddlfwdSubStage").val())
     });
+
+
     $("#ddlfwdAction").change(function () {
 
         mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html());
@@ -102,7 +109,7 @@
                 console.log(response);
                 if (response != null) {
                     /*$("#spanEditPslmId").html(response.psmId);*/
-                    FwdProjConfirm(CurrentPslmId);
+                    //FwdProjConfirm(CurrentPslmId);
                     $(".Fwdtitle").html("Projects Attch Details");
                     $(".ProjectsFwd").addClass("d-none");
                     $(".Attmenthistory").removeClass("d-none");
@@ -117,7 +124,6 @@
 
     $("#btnAttchMultiforpsmid").click(function () {
 
-        alert("Amit3");
         requiredFields = $('#ProjFwd').find('.requiredFieldAttch');
         var allFieldsComplete = true;
         requiredFields.each(function (index) {
@@ -167,6 +173,7 @@ function UploadFiles() {
         formData.append("uploadfile", file);
         formData.append("Reamarks", $("#Reamarks").val());
         formData.append("PsmId", $("#spanEditPslmId").html());
+
     }
 
     $.ajax({
@@ -330,11 +337,10 @@ function Deleteattechment(AttechId) {
         }
     });
 }
-function GetProjectMovement(ProjectId)
-{
+function GetProjectMovement(ProjectId) {
 
-        var listItem = "";
-     
+    var listItem = "";
+
     $.ajax({
         url: '/Projects/GetProjectMov',
         type: 'Post',
@@ -342,7 +348,7 @@ function GetProjectMovement(ProjectId)
             "Id": ProjectId
         },
         success: function (response) {
-           
+
             console.log(response);
             if (response != "null" && response != null) {
 
@@ -362,7 +368,7 @@ function GetProjectMovement(ProjectId)
                 else {
                     var count = 1;
                     for (var i = 0; i < response.length; i++) {
-                        
+
                         listItem += "<tr>";
                         listItem += "<td class='d-none'><span id='spnpsmId' class='d-none'>" + response[i].psmIds + "</span><span id='spneditstakeHolderId' class='d-none'>" + response[i].stakeHolderId + "</span>";
                         listItem += "<span id='spnStageId' class='d-none'>" + response[i].stageId + "</span>";
@@ -370,9 +376,9 @@ function GetProjectMovement(ProjectId)
                         listItem += "<span id='spnStatusId' class='d-none'>" + response[i].statusId + "</span>";
                         listItem += "<span id='spnActionId' class='d-none'>" + response[i].actionId + "</span>";
                         listItem += "<span id='spnToUnitId' class='d-none'>" + response[i].toUnitId + "</span>";
-                       
+
                         listItem += "</td>";
-                        listItem += "<td>" + count +"</td>";
+                        listItem += "<td>" + count + "</td>";
                         listItem += "<td class=''><span id='spnDate' class='d-none'>" + response[i].dateTimeOfUpdate + "</span><span id=''>" + DateFormateddMMyyyyhhmmss(response[i].dateTimeOfUpdate) + "</span></td>";
                         listItem += "<td class='align-middle'><span id='FromUnitName'>" + response[i].fromUnitName + "</span></td>";
                         listItem += "<td class='align-middle'><span id='FromUnitName'>" + response[i].toUnitName + "</span></td>";
@@ -380,6 +386,16 @@ function GetProjectMovement(ProjectId)
                         listItem += "<td class='align-middle'><span id='FromUnitName'>" + response[i].status + "</span></td>";
                         listItem += "<td class='align-middle'><span id='FromUnitName'>" + response[i].action + "</span></td>";
                         listItem += "<td class='align-middle'><span id='spnremarks'>" + response[i].remarks + "</span></td>";
+
+                        if (response[i].attCnt > 0) {
+                            listItem += "<td><a href='javascript:void(0);' class='anchorDetail' data-id='" + response[i].psmIds + "'>" +
+                                "<img src='/assets/images/icons/attachemnts_clip.png' alt='Icon' style='width: 31px; height: 29px; margin-right: 0px;'>" +
+                                "</a></td>";
+                        } else {
+                            listItem += "<td></td>"; // Add an empty cell when there's no attachment
+                        }
+
+
                         listItem += "<td class='align-middle'><span id='FromUnitName'><span class='btn btn-primary cls-btnedit'>Edit</span></td>";
 
 
@@ -404,7 +420,7 @@ function GetProjectMovement(ProjectId)
                             'copy',
                             'excel',
                             'csv',
-                           
+
                         ],
                         searchBuilder: {
                             conditions: {
@@ -448,11 +464,12 @@ function GetProjectMovement(ProjectId)
                         $("#TimeStampToProjfwd").val($(this).closest("tr").find("#spnDate").html());
                         $("#SpnFwdStakeHolderId").html($(this).closest("tr").find("#spneditstakeHolderId").html());
 
-                        
+
 
                         mMsaterfwdStage($(this).closest("tr").find("#spnStageId").html(), "ddlfwdStage", 5, 0, 1)
                         mMsaterStage($(this).closest("tr").find("#spnStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#spnStageId").html(), 0)
-                        mMsater($(this).closest("tr").find("#spnActionId").html(), "ddlfwdAction", 7, $(this).closest("tr").find("#spnStatusId").html())
+                        /*mMsater($(this).closest("tr").find("#spnActionId").html(), "ddlfwdAction", 7, $(this).closest("tr").find("#spnStatusId").html())*/
+                        mMsater($(this).closest("tr").find("#spnActionId").html(), "ddlfwdAction", 11, $(this).closest("tr").find("#spnStatusId").html())
                         mMsaterFwdTo($(this).closest("tr").find("#spnToUnitId").html(), "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html(), $(this).closest("tr").find("#spnToUnitId").html());
 
                     });
@@ -465,9 +482,42 @@ function GetProjectMovement(ProjectId)
 
     }
     );
-    
+
 }
 
 
 
+
+var TeamDetailPostBackURL = '/Projects/AttDetails';
+$(document).on('click', '.anchorDetail', function () {
+    
+
+    var $buttonClicked = $(this);
+    var id = $buttonClicked.attr('data-id');
+    console.log('PsmId:', id); // Check if id is correct
+
+    if (!id) {
+        alert("No PsmId found.");
+        return;
+    }
+
+    //var $buttonClicked = $(this);
+    //var id = $buttonClicked.attr('data-id');
+    var options = { "backdrop": "static", keyboard: true };
+    $.ajax({
+        type: "GET",
+        url: TeamDetailPostBackURL,
+        contentType: "application/json; charset=utf-8",
+        data: { "Id": id },
+        datatype: "json",
+        success: function (data) {
+            $('#myModalContent').html(data);
+            $('#myModal').modal(options);
+            $('#myModal').modal('show');
+        },
+        error: function () {
+            alert("Dynamic content load failed.");
+        }
+    });
+});
 

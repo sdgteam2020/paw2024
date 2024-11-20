@@ -56,7 +56,7 @@ namespace swas.BAL.Repository
                                join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
                                join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
 
-                               where b.ProjId == ProjectId
+                               where b.ProjId == ProjectId  & b.IsComment == false
                                orderby b.TimeStamp descending
                                select new DTOProjectsFwd
                                {
@@ -74,9 +74,11 @@ namespace swas.BAL.Repository
                                    ToUnitId=tounit.unitid,
                                    DateTimeOfUpdate = b.TimeStamp,
                                    Remarks = b.Remarks,
-                                   StakeHolderId=a.StakeHolderId
+                                   StakeHolderId=a.StakeHolderId,
+                                   IsComment = b.IsComment,
+                                   AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == b.PsmId)
 
-                               }).ToListAsync();
+							   }).ToListAsync();
         
 
             return query;

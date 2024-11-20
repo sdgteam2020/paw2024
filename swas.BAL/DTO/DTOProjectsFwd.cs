@@ -44,5 +44,9 @@ namespace swas.BAL.DTO
 
         public bool IsCommentRead { get; set; }
 
+		public int? AttCnt { get; set; }
+
+        public bool IsComment { get; set; }
+
     }
 }
