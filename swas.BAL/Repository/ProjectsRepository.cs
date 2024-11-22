@@ -800,8 +800,6 @@ namespace swas.BAL.Repository
                             where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true && b.IsComplete == false
                             && b.ToUnitId == Logins.unitid && b.IsComment == false
 
-                            orderby b.TimeStamp descending
-
                             select new DTOProjectsFwd
                             {
                                 ProjId = a.ProjId,
@@ -841,7 +839,7 @@ namespace swas.BAL.Repository
                                 TimeStamp = b.TimeStamp
                             };
 
-                var projectsWithDetails = await query.ToListAsync();
+                var projectsWithDetails = await query.OrderByDescending(x => x.ProjId).ToListAsync();
 
                 return projectsWithDetails;
             }

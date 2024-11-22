@@ -1636,14 +1636,15 @@ namespace swas.UI.Controllers
                     // Update IsRead to false for all records
                     //foreach (var comment in inboxComments)
                     //{
-                    inboxComments.DateTimeOfUpdate = DateTime.Now;
-                    if(inboxComments.IsRead==false)
+                    if (inboxComments != null)
                     {
-                        inboxComments.IsRead = true;
-                        await _projectsRepository.UpdateTxnAsync(inboxComments);
+                        inboxComments.DateTimeOfUpdate = DateTime.Now;
+                        if (inboxComments.IsRead == false)
+                        {
+                            inboxComments.IsRead = true;
+                            await _projectsRepository.UpdateTxnAsync(inboxComments);
+                        }
                     }
-                    //}
-
                     return Json(ProjId);
                 }
                 catch (Exception ex)

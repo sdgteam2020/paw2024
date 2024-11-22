@@ -139,13 +139,36 @@
         //GetAllComments($(this).closest("tr").find("#SpnCurrentProjId").html());
     });
 
+<<<<<<< Updated upstream
     $(".ProjName").click(function () {
+=======
+    $("#ProjectName").click(function () {
+      
+>>>>>>> Stashed changes
         var row = $(this).closest('tr');
-        IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
+        IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());  
         IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
+<<<<<<< Updated upstream
 
 
+=======
+        $(this).closest("tr").removeClass("bold-text")
+        window.location.reload();
+
+
+
+        /*$(this).closest("tr").removeClass("bold-text");*/
+>>>>>>> Stashed changes
     });
+
+    //$(".ProjName").click(function () {
+    //    debugger;
+    //    var row = $(this).closest("tr");
+    //    var currentPsmIdElement = row.find("#SpnCurrentpsmId");
+    //    console.log("Divyanshu",currentPsmIdElement); // Check if the element is found
+    //    console.log("DivyanshuHtml",currentPsmIdElement.html()); // Check the content of the element
+    //});
+
     $("#btn-ibutton").click(function () {
         $('#Projibutton').modal('show');
     });

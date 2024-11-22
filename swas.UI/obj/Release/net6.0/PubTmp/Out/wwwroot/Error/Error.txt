@@ -1,0 +1,900 @@
+    .GroupBy(n => n.ProjId)
+    .SelectMany(g => g
+        .AsQueryable()
+        .OrderByDescending(n => n.NotificationId)
+        .Take(1))' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 15:12:00
+The LINQ expression 'DbSet<tbl_ProjStakeHolderMov>()
+    .Where(n => n.IsComment == False && n.PsmId != __psmId_0)
+    .GroupBy(n => n.ProjId)
+    .SelectMany(g => g
+        .AsQueryable()
+        .OrderByDescending(n => n.PsmId)
+        .Take(1))' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 15:17:37
+The LINQ expression 'DbSet<Notification>()
+    .Where(n => n.NotificationType == 2 && (int?)n.NotificationTo != __unitId_0 && n.IsDeleted == False)
+    .GroupBy(n => n.ProjId)
+    .SelectMany(g => g
+        .AsQueryable()
+        .OrderByDescending(n => n.NotificationId)
+        .Take(1))' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 15:19:52
+The LINQ expression 'DbSet<tbl_ProjStakeHolderMov>()
+    .Where(n => n.IsComment == False && n.PsmId != __psmId_0)
+    .GroupBy(n => n.ProjId)
+    .SelectMany(g => g
+        .AsQueryable()
+        .OrderByDescending(n => n.PsmId)
+        .Take(1))' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 15:21:39
+The LINQ expression 'DbSet<Notification>()
+    .Where(n => n.NotificationType == 2 && (int?)n.NotificationTo != __unitId_0 && n.IsDeleted == False)
+    .GroupBy(n => n.ProjId)
+    .SelectMany(g => g
+        .AsQueryable()
+        .OrderByDescending(n => n.NotificationId)
+        .Take(1))' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 15:25:28
+The LINQ expression 'DbSet<Notification>()
+    .Where(n => n.NotificationType == 2 && (int?)n.NotificationTo != __unitId_0 && n.IsDeleted == False)
+    .GroupBy(n => n.ProjId)
+    .SelectMany(g => g
+        .AsQueryable()
+        .OrderByDescending(n => n.NotificationId)
+        .Take(1))' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 15:28:19
+The LINQ expression 'DbSet<Notification>()
+    .Where(n => n.NotificationType == 2 && (int?)n.NotificationTo != __unitId_0 && n.IsDeleted == False)
+    .GroupBy(n => n.ProjId)
+    .SelectMany(g => g
+        .AsQueryable()
+        .OrderByDescending(n => n.NotificationId)
+        .Take(1))' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 17:49:36
+This SqlTransaction has completed; it is no longer usable.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 17:49:41
+An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 17:49:43
+An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 17:49:45
+This SqlTransaction has completed; it is no longer usable.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 17:49:45
+An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 17:49:46
+An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+=======
+Date : 02-09-2024 11:44:41
+String '07-12-2024 00:00:00' was not recognized as a valid DateTime.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 11:44:41
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 02-09-2024 11:44:47
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:04:33
+String '07/02/1993' was not recognized as a valid DateTime.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:04:33
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:06:24
+String '07-12-2024 00:00:00' was not recognized as a valid DateTime.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:06:24
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:12:25
+String '07/12/2024' was not recognized as a valid DateTime.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:12:25
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:56:14
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:56:17
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:56:19
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:56:22
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:56:25
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:56:28
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:56:32
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:56:53
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:56:56
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:57:02
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:57:22
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:57:39
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:57:51
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:57:55
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:58:30
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:59:07
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:59:42
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 12:59:56
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 13:00:09
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 13:00:26
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 13:02:09
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 13:02:11
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 13:04:22
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 02-09-2024 13:04:43
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 09:33:30
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+>>>>>>> c12ffe46dd019a371d81822a7354313b62a04766
+-----------------------------------------------------------------------------
+Date : 03-09-2024 11:08:56
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 11:52:50
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 11:53:55
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 11:54:17
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 11:55:40
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 11:55:40
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 11:56:03
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 11:56:03
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 11:56:36
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 11:56:36
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 11:58:03
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 11:58:03
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 11:58:06
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 11:58:06
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 11:58:17
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 11:58:17
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 12:05:55
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 12:06:07
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 12:06:17
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 12:06:29
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 12:06:39
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 12:06:45
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 12:07:55
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 12:08:11
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 16:24:10
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 16:24:18
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 16:24:57
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 03-09-2024 16:25:05
+Invalid column name 'IsDeleted'.
+Invalid column name 'IsDeleted'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 09:36:24
+Invalid column name 'NotificationType'.
+Invalid column name 'NotificationType'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 09:36:24
+Invalid column name 'NotificationType'.
+Invalid column name 'NotificationType'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 09:36:35
+Invalid column name 'NotificationType'.
+Invalid column name 'NotificationType'.
+Invalid column name 'NotificationType'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 09:36:48
+Invalid column name 'NotificationType'.
+Invalid column name 'NotificationType'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 09:36:48
+Invalid column name 'NotificationType'.
+Invalid column name 'NotificationType'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 09:36:52
+Invalid column name 'NotificationType'.
+Invalid column name 'NotificationType'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 09:36:52
+Invalid column name 'NotificationType'.
+Invalid column name 'NotificationType'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 11:10:21
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 11:10:29
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 11:11:29
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 11:11:29
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 11:21:06
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 11:21:09
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 11:21:10
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 04-09-2024 11:21:28
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 11:21:28
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 04-09-2024 11:21:37
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 11:21:37
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 04-09-2024 11:21:50
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 11:21:51
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 04-09-2024 11:22:04
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 11:22:04
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 04-09-2024 11:22:11
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 11:22:11
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 04-09-2024 14:20:45
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 14:20:45
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 04-09-2024 14:22:47
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 14:23:03
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 14:25:24
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 14:25:24
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 04-09-2024 14:26:47
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 04-09-2024 14:27:04
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-09-2024 12:03:33
+A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SNI_PN11, error: 26 - Error Locating Server/Instance Specified)
+-----------------------------------------------------------------------------
+Date : 05-09-2024 12:03:56
+A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SNI_PN11, error: 26 - Error Locating Server/Instance Specified)
+-----------------------------------------------------------------------------
+<<<<<<< HEAD
+Date : 11-09-2024 10:00:02
+This SqlTransaction has completed; it is no longer usable.
+=======
+Date : 05-09-2024 15:46:26
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 05-09-2024 15:46:26
+Request failed & Status Code : 200
+>>>>>>> ea0e6f499d6a9b31302a84c03f86283025c81f52
+-----------------------------------------------------------------------------
+Date : 12-09-2024 11:18:58
+Unable to cast object of type 'System.Int32' to type 'System.String'.
+-----------------------------------------------------------------------------
+Date : 12-09-2024 11:18:58
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 12-09-2024 11:19:48
+Unable to cast object of type 'System.Int32' to type 'System.String'.
+-----------------------------------------------------------------------------
+Date : 12-09-2024 11:19:48
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 24-09-2024 11:55:11
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 12:32:32
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 12:34:11
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 12:34:16
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 12:34:18
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 12:34:19
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 12:34:19
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 13:38:07
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 13:42:55
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 13:43:12
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 13:47:41
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 13:55:32
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 14:17:02
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 14:18:55
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\DownloadFile\854.pdf'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 14:23:13
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 14:31:39
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 14:33:13
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 14:36:34
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 14:38:23
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 14:40:09
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 14:41:16
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 14:50:01
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 14:59:42
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 14:59:46
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 15:02:16
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 15:03:06
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 24-09-2024 17:29:59
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 25-09-2024 09:59:05
+Could not find a part of the path 'C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\PDF'.
+-----------------------------------------------------------------------------
+Date : 30-09-2024 09:46:36
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 30-09-2024 09:46:36
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 30-09-2024 09:46:58
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 30-09-2024 09:46:58
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 30-09-2024 09:47:07
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 30-09-2024 09:47:07
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 10-10-2024 14:30:24
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 10-10-2024 14:30:24
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 10-10-2024 14:39:00
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 10-10-2024 14:39:00
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 10-10-2024 14:41:09
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 10-10-2024 14:41:09
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 10-10-2024 14:45:08
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 10-10-2024 14:45:08
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-10-2024 17:27:01
+C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot/SOP/dgis.pdf not found as file or resource.
+-----------------------------------------------------------------------------
+Date : 17-10-2024 17:28:54
+C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot/SOP/dgis.pdf not found as file or resource.
+-----------------------------------------------------------------------------
+Date : 17-10-2024 17:29:03
+C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot/SOP/dgis.pdf not found as file or resource.
+-----------------------------------------------------------------------------
+Date : 17-10-2024 17:29:08
+C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot/SOP/dgis.pdf not found as file or resource.
+-----------------------------------------------------------------------------
+Date : 18-10-2024 09:16:27
+C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot/SOP/dgis.pdf not found as file or resource.
+-----------------------------------------------------------------------------
+Date : 18-10-2024 09:22:15
+C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot/SOP/dgis.pdf not found as file or resource.
+-----------------------------------------------------------------------------
+Date : 18-10-2024 09:22:22
+C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot/SOP/dgis.pdf not found as file or resource.
+-----------------------------------------------------------------------------
+Date : 18-10-2024 09:22:27
+C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot/SOP/dgis.pdf not found as file or resource.
+-----------------------------------------------------------------------------
+Date : 18-10-2024 09:22:29
+C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot/SOP/dgis.pdf not found as file or resource.
+-----------------------------------------------------------------------------
+Date : 18-10-2024 09:22:33
+C:\Users\Administrator\Desktop\paw_24Sep2024\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot/SOP/dgis.pdf not found as file or resource.
+-----------------------------------------------------------------------------
+Date : 21-10-2024 14:24:19
+C:\Users\Administrator\Desktop\paw_21 Oct 2024 1016Hrs\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\Uploads\Swas_861559e0-2f6b-4e12-84e2-bcc0274b3e2d.pdf not found as file or resource.
+-----------------------------------------------------------------------------
+Date : 21-10-2024 14:33:10
+C:\Users\Administrator\Desktop\paw_21 Oct 2024 1016Hrs\final paw code 12Sep 24_1632Hrs\swas.UI\wwwroot\Uploads\Swas_861559e0-2f6b-4e12-84e2-bcc0274b3e2d.pdf not found as file or resource.
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:55:04
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:55:04
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:55:06
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:55:06
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:55:08
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:55:08
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:55:10
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:55:10
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:55:11
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:55:11
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:55:12
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:55:12
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:55:13
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:55:13
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:55:17
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:55:17
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:55:19
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:55:19
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:55:23
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:55:23
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:57:25
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:57:27
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:57:27
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:57:28
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:57:28
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:57:30
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:57:30
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:58:19
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:58:19
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:58:25
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:58:25
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:58:31
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:58:31
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:58:35
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 23-10-2024 15:58:35
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 10/25/2024 12:02:13 PM
+A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SNI_PN11, error: 26 - Error Locating Server/Instance Specified)
+-----------------------------------------------------------------------------
+Date : 10/25/2024 12:02:17 PM
+A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SNI_PN11, error: 26 - Error Locating Server/Instance Specified)
+-----------------------------------------------------------------------------
+Date : 10/25/2024 12:02:33 PM
+A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SNI_PN11, error: 26 - Error Locating Server/Instance Specified)
+-----------------------------------------------------------------------------
+Date : 10/25/2024 12:02:33 PM
+A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SNI_PN11, error: 26 - Error Locating Server/Instance Specified)
+-----------------------------------------------------------------------------
+Date : 10/25/2024 12:03:02 PM
+A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SNI_PN11, error: 26 - Error Locating Server/Instance Specified)
+-----------------------------------------------------------------------------
+Date : 10/25/2024 12:07:27 PM
+A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SNI_PN11, error: 26 - Error Locating Server/Instance Specified)
+-----------------------------------------------------------------------------
+Date : 10/25/2024 12:09:49 PM
+This SqlTransaction has completed; it is no longer usable.
+-----------------------------------------------------------------------------
+Date : 10/25/2024 12:40:00 PM
+'System.Dynamic.DynamicObject' does not contain a definition for 'stageNamesList'
+-----------------------------------------------------------------------------
+Date : 10/25/2024 12:40:00 PM
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 10/25/2024 12:43:34 PM
+'System.Dynamic.DynamicObject' does not contain a definition for 'stageNamesList'
+-----------------------------------------------------------------------------
+Date : 10/25/2024 12:43:34 PM
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 11/1/2024 11:52:45 AM
+Session has not been configured for this application or request.
+-----------------------------------------------------------------------------
+Date : 11/1/2024 11:52:45 AM
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 11/1/2024 11:52:53 AM
+Session has not been configured for this application or request.
+-----------------------------------------------------------------------------
+Date : 11/1/2024 11:52:53 AM
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 11/1/2024 11:53:10 AM
+Session has not been configured for this application or request.
+-----------------------------------------------------------------------------
+Date : 11/1/2024 11:53:10 AM
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 11/1/2024 11:54:36 AM
+Session has not been configured for this application or request.
+-----------------------------------------------------------------------------
+Date : 11/1/2024 11:54:36 AM
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 11/1/2024 11:56:24 AM
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 11/1/2024 11:56:28 AM
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 11/1/2024 11:56:32 AM
+Session has not been configured for this application or request.
+-----------------------------------------------------------------------------
+Date : 11/1/2024 11:56:32 AM
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 11/1/2024 12:17:22 PM
+An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+-----------------------------------------------------------------------------
+Date : 11-11-2024 15:18:12
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 11-11-2024 15:37:49
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 11-11-2024 15:37:49
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 21-11-2024 11:12:30
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 21-11-2024 11:12:30
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:37:45
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:01
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:01
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:04
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:06
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:06
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:06
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:06
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:21
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:21
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:24
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:24
+Request failed & Status Code : 200

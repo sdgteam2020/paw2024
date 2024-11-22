@@ -476,7 +476,10 @@ AppPackages/
 /swas.UI/obj/Release/net6.0/swas.UI.genpublishdeps.cache
 /swas.UI/obj/Release/net6.0/swas.UI.genruntimeconfig.cache
 /swas.BAL/bin/Debug/net6.0/swas.BAL.deps.json
+<<<<<<< Updated upstream
 /swas.UI/wwwroot/Download
 /swas.UI/wwwroot/Download
 /swas.UI/wwwroot/PDF
 /swas.BAL/obj
+=======
+>>>>>>> Stashed changes

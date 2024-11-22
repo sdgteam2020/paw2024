@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 -----------------------------------------------------------------------------
 Date : 21-08-2024 15:32:11
 Object reference not set to an instance of an object.
@@ -118,6 +119,8 @@ The LINQ expression 'DbSet<tbl_ProjStakeHolderMov>()
 Date : 02-09-2024 15:12:00
 The LINQ expression 'DbSet<Notification>()
     .Where(n => n.NotificationType == 2 && (int?)n.NotificationTo != __unitId_0 && n.IsDeleted == False)
+=======
+>>>>>>> Stashed changes
     .GroupBy(n => n.ProjId)
     .SelectMany(g => g
         .AsQueryable()
@@ -898,3 +901,45 @@ Request failed & Status Code : 200
 -----------------------------------------------------------------------------
 Date : 07-11-2024 13:13:27
 Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 21-11-2024 11:12:30
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 21-11-2024 11:12:30
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:37:45
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:01
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:01
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:04
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:06
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:06
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:06
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:06
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:21
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:21
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:24
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 21-11-2024 12:44:24
+Request failed & Status Code : 200
