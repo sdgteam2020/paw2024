@@ -270,8 +270,7 @@ $(document).ready(function () {
     });
 });
 function AddProject(thistag) {
-
-     debugger;
+    
   
     $.ajax({
         url: '/Projects/AddProject',

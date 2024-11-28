@@ -257,13 +257,25 @@ namespace swas.BAL.Repository
         {
             try
             {
-               // var query = _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.PsmId < (_context.ProjStakeHolderMov.Max(p => p.PsmId))).Max(p => p.PsmId);
-                var query = _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.IsActive==true && i.IsComment==false).Max(p => p.PsmId);
+              // var query = _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.PsmId < (_context.ProjStakeHolderMov.Max(p => p.PsmId))).Max(p => p.PsmId);
+                var query = _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.IsActive==true && i.IsComment==false && i.UndoRemarks==null).Max(p => p.PsmId);
                 return query;
 
             }
             catch (Exception ex) { return 0; }
           
+        }
+        public async Task<int> GetLastRecProjectMovForUnod(int ProjectId, int? TounitId)
+        {
+            try
+            {
+               // var query = _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.PsmId < (_context.ProjStakeHolderMov.Max(p => p.PsmId))).Max(p => p.PsmId);
+                var query =await _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.IsActive == true && i.IsComment == false && i.ToUnitId== TounitId).OrderByDescending(i=>i.PsmId).Take(1).Select(i=>i.PsmId).SingleOrDefaultAsync();
+                return query;
+
+            }
+            catch (Exception ex) { return 0; }
+
         }
         public async Task<DTODashboard> DashboardCount(int UserId)
         {   
@@ -490,7 +502,7 @@ namespace swas.BAL.Repository
                                  join sts in _dbContext.mStatus on act.StatusId equals sts.StatusId
                                  join mov in _dbContext.ProjStakeHolderMov on act.StatusActionsMappingId equals mov.StatusActionsMappingId
                                  where act.ActionsId == 2 && act.StatusId == StatusId && mov.ProjId == ProjId
-                                 && mov.IsActive == true
+                                 && mov.IsActive == true && mov.UndoRemarks == null
                                  select new TrnStatusActionsMapping
                                  {
                                      StatusActionsMappingId = act.StatusActionsMappingId
@@ -507,7 +519,7 @@ namespace swas.BAL.Repository
                                  join sts in _dbContext.mStatus on act.StatusId equals sts.StatusId
                                  join mov in _dbContext.ProjStakeHolderMov on act.StatusActionsMappingId equals mov.StatusActionsMappingId
                                  where act.ActionsId == 1 && mov.ProjId == ProjId && mov.ToUnitId == 1 && mov.IsComment == true
-                                 && mov.IsActive == true
+                                 && mov.IsActive == true && mov.UndoRemarks==null
                                  select new TrnStatusActionsMapping
                                  {
                                      StatusActionsMappingId = act.StatusActionsMappingId

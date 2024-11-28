@@ -337,13 +337,13 @@
 
                                     <div class="needs-validation" novalidate>
                                         <div class="row">
-                                            <div>
+                                            <div id="projectcommentforstackholder">
                                                 <!-- First Part: Comments -->
                                                 <div class="form-group">
                                                     <label asp-for="Comments"><b>Comment</b> <span class="required-indicator">*</span></label>
                                                     <textarea asp-for="Comments" style="width: 100%; height: 240px;" class="form-control" rows="4" required oninput="ValInData(this)"></textarea>
                                                     <div class="invalid-feedback">Please provide the Comments</div>
-                                                    <span asp-validation-for="Comments" class="text-danger"></span> <!-- Validation message -->
+                                                    <span asp-validation-for="Comments"  class="text-danger"></span> <!-- Validation message -->
                                                 </div>
                                                 <div class="form-group">
                                                     

@@ -127,6 +127,7 @@ function GetAllUsers() {
 
                     $("#profsortname").html($(this).closest("div").find(".circleimg").html())
                     UserMapChat($(this).closest("div").find("#chatprofileId").html(), $(this).closest("div").find("#profName").html(), $(this).closest("div").find(".circleimg").html());
+                   
                 });
             }
         }
@@ -149,6 +150,7 @@ function UserMapChat(ToUserId, profName, sortname) {
                 $("#img_contuser").html('<div class="circleimg" style="background-color:' + displayFixedColorAlphabet(sortname.replace(/^\s+|\s+$/gm, '').substr(0, 1).toUpperCase()) + ';color:#ffff" >' + sortname.toUpperCase() + '</div>');
 
                 UserChat(response.userMapChatId, ToUserId, sortname);
+                
 
             }
         }
@@ -206,9 +208,11 @@ function UserChat(userMapChatId, FromUserId, sortname) {
                             listitem += '</div>';
                         }
                     }
+
                     $(".msg_card_body").html(listitem);
                     $(".msg_card_body").animate({ scrollTop: $('.msg_card_body').prop("scrollHeight") }, 1000);
-
+                    updateNotificationCountForChat(3, 'InterUserMsgCount');
+                    GetAllUsers();
                     $("body").on("click", ".msg_del", function () {
                         // alert($(this).closest("div").find(".spnmsgchatId").html())
                         alert(1)

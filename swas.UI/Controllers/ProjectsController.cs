@@ -321,54 +321,60 @@ namespace swas.UI.Controllers
         }
         //[Authorize(Policy = "StakeHolders")]
         [HttpPost]
-        [RequestFormLimits(MultipartBodyLengthLimit = 26214400)]
+        [RequestFormLimits(MultipartBodyLengthLimit = 83886080)]
         public async Task<IActionResult> UploadMultiFile(IFormFile uploadfile, string Reamarks, int PsmId)
         { 
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
-            if (uploadfile != null && uploadfile.Length > 0)
+            if (uploadfile != null && uploadfile.Length < 5855734)
             {
-
-                string uniqueFileName = $"{"Swas"}_{Guid.NewGuid()}{System.IO.Path.GetExtension(uploadfile.FileName)}";
-                if (System.IO.Path.GetExtension(uniqueFileName).ToLower() == ".pdf")
+                if (uploadfile != null && uploadfile.Length > 0)
                 {
-                    string filePath = System.IO.Path.Combine(_environment.ContentRootPath, "wwwroot/Uploads/", uniqueFileName);
 
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    string uniqueFileName = $"{"Swas"}_{Guid.NewGuid()}{System.IO.Path.GetExtension(uploadfile.FileName)}";
+                    if (System.IO.Path.GetExtension(uniqueFileName).ToLower() == ".pdf")
                     {
-                        uploadfile.CopyTo(stream);
-                    }
+                        string filePath = System.IO.Path.Combine(_environment.ContentRootPath, "wwwroot/Uploads/", uniqueFileName);
 
-                    // var project = await _projectsRepository.GetProjectByIdAsync(ProjectId);
-                    if (PsmId != null && PsmId != 0)
-                    {
-                        tbl_AttHistory atthis = new tbl_AttHistory();
-                        atthis.ActionId = 0;
-                        atthis.AttPath = uniqueFileName;
 
-                        atthis.Reamarks = Reamarks;
-                        atthis.PsmId = PsmId;
-                        atthis.UpdatedByUserId = Logins.unitid;
-                        atthis.DateTimeOfUpdate = DateTime.Now;
-                        atthis.IsDeleted = false;
-                        atthis.IsActive = true;
-                        atthis.EditDeleteBy = Logins.unitid;
-                        atthis.EditDeleteDate = DateTime.Now;
-                        atthis.TimeStamp = DateTime.Now;
-                        atthis.ActFileName = uploadfile.FileName;
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            uploadfile.CopyTo(stream);
+                        }
 
-                        await _attHistoryRepository.AddAttHistoryAsync(atthis);
+                        // var project = await _projectsRepository.GetProjectByIdAsync(ProjectId);
+                        if (PsmId != null && PsmId != 0)
+                        {
+                            tbl_AttHistory atthis = new tbl_AttHistory();
+                            atthis.ActionId = 0;
+                            atthis.AttPath = uniqueFileName;
+
+                            atthis.Reamarks = Reamarks;
+                            atthis.PsmId = PsmId;
+                            atthis.UpdatedByUserId = Logins.unitid;
+                            atthis.DateTimeOfUpdate = DateTime.Now;
+                            atthis.IsDeleted = false;
+                            atthis.IsActive = true;
+                            atthis.EditDeleteBy = Logins.unitid;
+                            atthis.EditDeleteDate = DateTime.Now;
+                            atthis.TimeStamp = DateTime.Now;
+                            atthis.ActFileName = uploadfile.FileName;
+
+                            await _attHistoryRepository.AddAttHistoryAsync(atthis);
+                        }
+                        else
+                        {
+                            return Json(-1);
+                        }
                     }
                     else
                     {
-                        return Json(-1);
+                        return Json(-2);
                     }
                 }
-                else
-                {
-                    return Json(-2);
-                }
+            }
+            else
+            {
+                return Json(-5);
             }
             return Json(1);
 
@@ -841,13 +847,16 @@ namespace swas.UI.Controllers
                     //movent.IsDeleted = true; removed by 12th nov
                     movent.IsRead = false;
                     movent.UndoRemarks = Remarks;
+                    movent.IsComplete = true;
                     var Ret = await _psmRepository.UpdateWithReturn(movent);
 
-
-                    var psmidold = _psmRepository.GetLastRecProjectMov(ProjectId);
+                    Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+                    
+                    var psmidold =await _psmRepository.GetLastRecProjectMovForUnod(ProjectId,Logins.unitid);
                     var movent1 = await _psmRepository.GetByByte(psmidold);
                     movent1.Remarks = "";
                     movent1.IsComplete = false;
+                    movent1.IsRead = false;
                     var Ret1 = await _psmRepository.UpdateWithReturn(movent);
                 }
 
@@ -893,48 +902,56 @@ namespace swas.UI.Controllers
                 string uniqueFileName = "";
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
                 var psmove = await _projectsRepository.GettXNByPsmIdAsync(psmid);
-                if (psmove.IsComplete == false)
+                if (uploadfile != null && uploadfile.Length <= 10485760)
                 {
-                    if (uploadfile != null && uploadfile.Length > 0)
+                    if (psmove.IsComplete == false)
                     {
-                        uniqueFileName = $"{"Swas"}_{Guid.NewGuid()}{System.IO.Path.GetExtension(uploadfile.FileName)}";
-
-                        string filePath = System.IO.Path.Combine(_environment.ContentRootPath, "wwwroot/Uploads/", uniqueFileName);
-
-
-                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        if (uploadfile != null && uploadfile.Length > 0)
                         {
-                            uploadfile.CopyTo(stream);
+                            uniqueFileName = $"{"Swas"}_{Guid.NewGuid()}{System.IO.Path.GetExtension(uploadfile.FileName)}";
+
+                            string filePath = System.IO.Path.Combine(_environment.ContentRootPath, "wwwroot/Uploads/", uniqueFileName);
+
+
+                            using (var stream = new FileStream(filePath, FileMode.Create))
+                            {
+                                uploadfile.CopyTo(stream);
+                            }
+
+
+                            cmmets.ActFileName = uploadfile.FileName;
                         }
 
+                        cmmets.Attpath = uniqueFileName;
+                        cmmets.Comments = Comments;
+                        cmmets.PsmId = psmid;
+                        cmmets.ProjId = ProjectId;
+                        cmmets.UpdatedByUserId = Logins.UserIntId;
+                        cmmets.DateTimeOfUpdate = CommentDate;
+                        cmmets.IsDeleted = false;
+                        cmmets.IsActive = true;
+                        cmmets.EditDeleteBy = Logins.unitid;
+                        cmmets.EditDeleteDate = CommentDate;
+                        cmmets.StkStatusId = StkStatusId;
+                        cmmets.UserDetails = Helper.LoginDetails(Logins);
+                        cmmets.StakeHolderId = Logins.unitid; ;
 
-                        cmmets.ActFileName = uploadfile.FileName;
+                        var ret = await _stkCommentRepository.AddWithReturn(cmmets);
+
+                        if (ret != null)
+                            return Json(nmum.Save);
+                        else
+                            return Json(0);
                     }
 
-                    cmmets.Attpath = uniqueFileName;
-                    cmmets.Comments = Comments;
-                    cmmets.PsmId = psmid;
-                    cmmets.ProjId = ProjectId;
-                    cmmets.UpdatedByUserId = Logins.UserIntId;
-                    cmmets.DateTimeOfUpdate = CommentDate;
-                    cmmets.IsDeleted = false;
-                    cmmets.IsActive = true;
-                    cmmets.EditDeleteBy = Logins.unitid;
-                    cmmets.EditDeleteDate = CommentDate;
-                    cmmets.StkStatusId = StkStatusId;
-                    cmmets.UserDetails = Helper.LoginDetails(Logins);
-                    cmmets.StakeHolderId = Logins.unitid; ;
-
-                    var ret = await _stkCommentRepository.AddWithReturn(cmmets);
-
-                    if (ret != null)
-                        return Json(nmum.Save);
                     else
-                        return Json(0);
+                    {
+                        return Json(nmum.NotSave);
+                    }
                 }
                 else
                 {
-                    return Json(nmum.NotSave);
+                    return Json(nmum.PdfSizeEx);
                 }
 
             }
@@ -1637,14 +1654,15 @@ namespace swas.UI.Controllers
                     // Update IsRead to false for all records
                     //foreach (var comment in inboxComments)
                     //{
-                    inboxComments.DateTimeOfUpdate = DateTime.Now;
-                    if(inboxComments.IsRead==false)
+                    if (inboxComments != null)
                     {
-                        inboxComments.IsRead = true;
-                        await _projectsRepository.UpdateTxnAsync(inboxComments);
+                        inboxComments.DateTimeOfUpdate = DateTime.Now;
+                        if (inboxComments.IsRead == false)
+                        {
+                            inboxComments.IsRead = true;
+                            await _projectsRepository.UpdateTxnAsync(inboxComments);
+                        }
                     }
-                    //}
-
                     return Json(ProjId);
                 }
                 catch (Exception ex)

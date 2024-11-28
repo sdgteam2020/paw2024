@@ -36,6 +36,15 @@
 
                 });
             }
+            else if (response == -5) {
+
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Pdf File LessThen 6 MB !",
+
+                });
+            }
 
         },
         error: function (error) {

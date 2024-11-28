@@ -14,8 +14,9 @@
         public static int Exception = 5;
         public static int NotSave = 6;
         public static int NotUpload = 7;
-       
-            
+        public static int PdfSizeEx = 8;
+
+
 
     }
   

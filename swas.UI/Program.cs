@@ -111,7 +111,7 @@ builder.Services.AddIdentity<ASPNetCoreIdentityCustomFields.Data.ApplicationUser
 
 builder.Services.Configure<FormOptions>(options =>
 {
-    options.MultipartBodyLengthLimit = 1073741824;
+    options.MultipartBodyLengthLimit = 100 * 1024 * 1024;
 });
 
 //builder.Services.AddRazorPages();
@@ -147,11 +147,11 @@ builder.Services.AddSession(options =>
 
 });
 
-builder.Services.Configure<FormOptions>(options =>
-{
+//builder.Services.Configure<FormOptions>(options =>
+//{
 
-    options.MultipartBodyLengthLimit = 5 * 1024 * 1024;
-});
+//    options.MultipartBodyLengthLimit = 100 * 1024 * 1024;
+//});
 
 
 builder.Services.Configure<CookiePolicyOptions>(options =>

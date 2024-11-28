@@ -6,7 +6,7 @@ $(document).ready(function () {
      
     $("#btnStatusUpdate").unbind().click(function () {
        
-        requiredFields = $('#StatusUpdateForm').find('.requiredField');
+        requiredFields = $('#projectcommentforstackholder').find('.requiredField');
         var allFieldsComplete = true;
         requiredFields.each(function (index) {
             if (this.value.length == 0) {
@@ -314,10 +314,11 @@ function SendMsg() {
                 GetProjCommentsByUnitId();
               //IsUnReadComment($("#ProjectcommentprojId").html());
                 //GetNotification($("#ProjectcommentprojId").html());
-
+                UnReadNotification($("#ProjectcommentprojId").html(), 1);
+                IsUnReadComment($("#ProjectcommentprojId").html(), $("#ProjectcommentPsmId").html());
                 reset();
             }
-            if (response == 6) {
+            else if (response == 6) {
                 Swal.fire({
                     position: 'top-end',
                     icon: 'Error',
@@ -326,11 +327,18 @@ function SendMsg() {
                     
                 });
             }
+            else if (response == 8) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'Error',
+                    title: 'Pdf Size allow less then 10 Mb !',
+                    showConfirmButton: true,
 
+                });
+            }
            
 
-            UnReadNotification($("#ProjectcommentprojId").html(), 1);
-            IsUnReadComment($("#ProjectcommentprojId").html(), $("#ProjectcommentPsmId").html());
+           
            
             //IsReadComment($("#ProjectcommentprojId").html());
         },

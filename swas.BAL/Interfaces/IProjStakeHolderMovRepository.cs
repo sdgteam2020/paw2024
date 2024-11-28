@@ -24,6 +24,7 @@ namespace swas.BAL.Interfaces
         //Task<DTOpR>
         Task<List<DTOProjectHold>> ProjectHolsTimeCalculate(int ProjectId );
         int GetLastRecProjectMov(int ProjectId);
+        Task<int> GetLastRecProjectMovForUnod(int ProjectId,int? TounitId);
         Task<DTODashboard> DashboardCount(int UserId);
 
         Task<bool> CheckFwdCondition(int ProjId, int StatusId); 

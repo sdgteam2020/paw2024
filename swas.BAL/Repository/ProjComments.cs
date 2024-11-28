@@ -26,6 +26,7 @@ namespace swas.BAL
             List<DTOProComments> lst = new List<DTOProComments>();
             var queryes = await (from proj in _context.Projects
                                  join mov in _context.ProjStakeHolderMov on proj.ProjId equals mov.ProjId
+                                 //join com in _context.StkComment on proj.ProjId equals com.ProjId
                                  join stakeholder in _context.tbl_mUnitBranch on proj.StakeHolderId equals stakeholder.unitid
                                  let StkStatusId =
                              (from cr1 in _context.StkComment
@@ -50,11 +51,14 @@ namespace swas.BAL
                                      TimeStamp= mov.TimeStamp,
                                      UnitId = mov.ToUnitId,
                                      IsComment = mov.IsRead 
+                                     //StkCommentId = com.StkCommentId
                                  }
                                   by new { proj.ProjId, mov.ToUnitId } into g  // Group by both ProjId and ToUnitId
                                  select g.First()).ToListAsync();
             lst.AddRange(queryes);
-            return lst.OrderByDescending(i=>i.TimeStamp).ToList();
+            //var data = lst.OrderByDescending(x => x.StkCommentId).ToList();
+            return lst.OrderByDescending(i => i.TimeStamp).ToList();
+            //return data;
 
         }
 

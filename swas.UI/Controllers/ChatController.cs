@@ -57,7 +57,7 @@ namespace swas.UI.Controllers
                             db.Rank = user.Rank;
                             db.Offr_Name = user.Offr_Name;
                             db.UserName = user.UserName;
-                            if (ischat != null && ischat.Count > 0) 
+                            if (ischat != null && ischat.Count > 0)
                             {
                                 DTOIsChat dTOIsChat = new DTOIsChat();
                                 dTOIsChat = ischat.Where(i => i.FromUserID == user.Id).FirstOrDefault();
@@ -72,7 +72,7 @@ namespace swas.UI.Controllers
                         }
                     }
                 }
-                return Json(lstuser.OrderByDescending(i => i.Total).OrderByDescending(i => i.CreatedOn));
+                return Json(lstuser/*.OrderByDescending(i => i.Total).OrderByDescending(i => i.CreatedOn)*/);
             }
             catch (Exception ex)
             {

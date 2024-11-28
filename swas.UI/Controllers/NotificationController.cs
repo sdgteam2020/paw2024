@@ -273,7 +273,7 @@ namespace swas.UI.Controllers
                             {
                                 notify.ReadDateTime = DateTime.Now;
                                 //notify.IsDeleted = true;
-                                notify.IsRead = false;  // Added 12thNov
+                                notify.IsRead = true;  // Added 12thNov
 
                                 var updateResult = await _notificationRepository.UpdateNotification(notify);
                                 if (updateResult)
