@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
-   
+
     sessionStorage.setItem("spntabType", $("#spntabType").html());
-   
+
     GetAllComments2();
 
     GetAllComments1();
@@ -9,7 +9,7 @@
 });
 
 function GetAllComments2() {
-  
+
     $.ajax({
         type: "POST",
         url: '/Projects/GetAllCommentBypsmId_UnitId',
@@ -19,7 +19,7 @@ function GetAllComments2() {
             "ProjId": $(".ProjectcommentprojId").html()
         },
         success: function (data) {
-             
+
             var tableHTML = '<table class="table" style="width:100%; border: 1px solid black; border-collapse:collapse;">';
             tableHTML += '<thead>';
             tableHTML += '<tr>';
@@ -32,7 +32,7 @@ function GetAllComments2() {
             tableHTML += '</tr>';
             tableHTML += '</thead>';
             tableHTML += '<tbody>';
-           
+
             if (data != null) {
                 for (var i = 0; i < data.length; i++) {
                     ////var date = new Date(data[i].date);
@@ -42,10 +42,10 @@ function GetAllComments2() {
                     ////    ("0" + date.getHours()).slice(-2) + ':' +
                     ////    ("0" + date.getMinutes()).slice(-2) + ':' +
                     ////    ("0" + date.getSeconds()).slice(-2);
-                    
+
                     tableHTML += '<tr>';
                     tableHTML += '<td style="border: 1px solid black;width:1% !important">' + (i + 1) + '</td>';
-                    tableHTML += '<td style="border: 1px solid black;">' + data[i].stakeholder + ' (' + data[i].userDetails +')</td>';
+                    tableHTML += '<td style="border: 1px solid black;">' + data[i].stakeholder + ' (' + data[i].userDetails + ')</td>';
                     tableHTML += '<td style="border: 1px solid black;">' + DateFormateddMMyyyyhhmmss(data[i].date) + '</td>';
                     tableHTML += '<td style="border: 1px solid black;">' + data[i].comments + '</td>';
                     if (data[i].status == "Accepted")
@@ -75,9 +75,32 @@ function GetAllComments2() {
             $('#ChatBox .table').DataTable({
                 "paging": true,    // Enable paging
                 "ordering": true,  // Enable ordering
-                "info": true       // Enable info
+                "info": true,       // Enable info
+                "dom": '<"row"<"col-sm-12 col-md-6 add-comment-btn"><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
             });
-           /* $('row').css('margin-t', '3px');*/
+
+            // Add the custom "Add Comment" 
+            $("div.add-comment-btn").html('<button id="add-comment" class="btn btn-primary"><i class="fas fa-plus"></i> Add Comment</button>');
+
+            //
+            // Bind the click event for the button
+
+
+            // add comment button will show only for 
+            $("#add-comment").on("click", function () {
+               
+                $("#ProjectcommentForStackHolderprojId").html($(".ProjectcommentprojId").html())
+                $("#ProjectcommentForStackHolderPsmId").html(5260) // psmId will send here dynamically here
+                
+                //IsReadComment($(this).closest("tr").find("#spnProjId").html(), $(this).closest("tr").find("#spnpsmId").html());
+                //IsReadNotification($(this).closest("tr").find("#spnProjId").html(), 1);
+                //$(this).closest("tr").removeClass("bold-text")
+                //reset()
+                mMsater(0, "ddlStatus", 4, 0)
+                $("#ProjCommentModal").modal('show');
+                GetAllComments($("#ProjectcommentForStackHolderPsmId").html(),$(".ProjectcommentprojId").html());
+            });
+
         },
         error: function () {
             alert('Error fetching comments.');
@@ -87,7 +110,7 @@ function GetAllComments2() {
 
 
 function GetAllComments1() {
-   
+
     $.ajax({
         type: "POST",
         url: '/Projects/GetAllCommentBypsmId_UnitId',
@@ -321,4 +344,76 @@ document.addEventListener("DOMContentLoaded", function () {
 //        '</html>');
 
 //    popupWin.document.close();
+//}
+
+//function GetAllComments() {
+//    $.ajax({
+//        type: "POST",
+//        url: '/Projects/GetAllCommentBypsmId_UnitId',
+//        data: {
+//            "PsmId": $("#ProjectcommentPsmId").html(),
+//            "stakeholderId": 1,
+//            "ProjId": $("#ProjectcommentprojId").html()
+//        },
+//        success: function (data) {
+
+//            var commentContainer = '';
+//            var userDetails = '';
+//            if (data != null) {
+//                for (var i = 0; i < data.length; i++) {
+//                    var date = new Date(data[i].date);
+//                    var formattedDate =
+//                        ("0" + date.getDate()).slice(-2) + '-' +
+//                        ("0" + (date.getMonth() + 1)).slice(-2) + '-' +
+//                        date.getFullYear() + ' ' +
+//                        ("0" + date.getHours()).slice(-2) + ':' +
+//                        ("0" + date.getMinutes()).slice(-2) + ':' +
+//                        ("0" + date.getSeconds()).slice(-2);
+//                    if (data[i].userDetails == null)
+//                        userDetails = '';
+//                    else
+//                        userDetails = data[i].userDetails
+
+//                    commentContainer += '<div class="comment-box" style="text-align: justify;">'; // Use text-align: justify for justified text
+//                    commentContainer += '<div class="comment-header">';
+//                    commentContainer += '<div>';
+//                    commentContainer += '<span style="font-family: Arial; color: #0793f7;">' + data[i].stakeholder + ' (' + userDetails + ') </span>';
+//                    commentContainer += '<div style="margin-left: 0px;" class="comment-meta">' + DateFormateddMMyyyyhhmmss(data[i].date) + '</div>';
+//                    commentContainer += '</div>';
+//                    commentContainer += '<div>';
+//                    if (data[i].status == "Accepted")
+//                        commentContainer += '<span class="comment-meta badge badge-success text-white">' + data[i].status + '</span>';
+//                    else if (data[i].status == "Obsn")
+//                        commentContainer += '<span class="comment-meta badge badge-warning text-white">' + data[i].status + '</span>';
+//                    else
+//                        commentContainer += '<span class="comment-meta badge badge-danger text-white">' + data[i].status + '</span>';
+//                    if (data[i].attpath !== '' && data[i].attpath !== null) {
+//                        commentContainer += '<a href="/Home/WaterMark3?id=' + data[i].attpath + '" target="_blank">';
+//                        commentContainer += '<img src="/assets/images/icons/pdfimg.png" alt="PDF icon" style="width: 24px; height: 24px;">';
+//                        commentContainer += '</a>';
+//                    }
+
+
+//                    commentContainer += '</span>';
+//                    commentContainer += '</div>';
+//                    commentContainer += '</div>';
+//                    commentContainer += '<div class="comment-content formated-text"><p>' + data[i].comments + '</p></div>';
+//                    commentContainer += '</div>';
+//                }
+
+
+
+//                commentContainer += '</div>'; // Close the container
+//                $('#ChatBox').empty().html(commentContainer);
+
+
+
+
+//            }
+
+//        },
+//        error: function () {
+//            alert('Error fetching comments.');
+//        }
+//    });
 //}

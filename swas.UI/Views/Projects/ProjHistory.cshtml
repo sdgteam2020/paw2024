@@ -125,6 +125,24 @@
     /*  #StakeholderDetails {
                                     page-break-before: always;
                                 }*/
+    .custom-modal-size {
+        max-width: 80%; /* Increase the width as required */
+        width: 75%;
+        /* height: 10%; Adjust height if necessary */
+        margin: auto;
+    }
+
+        .custom-modal-size .modal-content {
+            height: 100%; /* Ensure the content fills the modal */
+            overflow: auto; /* Add scrolling for long content */
+        }
+
+    .modal-dialog {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh; /* Full height */
+    }
 
 
 </style>
@@ -733,9 +751,6 @@
     </div>
 </div>
 
-
-
-
 <!-- PDF END -->
 @{
     snoa = 0;
@@ -833,8 +848,10 @@
         </div>
     </div>
 </div>
-
+<script src="~/developerjs/mtable.js"></script>
 <script src="~/developerjs/projectstckholdercommentforprojhistory.js"></script>
+<script src="~/developerjs/projectstkholdercomments.js"></script>
+
 @functions {
     public string truncateText(string text, int maxWords)
     {

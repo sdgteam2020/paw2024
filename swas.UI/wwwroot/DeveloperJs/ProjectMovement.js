@@ -20,7 +20,7 @@
         mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html());
     });
 
-   // GetProjectMovement();
+    // GetProjectMovement();
     $("#txtProjectName").autocomplete({
         source: function (request, response) {
 
@@ -44,7 +44,7 @@
 
                             $("#txtProjectName").val("");
 
-                           
+
                             alert("Project not found.")
                         }
                     },
@@ -60,13 +60,13 @@
         select: function (e, i) {
             e.preventDefault();
             $("#txtProjectName").val(i.item.label);
-            
+
             GetProjectMovement(i.item.value);
-            
+
         },
         appendTo: '#suggesstion-box'
     });
- 
+
     $("#btnFwdNext").click(function () {
         requiredFields = $('#ProjFwd').find('.requiredField');
         var allFieldsComplete = true;
@@ -79,14 +79,14 @@
             }
         });
         if (allFieldsComplete) {
-           
+
             AttechHistory();
             SaveFwdTo($("#spanEditPslmId").html());
-           
+
         }
     });
 
-    
+
     function SaveFwdTo(CurrentPslmId) {
 
 
@@ -120,7 +120,7 @@
         });
     }
 
-   
+
 
     $("#btnAttchMultiforpsmid").click(function () {
 
@@ -154,12 +154,12 @@
     $("#btnFwdConfirm").click(function () {
 
         $('#ProjFwdEdit').modal('hide');
-        
-      
 
-        
+
+
+
         GetProjectMovement($("#spanProjectId").html());
-       
+
     });
 
 });
@@ -196,13 +196,21 @@ function UploadFiles() {
                     timer: 1500
                 });
             }
-          else  if (response == -2) {
+            else if (response == -2) {
 
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
                     text: "Only Pdf File Upload!",
-                    
+
+                });
+            }
+            else if (response == -5) {
+
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Pdf File LessThen 10 MB !",
                 });
             }
 
@@ -216,7 +224,7 @@ function UploadFiles() {
 }
 
 function AttechHistory() {
-   
+
     var listItem = "";
     var userdata =
     {
@@ -490,7 +498,7 @@ function GetProjectMovement(ProjectId) {
 
 var TeamDetailPostBackURL = '/Projects/AttDetails';
 $(document).on('click', '.anchorDetail', function () {
-    
+
 
     var $buttonClicked = $(this);
     var id = $buttonClicked.attr('data-id');

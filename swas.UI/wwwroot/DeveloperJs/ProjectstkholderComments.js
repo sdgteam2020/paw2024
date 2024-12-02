@@ -67,6 +67,7 @@ function GetProjCommentsByUnitId() {
 
                     var count = 1;
                     console.log(response);
+                    
                     for (var i = 0; i < response.length; i++) {
                         var date = new Date(response[i].timeStamp);
                         var TimeStamp =
@@ -229,8 +230,8 @@ function GetProjCommentsByUnitId() {
                     
                     $("body").on("click", ".cls-btncomment", function () {
                        
-                        $("#ProjectcommentprojId").html($(this).closest("tr").find("#spnProjId").html());
-                        $("#ProjectcommentPsmId").html($(this).closest("tr").find("#spnpsmId").html());
+                        $("#ProjectcommentForStackHolderprojId").html($(this).closest("tr").find("#spnProjId").html());
+                        $("#ProjectcommentForStackHolderPsmId").html($(this).closest("tr").find("#spnpsmId").html());
 
                         IsReadComment($(this).closest("tr").find("#spnProjId").html(), $(this).closest("tr").find("#spnpsmId").html());
                         IsReadNotification($(this).closest("tr").find("#spnProjId").html(), 1);
@@ -238,7 +239,7 @@ function GetProjCommentsByUnitId() {
                         reset()
                         mMsater(0, "ddlStatus", 4, 0)
                         $("#ProjCommentModal").modal('show');
-                        GetAllComments();
+                        GetAllComments($("#ProjectcommentForStackHolderPsmId").html(), $("#ProjectcommentForStackHolderprojId").html());
                     });
 
                     $("body").on("click", ".projNameDetail", function () {
@@ -281,8 +282,8 @@ function SendMsg() {
    
     formData.append("Comments", $("#Comments").val());
     formData.append("StkStatusId", $("#ddlStatus").val());
-    formData.append("ProjectId", $("#ProjectcommentprojId").html());
-    formData.append("psmid", $("#ProjectcommentPsmId").html());
+    formData.append("ProjectId", $("#ProjectcommentForStackHolderprojId").html());
+    formData.append("psmid", $("#ProjectcommentForStackHolderPsmId").html());
     formData.append("CommentDate", $("#CommentDateFwd").val());
     
     $.ajax({
@@ -306,16 +307,16 @@ function SendMsg() {
 
               
                 if ($("#ddlStatus").val() == 1) {
-                    FwdProjConfirm($("#ProjectcommentPsmId").html());
+                    FwdProjConfirm($("#ProjectcommentForStackHolderPsmId").html());
                 }
                 
 
-                GetAllComments($("#ProjectcommentprojId").html());
+                GetAllComments($("#ProjectcommentForStackHolderPsmId").html() ,$("#ProjectcommentForStackHolderprojId").html());
                 GetProjCommentsByUnitId();
-              //IsUnReadComment($("#ProjectcommentprojId").html());
-                //GetNotification($("#ProjectcommentprojId").html());
-                UnReadNotification($("#ProjectcommentprojId").html(), 1);
-                IsUnReadComment($("#ProjectcommentprojId").html(), $("#ProjectcommentPsmId").html());
+              //IsUnReadComment($("#ProjectcommentForStackHolderprojId").html());
+                //GetNotification($("#ProjectcommentForStackHolderprojId").html());
+                UnReadNotification($("#ProjectcommentForStackHolderprojId").html(), 1);
+                IsUnReadComment($("#ProjectcommentForStackHolderprojId").html(), $("#ProjectcommentForStackHolderPsmId").html());
                 reset();
             }
             else if (response == 6) {
@@ -340,7 +341,7 @@ function SendMsg() {
 
            
            
-            //IsReadComment($("#ProjectcommentprojId").html());
+            //IsReadComment($("#ProjectcommentForStackHolderprojId").html());
         },
         error: function (error) {
            
@@ -348,15 +349,15 @@ function SendMsg() {
         }
     });
 }
-function GetAllComments()
+function GetAllComments(PsmId, projId)
 {
     $.ajax({
         type: "POST",
         url: '/Projects/GetAllCommentBypsmId_UnitId',
         data: {
-            "PsmId": $("#ProjectcommentPsmId").html(),
+            "PsmId": PsmId,
             "stakeholderId": 1,
-            "ProjId": $("#ProjectcommentprojId").html()
+            "ProjId": projId
         },
         success: function (data) {
 
@@ -407,7 +408,7 @@ function GetAllComments()
 
 
                 commentContainer += '</div>'; // Close the container
-                $('#ChatBox').empty().html(commentContainer);
+                $('#ChatBoxForStackholdercomment').empty().html(commentContainer);
 
               
 

@@ -41,7 +41,7 @@
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
-                    text: "Pdf File LessThen 6 MB !",
+                    text: "Pdf File LessThen 10 MB !",
 
                 });
             }
