@@ -32,7 +32,8 @@
 
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
         Swal.fire({
-            title: "Enter Undo Remarks",
+            /*title: "Enter Undo Remarks",*/
+            title: "enter pull back remarks",
             input: "text",
             inputAttributes: {
                 autocapitalize: "off"
@@ -308,8 +309,6 @@ function Updateundo(ProjId, PslmId, UndoRemarks, StageId) {
                     alert("Project Successfully Undo");
                     location.reload();
                 }
-
-
             }
 
         }

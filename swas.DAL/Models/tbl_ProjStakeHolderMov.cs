@@ -37,6 +37,7 @@ namespace swas.DAL.Models
 
         public bool IsActive { get; set; }
         public bool IsRead { get; set; }
+        public bool? IsPullBack { get; set; }
 
         [Display(Name = "Edit/Delete By")]
         public int? EditDeleteBy { get; set; }

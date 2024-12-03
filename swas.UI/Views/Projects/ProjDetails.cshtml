@@ -33,12 +33,10 @@
     }
 
     @@media (min-width: 1200px) {
-    .modal-xl {
-        --bs-modal-width: 1400px;
+        .modal-xl {
+            --bs-modal-width: 1400px;
+        }
     }
-    
-}
-
 
 </style>
 
@@ -181,7 +179,7 @@
         font-size: 15px !important;
     }
 
-        .bold-text {
+    .bold-text {
         font-weight: bold;
     }
 
@@ -202,9 +200,13 @@
                     <img src="~/assets/images/inbox.png" width="20px;" height="20px;" />&nbsp;Inbox
                 </a>
             </li>
-            <li><a href="#" data-tab="sent" id="tabsent">@*<span class="fa fa-edit"></span>*@
-                <img src="~/assets/images/sentmail.png" width="20px;" height="20px;" />
-                &nbsp;Sent</a></li>
+            <li>
+                <a href="#" data-tab="sent" id="tabsent">
+                    @*<span class="fa fa-edit"></span>*@
+                    <img src="~/assets/images/sentmail.png" width="20px;" height="20px;" />
+                    &nbsp;Sent
+                </a>
+            </li>
             <li><a href="#" data-tab="completed" id="tabcompleted">@*<span class="fa fa-camera"></span>*@<img src="~/assets/images/completed.png" width="20px;" height="20px;" />&nbsp;Completed</a></li>
             <li><a href="#" data-tab="draft" id="tabdraft"><img src="~/assets/images/draft.png" width="20px;" height="20px;" />&nbsp;Draft Projects</a></li>
             <li class="red-text" id="blinking-li">
@@ -248,97 +250,97 @@
                                         string @classname = "";
                                         if (project.IsRead == false)
                                         {
-                                            classname= "bold-text";
+                                            classname = "bold-text";
                                         }
                                         else
                                         {
-                                            classname= "";
+                                            classname = "";
                                         }
                                         <tr class="@classname">
 
-                                                <td>
+                                            <td>
 
-                                                    @{
-                                                        snoinbox++;
-                                                    }
-                                                    @snoinbox
+                                                @{
+                                                    snoinbox++;
+                                                }
+                                                @snoinbox
 
-                                                </td>
+                                            </td>
 
 
-                                                <td class="f-12">
+                                            <td class="f-12">
 
-                                                    <span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
-                                                    <span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
-                                                    <span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
-                                                    <span class="d-none" id="SpnTimeStampId">@project.TimeStamp</span>
-                                                    <span class="d-none" id="SpnStageId">@project.StageId</span>
-                                                    <span class="d-none" id="SpnTimeStatusId">@project.StatusId</span>
+                                                <span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
+                                                <span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
+                                                <span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
+                                                <span class="d-none" id="SpnTimeStampId">@project.TimeStamp</span>
+                                                <span class="d-none" id="SpnStageId">@project.StageId</span>
+                                                <span class="d-none" id="SpnTimeStatusId">@project.StatusId</span>
 
-                                                    <span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
-                                                    <span class="d-none" id="SpnTimeActionId">@project.ActionId</span>
-                                                    <span class="d-none" id="SpnTimeToUnitId">@project.ToUnitId</span>
+                                                <span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
+                                                <span class="d-none" id="SpnTimeActionId">@project.ActionId</span>
+                                                <span class="d-none" id="SpnTimeToUnitId">@project.ToUnitId</span>
 
                                                 <a data-proj-name="@project.ProjName" id="ProjectName" class="ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XRDC">
-                                                        <div class="tooltip-container" data-tooltip="@project.ProjName">
-                                                            <span class="short-text">@truncateText(project.ProjName, 6)</span>
-                                                            <span class="tooltip tooltip-text">@project.ProjName</span>
-                                                        </div>
-                                                    </a>
-                                                </td>
-
-
-
-                                                <td class="RefLetter-container">
-                                                    @project.UnitName
-                                                    <div class="RefLetter">
-                                                        @project.Sponsor
+                                                    <div class="tooltip-container" data-tooltip="@project.ProjName">
+                                                        <span class="short-text">@truncateText(project.ProjName, 6)</span>
+                                                        <span class="tooltip tooltip-text">@project.ProjName</span>
                                                     </div>
-                                                </td>
-                                                <td class="RefLetter-container col-width9">
-                                                    @project.FromUnitUserDetail
-                                                    <div class="RefLetter">
-                                                        @project.FromUnitName
+                                                </a>
+                                            </td>
+
+
+
+                                            <td class="RefLetter-container">
+                                                @project.UnitName
+                                                <div class="RefLetter">
+                                                    @project.Sponsor
+                                                </div>
+                                            </td>
+                                            <td class="RefLetter-container col-width9">
+                                                @project.FromUnitUserDetail
+                                                <div class="RefLetter">
+                                                    @project.FromUnitName
+                                                </div>
+                                            </td>
+
+                                            <td>@project.ToUnitName</td>
+                                            <td>@project.TimeStamp</td>
+                                            <td>@project.Stage</td>
+                                            <td>@project.Status</td>
+                                            <td>@project.Action</td>
+
+
+
+
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
+                                                        {
+                                                            <a href="javascript:void(0);" class="processDetail" data-id="@project.EncyPsmID">
+                                                                <img src="/assets/images/icons/process1.png" alt="Icon" style="height: 22px;">
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <button type="button" class="btn btn-success btn-Fwd" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
+                                                        }
                                                     </div>
-                                                </td>
-
-                                                <td>@project.ToUnitName</td>
-                                                <td>@project.TimeStamp</td>
-                                                <td>@project.Stage</td>
-                                                <td>@project.Status</td>
-                                                <td>@project.Action</td>
-
-
-
-
-                                                <td>
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
-                                                            {
-                                                                <a href="javascript:void(0);" class="processDetail" data-id="@project.EncyPsmID">
-                                                                    <img src="/assets/images/icons/process1.png" alt="Icon" style="height: 22px;">
-                                                                </a>
-                                                            }
-                                                            else
-                                                            {
-                                                                <button type="button" class="btn btn-success btn-Fwd" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
-                                                            }
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
-                                                            {
-                                                                <button type="button" class="btn btn-success btn-Obsn" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;">Obsn</button>
-                                                            }
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <button type="button" class="btn btn-success btn-FwdHistory" style="margin-top: 1px;" title="History"><i class="fa-solid fa-timeline"></i></button>
-                                                        </div>
+                                                    <div class="col-md-4">
+                                                        @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
+                                                        {
+                                                            <button type="button" class="btn btn-success btn-Obsn" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;">Obsn</button>
+                                                        }
                                                     </div>
-                                                </td>
-                                            </tr>
+                                                    <div class="col-md-4">
+                                                        <button type="button" class="btn btn-success btn-FwdHistory" style="margin-top: 1px;" title="History"><i class="fa-solid fa-timeline"></i></button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
 
-                                        
+
 
 
                                     }
@@ -418,19 +420,18 @@
                                 <tbody class="FontSize">
                                     @foreach (var project in Model.SendItems.OrderByDescending(i => i.TimeStamp).ToList())
                                     {
+
                                         <tr>
-
-
                                             <td class="s-no-column">
 
                                                 @{
                                                     snosent++;
                                                 }
                                                 @snosent
-                                                @if(project.IsRead==false)
+                                                @if (project.IsRead == false)
                                                 {
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
-                                                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />
+                                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />
                                                     </svg>
                                                 }
                                                 else
@@ -477,13 +478,33 @@
                                             <td>
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        @if (project.PsmIds == project.undopsmId && project.IsRead == false)
+
+                                                        @* Undo Code  *@
+                                                        @*@if (project.PsmIds == project.undopsmId && project.IsRead == false)
+                                                    {
+                                                    if(project.StageId!=1)
+                                                    {
+                                                    <button type="button" class="btn btn-success btn-Undo ml-2" style="padding: 1px !important;font-size: 13px !important;">Undo </button>
+                                                    }
+
+                                                    }*@
+
+
+                                                        @* Pull Back  *@
+
+                                                        @if (project.PsmIds == project.undopsmId && (project.IsPullBack == false || project.IsPullBack == null)) // project.undopsmId for the specified active project, excluding comments and records with undo remarks.
                                                         {
-                                                            if(project.StageId!=1)
+                                                            if (project.StageId != 1) // stageId!=1 means here this project in not in initial stage..
                                                             {
-                                                                <button type="button" class="btn btn-success btn-Undo ml-2" style="padding: 1px !important;font-size: 13px !important;">Undo </button>
+                                                                <button type="button" class="btn btn-success btn-Undo ml-2" style="padding: 1px !important;font-size: 13px !important;">Pull Back </button>
                                                             }
-                                                            
+                                                        }
+                                                        else
+                                                        {
+                                                            if (project.StageId != 1 && project.IsPullBack == true)
+                                                            {
+                                                                <span class="btn btn-success ml-2" style="padding: 1px !important;font-size: 13px !important; cursor: not-allowed;">Pulled Back</span>
+                                                            }
                                                         }
                                                     </div>
                                                     <div class="col-md-6">
@@ -583,7 +604,7 @@
                                         <th>Proj Name</th>
 
                                         <th>Recd From</th>
-@* 
+                                        @*
                                         <th>Recd On</th>
 
                                         <th>Fwd To</th>
@@ -592,7 +613,7 @@
                                         <th>Stage</th>
                                         <th>Status</th>
                                         <th>Action</th> *@
-                                      @*   <th>Comments</th> *@
+                                        @*   <th>Comments</th> *@
                                         <th>Remarks</th>
                                         @*  <th>Days in Inbox</th> *@
                                         <th>Att</th>
@@ -617,23 +638,23 @@
                                                 @project.ProjName
                                             </td>
                                             <td>@project.RecdFmUser</td>
-                                        @*     <td>@project.EditDeleteDate?.ToString("dd-MM-yyyy")</td>
+                                            @*     <td>@project.EditDeleteDate?.ToString("dd-MM-yyyy")</td>
 
-                                            <td>@project.FwdtoUser</td>
-                                            <td>@project.FwdtoDate?.ToString("dd-MM-yyyy")</td>
+                                        <td>@project.FwdtoUser</td>
+                                        <td>@project.FwdtoDate?.ToString("dd-MM-yyyy")</td>
 
-                                            <td>@project.Stages</td>
-                                            <td>
-                                                @project.Status
-                                            </td>
-                                            <td>
-                                                @project.Action
+                                        <td>@project.Stages</td>
+                                        <td>
+                                        @project.Status
+                                        </td>
+                                        <td>
+                                        @project.Action
 
-                                            </td> *@
+                                        </td> *@
                                             @* <td>
-                                                @project.Comments
+                                        @project.Comments
 
-                                            </td> *@
+                                        </td> *@
                                             <td>
                                                 @project.AdRemarks
 
@@ -763,7 +784,7 @@
                                         <div class="form-group col-md-4 ProjectsFwd">
                                             <label>Date of Fwd:</label>
                                             <input id="TimeStampToProjfwd" type="datetime-local" style="width: 200px;" class="  form-control requiredField" />
-                                        </div> 
+                                        </div>
                                         <div class="form-group col-md-2 ProjectsFwd mt-4">
                                             <button type="button" class="btn btn-danger" id="btn-ibutton" style="margin-top: 1px;" title="Process Step Wise">
                                                 <i class="fa fa-info-circle" aria-hidden="true"></i>
@@ -830,7 +851,7 @@
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    
+
                     <h4 class="modal-title" id="lblHistory">Project Fwd History</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -838,17 +859,14 @@
                 <div class="modal-body ml-lg-5">
 
                     <div class="timeline" id="projectmovfistory">
-                        
-                            
-                       
                     </div>
                 </div>
 
             </div><!-- modal-content -->
         </div><!-- modal-dialog -->
     </div>
-        <div class="modal fade right" id="Projibutton" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl" role="document" >
+    <div class="modal fade right" id="Projibutton" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
 
@@ -857,7 +875,7 @@
                 </div>
 
                 <div class="modal-body">
-                   <img src="~/assets/images/flow.png" class="FlowImg" />
+                    <img src="~/assets/images/flow.png" class="FlowImg" />
                 </div>
 
             </div><!-- modal-content -->
@@ -1029,4 +1047,3 @@
     });
 </script>*@
 
-   

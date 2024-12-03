@@ -72,48 +72,49 @@ function GetAllComments2() {
 
             $('#ChatBox').empty().html(tableHTML);
 
-            //$('#ChatBox .table').DataTable({
-            //    "paging": true,    // Enable paging
-            //    "ordering": true,  // Enable ordering
-            //    "info": true,       // Enable info
-            //    "dom": '<"row"<"col-sm-12 col-md-6 add-comment-btn"><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
-            //});
-
-            //if ($("#IsCommentPsmiId").html() != 0)
-            //    $("div.add-comment-btn").html('<button id="add-comment" class="btn btn-primary"><i class="fas fa-plus"></i> Add Comment</button>');
-
-            //$("#add-comment").on("click", function () {
-
-            //    $("#ProjectcommentForStackHolderprojId").html($(".ProjectcommentprojId").html())
-            //    $("#ProjectcommentForStackHolderPsmId").html($("#IsCommentPsmiId").html())
-            //    mMsater(0, "ddlStatus", 4, 0)
-            //    $("#ProjCommentModal").modal('show');
-            //    GetAllComments($("#IsCommentPsmiId").html(), $(".ProjectcommentprojId").html());
-            //});
-
-
             $('#ChatBox .table').DataTable({
-                "paging": true,              // Enable paging
-                "ordering": true,            // Enable ordering
-                "info": true,                // Enable info
-                "lengthMenu": [10, 25, 50],  // Options for records per page
-                "pageLength": 10,            // Default records per page
-                "dom": '<"row"<"col-sm-12 col-md-6"lf><"col-sm-12 col-md-6 add-comment-btn">>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>', // Move Add-comment-btn after search box
+                "paging": true,    // Enable paging
+                "ordering": true,  // Enable ordering
+                "info": true,       // Enable info
+                "dom": '<"row"<"col-sm-12 col-md-6 add-comment-btn"><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
             });
 
-            // Dynamically add the Add Comment button
-            if ($("#IsCommentPsmiId").html() != 0) {
+            if ($("#IsCommentPsmiId").html() != 0)
                 $("div.add-comment-btn").html('<button id="add-comment" class="btn btn-primary"><i class="fas fa-plus"></i> Add Comment</button>');
-            }
+
+            $("#add-comment").on("click", function () {
+
+                $("#ProjectcommentForStackHolderprojId").html($(".ProjectcommentprojId").html())
+                $("#ProjectcommentForStackHolderPsmId").html($("#IsCommentPsmiId").html())
+                mMsater(0, "ddlStatus", 4, 0)
+                $("#ProjCommentModal").modal('show');
+                GetAllComments($("#IsCommentPsmiId").html(), $(".ProjectcommentprojId").html());
+            });
+
+
+            //$('#ChatBox .table').DataTable({
+            //    "paging": true,              // Enable paging
+            //    "ordering": true,            // Enable ordering
+            //    "info": true,                // Enable info
+            //    "lengthMenu": [10, 25, 50],  // Options for records per page
+            //    "pageLength": 10,            // Default records per page
+            //    "dom": '<"row"<"col-sm-12 col-md-6"lf><"col-sm-12 col-md-6 add-comment-btn">>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>', // Move Add-comment-btn after search box
+            //});
+
+            //// Dynamically add the Add Comment button
+            //if ($("#IsCommentPsmiId").html() != 0) {
+            //    alert("#IsCommentPsmiId").html());
+            //    $("div.add-comment-btn").html('<button id="add-comment" class="btn btn-primary"><i class="fas fa-plus"></i> Add Comment</button>');
+            //}
 
             // Add functionality to the Add Comment button
-            $("#add-comment").on("click", function () {
-                $("#ProjectcommentForStackHolderprojId").html($(".ProjectcommentprojId").html());
-                $("#ProjectcommentForStackHolderPsmId").html($("#IsCommentPsmiId").html());
-                mMsater(0, "ddlStatus", 4, 0);   // Populate dropdown
-                $("#ProjCommentModal").modal('show'); // Show comment modal
-                GetAllComments($("#IsCommentPsmiId").html(), $(".ProjectcommentprojId").html()); // Fetch all comments
-            });
+            //$("#add-comment").on("click", function () {
+            //    $("#ProjectcommentForStackHolderprojId").html($(".ProjectcommentprojId").html());
+            //    $("#ProjectcommentForStackHolderPsmId").html($("#IsCommentPsmiId").html());
+            //    mMsater(0, "ddlStatus", 4, 0);   // Populate dropdown
+            //    $("#ProjCommentModal").modal('show'); // Show comment modal
+            //    GetAllComments($("#IsCommentPsmiId").html(), $(".ProjectcommentprojId").html()); // Fetch all comments
+            //});
 
 
 

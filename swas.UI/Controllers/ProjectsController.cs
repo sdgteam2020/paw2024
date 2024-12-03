@@ -849,6 +849,7 @@ namespace swas.UI.Controllers
                     movent.UndoRemarks = Remarks;
                     movent.IsComplete = true;
                     movent.DateTimeOfUpdate = DateTime.Now;
+                    movent.IsPullBack = true;
                     var Ret = await _psmRepository.UpdateWithReturn(movent);
 
                     Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
