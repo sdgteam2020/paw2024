@@ -15,11 +15,13 @@
 
     //today = today[0] + 'T' + today[1].substring(0,5);
     var today = year + `-` + monthsans + `-` + dayans + `T` + hh + `:` + mm
-
+  
     if ($("#isclaneder").html() == 1) {
        
         // yyyy-MM-ddTHH:mm//2024-09-06T15:42
-        $('input[type=datetime-local]').attr('max', today);
+
+
+      //  $('input[type=datetime-local]').attr('max', today);
         $('input[type=datetime-local]').attr('min', today);
         $('input[type=datetime-local]').val(today)
 

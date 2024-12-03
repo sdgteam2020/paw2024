@@ -205,15 +205,6 @@ function UploadFiles() {
 
                 });
             }
-            else if (response == -5) {
-
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Pdf File LessThen 10 MB !",
-                });
-            }
-
         },
         error: function (error) {
             $(".error-msg").removeClass("d-none")

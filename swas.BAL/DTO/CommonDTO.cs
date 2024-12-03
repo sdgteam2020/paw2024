@@ -138,7 +138,6 @@ namespace swas.BAL.DTO
 
         public string? HostedOn { get; set; }
 
-
         public List<tbl_AttHistory> Atthistory { get; set; }
 
         public List<tbl_Projects> ProjectDetl { get; set; }

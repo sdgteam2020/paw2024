@@ -476,3 +476,5 @@ AppPackages/
 /swas.UI/obj/Release/net6.0/swas.UI.genpublishdeps.cache
 /swas.UI/obj/Release/net6.0/swas.UI.genruntimeconfig.cache
 /swas.BAL/bin/Debug/net6.0/swas.BAL.deps.json
+/swas.UI/wwwroot/Uploads
+/swas.UI/wwwroot/Download

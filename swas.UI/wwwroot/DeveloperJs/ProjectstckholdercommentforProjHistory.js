@@ -19,6 +19,7 @@ function GetAllComments2() {
             "ProjId": $(".ProjectcommentprojId").html()
         },
         success: function (data) {
+            console.log("CommentData", data);
 
             var tableHTML = '<table class="table" style="width:100%; border: 1px solid black; border-collapse:collapse;">';
             tableHTML += '<thead>';
@@ -71,35 +72,51 @@ function GetAllComments2() {
 
             $('#ChatBox').empty().html(tableHTML);
 
-            // Apply DataTables
+            //$('#ChatBox .table').DataTable({
+            //    "paging": true,    // Enable paging
+            //    "ordering": true,  // Enable ordering
+            //    "info": true,       // Enable info
+            //    "dom": '<"row"<"col-sm-12 col-md-6 add-comment-btn"><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+            //});
+
+            //if ($("#IsCommentPsmiId").html() != 0)
+            //    $("div.add-comment-btn").html('<button id="add-comment" class="btn btn-primary"><i class="fas fa-plus"></i> Add Comment</button>');
+
+            //$("#add-comment").on("click", function () {
+
+            //    $("#ProjectcommentForStackHolderprojId").html($(".ProjectcommentprojId").html())
+            //    $("#ProjectcommentForStackHolderPsmId").html($("#IsCommentPsmiId").html())
+            //    mMsater(0, "ddlStatus", 4, 0)
+            //    $("#ProjCommentModal").modal('show');
+            //    GetAllComments($("#IsCommentPsmiId").html(), $(".ProjectcommentprojId").html());
+            //});
+
+
             $('#ChatBox .table').DataTable({
-                "paging": true,    // Enable paging
-                "ordering": true,  // Enable ordering
-                "info": true,       // Enable info
-                "dom": '<"row"<"col-sm-12 col-md-6 add-comment-btn"><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+                "paging": true,              // Enable paging
+                "ordering": true,            // Enable ordering
+                "info": true,                // Enable info
+                "lengthMenu": [10, 25, 50],  // Options for records per page
+                "pageLength": 10,            // Default records per page
+                "dom": '<"row"<"col-sm-12 col-md-6"lf><"col-sm-12 col-md-6 add-comment-btn">>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>', // Move Add-comment-btn after search box
             });
 
-            // Add the custom "Add Comment" 
-            $("div.add-comment-btn").html('<button id="add-comment" class="btn btn-primary"><i class="fas fa-plus"></i> Add Comment</button>');
+            // Dynamically add the Add Comment button
+            if ($("#IsCommentPsmiId").html() != 0) {
+                $("div.add-comment-btn").html('<button id="add-comment" class="btn btn-primary"><i class="fas fa-plus"></i> Add Comment</button>');
+            }
 
-            //
-            // Bind the click event for the button
-
-
-            // add comment button will show only for 
+            // Add functionality to the Add Comment button
             $("#add-comment").on("click", function () {
-               
-                $("#ProjectcommentForStackHolderprojId").html($(".ProjectcommentprojId").html())
-                $("#ProjectcommentForStackHolderPsmId").html(5260) // psmId will send here dynamically here
-                
-                //IsReadComment($(this).closest("tr").find("#spnProjId").html(), $(this).closest("tr").find("#spnpsmId").html());
-                //IsReadNotification($(this).closest("tr").find("#spnProjId").html(), 1);
-                //$(this).closest("tr").removeClass("bold-text")
-                //reset()
-                mMsater(0, "ddlStatus", 4, 0)
-                $("#ProjCommentModal").modal('show');
-                GetAllComments($("#ProjectcommentForStackHolderPsmId").html(),$(".ProjectcommentprojId").html());
+                $("#ProjectcommentForStackHolderprojId").html($(".ProjectcommentprojId").html());
+                $("#ProjectcommentForStackHolderPsmId").html($("#IsCommentPsmiId").html());
+                mMsater(0, "ddlStatus", 4, 0);   // Populate dropdown
+                $("#ProjCommentModal").modal('show'); // Show comment modal
+                GetAllComments($("#IsCommentPsmiId").html(), $(".ProjectcommentprojId").html()); // Fetch all comments
             });
+
+
+
 
         },
         error: function () {
@@ -120,6 +137,11 @@ function GetAllComments1() {
             "ProjId": $(".ProjectcommentprojId").html()
         },
         success: function (data) {
+            //// Assuming the API returns PsmId as part of the response object
+            //if (data && data.length > 0 && data[0].psmId !== undefined) {
+            //    // Bind the PsmId to a hidden field
+            //    $('#hiddenPsmId').val(data[0].psmId); // Ensure you have an input field with ID "hiddenPsmId"
+            //}
             var tableHTML = '<table style="width:100%; border: 1px solid black; border-collapse:collapse;">';
             tableHTML += '<thead>';
             tableHTML += '<tr>';

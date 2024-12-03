@@ -1,4 +1,8 @@
-﻿@using swas.BAL.DTO
+﻿@using Microsoft.AspNetCore.Identity
+@using swas.BAL.Helpers
+@using Microsoft.AspNetCore.Authorization
+
+@using swas.BAL.DTO
 @model List<ProjHistory>
 @{
     ViewBag.Title = "Project History List";
@@ -152,6 +156,7 @@
 <div class="row">
     <span id="spnstageid" class="d-none">@ViewBag.stageid</span>
     <span id="spntabType" class="d-none">@ViewBag.Type</span>
+    <span id="IsCommentPsmiId" class="d-none">@ViewBag.IsCommentPsmiId</span>
     <!--Proj Details-->
     <div class="col-12 col-lg-12 col-xl-4 d-flex">
 
@@ -742,6 +747,7 @@
                             @Model.FirstOrDefault()?.ProjName : Comments
                         </div>
                         <div id="ChatBoxPDF" style="width:100%; border: 1px solid black; border-collapse:collapse;">
+                            <input type="hidden" id="hiddenPsmId" value="" />
                             <!-- Dynamic comments will be loaded here -->
                         </div>
                     </div>
@@ -844,6 +850,7 @@
 
         </div>
         <div class="chat-messages" id="ChatBox" style="margin-top:3px !important">
+
             <!-- Your chat messages go here -->
         </div>
     </div>
@@ -890,4 +897,7 @@
 
         popupWin.document.close();
     }
+</script>
+<script>
+    var loginData = @Html.Raw(Json.Serialize(ViewBag.logins));
 </script>

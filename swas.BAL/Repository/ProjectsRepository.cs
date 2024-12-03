@@ -1264,6 +1264,7 @@ namespace swas.BAL.Repository
                                 from toSH in toStakeHolderJoin.DefaultIfEmpty()
                                 join curSH in _dbContext.tbl_mUnitBranch on proj.StakeHolderId equals curSH.unitid into currentStakeHolderJoin
                                 from curSH in currentStakeHolderJoin.DefaultIfEmpty()
+                              
                                     // join stakeHolderSH in _dbContext.tbl_mUnitBranch on p.CurrentStakeHolderId equals stakeHolderSH.unitid into stakeHolderJoin
                                     //from stakeHolderSH in stakeHolderJoin.DefaultIfEmpty()
                                 where proj.ProjName.Length > 1 && proj.ProjId == dtaProjID
@@ -2062,6 +2063,15 @@ namespace swas.BAL.Repository
             return await _dbContext.ProjStakeHolderMov
                 .Where(a => a.ProjId == projId && a.ToUnitId == ToUnitId)
                 .ToListAsync();
+        }
+
+        public async Task<int> GetIsCommentPsmiId(int? ProjId, int? StackHolderId)
+        {
+            var ret= await _dbContext.ProjStakeHolderMov.Where(i => i.ProjId == ProjId && i.IsComment == true && i.ToUnitId == StackHolderId).SingleOrDefaultAsync();
+           if(ret!=null)
+            return ret.PsmId;
+           else
+                return 0;
         }
 
         //public async Task<List<tbl_ProjStakeHolderMov>> GetCommentByProjAndUnitId(int projId, int? ToUnitId)

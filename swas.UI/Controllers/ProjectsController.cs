@@ -74,8 +74,8 @@ namespace swas.UI.Controllers
             ICommentRepository commentRepository, IActionsRepository actionsRepository,
             IProjComments projComments, IStkCommentRepository stkCommentRepository,
             IProjStakeHolderMovRepository projStakeHolderMovRepository,
-            UserManager<ApplicationUser> userManager , IUnitRepository unitRepository, IConfiguration configuration
-            
+            UserManager<ApplicationUser> userManager, IUnitRepository unitRepository, IConfiguration configuration
+
 
             )
         {
@@ -98,7 +98,7 @@ namespace swas.UI.Controllers
             _userManager = userManager;
             _unitRepository = unitRepository;
             _configuration = configuration;
-            
+
         }
 
 
@@ -107,7 +107,7 @@ namespace swas.UI.Controllers
 
         {
             CommonDTO dto = new CommonDTO();
-            
+
             dto.Projects = await _projectsRepository.GetAllProjectsAsync();
 
             return View(dto);
@@ -115,7 +115,7 @@ namespace swas.UI.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-           
+
             var project = await _projectsRepository.GetProjectByIdAsync(id);
             if (project == null)
             {
@@ -249,7 +249,7 @@ namespace swas.UI.Controllers
         {
             try
             {
-                
+
 
                 var options = _configuration.GetSection("WhitelistStatusOptions").Get<List<SelectListItem>>();
                 options.Insert(0, new SelectListItem { Text = "--Select--", Value = "", Disabled = true, Selected = true });
@@ -273,7 +273,7 @@ namespace swas.UI.Controllers
                 ViewBag.NotificationContent = notificationContent;
 
 
-               
+
 
                 int ids = 0;
                 if (id != null)
@@ -282,8 +282,8 @@ namespace swas.UI.Controllers
                     ids = int.Parse(decryptedValue);
                     tbl_Projects tbl_Projects = new tbl_Projects();
                     tbl_Projects = await _projectsRepository.GetProjectByPsmIdAsync(ids);
-                
-                   
+
+
                     ViewBag.Projects = await _projectsRepository.GetMyProjectsAsync();
                     return View(tbl_Projects);
 
@@ -291,7 +291,7 @@ namespace swas.UI.Controllers
                 TempData["SubCde"] = false;
                 TempData.Keep("SubCde");
 
-              
+
 
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
                 if (Logins != null)
@@ -302,8 +302,8 @@ namespace swas.UI.Controllers
                     var watermarkText = $" {ipAddress}\n  {currentDatetime}";
 
                     ViewBag.Projects = await _projectsRepository.GetMyProjectsAsync();
-                    return View(null); 
-                       
+                    return View(null);
+
                 }
                 else
                 {
@@ -323,9 +323,9 @@ namespace swas.UI.Controllers
         [HttpPost]
         [RequestFormLimits(MultipartBodyLengthLimit = 83886080)]
         public async Task<IActionResult> UploadMultiFile(IFormFile uploadfile, string Reamarks, int PsmId)
-        { 
+        {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-            if (uploadfile != null && uploadfile.Length < 5855734)
+            if (uploadfile != null && uploadfile.Length <= 10 * 1024 * 1024)
             {
                 if (uploadfile != null && uploadfile.Length > 0)
                 {
@@ -532,7 +532,7 @@ namespace swas.UI.Controllers
             }
         }
 
-        
+
         //[HttpPost]
         //public async Task<IActionResult> IsReadNotificationInbox(int ProjId)
         //{
@@ -621,7 +621,7 @@ namespace swas.UI.Controllers
                     proj = await _projectsRepository.GetProjectByIdAsync(ProjId);
                     proj.DateTimeOfUpdate = DateTime.Now;
                     proj.IsProcess = true;
-                    
+
                     await _projectsRepository.UpdateProjectAsync(proj);
 
 
@@ -728,7 +728,7 @@ namespace swas.UI.Controllers
                     {
                         var project = await _projectsRepository.GetProjectByIdAsync(ProjId);
                         unitid = project.StakeHolderId;
-                        int[] stausid = { 26, 31, 37, 21,21 }; /*  23, 22, 25, 27, 27*/ //ajayupdate
+                        int[] stausid = { 26, 31, 37, 21, 21 }; /*  23, 22, 25, 27, 27*/ //ajayupdate
                         int[] unitids = { 4, 3, 5, 1, unitid };
                         for (int i = 0; i < stausid.Length; i++)
                         {
@@ -739,7 +739,7 @@ namespace swas.UI.Controllers
                             //psmove.ActionId = 1;
                             psmove.Remarks = "";
                             psmove.FromUnitId = Logins.unitid ?? 0;
-                            psmove.UserDetails= Helper1.LoginDetails(Logins);
+                            psmove.UserDetails = Helper1.LoginDetails(Logins);
                             //psmove.TostackholderDt = DateTime.Now;  
 
                             psmove.UpdatedByUserId = Logins.unitid; // change with userid
@@ -781,7 +781,7 @@ namespace swas.UI.Controllers
         }
 
 
-            public async Task<IActionResult> FwdToProject(tbl_ProjStakeHolderMov psmove)
+        public async Task<IActionResult> FwdToProject(tbl_ProjStakeHolderMov psmove)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
@@ -802,9 +802,9 @@ namespace swas.UI.Controllers
             psmove.TimeStamp = psmove.TimeStamp;
             psmove.IsComplete = false;
             psmove.IsComment = false;
-            if(psmove.FromUnitId== psmove.ToUnitId)
+            if (psmove.FromUnitId == psmove.ToUnitId)
             {
-                psmove.IsRead= true;
+                psmove.IsRead = true;
             }
 
             var Ret = await _psmRepository.AddWithReturn(psmove);
@@ -817,7 +817,7 @@ namespace swas.UI.Controllers
                 return Json(nmum.NotSave);
             }
 
-        }   
+        }
 
         public async Task<IActionResult> ProjectMovHistory(int ProjectId)
         {
@@ -848,11 +848,12 @@ namespace swas.UI.Controllers
                     movent.IsRead = false;
                     movent.UndoRemarks = Remarks;
                     movent.IsComplete = true;
+                    movent.DateTimeOfUpdate = DateTime.Now;
                     var Ret = await _psmRepository.UpdateWithReturn(movent);
 
                     Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-                    
-                    var psmidold =await _psmRepository.GetLastRecProjectMovForUnod(ProjectId,Logins.unitid);
+
+                    var psmidold = await _psmRepository.GetLastRecProjectMovForUnod(ProjectId, Logins.unitid);
                     var movent1 = await _psmRepository.GetByByte(psmidold);
                     movent1.Remarks = "";
                     movent1.IsComplete = false;
@@ -878,12 +879,12 @@ namespace swas.UI.Controllers
             return View();
         }
         public async Task<IActionResult> GetProjCommentsByUnitId(int Id)
-     {
+        {
             try
             {
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
-                 return Json(await _projComments.GetAllStkForComment(Convert.ToInt32(Logins.unitid)));
+                return Json(await _projComments.GetAllStkForComment(Convert.ToInt32(Logins.unitid)));
             }
             catch (Exception ex)
             {
@@ -973,7 +974,7 @@ namespace swas.UI.Controllers
                 stkComment.ProjId = projId;
                 //stkComment.StakeHolderId = Logins.unitid;
                 var ret = await _stkCommentRepository.GetAllCommentBypsmId_UnitId(stkComment);
-               
+
                 return Json(ret);
 
             }
@@ -994,12 +995,13 @@ namespace swas.UI.Controllers
         #region Project History
         [HttpGet]
 
-        public async Task<IActionResult> ProjHistory(string userid, int? dataProjId, int? dtaProjID, string? AttPath, int? psmid, string? Projpin, string? EncyID, EncryModel? encryModel,string Type)
+        public async Task<IActionResult> ProjHistory(string userid, int? dataProjId, int? dtaProjID, string? AttPath, int? psmid, string? Projpin, string? EncyID, EncryModel? encryModel, string Type)
         {
             try
             {
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
+                ViewBag.logins = Logins;
                 string actufilename = "";
                 string AttDocuDescs = "";
 
@@ -1073,6 +1075,7 @@ namespace swas.UI.Controllers
                     {
                         string decryptedValue = _dataProtector.Unprotect(EncyID);
                         dataProjId = int.Parse(decryptedValue);
+                        ViewBag.IsCommentPsmiId = await _projectsRepository.GetIsCommentPsmiId(dataProjId, Logins.unitid);
                     }
                     catch (Exception ex)
                     {
@@ -1102,9 +1105,15 @@ namespace swas.UI.Controllers
 
                 ViewBag.PsmId = psmid ?? 0;
                 ViewBag.PjIR = Projpin;
+
+
+              
+
+
                 List<tbl_AttHistory> atthis = new List<tbl_AttHistory>();
                 if (dtaProjID != null)
                 {
+                    
                     List<ProjHistory> prohis = await _projectsRepository.GetProjectHistorybyID(dtaProjID);
                     tbl_Projects projects = await _projectsRepository.GetProjectByIdAsync(dtaProjID ?? 0);
 
@@ -1312,7 +1321,7 @@ namespace swas.UI.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> IsUnReadInbox (int PsmId)
+        public async Task<IActionResult> IsUnReadInbox(int PsmId)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
@@ -1345,7 +1354,7 @@ namespace swas.UI.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> IsUnReadComment(int Projid ,int PsmId)
+        public async Task<IActionResult> IsUnReadComment(int Projid, int PsmId)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
             if (Logins != null)
@@ -1381,7 +1390,7 @@ namespace swas.UI.Controllers
 
         [HttpGet]
         public async Task<JsonResult> GetProjectCommentCount()
-       {
+        {
             try
             {
                 int count = await _projectsRepository.GetNotificationCommentCount();
@@ -1512,10 +1521,10 @@ namespace swas.UI.Controllers
                         var project = await _projectsRepository.GetProjectByIdAsync(ProjId);
 
                         unitid = project.StakeHolderId;
-                        if(unitid == 1)
+                        if (unitid == 1)
                         {
                             int[] stausid = { 26, 31, 37, 21 };
-                            int[] unitids = { 4, 3, 5, 1};
+                            int[] unitids = { 4, 3, 5, 1 };
                             for (int i = 0; i < stausid.Length; i++)
                             {
                                 Notification notify = new Notification();
@@ -1550,8 +1559,8 @@ namespace swas.UI.Controllers
 
                             }
                         }
-                        
-                        
+
+
                         return Json(1);
                     }
                     else
@@ -1638,10 +1647,10 @@ namespace swas.UI.Controllers
         //}
 
 
-       
+
 
         [HttpPost]
-        public async Task<IActionResult> IsReadComment(int ProjId,int PsmId)
+        public async Task<IActionResult> IsReadComment(int ProjId, int PsmId)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
             if (Logins != null)

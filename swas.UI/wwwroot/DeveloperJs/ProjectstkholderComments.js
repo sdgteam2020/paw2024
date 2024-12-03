@@ -16,6 +16,15 @@ $(document).ready(function () {
                 $(this).removeClass('is-invalid');
             }
         });
+
+        var fileInput = $("#uploadfile");
+        if (fileInput.val().trim() === "") {
+            fileInput.addClass('is-invalid');
+            allFieldsComplete = false;
+        } else {
+            fileInput.removeClass('is-invalid');
+        }
+
         if (!allFieldsComplete) {
 
 
