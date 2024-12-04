@@ -200,6 +200,7 @@
                     <img src="~/assets/images/inbox.png" width="20px;" height="20px;" />&nbsp;Inbox
                 </a>
             </li>
+
             <li>
                 <a href="#" data-tab="sent" id="tabsent">
                     @*<span class="fa fa-edit"></span>*@
@@ -492,7 +493,7 @@
 
                                                         @* Pull Back  *@
 
-                                                        @if (project.PsmIds == project.undopsmId && (project.IsPullBack == false || project.IsPullBack == null)) // project.undopsmId for the specified active project, excluding comments and records with undo remarks.
+                                                        @if (project.IsPullBack == false || project.IsPullBack == null) // project.undopsmId for the specified active project, excluding comments and records with undo remarks.
                                                         {
                                                             if (project.StageId != 1) // stageId!=1 means here this project in not in initial stage..
                                                             {
@@ -501,7 +502,7 @@
                                                         }
                                                         else
                                                         {
-                                                            if (project.StageId != 1 && project.IsPullBack == true)
+                                                            if (project.IsPullBack == true)
                                                             {
                                                                 <span class="btn btn-success ml-2" style="padding: 1px !important;font-size: 13px !important; cursor: not-allowed;">Pulled Back</span>
                                                             }

@@ -871,7 +871,64 @@ namespace swas.UI.Controllers
             }
         }
         #endregion
+        #region PullBack
 
+        public async Task<IActionResult> PullBAckProject(int ProjectId, string Remarks, int StageId)
+        {
+            try
+            {
+
+                if (StageId == 1)
+                {
+                    return Json(nmum.NotSave);
+                }
+                else
+                {
+                    int psmData = _psmRepository.GetLastRecProjectMov(ProjectId);
+                    if (psmData != 0)
+                    {
+
+                        var movent = await _psmRepository.GetByByte(psmData);
+                        movent.IsRead = true;
+                        movent.UndoRemarks = Remarks;
+                        movent.IsComplete = true;
+                        movent.DateTimeOfUpdate = DateTime.Now;
+                        movent.IsPullBack = true;
+                        var Ret = await _psmRepository.UpdateWithReturn(movent);
+
+                        Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+
+
+                        //Add New Record For Pull Request
+                        movent.PsmId = 0;
+                        movent.FromUnitId = movent.ToUnitId;
+                        movent.ToUnitId = Convert.ToInt32(Logins.unitid);
+                        movent.IsComplete = false;
+                        movent.IsRead = false;
+                        movent.IsPullBack = true;
+                        movent.UndoRemarks = null;
+                        movent.UserDetails = Helper.LoginDetails(Logins);
+                        movent.UpdatedByUserId = Logins.UserIntId; // change with userid
+                        movent.DateTimeOfUpdate = DateTime.Now;
+
+
+                        movent.EditDeleteDate = DateTime.Now;
+                        movent.EditDeleteBy = Logins.UserIntId;
+                        movent.TimeStamp = DateTime.Now;
+                        movent.IsComplete = false;
+                        movent.IsComment = false;
+                        var Ret1 = await _psmRepository.AddWithReturn(movent);
+                        return Json(nmum.Update);
+                    }
+                    return Json(nmum.NotSave);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(nmum.Exception);
+            }
+        }
+        #endregion
 
         #region ProjComments
         public async Task<IActionResult> ProjComments()

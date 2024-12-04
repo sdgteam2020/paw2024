@@ -886,7 +886,7 @@ namespace swas.BAL.Repository
 
                             where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true && b.IsComplete == false
                             && b.FromUnitId == Logins.unitid && b.IsComment == false/* && b.StatusId != 5*/
-                            && b.UndoRemarks == null  || b.IsPullBack == true // Added here IsPullBack
+                            //&& b.UndoRemarks == null // Added here IsPullBack
 
                             orderby b.DateTimeOfUpdate descending
 
@@ -921,7 +921,7 @@ namespace swas.BAL.Repository
                                 EncyID = _dataProtector.Protect(a.ProjId.ToString()),
                                 EncyPsmID = _dataProtector.Protect(b.PsmId.ToString()),
                                 IsProcess = a.IsProcess,
-                                undopsmId = _psmRepository.GetLastRecProjectMov(a.ProjId),
+                               // undopsmId = _psmRepository.GetLastRecProjectMov(a.ProjId),
                                 StageId = eWithStages.StagesId,
                                 TimeStamp = b.TimeStamp,
                                 IsComplete = b.IsComplete,
@@ -955,7 +955,7 @@ namespace swas.BAL.Repository
                                 from eWithComment in fs.DefaultIfEmpty()
 
                                 where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true && b.IsComplete == true
-                                 && b.UndoRemarks == null
+                                 //&& b.UndoRemarks == null
                                 && b.FromUnitId == Logins.unitid && b.IsComment == false/* && b.StatusId != 5*/
                                
                                 orderby b.DateTimeOfUpdate descending
@@ -991,7 +991,8 @@ namespace swas.BAL.Repository
                                     StageId = eWithStages.StagesId,
                                     TimeStamp = b.TimeStamp,
                                     IsComplete = b.IsComplete,
-                                    IsRead = b.IsRead
+                                    IsRead = b.IsRead,
+                                    IsPullBack = b.IsPullBack
                                 };
 
                 var history = await queryhist.ToListAsync();

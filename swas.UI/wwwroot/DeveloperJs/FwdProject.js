@@ -51,13 +51,20 @@
         }).then((result) => {
             if (result.isConfirmed) {
 
-                Updateundo($(this).closest("tr").find("#SpnCurrentProjId").html(), $(this).closest("tr").find("#SpnCurrentpsmId").html(), result.value, $(this).closest("tr").find("#SpnprojectStageId").html());
+                PullBAckProject($(this).closest("tr").find("#SpnCurrentProjId").html(), $(this).closest("tr").find("#SpnCurrentpsmId").html(), result.value, $(this).closest("tr").find("#SpnprojectStageId").html());
                 UndoNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2, $(this).closest("tr").find("#SpnprojectToUnitId").html());
 
                 //For Notification
                 
                 AddNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2, $(this).closest("tr").find("#SpnStakeHolderId").html());
-               
+
+
+                //IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
+
+                //IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
+
+                //$(this).closest("tr").removeClass("bold-text");
+
             }
         });
     });
@@ -288,7 +295,7 @@ function SaveFwdTo(CurrentPslmId) {
     });
 }
 
-function Updateundo(ProjId, PslmId, UndoRemarks, StageId) {
+function PullBAckProject(ProjId, PslmId, UndoRemarks, StageId) {
     var userdata =
     {
         "ProjectId": ProjId,
@@ -299,14 +306,14 @@ function Updateundo(ProjId, PslmId, UndoRemarks, StageId) {
 
     };
     $.ajax({
-        url: '/Projects/UndoProject',
+        url: '/Projects/PullBAckProject',
         type: 'POST',
         data: userdata,
         success: function (response) {
             console.log(response);
             if (response != null) {
                 if (response == 2) {
-                    alert("Project Successfully Undo");
+                    alert("Project Successfully Pull");
                     location.reload();
                 }
             }
@@ -315,6 +322,33 @@ function Updateundo(ProjId, PslmId, UndoRemarks, StageId) {
     });
 
 }
+//function Updateundo(ProjId, PslmId, UndoRemarks, StageId) {
+//    var userdata =
+//    {
+//        "ProjectId": ProjId,
+//        "PsmId": PslmId,
+//        "Remarks": UndoRemarks,
+//        "StageId": StageId
+
+
+//    };
+//    $.ajax({
+//        url: '/Projects/UndoProject',
+//        type: 'POST',
+//        data: userdata,
+//        success: function (response) {
+//            console.log(response);
+//            if (response != null) {
+//                if (response == 2) {
+//                    alert("Project Successfully Undo");
+//                    location.reload();
+//                }
+//            }
+
+//        }
+//    });
+
+//}
 
 
 

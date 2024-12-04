@@ -21,6 +21,8 @@ using System.Xml.Linq;
 using System.Net.NetworkInformation;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace swas.BAL.Repository
 {
@@ -257,9 +259,19 @@ namespace swas.BAL.Repository
         {
             try
             {
-              // var query = _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.PsmId < (_context.ProjStakeHolderMov.Max(p => p.PsmId))).Max(p => p.PsmId);
-                var query = _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.IsActive==true && i.IsComment==false && i.UndoRemarks==null).Max(p => p.PsmId);
-                return query;
+                //var query = _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.IsActive==true && i.IsComment==false && i.UndoRemarks==null).Max(p => p.PsmId);
+                //return query;
+
+                var maxPsmIdParameter = new SqlParameter("@MaxPsmId", SqlDbType.Int)
+                {
+                    Direction = ParameterDirection.Output
+                };
+                _context.Database.ExecuteSqlRaw(
+                    "EXEC GetMaxPsmId @ProjectId = {0}, @MaxPsmId = @MaxPsmId OUTPUT",
+                    ProjectId,
+                    maxPsmIdParameter
+                );
+                return (int)(maxPsmIdParameter.Value ?? 0);
 
             }
             catch (Exception ex) { return 0; }
