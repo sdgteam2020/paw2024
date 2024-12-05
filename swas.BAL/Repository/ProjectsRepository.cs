@@ -548,6 +548,7 @@ namespace swas.BAL.Repository
             psmove.TimeStamp = project.InitiatedDate;
             psmove.IsComplete = false;
             psmove.IsComment = false;
+            psmove.IsPullBack = false;
             _dbContext.ProjStakeHolderMov.Add(psmove);
             await _dbContext.SaveChangesAsync();
 
@@ -917,6 +918,7 @@ namespace swas.BAL.Repository
                                 ToUnitId = b.ToUnitId,
                                 ToUnitName = toUnit.UnitName,
                                 Action = eWithAction.Actions,
+                                ActionId = eWithAction.ActionsId,
                                 TotalDays = 0,
                                 EncyID = _dataProtector.Protect(a.ProjId.ToString()),
                                 EncyPsmID = _dataProtector.Protect(b.PsmId.ToString()),
@@ -983,6 +985,7 @@ namespace swas.BAL.Repository
                                     ToUnitId = b.ToUnitId,
                                     ToUnitName = toUnit.UnitName,
                                     Action = eWithAction.Actions,
+                                    ActionId = eWithAction.ActionsId,
                                     TotalDays = 0,
                                     EncyID = _dataProtector.Protect(a.ProjId.ToString()),
                                     EncyPsmID = _dataProtector.Protect(b.PsmId.ToString()),

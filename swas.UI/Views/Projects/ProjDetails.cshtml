@@ -493,7 +493,7 @@
 
                                                         @* Pull Back  *@
 
-                                                        @if (project.IsPullBack == false || project.IsPullBack == null) // project.undopsmId for the specified active project, excluding comments and records with undo remarks.
+                                                        @if (project.IsPullBack == false @* || project.IsPullBack == null *@) // project.undopsmId for the specified active project, excluding comments and records with undo remarks.
                                                         {
                                                             if (project.StageId != 1) // stageId!=1 means here this project in not in initial stage..
                                                             {

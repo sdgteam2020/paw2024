@@ -802,6 +802,7 @@ namespace swas.UI.Controllers
             psmove.TimeStamp = psmove.TimeStamp;
             psmove.IsComplete = false;
             psmove.IsComment = false;
+            psmove.IsPullBack = false;
             if (psmove.FromUnitId == psmove.ToUnitId)
             {
                 psmove.IsRead = true;

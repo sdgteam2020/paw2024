@@ -28,7 +28,6 @@ function GetAllDashbaordCount() {
         },
         success: function (data) {
 
-            
             var dtoDashboardHeaderlst = data.dtoDashboardHeaderlst;
             var dTOApprovedCountlst = data.dtoApprovedCountlst;
             var dTODashboardCountlstForAction = data.dtoDashboardCountlstForAction;
