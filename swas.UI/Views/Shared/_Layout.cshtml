@@ -151,6 +151,27 @@
             font-size: 10px; /* Adjust size as needed */
         }
 
+        .custom-modal-size {
+            max-width: 85%; /* Set the modal width to 80% of the screen */
+            width: 85%; /* Ensure it scales responsively */
+            margin: auto; /* Center horizontally */
+        }
+
+            .custom-modal-size .modal-content {
+                height: 65vh; /* Ensure the content adjusts dynamically */
+                overflow-y: auto; /* Add vertical scrolling for long content */
+                overflow-x: hidden; /* Prevent horizontal overflow */
+                margin-left: 248px;
+            }
+
+        .modal-dialog {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh; /* Vertically center the modal */
+            margin: 0; /* Remove default margins for better centering */
+        }
+
     </style>
     <style>
 

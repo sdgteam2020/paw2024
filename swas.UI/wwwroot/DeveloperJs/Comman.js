@@ -15,6 +15,7 @@
 
     //today = today[0] + 'T' + today[1].substring(0,5);
     var today = year + `-` + monthsans + `-` + dayans + `T` + hh + `:` + mm
+
   
     if ($("#isclaneder").html() == 1) {
        
@@ -32,10 +33,14 @@
     else {
         $('input[type=datetime-local]').attr('max', today);
         $('.datepicker1').datepicker();
-       
+
     }
-    
     $('.datetimepicker1').datepicker();
+
+    // Remove the max date setting for CompletionDate to allow future selection
+    $('#CompletionDate').removeAttr('max');
+
+
 
     $('.form-control').keypress(function (e) {
         // Get the key code of the pressed key
