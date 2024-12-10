@@ -73,6 +73,8 @@ namespace swas.BAL.Interfaces
 
         Task<List<tbl_ProjStakeHolderMov>> GetInboxByProjAndUnitId (int projId, int? ToUnitId);
 
+        Task<tbl_ProjStakeHolderMov> GetProjStkHolderMovmentByPsmiId(int? PsmId);
+        Task<bool> UpdateProjectStkMovementAsync(tbl_ProjStakeHolderMov project);
     }
 
 

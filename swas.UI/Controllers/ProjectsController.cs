@@ -408,9 +408,6 @@ namespace swas.UI.Controllers
                     {
 
                         Data.EditDeleteDate = DateTime.Now;
-
-
-
                         await _projectsRepository.UpdateProjectAsync(Data);
                         Data = await _projectsRepository.GetProjectByIdAsync(Data.ProjId);
 
@@ -996,12 +993,30 @@ namespace swas.UI.Controllers
                         cmmets.UserDetails = Helper.LoginDetails(Logins);
                         cmmets.StakeHolderId = Logins.unitid; ;
 
-                        var ret = await _stkCommentRepository.AddWithReturn(cmmets);
+                        var projectStkHolderMovementData = await _projectsRepository.GetProjStkHolderMovmentByPsmiId(cmmets.PsmId);
+                        if (projectStkHolderMovementData != null)
+                        {
+                            projectStkHolderMovementData.TimeStamp = DateTime.Now;
+                            var rets = _projectsRepository.UpdateProjectStkMovementAsync(projectStkHolderMovementData);
+                            if (rets != null)
+                            {
+                                var ret = await _stkCommentRepository.AddWithReturn(cmmets);
+                                if (ret != null)
+                                    return Json(nmum.Save);
+                                else
+                                    return Json(0);
+                            }
+                            else
+                            {
+                                return Json(0);
+                            }
+                        }
+                        return Json(0);
 
-                        if (ret != null)
-                            return Json(nmum.Save);
-                        else
-                            return Json(0);
+                        //if (ret != null)
+                        //    return Json(nmum.Save);
+                        //else
+                        //    return Json(0);
                     }
 
                     else

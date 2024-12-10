@@ -2048,6 +2048,30 @@ namespace swas.BAL.Repository
         //        .ToListAsync();
         //}
 
+        public async Task<tbl_ProjStakeHolderMov> GetProjStkHolderMovmentByPsmiId(int? PsmId)
+        {
+            var ret = await _dbContext.ProjStakeHolderMov.Where(i => i.PsmId == PsmId).SingleOrDefaultAsync();
+            if (ret != null)
+                return ret;
+            else
+                return new tbl_ProjStakeHolderMov();
+        }
+
+        public async Task<bool> UpdateProjectStkMovementAsync(tbl_ProjStakeHolderMov project)
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            if (Logins != null)
+            {
+                _dbContext.Entry(project).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 
 }

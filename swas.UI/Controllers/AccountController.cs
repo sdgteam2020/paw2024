@@ -374,16 +374,12 @@ namespace swas.UI.Controllers
                 }
                 else
                 {
-
                     Response.Redirect("https://iam2.army.mil/IAM/User", true);
-                    
                 }
             }
             else
             {
                 Response.Redirect("https://iam2.army.mil/IAM/User", true);
-
-                
             }
             return RedirectToAction("UnAuthUser", "Account");
             //********************IAM COMMENTED CODE END**********************************
