@@ -182,6 +182,21 @@
     .bold-text {
         font-weight: bold;
     }
+
+    .custom-modal-size {
+        max-width: 85%; /* Set the modal width to 80% of the screen */
+        width: 85%; /* Ensure it scales responsively */
+        margin: auto; /* Center horizontally */
+    }
+
+        .custom-modal-size .custom-modal-content {
+            height: 65vh; /* Ensure the content adjusts dynamically */
+            overflow-y: auto; /* Add vertical scrolling for long content */
+            overflow-x: hidden; /* Prevent horizontal overflow */
+            margin-left: 248px;
+        }
+
+    
     
 </style>
 
@@ -728,7 +743,7 @@
     </div>
     <div class="modal fade" id="ProjFwd" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl custom-modal-size">
-            <div class="modal-content">
+            <div class="modal-content custom-modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="fwdModal">Project Fwd</h5>
                     <span class="d-none" id="spanCurrentPslmId">0</span>
