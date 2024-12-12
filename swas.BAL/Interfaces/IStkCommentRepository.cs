@@ -12,6 +12,8 @@ namespace swas.BAL.Interfaces
     public interface IStkCommentRepository : IGenericRepositoryDL<StkComment>
     {
         Task<List<DTOProComments>> GetAllCommentBypsmId_UnitId(StkComment Data);
+
+        Task<int> GetCommentStatusByPsmiId(int psmid);
        
     }
 }

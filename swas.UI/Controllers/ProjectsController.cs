@@ -958,10 +958,11 @@ namespace swas.UI.Controllers
                 StkComment cmmets = new StkComment();
                 string uniqueFileName = "";
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-                var psmove = await _projectsRepository.GettXNByPsmIdAsync(psmid);
+                ///var psmove = await _projectsRepository.GettXNByPsmIdAsync(psmid);  old code change by kapoor
+                int psmove = await _stkCommentRepository.GetCommentStatusByPsmiId(psmid);
                 if (uploadfile != null && uploadfile.Length <= 10485760)
                 {
-                    if (psmove.IsComplete == false)
+                    if (psmove != 1)
                     {
                         if (uploadfile != null && uploadfile.Length > 0)
                         {
@@ -997,7 +998,7 @@ namespace swas.UI.Controllers
                         if (projectStkHolderMovementData != null)
                         {
                             projectStkHolderMovementData.TimeStamp = DateTime.Now;
-                            var rets = _projectsRepository.UpdateProjectStkMovementAsync(projectStkHolderMovementData);
+                            var rets =await _projectsRepository.UpdateProjectStkMovementAsync(projectStkHolderMovementData);
                             if (rets != null)
                             {
                                 var ret = await _stkCommentRepository.AddWithReturn(cmmets);

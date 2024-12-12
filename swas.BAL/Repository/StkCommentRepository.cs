@@ -43,12 +43,20 @@ namespace swas.BAL.Repository
                              Attpath = comment.Attpath,
                              UserDetails = comment.UserDetails!= null ? comment.UserDetails.ToString() :"____"
 
-
                          }).ToListAsync();
            
 
 
             return query.ToList();
+        }
+
+        public async Task<int> GetCommentStatusByPsmiId(int psmid)
+        {
+            var ret = await _context.StkComment.Where(i => i.PsmId == psmid && i.StkStatusId==1).Select(i=>i.StkStatusId).FirstOrDefaultAsync();
+          if(ret==null)
+                return 0;
+          else
+            return 1;
         }
     }
 }

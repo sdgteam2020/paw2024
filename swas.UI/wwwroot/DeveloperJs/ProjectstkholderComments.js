@@ -315,9 +315,9 @@ function SendMsg() {
                 });
 
               
-                if ($("#ddlStatus").val() == 1) {
+              //  if ($("#ddlStatus").val() == 1) {
                     FwdProjConfirm($("#ProjectcommentForStackHolderPsmId").html());
-                }
+               // }
                 
 
                 GetAllComments($("#ProjectcommentForStackHolderPsmId").html() ,$("#ProjectcommentForStackHolderprojId").html());
