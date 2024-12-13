@@ -681,10 +681,6 @@ namespace swas.UI.Controllers
             var users = await userManager.Users.ToListAsync();
 
             Users inputModel = new Users();
-
-
-
-
             try
             {
                 foreach (var v in users)
@@ -709,17 +705,14 @@ namespace swas.UI.Controllers
                                 }).ToList();
 
                     ViewBag.data = list;
-
-
+                    ViewBag.Watermark = watermarkText;
                 }
             }
             catch (Exception ex)
             {
                 string ss = ex.InnerException.Message;
             }
-
             return View(inputModel);
-
         }
 
 
