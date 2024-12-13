@@ -200,7 +200,6 @@ namespace swas.BAL.Repository
                                  TimeStamp = gr.Key.datetime
                              }).ToListAsync();
             }
-           
 
             return lst.OrderByDescending(i=>i.TimeStamp).ToList();
         } 
@@ -259,8 +258,6 @@ namespace swas.BAL.Repository
                                        orderby cr1.StkCommentId descending
                                        select cr1.StkStatusId
                                       ).FirstOrDefault()
-
-                                      
 
                                         where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true //&& b.IsComplete == false
                                                                                                                            //&& b.ToUnitId == Logins.unitid 
@@ -399,8 +396,6 @@ namespace swas.BAL.Repository
                                            orderby cr1.StkCommentId descending
                                            select cr1.StkStatusId
                                           ).FirstOrDefault()
-
-                                         
 
                                            where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true //&& b.IsComplete == false
                                                                                                                                   //&& b.ToUnitId == Logins.unitid 
@@ -643,7 +638,6 @@ namespace swas.BAL.Repository
                              && actm.StatusActionsMappingId == 103 
                              // where a.ActionId == dft.ActionId
                              select new tbl_Projects
-
                              {
                                  ProjId = b.ProjId,
                                  PsmIds = a.PsmId,
@@ -664,25 +658,16 @@ namespace swas.BAL.Repository
                                  FwdBy = current != null ? current.UnitName : null,
                                  AdRemarks = a.Remarks,
                                  Comments = eWithComment.Comment,
-
                                  Status = eWithStatus.Status,
                                  Stages = eWithStages.Stages,
                                  Action = eWithAction.Actions,
                                  StakeHolder = stk.UnitName,
-
                                  AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == b.CurrentPslmId),
                                  HostTypeID = b.HostTypeID,
                                  EncyID = _dataProtector.Protect(b.CurrentPslmId.ToString())
-
-
-
                              };
-
-
                 var projectsWithDetails = await querys.ToListAsync();
                 return projectsWithDetails;
-
-
             }
             else
             {
@@ -719,9 +704,7 @@ namespace swas.BAL.Repository
                              join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId into ks
                              from eWithAction in ks.DefaultIfEmpty()
                              where a.FromUnitId == Logins.unitid && b.IsSubmited == false && a.IsComplete == false
-
                              select new tbl_Projects
-
                              {
                                  ProjId = b.ProjId,
                                  PsmIds = a.PsmId,
@@ -752,13 +735,10 @@ namespace swas.BAL.Repository
                                  AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == b.CurrentPslmId),
                                  HostTypeID = b.HostTypeID,
                                  EncyID = _dataProtector.Protect(b.CurrentPslmId.ToString()),
-
                                  EncyPsmID = _dataProtector.Protect(a.PsmId.ToString()),
-
                              };
 
                 var projectsWithDetails = await querys.ToListAsync();
-
                 return projectsWithDetails;
             }
             else
@@ -770,7 +750,6 @@ namespace swas.BAL.Repository
         public async Task<List<DTOProjectsFwd>> GetActInboxAsync()
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
             if (Logins != null)
             {
                 int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
@@ -784,23 +763,16 @@ namespace swas.BAL.Repository
                             join actm in _dbContext.TrnStatusActionsMapping on b.StatusActionsMappingId equals actm.StatusActionsMappingId
                             join d in _dbContext.mStatus on actm.StatusId equals d.StatusId
                             join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId
-
                             join c in _dbContext.tbl_mUnitBranch on b.ToUnitId equals c.unitid into cs
                             from toUnit in cs.DefaultIfEmpty()
-
                             join g in _dbContext.tbl_mUnitBranch on b.FromUnitId equals g.unitid into cg
                             from fromUnits in cg.DefaultIfEmpty()
-
                             join j in _dbContext.mStages on d.StageId equals j.StagesId into js
                             from eWithStages in js.DefaultIfEmpty()
-
-
                             join f in _dbContext.Comment on b.PsmId equals f.PsmId into fs
                             from eWithComment in fs.DefaultIfEmpty()
-
                             where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true && b.IsComplete == false
                             && b.ToUnitId == Logins.unitid && b.IsComment == false
-
                             select new DTOProjectsFwd
                             {
                                 ProjId = a.ProjId,
@@ -812,25 +784,18 @@ namespace swas.BAL.Repository
                                 Status = d.Status,
                                 StatusId=d.StatusId,
                                 FromUnitId = b.FromUnitId,
-                               
                                 ToUnitId = b.ToUnitId,
                                 ToUnitName = toUnit.UnitName,
                                 Action = k.Actions,
                                 TotalDays = 0,
-
                                 ActionId = actm.ActionsId,
-
                                 Sponsor = a.Sponsor,
-
                                 //tooltip start
                                 UnitName = _psmRepository.GetSponsorUnitName(a.StakeHolderId),
                                 FromUnitUserDetail = fromUnits.UnitName,
                                 FromUnitName = fromUnits.UnitName + " ( " + b.UserDetails + ")",
-                                
                                 //end
-
                                 Stage = eWithStages.Stages,
-
                                 StageId = eWithStages.StagesId,
                                 EncyID = _dataProtector.Protect(a.ProjId.ToString()),
                                 EncyPsmID = _dataProtector.Protect(b.PsmId.ToString()),
@@ -841,7 +806,6 @@ namespace swas.BAL.Repository
                             };
 
                 var projectsWithDetails = await query.OrderByDescending(x => x.ProjId).ToListAsync();
-
                 return projectsWithDetails;
             }
             else
@@ -849,8 +813,6 @@ namespace swas.BAL.Repository
                 return null;
             }
         }
-
-
 
         public async Task<List<DTOProjectsFwd>> GetActSendItemsAsync()
         {
@@ -909,8 +871,6 @@ namespace swas.BAL.Repository
                                 FromUnitUserDetail = fromUnits.UnitName,
                                 FromUnitName = fromUnits.UnitName + " ( " + b.UserDetails + ")",
                                 //end
-
-
 
                                 Status = eWithStatus.Status,
                                 FromUnitId = b.FromUnitId,
@@ -1012,10 +972,7 @@ namespace swas.BAL.Repository
 
         public async Task<List<tbl_Projects>> GetAllProjectsAsync()
         {
-
             return await _dbContext.Projects.ToListAsync();
-
-
         }
 
 
@@ -1023,16 +980,12 @@ namespace swas.BAL.Repository
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
-
-
             if (Logins != null)
             {
 
                 int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
 
                 string username = Logins.UserName;
-
-
 
                 var querys = from a in _dbContext.ProjStakeHolderMov
                              join b in _dbContext.Projects on a.PsmId equals b.CurrentPslmId
@@ -1091,15 +1044,9 @@ namespace swas.BAL.Repository
                                  HostTypeID = b.HostTypeID,
                                  EncyID = _dataProtector.Protect(b.CurrentPslmId.ToString()),
                                  ActionId = actm.ActionsId
-
-
-
                              };
 
-
                 var projectsWithDetails = await querys.ToListAsync();
-
-
 
                 return projectsWithDetails;
             }
@@ -1112,15 +1059,11 @@ namespace swas.BAL.Repository
 
         public async Task<tbl_Projects> GetProjectByIdAsync(int projectId)
         {
-
-
             return await _dbContext.Projects.FindAsync(projectId);
         }
 
         public async Task<tbl_Projects> GetProjectByIdAsync1(int? dataProjId)
         {
-
-
             return await _dbContext.Projects.FindAsync(dataProjId);
         }
 
@@ -1172,7 +1115,6 @@ namespace swas.BAL.Repository
                                     InitialRemarks = p.Remarks,
                                     AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == p.PsmId),
                                     ActionName = l.Actions
-
 
                                 };
 
@@ -1255,8 +1197,6 @@ namespace swas.BAL.Repository
                                     ActionName = l.Actions,
                                     AppDesc = eWithAppType.AppDesc,
                                     HostedOn = hostType.HostingDesc
-
-
                                 };
 
 
@@ -1280,8 +1220,6 @@ namespace swas.BAL.Repository
         {
             return await _dbContext.Projects.FirstOrDefaultAsync(a => a.CurrentPslmId == psmId);
         }
-
-
 
         public Task<List<tbl_Projects>> GetStatusProjAsync(int statusid)
         {
@@ -1318,17 +1256,12 @@ namespace swas.BAL.Repository
         {
             _dbContext.ProjStakeHolderMov.Update(psmov);
             await _dbContext.SaveChangesAsync();
-
-
             return true;
         }
        
         public async Task<List<tbl_Projects>> GetActProjectsAsync()
         {
-
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
-
 
             if (Logins != null && Logins.Role == "Unit")
             {
@@ -1344,7 +1277,6 @@ namespace swas.BAL.Repository
                                       from eWithStatus in ds.DefaultIfEmpty()
                                       join c in _DBContext.tbl_mUnitBranch on a.StakeHolderId equals c.unitid into cs
                                       from eWithUnit in cs.DefaultIfEmpty()
-
 
                                       join g in _DBContext.tbl_mUnitBranch on e.ToUnitId equals g.unitid into csh
                                       from curstk in csh.DefaultIfEmpty()
@@ -1381,13 +1313,7 @@ namespace swas.BAL.Repository
 
                                           AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == a.CurrentPslmId)
                                       }).ToListAsync();
-
-
-
-
                 return projects;
-
-
             }
             else if (Logins != null && Logins.Role == "Dte")
             {
@@ -1403,7 +1329,6 @@ namespace swas.BAL.Repository
                                       from eWithStatus in ds.DefaultIfEmpty()
                                       join c in _DBContext.tbl_mUnitBranch on a.StakeHolderId equals c.unitid into cs
                                       from eWithUnit in cs.DefaultIfEmpty()
-
 
                                       join g in _DBContext.tbl_mUnitBranch on e.ToUnitId equals g.unitid into csh
                                       from curstk in csh.DefaultIfEmpty()
@@ -1437,29 +1362,19 @@ namespace swas.BAL.Repository
                                           // ActionCde = e.ActionCde,
                                           AimScope = a.AimScope,
                                           EncyID = _dataProtector.Protect(a.CurrentPslmId.ToString()),
-
                                           AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == a.CurrentPslmId)
                                       }).ToListAsync();
 
-
-
                 return projects;
-
-
             }
             else
             {
 
                 return null;
             }
-
-
-
         }
         public async Task<List<DToWhiteListed>> GetWhiteListedActionProj()
         {
-
-
             //var currentDateMinus15Days = DateTime.Now.AddDays(-30);
             var results = (from a in _dbContext.trnWhiteListed
                            join b in _dbContext.mWhiteListedHeader on a.HeaderID equals b.Id
@@ -1479,8 +1394,6 @@ namespace swas.BAL.Repository
                                Remarks = a.Remarks,
                                Header = b.Header
                            }).ToList();
-
-
             return results;
 
             // 'results' contains the list of TimeExceeds objects with the specified conditions.
@@ -1631,7 +1544,6 @@ namespace swas.BAL.Repository
 
                 return projects;
 
-
             }
             else
             {
@@ -1756,9 +1668,7 @@ namespace swas.BAL.Repository
                                       AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == a.CurrentPslmId)
                                   }).ToListAsync();
 
-
             return projects;
-
 
             //}
 
@@ -1826,8 +1736,6 @@ namespace swas.BAL.Repository
 
 
             return projects;
-
-
             //}
 
         }
@@ -1861,21 +1769,13 @@ namespace swas.BAL.Repository
                                    FromUnitName = " " + fromunit.UnitName + " ( " + b.UserDetails + ")",
                                    Remark = b.Remarks,
                                    //end
-
                                    ToUnitName = tounit.UnitName,
-
                                    DateTimeOfUpdate = b.TimeStamp,
-
-
                                }).ToListAsync();
 
             return query;
 
         }
-
-
-        
-        
 
         public async Task<List<tbl_ProjStakeHolderMov>> GetInboxByProjIdAsync(int projId)
         {
@@ -1897,7 +1797,6 @@ namespace swas.BAL.Repository
         public async Task<int> GetNotificationCommentCount()
         {
             var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
             int notificationCount = await _dbContext.Notification
                 .Where(n => n.NotificationType == 1 && n.IsRead == false && n.NotificationTo == loginUser.unitid)
                 .CountAsync();
@@ -1995,8 +1894,6 @@ namespace swas.BAL.Repository
             return await _dbContext.ProjStakeHolderMov
                                    .Where(c => c.ProjId == projId && c.PsmId != psmId)
                                    .ToListAsync();
-
-           
         }
 
 
