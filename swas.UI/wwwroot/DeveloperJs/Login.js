@@ -9,6 +9,7 @@
 
             if (result == 1) {
                 window.location.replace("../../Home/Index");
+
             }
 
 

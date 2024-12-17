@@ -62,12 +62,22 @@ function ProjectWiseStatus() {
                             for (var i = 0; i < StatusProjectlst.length; i++) {
                                 var isstatus = MovProjectlst.filter(function (element) { return element.statusId == StatusProjectlst[i].statusId && element.projId == MovProjectlst[j].projId; });
 
-                                if (isstatus.length != 0) {
-                                    listItem += '<td class="align-middle text-center" data-toggle="tooltip" data-placement="top" title="' + DateFormateddMMyyyyhhmmss(isstatus[0].timeStamp) + '"><i class="fa fa-check-circle" style="color: #28a745;font-size: 20px;" aria-hidden="true"></i></td>';
+                                //if (isstatus.length != 0) {
+                                //    listItem += '<td class="align-middle text-center" data-toggle="tooltip" data-placement="top" title="' + DateFormateddMMyyyyhhmmss(isstatus[0].timeStamp) + '"><i class="fa fa-check-circle" style="color: #28a745;font-size: 20px;" aria-hidden="true"></i></td>';
 
+                                //}
+                                //else {
+                                //    listItem += '<td class="align-middle text-center"><i class="fa fa-minus-circle" style="color: #ffc107;font-size: 20px;" aria-hidden="true"></i></td>';
+                                //}
+                                if (isstatus.length != 0) {
+
+                                    listItem += '<td class="align-middle text-center" data-toggle="tooltip" data-placement="top" title="'
+                                        + DateFormateddMMyyyyhhmmss(isstatus[0].timeStamp)
+                                        + '"><div style="width: 25px; height: 25px; border-radius: 50%; background-color: #28a745; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: bold;">A</div></td>';
                                 }
                                 else {
-                                    listItem += '<td class="align-middle text-center"><i class="fa fa-minus-circle" style="color: #ffc107;font-size: 20px;" aria-hidden="true"></i></td>';
+                                    // Pending (P) - yellow circle with P
+                                    listItem += '<td class="align-middle text-center"><div style="width: 25px; height: 25px; border-radius: 50%; background-color: #ffc107; color: #000; display: inline-flex; align-items: center; justify-content: center; font-weight: bold;">P</div></td>';
                                 }
                             }
                             listItem += '</tr>';

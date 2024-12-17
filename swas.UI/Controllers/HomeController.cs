@@ -77,8 +77,8 @@ namespace swas.UI.Controllers
         private readonly ICommentRepository _commentRepository;
         DateTime Currentdate = DateTime.Now;
         private System.Timers.Timer aTimer;
+        //private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager;
 
-       
         public HomeController(IProjectsRepository projectsRepository, ICommentRepository commentRepository, SignInManager<ApplicationUser> signInManager, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IDdlRepository dlRepository, ApplicationDbContext context, IUnitRepository unitRepository, IProjStakeHolderMovRepository stkholdmove, IChartService chartService, IWebHostEnvironment _webHostEnvironment, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, IDataProtectionProvider dataProtector, IActionsRepository actionsRepository, IAttHistoryRepository attHistoryRepository)
         {
             //  _logger = logger; _repositoryUser = repositoryUser;
@@ -103,7 +103,7 @@ namespace swas.UI.Controllers
 
 
         ///Developer Name :- Sub Maj M Sanal Kumar
-        ///Revised on :- 01/10/2023ddgf
+        ///Revised on :- 01/10/2023ddgf 
         ///    chart generation corrected df fgdgd sdfsdf dsfdsfsdfsfd dsfdsfdsf fgfdgdfgdfg
         ///    
 
@@ -117,7 +117,12 @@ namespace swas.UI.Controllers
                 {
                     return Redirect("/Identity/Account/Login");
                 }
-              
+
+                //ApplicationUser user = await _userManager.FindByNameAsync(Logins.UserName);
+                //if (user == null || user.Flag == false)
+                //{
+                //    return Redirect("/Identity/Account/Login");
+                //}
                 return View();
             }
             catch (Exception ex)
@@ -126,15 +131,15 @@ namespace swas.UI.Controllers
                 return Redirect("/Home/Error");
             }
         }
-        public async Task<IActionResult> GetDashboardStatusDetails(int StatusId,bool IsDuplicate)
+        public async Task<IActionResult> GetDashboardStatusDetails(int StatusId, bool IsDuplicate)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
-            var ss = await _projectsRepository.GetDashboardStatusDetails(StatusId,Convert.ToInt32(Logins.unitid), IsDuplicate);
+            var ss = await _projectsRepository.GetDashboardStatusDetails(StatusId, Convert.ToInt32(Logins.unitid), IsDuplicate);
 
             return Json(ss);
-            
+
         }
-        public async Task<IActionResult> GetDashboardApproved(int StatusId,int statusActionsMappingId)
+        public async Task<IActionResult> GetDashboardApproved(int StatusId, int statusActionsMappingId)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
             var ss = await _projectsRepository.GetDashboardApproved(StatusId, statusActionsMappingId);
@@ -152,7 +157,7 @@ namespace swas.UI.Controllers
         }
         public async Task<IActionResult> GetProjHoldStatus(int ProjId)
         {
-            var ss=await _stkholdmove.ProjectHolsTimeCalculate(ProjId);
+            var ss = await _stkholdmove.ProjectHolsTimeCalculate(ProjId);
             return Json(ss);
         }
         public async Task<IActionResult> ProjectWiseReport()
@@ -258,10 +263,10 @@ namespace swas.UI.Controllers
         //    List<Notification> notifications = await _commentRepository.GetNotificationAsync(ProjId);
         //    return View();
 
-            
+
         //}
 
-        public async Task<IActionResult> GetNotificationInbox (int ProjId)
+        public async Task<IActionResult> GetNotificationInbox(int ProjId)
         {
             List<Notification> notifications = await _commentRepository.GetNotificationInbox(ProjId);
             return View();
@@ -1562,6 +1567,12 @@ s.IsDashboard,
             }
         }
 
+        [HttpPost]
+        public IActionResult ClearSession()
+        {
+            HttpContext.Session.Clear();
+            return Ok();
+        }
 
     }
 }
