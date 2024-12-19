@@ -3,9 +3,9 @@
 $(document).ready(function () {
 
     GetProjCommentsByUnitId();
-     
+
     $("#btnStatusUpdate").unbind().click(function () {
-       
+
         requiredFields = $('#projectcommentforstackholder').find('.requiredField');
         var allFieldsComplete = true;
         requiredFields.each(function (index) {
@@ -17,13 +17,13 @@ $(document).ready(function () {
             }
         });
 
-        var fileInput = $("#uploadfile");
-        if (fileInput.val().trim() === "") {
-            fileInput.addClass('is-invalid');
-            allFieldsComplete = false;
-        } else {
-            fileInput.removeClass('is-invalid');
-        }
+        //var fileInput = $("#uploadfile");
+        //if (fileInput.val().trim() === "") {
+        //    fileInput.addClass('is-invalid');
+        //    allFieldsComplete = false;
+        //} else {
+        //    fileInput.removeClass('is-invalid');
+        //}
 
         if (!allFieldsComplete) {
 
@@ -50,14 +50,14 @@ function IsUnReadInbox(psmId) {
 }
 function GetProjCommentsByUnitId() {
     var listItem = "";
-  
+
     /*let boldCount = 0;*/
     $.ajax({
         url: '/Projects/GetProjCommentsByUnitId',
         type: 'POST',
         data: { "Id": 0 },
         success: function (response) {
-            
+
             if (response != "null" && response != null) {
 
                 if (response == -1) {
@@ -69,14 +69,14 @@ function GetProjCommentsByUnitId() {
                     listItem += "<tr><td class='text-center' colspan=6>No Record Found</td></tr>";
 
                     $("#DetailBody").html(listItem);
-                   ;
+                    ;
                 }
 
                 else {
 
                     var count = 1;
                     console.log(response);
-                    
+
                     for (var i = 0; i < response.length; i++) {
                         var date = new Date(response[i].timeStamp);
                         var TimeStamp =
@@ -85,12 +85,12 @@ function GetProjCommentsByUnitId() {
                             date.getFullYear() + ' ' +
                             ("0" + date.getHours()).slice(-2) + ':' +
                             ("0" + date.getMinutes()).slice(-2) + ':' +
-                            ("0" + date.getSeconds()).slice(-2); 
+                            ("0" + date.getSeconds()).slice(-2);
 
-                        
+
                         if (response[i].isComment == false) {
                             listItem += "<tr class='bold-text'>";
-                           /* boldCount++;*/
+                            /* boldCount++;*/
                         } else {
                             listItem += "<tr>";
                         }
@@ -235,10 +235,10 @@ function GetProjCommentsByUnitId() {
 
                         popupWin.document.close();
                     }
-                   /* $('#ProjectCommentCount').html(boldCount);*/
-                    
+                    /* $('#ProjectCommentCount').html(boldCount);*/
+
                     $("body").on("click", ".cls-btncomment", function () {
-                       
+
                         $("#ProjectcommentForStackHolderprojId").html($(this).closest("tr").find("#spnProjId").html());
                         $("#ProjectcommentForStackHolderPsmId").html($(this).closest("tr").find("#spnpsmId").html());
 
@@ -263,9 +263,9 @@ function GetProjCommentsByUnitId() {
             }
             else {
                 listItem += "<tr><td class='text-center' colspan=6>No Record Found</td></tr>";
-               
+
                 $("#DetailBody").html(listItem);
-                
+
             }
         },
         error: function (result) {
@@ -288,13 +288,13 @@ function SendMsg() {
         formData.append("uploadfile", file);
 
     }
-   
+
     formData.append("Comments", $("#Comments").val());
     formData.append("StkStatusId", $("#ddlStatus").val());
     formData.append("ProjectId", $("#ProjectcommentForStackHolderprojId").html());
     formData.append("psmid", $("#ProjectcommentForStackHolderPsmId").html());
     formData.append("CommentDate", $("#CommentDateFwd").val());
-    
+
     $.ajax({
         type: "POST",
         url: '/Projects/SendCommentonProject',
@@ -302,27 +302,33 @@ function SendMsg() {
         contentType: false,
         processData: false,
         success: function (response) {
+            debugger;
             if (response == 0) {
 
             }
             if (response == 1) {
+                console.log("test comment done");
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
                     title: 'Comment Sent successfully',
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 5000
+                }).then(() => {
+                    setTimeout(() => {
+                        Swal.close();
+                    }, 5000); // Manually close after 5 seconds
                 });
 
-              
-              //  if ($("#ddlStatus").val() == 1) {
-                    FwdProjConfirm($("#ProjectcommentForStackHolderPsmId").html());
-               // }
-                
 
-                GetAllComments($("#ProjectcommentForStackHolderPsmId").html() ,$("#ProjectcommentForStackHolderprojId").html());
+                //  if ($("#ddlStatus").val() == 1) {
+                FwdProjConfirm($("#ProjectcommentForStackHolderPsmId").html());
+                // }
+
+
+                GetAllComments($("#ProjectcommentForStackHolderPsmId").html(), $("#ProjectcommentForStackHolderprojId").html());
                 GetProjCommentsByUnitId();
-              //IsUnReadComment($("#ProjectcommentForStackHolderprojId").html());
+                //IsUnReadComment($("#ProjectcommentForStackHolderprojId").html());
                 //GetNotification($("#ProjectcommentForStackHolderprojId").html());
                 UnReadNotification($("#ProjectcommentForStackHolderprojId").html(), 1);
                 IsUnReadComment($("#ProjectcommentForStackHolderprojId").html(), $("#ProjectcommentForStackHolderPsmId").html());
@@ -334,7 +340,7 @@ function SendMsg() {
                     icon: 'Error',
                     title: 'No Amdts Allowed as the Project is Already Accepted By You !',
                     showConfirmButton: true,
-                    
+
                 });
             }
             else if (response == 8) {
@@ -346,20 +352,19 @@ function SendMsg() {
 
                 });
             }
-           
 
-           
-           
+
+
+
             //IsReadComment($("#ProjectcommentForStackHolderprojId").html());
         },
         error: function (error) {
-           
+
 
         }
     });
 }
-function GetAllComments(PsmId, projId)
-{
+function GetAllComments(PsmId, projId) {
     $.ajax({
         type: "POST",
         url: '/Projects/GetAllCommentBypsmId_UnitId',
@@ -381,7 +386,7 @@ function GetAllComments(PsmId, projId)
                         date.getFullYear() + ' ' +
                         ("0" + date.getHours()).slice(-2) + ':' +
                         ("0" + date.getMinutes()).slice(-2) + ':' +
-                        ("0" + date.getSeconds()).slice(-2); 
+                        ("0" + date.getSeconds()).slice(-2);
                     if (data[i].userDetails == null)
                         userDetails = '';
                     else
@@ -390,7 +395,7 @@ function GetAllComments(PsmId, projId)
                     commentContainer += '<div class="comment-box" style="text-align: justify;">'; // Use text-align: justify for justified text
                     commentContainer += '<div class="comment-header">';
                     commentContainer += '<div>';
-                    commentContainer += '<span style="font-family: Arial; color: #0793f7;">' + data[i].stakeholder + ' (' + userDetails +') </span>';
+                    commentContainer += '<span style="font-family: Arial; color: #0793f7;">' + data[i].stakeholder + ' (' + userDetails + ') </span>';
                     commentContainer += '<div style="margin-left: 0px;" class="comment-meta">' + DateFormateddMMyyyyhhmmss(data[i].date) + '</div>';
                     commentContainer += '</div>';
                     commentContainer += '<div>';
@@ -419,7 +424,7 @@ function GetAllComments(PsmId, projId)
                 commentContainer += '</div>'; // Close the container
                 $('#ChatBoxForStackholdercomment').empty().html(commentContainer);
 
-              
+
 
 
             }
@@ -459,7 +464,7 @@ function GetNotificationInbox(ProjId) {
 
 function IsUnReadComment(ProjId, PsmId) {
     $.ajax({
-        url:'/Projects/IsUnReadComment',
+        url: '/Projects/IsUnReadComment',
         type: 'POST',
         data: {
             "ProjId": ProjId,
@@ -541,8 +546,8 @@ function FwdProjConfirm(psmid) {
 
             if (response >= 1) {
 
-              
-                
+
+
 
 
             }

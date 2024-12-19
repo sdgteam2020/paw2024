@@ -208,11 +208,12 @@ $(document).ready(function () {
                 contentType: "application/json; charset=utf-8",
                 data: { "Id": id },
                 datatype: "json",
-                success: function (data) {
-
-                    $('#myModalContent').html(data);
-                    $('#myModal').modal(options);
-                    $('#myModal').modal('show');
+                success: function (datadata) {
+                    
+                    $('#myModalPagehistoryAttechment').modal('show');
+                    $('#myModalContenthistoryAttechment').html(datadata);
+                   /* $('#myModal').modal(options);*/
+                    
 
                 },
                 error: function () {

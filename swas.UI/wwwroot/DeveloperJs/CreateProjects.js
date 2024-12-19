@@ -131,8 +131,8 @@ $(document).ready(function () {
         const todaydate = DateFormateyyy_mm_dd(new Date());
         $("#ProjName").val("New Project" + number);
         $("#InitiatedDate").val(predate);
-        $("#CompletionDate").val(todaydate);;
-        $("#IsWhitelisted").val("YES" + number);;
+        $("#CompletionDate").val(todaydate);
+        $("#IsWhitelisted").val("YES" + number);
         $("#InitialRemark").val("Remarks" + number);
         $("#AimScope").val("AimScope" + number);
         $("#HQandITinfraReqd").val("HQandITinfraReqd" + number);
@@ -527,8 +527,6 @@ function DateFormateyyy_mm_dd(date) {
 
     //`${datef2.getFullYear()}/` + monthsans + `/` + dayans ;
 }
-
-
 
 function DeleteProject(ProjectId) {
     $.ajax({

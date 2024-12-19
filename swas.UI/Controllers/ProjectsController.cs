@@ -317,7 +317,6 @@ namespace swas.UI.Controllers
                 return Redirect("/Home/Error");
             }
 
-
         }
         //[Authorize(Policy = "StakeHolders")]
         [HttpPost]
@@ -896,7 +895,20 @@ namespace swas.UI.Controllers
 
                         Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
-
+                        UnitDtl unitDetail = new UnitDtl();
+                        unitDetail = await _unitRepository.GetUnitDtl(movent.ToUnitId);
+                        if (unitDetail != null)
+                        {
+                            ApplicationUser userdet = await _userManager.FindByNameAsync(unitDetail.UnitName);
+                            if (userdet != null)
+                            {
+                                movent.UserDetails = Helper.UserInfoDetails(userdet);
+                            }
+                            else
+                            {
+                                movent.UserDetails = "";
+                            }
+                        }
                         //Add New Record For Pull Request
                         movent.PsmId = 0;
                         movent.FromUnitId = movent.ToUnitId;
@@ -905,8 +917,8 @@ namespace swas.UI.Controllers
                         movent.IsRead = false;
                         movent.IsPullBack = true;
                         movent.UndoRemarks = null;
-                        movent.UserDetails = Helper.LoginDetails(Logins);
-                        movent.UpdatedByUserId = Logins.UserIntId; // change with userid
+                        //movent.UserDetails = Helper.LoginDetails(Logins);
+                        movent.UpdatedByUserId = Logins.UserIntId;
                         movent.DateTimeOfUpdate = DateTime.Now;
 
 
@@ -960,24 +972,30 @@ namespace swas.UI.Controllers
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
                 ///var psmove = await _projectsRepository.GettXNByPsmIdAsync(psmid);  old code change by kapoor
                 int psmove = await _stkCommentRepository.GetCommentStatusByPsmiId(psmid);
-                if (uploadfile != null && uploadfile.Length <= 10485760)
-                {
+                
                     if (psmove != 1)
                     {
-                        if (uploadfile != null && uploadfile.Length > 0)
+                        if (uploadfile != null)
                         {
-                            uniqueFileName = $"{"Swas"}_{Guid.NewGuid()}{System.IO.Path.GetExtension(uploadfile.FileName)}";
-
-                            string filePath = System.IO.Path.Combine(_environment.ContentRootPath, "wwwroot/Uploads/", uniqueFileName);
-
-
-                            using (var stream = new FileStream(filePath, FileMode.Create))
+                            if (uploadfile.Length <= 10485760)
                             {
-                                uploadfile.CopyTo(stream);
+                                uniqueFileName = $"{"Swas"}_{Guid.NewGuid()}{System.IO.Path.GetExtension(uploadfile.FileName)}";
+
+                                string filePath = System.IO.Path.Combine(_environment.ContentRootPath, "wwwroot/Uploads/", uniqueFileName);
+
+
+                                using (var stream = new FileStream(filePath, FileMode.Create))
+                                {
+                                    uploadfile.CopyTo(stream);
+                                }
+
+
+                                cmmets.ActFileName = uploadfile.FileName;
                             }
-
-
-                            cmmets.ActFileName = uploadfile.FileName;
+                            else
+                            {
+                                return Json(nmum.PdfSizeEx);
+                            }
                         }
 
                         cmmets.Attpath = uniqueFileName;
@@ -1024,11 +1042,8 @@ namespace swas.UI.Controllers
                     {
                         return Json(nmum.NotSave);
                     }
-                }
-                else
-                {
-                    return Json(nmum.PdfSizeEx);
-                }
+                
+                
 
             }
             catch (Exception ex)
