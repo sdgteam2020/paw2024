@@ -75,7 +75,7 @@ namespace swas.UI.Controllers
                             var project = await _projectsRepository.GetProjectByIdAsync(ProjId);
 
                             unitid = project.StakeHolderId;
-                            if (unitid == 1)
+                            if (unitid == 1 || unitid == 3 || unitid == 4 || unitid == 5)
                             {
                                 int[] stausid = { 26, 31, 37, 21 };
                                 int[] unitids = { 4, 3, 5, 1 };
