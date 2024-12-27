@@ -15,8 +15,12 @@ namespace swas.DAL.Models
     {
         [Key]
         public int Attid { get; set; }
+
+        [ForeignKey("ProjStakeHolderMov")]
         public int PsmId { get; set; }
         public string AttPath { get; set; }
+
+        [ForeignKey("StkComment")]
         public int StkCommentId { get; set; }
         public DateTime? TimeStamp { get; set; }
         public bool IsDeleted { get; set; }

@@ -800,7 +800,7 @@
                                 }
                                 @snoa
                             </td>
-                            <td>@history.Date</td>
+                            <td>@history.Date.ToString().Substring(0,10)</td>
                             <td>@history.FromUnitName</td>
                             <td>@history.ToUnitName</td>
                             <td>@history.Stages</td>
@@ -820,7 +820,14 @@
                                 @history.Actions
                             </td>
                             <td class="wrap">
+                            @if (history.IsPulledBack == true)
+                            {
+                                @:Pulled Back Remarks - @history.Remarks
+                            }
+                            else
+                            {
                                 @history.Remarks
+                            }
                             </td>
 
                             <td>

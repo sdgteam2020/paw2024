@@ -1927,8 +1927,11 @@
                         <ul class="navbar-nav align-items-center">
                             <li class="nav-item dropdown">
                                 <span class="d-none" id="IpAddress">@Logins.IpAddress</span>
+                                <span class="d-none" id="SpnCurrentUserStackholderID">@Logins.unitid</span>
+
+
                                 <div class="text-white mr-2">
-                                    Welcome :  @Logins.UserName.ToLower()
+                                    Welcome :  @Logins.UserName.ToLower() 
                                     <div class="text-white mr-2 text-capitalize">@Logins.Rank @Logins.Offr_Name</div>
                                     <span class="spnOffr_Name d-none">@Logins.Offr_Name</span>
                             </li>
@@ -2340,7 +2343,7 @@
 
                                                     <div class="form-group">
                                                         <label class="control-label"><b>Date of Post:</b></label>
-                                                        <input id="CommentDateFwd" type="datetime-local" class="datePicker  form-control requiredField" />
+                                                        <input id="CommentDateFwd" type="date" class="datePicker  form-control requiredField" />
                                                     </div>
 
                                                     <div class="form-group">

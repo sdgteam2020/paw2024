@@ -4,7 +4,7 @@
     {
         "id": TableId,
         "ParentId": ParentId,
-     
+
     };
     $.ajax({
         url: '/Master/GetAllMasterTableforddl',
@@ -16,17 +16,17 @@
             if (response != "null" && response != null) {
                 if (response == 0) {
                     listItemddl += '<option  Value = "", Disabled = true, Selected = true>--Select--</option>';
-                   /* listItemddl += '<option value="">Please Select</option>';*/
+                    /* listItemddl += '<option value="">Please Select</option>';*/
                     $("#" + ddl + "").html(listItemddl);
                 }
 
                 else {
 
                     var listItemddl = "";
-                   
+
                     /* listItemddl += '<option value="">Please Select</option>';*/
                     listItemddl += '<option  Value = "", Disabled = true, Selected = true>--Select--</option>';
-                    
+
 
                     for (var i = 0; i < response.length; i++) {
                         listItemddl += '<option value="' + response[i].id + '">' + response[i].name + '</option>';
@@ -68,7 +68,7 @@
     });
 }
 
-function mMsaterfwdStage(sectid = '', ddl, TableId, ParentId,type) {
+function mMsaterfwdStage(sectid = '', ddl, TableId, ParentId, type) {
     var userdata =
     {
         "id": TableId,
@@ -121,7 +121,7 @@ function mMsaterfwdStage(sectid = '', ddl, TableId, ParentId,type) {
                             $("#ddlfwdStage option[value='3']").remove();
                         }
                         else {
-                           /* $("#ddlfwdStage option[value='1']").remove();*/   /*ajayUpdate*/
+                            /* $("#ddlfwdStage option[value='1']").remove();*/   /*ajayUpdate*/
 
                         }
                     }
@@ -147,8 +147,7 @@ function mMsaterfwdStage(sectid = '', ddl, TableId, ParentId,type) {
         }
     });
 }
-function mMsaterStage(sectid = '', ddl, TableId, ParentId, StakeHolderId)
-{
+function mMsaterStage(sectid = '', ddl, TableId, ParentId, StakeHolderId) {
 
     var userdata =
     {
@@ -218,7 +217,7 @@ function mMsaterStage(sectid = '', ddl, TableId, ParentId, StakeHolderId)
 }
 
 function mMsaterFwdTo(sectid = '', ddl, TableId, ParentId, StakeHolderId) {
- 
+
 
     var userdata =
     {
@@ -392,5 +391,17 @@ function DateTimeFormatedd_mm_yyyy(date) {
     var formattedDateTime = day + '/' + month + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds;
 
     return formattedDateTime;
+}
+function DateTimeFormatedd_dd_mm_yyyy(dateString) {
+    // Create a Date object from the input string
+    const date = new Date(dateString);
+
+    // Get the day, month, and year
+    const day = String(date.getDate()).padStart(2, '0');  // Add leading zero if single digit
+    const month = String(date.getMonth() + 1).padStart(2, '0');  // Get month (0-based)
+    const year = date.getFullYear();
+
+    // Return the date in the format: dd/mm/yyyy
+    return `${day}/${month}/${year}`;
 }
 

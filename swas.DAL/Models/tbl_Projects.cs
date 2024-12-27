@@ -24,8 +24,12 @@ namespace swas.DAL.Models
         [Display(Name = "Stake Holder")]
 
         public string Sponsor { get; set; }
+
+        [ForeignKey("tbl_mUnitBranch")]
         public int StakeHolderId { get; set; }
-		public int CurrentPslmId { get; set; }
+
+        [ForeignKey("tbl_ProjStakeHolderMov")]
+        public int CurrentPslmId { get; set; }
 
 		[DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
 

@@ -19,6 +19,7 @@ namespace swas.DAL.Models
 		[Column(TypeName = "varchar(200)")]
 		[Display(Name = "Attach Path")]
 		public string? AttPath { get; set; }
+		// Check with database all the value is 0 that is not possible to make foregin relation with mAction table.
 		public int? ActionId { get; set; }
 		public DateTime? TimeStamp { get; set; }
 		public bool? IsDeleted { get; set; }

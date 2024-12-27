@@ -289,12 +289,19 @@ function SendMsg() {
 
     }
 
+
+    var currentTime = new Date();
+    var timeString = currentTime.toTimeString().split(' ')[0]; // Example: "14:45:30"
+
+    var commentDate = $("#CommentDateFwd").val(); // Example: "2024-12-27"
+    var commentDateTime = commentDate + " " + timeString;
+
     formData.append("Comments", $("#Comments").val());
     formData.append("StkStatusId", $("#ddlStatus").val());
     formData.append("ProjectId", $("#ProjectcommentForStackHolderprojId").html());
     formData.append("psmid", $("#ProjectcommentForStackHolderPsmId").html());
-    formData.append("CommentDate", $("#CommentDateFwd").val());
-
+    //formData.append("CommentDate", $("#CommentDateFwd").val());
+    formData.append("CommentDate", commentDateTime);
     $.ajax({
         type: "POST",
         url: '/Projects/SendCommentonProject',
@@ -313,26 +320,23 @@ function SendMsg() {
                     icon: 'success',
                     title: 'Comment Sent successfully',
                     showConfirmButton: false,
-                    timer: 5000
+                    timer: 3000
                 }).then(() => {
-                    setTimeout(() => {
-                        Swal.close();
-                    }, 5000); // Manually close after 5 seconds
-                });
+                    //  if ($("#ddlStatus").val() == 1) {
+                    FwdProjConfirm($("#ProjectcommentForStackHolderPsmId").html());
+                    // }
 
 
-                //  if ($("#ddlStatus").val() == 1) {
-                FwdProjConfirm($("#ProjectcommentForStackHolderPsmId").html());
-                // }
+                    GetAllComments($("#ProjectcommentForStackHolderPsmId").html(), $("#ProjectcommentForStackHolderprojId").html());
+                    GetProjCommentsByUnitId();
+                    //IsUnReadComment($("#ProjectcommentForStackHolderprojId").html());
+                    //GetNotification($("#ProjectcommentForStackHolderprojId").html());
+                    UnReadNotification($("#ProjectcommentForStackHolderprojId").html(), 1);
+                    IsUnReadComment($("#ProjectcommentForStackHolderprojId").html(), $("#ProjectcommentForStackHolderPsmId").html());
+                    reset();
+                })
 
-
-                GetAllComments($("#ProjectcommentForStackHolderPsmId").html(), $("#ProjectcommentForStackHolderprojId").html());
-                GetProjCommentsByUnitId();
-                //IsUnReadComment($("#ProjectcommentForStackHolderprojId").html());
-                //GetNotification($("#ProjectcommentForStackHolderprojId").html());
-                UnReadNotification($("#ProjectcommentForStackHolderprojId").html(), 1);
-                IsUnReadComment($("#ProjectcommentForStackHolderprojId").html(), $("#ProjectcommentForStackHolderPsmId").html());
-                reset();
+              
             }
             else if (response == 6) {
                 Swal.fire({

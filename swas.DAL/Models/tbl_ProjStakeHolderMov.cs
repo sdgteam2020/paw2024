@@ -17,8 +17,9 @@ namespace swas.DAL.Models
         [ForeignKey("tbl_Projects")]
         public int ProjId { get; set; }
 
-       // public int StatusId { get; set; }
+        // public int StatusId { get; set; }
 
+        [ForeignKey("TrnStatusActionsMapping")] 
         public int StatusActionsMappingId { get; set; }
 
         //[StringLength(20000)]

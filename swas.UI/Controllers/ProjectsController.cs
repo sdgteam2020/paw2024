@@ -725,9 +725,19 @@ namespace swas.UI.Controllers
                         var project = await _projectsRepository.GetProjectByIdAsync(ProjId);
                         unitid = project.StakeHolderId;
                         int[] stausid = { 26, 31, 37, 21, 21 }; /*  23, 22, 25, 27, 27*/ //ajayupdate
-                        int[] unitids = { 4, 3, 5, 1, unitid };
+                        int[] unitids = { 4, 3, 5, 1, unitid }; //1,3,4,5
+                        //int[] skipUnitIds = { 4, 3, 5, 1 };
+                        //int[] unitids = { 1, 3, 5, 4, unitid }; //1,3,4,5
+
+                        //bool first21Skipped = false;
+
                         for (int i = 0; i < stausid.Length; i++)
                         {
+                            //if (skipUnitIds.Contains(unitid) && stausid[i] == 21 && first21Skipped)
+                            //{
+                            //    continue; // Skip this iteration and go to the next one
+                            //}
+
                             tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
 
                             psmove.ProjId = ProjId;
@@ -748,12 +758,8 @@ namespace swas.UI.Controllers
                             psmove.IsComplete = false;
                             psmove.ToUnitId = unitids[i];
                             psmove.IsComment = true;
-
                             await _psmRepository.AddProjStakeHolderMovAsync(psmove);
-
-
-
-
+                           /* first21Skipped = true; */// Set the flag to true after skipping the first 21
                         }
                         return Json(1);
                     }
@@ -769,6 +775,7 @@ namespace swas.UI.Controllers
             }
             catch (Exception ex) { return Json(-1); }
         }
+
 
         public async Task<IActionResult> CheckFwdCondition(int ProjId, int StatusId)
         {
@@ -887,7 +894,8 @@ namespace swas.UI.Controllers
 
                         var movent = await _psmRepository.GetByByte(psmData);
                         movent.IsRead = true;
-                        movent.UndoRemarks = Remarks;
+                        //movent.UndoRemarks = Remarks; as discussed with Lt Col Jasjeet sir (keep pulled back remark in Remarks column)
+                        movent.Remarks = Remarks;
                         movent.IsComplete = true;
                         movent.DateTimeOfUpdate = DateTime.Now;
                         movent.IsPullBack = true;

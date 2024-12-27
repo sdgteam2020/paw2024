@@ -1,5 +1,4 @@
 ﻿var current = 1;
-
 $(document).ready(function () {
     //$("#1").hide();
     //$("#3").show();
@@ -129,6 +128,7 @@ $(document).ready(function () {
         var number = 1 + Math.floor(Math.random() * 15000);
         const predate = DateFormateyyy_mm_dd(new Date()-1);
         const todaydate = DateFormateyyy_mm_dd(new Date());
+
         $("#ProjName").val("New Project" + number);
         $("#InitiatedDate").val(predate);
         $("#CompletionDate").val(todaydate);
@@ -270,7 +270,23 @@ $(document).ready(function () {
     });
 });
 function AddProject(thistag) {
-    
+
+    //var initiatedDate = $("#InitiatedDate").val();
+    //var completionDate = $("#CompletionDate").val();
+
+    //// Get current time, or any specific time you want to append
+    //var currentTime = new Date(); // Get current date and time
+    //var hours = currentTime.getHours().toString().padStart(2, '0');
+    //var minutes = currentTime.getMinutes().toString().padStart(2, '0');
+    //var seconds = currentTime.getSeconds().toString().padStart(2, '0');
+
+    //var timeString = hours + ":" + minutes + ":" + seconds;
+
+    //// Combine date with the time (assuming you want the current time appended)
+    //initiatedDate = initiatedDate + " " + timeString;
+    //completionDate = completionDate + " " + timeString;
+
+
   
     $.ajax({
         url: '/Projects/AddProject',

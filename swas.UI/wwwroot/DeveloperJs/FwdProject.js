@@ -30,10 +30,10 @@
     //});
     $(".btn-Undo").click(function () {
 
+        var projectName = $(this).closest("tr").find("a").data("proj-name");
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
         Swal.fire({
-            /*title: "Enter Undo Remarks",*/
-            title: "enter pull back remarks",
+            title: `Enter pull back remarks: ${projectName}`,
             input: "text",
             inputAttributes: {
                 autocapitalize: "off"
@@ -43,8 +43,7 @@
             showLoaderOnConfirm: true,
             preConfirm: async (login) => {
                 if (login == "") {
-                    Swal.showValidationMessage(`
-               Please Enter Remarks: `);
+                    Swal.showValidationMessage(`Please Enter Remarks for project: ${projectName}`);
                 }
             },
             allowOutsideClick: () => !Swal.isLoading()
@@ -56,7 +55,7 @@
 
                 //For Notification
                 
-                AddNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2, $(this).closest("tr").find("#SpnStakeHolderId").html());
+                AddNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2, $("#SpnCurrentUserStackholderID").html());
 
 
                 //IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
@@ -313,7 +312,6 @@ function PullBAckProject(ProjId, PslmId, UndoRemarks, StageId) {
             console.log(response);
             if (response != null) {
                 if (response == 2) {
-                    alert("Project Successfully Pull");
                     location.reload();
                 }
             }

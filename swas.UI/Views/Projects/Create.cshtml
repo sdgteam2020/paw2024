@@ -274,7 +274,7 @@
                                          
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(model => model.InitiatedDate, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control requiredField", type = "datetime-local", required = "required" })
+                                        @Html.TextBoxFor(model => model.InitiatedDate, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control requiredField", type = "date", required = "required" })
 
                                         <div class="invalid-feedback">
                                             Initiation Date Required
@@ -292,7 +292,7 @@
                                     </td>
                                     <td>
 
-                                            @Html.TextBoxFor(model => model.CompletionDate, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control ", type = "datetime-local", required = "required" })
+                                            @Html.TextBoxFor(model => model.CompletionDate, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control ", type = "date", required = "required"})
 
                                         <div class="invalid-feedback">
                                             Completion Date Required

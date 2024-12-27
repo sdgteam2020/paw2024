@@ -20,6 +20,7 @@ namespace swas.DAL.Models
         public string? UserName { get; set; }
                
         [Column("UnitId")]
+        [ForeignKey("tbl_mUnitBranch")]
         public int UnitId { get; set; }
 
         [Column("Appointment")]

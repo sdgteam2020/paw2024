@@ -210,6 +210,7 @@ function GetProjectMovHistory(ProjId) {
             console.log(response);
             if (response.dtoProjectMovHistorypsmlst.length) {
                 listitem += '<div class="timeline-month">';
+                debugger;
 
                 /*listitem += '  ' + DateTimeFormatedd_mm_yyyy(new Date($.now())) + '';*/
                 DTOProjectMovHistorypsmlst = response.dtoProjectMovHistorypsmlst;
@@ -219,7 +220,7 @@ function GetProjectMovHistory(ProjId) {
                 listitem += '</div>';
                 for (var i = 0; i < DTOProjectMovHistorypsmlst.length; i++) {
 
-                    listitem += '<div class="timeline-section"> <div class="timeline-date"> ' + DateTimeFormatedd_mm_yyyy(DTOProjectMovHistorypsmlst[i].date) + '</div>';
+                    listitem += '<div class="timeline-section"> <div class="timeline-date"> ' + DateTimeFormatedd_dd_mm_yyyy(DTOProjectMovHistorypsmlst[i].date) + '</div>';
 
                     /* listitem += '<div class="timeline-section"> <div class="timeline-date"> ' + DateFormatedd_mm_yyyy(DTOProjectMovHistorypsmlst[i].date) + '</div>';*/
                     listitem += '<div class="row"><div class="col-sm-4">';

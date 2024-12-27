@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ namespace swas.DAL.Models
     {
         [Key]
         public int NotificationId { get; set; }
+
+        [ForeignKey("tbl_Projects")]
         public int ProjId { get; set; }
         public int NotificationFrom { get; set; }
         public int NotificationTo { get; set; }

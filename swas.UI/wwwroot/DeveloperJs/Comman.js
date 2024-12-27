@@ -14,8 +14,10 @@
     //var today = new Date().toISOString().split('T');  // Get today's date in YYYY-MM-DD format
 
     //today = today[0] + 'T' + today[1].substring(0,5);
-    var today = year + `-` + monthsans + `-` + dayans + `T` + hh + `:` + mm
+    //var today = year + `-` + monthsans + `-` + dayans + `T` + hh + `:` + mm
 
+
+    var today = year + `-` + monthsans + `-` + dayans;
   
     if ($("#isclaneder").html() == 1) {
        
@@ -23,22 +25,28 @@
 
 
       //  $('input[type=datetime-local]').attr('max', today);
-        $('input[type=datetime-local]').attr('min', today);
-        $('input[type=datetime-local]').val(today)
+        $('input[type=date]').attr('min', today);
+        $('input[type=date]').val(today)
 
         $('.datepicker1').datepicker({
             minDate: 0
         });
     }
     else {
-        $('input[type=datetime-local]').attr('max', today);
+        $('input[type=date]').attr('max', today);
         $('.datepicker1').datepicker();
 
     }
     $('.datetimepicker1').datepicker();
 
     // Remove the max date setting for CompletionDate to allow future selection
-    $('#CompletionDate').removeAttr('max');
+    $("#InitiatedDate").change(function () {
+
+        $('#CompletionDate').val("");
+        $('#CompletionDate').attr('min', $("#InitiatedDate").val());
+        $('input[type=date]').attr('max', null);
+    })
+    
 
 
 

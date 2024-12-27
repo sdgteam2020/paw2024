@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,6 +40,7 @@ namespace swas.DAL.Models
         public string area_loc { get; set; }
 
         [Display(Name = "Type ID")]
+        [ForeignKey("Types")]
         public int TypeId { get; set; }
 
         [Display(Name = "Corps ID")]

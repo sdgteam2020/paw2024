@@ -501,90 +501,97 @@ namespace swas.BAL.Repository
         }
         public async Task<int> AddProjectAsync(tbl_Projects project)
         {
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
-
-            tbl_Comment cmt = new tbl_Comment();
-            _dbContext.Projects.Add(project);
-            await _dbContext.SaveChangesAsync();
-
-            ProjIDRes PjIR = new ProjIDRes();
-            PjIR = swas.BAL.Utility.ExtensionMethods.FirstSecond(project.ProjName, project.ProjId, 0);
-
-            if (PjIR.PorjPin == null)
+            try
             {
-
-                project.ProjCode = "Error";
-
-            }
-            else
-            {
-                project.ProjCode = PjIR.PorjPin;
-
-            }
-
-            tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
+                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
 
-            psmove.ProjId = project.ProjId;
-            psmove.StatusActionsMappingId = 1; //21  //ajayupdate
-            //psmove.ActionId = 1;
-            psmove.Remarks = project.InitialRemark;
-            psmove.FromUnitId = Logins.unitid ?? 0;
-            psmove.ToUnitId = 1; //  
-                                 //psmove.TostackholderDt = DateTime.Now;  
-            psmove.UserDetails = Helper1.LoginDetails(Logins);
-            psmove.UpdatedByUserId = Logins.unitid; // change with userid
-            psmove.DateTimeOfUpdate = project.InitiatedDate;
-            psmove.IsActive = true;
-
-            psmove.EditDeleteDate = project.InitiatedDate;
-            psmove.EditDeleteBy = Logins.unitid;
-            psmove.TimeStamp = project.InitiatedDate;
-            psmove.IsComplete = false;
-            psmove.IsComment = false;
-            psmove.IsPullBack = false;
-            _dbContext.ProjStakeHolderMov.Add(psmove);
-            await _dbContext.SaveChangesAsync();
-
-            var projectToUpdate = await _dbContext.Projects.FirstOrDefaultAsync(a => a.ProjId == project.ProjId);
-            if (projectToUpdate != null)
-            {
-                projectToUpdate.CurrentPslmId = psmove.PsmId;
+                tbl_Comment cmt = new tbl_Comment();
+                _dbContext.Projects.Add(project);
                 await _dbContext.SaveChangesAsync();
-            }
 
-            cmt.EditDeleteDate = project.InitiatedDate;
-            cmt.IsDeleted = false;
-            cmt.IsActive = true;
-            cmt.DateTimeOfUpdate = project.InitiatedDate;
-            cmt.Comment = project.InitialRemark;
-            cmt.PsmId = psmove.PsmId;
-            cmt.UpdatedByUserId = Logins.UserIntId;
-            cmt.EditDeleteBy = 0;
-            _dbContext.Comment.Add(cmt);
-            await _dbContext.SaveChangesAsync();
-            if (project.UploadedFile != null)
-            {
-                tbl_AttHistory atthis = new tbl_AttHistory();
-                atthis.AttPath = project.UploadedFile;
-                atthis.ActFileName = project.ActFileName;
-                atthis.PsmId = psmove.PsmId;
-                atthis.UpdatedByUserId = Logins.unitid;
-                atthis.DateTimeOfUpdate = project.InitiatedDate;
-                atthis.IsDeleted = false;
-                atthis.IsActive = true;
-                atthis.EditDeleteBy = Logins.unitid;
-                atthis.ActionId = 1;
-                atthis.TimeStamp = project.InitiatedDate;
-                atthis.Reamarks = psmove.Remarks ?? "File Attached";
+                ProjIDRes PjIR = new ProjIDRes();
+                PjIR = swas.BAL.Utility.ExtensionMethods.FirstSecond(project.ProjName, project.ProjId, 0);
 
-                _dbContext.AttHistory.Add(atthis);
+                if (PjIR.PorjPin == null)
+                {
+
+                    project.ProjCode = "Error";
+
+                }
+                else
+                {
+                    project.ProjCode = PjIR.PorjPin;
+
+                }
+
+                tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
+
+
+                psmove.ProjId = project.ProjId;
+                psmove.StatusActionsMappingId = 1; //21  //ajayupdate
+                                                   //psmove.ActionId = 1;
+                psmove.Remarks = project.InitialRemark;
+                psmove.FromUnitId = Logins.unitid ?? 0;
+                psmove.ToUnitId = 1; //  
+                                     //psmove.TostackholderDt = DateTime.Now;  
+                psmove.UserDetails = Helper1.LoginDetails(Logins);
+                psmove.UpdatedByUserId = Logins.unitid; // change with userid
+                psmove.DateTimeOfUpdate = project.InitiatedDate;
+                psmove.IsActive = true;
+
+                psmove.EditDeleteDate = project.InitiatedDate;
+                psmove.EditDeleteBy = Logins.unitid;
+                psmove.TimeStamp = project.InitiatedDate;
+                psmove.IsComplete = false;
+                psmove.IsComment = false;
+                psmove.IsPullBack = false;
+                _dbContext.ProjStakeHolderMov.Add(psmove);
                 await _dbContext.SaveChangesAsync();
-            }
-            project.CurrentPslmId = psmove.PsmId;
 
-            return project.ProjId;
+                var projectToUpdate = await _dbContext.Projects.FirstOrDefaultAsync(a => a.ProjId == project.ProjId);
+                if (projectToUpdate != null)
+                {
+                    projectToUpdate.CurrentPslmId = psmove.PsmId;
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                cmt.EditDeleteDate = project.InitiatedDate;
+                cmt.IsDeleted = false;
+                cmt.IsActive = true;
+                cmt.DateTimeOfUpdate = project.InitiatedDate;
+                cmt.Comment = project.InitialRemark;
+                cmt.PsmId = psmove.PsmId;
+                cmt.UpdatedByUserId = Logins.UserIntId;
+                cmt.EditDeleteBy = 0;
+                _dbContext.Comment.Add(cmt);
+                await _dbContext.SaveChangesAsync();
+                if (project.UploadedFile != null)
+                {
+                    tbl_AttHistory atthis = new tbl_AttHistory();
+                    atthis.AttPath = project.UploadedFile;
+                    atthis.ActFileName = project.ActFileName;
+                    atthis.PsmId = psmove.PsmId;
+                    atthis.UpdatedByUserId = Logins.unitid;
+                    atthis.DateTimeOfUpdate = project.InitiatedDate;
+                    atthis.IsDeleted = false;
+                    atthis.IsActive = true;
+                    atthis.EditDeleteBy = Logins.unitid;
+                    atthis.ActionId = 1;
+                    atthis.TimeStamp = project.InitiatedDate;
+                    atthis.Reamarks = psmove.Remarks ?? "File Attached";
+
+                    _dbContext.AttHistory.Add(atthis);
+                    await _dbContext.SaveChangesAsync();
+                }
+                project.CurrentPslmId = psmove.PsmId;
+
+                return project.ProjId;
+            }
+            catch(Exception ex)
+            {
+                return nmum.Exception;
+            }
         }
 
         public async Task<bool> DeleteProjectAsync(int projectId)
@@ -805,7 +812,7 @@ namespace swas.BAL.Repository
                                 TimeStamp = b.TimeStamp
                             };
 
-                var projectsWithDetails = await query.OrderByDescending(x => x.ProjId).ToListAsync();
+                var projectsWithDetails = await query.OrderByDescending(x => x.PsmIds).ToListAsync();
                 return projectsWithDetails;
             }
             else
@@ -851,7 +858,7 @@ namespace swas.BAL.Repository
                             && b.FromUnitId == Logins.unitid && b.IsComment == false/* && b.StatusId != 5*/
                             //&& b.UndoRemarks == null // Added here IsPullBack
 
-                            orderby b.DateTimeOfUpdate descending
+                            orderby b.PsmId descending
 
                             select new DTOProjectsFwd
                             {
