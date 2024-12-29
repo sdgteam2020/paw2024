@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace swas.DAL.Models
 {
@@ -6,6 +7,7 @@ namespace swas.DAL.Models
     {
         [Key]
         public int MappingId { get; set; }
+        [ForeignKey("tbl_mUnitBranch")]
         public int UnitId { get; set; }
         public int? Statusid { get; set; }
         public int? MandatoryActionId { get; set; }
