@@ -90,16 +90,16 @@ namespace swas.BAL.Repository
         public async Task<DTOProjectMovHistory> ProjectMovHistory(int? ProjectId)
         {
             DTOProjectMovHistory lst=new DTOProjectMovHistory();
-            //var queryforstackholderself = await (from a in _dbContext.Projects
-            //                                     join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
-            //                                     where a.ProjId==ProjectId && b.IsComment == true
-            //                                     && a.StakeHolderId == b.ToUnitId && b.StatusActionsMappingId != 26
-            //                                     select new DTOForStackHolderCout
-            //                                     {
-            //                                      Count= b.PsmId
-            //                                     }
-            //                                     ).ToListAsync();
-                                               
+            var queryforstackholderself = await (from a in _dbContext.Projects
+                                                 join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
+                                                 where a.ProjId == ProjectId && b.IsComment == true
+                                                 && a.StakeHolderId == b.ToUnitId //&& b.StatusActionsMappingId == 21
+                                                 select new DTOForStackHolderCout
+                                                 {
+                                                     PsmId = b.PsmId
+                                                 }
+                                                 ).ToListAsync();
+
 
 
 
@@ -137,11 +137,11 @@ namespace swas.BAL.Repository
                                    StatusActionsMappingId=b.StatusActionsMappingId
 
                                }).ToListAsync();
-            //if(queryforstackholderself!=null)
-            //lst.DTOProjectMovHistorypsmlst = query.Where(i=>i.StatusActionsMappingId!=26).ToList();
-            //else
-            lst.DTOProjectMovHistorypsmlst = query;
-            //lst.DTOProjectMovHistorypsmlst = query.GroupBy(x => x.StatusId).Select(grp => grp.FirstOrDefault()).ToList();
+            if (queryforstackholderself != null && queryforstackholderself.Count==2)
+                lst.DTOProjectMovHistorypsmlst = query.Where(i=>i.PsmId!= queryforstackholderself[1].PsmId).ToList();
+            else
+                lst.DTOProjectMovHistorypsmlst = query;
+            // lst.DTOProjectMovHistorypsmlst = query.GroupBy(x => x.StatusId).Select(grp => grp.FirstOrDefault()).ToList();
             var comments = await (from mov in _dbContext.ProjStakeHolderMov
                                   join stk in _dbContext.StkComment on mov.PsmId equals stk.PsmId
                                   join stksts in _dbContext.StkStatus on stk.StkStatusId equals stksts.StkStatusId

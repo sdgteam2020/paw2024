@@ -53,8 +53,12 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         $('#confirmationModal').modal('show');
 
         $('#confirmSend').off('click').on('click', function () {
-            var FwdDateForComment = $('#datepicker').val();
-            if (FwdDateForComment === '') {
+            /*var FwdDateForComment = $('#datepicker').val();*/
+            var dateValue = $('#datepicker').val(); 
+            var currentDate = new Date(); 
+            var currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false });
+            var FwdDateForComment = dateValue + ' ' + currentTime;
+            if (FwdDateForComment === '' || dateValue === '') {
                 alert('Please select date & time.');
                 return; 
             }

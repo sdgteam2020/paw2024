@@ -726,17 +726,21 @@ namespace swas.UI.Controllers
                         unitid = project.StakeHolderId;
                         int[] stausid = { 26, 31, 37, 21, 21 }; /*  23, 22, 25, 27, 27*/ //ajayupdate
                         int[] unitids = { 4, 3, 5, 1, unitid }; //1,3,4,5
-                        //int[] skipUnitIds = { 4, 3, 5, 1 };
+                        int[] skipUnitIds = { 4, 3, 5, 1 };
                         //int[] unitids = { 1, 3, 5, 4, unitid }; //1,3,4,5
 
                         //bool first21Skipped = false;
 
                         for (int i = 0; i < stausid.Length; i++)
                         {
-                            //if (skipUnitIds.Contains(unitid) && stausid[i] == 21 && first21Skipped)
-                            //{
-                            //    continue; // Skip this iteration and go to the next one
-                            //}
+                            if (i == 4)
+                            {
+                                if (skipUnitIds.Contains(unitid) && stausid[i] == 21)
+                                {
+                                    continue;
+                                }
+                            }
+
 
                             tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
 
@@ -759,7 +763,7 @@ namespace swas.UI.Controllers
                             psmove.ToUnitId = unitids[i];
                             psmove.IsComment = true;
                             await _psmRepository.AddProjStakeHolderMovAsync(psmove);
-                           /* first21Skipped = true; */// Set the flag to true after skipping the first 21
+                            /* first21Skipped = true; */// Set the flag to true after skipping the first 21
                         }
                         return Json(1);
                     }
@@ -980,78 +984,78 @@ namespace swas.UI.Controllers
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
                 ///var psmove = await _projectsRepository.GettXNByPsmIdAsync(psmid);  old code change by kapoor
                 int psmove = await _stkCommentRepository.GetCommentStatusByPsmiId(psmid);
-                
-                    if (psmove != 1)
+
+                if (psmove != 1)
+                {
+                    if (uploadfile != null)
                     {
-                        if (uploadfile != null)
+                        if (uploadfile.Length <= 10485760)
                         {
-                            if (uploadfile.Length <= 10485760)
+                            uniqueFileName = $"{"Swas"}_{Guid.NewGuid()}{System.IO.Path.GetExtension(uploadfile.FileName)}";
+
+                            string filePath = System.IO.Path.Combine(_environment.ContentRootPath, "wwwroot/Uploads/", uniqueFileName);
+
+
+                            using (var stream = new FileStream(filePath, FileMode.Create))
                             {
-                                uniqueFileName = $"{"Swas"}_{Guid.NewGuid()}{System.IO.Path.GetExtension(uploadfile.FileName)}";
-
-                                string filePath = System.IO.Path.Combine(_environment.ContentRootPath, "wwwroot/Uploads/", uniqueFileName);
-
-
-                                using (var stream = new FileStream(filePath, FileMode.Create))
-                                {
-                                    uploadfile.CopyTo(stream);
-                                }
-
-
-                                cmmets.ActFileName = uploadfile.FileName;
+                                uploadfile.CopyTo(stream);
                             }
-                            else
-                            {
-                                return Json(nmum.PdfSizeEx);
-                            }
+
+
+                            cmmets.ActFileName = uploadfile.FileName;
                         }
-
-                        cmmets.Attpath = uniqueFileName;
-                        cmmets.Comments = Comments;
-                        cmmets.PsmId = psmid;
-                        cmmets.ProjId = ProjectId;
-                        cmmets.UpdatedByUserId = Logins.UserIntId;
-                        cmmets.DateTimeOfUpdate = CommentDate;
-                        cmmets.IsDeleted = false;
-                        cmmets.IsActive = true;
-                        cmmets.EditDeleteBy = Logins.unitid;
-                        cmmets.EditDeleteDate = CommentDate;
-                        cmmets.StkStatusId = StkStatusId;
-                        cmmets.UserDetails = Helper.LoginDetails(Logins);
-                        cmmets.StakeHolderId = Logins.unitid; ;
-
-                        var projectStkHolderMovementData = await _projectsRepository.GetProjStkHolderMovmentByPsmiId(cmmets.PsmId);
-                        if (projectStkHolderMovementData != null)
+                        else
                         {
-                            projectStkHolderMovementData.TimeStamp = DateTime.Now;
-                            var rets =await _projectsRepository.UpdateProjectStkMovementAsync(projectStkHolderMovementData);
-                            if (rets != null)
-                            {
-                                var ret = await _stkCommentRepository.AddWithReturn(cmmets);
-                                if (ret != null)
-                                    return Json(nmum.Save);
-                                else
-                                    return Json(0);
-                            }
+                            return Json(nmum.PdfSizeEx);
+                        }
+                    }
+
+                    cmmets.Attpath = uniqueFileName;
+                    cmmets.Comments = Comments;
+                    cmmets.PsmId = psmid;
+                    cmmets.ProjId = ProjectId;
+                    cmmets.UpdatedByUserId = Logins.UserIntId;
+                    cmmets.DateTimeOfUpdate = CommentDate;
+                    cmmets.IsDeleted = false;
+                    cmmets.IsActive = true;
+                    cmmets.EditDeleteBy = Logins.unitid;
+                    cmmets.EditDeleteDate = CommentDate;
+                    cmmets.StkStatusId = StkStatusId;
+                    cmmets.UserDetails = Helper.LoginDetails(Logins);
+                    cmmets.StakeHolderId = Logins.unitid; ;
+
+                    var projectStkHolderMovementData = await _projectsRepository.GetProjStkHolderMovmentByPsmiId(cmmets.PsmId);
+                    if (projectStkHolderMovementData != null)
+                    {
+                        projectStkHolderMovementData.TimeStamp = DateTime.Now;
+                        var rets = await _projectsRepository.UpdateProjectStkMovementAsync(projectStkHolderMovementData);
+                        if (rets != null)
+                        {
+                            var ret = await _stkCommentRepository.AddWithReturn(cmmets);
+                            if (ret != null)
+                                return Json(nmum.Save);
                             else
-                            {
                                 return Json(0);
-                            }
                         }
-                        return Json(0);
-
-                        //if (ret != null)
-                        //    return Json(nmum.Save);
-                        //else
-                        //    return Json(0);
+                        else
+                        {
+                            return Json(0);
+                        }
                     }
+                    return Json(0);
 
-                    else
-                    {
-                        return Json(nmum.NotSave);
-                    }
-                
-                
+                    //if (ret != null)
+                    //    return Json(nmum.Save);
+                    //else
+                    //    return Json(0);
+                }
+
+                else
+                {
+                    return Json(nmum.NotSave);
+                }
+
+
 
             }
             catch (Exception ex)
@@ -1205,13 +1209,13 @@ namespace swas.UI.Controllers
                 ViewBag.PjIR = Projpin;
 
 
-              
+
 
 
                 List<tbl_AttHistory> atthis = new List<tbl_AttHistory>();
                 if (dtaProjID != null)
                 {
-                    
+
                     List<ProjHistory> prohis = await _projectsRepository.GetProjectHistorybyID(dtaProjID);
                     tbl_Projects projects = await _projectsRepository.GetProjectByIdAsync(dtaProjID ?? 0);
 

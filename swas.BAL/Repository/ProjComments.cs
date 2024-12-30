@@ -5,9 +5,12 @@ using swas.BAL.Interfaces;
 using swas.DAL;
 using swas.DAL.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.Xml;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace swas.BAL
@@ -23,7 +26,34 @@ namespace swas.BAL
         }
         public async Task<List<DTOProComments>> GetAllStkForComment(int UnitId)
          {
-            List<DTOProComments> lst = new List<DTOProComments>();
+            var queryforstackholderself = from a in _context.Projects
+                                          join b in _context.ProjStakeHolderMov on a.ProjId equals b.ProjId
+
+                                          where b.IsComment == true
+                                          && a.StakeHolderId == b.ToUnitId
+                                          group b by new { b.ToUnitId, a.ProjId } into grp
+                                          where grp.Count() > 1
+                                          select new DTOForStackHolderCout
+                                          {
+                                              ProjId = grp.Key.ProjId,
+                                              UnitId = grp.Key.ToUnitId
+                                          };
+
+
+            var maxpsmid = await (from a in _context.ProjStakeHolderMov
+                                  join b in queryforstackholderself on a.ProjId equals b.ProjId
+                                  where a.IsComment == true
+                                  select new DTOForStackHolderCout
+                                  {
+                                      ProjId = b.ProjId,
+                                      PsmId = a.PsmId,
+                                  }).ToListAsync();
+
+            var lastpsmiid = maxpsmid.GroupBy(x => x.ProjId).Select(x => x.OrderByDescending(a => a.PsmId).FirstOrDefault()).ToList();
+
+
+
+            List < DTOProComments > lst = new List<DTOProComments>();
             var queryes = await (from proj in _context.Projects
                                  join mov in _context.ProjStakeHolderMov on proj.ProjId equals mov.ProjId
                                  //join com in _context.StkComment on proj.ProjId equals com.ProjId
@@ -36,8 +66,8 @@ namespace swas.BAL
                               select cr1.StkStatusId
                              ).FirstOrDefault()/*.Count()*/
                                  where mov.ToUnitId == UnitId && mov.IsComment == true //&& mov.StatusId==5
-                                
-                                 group new DTOProComments 
+
+                                 select new DTOProComments
                                  {
                                      ProjectName = proj.ProjName,
                                      Stakeholder = stakeholder.UnitName,
@@ -48,15 +78,20 @@ namespace swas.BAL
                                      PsmId = mov.PsmId,
                                      EncyID = _dataProtector.Protect(proj.ProjId.ToString()),
                                      //TimeStamp = _context.StkComment.Where(i => i.StkStatusId == StkStatusId).Select(i => i.DateTimeOfUpdate).SingleOrDefault()?? mov.TimeStamp,
-                                     TimeStamp= mov.TimeStamp,
+                                     TimeStamp = mov.TimeStamp,
                                      UnitId = mov.ToUnitId,
-                                     IsComment = mov.IsRead 
+                                     IsComment = mov.IsRead
                                      //StkCommentId = com.StkCommentId
                                  }
-                                  by new { proj.ProjId, mov.ToUnitId } into g  // Group by both ProjId and ToUnitId
-                                 select g.First()).ToListAsync();
-            lst.AddRange(queryes);
+                                    // Group by both ProjId and ToUnitId  /////old  by new { proj.ProjId, mov.ToUnitId } into g 
+                                 ).ToListAsync();
+
             //var data = lst.OrderByDescending(x => x.StkCommentId).ToList();
+
+                lst.AddRange(queryes);
+
+                lst.RemoveAll(item => lastpsmiid.Any(item2 => item.PsmId == item2.PsmId));
+
             return lst.OrderByDescending(i => i.TimeStamp).ToList();
             //return data;
 

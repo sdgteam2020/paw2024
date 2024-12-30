@@ -8,6 +8,8 @@ namespace swas.BAL.DTO
 {
     public class DTOForStackHolderCout
     {
-        public int Count { get; set; }
+        public int PsmId { get; set; }
+        public int ProjId { get; set; }
+        public int UnitId { get; set; }
     }
 }
