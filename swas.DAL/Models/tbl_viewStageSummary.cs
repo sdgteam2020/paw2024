@@ -8,14 +8,14 @@ namespace swas.DAL.Models
 	///Tested By :- 
 	///Tested Date : 
 	///Start
-	public class tbl_viewStageSummary
-	{
-		[Key]
-		public int ID { get; set; }
-		public string? Stagescleared { get; set; }
-		public int? Projcount { get; set; } 
+	//public class tbl_viewStageSummary
+	//{
+	//	[Key]
+	//	public int ID { get; set; }
+	//	public string? Stagescleared { get; set; }
+	//	public int? Projcount { get; set; } 
 
-	}
+	//}
 
 
 }

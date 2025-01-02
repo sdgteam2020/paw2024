@@ -14,16 +14,16 @@ namespace swas.UI.Controllers
             _SoftwareRepo = softwareTypeRepository;
         }
 
-        [Authorize(Policy = "Admin")]
-        public  async Task<IActionResult> Index()
-        {
-            var software = await _SoftwareRepo.GetAll();
-            return View(software);
-        }
-        [Authorize(Policy = "Admin")]
-        public IActionResult Project()
-        {
-            return View();  
-        }
+        //[Authorize(Policy = "Admin")]
+        //public  async Task<IActionResult> Index()
+        //{
+        //    var software = await _SoftwareRepo.GetAll();
+        //    return View(software);
+        //}
+        //[Authorize(Policy = "Admin")]
+        //public IActionResult Project()
+        //{
+        //    return View();  
+        //}
     }
 }

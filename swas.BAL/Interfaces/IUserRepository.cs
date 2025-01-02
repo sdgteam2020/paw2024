@@ -15,10 +15,10 @@ namespace swas.BAL.Interfaces
     ///Start
     public interface IUserRepository
     {
-        Task<int> Save(tbl_users Db);
-        bool CheckUserExist(string UserName);
-        Task<int> DeleteUserAsync(tbl_users Db);
-        Task<List<ApplicationUser>> GetAllUsersAsync();
+        //Task<int> Save(tbl_users Db);
+        //bool CheckUserExist(string UserName);
+        //Task<int> DeleteUserAsync(tbl_users Db);
+        //Task<List<ApplicationUser>> GetAllUsersAsync();
 
         Task<int> Add(tbl_LoginLog Db);
 

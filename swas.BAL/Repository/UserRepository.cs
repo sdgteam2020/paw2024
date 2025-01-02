@@ -31,19 +31,19 @@ namespace swas.BAL
         }
 
 
-        public async Task<int> DeleteUserAsync(tbl_users user)
-        {
-            var userToDelete = await _dbContext.Users.FindAsync(user.UserName);
+        //public async Task<int> DeleteUserAsync(tbl_users user)
+        //{
+        //    var userToDelete = await _dbContext.Users.FindAsync(user.UserName);
 
-            if (userToDelete != null)
-            {
-                _dbContext.Users.Remove(userToDelete);
-                await _dbContext.SaveChangesAsync();
-                return 1; 
-            }
+        //    if (userToDelete != null)
+        //    {
+        //        _dbContext.Users.Remove(userToDelete);
+        //        await _dbContext.SaveChangesAsync();
+        //        return 1; 
+        //    }
 
-            return 0; 
-        }
+        //    return 0; 
+        //}
        
 
       
@@ -53,21 +53,21 @@ namespace swas.BAL
             return users;
         }
 
-        public async Task<int> Save(tbl_users Db)
-        {
+        //public async Task<int> Save(tbl_users Db)
+        //{
 
-            var userToAdd = await _dbContext.Users.FindAsync(Db.UserName);
+        //    var userToAdd = await _dbContext.Users.FindAsync(Db.UserName);
 
-            if (userToAdd != null)
-            {
-                _dbContext.Users.Add(userToAdd);
-                await _dbContext.SaveChangesAsync();
-                return 1;
-            }
+        //    if (userToAdd != null)
+        //    {
+        //        _dbContext.Users.Add(userToAdd);
+        //        await _dbContext.SaveChangesAsync();
+        //        return 1;
+        //    }
 
-            return 0;
+        //    return 0;
             
-        }
+        //}
 
 
         public async Task<int> Add(tbl_LoginLog userlog)

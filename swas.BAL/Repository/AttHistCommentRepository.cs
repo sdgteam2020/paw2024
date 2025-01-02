@@ -23,48 +23,48 @@ namespace swas.BAL.Repository
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public AttHistCommentRepository(ApplicationDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+        //public AttHistCommentRepository(ApplicationDbContext dbContext)
+        //{
+        //    _dbContext = dbContext;
+        //}
 
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        public async Task<IEnumerable<AttHistComment>> GetAllAsync()
-        {
-            return await _dbContext.AttHistComments.ToListAsync();
-        }
+        /////Created and Reviewed by : Sub Maj Sanal
+        /////Reviewed Date : 31 Jul 23
+        //public async Task<IEnumerable<AttHistComment>> GetAllAsync()
+        //{
+        //    return await _dbContext.AttHistComments.ToListAsync();
+        //}
 
-        public async Task<AttHistComment> GetByIdAsync(int attId)
-        {
-            return await _dbContext.AttHistComments.FirstOrDefaultAsync(a => a.Attid == attId);
-        }
+        //public async Task<AttHistComment> GetByIdAsync(int attId)
+        //{
+        //    return await _dbContext.AttHistComments.FirstOrDefaultAsync(a => a.Attid == attId);
+        //}
 
-        public async Task<int> AddAsync(AttHistComment attHistComment)
-        {
-            _dbContext.AttHistComments.Add(attHistComment);
-            await _dbContext.SaveChangesAsync();
-            return attHistComment.Attid;
-        }
+        //public async Task<int> AddAsync(AttHistComment attHistComment)
+        //{
+        //    _dbContext.AttHistComments.Add(attHistComment);
+        //    await _dbContext.SaveChangesAsync();
+        //    return attHistComment.Attid;
+        //}
 
-        public async Task<int> UpdateAsync(AttHistComment attHistComment)
-        {
-            _dbContext.Entry(attHistComment).State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync();
-            return attHistComment.Attid;
-        }
+        //public async Task<int> UpdateAsync(AttHistComment attHistComment)
+        //{
+        //    _dbContext.Entry(attHistComment).State = EntityState.Modified;
+        //    await _dbContext.SaveChangesAsync();
+        //    return attHistComment.Attid;
+        //}
 
-        public async Task<int> DeleteAsync(int attId)
-        {
-            var attHistComment = await _dbContext.AttHistComments.FindAsync(attId);
-            if (attHistComment != null)
-            {
-                _dbContext.AttHistComments.Remove(attHistComment);
-                await _dbContext.SaveChangesAsync();
-                return attId;
-            }
-            return 0;
-        }
+        //public async Task<int> DeleteAsync(int attId)
+        //{
+        //    var attHistComment = await _dbContext.AttHistComments.FindAsync(attId);
+        //    if (attHistComment != null)
+        //    {
+        //        _dbContext.AttHistComments.Remove(attHistComment);
+        //        await _dbContext.SaveChangesAsync();
+        //        return attId;
+        //    }
+        //    return 0;
+        //}
 
     }
 

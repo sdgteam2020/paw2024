@@ -11,30 +11,30 @@ using System.Threading.Tasks;
 namespace swas.DAL.Models
 {
     // Created by Sub Maj Sanal on 13 Nov 23 for blog attachment
-    public class AttHistComment
-    {
-        [Key]
-        public int Attid { get; set; }
+    //public class AttHistComment
+    //{
+    //    [Key]
+    //    public int Attid { get; set; }
 
-        [ForeignKey("ProjStakeHolderMov")]
-        public int PsmId { get; set; }
-        public string AttPath { get; set; }
+    //    [ForeignKey("ProjStakeHolderMov")]
+    //    public int PsmId { get; set; }
+    //    public string AttPath { get; set; }
 
-        [ForeignKey("StkComment")]
-        public int StkCommentId { get; set; }
-        public DateTime? TimeStamp { get; set; }
-        public bool IsDeleted { get; set; }
-        public bool IsActive { get; set; }
-        public string? EditDeleteBy { get; set; }
-        public DateTime EditDeleteDate { get; set; }
-        public string? UpdatedByUserId { get; set; }
-        public DateTime? DateTimeOfUpdate { get; set; }
-        [StringLength(1500)]
-        public string? Reamarks { get; set; }
-        public string ActFileName { get; set; }
+    //    [ForeignKey("StkComment")]
+    //    public int StkCommentId { get; set; }
+    //    public DateTime? TimeStamp { get; set; }
+    //    public bool IsDeleted { get; set; }
+    //    public bool IsActive { get; set; }
+    //    public string? EditDeleteBy { get; set; }
+    //    public DateTime EditDeleteDate { get; set; }
+    //    public string? UpdatedByUserId { get; set; }
+    //    public DateTime? DateTimeOfUpdate { get; set; }
+    //    [StringLength(1500)]
+    //    public string? Reamarks { get; set; }
+    //    public string ActFileName { get; set; }
 
        
-    }
+    //}
 }
 // stkcomment
 

@@ -8,30 +8,30 @@ namespace swas.DAL.Models
 	///Tested By :- 
 	///Tested Date : 
 	///Start
-	public class Proj_initialstatus
-    {
-		[Key]
+	//public class Proj_initialstatus
+ //   {
+	//	[Key]
         
-        public int InitialStatusId { get; set; }
-        public int? projid { get; set; }
-        public int? psmid { get; set; }
+ //       public int InitialStatusId { get; set; }
+ //       public int? projid { get; set; }
+ //       public int? psmid { get; set; }
 
-        public int StakeHolderId { get; set; }
+ //       public int StakeHolderId { get; set; }
 
-        [Display(Name = "Reamrks")]
-        public string Remarks { get; set; } 
+ //       [Display(Name = "Reamrks")]
+ //       public string Remarks { get; set; } 
 
-        public string EditDeleteBy { get; set; } 
+ //       public string EditDeleteBy { get; set; } 
 
-        public DateTime EditDeleteDate { get; set; } 
+ //       public DateTime EditDeleteDate { get; set; } 
 
-        public string UpdatedByUserId { get; set; } 
+ //       public string UpdatedByUserId { get; set; } 
 
-        public DateTime DateTimeOfUpdate { get; set; } 
+ //       public DateTime DateTimeOfUpdate { get; set; } 
 
-        public int InitialStatus { get; set; } 
+ //       public int InitialStatus { get; set; } 
 
-    }
+ //   }
 
 
 }

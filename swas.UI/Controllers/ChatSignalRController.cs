@@ -35,10 +35,10 @@ namespace swas.UI.Controllers
             _trnChatMsg = trnChatMsg;
             _hubContext = hubContext;
         }
-        public async Task<IActionResult> Index()
-        {
-            return View();
-        }
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View();
+        //}
 
         //public async Task<IActionResult> GetAllUsers(int Id)
         //{
@@ -85,66 +85,66 @@ namespace swas.UI.Controllers
         //    }
         //}
 
-        public async Task<IActionResult> GetAllUsers(int id)
-        {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var users = await _trnChatMsg.GetAllUsers();
-            var isChats = await _trnChatMsg.GetIsChat(userId);
+        //public async Task<IActionResult> GetAllUsers(int id)
+        //{
+        //    var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    var users = await _trnChatMsg.GetAllUsers();
+        //    var isChats = await _trnChatMsg.GetIsChat(userId);
 
-            var userWithChatData = users
-                .Where(user => userId != user.Id)
-                .Select(user =>
-                {
-                    var chat = isChats.FirstOrDefault(c => c.FromUserID == user.Id);
-                    return new DTOApplicationUserWithChatRead
-                    {
-                        Id = user.Id,
-                        Rank = user.Rank,
-                        Offr_Name = user.Offr_Name,
-                        UserName = user.UserName,
-                        CreatedDate = user.CreatedDate,
-                        Total = chat?.Total ?? 0,
-                        CreatedOn = chat?.CreatedOn ?? DateTime.Now
-                    };
-                })
-                .OrderByDescending(u => u.Total)
-                .ThenByDescending(u => u.CreatedOn)
-                .ToList();
+        //    var userWithChatData = users
+        //        .Where(user => userId != user.Id)
+        //        .Select(user =>
+        //        {
+        //            var chat = isChats.FirstOrDefault(c => c.FromUserID == user.Id);
+        //            return new DTOApplicationUserWithChatRead
+        //            {
+        //                Id = user.Id,
+        //                Rank = user.Rank,
+        //                Offr_Name = user.Offr_Name,
+        //                UserName = user.UserName,
+        //                CreatedDate = user.CreatedDate,
+        //                Total = chat?.Total ?? 0,
+        //                CreatedOn = chat?.CreatedOn ?? DateTime.Now
+        //            };
+        //        })
+        //        .OrderByDescending(u => u.Total)
+        //        .ThenByDescending(u => u.CreatedOn)
+        //        .ToList();
 
-            return Json(userWithChatData);
-        }
-        public async Task<IActionResult> SaveUserMapChat(mUserMapChat mUserMapChat)
-        {
-            var id = this.User.FindFirstValue(ClaimTypes.NameIdentifier).ToLower();
-            mUserMapChat.FromUserId = id;
-            mUserMapChat.ToUserId = mUserMapChat.ToUserId.ToLower();
+        //    return Json(userWithChatData);
+        //}
+        //public async Task<IActionResult> SaveUserMapChat(mUserMapChat mUserMapChat)
+        //{
+        //    var id = this.User.FindFirstValue(ClaimTypes.NameIdentifier).ToLower();
+        //    mUserMapChat.FromUserId = id;
+        //    mUserMapChat.ToUserId = mUserMapChat.ToUserId.ToLower();
              
-            var mapDetails = await _userMapChatRepository.GetMapDetails(mUserMapChat);
-            var response = mapDetails ?? await _userMapChatRepository.AddWithReturn(mUserMapChat);
+        //    var mapDetails = await _userMapChatRepository.GetMapDetails(mUserMapChat);
+        //    var response = mapDetails ?? await _userMapChatRepository.AddWithReturn(mUserMapChat);
 
-            return Json(response);
-        }
+        //    return Json(response);
+        //}
 
-        public async Task<IActionResult> SaveChat(TrnChatMsg trnChatMsg)
-        {
-            trnChatMsg.ChatId = 0;
-            trnChatMsg.CreatedOn = DateTime.Now;
-            trnChatMsg.IsRead = false;
+        //public async Task<IActionResult> SaveChat(TrnChatMsg trnChatMsg)
+        //{
+        //    trnChatMsg.ChatId = 0;
+        //    trnChatMsg.CreatedOn = DateTime.Now;
+        //    trnChatMsg.IsRead = false;
 
-            var savedChat = await _trnChatMsg.AddWithReturn(trnChatMsg);
+        //    var savedChat = await _trnChatMsg.AddWithReturn(trnChatMsg);
 
-            // Broadcast message via SignalR
-            await _hubContext.Clients.All.SendAsync("ReceiveMessage", trnChatMsg.UserMapChatId, trnChatMsg.Msg);
+        //    // Broadcast message via SignalR
+        //    await _hubContext.Clients.All.SendAsync("ReceiveMessage", trnChatMsg.UserMapChatId, trnChatMsg.Msg);
 
-            return Json(savedChat);
-        }
+        //    return Json(savedChat);
+        //}
 
-        public async Task<IActionResult> GetUserMapChat(int userMapChatId, string fromUserId)
-        {
-            var toUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var chatHistory = await _trnChatMsg.GetChat(userMapChatId, fromUserId, toUserId);
+        //public async Task<IActionResult> GetUserMapChat(int userMapChatId, string fromUserId)
+        //{
+        //    var toUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    var chatHistory = await _trnChatMsg.GetChat(userMapChatId, fromUserId, toUserId);
 
-            return Json(chatHistory);
-        }
+        //    return Json(chatHistory);
+        //}
     }
 }

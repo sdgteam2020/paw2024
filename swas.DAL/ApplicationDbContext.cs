@@ -23,7 +23,7 @@ namespace swas.DAL
         }
 
         public DbSet<tbl_LoginLog> tbl_LoginLog { get; set; }
-        public DbSet<SoftwareType> SoftwareTypes { get; set; }
+        //public DbSet<SoftwareType> SoftwareTypes { get; set; }
         public DbSet<Types> tbl_Type { get; set; }
         public DbSet<UnitDtl> tbl_mUnitBranch { get; set; }
         public DbSet<tbl_AttHistory> AttHistory { get; set; }
@@ -39,20 +39,20 @@ namespace swas.DAL
         //public DbSet<tbl_users> Users { get; set; }
         public DbSet<mAppType> mAppType { get; set; }
         public DbSet<mHostType> mHostType { get; set; }
-        public DbSet<tbl_mUnitBranch> mUnitBranch { get; set; }
+        public DbSet<tbl_mUnitBranch> mUnitBranch { get; set; } 
 
         public DbSet<mRank> mRank { get; set; }
-        public DbSet<Proj_initialstatus> PorjIniStat { get; set; }
-        public DbSet<tbl_viewActionsum> Viewaction { get; set; }
-        public DbSet<tbl_viewStageSummary> StageSummary { get; set; }
+        //public DbSet<Proj_initialstatus> PorjIniStat { get; set; }
+        //public DbSet<tbl_viewActionsum> Viewaction { get; set; }
+        //public DbSet<tbl_viewStageSummary> StageSummary { get; set; }
         public DbSet<ChartModel> ChartModel { get; set; }
         public DbSet<ChartModelS> ChartModelS { get; set; }
         public DbSet<StkComment> StkComment { get; set; }
         public DbSet<Notification> Notification { get; set; }
         public DbSet<StkStatus> StkStatus { get; set; }
-        public DbSet<mActionmapping> mActionmapping { get; set; }
-        public DbSet<Resultss> Resultstr { get; set; }
-        public DbSet<AttHistComment> AttHistComments { get; set; }
+        //public DbSet<mActionmapping> mActionmapping { get; set; }
+        //public DbSet<Resultss> Resultstr { get; set; }
+        //public DbSet<AttHistComment> AttHistComments { get; set; }
         public DbSet<mWhiteListedHeader> mWhiteListedHeader { get; set; }
         public DbSet<trnWhiteListed> trnWhiteListed { get; set; }
         public DbSet<TrnUnitStatusMapping> TrnUnitStatusMapping { get; set; }
@@ -66,7 +66,7 @@ namespace swas.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Resultss>().HasNoKey();
+            //modelBuilder.Entity<Resultss>().HasNoKey();
 
             base.OnModelCreating(modelBuilder);
 
@@ -96,9 +96,6 @@ namespace swas.DAL
         .Property(e => e.appointment)
         .HasColumnType("nvarchar(max)");
 
-         
-
-        
         }
 
     }

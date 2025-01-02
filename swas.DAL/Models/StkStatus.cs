@@ -18,8 +18,8 @@ namespace swas.DAL.Models
         public string Status { get; set; }
     }
 
-    public class Resultss
-    {
-        public string? Result { get; set; }
-    }
+    //public class Resultss
+    //{
+    //    public string? Result { get; set; }
+    //}
 }

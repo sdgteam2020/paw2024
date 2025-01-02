@@ -12,6 +12,7 @@ using swas.BAL.DTO;
 using static Grpc.Core.Metadata;
 using System.Collections;
 using System.Security.Cryptography;
+using swas.BAL.Helpers;
 
 namespace swas.BAL.Repository
 {
@@ -145,6 +146,7 @@ namespace swas.BAL.Repository
         //}
         public async Task<List<DTOApplicationUserWithChatRead>> GetAllUsers()
         {
+            var commonHelper = new CommonHelper(_context);
             try
             {
                 var ret = await (from users in _context.Users
@@ -157,7 +159,7 @@ namespace swas.BAL.Repository
                                  select new DTOApplicationUserWithChatRead
                                  {
                                      Id = users.Id,
-                                     Rank = users.Rank,
+                                     Rank = users.Rank /*CommonHelper.GetRankByRankId(users.Rank)*/ ,
                                      Offr_Name = users.Offr_Name,
                                      UserName = users.UserName,
                                      CreatedDate = datetime  

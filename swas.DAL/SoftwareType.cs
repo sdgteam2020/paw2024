@@ -8,13 +8,13 @@ using System.Xml.Linq;
 
 namespace swas.DAL
 {
-    public class SoftwareType
-    {
-        [Key]
-        public int Id { get; set; }
+    //public class SoftwareType
+    //{
+    //    [Key]
+    //    public int Id { get; set; }
 
-        [Required]
-        [Display(Name = "Type of Software")]
-        public string? TypeOfSoftware { get; set; }
-    }
+    //    [Required]
+    //    [Display(Name = "Type of Software")]
+    //    public string? TypeOfSoftware { get; set; }
+    //}
 }

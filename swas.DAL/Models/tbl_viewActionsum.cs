@@ -8,26 +8,26 @@ namespace swas.DAL.Models
 	///Tested By :- 
 	///Tested Date : 
 	///Start
-	public class tbl_viewActionsum
-	{
-		[Key]
+	//public class tbl_viewActionsum
+	//{
+	//	[Key]
        
-        public int ActionsId { get; set; }
-		[StringLength(200)]
-		[Column(TypeName = "varchar(200)")]
-		[Display(Name = "Actions")]
-		[Required]
-		public string ? Actions { get; set; }
+ //       public int ActionsId { get; set; }
+	//	[StringLength(200)]
+	//	[Column(TypeName = "varchar(200)")]
+	//	[Display(Name = "Actions")]
+	//	[Required]
+	//	public string ? Actions { get; set; }
 		
-		public int? total { get; set; }
+	//	public int? total { get; set; }
 
-		public int? gttotal{ get; set; }
+	//	public int? gttotal{ get; set; }
 
-		//public int?  FinalActionID { get; set; }
+	//	//public int?  FinalActionID { get; set; }
 
 
 
-	}
+	//}
 
 
 }
