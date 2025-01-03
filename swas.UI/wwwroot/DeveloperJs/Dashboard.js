@@ -114,7 +114,8 @@ function GetAllDashbaordCount() {
                         }
                        
                     }
-                    else {
+                    else
+                    {
                         for (var j = 0; j < DTODashboardCount.length; j++) {
 
 
@@ -186,7 +187,7 @@ function GetAllDashbaordCount() {
                 //});
 
 
-                    $("body").on("click", ".ApprovedProj", function () {
+                $("body").on("click", ".ApprovedProj", function () {
                     var spnstatusId = $(this).closest("div").find("#spnstatusId").html();
                     var spnstatusActionsMappingId = $(this).closest("div").find("#spnstatusActionsMappingId").html();
                   
@@ -237,13 +238,14 @@ function GetAllDashbaordCount() {
                         }
                     }
                 });
-                    $("body").on("click", ".btnGetsummay", function () {
-
+                $("body").on("click", ".btnGetsummay", function () {
+                  
                     var spnstatusId = $(this).closest("div").find("#spnstatusId").html();
                    
                     $('#ProjGetsummay').modal('show');
                         $('#ProjectSummaryTittle').html($(this).closest("div").find(".statusprojsummry").html());
                         $('#IsNotduplicate').prop('checked', false);
+                        
                         getProjGetsummay(spnstatusId, true);
 
 
@@ -618,7 +620,8 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stage + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].status + "</span></td>";
                         listItem += "<td class='align-middle'><span id='divName'>" + response[i].action + "</span></td>";
-                        listItem += "<td class='align-middle'><span id='divName'>" + DateFormateddMMyyyyhhmmss(response[i].dateTimeOfUpdate) + "</span></td>";
+                        //listItem += "<td class='align-middle'><span id='divName'>" + DateFormateddMMyyyyhhmmss(response[i].dateTimeOfUpdate) + "</span></td>";
+                        listItem += "<td class='align-middle'><span id='divName'>" + DateFormateyyy_mm_dd(response[i].dateTimeOfUpdate) + "</span></td>";
 
                         if (response[i].isComplete) {
                             listItem += "<td ><span class='badge badge-success' id='divName'>Processed</span></td>";

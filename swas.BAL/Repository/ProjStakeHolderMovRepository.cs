@@ -307,7 +307,7 @@ namespace swas.BAL.Repository
 
         }
         public async Task<DTODashboard> DashboardCount(int UserId)
-        {   
+        {    
             DTODashboard db=new DTODashboard();
            
  
@@ -324,6 +324,7 @@ namespace swas.BAL.Repository
                                /*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
                                && ststus.IsDashboard == true
                                && proj.IsSubmited == true   
+                               && mov.StatusActionsMappingId != 118 &&  mov.StatusActionsMappingId != 4
                                orderby stge.StagesId ascending
                                group mov by new { ststus.StatusId, QStages = stge.Stages, QStagesId= stge.StagesId, 
                                    QStatus=ststus.Status,
@@ -359,6 +360,7 @@ namespace swas.BAL.Repository
                                 && mov.IsActive == true/*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
                                && ststus.IsDashboard == true
                                && proj.IsSubmited == true
+                                && mov.StatusActionsMappingId != 118 && mov.StatusActionsMappingId != 4
                                  orderby stge.StagesId ascending
                                group mov by new
                                {
@@ -436,7 +438,7 @@ namespace swas.BAL.Repository
 
             db.DTODashboardCountlstForAction = (queryForAction);
 
-
+          
 
 
             var query1 = await (from ststus in _dbContext.mStatus

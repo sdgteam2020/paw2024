@@ -333,7 +333,7 @@ namespace swas.BAL.Repository
                                                          select mov1.PsmId).FirstOrDefault()
 
                                            where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true //&& b.IsComplete == false
-                                                                                                                                  //&& b.ToUnitId == Logins.unitid 
+                                                    && b.StatusActionsMappingId != 118 && b.StatusActionsMappingId != 4                                                                              //&& b.ToUnitId == Logins.unitid 
                                             && actm.StatusId == StatuId
                                             && b.PsmId == psmiis
                                            orderby a.ProjName, b.DateTimeOfUpdate descending
@@ -398,7 +398,7 @@ namespace swas.BAL.Repository
                                           ).FirstOrDefault()
 
                                            where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true //&& b.IsComplete == false
-                                                                                                                                  //&& b.ToUnitId == Logins.unitid 
+                                                    && b.StatusActionsMappingId != 118 && b.StatusActionsMappingId != 4                                                                                        //&& b.ToUnitId == Logins.unitid 
                                             && actm.StatusId == StatuId
                                           
                                            orderby a.ProjName, b.DateTimeOfUpdate descending
