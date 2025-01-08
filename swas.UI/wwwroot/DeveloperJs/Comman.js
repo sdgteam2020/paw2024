@@ -178,3 +178,21 @@ function DateCalculateago(fmDate, end_actual_time) {
     //}
     return ago;
 }
+
+function formatDateToDDMMYYYY(date) {
+    // Parse the input date
+    var dateObj = new Date(date);
+
+    // Ensure the date is valid
+    if (isNaN(dateObj.getTime())) {
+        return ''; // Return an empty string if the date is invalid
+    }
+
+    // Extract day, month, and year
+    var day = dateObj.getDate().toString().padStart(2, '0'); // Ensure 2 digits
+    var month = (dateObj.getMonth() + 1).toString().padStart(2, '0'); // Ensure 2 digits
+    var year = dateObj.getFullYear();
+
+    // Return the formatted date
+    return `${day}-${month}-${year}`;
+}

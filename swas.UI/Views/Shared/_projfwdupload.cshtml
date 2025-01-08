@@ -177,11 +177,14 @@
             <button class="btn btn-secondary" type="button">
                 
                  <a href="javascript:void(0);" onclick="history.go(-1);" style="color: white;">Close</a>
+               @*  <a href="javascript:void(0);" onclick="window.history.back();" style="color: white;">Close</a>
+                <a href="javascript:void(0);" onclick="event.preventDefault(); window.history.back();" style="color: white;">Close</a> *@
+
              
 
             </button>
             <button class="btn btn-danger" type="button">
-
+                
                 <img src="/assets/images/icons/pdfimg.png" onclick="PrintDiv()" alt="Pdf Download" width="35" height="25">
             </button>
 

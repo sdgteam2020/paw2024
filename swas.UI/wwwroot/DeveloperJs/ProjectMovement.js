@@ -485,6 +485,77 @@ function GetProjectMovement(ProjectId) {
 }
 
 
+//$(document).ready(function () {
+//    alert("hello from ProjectMovementjs");
+
+//    var TeamDetailPostBackURL = '/Projects/AttDetails';
+//    $(function () {
+//        $(".anchorDetail").click(function () {
+
+//            var $buttonClicked = $(this);
+//            var id = $buttonClicked.attr('data-id');
+//            var options = { "backdrop": "static", keyboard: true };
+//            $.ajax({
+//                type: "GET",
+//                url: TeamDetailPostBackURL,
+//                contentType: "application/json; charset=utf-8",
+//                data: { "Id": id },
+//                datatype: "json",
+//                success: function (datadata) {
+
+//                    $('#myModalPagehistoryAttechment').modal('show');
+//                    $('#myModalContenthistoryAttechment').html(datadata);
+//                    /* $('#myModal').modal(options);*/
+
+
+//                },
+//                error: function () {
+//                    alert("Dynamic content load failed.");
+//                }
+//            });
+
+//        });
+
+//    });
+
+//    $(document).on('click', '.pdf', function () {
+//        $('#ViewRecordsHistory').modal('show');
+//    });
+//});
+
+$(document).ready(function () {
+  /*  alert("hello from ProjectMovementjs");*/
+
+    var TeamDetailPostBackURL = '/Projects/AttDetails';
+    $(document).on('click', '.anchorDetail', function () {
+        var $buttonClicked = $(this);
+        var id = $buttonClicked.attr('data-id');
+
+        if (!id) {
+            alert("No PsmId found.");
+            return;
+        }
+
+        $.ajax({
+            type: "GET",
+            url: TeamDetailPostBackURL,
+            contentType: "application/json; charset=utf-8",
+            data: { "Id": id },
+            datatype: "json",
+            success: function (data) {
+                $('#myModalContenthistoryAttechment').html(data);
+                $('#myModalPagehistoryAttechment').modal('show');
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
+            }
+        });
+    });
+
+    $(document).on('click', '.pdf', function () {
+        $('#ViewRecordsHistory').modal('show');
+    });
+});
 
 
 var TeamDetailPostBackURL = '/Projects/AttDetails';

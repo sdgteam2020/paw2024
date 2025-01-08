@@ -152,10 +152,12 @@
     });
 
     $(".ProjName").click(function () {
-        var row = $(this).closest('tr');
+        //var row = $(this).closest('tr');
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
         IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
 
+        $(this).closest("tr").removeClass("bold-text")
+        location.reload();
 
     });
     $("#btn-ibutton").click(function () {
