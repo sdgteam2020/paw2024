@@ -1871,7 +1871,7 @@ namespace swas.BAL.Repository
             try
             {
                 var GetALL = (from A in _DBContext.Projects
-                              where A.ProjName.Contains(ProjName)
+                              where A.ProjName.Contains(ProjName) && A.IsSubmited == true
                               select new DTODDLComman
                               {
                                   Id = A.ProjId,
