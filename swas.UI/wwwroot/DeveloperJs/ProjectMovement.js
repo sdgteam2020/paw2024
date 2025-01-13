@@ -20,7 +20,7 @@
         mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html());
     });
 
-    // GetProjectMovement();
+     //GetProjectMovement();
     $("#txtProjectName").autocomplete({
         source: function (request, response) {
 
@@ -66,6 +66,100 @@
         },
         appendTo: '#suggesstion-box'
     });
+
+
+    //$("#txtProjectName").autocomplete({
+    //    source: function (request, response) {
+    //        if (request.term.length > 1) {
+    //            var projName = request.term;
+    //            var param = { "ProjName": projName };
+    //            $.ajax({
+    //                url: '/Projects/GetALLByProjectName',
+    //                contentType: 'application/x-www-form-urlencoded',
+    //                data: param,
+    //                type: 'POST',
+    //                success: function (data) {
+    //                    if (data.length != 0) {
+    //                        response($.map(data, function (item) {
+    //                            return { label: item.name, value: item.id };
+    //                        }));
+    //                    } else {
+    //                        $("#txtProjectName").val("");
+    //                        alert("Project not found.");
+    //                    }
+    //                },
+    //                error: function (response) {
+    //                    alert(response.responseText);
+    //                },
+    //                failure: function (response) {
+    //                    alert(response.responseText);
+    //                }
+    //            });
+    //        }
+    //    },
+    //    select: function (e, i) {
+    //        e.preventDefault();
+    //        $("#txtProjectName").val(i.item.label);
+    //        GetProjectMovement(i.item.value);
+    //    },
+    //    appendTo: '#suggesstion-box',
+    //    open: function () {
+    //        // Ensure autocomplete matches the width of the search box
+    //        var $input = $("#txtProjectName");
+    //        var $autocomplete = $(".ui-autocomplete");
+    //        $autocomplete.outerWidth($input.outerWidth());
+    //    }
+    //});
+
+    //$("#txtProjectName").autocomplete({
+    //    source: function (request, response) {
+    //        if (request.term.length > 1) {
+    //            var projName = request.term;
+    //            var param = { "ProjName": projName };
+    //            $.ajax({
+    //                url: '/Projects/GetALLByProjectName',
+    //                contentType: 'application/x-www-form-urlencoded',
+    //                data: param,
+    //                type: 'POST',
+    //                success: function (data) {
+    //                    if (data.length != 0) {
+    //                        response($.map(data, function (item) {
+    //                            return { label: item.name, value: item.id };
+    //                        }));
+    //                    } else {
+    //                        $("#txtProjectName").val("");
+    //                        alert("Project not found.");
+    //                    }
+    //                },
+    //                error: function (response) {
+    //                    alert(response.responseText);
+    //                },
+    //                failure: function (response) {
+    //                    alert(response.responseText);
+    //                }
+    //            });
+    //        }
+    //    },
+    //    select: function (e, i) {
+    //        e.preventDefault();
+    //        $("#txtProjectName").val(i.item.label);
+    //        GetProjectMovement(i.item.value);
+    //    },
+    //    appendTo: '#suggesstion-box',
+    //    open: function (event, ui) {
+    //        var autocomplete = $(".ui-autocomplete:visible");
+    //        var inputOffset = $("#txtProjectName").offset();
+    //        var inputHeight = $("#txtProjectName").outerHeight();
+
+    //        // Position the autocomplete below the input field
+    //        autocomplete.css({
+    //            top: inputOffset.top + inputHeight,
+    //            left: inputOffset.left,
+    //            width: $("#txtProjectName").outerWidth() // Match the input width
+    //        });
+    //    }
+    //});
+
 
     $("#btnFwdNext").click(function () {
         requiredFields = $('#ProjFwd').find('.requiredField');
