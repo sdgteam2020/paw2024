@@ -22,7 +22,7 @@ namespace ASPNetCoreIdentityCustomFields.Data
         public int unitid { get; set; }
         public string? appointment { get; set; }
         public string? Icno { get; set; }
-        public string? Rank { get; set; }
+        public int? Rank { get; set; }
         public string? Offr_Name { get; set; }
         public string? Tele_Army { get; set; }
 
@@ -31,6 +31,4 @@ namespace ASPNetCoreIdentityCustomFields.Data
 
         //public int skipImdtFmn { get; set; } = 0;
     }
-
-   
 }

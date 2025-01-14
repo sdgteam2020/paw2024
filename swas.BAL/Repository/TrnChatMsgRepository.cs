@@ -158,11 +158,13 @@ namespace swas.BAL.Repository
 
                                  select new DTOApplicationUserWithChatRead
                                  {
+                                     
                                      Id = users.Id,
-                                     Rank = users.Rank /*CommonHelper.GetRankByRankId(users.Rank)*/ ,
+                                     //Rank = users.Rank 
+                                     RankName = commonHelper.GetRankByRankId(users.Rank),
                                      Offr_Name = users.Offr_Name,
                                      UserName = users.UserName,
-                                     CreatedDate = datetime  
+                                     CreatedDate = datetime 
                                  }).ToListAsync();
 
                 return ret.OrderByDescending(i => i.CreatedDate).ToList();

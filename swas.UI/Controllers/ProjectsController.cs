@@ -38,6 +38,7 @@ using ASPNetCoreIdentityCustomFields.Data;
 using System.Globalization;
 using System.Configuration;
 using Microsoft.Extensions.Options;
+using swas.DAL;
 
 namespace swas.UI.Controllers
 {
@@ -57,6 +58,7 @@ namespace swas.UI.Controllers
         private readonly IActionsRepository _actionsRepository;
         private readonly IProjComments _projComments;
         private readonly IProjStakeHolderMovRepository _projStakeHolderMovRepository;
+        private readonly ApplicationDbContext _dbContext;
 
         private IWebHostEnvironment webHostEnvironment;
         private System.Timers.Timer aTimer;
@@ -74,7 +76,7 @@ namespace swas.UI.Controllers
             ICommentRepository commentRepository, IActionsRepository actionsRepository,
             IProjComments projComments, IStkCommentRepository stkCommentRepository,
             IProjStakeHolderMovRepository projStakeHolderMovRepository,
-            UserManager<ApplicationUser> userManager, IUnitRepository unitRepository, IConfiguration configuration
+            UserManager<ApplicationUser> userManager, IUnitRepository unitRepository, IConfiguration configuration, ApplicationDbContext context
 
 
             )
@@ -98,6 +100,7 @@ namespace swas.UI.Controllers
             _userManager = userManager;
             _unitRepository = unitRepository;
             _configuration = configuration;
+            _dbContext = context;
 
         }
 
@@ -899,7 +902,7 @@ namespace swas.UI.Controllers
                         var movent = await _psmRepository.GetByByte(psmData);
                         movent.IsRead = true;
                         //movent.UndoRemarks = Remarks; as discussed with Lt Col Jasjeet sir (keep pulled back remark in Remarks column)
-                        movent.Remarks = Remarks;
+                        //movent.Remarks = Remarks;
                         movent.IsComplete = true;
                         movent.DateTimeOfUpdate = DateTime.Now;
                         movent.IsPullBack = true;
@@ -914,7 +917,14 @@ namespace swas.UI.Controllers
                             ApplicationUser userdet = await _userManager.FindByNameAsync(unitDetail.UnitName);
                             if (userdet != null)
                             {
-                                movent.UserDetails = Helper.UserInfoDetails(userdet);
+                                //var rankId = Convert.ToInt32(userdet.Rank?.Trim());
+                                var rankName = _dbContext.mRank.FirstOrDefault(x => x.Id == userdet.Rank);
+                                if (rankName != null)
+                                {
+                                    movent.UserDetails = rankName.RankName + " " + userdet.Offr_Name.Trim() + " / " + userdet.UserName.Trim() + "";
+                                }
+
+                                //movent.UserDetails = Helper.UserInfoDetails(userdet);
                             }
                             else
                             {
@@ -929,6 +939,7 @@ namespace swas.UI.Controllers
                         movent.IsRead = false;
                         movent.IsPullBack = true;
                         movent.UndoRemarks = null;
+                        movent.Remarks = Remarks;
                         //movent.UserDetails = Helper.LoginDetails(Logins);
                         movent.UpdatedByUserId = Logins.UserIntId;
                         movent.DateTimeOfUpdate = DateTime.Now;
@@ -1582,7 +1593,14 @@ namespace swas.UI.Controllers
                         ApplicationUser userdet = await _userManager.FindByNameAsync(unitDetail.UnitName);
                         if (userdet != null)
                         {
-                            nextPsmMove.UserDetails = Helper.UserInfoDetails(userdet);
+                            //nextPsmMove.UserDetails = Helper.UserInfoDetails(userdet);
+                            //var rankId = Convert.ToInt32(userdet.Rank?.Trim());
+
+                            var rankName = _dbContext.mRank.FirstOrDefault(x => x.Id == userdet.Rank);
+                            if (rankName != null)
+                            {
+                                nextPsmMove.UserDetails = rankName.RankName + " " + userdet.Offr_Name.Trim() + " / " + userdet.UserName.Trim() + "";
+                            }
                         }
 
                     }

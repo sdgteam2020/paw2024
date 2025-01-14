@@ -416,6 +416,7 @@ namespace swas.Areas.Identity.Pages.Account
                 // Assuming adminUserName is the admin's UserName
                 var adminUserName = User.Identity.Name; // You might need to adjust this based on how you get the admin's UserName
 
+                var rankId = _context.mRank.FirstOrDefault(x => x.RankName == Input.Rank).Id;
                 bool flg = true;
                 ApplicationUser inputModel = new ApplicationUser();
 
@@ -462,7 +463,8 @@ namespace swas.Areas.Identity.Pages.Account
                     user.appointment = Input.appointment;
                     user.unitid = Input.unitId;
                     user.UserName = Input.UserName;
-                    user.Rank = Input.Rank;
+                    //user.Rank = Input.Rank;
+                    user.Rank = rankId;
                     user.Offr_Name = Input.OfficerName;
                     user.Tele_Army = Input.Tele_Army;                    
                     user.CreatedDate = DateTime.Now;

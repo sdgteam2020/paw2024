@@ -54,7 +54,7 @@ namespace swas.UI.Controllers
                         {
                             DTOApplicationUserWithChatRead db = new DTOApplicationUserWithChatRead();
                             db.Id = user.Id;
-                            db.Rank = user.Rank;
+                            db.RankName = user.RankName;
                             db.Offr_Name = user.Offr_Name;
                             db.UserName = user.UserName;
                             if (ischat != null && ischat.Count > 0)

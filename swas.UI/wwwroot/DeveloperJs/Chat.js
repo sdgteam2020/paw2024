@@ -90,7 +90,8 @@ function GetAllUsers() {
         type: 'POST',
         data: { "Id": 0 },
         success: function (response) {
-            /*console.log(response);*/
+            debugger;
+            console.log("chatResponse", response);
             if (response.length) {
                 var listitem = "";
                 for (var i = 0; i < response.length; i++) {
@@ -108,7 +109,7 @@ function GetAllUsers() {
                         listitem += '</div>';
                         listitem += '<div class="user_info">';
                         listitem += '<span class="d-none" id="chatprofileId">' + response[i].id + '</span>';
-                        listitem += '<span id="profName">' + response[i].rank + ' ' + response[i].offr_Name + '</span>';
+                        listitem += '<span id="profName">' + response[i].rankName + ' ' + response[i].offr_Name + '</span>';
                         listitem += ' <p>' + response[i].userName + '</p>';
                         listitem += '</div>';
                         listitem += '</div>';

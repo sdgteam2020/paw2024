@@ -18,6 +18,7 @@ using swas.DAL.Models;
 using swas.BAL.DTO;
 using swas.BAL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using swas.DAL;
 
 namespace swas.Areas.Identity.Pages.Account
 {
@@ -37,8 +38,9 @@ namespace swas.Areas.Identity.Pages.Account
         private readonly IUnitRepository _unitRepository;
 
         private readonly IUserRepository _userRepository;
+        public readonly ApplicationDbContext _context;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IUnitRepository unitRepository, IUserRepository userRepository)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IUnitRepository unitRepository, IUserRepository userRepository, ApplicationDbContext context)
         {
             _signInManager = signInManager;
             _logger = logger;
@@ -46,6 +48,7 @@ namespace swas.Areas.Identity.Pages.Account
             _roleManager = roleManager;
             _unitRepository = unitRepository;
             _userRepository = userRepository;
+            _context = context;
         }
 
         /// <summary>
@@ -195,6 +198,8 @@ namespace swas.Areas.Identity.Pages.Account
                                 {
                                     Login Db = new Login();
                                     userdet.domain_iam = userdet.UserName;
+                                    CommonHelper commonHelper = new CommonHelper(_context);
+                                    var userRank = commonHelper.UserRankDetail(userdet);
 
                                     if (userdet.domain_iam != null)   // domain_iam available after registration
                                     {
@@ -205,7 +210,8 @@ namespace swas.Areas.Identity.Pages.Account
                                         Db.Unit = unitdetl.UnitName;        
                                         Db.unitid = userdet.unitid;
                                         Db.UserIntId = userdet.unitid;
-                                        Db.Rank=userdet.Rank;
+                                        //Db.Rank=userdet.Rank;
+                                        Db.Rank=userRank;
                                         Db.IcNo = userdet.Icno;
                                         Db.Offr_Name = userdet.Offr_Name;
                                         var users = await _userManager.FindByNameAsync(userdet.UserName);

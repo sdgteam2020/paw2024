@@ -13,5 +13,6 @@ namespace swas.BAL.DTO
 		public int Total { get; set; }
 		public DateTime CreatedOn { get; set; }
 		public string? sorton { get; set; }
-	}
+        public string? RankName { get; set; }
+    }
 }

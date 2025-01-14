@@ -282,7 +282,8 @@ namespace swas.UI.Controllers
 
                             userdet = await userManager.FindByNameAsync(log.NameId);
                             var unitdetl = await _unitRepository.GetUnitDtl(userdet.unitid);
-
+                            CommonHelper commonHelper = new CommonHelper(_context);
+                            var userRank = commonHelper.UserRankDetail(userdet);
 
                             Login Db = new Login();
                             if (userdet.domain_iam != null)   //   domain_iam available after registration
@@ -294,7 +295,8 @@ namespace swas.UI.Controllers
                                 Db.Unit = unitdetl.UnitName;
                                 Db.unitid = userdet.unitid;
                                 Db.UserIntId = userdet.UserIntId;
-                                Db.Rank = userdet.Rank;
+                                //Db.Rank = userdet.Rank;
+                                Db.Rank = userRank;
                                 Db.IcNo = userdet.Icno;
                                 Db.Offr_Name = userdet.Offr_Name;
                                 Db.IpAddress = watermarkText;
@@ -689,7 +691,7 @@ namespace swas.UI.Controllers
                     var roles = await userManager.GetRolesAsync(v);
 
                     var list = (from a in userManager.Users
-                                join d in _context.mRank on a.Rank equals d.RankName
+                                join d in _context.mRank on a.Rank equals d.Id
                                 join c in _context.UserRoles on a.Id equals c.UserId
                                 join b in _roleManager.Roles on c.RoleId equals b.Id
                                 orderby a.CreatedDate descending
@@ -886,7 +888,8 @@ namespace swas.UI.Controllers
                     userToUpdate.domain_iam = input.UserName;
                     userToUpdate.appointment = input.appointment;
                     userToUpdate.unitid = input.unitId;
-                    userToUpdate.Rank = input.RankName;
+                    //userToUpdate.Rank = input.RankName;
+                    userToUpdate.Rank = input.RankId;
                     userToUpdate.Offr_Name = input.OfficerName;
                     userToUpdate.Tele_Army = input.Tele_Army;
                     userToUpdate.UserName = input.UserName;
