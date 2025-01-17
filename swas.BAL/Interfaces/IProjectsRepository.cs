@@ -1,4 +1,5 @@
-﻿using swas.BAL.DTO;
+﻿using ASPNetCoreIdentityCustomFields.Data;
+using swas.BAL.DTO;
 using swas.DAL;
 using swas.DAL.Models;
 using System;
@@ -75,6 +76,7 @@ namespace swas.BAL.Interfaces
 
         Task<tbl_ProjStakeHolderMov> GetProjStkHolderMovmentByPsmiId(int? PsmId);
         Task<bool> UpdateProjectStkMovementAsync(tbl_ProjStakeHolderMov project);
+        Task<ApplicationUser> GetUserByUnitId(int? UnitId);
     }
 
 

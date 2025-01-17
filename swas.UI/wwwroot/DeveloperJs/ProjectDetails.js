@@ -211,10 +211,10 @@ function GetProjectMovHistory(ProjId) {
         type: 'POST',
         data: { "ProjectId": ProjId },
         success: function (response) {
-            console.log(response);
+            /*console.log(response);*/
             if (response.dtoProjectMovHistorypsmlst.length) {
                 listitem += '<div class="timeline-month">';
-                debugger;
+            /*    debugger;*/
 
                 /*listitem += '  ' + DateTimeFormatedd_mm_yyyy(new Date($.now())) + '';*/
                 DTOProjectMovHistorypsmlst = response.dtoProjectMovHistorypsmlst;
@@ -390,19 +390,18 @@ function GetProjectMovHistory(ProjId) {
                             listitem += '<div class="box-footer ">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
                         listitem += '</div></div>';
                     }
-                    if (DTOProjectMovHistorypsmlst[i].undoRemarks != null) {
-                        listitem += '<div class="col-sm-4">';
-                        listitem += '<div class="timeline-box">';
-                        listitem += '<div class="box-title">';
-                        listitem += '<i class="fa fa-pencil text-info" aria-hidden="true"></i>Undo Remarks';
-                        listitem += '</div>';
-                        listitem += '<div class="box-content">';
-                        /*listitem += ' <a class="btn btn-xs btn-default pull-right">Remarks</a>';*/
-                        listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].undoRemarks + '</div>';
-                        listitem += '</div>';
-                        listitem += '<div class="box-footer">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
-                        listitem += '</div></div>';
-                    }
+                    //if (DTOProjectMovHistorypsmlst[i].undoRemarks != null) {
+                    //    listitem += '<div class="col-sm-4">';
+                    //    listitem += '<div class="timeline-box">';
+                    //    listitem += '<div class="box-title">';
+                    //    listitem += '<i class="fa fa-pencil text-info" aria-hidden="true"></i>Undo Remarks';
+                    //    listitem += '</div>';
+                    //    listitem += '<div class="box-content">';
+                    //    listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].undoRemarks + '</div>';
+                    //    listitem += '</div>';
+                    //    listitem += '<div class="box-footer">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
+                    //    listitem += '</div></div>';
+                    //}
                     listitem += '</div></div>';
                     listitem += '';
                     listitem += '';

@@ -820,7 +820,7 @@
                                 @history.Actions
                             </td>
                             <td class="wrap">
-                            @if (history.IsPulledBack == true)
+                            @if (history.IsPulledBack == true && history.UndoRemarks == null)
                             {
                                 @:Pulled Back Remarks - @history.Remarks
                             }

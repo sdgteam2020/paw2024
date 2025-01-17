@@ -114,7 +114,7 @@ namespace swas.BAL.Repository
                                join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
 
                                where b.ProjId == ProjectId
-                               orderby b.TimeStamp descending
+                               orderby b.PsmId descending
                                select new DTOProjectMovHistorypsm
                                {
                                    PsmId = b.PsmId,

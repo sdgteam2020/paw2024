@@ -901,7 +901,7 @@ namespace swas.UI.Controllers
 
                         var movent = await _psmRepository.GetByByte(psmData);
                         movent.IsRead = true;
-                        //movent.UndoRemarks = Remarks; as discussed with Lt Col Jasjeet sir (keep pulled back remark in Remarks column)
+                        //movent.UndoRemarks = Remarks;
                         //movent.Remarks = Remarks;
                         movent.IsComplete = true;
                         movent.DateTimeOfUpdate = DateTime.Now;
@@ -914,7 +914,8 @@ namespace swas.UI.Controllers
                         unitDetail = await _unitRepository.GetUnitDtl(movent.ToUnitId);
                         if (unitDetail != null)
                         {
-                            ApplicationUser userdet = await _userManager.FindByNameAsync(unitDetail.UnitName);
+                            //ApplicationUser userdet = await _userManager.FindByNameAsync(unitDetail.UnitName);
+                            ApplicationUser userdet = await _projectsRepository.GetUserByUnitId(unitDetail.unitid);
                             if (userdet != null)
                             {
                                 //var rankId = Convert.ToInt32(userdet.Rank?.Trim());
@@ -923,7 +924,7 @@ namespace swas.UI.Controllers
                                 {
                                     movent.UserDetails = rankName.RankName + " " + userdet.Offr_Name.Trim() + " / " + userdet.UserName.Trim() + "";
                                 }
-
+                                z
                                 //movent.UserDetails = Helper.UserInfoDetails(userdet);
                             }
                             else
@@ -939,7 +940,7 @@ namespace swas.UI.Controllers
                         movent.IsRead = false;
                         movent.IsPullBack = true;
                         movent.UndoRemarks = null;
-                        movent.Remarks = Remarks;
+                        movent.Remarks = Remarks; /* as discussed with Lt Col Jasjeet sir (keep pulled back remark in Remarks column)*/
                         //movent.UserDetails = Helper.LoginDetails(Logins);
                         movent.UpdatedByUserId = Logins.UserIntId;
                         movent.DateTimeOfUpdate = DateTime.Now;

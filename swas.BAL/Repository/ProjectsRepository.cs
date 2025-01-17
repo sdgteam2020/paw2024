@@ -22,6 +22,7 @@ using System.Diagnostics;
 using System.Threading;
 using swas.UI.Helpers;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using ASPNetCoreIdentityCustomFields.Data;
 
 namespace swas.BAL.Repository
 {
@@ -1974,6 +1975,15 @@ namespace swas.BAL.Repository
             {
                 return false;
             }
+        }
+
+        public async Task<ApplicationUser> GetUserByUnitId(int? UnitId)
+        {
+            var ret = await _dbContext.Users.Where(i => i.unitid == UnitId).FirstOrDefaultAsync();
+            if (ret != null)
+                return ret;
+            else
+                return new ApplicationUser();
         }
 
     }
