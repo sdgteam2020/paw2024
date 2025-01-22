@@ -779,7 +779,7 @@
             <thead>
                 <tr>
                     <th>Ser No</th>
-                    <th>Date</th>
+                    <th>TimeStamp</th>
                     <th>FromStakeHolder</th>
                     <th>ToStakeHolder</th>
                     <th>Stage</th>
@@ -800,7 +800,8 @@
                                 }
                                 @snoa
                             </td>
-                            <td>@history.Date.ToString().Substring(0,10)</td>
+                            @* <td>@history.Date.ToString().Substring(0,10)</td> *@
+                            <td>@history.Date</td>
                             <td>@history.FromUnitName</td>
                             <td>@history.ToUnitName</td>
                             <td>@history.Stages</td>

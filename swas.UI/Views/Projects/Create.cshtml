@@ -274,7 +274,8 @@
                                          
                                     </td>
                                     <td>
-                                            @Html.TextBoxFor(model => model.InitiatedDate, "{0:yyyy-MM-dd}", new { @class = "form-control requiredField", type = "date", required = "required" })
+                                            @* @Html.TextBoxFor(model => model.InitiatedDate, "{0:yyyy-MM-dd}", new { @class = "form-control requiredField", type = "date", required = "required" }) *@
+                                            @Html.TextBoxFor(model => model.InitiatedDate, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control requiredField", type = "date", required = "required" })
 
                                         <div class="invalid-feedback">
                                             Initiation Date Required
@@ -292,7 +293,8 @@
                                     </td>
                                     <td>
 
-                                            @Html.TextBoxFor(model => model.CompletionDate, "{0:yyyy-MM-dd}", new { @class = "form-control ", type = "date", required = "required" })
+                                            @* @Html.TextBoxFor(model => model.CompletionDate, "{0:yyyy-MM-dd}", new { @class = "form-control ", type = "date", required = "required" }) *@
+                                            @Html.TextBoxFor(model => model.CompletionDate, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control ", type = "date", required = "required" })
 
                                         <div class="invalid-feedback">
                                             Completion Date Required
@@ -855,12 +857,13 @@
                         </td>
                         @*   <td>@project.StakeHolder</td> *@
 
-                        <td>@project.InitiatedDate?.ToString("dd-MM-yyyy")</td>
+                        <td>@project.InitiatedDate</td>
                         @*  <td>@project.CompletionDate?.ToString("dd-MM-yyyy")</td> *@
                         @*  <td>@project.IsWhitelisted</td> *@
                         <td>@project.Comments</td>
 
-                        <td>@project.DateTimeOfUpdate?.ToString("dd-MM-yyyy")</td>
+                        @* <td>@project.DateTimeOfUpdate?.ToString("dd-MM-yyyy")</td> *@
+                        <td>@project.DateTimeOfUpdate</td>
                         <td>
                             @project.Status
 

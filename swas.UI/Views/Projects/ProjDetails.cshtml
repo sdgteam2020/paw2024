@@ -289,7 +289,8 @@
                                                 <span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
                                                 <span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
                                                 <span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
-                                                <span class="d-none" id="SpnTimeStampId">@project.TimeStamp.ToString().Substring(0, 10)</span>
+                                                @* <span class="d-none" id="SpnTimeStampId">@project.TimeStamp.ToString().Substring(0, 10)</span> *@
+                                                <span class="d-none" id="SpnTimeStampId">@project.TimeStamp</span>
                                                 <span class="d-none" id="SpnStageId">@project.StageId</span>
                                                 <span class="d-none" id="SpnTimeStatusId">@project.StatusId</span>
 
@@ -321,7 +322,8 @@
                                             </td>
 
                                             <td>@project.ToUnitName</td>
-                                            <td>@project.TimeStamp.ToString().Substring(0,10)</td>
+                                            @* <td>@project.TimeStamp.ToString().Substring(0,10)</td> *@
+                                            <td>@project.TimeStamp</td>
                                             <td>@project.Stage</td>
                                             <td>@project.Status</td>
                                             <td>@project.Action</td>
@@ -456,7 +458,8 @@
                                                 <span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
                                                 <span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
                                                 <span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
-                                                <span class="d-none" id="SpnTimeStampId">@project.TimeStamp.ToString().Substring(0,10)</span>
+                                                @* <span class="d-none" id="SpnTimeStampId">@project.TimeStamp.ToString().Substring(0,10)</span> *@
+                                                <span class="d-none" id="SpnTimeStampId">@project.TimeStamp</span>
                                                 <span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
                                                 <span class="d-none" id="SpnprojectStageId">@project.StageId</span>
                                                 <span class="d-none" id="SpnprojectToUnitId">@project.ToUnitId</span>
@@ -482,7 +485,8 @@
                                             </td>
 
                                             <td>@project.ToUnitName</td>
-                                            <td>@project.TimeStamp.ToString().Substring(0, 10)</td>
+                                            @* <td>@project.TimeStamp.ToString().Substring(0, 10)</td> *@
+                                            <td>@project.TimeStamp</td>
                                             <td>@project.Stage</td>
                                             <td>@project.Status</td>
                                             <td>@project.Action</td>
@@ -579,7 +583,8 @@
                                             </td>
                                             <td>@project.StakeHolder</td>
                                             <td>@project.FwdBy</td>
-                                            <td>@project.DateTimeOfUpdate?.ToString("dd-MM-yyyy")</td>
+                                            @* <td>@project.DateTimeOfUpdate?.ToString("dd-MM-yyyy")</td> *@
+                                            <td>@project.DateTimeOfUpdate</td>
 
 
                                             <td>

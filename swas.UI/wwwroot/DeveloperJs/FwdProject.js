@@ -265,7 +265,10 @@ function CheckFwdCondition(CurrentPslmId) {
 }
 function SaveFwdTo(CurrentPslmId) {
 
-
+    var currentDate = new Date();
+    var currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false });
+    var time = $("#TimeStampToProjfwd").val();
+    var timeData = time + ' ' + currentTime;
     var userdata =
     {
         "ProjId": $("#spanFwdProjectId").html(),
@@ -274,8 +277,11 @@ function SaveFwdTo(CurrentPslmId) {
         "Remarks": $("#txtRemarksfwd").val(),
         "ToUnitId": $("#ddlfwdFwdTo").val(),
 
-        "TimeStamp": $("#TimeStampToProjfwd").val()
+        //"TimeStamp": $("#TimeStampToProjfwd").val()
+        "TimeStamp": timeData
     };
+
+    console.log("Fwd UserData", userdata);
     $.ajax({
         url: '/Projects/FwdToProject',
         type: 'POST',

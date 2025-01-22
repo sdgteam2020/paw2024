@@ -620,8 +620,8 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stage + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].status + "</span></td>";
                         listItem += "<td class='align-middle'><span id='divName'>" + response[i].action + "</span></td>";
-                        //listItem += "<td class='align-middle'><span id='divName'>" + DateFormateddMMyyyyhhmmss(response[i].dateTimeOfUpdate) + "</span></td>";
-                        listItem += "<td class='align-middle'><span id='divName'>" + DateFormateyyy_mm_dd(response[i].dateTimeOfUpdate) + "</span></td>";
+                        listItem += "<td class='align-middle'><span id='divName'>" + DateFormateddMMyyyyhhmmss(response[i].dateTimeOfUpdate) + "</span></td>";
+                        //listItem += "<td class='align-middle'><span id='divName'>" + DateFormateyyy_mm_dd(response[i].dateTimeOfUpdate) + "</span></td>";
 
                         if (response[i].isComplete) {
                             listItem += "<td ><span class='badge badge-success' id='divName'>Processed</span></td>";

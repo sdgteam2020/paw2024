@@ -901,7 +901,7 @@ namespace swas.UI.Controllers
 
                         var movent = await _psmRepository.GetByByte(psmData);
                         movent.IsRead = true;
-                        //movent.UndoRemarks = Remarks;
+                        movent.UndoRemarks = Remarks;
                         //movent.Remarks = Remarks;
                         movent.IsComplete = true;
                         movent.DateTimeOfUpdate = DateTime.Now;
@@ -924,7 +924,6 @@ namespace swas.UI.Controllers
                                 {
                                     movent.UserDetails = rankName.RankName + " " + userdet.Offr_Name.Trim() + " / " + userdet.UserName.Trim() + "";
                                 }
-                                z
                                 //movent.UserDetails = Helper.UserInfoDetails(userdet);
                             }
                             else

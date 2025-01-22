@@ -224,7 +224,8 @@ function GetProjectMovHistory(ProjId) {
                 listitem += '</div>';
                 for (var i = 0; i < DTOProjectMovHistorypsmlst.length; i++) {
 
-                    listitem += '<div class="timeline-section"> <div class="timeline-date"> ' + DateTimeFormatedd_dd_mm_yyyy(DTOProjectMovHistorypsmlst[i].date) + '</div>';
+                    listitem += '<div class="timeline-section"> <div class="timeline-date"> ' + DateTimeFormatedd_mm_yyyy(DTOProjectMovHistorypsmlst[i].date) + '</div>';
+                    //listitem += '<div class="timeline-section"> <div class="timeline-date"> ' + DateTimeFormatedd_dd_mm_yyyy(DTOProjectMovHistorypsmlst[i].date) + '</div>';
 
                     /* listitem += '<div class="timeline-section"> <div class="timeline-date"> ' + DateFormatedd_mm_yyyy(DTOProjectMovHistorypsmlst[i].date) + '</div>';*/
                     listitem += '<div class="row"><div class="col-sm-4">';
@@ -382,6 +383,13 @@ function GetProjectMovHistory(ProjId) {
                         listitem += '</div>';
                         listitem += '<div class="box-content">';
                         /*listitem += ' <a class="btn btn-xs btn-default pull-right">Remarks</a>';*/
+
+                        //if (DTOProjectMovHistorypsmlst[i].IsPulledBack == true && DTOProjectMovHistorypsmlst[i].UndoRemarks == null) {
+                        //    listitem += '<div class="box-item">' +'Pulled Back Remarks -' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
+                        //}
+                        //else {
+                        //    listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
+                        //}
                         listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
                         listitem += '</div>';
                         if (DTOProjectMovHistorypsmlst[i].actions == "Obsn")

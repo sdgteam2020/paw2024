@@ -285,17 +285,23 @@ function AddProject(thistag) {
     //// Combine date with the time (assuming you want the current time appended)
     //initiatedDate = initiatedDate + " " + timeString;
     //completionDate = completionDate + " " + timeString;
+    var initialDate = $('#InitiatedDate').val();
+    var completionDate = $('#CompletionDate').val();
+    var currentDate = new Date();
+    var currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false });
+    var InitiatedDate = initialDate + ' ' + currentTime;
+    var CompletionDate = completionDate + ' ' + currentTime;
 
-
-  
     $.ajax({
         url: '/Projects/AddProject',
         type: 'POST',
         data: {
             "ProjId": $("#ProjId").val(),
             "ProjName": $("#ProjName").val(),
-            "InitiatedDate": $("#InitiatedDate").val(),
-            "CompletionDate": $("#CompletionDate").val(),
+            //  "InitiatedDate": $("#InitiatedDate").val(),
+            "InitiatedDate": InitiatedDate,
+            //  "CompletionDate": $("#CompletionDate").val(),
+            "CompletionDate": CompletionDate,
             "IsWhitelisted": $("#IsWhitelisted").val(),
             "InitialRemark": $("#InitialRemark").val(),
             "StakeHolderId": $("#ddlStakeHolderId").val(),
