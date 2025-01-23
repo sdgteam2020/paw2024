@@ -290,18 +290,41 @@ function SendMsg() {
     }
 
 
-    var currentTime = new Date();
-    var timeString = currentTime.toTimeString().split(' ')[0]; // Example: "14:45:30"
+    //var currentTime = new Date();
+    //var timeString = currentTime.toTimeString().split(' ')[0]; // Example: "14:45:30"
 
-    var commentDate = $("#CommentDateFwd").val(); // Example: "2024-12-27"
-    var commentDateTime = commentDate + " " + timeString;
+    //var commentDate = $("#CommentDateFwd").val(); // Example: "2024-12-27"
+    //var commentDateTime = commentDate + " " + timeString;
 
+    var dateValue = $('#CommentDateFwd').val();
+    var currentDate = new Date();
+
+    // Add server's current time if only a date is selected
+    var commentDateTime = '';
+    if ($('#CommentDateFwd').attr('type') === 'date') {
+        if (!dateValue) {
+            alert('Please select a date .');
+            return;
+        }
+        var currentTime = currentDate.toTimeString().split(' ')[0]; // Get current time in HH:mm:ss
+        commentDateTime = dateValue + ' ' + currentTime;
+    } else if ($('#CommentDateFwd').attr('type') === 'datetime-local') {
+        if (!dateValue) {
+            alert('Please select date and time.');
+            return;
+        }
+        commentDateTime = dateValue.replace('T', ' '); // Format datetime-local to space-separated
+    }
+
+    
+ 
     formData.append("Comments", $("#Comments").val());
     formData.append("StkStatusId", $("#ddlStatus").val());
     formData.append("ProjectId", $("#ProjectcommentForStackHolderprojId").html());
     formData.append("psmid", $("#ProjectcommentForStackHolderPsmId").html());
     //formData.append("CommentDate", $("#CommentDateFwd").val());
     formData.append("CommentDate", commentDateTime);
+    //console.log("comment formdata", commentDateTime);
     $.ajax({
         type: "POST",
         url: '/Projects/SendCommentonProject',
@@ -331,7 +354,7 @@ function SendMsg() {
                     GetProjCommentsByUnitId();
                     //IsUnReadComment($("#ProjectcommentForStackHolderprojId").html());
                     //GetNotification($("#ProjectcommentForStackHolderprojId").html());
-                    UnReadNotification($("#ProjectcommentForStackHolderprojId").html(), 1);
+                    UnReadNotification($("#ProjectcommentForStackHolderprojId").html(), 2);
                     IsUnReadComment($("#ProjectcommentForStackHolderprojId").html(), $("#ProjectcommentForStackHolderPsmId").html());
                     reset();
                 })

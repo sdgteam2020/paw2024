@@ -1022,6 +1022,95 @@
     containerTabss.addEventListener("click", handleTabClick);
 </script>
 
+@section Scripts {
+    @* <script>
+        var pad = "00"
+        var datef2 = new Date();
+        var months = "" + `${(datef2.getMonth() + 1)}`;
+        var days = "" + `${(datef2.getDate())}`;
+        var monthsans = pad.substring(0, pad.length - months.length) + months
+        var dayans = pad.substring(0, pad.length - days.length) + days
+        var year = `${datef2.getFullYear()}`;
+        var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+        var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+        var ss = `${datef2.getSeconds()}`;
+
+        var today = year + `-` + monthsans + `-` + dayans;
+        $(document).ready(function () {
+            var claValue = @Logins.cla; 
+
+            if (claValue == 2) {
+                 $('#datepicker').attr('type', 'datetime-local');
+            } else {
+                $('#datepicker').attr('type', 'date');
+            }
+        });
+    </script> *@
+
+    <script>
+        // TimeStampToProjfwd
+        var pad = "00";
+        var datef2 = new Date();
+
+        // Formatting the current date and time
+        var months = "" + (datef2.getMonth() + 1);
+        var days = "" + datef2.getDate();
+        var monthsans = pad.substring(0, pad.length - months.length) + months;
+        var dayans = pad.substring(0, pad.length - days.length) + days;
+        var year = datef2.getFullYear();
+        var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+        var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+        var ss = `${datef2.getSeconds()}`;
+
+        // Today's date and time in the required formats
+        var todayDate = `${year}-${monthsans}-${dayans}`;
+        var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+
+        $(document).ready(function () {
+            var claValue = @Logins.cla; // Get the value of Logins.cla
+
+            if (claValue == 2) {
+                // Set type to datetime-local and max to today with current time
+                $('#TimeStampToProjfwd').attr('type', 'datetime-local');
+                $('#TimeStampToProjfwd').attr('max', todayDateTime);
+            } else {
+                $('#TimeStampToProjfwd').attr('type', 'date');
+            }
+        });
+
+    </script>
+    <script>
+        var pad = "00";
+        var datef2 = new Date();
+
+        // Formatting the current date and time
+        var months = "" + (datef2.getMonth() + 1);
+        var days = "" + datef2.getDate();
+        var monthsans = pad.substring(0, pad.length - months.length) + months;
+        var dayans = pad.substring(0, pad.length - days.length) + days;
+        var year = datef2.getFullYear();
+        var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+        var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+        var ss = `${datef2.getSeconds()}`;
+
+        // Today's date and time in the required formats
+        var todayDate = `${year}-${monthsans}-${dayans}`;
+        var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+
+        $(document).ready(function () {
+            var claValue = @Logins.cla; // Get the value of Logins.cla
+
+            if (claValue == 2) {
+                // Set type to datetime-local and max to today with current time
+                $('#datepicker').attr('type', 'datetime-local');
+                $('#datepicker').attr('max', todayDateTime);
+            } else {
+                $('#datepicker').attr('type', 'date');
+            }
+        });
+    </script>
+
+}
 
 
 @* <script>

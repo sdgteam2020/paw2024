@@ -70,7 +70,6 @@
     $(".btn-FwdHistory").click(function () {
         $('#ProjFwdHistory').modal('show');
 
-
         GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentProjId").html());
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
 
@@ -265,10 +264,31 @@ function CheckFwdCondition(CurrentPslmId) {
 }
 function SaveFwdTo(CurrentPslmId) {
 
+    var dateValue = $("#TimeStampToProjfwd").val();
     var currentDate = new Date();
-    var currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false });
-    var time = $("#TimeStampToProjfwd").val();
-    var timeData = time + ' ' + currentTime;
+
+    // Add server's current time if only a date is selected
+    var TimeStamps = '';
+    if ($('#TimeStampToProjfwd').attr('type') === 'date') {
+        if (!dateValue) {
+            alert('Please select a date .');
+            return;
+        }
+        var currentTime = currentDate.toTimeString().split(' ')[0]; // Get current time in HH:mm:ss
+        TimeStamps = dateValue + ' ' + currentTime;
+    } else if ($('#TimeStampToProjfwd').attr('type') === 'datetime-local') {
+        if (!dateValue) {
+            alert('Please select date and time.');
+            return;
+        }
+        TimeStamps = dateValue.replace('T', ' '); // Format datetime-local to space-separated
+    }
+
+
+    //var currentDate = new Date();
+    //var currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false });
+    //var time = $("#TimeStampToProjfwd").val();
+    //var timeData = time + ' ' + currentTime;
     var userdata =
     {
         "ProjId": $("#spanFwdProjectId").html(),
@@ -278,10 +298,8 @@ function SaveFwdTo(CurrentPslmId) {
         "ToUnitId": $("#ddlfwdFwdTo").val(),
 
         //"TimeStamp": $("#TimeStampToProjfwd").val()
-        "TimeStamp": timeData
+        "TimeStamp": TimeStamps
     };
-
-    console.log("Fwd UserData", userdata);
     $.ajax({
         url: '/Projects/FwdToProject',
         type: 'POST',

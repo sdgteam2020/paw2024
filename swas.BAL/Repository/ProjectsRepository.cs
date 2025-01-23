@@ -781,6 +781,7 @@ namespace swas.BAL.Repository
                             from eWithComment in fs.DefaultIfEmpty()
                             where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true && b.IsComplete == false
                             && b.ToUnitId == Logins.unitid && b.IsComment == false
+                            orderby b.TimeStamp descending
                             select new DTOProjectsFwd
                             {
                                 ProjId = a.ProjId,
@@ -813,7 +814,8 @@ namespace swas.BAL.Repository
                                 TimeStamp = b.TimeStamp
                             };
 
-                var projectsWithDetails = await query.OrderByDescending(x => x.PsmIds).ToListAsync();
+                //var projectsWithDetails = await query.OrderByDescending(x => x.PsmIds).ToListAsync();
+                var projectsWithDetails = query.ToList();
                 return projectsWithDetails;
             }
             else
@@ -1985,6 +1987,15 @@ namespace swas.BAL.Repository
             else
                 return new ApplicationUser();
         }
+
+        //public async Task<List<tbl_ProjStakeHolderMov>> GetProjStkHolderMovmentByProjId(int? ProjId)
+        //{
+        //    var ret = await _dbContext.ProjStakeHolderMov.Where(i => i.ProjId == ProjId && i.IsComment == true).ToListAsync();
+        //    if (ret != null)
+        //        return ret;
+        //    else
+        //        return new List<tbl_ProjStakeHolderMov>();
+        //}
 
     }
 

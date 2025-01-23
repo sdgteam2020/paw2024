@@ -53,17 +53,26 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         $('#confirmationModal').modal('show');
 
         $('#confirmSend').off('click').on('click', function () {
-            /*var FwdDateForComment = $('#datepicker').val();*/
-            var dateValue = $('#datepicker').val(); 
-            var currentDate = new Date(); 
-            var currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false });
-            var FwdDateForComment = dateValue + ' ' + currentTime;
-            if (FwdDateForComment === '' || dateValue === '') {
-                alert('Please select date & time.');
-                return; 
+            var dateValue = $('#datepicker').val();
+            var currentDate = new Date();
+
+            // Add server's current time if only a date is selected
+            var FwdDateForComment = '';
+            if ($('#datepicker').attr('type') === 'date') {
+                if (!dateValue) {
+                    alert('Please select a date .');
+                    return;
+                }
+                var currentTime = currentDate.toTimeString().split(' ')[0]; // Get current time in HH:mm:ss
+                FwdDateForComment = dateValue + ' ' + currentTime;
+            } else if ($('#datepicker').attr('type') === 'datetime-local') {
+                if (!dateValue) {
+                    alert('Please select date and time.');
+                    return;
+                }
+                FwdDateForComment = dateValue.replace('T', ' '); // Format datetime-local to space-separated
             }
             $('#confirmationModal').modal('hide');
-
             SentForComment(ProjId, psmId, 0, FwdDateForComment);
             AddNotification(ProjId, 1, 0);
             ProcessProjConfirm(ProjId);
@@ -74,7 +83,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
     });
 
-    $('#confirmationModal').on('hidden.bs.modal', function () {
+    $('#x').on('hidden.bs.modal', function () {
         $('#datepicker').datepicker('setDate', null);
     });
 });
@@ -374,8 +383,10 @@ function GetProjectMovHistory(ProjId) {
                             listitem += '</div></div>';
                         }
                     }
-
+                  
                     if (DTOProjectMovHistorypsmlst[i].remarks != "") {
+                        //console.log(DTOProjectMovHistorypsmlst);
+                        debugger;
                         listitem += '<div class="col-sm-4">';
                         listitem += '<div class="timeline-box">';
                         listitem += '<div class="box-title">';
@@ -384,13 +395,15 @@ function GetProjectMovHistory(ProjId) {
                         listitem += '<div class="box-content">';
                         /*listitem += ' <a class="btn btn-xs btn-default pull-right">Remarks</a>';*/
 
-                        //if (DTOProjectMovHistorypsmlst[i].IsPulledBack == true && DTOProjectMovHistorypsmlst[i].UndoRemarks == null) {
-                        //    listitem += '<div class="box-item">' +'Pulled Back Remarks -' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
-                        //}
-                        //else {
-                        //    listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
-                        //}
-                        listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
+                        console.log("IsPulledBack:", DTOProjectMovHistorypsmlst[i]?.IsPulledBack);
+                        console.log("UndoRemarks:", DTOProjectMovHistorypsmlst[i]?.UndoRemarks);
+                        if (DTOProjectMovHistorypsmlst[i]?.isPulledBack === true && DTOProjectMovHistorypsmlst[i]?.undoRemarks == null) {
+                            listitem += '<div class="box-item">' + '<strong>Pulled Back Remarks</strong> -  ' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
+                        } else {
+                            listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
+                        }
+
+                        //listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
                         listitem += '</div>';
                         if (DTOProjectMovHistorypsmlst[i].actions == "Obsn")
                             listitem += '<div class="box-footer bg-warning">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';

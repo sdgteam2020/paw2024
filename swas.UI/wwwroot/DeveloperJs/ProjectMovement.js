@@ -182,7 +182,25 @@
 
 
     function SaveFwdTo(CurrentPslmId) {
+        var dateValue = $("#TimeStampToProjfwd").val();
+        var currentDate = new Date();
 
+        // Add server's current time if only a date is selected
+        var TimeStamps = '';
+        if ($('#TimeStampToProjfwd').attr('type') === 'date') {
+            if (!dateValue) {
+                alert('Please select a date .');
+                return;
+            }
+            var currentTime = currentDate.toTimeString().split(' ')[0]; // Get current time in HH:mm:ss
+            TimeStamps = dateValue + ' ' + currentTime;
+        } else if ($('#TimeStampToProjfwd').attr('type') === 'datetime-local') {
+            if (!dateValue) {
+                alert('Please select date and time.');
+                return;
+            }
+            TimeStamps = dateValue.replace('T', ' '); // Format datetime-local to space-separated
+        }
 
         var userdata =
         {
@@ -193,7 +211,8 @@
             "Remarks": $("#txtRemarksfwd").val(),
             "ToUnitId": $("#ddlfwdFwdTo").val(),
 
-            "TimeStamp": $("#TimeStampToProjfwd").val()
+            //"TimeStamp": $("#TimeStampToProjfwd").val()
+            "TimeStamp": TimeStamps
         };
         $.ajax({
             url: '/Projects/ProjectMovementUpdate',
@@ -248,9 +267,6 @@
     $("#btnFwdConfirm").click(function () {
 
         $('#ProjFwdEdit').modal('hide');
-
-
-
 
         GetProjectMovement($("#spanProjectId").html());
 

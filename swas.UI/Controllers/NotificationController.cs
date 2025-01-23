@@ -237,7 +237,29 @@ namespace swas.UI.Controllers
                                 return Json(new { success = false, message = "No notifications found." });
                             }
                         }
-
+                        if (type == 2)
+                        {
+                            var notifications = await _notificationRepository.GetNotifExcludingToUnit(loginUser.unitid, ProjId);
+                            if (notifications != null && notifications.Any())
+                            {
+                                foreach (var notify in notifications)
+                                {
+                                    if (notify.NotificationType == 2) continue;
+                                    notify.ReadDateTime = DateTime.Now;
+                                    notify.IsRead = false;
+                                    var updateResult = await _notificationRepository.UpdateNotification(notify);
+                                    if (!updateResult)
+                                    {
+                                        return Json(new { success = false, message = "Failed to update notification." });
+                                    }
+                                }
+                                return Json(new { success = true, projId = ProjId });
+                            }
+                            else
+                            {
+                                return Json(new { success = false, message = "No notifications found." });
+                            }
+                        }
 
                     }
 
