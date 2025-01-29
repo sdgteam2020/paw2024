@@ -223,8 +223,7 @@ function GetProjectMovHistory(ProjId) {
             /*console.log(response);*/
             if (response.dtoProjectMovHistorypsmlst.length) {
                 listitem += '<div class="timeline-month">';
-            /*    debugger;*/
-
+                
                 /*listitem += '  ' + DateTimeFormatedd_mm_yyyy(new Date($.now())) + '';*/
                 DTOProjectMovHistorypsmlst = response.dtoProjectMovHistorypsmlst;
                 DTOProjectMovHistorycmdlst = response.dtoProjectMovHistorycmdlst;
@@ -386,7 +385,6 @@ function GetProjectMovHistory(ProjId) {
                   
                     if (DTOProjectMovHistorypsmlst[i].remarks != "") {
                         //console.log(DTOProjectMovHistorypsmlst);
-                        debugger;
                         listitem += '<div class="col-sm-4">';
                         listitem += '<div class="timeline-box">';
                         listitem += '<div class="box-title">';

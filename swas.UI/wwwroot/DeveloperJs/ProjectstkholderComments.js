@@ -73,10 +73,9 @@ function GetProjCommentsByUnitId() {
                 }
 
                 else {
+                    debugger;
 
                     var count = 1;
-                    console.log(response);
-
                     for (var i = 0; i < response.length; i++) {
                         var date = new Date(response[i].timeStamp);
                         var TimeStamp =

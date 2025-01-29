@@ -706,7 +706,7 @@
                                                                  </style>
                                                              `;
 
-                var table = $('#SoftwareType').DataTable();
+                //var table = $('#SoftwareType').DataTable();
 
                 var filteredData = table.rows({ search: 'applied' }).data().toArray();
 
@@ -2519,6 +2519,20 @@
 
         $(".dropdown-menu.selected").addClass("visible");
     });
+</script>
+<script>
+    $(document).ready(function () {
+        var claValue = @Logins.cla; // Get the value of Logins.cla
+
+        if (claValue == 2) {
+            $('#fromDate').attr('type', 'date').removeAttr('max').removeAttr('min');
+            $('#toDate').attr('type', 'date').removeAttr('max').removeAttr('min');
+        } else {
+            $('#fromDate').attr('type', 'date').removeAttr('max').removeAttr('min');
+            $('#toDate').attr('type', 'date').removeAttr('max').removeAttr('min');
+        }
+    });
+
 </script>
 
 <script src="~/developerjs/projectstkholdercomments.js"></script>

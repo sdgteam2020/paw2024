@@ -90,8 +90,7 @@ function GetAllUsers() {
         type: 'POST',
         data: { "Id": 0 },
         success: function (response) {
-            debugger;
-            console.log("chatResponse", response);
+            //console.log("chatResponse", response);
             if (response.length) {
                 var listitem = "";
                 for (var i = 0; i < response.length; i++) {

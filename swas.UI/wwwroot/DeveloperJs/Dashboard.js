@@ -27,7 +27,6 @@ function GetAllDashbaordCount() {
            
         },
         success: function (data) {
-            debugger;
             var dtoDashboardHeaderlst = data.dtoDashboardHeaderlst;
             var dTOApprovedCountlst = data.dtoApprovedCountlst;
             var dTODashboardCountlstForAction = data.dtoDashboardCountlstForAction;
@@ -462,7 +461,6 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
         data: userdata,
         type: 'POST',
         success: function (response) {
-            debugger;
             if (response != "null" && response != null) {
 
                 if (response == -1) {
@@ -591,8 +589,7 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
         data: userdata,
         type: 'POST',
         success: function (response) {
-            debugger;
-            console.log("GetDashboardStatusDetails", response);
+            //console.log("GetDashboardStatusDetails", response);
             if (response != "null" && response != null) {
                 
                 if (response == -1) {
