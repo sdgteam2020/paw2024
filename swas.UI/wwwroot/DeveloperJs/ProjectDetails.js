@@ -59,12 +59,15 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             // Add server's current time if only a date is selected
             var FwdDateForComment = '';
             if ($('#datepicker').attr('type') === 'date') {
-                if (!dateValue) {
-                    alert('Please select a date .');
-                    return;
-                }
-                var currentTime = currentDate.toTimeString().split(' ')[0]; // Get current time in HH:mm:ss
-                FwdDateForComment = dateValue + ' ' + currentTime;
+                //if (!dateValue) {
+                //    alert('Please select a date .');
+                //    return;
+                //}
+                //var currentTime = currentDate.toTimeString().split(' ')[0]; // Get current time in HH:mm:ss
+                //FwdDateForComment = dateValue + ' ' + currentTime;
+                const formattedDate = currentDate.toLocaleString("sv-SE").replace("T", " ");
+                FwdDateForComment = formattedDate;
+
             } else if ($('#datepicker').attr('type') === 'datetime-local') {
                 if (!dateValue) {
                     alert('Please select date and time.');
@@ -95,7 +98,7 @@ function GetForCommentStakeHolder(ProjId, psmId) {
         type: 'POST',
         data: { "Id": 0 },
         success: function (response) {
-            console.log(response);
+            //console.log(response);
 
 
             if (response != null) {
@@ -123,7 +126,7 @@ function SentForComment(ProjId, psmId, unitid, FwdDateForComment) {
             "unitid": unitid, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
         },
         success: function (response) {
-            console.log(response);
+            //console.log(response);
             if (response && response === 1) {
                 Swal.fire({
                     position: 'top-end',
@@ -152,12 +155,13 @@ function SentForNotification(ProjId, psmId, unitid, FwdDateForComment) {
             "unitid": unitid, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
         },
         success: function (response) {
-            console.log(response);
+            //console.log(response);
             if (response && response === 1) {
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
-                    title: 'Project Notification Added  successfully',
+                    //title: 'Project Notification Added  successfully',
+                    title: 'Project Submit Successfully',
                     showConfirmButton: false,
                     timer: 700
                 });
@@ -177,7 +181,7 @@ function ProcessProjConfirm(ProjId) {
         type: 'POST',
         data: { "ProjId": ProjId },
         success: function (response) {
-            console.log(response);
+            //console.log(response);
             if (response >= 1) {
                 Swal.fire({
                     position: "top-end",
@@ -197,7 +201,7 @@ function FwdProjConfirm(psmId) {
             type: 'POST',
             data: { "PslmId": psmId },
             success: function (response) {
-                console.log(response);
+                //console.log(response);
                 if (response >= 1) {
                     Swal.fire({
                         position: "top-end",
@@ -388,17 +392,17 @@ function GetProjectMovHistory(ProjId) {
                         listitem += '<div class="col-sm-4">';
                         listitem += '<div class="timeline-box">';
                         listitem += '<div class="box-title">';
-                        listitem += '<i class="fa fa-pencil text-info" aria-hidden="true"></i> Remarks';
+                        listitem += '<i class="fa fa-pencil text-info" aria-hidden="true"></i> Remarks On ' + DateTimeFormatedd_mm_yyyy(DTOProjectMovHistorypsmlst[i].date);
                         listitem += '</div>';
                         listitem += '<div class="box-content">';
                         /*listitem += ' <a class="btn btn-xs btn-default pull-right">Remarks</a>';*/
 
-                        console.log("IsPulledBack:", DTOProjectMovHistorypsmlst[i]?.IsPulledBack);
-                        console.log("UndoRemarks:", DTOProjectMovHistorypsmlst[i]?.UndoRemarks);
+                        //console.log("IsPulledBack:", DTOProjectMovHistorypsmlst[i]?.IsPulledBack);
+                        //console.log("UndoRemarks:", DTOProjectMovHistorypsmlst[i]?.UndoRemarks);
                         if (DTOProjectMovHistorypsmlst[i]?.isPulledBack === true && DTOProjectMovHistorypsmlst[i]?.undoRemarks == null) {
                             listitem += '<div class="box-item">' + '<strong>Pulled Back Remarks</strong> -  ' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
                         } else {
-                            listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
+                            listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].remarks +'</div>';
                         }
 
                         //listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';

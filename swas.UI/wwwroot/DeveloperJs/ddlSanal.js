@@ -14,7 +14,7 @@ function populateddlStakeHolder(paramValue) {
             option.value = "-1";
             option.text = "---- Select ----";
             odc.appendChild(option);
-            console.log(data);
+            //console.log(data);
             for (var i = 0; i < data.length; i++) {
                 var item = data[i];
                 var opt1 = document.createElement("option");
@@ -40,7 +40,7 @@ function populateddlActions(paramValue) {
             option.value = "-1";
             option.text = "---- Select ----";
             odc.appendChild(option);
-            console.log(data);
+            //console.log(data);
             for (var i = 0; i < data.length; i++) {
                 var item = data[i];
                 var opt1 = document.createElement("option");
@@ -98,7 +98,7 @@ function populateddlUnitedit(paramValue) {
             option.value = "-1";
             option.text = "---- Select ----";
             odc.appendChild(option);
-            console.log(data);
+            //console.log(data);
             for (var i = 0; i < data.length; i++) {
                 var item = data[i];
                 var opt1 = document.createElement("option");
@@ -128,7 +128,7 @@ function populateddlUnit(paramValue) {
             option.value = "-1";
             option.text = "---- Select ----";
             odc.appendChild(option);
-            console.log(data);
+            //console.log(data);
             for (var i = 0; i < data.length; i++) {
                 var item = data[i];
                 var opt1 = document.createElement("option");
@@ -222,7 +222,7 @@ function populateddlAppType(paramValue) {
             option.value = "-1";
             option.text = "---- Select ----";
             odc.appendChild(option);
-            console.log(data);
+            //console.log(data);
             for (var i = 0; i < data.length; i++) {
                 var item = data[i];
                

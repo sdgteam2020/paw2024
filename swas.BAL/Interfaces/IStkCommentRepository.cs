@@ -14,6 +14,8 @@ namespace swas.BAL.Interfaces
         Task<List<DTOProComments>> GetAllCommentBypsmId_UnitId(StkComment Data);
 
         Task<int> GetCommentStatusByPsmiId(int psmid);
-       
+        int IsAllowForCommentByStkStatusId(int stkStatusId);
+
+
     }
 }

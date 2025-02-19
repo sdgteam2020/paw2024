@@ -156,7 +156,7 @@ function Deleteattechment(AttechId) {
         type: 'POST',
         data: { "AttechId": AttechId },
         success: function (response) {
-            console.log(response);
+            //console.log(response);
 
 
             if (response == 1) {

@@ -18,24 +18,16 @@
 
 
     var today = year + `-` + monthsans + `-` + dayans;
-  
+   
     if ($("#isclaneder").html() == 1) {
 
         $('input[type=date]').attr('min', today);
         $('.datepicker1').datepicker({
             minDate: 0
         });
-    }
-    //if ($("#isclaneder").html() == 1) {
-    //    $('input[type=date]').attr('min', today).attr('max', today);
-
-    //    $('.datepicker1').datepicker({
-    //        //minDate: new Date(),
-    //        //maxDate: new Date()  
-    //        minDate: 0,
-    //        maxDate: 0
-    //    });
-    //}
+        $("#InitiatedDate").val(today);
+        $('#InitiatedDate').attr('readonly', true);
+    }   
     else {
         $('input[type=date]').attr('max', today);
         $('.datepicker1').datepicker();

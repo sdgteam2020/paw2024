@@ -27,7 +27,6 @@ namespace swas.BAL.Repository
 
         public async Task<int> AddAttHistoryAsync(tbl_AttHistory attHistory)
         {
-            
             if (attHistory.Reamarks == null)
             {
                 attHistory.Reamarks = "Att File";
@@ -44,8 +43,6 @@ namespace swas.BAL.Repository
             List<tbl_AttHistory> tblhis = new List<tbl_AttHistory>();
             tblhis = await _dbContext.AttHistory.Where(a => a.PsmId == psmid).ToListAsync();
             return tblhis;
-
-
         }
 
         public async Task<List<tbl_AttHistory>> GetAttHistDelIdAsync(int? psmid)
@@ -53,21 +50,13 @@ namespace swas.BAL.Repository
             List<tbl_AttHistory> tblhis = new List<tbl_AttHistory>();
             tblhis = await _dbContext.AttHistory.Where(a => a.AttId == psmid).ToListAsync();
             return tblhis;
-
-
         }
-
-
 
         public async Task<tbl_AttHistory> GetAttHistByIdAsync(int? psmid)
         {
-            tbl_AttHistory atthis = await _dbContext.AttHistory
-     .Where(a => a.PsmId == psmid)
-     .FirstOrDefaultAsync();
+            tbl_AttHistory atthis = await _dbContext.AttHistory.Where(a => a.PsmId == psmid).FirstOrDefaultAsync();
             return atthis;
-            
         }
-
 
         ///Created and Reviewed by : Sub Maj Sanal
         ///Reviewed Date : 31 Jul 23
@@ -77,7 +66,6 @@ namespace swas.BAL.Repository
         }
         ///Created and Reviewed by : Sub Maj Sanal
         ///Reviewed Date : 31 Jul 23
-
         public async Task<bool> UpdateAttHistoryAsync(tbl_AttHistory attHistory)
         {
             _dbContext.Entry(attHistory).State = EntityState.Modified;
@@ -85,18 +73,26 @@ namespace swas.BAL.Repository
             return true;
         }
 
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
         public async Task<bool> DeleteAttHistoryAsync(int attId)
         {
-            var attHistory = await _dbContext.AttHistory.FindAsync(attId);
-            if (attHistory == null)
+            try
+            {
+                var attHistory = await _dbContext.AttHistory.FindAsync(attId);
+                if (attHistory == null)
+                    return false;
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads", attHistory.AttPath);
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+                _dbContext.AttHistory.Remove(attHistory);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
                 return false;
-
-            _dbContext.AttHistory.Remove(attHistory);
-            await _dbContext.SaveChangesAsync();
-            return true;
+            }                      
         }
     }
-
 }

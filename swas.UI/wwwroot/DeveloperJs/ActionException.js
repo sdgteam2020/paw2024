@@ -109,7 +109,7 @@ function CheckProjectExists(Type) {
         type: 'POST',
         data: userdata,
         success: function (response) {
-            console.log(response);
+            //console.log(response);
             if (response != null) {
 
                 if (response == true) {
@@ -151,7 +151,7 @@ function SaveActionException() {
         type: 'POST',
         data: userdata,
         success: function (response) {
-            console.log(response);
+            //console.log(response);
             if (response != null) {
                 
                 Swal.fire({
@@ -183,7 +183,7 @@ function UpdateActionException() {
         type: 'POST',
         data: userdata,
         success: function (response) {
-            console.log(response);
+            //console.log(response);
             if (response != null) {
 
                 Swal.fire({

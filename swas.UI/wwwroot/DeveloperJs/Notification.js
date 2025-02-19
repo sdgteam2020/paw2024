@@ -168,12 +168,13 @@ function AddNotification(ProjId, type, unitid) {
             "unitid": unitid, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
         },
         success: function (response) {
-            console.log(response);
+            //console.log(response);
             if (response && response === 1) {
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
-                    title: 'Project Notification Added  successfully',
+                   //title: 'Project Notification Added  successfully',
+                    title: 'Project Submit Successfully',
                     showConfirmButton: false,
                     timer: 700
                 });
@@ -199,7 +200,7 @@ function IsReadNotification(ProjId, type) {
             "type": type
         },
         success: function (response) {
-            console.log(response);
+            //console.log(response);
             updateNotificationCount(1, 'ProjectCommentCount'); // For project comments
             updateNotificationCount(2, 'InboxCount'); // For inbox
             updateNotificationCountForChat(3, 'InterUserMsgCount'); // For Inter-User Msg
@@ -219,7 +220,7 @@ function UndoNotification(ProjId, type, ToUnitId) {
             "ToUnitId": ToUnitId
         },
         success: function (response) {
-            console.log(response);
+            //console.log(response);
 
         }
     });
@@ -237,7 +238,7 @@ function UnReadNotification(ProjId, type) {
             "type": type
         },
         success: function (response) {
-            console.log(response);
+            //console.log(response);
 
         }
     });

@@ -300,6 +300,15 @@
         .WhitelistedTablesss {
             margin-top: 23px;
         }
+
+        body {
+            pointer-events: none;
+        }
+
+        #ProcessId, #PolicyWhiteList, #whitelistCard, #WhiteListedProject {
+            pointer-events: auto;
+            cursor: pointer;
+        }
     </style>
 
 </head>
@@ -652,7 +661,8 @@
                                     <div class="col-md-4" id="PolicyWhiteList">
                                         <div class="card1 hover-point">
                                             <div class="card_title title-white" style="text-align: center; color: black;">
-                                                <p class="font-d">Policy on Whitelisting</p>
+                                                @* <p class="font-d">Policy on Whitelisting</p> *@
+                                                <p class="font-d">Policies on WhiteListing</p>
                                             </div>
                                             <div class="card_image"><img src="~/assets/images/Policy1.png" class="images" /></div>
                                         </div>
@@ -661,7 +671,8 @@
                                     <div class="col-md-4" id="whitelistCard">
                                         <div class="card1 hover-point">
                                             <div class="card_title title-white" style="text-align: center; color: black;">
-                                                <p class="font-d">Projs Under Process</p>
+                                                @* <p class="font-d">Projs Under Process</p> *@
+                                                <p class="font-d">Real Time Proj Status</p>
                                             </div>
                                             <div class="card_image"><img src="~/assets/images/projectunder.png" class="images" /></div>
 
@@ -672,7 +683,8 @@
                                     <div class="col-md-4" id="WhiteListedProject">
                                         <div class="card1 hover-point">
                                             <div class="card_title title-white" style="text-align: center; color: black;">
-                                                <p class="font-d">WhiteListed Projects</p>
+                                                @* <p class="font-d">WhiteListed Projects</p> *@
+                                                <p class="font-d">View WhiteListed Projs</p>
                                             </div>
                                             <div class="card_image"><img src="~/assets/images/Completed1.png" class="images" /></div>
 

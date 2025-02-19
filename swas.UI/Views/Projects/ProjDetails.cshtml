@@ -196,8 +196,12 @@
             margin-left: 248px;
         }
 
-    
-    
+    .swal2-title{
+        background-color: #002b5e; 
+        color: white;
+        font-size: 18px;
+        padding-bottom: 26px;
+    }
 </style>
 
 
@@ -352,7 +356,7 @@
                                                         }
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <button type="button" class="btn btn-success btn-FwdHistory" style="margin-top: 1px;" title="History"><i class="fa-solid fa-timeline"></i></button>
+                                                        <button type="button" class="btn btn-success btn-FwdHistory" data-proj-name="@project.ProjName" style="margin-top: 1px;" title="History"><i class="fa-solid fa-timeline"></i></button>
                                                     </div>
                                                 </div>
                                             </td>
@@ -388,10 +392,23 @@
                                     processing and comments of DG SIGS(SIGS-7), AHCC, ACG, ASDC. Pl Confirm!
                                 </b>
                             </p>
-                            <p>
-                                <b>Please select Date & Time :</b>
-                            </p>
-                            <input type="date" id="datepicker" class="form-control" placeholder="Select Date" required>
+                            @if (@Logins.cla == 1)
+                            {
+                                <div style="display:none">
+                                    <p>
+                                        <b>Please select Date & Time :</b>
+                                    </p>
+                                    <input type="date" id="datepicker" class="form-control" placeholder="Select Date" required>
+                                </div>
+                            }
+                            else
+                            {
+                                <p>
+                                    <b>Please select Date & Time :</b>
+                                </p>
+                                <input type="date" id="datepicker" class="form-control" placeholder="Select Date" required>
+                            }
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" id="confirmSend">OK</button>
@@ -734,13 +751,7 @@
             <!---END-DRAFT-->
 
 
-
-
-
         </div>
-
-
-
     </div>
     <div class="modal fade" id="ProjFwd" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl custom-modal-size">
@@ -840,9 +851,7 @@
                                     <thead>
                                         <tr>
 
-
                                             <th>Delete</th>
-
                                             <th>Docu Desc</th>
                                             <th>File Name</th>
                                             <th>Timestamp</th>
@@ -869,7 +878,7 @@
             <div class="modal-content">
                 <div class="modal-header">
 
-                    <h4 class="modal-title" id="lblHistory">Project Fwd History</h4>
+                    <h4 class="modal-title" id="lblHistory">Project Name Fwd History</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
@@ -1037,7 +1046,7 @@
 
         var today = year + `-` + monthsans + `-` + dayans;
         $(document).ready(function () {
-            var claValue = @Logins.cla; 
+            var claValue = @Logins.cla;
 
             if (claValue == 2) {
                  $('#datepicker').attr('type', 'datetime-local');
@@ -1048,6 +1057,41 @@
     </script> *@
 
     <script>
+        var pad = "00";
+        var datef2 = new Date();
+
+
+        var months = "" + (datef2.getMonth() + 1);
+        var days = "" + datef2.getDate();
+        var monthsans = pad.substring(0, pad.length - months.length) + months;
+        var dayans = pad.substring(0, pad.length - days.length) + days;
+        var year = datef2.getFullYear();
+        var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+        var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+        var ss = `${datef2.getSeconds()}`;
+
+        // Today's date and time in the required formats
+        var todayDate = `${year}-${monthsans}-${dayans}`;
+        var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+
+        $(document).ready(function () {
+            var claValue = @Logins.cla;
+
+            if (claValue == 2) {
+                $('#TimeStampToProjfwd').attr('type', 'datetime-local');
+                $('#TimeStampToProjfwd').attr('max', todayDateTime);
+                $('#TimeStampToProjfwd').prop('disabled', false); // Allow user input
+            } else {
+                $('#TimeStampToProjfwd').attr('type', 'date');
+                $('#TimeStampToProjfwd').val(todayDate); // Set today's date
+                $('#TimeStampToProjfwd').prop('disabled', true); // Freeze input
+            }
+
+        });
+
+    </script>
+
+    @* <script>
         // TimeStampToProjfwd
         var pad = "00";
         var datef2 = new Date();
@@ -1078,10 +1122,12 @@
             }
         });
 
-    </script>
+    </script> *@
     <script>
         var pad = "00";
         var datef2 = new Date();
+
+        const formattedDate = datef2.toLocaleString("sv-SE").replace("T", " ");
 
         // Formatting the current date and time
         var months = "" + (datef2.getMonth() + 1);

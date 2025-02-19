@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using swas.DAL.Logger;
+using swas.DAL.Mapper;
 using swas.DAL.Models;
 
 namespace swas.DAL
@@ -63,6 +64,7 @@ namespace swas.DAL
         public DbSet<mCalendar> mCalendar { get; set; }
 
         public DbSet<LogEntry> Errors { get; set; }
+        public DbSet<AddNewProject> AddNewProjects   { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -95,6 +97,8 @@ namespace swas.DAL
             modelBuilder.Entity<ApplicationUser>()
         .Property(e => e.appointment)
         .HasColumnType("nvarchar(max)");
+
+            modelBuilder.Entity<AddNewProject>().HasNoKey(); // Mark as keyless entity
 
         }
 

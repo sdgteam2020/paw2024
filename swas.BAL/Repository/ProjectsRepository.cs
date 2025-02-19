@@ -23,6 +23,8 @@ using System.Threading;
 using swas.UI.Helpers;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using ASPNetCoreIdentityCustomFields.Data;
+using Microsoft.Data.SqlClient;
+using swas.DAL.Mapper;
 
 namespace swas.BAL.Repository
 {
@@ -1016,7 +1018,7 @@ namespace swas.BAL.Repository
                              from eWithStages in js.DefaultIfEmpty()
                              join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId into ks
                              from eWithAction in ks.DefaultIfEmpty()
-                             where b.StakeHolderId == Logins.unitid
+                             where b.StakeHolderId == Logins.unitid 
                              // && a.TostackholderDt !=null
 
                              select new tbl_Projects
@@ -1065,6 +1067,64 @@ namespace swas.BAL.Repository
                 return null;
             }
         }
+
+        // Retrive data from only Project table with stored procedure 
+        //public async Task<List<AddNewProject>> GetMyProjects()
+        //{
+        //    Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+
+        //    if (Logins != null)
+        //    {
+        //        int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
+        //        string username = Logins.UserName?? "NA";
+        //        var querys = from proj in _dbContext.Projects 
+        //                     where proj.StakeHolderId == Logins.unitid
+
+        //                     select new AddNewProject
+        //                     {
+        //                         ProjId = proj.ProjId,
+        //                         ProjName = proj.ProjName,
+        //                         StakeHolderId = proj.StakeHolderId,
+        //                         InitiatedDate = proj.InitiatedDate,
+        //                         HostType = _dbContext.mHostType.FirstOrDefault(x => x.HostTypeID == proj.HostTypeID).HostingDesc,
+        //                         Apptype = _dbContext.mAppType.FirstOrDefault(x => x.Apptype == proj.Apptype).AppDesc,
+        //                         TypeofSW = proj.TypeofSW,
+        //                         BeingDevpInhouse = proj.BeingDevpInhouse
+        //                     };
+
+        //        var projectsWithDetails = await querys.ToListAsync();
+
+        //        return projectsWithDetails;
+        //    }
+        //    else
+        //    {
+        //        return null;
+        //    }
+        //}
+
+        public async Task<List<AddNewProject>> GetMyProjects()
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+
+            if (Logins != null)
+            {
+                int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
+
+                var projects = await _dbContext.AddNewProjects
+                    .FromSqlRaw("EXEC GetMyProjects @StakeHolderId", new SqlParameter("@StakeHolderId", stkholder))
+                    .ToListAsync();
+
+                foreach (var project in projects)
+                {
+                    project.EncyID = _dataProtector.Protect(project.CurrentPslmId.ToString());
+                }
+
+                return projects;
+            }
+
+            return null;
+        }
+
 
 
         public async Task<tbl_Projects> GetProjectByIdAsync(int projectId)
@@ -1229,6 +1289,7 @@ namespace swas.BAL.Repository
         public async Task<tbl_Projects> GetProjectByPsmIdAsync(int psmId)
         {
             return await _dbContext.Projects.FirstOrDefaultAsync(a => a.CurrentPslmId == psmId);
+
         }
 
         public Task<List<tbl_Projects>> GetStatusProjAsync(int statusid)

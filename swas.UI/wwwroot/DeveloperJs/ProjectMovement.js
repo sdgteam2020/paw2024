@@ -23,7 +23,7 @@
      //GetProjectMovement();
     $("#txtProjectName").autocomplete({
         source: function (request, response) {
-
+            //alert("Hey");
             if (request.term.length > 1) {
                 var projName = request.term;
                 var param = { "ProjName": projName };
@@ -214,12 +214,13 @@
             //"TimeStamp": $("#TimeStampToProjfwd").val()
             "TimeStamp": TimeStamps
         };
+        //console.log("Fwd Data :", userdata)
         $.ajax({
             url: '/Projects/ProjectMovementUpdate',
             type: 'POST',
             data: userdata,
             success: function (response) {
-                console.log(response);
+               // console.log(response);
                 if (response != null) {
                     /*$("#spanEditPslmId").html(response.psmId);*/
                     //FwdProjConfirm(CurrentPslmId);
@@ -427,7 +428,7 @@ function Deleteattechment(AttechId) {
         type: 'POST',
         data: { "AttechId": AttechId },
         success: function (response) {
-            console.log(response);
+            //console.log(response);
 
 
             if (response == 1) {
@@ -458,7 +459,7 @@ function GetProjectMovement(ProjectId) {
         },
         success: function (response) {
 
-            console.log(response);
+            //console.log("GetProjectMov: ", response);
             if (response != "null" && response != null) {
 
                 if (response == -1) {
@@ -521,15 +522,35 @@ function GetProjectMovement(ProjectId) {
 
                         searching: true,
                         stateSave: true,
-                        "order": [[0, "asc"]],
+                        "order": [[10, "asc"]],
                         "ordering": true,
                         "paging": true,
                         dom: 'lBfrtip',
-                        buttons: [
-                            'copy',
-                            'excel',
-                            'csv',
+                        //buttons: [
+                        //    'copy',
+                        //    'excel',
+                        //    'csv',
 
+                        //],
+                        buttons: [
+                            {
+                                extend: 'copy',
+                                exportOptions: {
+                                    columns: ':not(:first-child):not(:nth-last-child(2))' // Excludes "Ser No" (first column) and "#Att" (second last column)
+                                }
+                            },
+                            {
+                                extend: 'excel',
+                                exportOptions: {
+                                    columns: ':not(:first-child):not(:nth-last-child(2))' // Excludes "Ser No" and "#Att"
+                                }
+                            },
+                            {
+                                extend: 'csv',
+                                exportOptions: {
+                                    columns: ':not(:first-child):not(:nth-last-child(2))' // Excludes "Ser No" and "#Att"
+                                }
+                            }
                         ],
                         searchBuilder: {
                             conditions: {
@@ -674,7 +695,7 @@ $(document).on('click', '.anchorDetail', function () {
 
     var $buttonClicked = $(this);
     var id = $buttonClicked.attr('data-id');
-    console.log('PsmId:', id); // Check if id is correct
+    //console.log('PsmId:', id); // Check if id is correct
 
     if (!id) {
         alert("No PsmId found.");

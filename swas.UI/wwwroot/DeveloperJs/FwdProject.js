@@ -32,18 +32,47 @@
 
         var projectName = $(this).closest("tr").find("a").data("proj-name");
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
+
+        var words = projectName.split(" ");
+        var shortProjName = words.length > 6 ? words.slice(0, 4).join(" ") + "..." : projectName;
+       
+        //Swal.fire({
+        //    title: `Enter pull back remarks: ${projectName}`,
+        //    input: "text",
+        //    inputAttributes: {
+        //        autocapitalize: "off"
+        //    },
+        //    showCancelButton: true,
+        //    confirmButtonText: "Ok",
+        //    showLoaderOnConfirm: true,
+        //    preConfirm: async (login) => {
+        //        if (login == "") {
+        //            Swal.showValidationMessage(`Please Enter Remarks for project: ${projectName}`);
+        //        }
+        //    },
+        //    allowOutsideClick: () => !Swal.isLoading()
+        //}).then((result) =>
         Swal.fire({
-            title: `Enter pull back remarks: ${projectName}`,
+            title: `<div>
+                    Enter Pull Back Remarks: ${shortProjName}
+                </div>`,
             input: "text",
             inputAttributes: {
                 autocapitalize: "off"
             },
             showCancelButton: true,
-            confirmButtonText: "Undo",
-            showLoaderOnConfirm: true,
+            confirmButtonText: "OK",
+            cancelButtonText: "Cancel",
+            //position: "top",
+            customClass: {
+                popup: 'custom-swal-popup',
+                confirmButton: 'custom-confirm-button',
+                cancelButton: 'custom-cancel-button',
+                input: 'custom-input-field'
+            },
             preConfirm: async (login) => {
                 if (login == "") {
-                    Swal.showValidationMessage(`Please Enter Remarks for project: ${projectName}`);
+                    Swal.showValidationMessage(`Please Enter Remarks for project: ${shortProjName}`);
                 }
             },
             allowOutsideClick: () => !Swal.isLoading()
@@ -68,6 +97,13 @@
         });
     });
     $(".btn-FwdHistory").click(function () {
+        var projName = $(this).data('proj-name');
+        //console.log("Project-name : ", projName);
+        var words = projName.split(" ");
+        // Limit to 6 words and add "..." if needed
+        var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
+        var finalTitle = "Mov History: " + shortProjName;
+        $('#lblHistory').text(finalTitle);
         $('#ProjFwdHistory').modal('show');
 
         GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentProjId").html());
@@ -80,10 +116,16 @@
 
     });
     $(".btn-Fwd").click(function () {
+        var projName = $(this).data('proj-name');
+        var words = projName.split(" ");
+        // Limit to 6 words and add "..." if needed
+        var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
+        var finalTitle = "Mov History: " + shortProjName;
+        $('#fwdModal').text(finalTitle);
 
-        var projName = $(this).data('proj-name') + "  " + "Fwd";
+        //var projName = "Fwd Proj Name:  " + $(this).data('proj-name');
         var projNameDetail = $(this).data('proj-name') + " " + "Move Details";
-        $('#fwdModal').text(projName);
+        //$('#fwdModal').text(projName);
         $('.fwdtitle').text(projNameDetail);
 
 
@@ -118,10 +160,14 @@
     });
     $(".btn-Obsn").click(function () {
 
-        var projName = $(this).data('proj-name') + "  " + "Fwd";
-        var projNameDetail = $(this).data('proj-name') + " " + "Move Details";
-
-        $('#fwdModal').text(projName);
+        var projNameDetail = $(this).data('proj-name') + " " + "Move Details"
+        var projName = $(this).data('proj-name');
+        var words = projName.split(" ");
+        // Limit to 6 words and add "..." if needed
+        //var projNameDetail = $(this).data('proj-name') + " " + "Move Details";
+        var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
+        var finalTitle = "Mov History: " + shortProjName;
+        $('#fwdModal').text(finalTitle);
         $('.fwdtitle').text(projNameDetail);
 
         mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 2)
@@ -229,7 +275,7 @@ function CheckFwdCondition(CurrentPslmId) {
         type: 'POST',
         data: userdata,
         success: function (response) {
-            console.log(response);
+            //console.log(response);
             if (response != null) {
 
                 if (response == true) {
@@ -305,7 +351,7 @@ function SaveFwdTo(CurrentPslmId) {
         type: 'POST',
         data: userdata,
         success: function (response) {
-            console.log(response);
+            //console.log(response);
             if (response != null) {
                 $("#spanCurrentPslmId").html(response.psmId);
                 FwdProjConfirm(CurrentPslmId);
@@ -335,7 +381,7 @@ function PullBAckProject(ProjId, PslmId, UndoRemarks, StageId) {
         type: 'POST',
         data: userdata,
         success: function (response) {
-            console.log(response);
+            //console.log(response);
             if (response != null) {
                 if (response == 2) {
                     location.reload();
@@ -397,7 +443,7 @@ function IsReadInbox(psmId) {
         type: 'POST',
         data: { "PsmId": psmId },
         success: function (response) {
-            console.log(response);
+            //console.log(response);
 
         }
     });

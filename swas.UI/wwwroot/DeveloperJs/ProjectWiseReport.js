@@ -69,15 +69,23 @@ function ProjectWiseStatus() {
                                 //else {
                                 //    listItem += '<td class="align-middle text-center"><i class="fa fa-minus-circle" style="color: #ffc107;font-size: 20px;" aria-hidden="true"></i></td>';
                                 //}
-                                if (isstatus.length != 0) {
+                                //if (isstatus.length != 0) {
 
+                                //    listItem += '<td class="align-middle text-center" data-toggle="tooltip" data-placement="top" title="'
+                                //        + DateFormateddMMyyyyhhmmss(isstatus[0].timeStamp)
+                                //        + '"><div style="width: 25px; height: 25px; border-radius: 50%; background-color: #28a745; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: bold;">A</div></td>';
+                                //}
+                                //else {
+                                //    // Pending (P) - yellow circle with P
+                                //    listItem += '<td class="align-middle text-center"><div style="width: 25px; height: 25px; border-radius: 50%; background-color: #ffc107; color: #000; display: inline-flex; align-items: center; justify-content: center; font-weight: bold;">P</div></td>';
+                                //}
+                                if (isstatus.length != 0) {
+                                    // Green tick instead of "A"
                                     listItem += '<td class="align-middle text-center" data-toggle="tooltip" data-placement="top" title="'
                                         + DateFormateddMMyyyyhhmmss(isstatus[0].timeStamp)
-                                        + '"><div style="width: 25px; height: 25px; border-radius: 50%; background-color: #28a745; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: bold;">A</div></td>';
-                                }
-                                else {
-                                    // Pending (P) - yellow circle with P
-                                    listItem += '<td class="align-middle text-center"><div style="width: 25px; height: 25px; border-radius: 50%; background-color: #ffc107; color: #000; display: inline-flex; align-items: center; justify-content: center; font-weight: bold;">P</div></td>';
+                                        + '"><div style="width: 25px; height: 25px; border-radius: 50%; background-color: #28a745; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px;">✔</div></td>';
+                                } else {
+                                    listItem += '<td class="align-middle text-center"><img src="/assets/images/icons/Cross_red_circle.png" width="22" height="22" alt="Readed"></td>';
                                 }
                             }
                             listItem += '</tr>';

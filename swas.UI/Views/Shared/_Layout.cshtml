@@ -127,7 +127,7 @@
         .badge5 {
             position: absolute;
             top: 0px;
-            right: 78px;
+            right: 18px;
             background-color: red;
             color: white;
             border-radius: 50%;
@@ -181,6 +181,22 @@
             display: inline-block;
             animation: bounce 1s infinite;
         }
+
+        /* .btn-add-comment{
+            margin-left: 535px;
+        } */
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            flex-grow: 1;
+            text-align: center; /* This centers the heading within the available space */
+        }
+
     </style>
 
     <link rel="stylesheet" href="~/" asp-append-version="true" />
@@ -1693,7 +1709,8 @@
                             <div class="icon-container">
 
                                 <ion-icon name="ellipse-outline"></ion-icon>
-                                <span class="icon-name">Proj Comments</span>
+                                @* <span class="icon-name">Proj Comments</span> *@
+                                <span class="icon-name">Stakeholder Comments</span>
                                 @*  <span class="inbox-alertsub1"></span>*@
                                 <span id="ProjectCommentCount" class="badge5 d-none ProjectCommentCount">0</span>
                             </div>
@@ -1708,7 +1725,8 @@
                             <div class="icon-container">
 
                                 <ion-icon name="ellipse-outline"></ion-icon>
-                                <span class="icon-name">Proj Log</span>
+                                @* <span class="icon-name">Proj Log</span> *@
+                                <span class="icon-name">Movement Log</span>
                             </div>
 
                         </a>
@@ -1718,12 +1736,13 @@
                             <div class="icon-container">
 
                                 <ion-icon name="ellipse-outline"></ion-icon>
-                                <span class="icon-name">Project Wise Status</span>
+                                @* <span class="icon-name">Project Wise Status</span> *@
+                                <span class="icon-name">Stage Wise Status</span>
                             </div>
 
                         </a>
                     </li>
-                    <li>
+                    @* <li>
                         <a href="/Home/AllProjectDetails">
                             <div class="icon-container">
 
@@ -1732,7 +1751,7 @@
                             </div>
 
                         </a>
-                    </li>
+                    </li> *@
 
 
                     @* <a href="/Chat/Index" @*onclick="createNotification(event)"*@
@@ -1761,7 +1780,7 @@
 
                                 <div class="icon-container" style="margin-left: -43px;">
                                     <ion-icon name="ellipse-outline"></ion-icon>
-                                    <span class="icon-name mr-3">Inter-User Msg</span>
+                                    <span class="icon-name mr-3">Chat</span>
                                     <span id="InterUserMsgCount" class="badge3 d-none InterUserMsgCount mt-1">
                                         <ion-icon name="ellipse" class="new-badge-icon"></ion-icon>
                                         <span class="new-text">new</span>
@@ -2120,7 +2139,8 @@
                             <div class="inbox-container" style="margin-left : 46px !important">
                                 <div class="icon-container" style="margin-left: -43px;">
                                     <ion-icon name="ellipse-outline"></ion-icon>
-                                    <span class="icon-name mr-3">Inter-User Msg</span>
+                                    @* <span class="icon-name mr-3">Inter-User Msg</span> *@
+                                    <span class="icon-name mr-3">Chat</span>
                                     <span id="InterUserMsgCount" class="badge3 d-none InterUserMsgCount mt-1">
                                         <ion-icon name="ellipse" class="new-badge-icon"></ion-icon>
                                         <span class="new-text">new</span>
@@ -2274,7 +2294,7 @@
         <!--Start Back To Top Button-->
         <a href="javaScript:;" class="back-to-top">
             <ion-icon name="arrow-up-outline"></ion-icon>
-        </a>
+        </a> 
         <!--End Back To Top Button-->
         <!--start switcher-->
         <!--end switcher-->
@@ -2289,7 +2309,7 @@
         <div class="modal-dialog modal-xl custom-modal-size">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Comments</h5>
+                    <h5 class="modal-title btn-add-comment" id="addComment">Project Name:</h5>
                     <span class="d-none" id="ProjectcommentForStackHolderprojId"></span>
                     <span class="d-none" id="ProjectcommentForStackHolderPsmId"></span>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -2300,7 +2320,7 @@
                             <div class="card radius-12">
                                 <div class="text-with-icon underline-h7">
                                     <span style="font-size: 20px;">&#128172;</span>
-                                    <h7 class="text-center mb-4 underline-h7" style="text-align:left; text-decoration-color:revert; color:antiquewhite">
+                                    <h7 class="text-center mb-4 underline-h7" style="text-align:left; font-size:16px; font-weight:bold; text-decoration-color:revert; color:antiquewhite">
                                         Add Comments for Project
                                     </h7>
                                 </div>
@@ -2398,15 +2418,18 @@
     var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
 
     $(document).ready(function () {
-        var claValue = @Logins.cla; // Get the value of Logins.cla
+        var claValue = @Logins.cla; 
 
-        if (claValue == 2) {
-            // Set type to datetime-local and max to today with current time
+           if (claValue == 2) {
             $('#CommentDateFwd').attr('type', 'datetime-local');
             $('#CommentDateFwd').attr('max', todayDateTime);
+            $('#CommentDateFwd').prop('disabled', false); // Allow user input
         } else {
             $('#CommentDateFwd').attr('type', 'date');
+            $('#CommentDateFwd').val(todayDate); // Set today's date
+            $('#CommentDateFwd').prop('disabled', true); // Freeze input
         }
+
     });
 
 </script>
@@ -2536,6 +2559,7 @@
 </script>
 
 <script src="~/developerjs/projectstkholdercomments.js"></script>
+<script src="~/developerjs/ProjectstckholdercommentforProjHistory.js"></script>
 
 @RenderSection("scripts", required: false)
 

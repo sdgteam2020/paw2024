@@ -43,7 +43,7 @@ function IsUnReadInbox(psmId) {
         type: 'POST',
         data: { "PsmId": psmId },
         success: function (response) {
-            console.log(response);
+            //console.log(response);
 
         }
     });
@@ -57,7 +57,7 @@ function GetProjCommentsByUnitId() {
         type: 'POST',
         data: { "Id": 0 },
         success: function (response) {
-
+            /*console.log("GetAllProjectByUnitId", response);*/
             if (response != "null" && response != null) {
 
                 if (response == -1) {
@@ -69,11 +69,10 @@ function GetProjCommentsByUnitId() {
                     listItem += "<tr><td class='text-center' colspan=6>No Record Found</td></tr>";
 
                     $("#DetailBody").html(listItem);
-                    ;
+
                 }
 
                 else {
-                    debugger;
 
                     var count = 1;
                     for (var i = 0; i < response.length; i++) {
@@ -94,7 +93,8 @@ function GetProjCommentsByUnitId() {
                             listItem += "<tr>";
                         }
                         listItem += "<td class='noExport d-none'><span class='noExport d-none' id='spnProjId'>" + response[i].projId + "</span><span class='noExport d-none' id='spnpsmId'>" + response[i].psmId + "</span></td>";
-                        listItem += "<td class='align-middle'><span id='divName'>" + count + "</span></td>";
+                        //listItem += "<td class='align-middle'><span id='divName'>" + count + "</span></td>";
+                        listItem += "<td class='align-middle ser-no'>" + (i + 1) + "</td>";
 
                         listItem += "<td class='align-middle'>";
                         listItem += "<a  href='/Projects/ProjHistory?EncyID=" + encodeURIComponent(response[i].encyID) + "'>";
@@ -107,6 +107,10 @@ function GetProjCommentsByUnitId() {
                             listItem += "<td class='align-middle'><span id='status'>Accepted</span></td>";
                             listItem += "<td class='align-middle'><span id='btnedit'><button type='button' class='cls-btncomment btn-icon btn-round btn-success mr-1'><i class='fas fa-comment'></i></button></td>";
 
+                        }
+                        else if (response[i].stkStatusId == 5) {
+                            listItem += "<td class='align-middle'><span id='status'>Info</span></td>";
+                            listItem += "<td class='align-middle'><span id='btnedit'><button type='button' class='cls-btncomment btn-icon btn-round btn-success mr-1'><i class='fas fa-comment'></i></button></td>";
                         }
                         else if (response[i].stkStatusId == 2) {
                             listItem += "<td class='align-middle'><span id='status'>Obsn</span></td>";
@@ -132,19 +136,45 @@ function GetProjCommentsByUnitId() {
                         dom: 'lBfrtip',
                         retrieve: true,
                         bDestroy: true,
-                        pageLength: -1, // Show all entries by default
-                        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                        pageLength: -1, // Show all entries by default // 
+                        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]], //
+                        order: [[1, 'asc']], // Ensure Ser No is sorted in ascending order
                         buttons: [
-                            'copy',
-                            'excel',
-                            'csv',
                             {
-                                text: 'PDF',
+                                extend: 'excel',
+                                text: 'Excel',
+                                exportOptions: {
+                                    columns: ':visible:not(:last-child)',
+                                    format: {
+                                        body: function (data, row, column, node) {
+                                            var excelRowData = $(data).text().trim();
+                                            return column === 0 ? row + 1 : excelRowData; // Fix Ser No in export
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                extend: 'csv',
+                                exportoptions: {
+                                    columns: ':visible:not(:last-child)',
+                                    format: {
+                                        body: function (data, row, column, node) {
+                                            var csvrowdata = $(data).text().trim();
+                                            return column === 0 ? row + 1 : csvrowdata; // fix ser no in export
+                                        }
+                                    }
+                                }
+                            },                            
+                            {
                                 extend: 'pdfHtml5',
+                                text: 'PDF',
+                                exportOptions: {
+                                    columns: ':visible:not(:last-child)'
+                                },
                                 action: function (e, dt, node, config) {
                                     PdfDiv();
                                 }
-                            }
+                            }                           
                         ],
                         searchBuilder: {
                             conditions: {
@@ -174,70 +204,87 @@ function GetProjCommentsByUnitId() {
                     });
 
                     function PdfDiv() {
-                        var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
-                        popupWin.document.open();
-
-                        var tableStyles = `
-                    <style type="text/css">
-                        table {
-                            width: 100%;
-                            border-collapse: collapse;
-                            margin-bottom: 20px;
-                        }
-                        .table > thead {
-                            vertical-align: bottom;
-                            background-color: red;
-                        }
-                        th, td {
-                            padding: 8px;
-                            border: 1px solid #ddd;
-                            text-align: center;
-                        }
-                        th {
-                            background-color: #f2f2f2;
-                            color: black;
-                        }
-                    </style>
-                `;
-
                         var table = $('#Comment').DataTable();
                         var filteredData = table.rows({ search: 'applied' }).data().toArray();
 
+                        // Extract headers while excluding the last column (Action)
+                        var headers = [];
+                        table.columns(':visible').header().each(function (header, index) {
+                            if (index !== table.columns().count() - 1) { // Exclude "Action" column
+                                headers.push($(header).text().trim());
+                            }
+                        });
+
+                        // Extract data while excluding the last column (Action) and fixing Ser No
+                        var data = [];
+                        for (var i = 0; i < filteredData.length; i++) {
+                            var rowData = [];
+                            for (var j = 0; j < filteredData[i].length - 1; j++) { // Exclude "Action" column
+                                var cleanText = $(filteredData[i][j]).text().trim(); // Strip HTML tags
+                                rowData.push(j === 0 ? i + 1 : cleanText); // Fix Ser No (Starts at 1)
+                            }
+                            data.push(rowData);
+                        }
+
                         var tableHTML = '<table>';
                         tableHTML += '<thead><tr>';
-                        table.columns().header().each(function (header) {
-                            tableHTML += '<th>' + header.innerHTML + '</th>';
+                        headers.forEach(header => {
+                            tableHTML += '<th>' + header + '</th>';
                         });
                         tableHTML += '</tr></thead><tbody>';
 
-                        for (var i = 0; i < filteredData.length; i++) {
+                        data.forEach(row => {
                             tableHTML += '<tr>';
-                            for (var j = 0; j < filteredData[i].length; j++) {
-                                tableHTML += '<td>' + filteredData[i][j] + '</td>';
-                            }
+                            row.forEach(cell => {
+                                tableHTML += '<td>' + cell + '</td>';
+                            });
                             tableHTML += '</tr>';
-                        }
+                        });
+
                         tableHTML += '</tbody></table>';
 
                         var watermarkText = $("#IpAddress").html();
 
+                        var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+                        popupWin.document.open();
+
+                        var tableStyles = `
+    <style type="text/css">
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: black;
+        }
+    </style>`;
+
                         popupWin.document.write(`
-                    <html>
-                    <head>${tableStyles}</head>
-                    <body onload="window.print()">${tableHTML}
-                    <div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">
-                    ${watermarkText}
-                    </div>
-                    </body>
-                    </html>
-                `);
+    <html>
+    <head>${tableStyles}</head>
+    <body onload="window.print()">
+        ${tableHTML}
+        <div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK;
+        position:fixed;left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;
+        display: grid;justify-content: center;align-content: center;">
+        ${watermarkText}
+        </div>
+    </body>
+    </html>`);
 
                         popupWin.document.close();
                     }
+
                     /* $('#ProjectCommentCount').html(boldCount);*/
 
                     $("body").on("click", ".cls-btncomment", function () {
-
                         $("#ProjectcommentForStackHolderprojId").html($(this).closest("tr").find("#spnProjId").html());
                         $("#ProjectcommentForStackHolderPsmId").html($(this).closest("tr").find("#spnpsmId").html());
 
@@ -248,6 +295,16 @@ function GetProjCommentsByUnitId() {
                         mMsater(0, "ddlStatus", 4, 0)
                         $("#ProjCommentModal").modal('show');
                         GetAllComments($("#ProjectcommentForStackHolderPsmId").html(), $("#ProjectcommentForStackHolderprojId").html());
+
+                        // Added from here for pop up heading with project name in comment (added by Divyanshu on 04/02/2025)
+                        //var projName = $(this).closest("tr").find("#projectName").html() + "  " + "Comments";
+                        //$('#addComment').text(projName);
+                        var projName = $(this).closest("tr").find("#projectName").html();
+                        var words = projName.split(" ");
+                        // Limit to 6 words and add "..." if needed
+                        var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
+                        var finalTitle = "Mov History: " + shortProjName;
+                        $('#addComment').text(finalTitle);
                     });
 
                     $("body").on("click", ".projNameDetail", function () {
@@ -288,13 +345,6 @@ function SendMsg() {
 
     }
 
-
-    //var currentTime = new Date();
-    //var timeString = currentTime.toTimeString().split(' ')[0]; // Example: "14:45:30"
-
-    //var commentDate = $("#CommentDateFwd").val(); // Example: "2024-12-27"
-    //var commentDateTime = commentDate + " " + timeString;
-
     var dateValue = $('#CommentDateFwd').val();
     var currentDate = new Date();
 
@@ -315,15 +365,14 @@ function SendMsg() {
         commentDateTime = dateValue.replace('T', ' '); // Format datetime-local to space-separated
     }
 
-    
- 
+
+
     formData.append("Comments", $("#Comments").val());
     formData.append("StkStatusId", $("#ddlStatus").val());
     formData.append("ProjectId", $("#ProjectcommentForStackHolderprojId").html());
     formData.append("psmid", $("#ProjectcommentForStackHolderPsmId").html());
     //formData.append("CommentDate", $("#CommentDateFwd").val());
     formData.append("CommentDate", commentDateTime);
-    //console.log("comment formdata", commentDateTime);
     $.ajax({
         type: "POST",
         url: '/Projects/SendCommentonProject',
@@ -331,12 +380,10 @@ function SendMsg() {
         contentType: false,
         processData: false,
         success: function (response) {
-            debugger;
             if (response == 0) {
 
             }
             if (response == 1) {
-                console.log("test comment done");
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
@@ -358,13 +405,19 @@ function SendMsg() {
                     reset();
                 })
 
-              
+
             }
             else if (response == 6) {
                 Swal.fire({
                     position: 'top-end',
                     icon: 'Error',
-                    title: 'No Amdts Allowed as the Project is Already Accepted By You !',
+                    /*title: 'No Amdts Allowed as the Project is Already Accepted By You !',*/
+                    title: '<div style="text-align: left;">' +
+                        '<ol style="margin: 0; padding-left: 20px; text-align: left;">' +
+                        '<li>No Amdts Allowed as the Project is Already Accepted By You!</li>' +
+                        '<li>However, only info is allowed after the project is accepted.</li>' +
+                        '</ol>' +
+                        '</div>',
                     showConfirmButton: true,
 
                 });
@@ -425,7 +478,7 @@ function GetAllComments(PsmId, projId) {
                     commentContainer += '<div style="margin-left: 0px;" class="comment-meta">' + DateFormateddMMyyyyhhmmss(data[i].date) + '</div>';
                     commentContainer += '</div>';
                     commentContainer += '<div>';
-                    if (data[i].status == "Accepted")
+                    if (data[i].status == "Accepted" || data[i].status == "Info")
                         commentContainer += '<span class="comment-meta badge badge-success text-white">' + data[i].status + '</span>';
                     else if (data[i].status == "Obsn")
                         commentContainer += '<span class="comment-meta badge badge-warning text-white">' + data[i].status + '</span>';
@@ -470,7 +523,7 @@ function IsReadComment(ProjId, PsmId) {
         type: 'POST',
         data: { "ProjId": ProjId, "PsmId": PsmId },
         success: function (response) {
-            console.log(response);
+            //console.log(response);
         }
     })
 }
@@ -497,7 +550,7 @@ function IsUnReadComment(ProjId, PsmId) {
             "PsmId": PsmId
         },
         success: function (response) {
-            console.log(response);
+            //console.log(response);
             window.location.reload();
         }
     })
@@ -510,7 +563,7 @@ function IsReadInbox(psmId) {
         type: 'POST',
         data: { "PsmId": psmId },
         success: function (response) {
-            console.log(response);
+            //console.log(response);
 
         }
     });
@@ -567,7 +620,7 @@ function FwdProjConfirm(psmid) {
         type: 'POST',
         data: { "PslmId": psmid },
         success: function (response) {
-            console.log(response);
+            //console.log(response);
 
 
             if (response >= 1) {
@@ -590,7 +643,7 @@ function IsCommentedUnreadNotification(ProjId) {
         type: 'POST',
         data: { "ProjId": ProjId },
         success: function (response) {
-            console.log(response);
+            //console.log(response);
 
         }
     });

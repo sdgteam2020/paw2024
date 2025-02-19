@@ -8,8 +8,7 @@
 
 });
 
-function GetAllComments2() {
-
+function GetAllComments2() {    
     $.ajax({
         type: "POST",
         url: '/Projects/GetAllCommentBypsmId_UnitId',
@@ -19,34 +18,30 @@ function GetAllComments2() {
             "ProjId": $(".ProjectcommentprojId").html()
         },
         success: function (data) {
-            console.log("CommentData", data);
+            //console.log("CommentData", data);
+            var projectName = data[0].projectName;
+            //console.log("First Project Name:", projectName);
 
             var tableHTML = '<table class="table" style="width:100%; border: 1px solid black; border-collapse:collapse;">';
             tableHTML += '<thead>';
             tableHTML += '<tr>';
+            //tableHTML += '<th style="display: none;">Project Name</th>';
             tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">Ser No</th>';
             tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">Stakeholder</th>';
             tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">Datetime</th>';
             tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">Comment</th>';
             tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">Status</th>';
-            tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">PDF</th>';
+            tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">PDF</th>';            
             tableHTML += '</tr>';
             tableHTML += '</thead>';
             tableHTML += '<tbody>';
 
             if (data != null) {
                 for (var i = 0; i < data.length; i++) {
-                    ////var date = new Date(data[i].date);
-                    ////var formattedDate = ("0" + date.getDate()).slice(-2) + '-' +
-                    ////    ("0" + (date.getMonth() + 1)).slice(-2) + '-' +
-                    ////    date.getFullYear() + ' ' +
-                    ////    ("0" + date.getHours()).slice(-2) + ':' +
-                    ////    ("0" + date.getMinutes()).slice(-2) + ':' +
-                    ////    ("0" + date.getSeconds()).slice(-2);
-
                     tableHTML += '<tr>';
+                    //tableHTML += '<td style="display: none;" class="project-name">' + data[i].projectName + '</td>';
                     tableHTML += '<td style="border: 1px solid black;width:1% !important">' + (i + 1) + '</td>';
-                    tableHTML += '<td style="border: 1px solid black;">' + data[i].stakeholder + ' (' + data[i].userDetails + ')</td>';
+                    tableHTML += '<td style="border: 1px solid black;">' + data[i].stakeholder + ' (' + data[i].userDetails + ')</td>'; 
                     tableHTML += '<td style="border: 1px solid black;">' + DateFormateddMMyyyyhhmmss(data[i].date) + '</td>';
                     tableHTML += '<td style="border: 1px solid black;">' + data[i].comments + '</td>';
                     if (data[i].status == "Accepted")
@@ -89,34 +84,15 @@ function GetAllComments2() {
                 mMsater(0, "ddlStatus", 4, 0)
                 $("#ProjCommentModal").modal('show');
                 GetAllComments($("#IsCommentPsmiId").html(), $(".ProjectcommentprojId").html());
+
+                // Added from here for pop up heading with project name in comment (added by Divyanshu on 10/02/2025)
+                var words = projectName.split(" ");
+                // Limit to 6 words and add "..." if needed
+                var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projectName;
+                var finalTitle = "Mov History: " + shortProjName;
+                $('#addComment').text(finalTitle);
+
             });
-
-
-            //$('#ChatBox .table').DataTable({
-            //    "paging": true,              // Enable paging
-            //    "ordering": true,            // Enable ordering
-            //    "info": true,                // Enable info
-            //    "lengthMenu": [10, 25, 50],  // Options for records per page
-            //    "pageLength": 10,            // Default records per page
-            //    "dom": '<"row"<"col-sm-12 col-md-6"lf><"col-sm-12 col-md-6 add-comment-btn">>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>', // Move Add-comment-btn after search box
-            //});
-
-            //// Dynamically add the Add Comment button
-            //if ($("#IsCommentPsmiId").html() != 0) {
-            //    alert("#IsCommentPsmiId").html());
-            //    $("div.add-comment-btn").html('<button id="add-comment" class="btn btn-primary"><i class="fas fa-plus"></i> Add Comment</button>');
-            //}
-
-            // Add functionality to the Add Comment button
-            //$("#add-comment").on("click", function () {
-            //    $("#ProjectcommentForStackHolderprojId").html($(".ProjectcommentprojId").html());
-            //    $("#ProjectcommentForStackHolderPsmId").html($("#IsCommentPsmiId").html());
-            //    mMsater(0, "ddlStatus", 4, 0);   // Populate dropdown
-            //    $("#ProjCommentModal").modal('show'); // Show comment modal
-            //    GetAllComments($("#IsCommentPsmiId").html(), $(".ProjectcommentprojId").html()); // Fetch all comments
-            //});
-
-
 
 
         },
@@ -197,7 +173,8 @@ $(document).ready(function () {
 
     var TeamDetailPostBackURL = '/Projects/AttDetails';
     $(function () {
-        $(".anchorDetail").click(function () {
+        /*$(".anchorDetail").click(function () {*/
+        $(document).on("click", ".anchorDetail", function () {
 
             var $buttonClicked = $(this);
             var id = $buttonClicked.attr('data-id');

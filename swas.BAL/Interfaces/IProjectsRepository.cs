@@ -1,6 +1,7 @@
 ﻿using ASPNetCoreIdentityCustomFields.Data;
 using swas.BAL.DTO;
 using swas.DAL;
+using swas.DAL.Mapper;
 using swas.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -78,6 +79,8 @@ namespace swas.BAL.Interfaces
         Task<bool> UpdateProjectStkMovementAsync(tbl_ProjStakeHolderMov project);
         Task<ApplicationUser> GetUserByUnitId(int? UnitId);
         //Task<List<tbl_ProjStakeHolderMov>> GetProjStkHolderMovmentByProjId(int? ProjId);
+
+        Task<List<AddNewProject>> GetMyProjects();
     }
 
 

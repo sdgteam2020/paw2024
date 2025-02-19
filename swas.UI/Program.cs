@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Mvc;
 using BAL;
 using swas.BAL.DTO;
 using swas.DAL.Logger;
+using swas.BAL.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -169,6 +170,7 @@ builder.Logging.ClearProviders();
 builder.Logging.AddProvider(new DbLoggerProvider(builder.Services.BuildServiceProvider()));
 
 var app = builder.Build();
+//app.UseMiddleware<MoveFileMiddleware>();
 
 app.UseCookiePolicy(
 new CookiePolicyOptions

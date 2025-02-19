@@ -69,7 +69,7 @@ animateBoxes();
 
 
 function functionConfirm1(ActionsId) {
-    console.log('functionConfirm1 called with id:', ActionsId);
+    //console.log('functionConfirm1 called with id:', ActionsId);
 
     Swal.fire({
         title: 'Are you sure?',
@@ -84,7 +84,7 @@ function functionConfirm1(ActionsId) {
                 type: 'POST',
                 data: { ActionsId: ActionsId },
                 success: function (response) {
-                    console.log(response);
+                    //console.log(response);
                     if (response) {
                         if (response == 1) {
                             Swal.fire({

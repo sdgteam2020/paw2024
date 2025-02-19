@@ -41,7 +41,8 @@ namespace swas.BAL.Repository
                              StkCommentId = comment.StkCommentId,
                              UnitId = comment.StakeHolderId,
                              Attpath = comment.Attpath,
-                             UserDetails = comment.UserDetails!= null ? comment.UserDetails.ToString() :"____"
+                             UserDetails = comment.UserDetails!= null ? comment.UserDetails.ToString() :"____", 
+                             ProjectName = project.ProjName
 
                          }).ToListAsync();
            
@@ -57,6 +58,15 @@ namespace swas.BAL.Repository
                 return 0;
           else
             return 1;
+        }
+
+        public int IsAllowForCommentByStkStatusId(int stkStatusId)
+        {
+            var ret = _context.StkStatus.Where(i => i.StkStatusId == stkStatusId).FirstOrDefault().Status;
+            if (ret == "Info")
+                return 1;
+            else
+                return 0;
         }
     }
 }

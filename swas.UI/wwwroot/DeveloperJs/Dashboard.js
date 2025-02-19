@@ -12,6 +12,8 @@ $(document).ready(function () {
         else
             getProjGetsummay($("#spndashboardstatusId").html(), true);
     }); 
+
+    $('[data-toggle="tooltip"]').tooltip(); 
   
 });
 
@@ -134,14 +136,17 @@ function GetAllDashbaordCount() {
                    /* listitem += '<img src="/assets/images/icons/' + dtoDashboardHeaderlst[i].icons +'" alt="Icon" style="height:25px">';*/
                     if (dtoDashboardHeaderlst[i].statusId == 2 || dtoDashboardHeaderlst[i].statusId == 3 || dtoDashboardHeaderlst[i].statusId == 22 || dtoDashboardHeaderlst[i].statusId == 31 || dtoDashboardHeaderlst[i].statusId == 37) {
                         if (dtoDashboardHeaderlst[i].statusId == 3)
-                            listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" style="height:25px">';
+                            listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" style="height:25px" data-toggle="tooltip" data-placement="top" title="Approved at this stage">';
                        else listitem += '<img src="/assets/images/icons/rejec.png" alt="Icon" style="height:25px">';
                         listitem += '<h5 style="margin-top: 25px;" > </h5>';
                     } else {
-                        listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" style="height:25px">';
+                        listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" style="height:25px" data-toggle="tooltip" data-placement="top" title="Approved at this stage">';
                         var approvedcount = dTOApprovedCountlst.filter(function (element) { return element.statusId == dtoDashboardHeaderlst[i].statusId; });
                         if (approvedcount.length > 0)
-                            listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span><h5 style="margin-top: 8px;" >' + approvedcount[0].total + ' </h5>';
+                            /* listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span><h5 style="margin-top: 8px;" >' + approvedcount[0].total + ' </h5>';*/
+                            listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span>' +
+                                '<h5 style="margin-top: 8px;" data-toggle="tooltip" data-placement="top" title="Approved at this stage">' + approvedcount[0].total + ' </h5>';
+
                         else
                             listitem += '<span class="d-none" id="spnstatusActionsMappingId">0</span><h5 style="margin-top: 8px;" >0 </h5>';
                     }
@@ -154,7 +159,7 @@ function GetAllDashbaordCount() {
 
                      //   listitem += '<button type="button" class="btn btn-primary"> ' + DTODashboardActionlst[j].action +' <span class="badge badge-light">9</span>';
                        
-                    listitem += '<span class="badge badge-light text-black" style="font-size:18px"><span class="badge bg-danger">' + peding + '</span> / <span class="badge bg-success">' + sent + '</span></span>';
+                    listitem += '<span class="badge badge-light text-black" style="font-size:18px" data-toggle="tooltip" data-placement="top" title="Total no of Proj movement"><span class="badge bg-danger">' + peding + '</span> / <span class="badge bg-success">' + sent + '</span></span>';
                       
                         
 
@@ -166,7 +171,7 @@ function GetAllDashbaordCount() {
                     listitem += ' </div>';
                     listitem += '';
                     listitem += ' <div class="mb-2">';
-                    listitem += '<span class="badge badge-primary mr-2" style="font-size:14px">' + tot + '</span>';
+                    listitem += '<span class="badge badge-primary mr-2" style="font-size:14px" data-toggle="tooltip" data-placement="top" title="Total no of Proj movement">' + tot + '</span>';
                     listitem += ' </div>';
                     listitem += ' </div>';
 
@@ -190,7 +195,7 @@ function GetAllDashbaordCount() {
                     var spnstatusId = $(this).closest("div").find("#spnstatusId").html();
                     var spnstatusActionsMappingId = $(this).closest("div").find("#spnstatusActionsMappingId").html();
                   
-                    tittle = $(this).closest("div").find(".statusprojsummry").html();
+                    tittle = "Total Proj Movement: " + $(this).closest("div").find(".statusprojsummry").html();
                         if (parseInt(spnstatusActionsMappingId) == 1) {
 
                             Status = 'Accepted';
@@ -242,7 +247,8 @@ function GetAllDashbaordCount() {
                     var spnstatusId = $(this).closest("div").find("#spnstatusId").html();
                    
                     $('#ProjGetsummay').modal('show');
-                        $('#ProjectSummaryTittle').html($(this).closest("div").find(".statusprojsummry").html());
+                    ($(this).closest("div").find(".statusprojsummry").html());
+                    $('#ProjectSummaryTittle').html("Total Proj Movement: "+$(this).closest("div").find(".statusprojsummry").html());
                         $('#IsNotduplicate').prop('checked', false);
                         
                         getProjGetsummay(spnstatusId, true);
@@ -608,9 +614,14 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                     $('#dashboardDeatils').dataTable().fnDestroy();
                    
                     for (var i = 0; i < response.length; i++) {
+                        var projName = response[i].projName;
+                        var words = projName.split(" ");
+                        var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
+
                         listItem += "<tr>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + count + "</span></td>";
-                        listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].projName + "</span></td>";
+                        //listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].projName + "</span></td>";
+                        listItem += "<td class='align-middle'><span id='ProjName' title='" + projName + "'>" + shortProjName + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].fromUnitName + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].toUnitName + "</span></td>";
@@ -621,7 +632,9 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                         //listItem += "<td class='align-middle'><span id='divName'>" + DateFormateyyy_mm_dd(response[i].dateTimeOfUpdate) + "</span></td>";
 
                         if (response[i].isComplete) {
-                            listItem += "<td ><span class='badge badge-success' id='divName'>Processed</span></td>";
+                            //listItem += "<td ><span class='badge badge-success' id='divName'>Processed</span></td>";
+                            //listItem += `<td ><span class='badge badge-success' id='divName'>Process with ${response[i].toUnitName}</span></td>`;
+                            listItem += `<td ><span class='badge badge-success' id='divName'>${response[i].toUnitName}</span></td>`;
                         }
                         else
                         {
@@ -630,7 +643,9 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                             } else if (response[i].stkStatusId == 3) {
                                 listItem += "<td ><span class='badge badge-danger' id='divName'>Rejected</span></td>";
                             } else {
-                                listItem += "<td ><span class='badge badge-danger' id='divName'>Pending</span></td>";
+                                //listItem += "<td ><span class='badge badge-danger' id='divName'>Pending</span></td>";
+                                //listItem += `<td ><span class='badge badge-danger' id='divName'>Pending at ${response[i].toUnitName}</span></td>`;
+                                listItem += `<td ><span class='badge badge-danger' id='divName'>${response[i].toUnitName}</span></td>`;
                             }
                         }
 
@@ -651,6 +666,7 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                         "order": [[0, "asc"]],
                         "ordering": true,
                         "paging": true,
+                        pageLength: 25,
                         dom: 'lBfrtip',
                         buttons: [
                             'copy',

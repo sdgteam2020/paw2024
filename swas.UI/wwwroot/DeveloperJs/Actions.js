@@ -84,7 +84,7 @@ function functionConfirm1(ActionsId) {
                 type: 'POST',
                 data: { ActionsId: ActionsId },
                 success: function (response) {
-                    console.log(response);
+                    //console.log(response);
                     if (response) {
                         if (response == 1) {
                             Swal.fire({

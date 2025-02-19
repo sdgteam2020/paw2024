@@ -43,11 +43,13 @@ $(document).ready(function () {
             UploadFiles();
         }
     });
+   
     $("#finalupload").click(function () {
-
         ProjectSubmited($(this));
        
-
+    });
+    $("#draftUpload").click(function () {
+        ProjectSaveAsDraft($(this));
     });
     $("#submitUpload").click(function () {
 
@@ -291,7 +293,7 @@ function AddProject(thistag) {
     var currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false });
     var InitiatedDate = initialDate + ' ' + currentTime;
     var CompletionDate = completionDate + ' ' + currentTime;
-
+    console.log("Inititated date:", initialDate + ", Complition Date: ", InitiatedDate)
     $.ajax({
         url: '/Projects/AddProject',
         type: 'POST',
@@ -422,7 +424,7 @@ function FwdProjConfirm(thisdata) {
         type: 'POST',
         data: { "PslmId": $("#spanCurrentPslmId").html() },
         success: function (response) {
-            console.log(response);
+            //console.log(response);
 
 
             if (response >= 1) {
@@ -466,21 +468,22 @@ function FwdProjConfirm(thisdata) {
     });
 }
 
+
 function ProjectSubmited(thisdata) {
      
     $.ajax({
         url: '/Projects/ProjectSubmited',
         type: 'POST',
-        data: { "projid": $("#spanProjectId").html() },
+        data: { "projid": $("#spanProjectId").html(),"type": 1},
         success: function (response) {
-            console.log(response);
+            //console.log(response);
 
             if (response >= 1) {
 
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: "Project Successfully Submitted..!",
+                    title: "Project Submit Successfully",
                     showConfirmButton: false,
                     timer: 1500
                 });
@@ -516,6 +519,32 @@ function ProjectSubmited(thisdata) {
     });
 }
 
+
+function ProjectSaveAsDraft(thisdata) {
+    $.ajax({
+        url: '/Projects/ProjectSubmited',
+        type: 'POST',
+        data: { "projid": $("#spanProjectId").html(), "type": 2 },
+        success: function (response) {
+            //console.log(response);
+            if (response >= 1) {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Draft Saved Successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+
+                // Disable Save button and apply blur effect
+                $("#draftUpload").prop("disabled", true).removeClass("enabled-button").addClass("disabled-button");
+
+                // Enable Submit button and remove blur effect
+                $("#finalupload").prop("disabled", false).removeClass("disabled-button").addClass("enabled-button");
+            }
+        }
+    });
+}
 function validationIsSuccessful() {
     // Your validation logic goes here
     // Return true if validation passes, false otherwise
@@ -556,7 +585,7 @@ function DeleteProject(ProjectId) {
         type: 'POST',
         data: { "ProjectId": ProjectId },
         success: function (response) {
-            console.log(response);
+            //console.log(response);
 
 
             if (response == 1) {
