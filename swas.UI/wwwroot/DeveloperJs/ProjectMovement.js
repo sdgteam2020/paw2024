@@ -20,7 +20,7 @@
         mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html());
     });
 
-     //GetProjectMovement();
+    //GetProjectMovement();
     $("#txtProjectName").autocomplete({
         source: function (request, response) {
             //alert("Hey");
@@ -43,8 +43,6 @@
                         else {
 
                             $("#txtProjectName").val("");
-
-
                             alert("Project not found.")
                         }
                     },
@@ -67,99 +65,53 @@
         appendTo: '#suggesstion-box'
     });
 
-
     //$("#txtProjectName").autocomplete({
+    //    minLength: 2,
     //    source: function (request, response) {
-    //        if (request.term.length > 1) {
-    //            var projName = request.term;
-    //            var param = { "ProjName": projName };
-    //            $.ajax({
-    //                url: '/Projects/GetALLByProjectName',
-    //                contentType: 'application/x-www-form-urlencoded',
-    //                data: param,
-    //                type: 'POST',
-    //                success: function (data) {
-    //                    if (data.length != 0) {
-    //                        response($.map(data, function (item) {
-    //                            return { label: item.name, value: item.id };
-    //                        }));
-    //                    } else {
-    //                        $("#txtProjectName").val("");
-    //                        alert("Project not found.");
-    //                    }
-    //                },
-    //                error: function (response) {
-    //                    alert(response.responseText);
-    //                },
-    //                failure: function (response) {
-    //                    alert(response.responseText);
+    //        $.ajax({
+    //            url: '/Projects/GetALLByProjectName',
+    //            type: 'POST',
+    //            contentType: 'application/x-www-form-urlencoded',
+    //            data: { "ProjName": request.term },
+    //            success: function (data) {
+    //                if (data.length > 0) {
+    //                    response($.map(data, function (item) {
+    //                        return {
+    //                            label: item.name,
+    //                            value: item.id,
+    //                            description: item.description
+    //                        };
+    //                    }));
+    //                } else {
+    //                    $("#txtProjectName").val("");
+    //                    alert("Project not found.");
     //                }
-    //            });
-    //        }
-    //    },
-    //    select: function (e, i) {
-    //        e.preventDefault();
-    //        $("#txtProjectName").val(i.item.label);
-    //        GetProjectMovement(i.item.value);
-    //    },
-    //    appendTo: '#suggesstion-box',
-    //    open: function () {
-    //        // Ensure autocomplete matches the width of the search box
-    //        var $input = $("#txtProjectName");
-    //        var $autocomplete = $(".ui-autocomplete");
-    //        $autocomplete.outerWidth($input.outerWidth());
-    //    }
-    //});
-
-    //$("#txtProjectName").autocomplete({
-    //    source: function (request, response) {
-    //        if (request.term.length > 1) {
-    //            var projName = request.term;
-    //            var param = { "ProjName": projName };
-    //            $.ajax({
-    //                url: '/Projects/GetALLByProjectName',
-    //                contentType: 'application/x-www-form-urlencoded',
-    //                data: param,
-    //                type: 'POST',
-    //                success: function (data) {
-    //                    if (data.length != 0) {
-    //                        response($.map(data, function (item) {
-    //                            return { label: item.name, value: item.id };
-    //                        }));
-    //                    } else {
-    //                        $("#txtProjectName").val("");
-    //                        alert("Project not found.");
-    //                    }
-    //                },
-    //                error: function (response) {
-    //                    alert(response.responseText);
-    //                },
-    //                failure: function (response) {
-    //                    alert(response.responseText);
-    //                }
-    //            });
-    //        }
-    //    },
-    //    select: function (e, i) {
-    //        e.preventDefault();
-    //        $("#txtProjectName").val(i.item.label);
-    //        GetProjectMovement(i.item.value);
-    //    },
-    //    appendTo: '#suggesstion-box',
-    //    open: function (event, ui) {
-    //        var autocomplete = $(".ui-autocomplete:visible");
-    //        var inputOffset = $("#txtProjectName").offset();
-    //        var inputHeight = $("#txtProjectName").outerHeight();
-
-    //        // Position the autocomplete below the input field
-    //        autocomplete.css({
-    //            top: inputOffset.top + inputHeight,
-    //            left: inputOffset.left,
-    //            width: $("#txtProjectName").outerWidth() // Match the input width
+    //            },
+    //            error: function (xhr) {
+    //                console.error(xhr.responseText);
+    //            }
     //        });
-    //    }
-    //});
+    //    },
+    //    select: function (event, ui) {
+    //        event.preventDefault();
+    //        $("#txtProjectName").val(ui.item.label);
+    //        GetProjectMovement(ui.item.value);
+    //    },
+    //    appendTo: '#suggesstion-box' // Ensure dropdown stays inside the form container
+    //}).autocomplete("instance")._renderItem = function (ul, item) {
+    //    return $("<li>")
+    //        .append("<div class='autocomplete-item'><strong>" + item.label + "</strong><br><small>" + item.description + "</small></div>")
+    //        .appendTo(ul);
+    //};
 
+    //// Ensure dropdown follows the input field dimensions
+    //$("#txtProjectName").on("keyup focus", function () {
+    //    $(".ui-autocomplete").css({
+    //        "width": $(this).outerWidth() + "px", // Set width same as input
+    //        "z-index": 1000, // Ensure it's above other elements
+    //        "position": "absolute"
+    //    });
+    //});
 
     $("#btnFwdNext").click(function () {
         requiredFields = $('#ProjFwd').find('.requiredField');
@@ -220,7 +172,7 @@
             type: 'POST',
             data: userdata,
             success: function (response) {
-               // console.log(response);
+                // console.log(response);
                 if (response != null) {
                     /*$("#spanEditPslmId").html(response.psmId);*/
                     //FwdProjConfirm(CurrentPslmId);
@@ -655,7 +607,7 @@ function GetProjectMovement(ProjectId) {
 //});
 
 $(document).ready(function () {
-  /*  alert("hello from ProjectMovementjs");*/
+    /*  alert("hello from ProjectMovementjs");*/
 
     var TeamDetailPostBackURL = '/Projects/AttDetails';
     $(document).on('click', '.anchorDetail', function () {

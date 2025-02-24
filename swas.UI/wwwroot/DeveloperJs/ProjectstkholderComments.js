@@ -303,7 +303,8 @@ function GetProjCommentsByUnitId() {
                         var words = projName.split(" ");
                         // Limit to 6 words and add "..." if needed
                         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
-                        var finalTitle = "Mov History: " + shortProjName;
+                        //var finalTitle = "Mov History: " + shortProjName;
+                        var finalTitle = "Mov History: " + projName;
                         $('#addComment').text(finalTitle);
                     });
 

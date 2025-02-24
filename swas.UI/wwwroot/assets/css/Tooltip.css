@@ -40,7 +40,8 @@
 .RefLetter {
     visibility: hidden;
     width: 250px;
-    background-color: #333;
+    /*background-color: #333;*/
+    background-color: #5a8cd6;
     color: #fff;
     text-align: center;
     border-radius: 5px;

@@ -674,7 +674,7 @@ namespace swas.BAL.Repository
                                  StakeHolder = stk.UnitName,
                                  AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == b.CurrentPslmId),
                                  HostTypeID = b.HostTypeID,
-                                 EncyID = _dataProtector.Protect(b.CurrentPslmId.ToString())
+                                 EncyID = _dataProtector.Protect(b.ProjId.ToString())
                              };
                 var projectsWithDetails = await querys.ToListAsync();
                 return projectsWithDetails;
@@ -2048,6 +2048,15 @@ namespace swas.BAL.Repository
             else
                 return new ApplicationUser();
         }
+
+        //public async Task<int> GetProjIdByPsmiId(int? Psmid, int? StackHolderId)
+        //{
+        //    var ret = await _dbContext.ProjStakeHolderMov.Where(i => i.PsmId == Psmid).FirstOrDefaultAsync();
+        //    if (ret != null)
+        //        return ret.ProjId;
+        //    else
+        //        return 0;
+        //}
 
         //public async Task<List<tbl_ProjStakeHolderMov>> GetProjStkHolderMovmentByProjId(int? ProjId)
         //{

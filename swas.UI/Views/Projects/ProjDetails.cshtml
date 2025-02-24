@@ -196,12 +196,54 @@
             margin-left: 248px;
         }
 
-    .swal2-title{
+    /* .swal2-title{
         background-color: #002b5e; 
         color: white;
         font-size: 18px;
         padding-bottom: 26px;
+    } */
+    .pullback-title {
+        background-color: #002b5e;
+        color: white;
+        font-size: 18px;
+        padding-bottom: 26px;
+        /* add any other styles you need */
     }
+
+   /*  .custom-swal-title {
+        background-color: #002b5e;
+        color: white;
+        font-size: 18px;
+        padding-bottom: 26px;
+        padding: 10px;
+        border-radius: 5px;
+        display: inline-block;
+    } */
+
+
+    .custom-modal-size {
+        max-width: 80%; /* Increase the width as required */
+        width: 75%;
+        /* height: 10%; Adjust height if necessary */
+        margin: auto;
+    }
+
+        .custom-modal-size .modal-content {
+            height: 100%; /* Ensure the content fills the modal */
+            overflow: auto; /* Add scrolling for long content */
+        }
+
+    .modal-dialog {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh; /* Full height */
+    }
+
+    .tooltip-text {
+        background-color: #5a8cd6;
+    }
+
 </style>
 
 
@@ -541,7 +583,7 @@
                                                         }
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <button type="button" class="btn btn-success btn-FwdHistory" title="History" style="margin-top: 1px;"><i class="fa-solid fa-timeline"></i></button>
+                                                        <button type="button" class="btn btn-success btn-FwdHistory" data-proj-name="@project.ProjName" title="History" style="margin-top: 1px;"><i class="fa-solid fa-timeline"></i></button>
                                                     </div>
                                                 </div>
 
@@ -907,6 +949,24 @@
             </div><!-- modal-content -->
         </div><!-- modal-dialog -->
     </div>
+
+
+    <div class="modal fade" id="myModalPagehistoryAttechment" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg custom-modal-size">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">ATTACHMENTS</h5>
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="myModalContenthistoryAttechment">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </body>
 @functions {
     public string truncateText(string text, int maxWords)
@@ -928,6 +988,7 @@
 <script src="~/developerjs/atthistory.js"></script>
 <script src="~/developerjs/projectdetails.js"></script>
 
+<script src="~/developerjs/projectstckholdercommentforprojhistory.js"></script>
 
 <script src="~/developerjs/ProjectDetailDatatable.js"></script>
 

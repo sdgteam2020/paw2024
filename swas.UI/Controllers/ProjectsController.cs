@@ -675,6 +675,7 @@ namespace swas.UI.Controllers
 
         }
         #endregion
+
         public string generate2(string Path, string ip)
         {
             try
@@ -1184,6 +1185,7 @@ namespace swas.UI.Controllers
                         string decryptedValue = _dataProtector.Unprotect(EncyID);
                         dataProjId = int.Parse(decryptedValue);
                         ViewBag.IsCommentPsmiId = await _projectsRepository.GetIsCommentPsmiId(dataProjId, Logins.unitid);
+                        //dataProjId = await _projectsRepository.GetProjIdByPsmiId(psmId, Logins.unitid);
                     }
                     catch (Exception ex)
                     {

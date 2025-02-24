@@ -5,16 +5,16 @@ $(document).ready(function () {
 
     $("#IsNotduplicate").change(function () {
 
-        
-        var ischecked = $(this).is(':checked');      
+
+        var ischecked = $(this).is(':checked');
         if (ischecked)
             getProjGetsummay($("#spndashboardstatusId").html(), false);
         else
             getProjGetsummay($("#spndashboardstatusId").html(), true);
-    }); 
+    });
 
-    $('[data-toggle="tooltip"]').tooltip(); 
-  
+    $('[data-toggle="tooltip"]').tooltip();
+
 });
 
 
@@ -26,7 +26,7 @@ function GetAllDashbaordCount() {
         url: '/Home/GetDashboardCount',
         data: {
             "Id": 0,
-           
+
         },
         success: function (data) {
             var dtoDashboardHeaderlst = data.dtoDashboardHeaderlst;
@@ -44,7 +44,7 @@ function GetAllDashbaordCount() {
                 //listitem += '<div class="cd-1  ProjectWiseStatus cursorpointer" style="background-color:white">';
                 //listitem += '<div class="icon-container ">';
                 //listitem += '<img src="/assets/images/icons/status.png" alt="Icon" style="height:50px">';
-              
+
                 //listitem += '</div>';
                 //listitem += '<div class="cursorpointer ">';
                 //listitem += '<div class="mb-4">';
@@ -64,7 +64,7 @@ function GetAllDashbaordCount() {
 
                 //listitem += ' </div>';
                 //listitem += '';
-              
+
                 //listitem += ' </div>';
 
                 //listitem += ' </div>';
@@ -75,13 +75,13 @@ function GetAllDashbaordCount() {
                             listitem += '</div>';
                         }
                         listitem += '<div class="newprojectheading text-center"> ' + dtoDashboardHeaderlst[i].stages + ' </div>';
-                       
+
                         listitem += '<div class="r-1" style="margin-top: 13px;">';
                     }
-                    
-                    
+
+
                     listitem += '<div class="cd-1  " style="background-color:white">';
-                  
+
                     tot = 0;
                     peding = 0;
                     sent = 0;
@@ -96,9 +96,9 @@ function GetAllDashbaordCount() {
                         else if (parseInt(dtoDashboardHeaderlst[i].statusId) == 3)
                             var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 11 });
                         else if (parseInt(dtoDashboardHeaderlst[i].statusId) == 22)
-                            var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 3 && e.stagesId==2 });
+                            var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 3 && e.stagesId == 2 });
                         else if (parseInt(dtoDashboardHeaderlst[i].statusId) == 31)
-                            var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 3 && e.stagesId == 3});
+                            var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 3 && e.stagesId == 3 });
                         else if (parseInt(dtoDashboardHeaderlst[i].statusId) == 37)
                             var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 3 && e.stagesId == 1 });
 
@@ -113,10 +113,9 @@ function GetAllDashbaordCount() {
                                 sent += ForAction[j].tot;
                             }
                         }
-                       
+
                     }
-                    else
-                    {
+                    else {
                         for (var j = 0; j < DTODashboardCount.length; j++) {
 
 
@@ -131,59 +130,59 @@ function GetAllDashbaordCount() {
 
                         }
                     }
-                   
-                    listitem += '<div class="icon-container ApprovedProj cursorpointer"><span class="d-none" id="spnstatusId">' + dtoDashboardHeaderlst[i].statusId +'</span>';
-                   /* listitem += '<img src="/assets/images/icons/' + dtoDashboardHeaderlst[i].icons +'" alt="Icon" style="height:25px">';*/
+
+                    listitem += '<div class="icon-container ApprovedProj cursorpointer"><span class="d-none" id="spnstatusId">' + dtoDashboardHeaderlst[i].statusId + '</span>';
+                    /* listitem += '<img src="/assets/images/icons/' + dtoDashboardHeaderlst[i].icons +'" alt="Icon" style="height:25px">';*/
                     if (dtoDashboardHeaderlst[i].statusId == 2 || dtoDashboardHeaderlst[i].statusId == 3 || dtoDashboardHeaderlst[i].statusId == 22 || dtoDashboardHeaderlst[i].statusId == 31 || dtoDashboardHeaderlst[i].statusId == 37) {
                         if (dtoDashboardHeaderlst[i].statusId == 3)
-                            listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" style="height:25px" data-toggle="tooltip" data-placement="top" title="Approved at this stage">';
-                       else listitem += '<img src="/assets/images/icons/rejec.png" alt="Icon" style="height:25px">';
+                            listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" style="height:25px" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">';
+                        else listitem += '<img src="/assets/images/icons/rejec.png" alt="Icon" style="height:25px">';
                         listitem += '<h5 style="margin-top: 25px;" > </h5>';
                     } else {
-                        listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" style="height:25px" data-toggle="tooltip" data-placement="top" title="Approved at this stage">';
+                        listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" style="height:25px" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">';
                         var approvedcount = dTOApprovedCountlst.filter(function (element) { return element.statusId == dtoDashboardHeaderlst[i].statusId; });
                         if (approvedcount.length > 0)
                             /* listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span><h5 style="margin-top: 8px;" >' + approvedcount[0].total + ' </h5>';*/
                             listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span>' +
-                                '<h5 style="margin-top: 8px;" data-toggle="tooltip" data-placement="top" title="Approved at this stage">' + approvedcount[0].total + ' </h5>';
+                                '<h5 style="margin-top: 8px;" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">' + approvedcount[0].total + ' </h5>';
 
                         else
                             listitem += '<span class="d-none" id="spnstatusActionsMappingId">0</span><h5 style="margin-top: 8px;" >0 </h5>';
                     }
-                        listitem += '<div class="t-1 statusprojsummry d-none">' + dtoDashboardHeaderlst[i].status + '</div> ';
+                    listitem += '<div class="t-1 statusprojsummry d-none">' + dtoDashboardHeaderlst[i].status + '</div> ';
                     listitem += '</div>';
-                    listitem += '<div class="cursorpointer btnGetsummay "><span class="d-none" id="spnstatusId">' + dtoDashboardHeaderlst[i].statusId +'</span>';
+                    listitem += '<div class="cursorpointer btnGetsummay "><span class="d-none" id="spnstatusId">' + dtoDashboardHeaderlst[i].statusId + '</span>';
                     listitem += '<div class="">';
                     listitem += '<div class="t-1 statusprojsummry">' + dtoDashboardHeaderlst[i].status + '</div> ';
-                       
 
-                     //   listitem += '<button type="button" class="btn btn-primary"> ' + DTODashboardActionlst[j].action +' <span class="badge badge-light">9</span>';
-                       
-                    listitem += '<span class="badge badge-light text-black" style="font-size:18px" data-toggle="tooltip" data-placement="top" title="Total no of Proj movement"><span class="badge bg-danger">' + peding + '</span> / <span class="badge bg-success">' + sent + '</span></span>';
-                      
-                        
 
-                        //listitem += '<span class="badge badge-primary mr-2"></span>';
+                    //   listitem += '<button type="button" class="btn btn-primary"> ' + DTODashboardActionlst[j].action +' <span class="badge badge-light">9</span>';
 
-                  
-                  
-                   
+                    listitem += '<span class="badge badge-light text-black" style="font-size:18px" data-toggle="tooltip" data-placement="top" ><span class="badge bg-danger">' + peding + '</span> / <span class="badge bg-success">' + sent + '</span></span>';
+
+
+
+                    //listitem += '<span class="badge badge-primary mr-2"></span>';
+
+
+
+
                     listitem += ' </div>';
                     listitem += '';
                     listitem += ' <div class="mb-2">';
-                    listitem += '<span class="badge badge-primary mr-2" style="font-size:14px" data-toggle="tooltip" data-placement="top" title="Total no of Proj movement">' + tot + '</span>';
+                    listitem += '<span class="badge badge-primary mr-2" style="font-size:14px" data-toggle="tooltip" data-placement="top" title="Total No of transaction at this stage">' + tot + '</span>';
                     listitem += ' </div>';
                     listitem += ' </div>';
 
                     listitem += ' </div>';
-                    
+
                     listitem += '';
 
-                    stageId=dtoDashboardHeaderlst[i].stageId;
+                    stageId = dtoDashboardHeaderlst[i].stageId;
                 }
 
-               
-               
+
+
                 $("#carddashboardcount").html(listitem);
                 //$("body").on("click", ".ProjectWiseStatus", function () {
                 //    $('#modalProjectWiseStatus').modal('show');
@@ -194,44 +193,44 @@ function GetAllDashbaordCount() {
                 $("body").on("click", ".ApprovedProj", function () {
                     var spnstatusId = $(this).closest("div").find("#spnstatusId").html();
                     var spnstatusActionsMappingId = $(this).closest("div").find("#spnstatusActionsMappingId").html();
-                  
+
                     tittle = "Total Proj Movement: " + $(this).closest("div").find(".statusprojsummry").html();
-                        if (parseInt(spnstatusActionsMappingId) == 1) {
+                    if (parseInt(spnstatusActionsMappingId) == 1) {
 
-                            Status = 'Accepted';
-                        }
-                        else if (parseInt(spnstatusActionsMappingId) == 9) {
-                            Status = 'obsn Raised';
-                        }
-                        else if (parseInt(spnstatusActionsMappingId) == 113) {
-                            Status = 'Rectified';
-                        }
-                        else if (parseInt(spnstatusActionsMappingId) == 48 || parseInt(spnstatusActionsMappingId) == 53) {
-                            Status = 'Approved';
-                        }
+                        Status = 'Accepted';
+                    }
+                    else if (parseInt(spnstatusActionsMappingId) == 9) {
+                        Status = 'obsn Raised';
+                    }
+                    else if (parseInt(spnstatusActionsMappingId) == 113) {
+                        Status = 'Rectified';
+                    }
+                    else if (parseInt(spnstatusActionsMappingId) == 48 || parseInt(spnstatusActionsMappingId) == 53) {
+                        Status = 'Approved';
+                    }
 
-                        else if (parseInt(spnstatusActionsMappingId) == 60) {
-                            tittle = "Closed Project";
-                            Status = 'Closed';
-                        }
-                        else if (parseInt(spnstatusActionsMappingId) == 68 || parseInt(spnstatusActionsMappingId) == 73 || parseInt(spnstatusActionsMappingId) == 63
-                            || parseInt(spnstatusActionsMappingId) == 78 || parseInt(spnstatusActionsMappingId) == 83 || parseInt(spnstatusActionsMappingId) == 88) {
-                            Status = 'Completed';
-                        }
+                    else if (parseInt(spnstatusActionsMappingId) == 60) {
+                        tittle = "Closed Project";
+                        Status = 'Closed';
+                    }
+                    else if (parseInt(spnstatusActionsMappingId) == 68 || parseInt(spnstatusActionsMappingId) == 73 || parseInt(spnstatusActionsMappingId) == 63
+                        || parseInt(spnstatusActionsMappingId) == 78 || parseInt(spnstatusActionsMappingId) == 83 || parseInt(spnstatusActionsMappingId) == 88) {
+                        Status = 'Completed';
+                    }
 
-                        else if (parseInt(spnstatusActionsMappingId) == 26 || parseInt(spnstatusActionsMappingId) == 31 || parseInt(spnstatusActionsMappingId) == 37) {
-                            Status = 'Approved';
-                        }
+                    else if (parseInt(spnstatusActionsMappingId) == 26 || parseInt(spnstatusActionsMappingId) == 31 || parseInt(spnstatusActionsMappingId) == 37) {
+                        Status = 'Approved';
+                    }
 
                     if (parseInt(spnstatusActionsMappingId) == 0) {
                         Swal.fire({
                             icon: "error",
                             title: "Oops...",
                             text: "Data Not Found!",
-                            
+
                         });
                     } else {
-                        
+
                         if (spnstatusId == 2 || spnstatusId == 3 || spnstatusId == 22) {
 
                         } else {
@@ -243,15 +242,15 @@ function GetAllDashbaordCount() {
                     }
                 });
                 $("body").on("click", ".btnGetsummay", function () {
-                  
+
                     var spnstatusId = $(this).closest("div").find("#spnstatusId").html();
-                   
+
                     $('#ProjGetsummay').modal('show');
                     ($(this).closest("div").find(".statusprojsummry").html());
-                    $('#ProjectSummaryTittle').html("Total Proj Movement: "+$(this).closest("div").find(".statusprojsummry").html());
-                        $('#IsNotduplicate').prop('checked', false);
-                        
-                        getProjGetsummay(spnstatusId, true);
+                    $('#ProjectSummaryTittle').html("Total Proj Movement: " + $(this).closest("div").find(".statusprojsummry").html());
+                    $('#IsNotduplicate').prop('checked', false);
+
+                    getProjGetsummay(spnstatusId, true);
 
 
                 })
@@ -455,7 +454,7 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
     var listItem = "";
     var table = new DataTable('#dashboardApproved');
     table.destroy();
-   /* alert(spnstatusActionsMappingId)*/
+    /* alert(spnstatusActionsMappingId)*/
     var userdata = {
         "StatusId": spnstatusId,
         "statusActionsMappingId": spnstatusActionsMappingId,
@@ -481,8 +480,8 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
 
                 } else {
                     var count = 1;
-                    
-                    
+
+
                     $('#DetailBodyApproved').empty();
                     $('#dashboardApproved').dataTable().fnClearTable();
                     $('#dashboardApproved').dataTable().fnDestroy();
@@ -493,8 +492,8 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + DateFormateddMMyyyyhhmmss(response[i].timeStamp) + "</span></td>";
 
-                        listItem += "<td ><span class='badge badge-success' id='divName'>" + Status +"</span></td>";
-                        
+                        listItem += "<td ><span class='badge badge-success' id='divName'>" + Status + "</span></td>";
+
                         listItem += "</tr>";
                         count++;
                     }
@@ -505,7 +504,7 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                         lengthChange: true,
                         retrieve: true,
                         bDestroy: true,
-                       
+
                         searching: true,
                         stateSave: true,
                         "order": [[0, "asc"]],
@@ -582,7 +581,7 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
 }
 function getProjGetsummay(spnstatusId, IsDuplicate) {
     var listItem = "";
-   
+
     $("#spndashboardstatusId").html(spnstatusId);
     var userdata = {
         "StatusId": spnstatusId,
@@ -597,22 +596,22 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
         success: function (response) {
             //console.log("GetDashboardStatusDetails", response);
             if (response != "null" && response != null) {
-                
+
                 if (response == -1) {
                     Swal.fire({ text: "" });
                 } else if (response == 0) {
-                    
+
                     $('#DetailBodysummary1').empty();
                     listItem += "<tr><td class='text-center' colspan='10'>No Record Found</td></tr>";
                     $("#DetailBodysummary1").html(listItem);
                     $("#lblTotal").html(0);
-                   
+
 
                 } else {
                     var count = 1;
                     $('#dashboardDeatils').dataTable().fnClearTable();
                     $('#dashboardDeatils').dataTable().fnDestroy();
-                   
+
                     for (var i = 0; i < response.length; i++) {
                         var projName = response[i].projName;
                         var words = projName.split(" ");
@@ -633,19 +632,16 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
 
                         if (response[i].isComplete) {
                             //listItem += "<td ><span class='badge badge-success' id='divName'>Processed</span></td>";
-                            //listItem += `<td ><span class='badge badge-success' id='divName'>Process with ${response[i].toUnitName}</span></td>`;
-                            listItem += `<td ><span class='badge badge-success' id='divName'>${response[i].toUnitName}</span></td>`;
+                            listItem += `<td ><span class='badge badge-success' id='divName' title='Processed by ${response[i].toUnitName}'>${response[i].toUnitName}</span></td>`;
                         }
-                        else
-                        {
+                        else {
                             if (response[i].stkStatusId == 2) {
                                 listItem += "<td ><span class='badge badge-warning' id='divName'>Obsn</span></td>";
                             } else if (response[i].stkStatusId == 3) {
                                 listItem += "<td ><span class='badge badge-danger' id='divName'>Rejected</span></td>";
                             } else {
                                 //listItem += "<td ><span class='badge badge-danger' id='divName'>Pending</span></td>";
-                                //listItem += `<td ><span class='badge badge-danger' id='divName'>Pending at ${response[i].toUnitName}</span></td>`;
-                                listItem += `<td ><span class='badge badge-danger' id='divName'>${response[i].toUnitName}</span></td>`;
+                                listItem += `<td ><span class='badge badge-danger' id='divName' title='Pending with ${response[i].toUnitName}'>${response[i].toUnitName}</span></td>`;
                             }
                         }
 
@@ -655,14 +651,14 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
 
                     $("#DetailBodysummary1").html(listItem);
 
-                   
+
                     var table = $('#dashboardDeatils').DataTable({
                         lengthChange: true,
                         retrieve: true,
                         bDestroy: true,
                         destroy: true,
                         searching: true,
-                       /* stateSave: true,*/
+                        /* stateSave: true,*/
                         "order": [[0, "asc"]],
                         "ordering": true,
                         "paging": true,
@@ -714,16 +710,16 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                     //    $('input[type=search]').trigger("click");
                     //    $('input[type=search]').focus();
                     //}, 1000);
-                   
+
                 }
             }
             else {
-               
+
                 $('#DetailBodysummary1').empty();
                 listItem += "<tr><td class='text-center' colspan='10'>No Record Found</td></tr>";
                 $("#DetailBodysummary1").html(listItem);
 
-               
+
 
             }
         },

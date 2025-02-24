@@ -35,46 +35,58 @@
 
         var words = projectName.split(" ");
         var shortProjName = words.length > 6 ? words.slice(0, 4).join(" ") + "..." : projectName;
-       
+     
         //Swal.fire({
-        //    title: `Enter pull back remarks: ${projectName}`,
+        //    title: `<div>
+        //            Enter Pull Back Remarks: ${shortProjName}
+        //        </div>`,
         //    input: "text",
         //    inputAttributes: {
         //        autocapitalize: "off"
         //    },
         //    showCancelButton: true,
-        //    confirmButtonText: "Ok",
-        //    showLoaderOnConfirm: true,
+        //    confirmButtonText: "OK",
+        //    cancelButtonText: "Cancel",
+        //    //position: "top",
+        //    customClass: {
+        //        popup: 'custom-swal-popup',
+        //        confirmButton: 'custom-confirm-button',
+        //        cancelButton: 'custom-cancel-button',
+        //        input: 'custom-input-field'
+        //    },
         //    preConfirm: async (login) => {
         //        if (login == "") {
-        //            Swal.showValidationMessage(`Please Enter Remarks for project: ${projectName}`);
+        //            Swal.showValidationMessage(`Please Enter Remarks for project: ${shortProjName}`);
         //        }
         //    },
         //    allowOutsideClick: () => !Swal.isLoading()
-        //}).then((result) =>
+        //})
+
+
         Swal.fire({
-            title: `<div>
-                    Enter Pull Back Remarks: ${shortProjName}
-                </div>`,
-            input: "text",
-            inputAttributes: {
-                autocapitalize: "off"
-            },
+            title: `Enter Pull Back Remarks: ${shortProjName}`, // your dynamic title
+            input: 'text',
             showCancelButton: true,
-            confirmButtonText: "OK",
-            cancelButtonText: "Cancel",
-            //position: "top",
+            confirmButtonText: 'OK',
+            cancelButtonText: 'Cancel',
+
+            /* Assign custom classes for just this SweetAlert instance */
             customClass: {
                 popup: 'custom-swal-popup',
                 confirmButton: 'custom-confirm-button',
                 cancelButton: 'custom-cancel-button',
-                input: 'custom-input-field'
+                input: 'custom-input-field',
+
+                // Here is the important part:
+                title: 'pullback-title'
             },
-            preConfirm: async (login) => {
-                if (login == "") {
-                    Swal.showValidationMessage(`Please Enter Remarks for project: ${shortProjName}`);
+
+            preConfirm: (login) => {
+                if (!login) {
+                    Swal.showValidationMessage(`Please enter remarks for project: ${shortProjName}`);
                 }
             },
+
             allowOutsideClick: () => !Swal.isLoading()
         }).then((result) => {
             if (result.isConfirmed) {
@@ -98,11 +110,10 @@
     });
     $(".btn-FwdHistory").click(function () {
         var projName = $(this).data('proj-name');
-        //console.log("Project-name : ", projName);
         var words = projName.split(" ");
-        // Limit to 6 words and add "..." if needed
         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
-        var finalTitle = "Mov History: " + shortProjName;
+        //var finalTitle = "Mov History: " + shortProjName;
+        var finalTitle = "Mov History: " + projName;
         $('#lblHistory').text(finalTitle);
         $('#ProjFwdHistory').modal('show');
 
@@ -118,14 +129,12 @@
     $(".btn-Fwd").click(function () {
         var projName = $(this).data('proj-name');
         var words = projName.split(" ");
-        // Limit to 6 words and add "..." if needed
         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
-        var finalTitle = "Mov History: " + shortProjName;
+        //var finalTitle = "Mov History: " + shortProjName;
+        var finalTitle = "Mov History: " + projName;
         $('#fwdModal').text(finalTitle);
 
-        //var projName = "Fwd Proj Name:  " + $(this).data('proj-name');
-        var projNameDetail = $(this).data('proj-name') + " " + "Move Details";
-        //$('#fwdModal').text(projName);
+        var projNameDetail = $(this).data('proj-name') + " " + "Move Details";       
         $('.fwdtitle').text(projNameDetail);
 
 
@@ -163,10 +172,9 @@
         var projNameDetail = $(this).data('proj-name') + " " + "Move Details"
         var projName = $(this).data('proj-name');
         var words = projName.split(" ");
-        // Limit to 6 words and add "..." if needed
-        //var projNameDetail = $(this).data('proj-name') + " " + "Move Details";
         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
-        var finalTitle = "Mov History: " + shortProjName;
+        //var finalTitle = "Mov History: " + shortProjName;
+        var finalTitle = "Mov History: " + projNameDetail;
         $('#fwdModal').text(finalTitle);
         $('.fwdtitle').text(projNameDetail);
 

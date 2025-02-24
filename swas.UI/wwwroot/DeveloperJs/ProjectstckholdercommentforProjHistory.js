@@ -48,6 +48,8 @@ function GetAllComments2() {
                         tableHTML += '<td style="border: 1px solid black;"><span class="badge badge-success text-white">' + data[i].status + '</span></td>';
                     else if (data[i].status == "Obsn")
                         tableHTML += '<td style="border: 1px solid black;"><span class="badge badge-warning text-white">' + data[i].status + '</span></td>';
+                    else if (data[i].status == "Info")
+                        tableHTML += '<td style="border: 1px solid black;"><span class="badge badge-success text-white">' + data[i].status + '</span></td>';
                     else
                         tableHTML += '<td style="border: 1px solid black;"><span class="badge badge-danger text-white">' + data[i].status + '</span></td>';
 

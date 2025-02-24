@@ -196,7 +196,6 @@
             flex-grow: 1;
             text-align: center; /* This centers the heading within the available space */
         }
-
     </style>
 
     <link rel="stylesheet" href="~/" asp-append-version="true" />
@@ -2066,7 +2065,8 @@
                                 <div class="icon-container">
 
                                     <ion-icon name="ellipse-outline"></ion-icon>
-                                    <span class="icon-name">Proj Comments</span>
+                                    @* <span class="icon-name">Proj Comments</span> *@
+                                    <span class="icon-name">Stakeholder Comments</span>
                                     @*  <span class="inbox-alertsub1"></span>*@
                                     <span id="ProjectCommentCount" class="badge5 d-none ProjectCommentCount">0</span>
                                 </div>
@@ -2104,13 +2104,14 @@
                             <div class="icon-container">
 
                                 <ion-icon name="ellipse-outline"></ion-icon>
-                                <span class="icon-name">Project Wise Status</span>
+                                @* <span class="icon-name">Project Wise Status</span> *@
+                                <span class="icon-name">Stage Wise Status</span>
                             </div>
 
                         </a>
                     </li>
 
-                    <li>
+                @*     <li>
                         <a href="/Home/AllProjectDetails">
                             <div class="icon-container">
 
@@ -2119,7 +2120,7 @@
                             </div>
 
                         </a>
-                    </li>
+                    </li> *@
 
                     @* <a href="/Chat/Index" @*onclick="createNotification(event)"*@
                     @* <li>
