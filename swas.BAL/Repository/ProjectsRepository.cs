@@ -71,6 +71,7 @@ namespace swas.BAL.Repository
 
             var movent = await (from proj in _dbContext.Projects
                                 join mov in _dbContext.ProjStakeHolderMov on proj.ProjId equals mov.ProjId
+                                where proj.IsSubmited == true
                                 orderby proj.ProjId descending
                                 select new MovProject
                                 {
@@ -103,105 +104,122 @@ namespace swas.BAL.Repository
         }
         public async Task<List<DTOProjectsFwd>> GetDashboardApproved(int StatuId, int statusActionsMappingId)
         {
-            if (statusActionsMappingId == 1)
-                statusActionsMappingId = 21;
             List<DTOProjectsFwd> lst = new List<DTOProjectsFwd>();
-            if (statusActionsMappingId == 26 || statusActionsMappingId == 31 || statusActionsMappingId == 37)
+            var status =  _dbContext.mStatus.FirstOrDefault(x => x.StatusId == StatuId).Status;     
+            if (status == "BISAG-N")
             {
-                lst = await (from a in _dbContext.Projects
-                             join mov in _dbContext.ProjStakeHolderMov on a.ProjId equals mov.ProjId
-                             join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
-                             from stackcs in cs1.DefaultIfEmpty()
-                             let datetime = (from mov1 in _dbContext.ProjStakeHolderMov
-                                             join pro1 in _dbContext.Projects on mov1.ProjId equals pro1.ProjId
-                                             where pro1.IsProcess == true && mov1.StatusActionsMappingId == statusActionsMappingId
-                                            && pro1.ProjId == a.ProjId && mov.IsActive==true
-                                             orderby mov1.PsmId
-                                             select mov1.TimeStamp).FirstOrDefault()
-                             where a.IsProcess == true && mov.StatusActionsMappingId == statusActionsMappingId
-                             && mov.IsComplete==true && mov.IsActive == true
-                             group mov by new
-                             {
-                                 a.ProjId,
-                                 a.ProjName,
-                                 a.StakeHolderId,
-                                 stackcs.UnitName,
-                                 datetime
-                             } into gr
+                lst = await (from p in _dbContext.Projects
+                             join stk in _dbContext.tbl_mUnitBranch on p.StakeHolderId equals stk.unitid
+                             where /*p.IsProcess == true*/ p.IsSubmited == true && p.BeingDevpInhouse == "BISAG-N"
                              select new DTOProjectsFwd
                              {
-                                 ProjId = gr.Key.ProjId,
-                                 ProjName = gr.Key.ProjName,
-                                 StakeHolderId = gr.Key.StakeHolderId,
-                                 StakeHolder = gr.Key.UnitName,
-                                 TimeStamp = gr.Key.datetime
+                                 ProjId = p.ProjId,
+                                 ProjName = p.ProjName, 
+                                 StakeHolder = stk.UnitName, 
+                                 TimeStamp = p.InitiatedDate,
+                                 Status = "BISAG-N"
                              }).ToListAsync();
             }
-            else if (statusActionsMappingId == 21)
-            {
-                 lst = await (from a in _dbContext.Projects
-                              join mov in _dbContext.ProjStakeHolderMov on a.ProjId equals mov.ProjId
-                              join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
-                                  from stackcs in cs1.DefaultIfEmpty()
-                              let datetime = (from mov1 in _dbContext.ProjStakeHolderMov
-                                             join pro1 in _dbContext.Projects on mov1.ProjId equals pro1.ProjId
-                                             where pro1.IsProcess == true && mov1.StatusActionsMappingId == statusActionsMappingId
-                                            && pro1.ProjId==a.ProjId && mov.IsActive == true
-                                              orderby mov1.PsmId
-                                             select mov1.TimeStamp).FirstOrDefault()
+            else {
+                if (statusActionsMappingId == 1)
+                    statusActionsMappingId = 21;
+                if (statusActionsMappingId == 26 || statusActionsMappingId == 31 || statusActionsMappingId == 37)
+                {
+                    lst = await (from a in _dbContext.Projects
+                                 join mov in _dbContext.ProjStakeHolderMov on a.ProjId equals mov.ProjId
+                                 join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
+                                 from stackcs in cs1.DefaultIfEmpty()
+                                 let datetime = (from mov1 in _dbContext.ProjStakeHolderMov
+                                                 join pro1 in _dbContext.Projects on mov1.ProjId equals pro1.ProjId
+                                                 where pro1.IsProcess == true && mov1.StatusActionsMappingId == statusActionsMappingId
+                                                && pro1.ProjId == a.ProjId && mov.IsActive == true
+                                                 orderby mov1.PsmId
+                                                 select mov1.TimeStamp).FirstOrDefault()
+                                 where a.IsProcess == true && mov.StatusActionsMappingId == statusActionsMappingId
+                                 && mov.IsComplete == true && mov.IsActive == true
+                                 group mov by new
+                                 {
+                                     a.ProjId,
+                                     a.ProjName,
+                                     a.StakeHolderId,
+                                     stackcs.UnitName,
+                                     datetime
+                                 } into gr
+                                 select new DTOProjectsFwd
+                                 {
+                                     ProjId = gr.Key.ProjId,
+                                     ProjName = gr.Key.ProjName,
+                                     StakeHolderId = gr.Key.StakeHolderId,
+                                     StakeHolder = gr.Key.UnitName,
+                                     TimeStamp = gr.Key.datetime
+                                 }).ToListAsync();
+                }
+                else if (statusActionsMappingId == 21)
+                {
+                    lst = await (from a in _dbContext.Projects
+                                 join mov in _dbContext.ProjStakeHolderMov on a.ProjId equals mov.ProjId
+                                 join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
+                                 from stackcs in cs1.DefaultIfEmpty()
+                                 let datetime = (from mov1 in _dbContext.ProjStakeHolderMov
+                                                 join pro1 in _dbContext.Projects on mov1.ProjId equals pro1.ProjId
+                                                 where pro1.IsProcess == true && mov1.StatusActionsMappingId == statusActionsMappingId
+                                                && pro1.ProjId == a.ProjId && mov.IsActive == true
+                                                 orderby mov1.PsmId
+                                                 select mov1.TimeStamp).FirstOrDefault()
 
-                              where a.IsProcess==true && mov.StatusActionsMappingId == statusActionsMappingId && mov.IsActive == true
-                              group mov by new
-                              {
-                                  a.ProjId,
-                                  a.ProjName,
-                                  a.StakeHolderId,
-                                  stackcs.UnitName,
-                                  datetime
-                              } into gr
-                              select new DTOProjectsFwd
-                              {
-                                  ProjId = gr.Key.ProjId,
-                                  ProjName = gr.Key.ProjName,
-                                  StakeHolderId = gr.Key.StakeHolderId,
-                                  StakeHolder = gr.Key.UnitName,
-                                  TimeStamp= gr.Key.datetime
-                              }).ToListAsync();
-            }
-            else if (statusActionsMappingId==9|| statusActionsMappingId==15|| statusActionsMappingId==48|| 
-                statusActionsMappingId==53|| statusActionsMappingId==60|| statusActionsMappingId == 63 || statusActionsMappingId ==68||
-                statusActionsMappingId==73|| statusActionsMappingId==78|| statusActionsMappingId==83|| 
-                statusActionsMappingId==88)
-            {
-                lst = await (from a in _dbContext.Projects
-                             join mov in _dbContext.ProjStakeHolderMov on a.ProjId equals mov.ProjId
-                             join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
-                             from stackcs in cs1.DefaultIfEmpty()
+                                 where a.IsProcess == true && mov.StatusActionsMappingId == statusActionsMappingId && mov.IsActive == true
+                                 group mov by new
+                                 {
+                                     a.ProjId,
+                                     a.ProjName,
+                                     a.StakeHolderId,
+                                     stackcs.UnitName,
+                                     datetime
+                                 } into gr
+                                 select new DTOProjectsFwd
+                                 {
+                                     ProjId = gr.Key.ProjId,
+                                     ProjName = gr.Key.ProjName,
+                                     StakeHolderId = gr.Key.StakeHolderId,
+                                     StakeHolder = gr.Key.UnitName,
+                                     TimeStamp = gr.Key.datetime
+                                 }).ToListAsync();
+                }
+                else if (statusActionsMappingId == 9 || statusActionsMappingId == 15 || statusActionsMappingId == 48 ||
+                    statusActionsMappingId == 53 || statusActionsMappingId == 60 || statusActionsMappingId == 63 || statusActionsMappingId == 68 ||
+                    statusActionsMappingId == 73 || statusActionsMappingId == 78 || statusActionsMappingId == 83 ||
+                    statusActionsMappingId == 88)
+                {
+                    lst = await (from a in _dbContext.Projects
+                                 join mov in _dbContext.ProjStakeHolderMov on a.ProjId equals mov.ProjId
+                                 join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
+                                 from stackcs in cs1.DefaultIfEmpty()
 
-                             let datetime = (from mov1 in _dbContext.ProjStakeHolderMov
-                                             join pro1 in _dbContext.Projects on mov1.ProjId equals pro1.ProjId
-                                             where pro1.IsProcess == true && mov1.StatusActionsMappingId == statusActionsMappingId
-                                            && pro1.ProjId == a.ProjId && mov.IsActive == true
-                                             orderby mov1.PsmId
-                                             select mov1.TimeStamp).FirstOrDefault()
-                             where a.IsProcess == true && mov.StatusActionsMappingId==statusActionsMappingId
-                             && mov.IsActive == true
-                             group mov by new
-                             {
-                                 a.ProjId,
-                                 a.ProjName,
-                                 a.StakeHolderId,
-                                 stackcs.UnitName,
-                                 datetime
-                             } into gr
-                             select new DTOProjectsFwd
-                             {
-                                 ProjId = gr.Key.ProjId,
-                                 ProjName = gr.Key.ProjName,
-                                 StakeHolderId = gr.Key.StakeHolderId,
-                                 StakeHolder = gr.Key.UnitName,
-                                 TimeStamp = gr.Key.datetime
-                             }).ToListAsync();
+                                 let datetime = (from mov1 in _dbContext.ProjStakeHolderMov
+                                                 join pro1 in _dbContext.Projects on mov1.ProjId equals pro1.ProjId
+                                                 where pro1.IsProcess == true && mov1.StatusActionsMappingId == statusActionsMappingId
+                                                && pro1.ProjId == a.ProjId && mov.IsActive == true
+                                                 orderby mov1.PsmId
+                                                 select mov1.TimeStamp).FirstOrDefault()
+                                 where a.IsProcess == true && mov.StatusActionsMappingId == statusActionsMappingId
+                                 && mov.IsActive == true
+                                 group mov by new
+                                 {
+                                     a.ProjId,
+                                     a.ProjName,
+                                     a.StakeHolderId,
+                                     stackcs.UnitName,
+                                     datetime
+                                 } into gr
+                                 select new DTOProjectsFwd
+                                 {
+                                     ProjId = gr.Key.ProjId,
+                                     ProjName = gr.Key.ProjName,
+                                     StakeHolderId = gr.Key.StakeHolderId,
+                                     StakeHolder = gr.Key.UnitName,
+                                     TimeStamp = gr.Key.datetime
+                                 }).ToListAsync();
+                } 
             }
 
             return lst.OrderByDescending(i=>i.TimeStamp).ToList();

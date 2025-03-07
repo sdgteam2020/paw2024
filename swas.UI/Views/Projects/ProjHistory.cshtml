@@ -129,23 +129,47 @@
     /*  #StakeholderDetails {
                                     page-break-before: always;
                                 }*/
-    .custom-modal-size {
+    .custom-modal-sizes {
         max-width: 80%; /* Increase the width as required */
         width: 75%;
         /* height: 10%; Adjust height if necessary */
         margin: auto;
     }
 
-        .custom-modal-size .modal-content {
+        .custom-modal-sizes .modal-content-new {
             height: 100%; /* Ensure the content fills the modal */
             overflow: auto; /* Add scrolling for long content */
         }
+
+    .modal-lg {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh; /* Full height */
+    }
+    .custom-modal-size {
+        max-width: 100%; /* Set the modal width to 80% of the screen */
+        width: 95%; /* Ensure it scales responsively */
+        margin: auto; /* Center horizontally */
+    }
 
     .modal-dialog {
         display: flex;
         align-items: center;
         justify-content: center;
-        min-height: 100vh; /* Full height */
+        min-height: 100vh; /* Vertically center the modal */
+        margin: 0; /* Remove default margins for better centering */
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .modal-content-new {
+        margin-left: 277px;
+        margin-right: -225px;
     }
 
 
@@ -298,8 +322,8 @@
 
 
 <div class="modal fade" id="myModalPagehistoryAttechment" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg custom-modal-size">
-        <div class="modal-content">
+    <div class="modal-dialog modal-lg custom-modal-sizes">
+        <div class="modal-content modal-content-new">
             <div class="modal-header">
                 <h5 class="modal-title">ATTACHMENTS</h5>
 
@@ -327,9 +351,6 @@
     }
     @Html.Partial("_projfwdupload", pmove)
 </div>
-
-
-
 
 
 <div class="container" hidden="hidden">

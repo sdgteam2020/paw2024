@@ -39,6 +39,8 @@ using System.Globalization;
 using System.Configuration;
 using Microsoft.Extensions.Options;
 using swas.DAL;
+using Document = iText.Layout.Document;
+using System.IO;
 
 namespace swas.UI.Controllers
 {
@@ -134,8 +136,6 @@ namespace swas.UI.Controllers
 
         public async Task<IActionResult> ProjStatDashBdView(string? id, string? status)
         {
-
-
             string EncyID = id;
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
@@ -164,7 +164,7 @@ namespace swas.UI.Controllers
                     // sanal
                     MailBox mbx = new MailBox();
 
-                    mbx.SendItems = null;//await _projectsRepository.GetStatusProjAsync(dataProjId);
+                    mbx.SendItems = null;
 
                     return View(mbx);
                 }
@@ -175,8 +175,6 @@ namespace swas.UI.Controllers
             {
                 return Redirect("~/Identity/Account/Login");
             }
-
-
 
         }
 
@@ -676,43 +674,43 @@ namespace swas.UI.Controllers
         }
         #endregion
 
-        public string generate2(string Path, string ip)
+        public byte[] generate2(string Path, string ip)
         {
             try
             {
-                Random rnd = new Random();
-                string Dfilename = rnd.Next(1, 1000).ToString();
-                var filePath1 = System.IO.Path.Combine(_environment.ContentRootPath, "wwwroot\\DownloadFile\\" + Dfilename + ".pdf");
-                PdfDocument pdfDoc = new PdfDocument(new PdfReader(Path), new PdfWriter(filePath1));
-                iText.Layout.Document doc = new iText.Layout.Document(pdfDoc);
-                PdfFont font = PdfFontFactory.CreateFont(FontProgramFactory.CreateFont(StandardFonts.HELVETICA));
-                Paragraph paragraph = new Paragraph(ip + " " + DateTime.Now).SetFont(font).SetFontSize(30);
-
-                PdfExtGState gs1 = new PdfExtGState().SetFillOpacity(0.2f);
-                for (int i = 1; i <= pdfDoc.GetNumberOfPages(); i++)
+                using (MemoryStream memoryStream = new MemoryStream())
                 {
-                    PdfPage pdfPage = pdfDoc.GetPage(i);
-                    Rectangle pageSize = pdfPage.GetPageSize();
-                    float x = (pageSize.GetLeft() + pageSize.GetRight()) / 2;
-                    float y = (pageSize.GetTop() + pageSize.GetBottom()) / 2;
-                    PdfCanvas over = new PdfCanvas(pdfPage);
-                    over.SaveState();
-                    over.SetExtGState(gs1);
+                    PdfDocument pdfDoc = new PdfDocument(new PdfReader(Path), new PdfWriter(memoryStream));
+                    Document doc = new Document(pdfDoc);
+                    PdfFont font = PdfFontFactory.CreateFont(FontProgramFactory.CreateFont(StandardFonts.HELVETICA));
+                    Paragraph paragraph = new Paragraph(ip + " " + DateTime.Now)
+                                            .SetFont(font)
+                                            .SetFontSize(30);
 
-                    doc.ShowTextAligned(paragraph, 297, 450, i, TextAlignment.CENTER, VerticalAlignment.MIDDLE, 45);
+                    PdfExtGState gs1 = new PdfExtGState().SetFillOpacity(0.2f);
+                    for (int i = 1; i <= pdfDoc.GetNumberOfPages(); i++)
+                    {
+                        PdfPage pdfPage = pdfDoc.GetPage(i);
+                        PdfCanvas over = new PdfCanvas(pdfPage);
+                        over.SaveState();
+                        over.SetExtGState(gs1);
 
-                    over.RestoreState();
+                        doc.ShowTextAligned(paragraph, 297, 450, i, TextAlignment.CENTER, VerticalAlignment.MIDDLE, 45);
+
+                        over.RestoreState();
+                    }
+
+                    doc.Close();
+                    return memoryStream.ToArray();
                 }
-
-                doc.Close();
-                return Dfilename;
+                
 
             }
             catch (Exception ex)
             {
                 swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
                 //Comman.ExceptionHandle(ex.Message);
-                return "";
+                return null;
             }
         }
 
@@ -1366,8 +1364,6 @@ namespace swas.UI.Controllers
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
             if (Logins != null)
             {
-
-                ;
                 try
                 {
                     var ip = _httpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
@@ -1375,20 +1371,17 @@ namespace swas.UI.Controllers
                     var filePath = System.IO.Path.Combine(_environment.WebRootPath, "Uploads\\" + id + "");
                     if (System.IO.File.Exists(filePath))
                     {
-                        filepathpdf = generate2(filePath, ip);
+                        //filepathpdf = generate2(filePath, ip);
+                        Random rnd = new Random();
+                        string Dfilename = rnd.Next(1, 1000).ToString() + ".pdf";
+                        var pdfBytes = generate2(filePath, ip);
+                        Response.Headers["Content-Disposition"] = $"inline; filename={Dfilename}";
+                        return File(pdfBytes, "application/pdf");
                     }
                     else
                     {
                         return Content("PDF IS NOT IN FOLDER");
                     }
-
-
-                    aTimer = new System.Timers.Timer(60000);
-                    // Hook up the Elapsed event for the timer.
-                    aTimer.Elapsed += OnTimer;
-
-                    aTimer.Enabled = true;
-                    return Redirect("../../DownloadFile/" + filepathpdf + ".pdf");
                 }
                 catch (Exception ex)
                 {

@@ -23,6 +23,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Diagnostics;
 
 namespace swas.BAL.Repository
 {
@@ -515,9 +516,27 @@ namespace swas.BAL.Repository
                     StatusActionsMappingId = g.Key.StatusActionsMappingId,
                     Total = g.Count()
                 }).ToList();
-           
 
+            int StatusId = _dbContext.mStatus.Where(x => x.Status == "BISAG-N").FirstOrDefault().StatusId;
+            //var bisagNProjId = await (from proj in _dbContext.Projects
+            //                          where proj.BeingDevpInhouse == "BISAG-N" && proj.IsSubmited == true /*&& proj.IsProcess == true*/
+            //                          select proj.ProjId).FirstOrDefaultAsync();
 
+            var bisagNCount = await (from proj in _dbContext.Projects
+                                     where proj.BeingDevpInhouse == "BISAG-N" && proj.IsSubmited == true /*&& proj.IsProcess == true*/
+                                     select proj).CountAsync();
+
+            var bisagNEntry = new DTOApprovedCount
+            {
+                //ProjId = bisagNProjId, 
+                //StatusId = 1041, // 
+                StatusId = StatusId, 
+                Status = "BISAG-N",
+                StatusActionsMappingId = 1,  
+                Total = bisagNCount  // The total count for BISAG-N projects
+            };
+
+            db.DTOApprovedCountlst.Add(bisagNEntry);
 
             return db;
         }

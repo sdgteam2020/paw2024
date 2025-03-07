@@ -569,7 +569,7 @@
 
                                                         @if (project.IsPullBack == false @* || project.IsPullBack == null *@) // project.undopsmId for the specified active project, excluding comments and records with undo remarks.
                                                         {
-                                                            if (project.StageId != 1) // stageId!=1 means here this project in not in initial stage..
+                                                            if (project.StageId != 1 && project.IsComplete != true) // stageId!=1 means here this project in not in initial stage..
                                                             {
                                                                 <button type="button" class="btn btn-success btn-Undo ml-2" style="padding: 1px !important;font-size: 13px !important;">Pull Back </button>
                                                             }

@@ -139,6 +139,7 @@ namespace swas.UI.Controllers
             return Json(ss);
 
         }
+
         public async Task<IActionResult> GetDashboardApproved(int StatusId, int statusActionsMappingId)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
@@ -1201,48 +1202,41 @@ s.IsDashboard,
 
         public IActionResult WaterMark3(string id)
         {
-            //var stream = new FileStream(@"path\to\file", FileMode.Open);
-            //return new FileStreamResult(stream, "application/pdf");
             try
             {
                 var ip = _httpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
-                // var filePath = System.IO.Path.Combine(_env.ContentRootPath, "wwwroot/Uploads/" + id);
                 var filePath = System.IO.Path.Combine(_env.WebRootPath, "Uploads\\" + id + "");
-                filepathpdf1 = generate3(filePath, ip);
-
-                aTimer = new System.Timers.Timer(60000);
-                // Hook up the Elapsed event for the timer.
-                aTimer.Elapsed += OnTimer1;
-
-                aTimer.Enabled = true;
-                return Redirect("../../Download/" + filepathpdf1 + ".pdf");
+                
+                if (System.IO.File.Exists(filePath))
+                {
+                    Random rnd = new Random();
+                    string Dfilename = rnd.Next(1, 1000).ToString() + ".pdf";
+                    var pdfBytes = GeneratePdfInMemory(filePath, ip);                    
+                    Response.Headers["Content-Disposition"] = $"inline; filename={Dfilename}";
+                    return File(pdfBytes, "application/pdf");
+                }
+                else
+                {
+                    return Content("PDF IS NOT IN FOLDER");
+                }  
             }
             catch (Exception ex)
             {
-
                 swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
                 return Json(0);
             }
         }
 
-
         //   created by ajay for unit comments on 24 Nov 23
         public void OnTimer1(Object source, ElapsedEventArgs e)
         {
-
             try
             {
                 var filePath1 = System.IO.Path.Combine(_env.ContentRootPath, "wwwroot\\Download\\" + filepathpdf + ".pdf");
-
-                // var filePath1 = System.IO.Path.Combine(_env.ContentRootPath, "wwwroot/Download/" + filepathpdf + ".pdf");
-
                 if (System.IO.File.Exists(filePath1))
                 {
                     // If file found, delete it    
-
                     System.IO.File.Delete(filePath1);
-
-
                 }
             }
             catch (Exception ex)
@@ -1291,6 +1285,44 @@ s.IsDashboard,
 
                 swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
                 return "";
+            }
+        }
+
+
+        public byte[] GeneratePdfInMemory(string path, string ip)
+        {
+            try
+            {
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    PdfDocument pdfDoc = new PdfDocument(new PdfReader(path), new PdfWriter(memoryStream));
+                    Document doc = new Document(pdfDoc);
+                    PdfFont font = PdfFontFactory.CreateFont(FontProgramFactory.CreateFont(StandardFonts.HELVETICA));
+                    Paragraph paragraph = new Paragraph(ip + " " + DateTime.Now)
+                                            .SetFont(font)
+                                            .SetFontSize(30);
+
+                    PdfExtGState gs1 = new PdfExtGState().SetFillOpacity(0.2f);
+                    for (int i = 1; i <= pdfDoc.GetNumberOfPages(); i++)
+                    {
+                        PdfPage pdfPage = pdfDoc.GetPage(i);
+                        PdfCanvas over = new PdfCanvas(pdfPage);
+                        over.SaveState();
+                        over.SetExtGState(gs1);
+
+                        doc.ShowTextAligned(paragraph, 297, 450, i, TextAlignment.CENTER, VerticalAlignment.MIDDLE, 45);
+
+                        over.RestoreState();
+                    }
+
+                    doc.Close();
+                    return memoryStream.ToArray();
+                }
+            }
+            catch (Exception ex)
+            {
+                swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                return null;
             }
         }
 
@@ -1549,17 +1581,18 @@ s.IsDashboard,
             {
                 string inputPdfPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/SOP/dgis.pdf");
                 string ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
-                string outputFileName = generate3(inputPdfPath, ipAddress);
-                if (string.IsNullOrEmpty(outputFileName))
+                if (System.IO.File.Exists(inputPdfPath))
                 {
-                    return View("Error");
+                    Random rnd = new Random();
+                    string Dfilename = rnd.Next(1, 1000).ToString() + ".pdf";
+                    var pdfBytes = GeneratePdfInMemory(inputPdfPath, ipAddress);
+                    Response.Headers["Content-Disposition"] = $"inline; filename={Dfilename}";
+                    return File(pdfBytes, "application/pdf");
                 }
-                string outputFilePath = Path.Combine(_env.ContentRootPath, "wwwroot/Download", outputFileName + ".pdf");
-                var fileStream = new FileStream(outputFilePath, FileMode.Open, FileAccess.Read);
-                return new FileStreamResult(fileStream, "application/pdf")
+                else
                 {
-                    FileDownloadName = outputFileName + ".pdf"
-                };
+                    return Content("PDF IS NOT IN FOLDER");
+                }
             }
             catch
             {

@@ -29,6 +29,7 @@ function GetAllDashbaordCount() {
 
         },
         success: function (data) {
+            // console.log("Dashboard", data)
             var dtoDashboardHeaderlst = data.dtoDashboardHeaderlst;
             var dTOApprovedCountlst = data.dtoApprovedCountlst;
             var dTODashboardCountlstForAction = data.dtoDashboardCountlstForAction;
@@ -39,36 +40,7 @@ function GetAllDashbaordCount() {
             var peding = 0;
             var sent = 0;
             if (data != null) {
-                //listitem += '<div class="newprojectheading text-center "> Status </div>';
-                //listitem += '<div class="r-1" style="margin-top: 13px;">';
-                //listitem += '<div class="cd-1  ProjectWiseStatus cursorpointer" style="background-color:white">';
-                //listitem += '<div class="icon-container ">';
-                //listitem += '<img src="/assets/images/icons/status.png" alt="Icon" style="height:50px">';
 
-                //listitem += '</div>';
-                //listitem += '<div class="cursorpointer ">';
-                //listitem += '<div class="mb-4">';
-                //listitem += '<div class="t-1 statusprojsummry">Project Wise <br> Status</div> ';
-
-
-                //   listitem += '<button type="button" class="btn btn-primary"> ' + DTODashboardActionlst[j].action +' <span class="badge badge-light">9</span>';
-
-                //listitem += '<span class="badge badge-light text-black" style="font-size:18px"><span class="badge bg-danger">0</span></span>';
-
-
-
-                //listitem += '<span class="badge badge-primary mr-2"></span>';
-
-
-
-
-                //listitem += ' </div>';
-                //listitem += '';
-
-                //listitem += ' </div>';
-
-                //listitem += ' </div>';
-                //listitem += '</div>';
                 for (var i = 0; i < dtoDashboardHeaderlst.length; i++) {
                     if (stageId != dtoDashboardHeaderlst[i].stageId) {
                         if (stageId != 0) {
@@ -132,6 +104,7 @@ function GetAllDashbaordCount() {
                     }
 
                     listitem += '<div class="icon-container ApprovedProj cursorpointer"><span class="d-none" id="spnstatusId">' + dtoDashboardHeaderlst[i].statusId + '</span>';
+                    //listitem += '<div class="icon-container ApprovedProj cursorpointer"><span class="d-none" id="spnstatus">' + dtoDashboardHeaderlst[i].status + '</span>';
                     /* listitem += '<img src="/assets/images/icons/' + dtoDashboardHeaderlst[i].icons +'" alt="Icon" style="height:25px">';*/
                     if (dtoDashboardHeaderlst[i].statusId == 2 || dtoDashboardHeaderlst[i].statusId == 3 || dtoDashboardHeaderlst[i].statusId == 22 || dtoDashboardHeaderlst[i].statusId == 31 || dtoDashboardHeaderlst[i].statusId == 37) {
                         if (dtoDashboardHeaderlst[i].statusId == 3)
@@ -143,8 +116,14 @@ function GetAllDashbaordCount() {
                         var approvedcount = dTOApprovedCountlst.filter(function (element) { return element.statusId == dtoDashboardHeaderlst[i].statusId; });
                         if (approvedcount.length > 0)
                             /* listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span><h5 style="margin-top: 8px;" >' + approvedcount[0].total + ' </h5>';*/
-                            listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span>' +
-                                '<h5 style="margin-top: 8px;" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">' + approvedcount[0].total + ' </h5>';
+                            if (dtoDashboardHeaderlst[i].status.includes("BISAG-N")) {
+                                listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span>' +
+                                    '<h5 style="margin-top: 8px; padding-top: 10px;" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">' + approvedcount[0].total + ' </h5>';
+                            }
+                            else {
+                                listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span>' +
+                                    '<h5 style="margin-top: 8px;" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">' + approvedcount[0].total + ' </h5>';    
+                            }
 
                         else
                             listitem += '<span class="d-none" id="spnstatusActionsMappingId">0</span><h5 style="margin-top: 8px;" >0 </h5>';
@@ -152,25 +131,36 @@ function GetAllDashbaordCount() {
                     listitem += '<div class="t-1 statusprojsummry d-none">' + dtoDashboardHeaderlst[i].status + '</div> ';
                     listitem += '</div>';
                     listitem += '<div class="cursorpointer btnGetsummay "><span class="d-none" id="spnstatusId">' + dtoDashboardHeaderlst[i].statusId + '</span>';
+                    //listitem += '<div class="cursorpointer btnGetsummay "><span class="d-none" id="spnstatus">' + dtoDashboardHeaderlst[i].status + '</span>';
                     listitem += '<div class="">';
-                    listitem += '<div class="t-1 statusprojsummry">' + dtoDashboardHeaderlst[i].status + '</div> ';
+                    debugger;
+                    if (dtoDashboardHeaderlst[i].status.includes("BISAG-N")) {
+                        listitem += '<div class="t-1 statusprojsummry" style="padding-top: 7px;" >' + dtoDashboardHeaderlst[i].status + '</div> ';
+                    }
+                    else {
+                        listitem += '<div class="t-1 statusprojsummry">' + dtoDashboardHeaderlst[i].status + '</div> ';
+                    }
+
+                    if (dtoDashboardHeaderlst[i].status.includes("BISAG-N")) {
+
+                        listitem += '<span class="badge badge-light text-black d-none" style="font-size:18px" data-toggle="tooltip" data-placement="top" ><span class="badge bg-danger">' + peding + '</span> / <span class="badge bg-success">' + sent + '</span></span>';
+
+                        listitem += ' </div>';
+                        listitem += '';
+                        listitem += ' <div class="mb-2">';
+                        listitem += '<span class="badge badge-primary mr-2 d-none" style="font-size:14px" data-toggle="tooltip" data-placement="top" title="Total No of transaction at this stage">' + tot + '</span>';
+
+                    }
+                    else {
+                        listitem += '<span class="badge badge-light text-black" style="font-size:18px" data-toggle="tooltip" data-placement="top" ><span class="badge bg-danger">' + peding + '</span> / <span class="badge bg-success">' + sent + '</span></span>';
 
 
-                    //   listitem += '<button type="button" class="btn btn-primary"> ' + DTODashboardActionlst[j].action +' <span class="badge badge-light">9</span>';
+                        listitem += ' </div>';
+                        listitem += '';
+                        listitem += ' <div class="mb-2">';
+                        listitem += '<span class="badge badge-primary mr-2" style="font-size:14px" data-toggle="tooltip" data-placement="top" title="Total No of transaction at this stage">' + tot + '</span>';
+                    }
 
-                    listitem += '<span class="badge badge-light text-black" style="font-size:18px" data-toggle="tooltip" data-placement="top" ><span class="badge bg-danger">' + peding + '</span> / <span class="badge bg-success">' + sent + '</span></span>';
-
-
-
-                    //listitem += '<span class="badge badge-primary mr-2"></span>';
-
-
-
-
-                    listitem += ' </div>';
-                    listitem += '';
-                    listitem += ' <div class="mb-2">';
-                    listitem += '<span class="badge badge-primary mr-2" style="font-size:14px" data-toggle="tooltip" data-placement="top" title="Total No of transaction at this stage">' + tot + '</span>';
                     listitem += ' </div>';
                     listitem += ' </div>';
 
@@ -192,6 +182,7 @@ function GetAllDashbaordCount() {
 
                 $("body").on("click", ".ApprovedProj", function () {
                     var spnstatusId = $(this).closest("div").find("#spnstatusId").html();
+                    //var spnstatus = $(this).closest("div").find("#spnstatus").html();
                     var spnstatusActionsMappingId = $(this).closest("div").find("#spnstatusActionsMappingId").html();
 
                     tittle = "Total Proj Movement: " + $(this).closest("div").find(".statusprojsummry").html();
@@ -233,6 +224,10 @@ function GetAllDashbaordCount() {
 
                         if (spnstatusId == 2 || spnstatusId == 3 || spnstatusId == 22) {
 
+                        } else if (spnstatusId == 1041) {
+                            $('#ProjectApprovedTittle').html(tittle);
+                            $('#BISAG-N').modal('show');
+                            getProjBisagN(spnstatusId, spnstatusActionsMappingId);
                         } else {
                             $('#ProjectApprovedTittle').html(tittle);
                             $('#ProjApproved').modal('show');
@@ -244,13 +239,14 @@ function GetAllDashbaordCount() {
                 $("body").on("click", ".btnGetsummay", function () {
 
                     var spnstatusId = $(this).closest("div").find("#spnstatusId").html();
+                    if (spnstatusId != 1041) {
+                        $('#ProjGetsummay').modal('show');
+                        ($(this).closest("div").find(".statusprojsummry").html());
+                        $('#ProjectSummaryTittle').html("Total Proj Movement: " + $(this).closest("div").find(".statusprojsummry").html());
+                        $('#IsNotduplicate').prop('checked', false);
 
-                    $('#ProjGetsummay').modal('show');
-                    ($(this).closest("div").find(".statusprojsummry").html());
-                    $('#ProjectSummaryTittle').html("Total Proj Movement: " + $(this).closest("div").find(".statusprojsummry").html());
-                    $('#IsNotduplicate').prop('checked', false);
-
-                    getProjGetsummay(spnstatusId, true);
+                        getProjGetsummay(spnstatusId, true);
+                    }
 
 
                 })
@@ -491,9 +487,9 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                         listItem += "<td class='align-middle nowrap'><span id='ProjName'>" + response[i].projName + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + DateFormateddMMyyyyhhmmss(response[i].timeStamp) + "</span></td>";
-
+                        //if (response[i].status != "BISAG-N") {
                         listItem += "<td ><span class='badge badge-success' id='divName'>" + Status + "</span></td>";
-
+                        //}
                         listItem += "</tr>";
                         count++;
                     }
@@ -863,3 +859,214 @@ function DateFormateddMMyyyyhhmmss(date) {
 
     //`${datef2.getFullYear()}/` + monthsans + `/` + dayans ;
 }
+
+
+function getProjBisagN(spnstatusId, spnstatusActionsMappingId) {
+    var listItem = "";
+    var table = $('#dashboardApprovedBisagN').DataTable(); // Initialize DataTable
+    table.clear().destroy(); // Destroy the existing table instance
+
+    var userdata = {
+        "StatusId": spnstatusId,
+        "statusActionsMappingId": spnstatusActionsMappingId,
+    };
+
+    $.ajax({
+        url: '/Home/GetDashboardApproved',
+        contentType: 'application/x-www-form-urlencoded',
+        data: userdata,
+        type: 'POST',
+        success: function (response) {
+            if (response != "null" && response != null) {
+
+                if (response == -1) {
+                    Swal.fire({ text: "No data found." });
+                } else if (response == 0) {
+
+                    $('#DetailBodyBisagN').empty();
+                    listItem += "<tr><td class='text-center' colspan='7'>No Record Found</td></tr>";
+                    $("#DetailBodyBisagN").html(listItem);
+                    $("#lblTotal").html(0);
+
+                } else {
+                    var count = 1;
+
+                    $('#DetailBodyBisagN').empty();
+                    for (var i = 0; i < response.length; i++) {
+                        listItem += "<tr>";
+                        listItem += "<td class='align-middle'>" + count + "</td>";
+                        listItem += "<td class='align-middle nowrap'><span id='ProjName'>" + response[i].projName + "</span></td>";
+                        listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
+                        listItem += "<td class='align-middle'><span id='ProjName'>" + DateFormateddMMyyyyhhmmss(response[i].timeStamp) + "</span></td>";
+                        listItem += "</tr>";
+                        count++;
+                    }
+
+                    $("#DetailBodyBisagN").html(listItem);
+
+                    // Initialize the DataTable
+                    var table = $('#dashboardApprovedBisagN').DataTable({
+                        lengthChange: true,
+                        retrieve: true,
+                        bDestroy: true,
+                        searching: true,
+                        stateSave: true,
+                        "order": [[0, "asc"]],
+                        "ordering": true,
+                        "paging": true,
+                        dom: 'lBfrtip',
+                        buttons: [
+                            'copy',
+                            'excel',
+                            'csv',
+                        ],
+                        searchBuilder: {
+                            conditions: {
+                                num: {
+                                    'MultipleOf': {
+                                        conditionName: 'Multiple Of',
+                                        init: function (that, fn, preDefined = null) {
+                                            var el = $('<input/>').on('input', function () { fn(that, this) });
+
+                                            if (preDefined !== null) {
+                                                $(el).val(preDefined[0]);
+                                            }
+
+                                            return el;
+                                        },
+                                        inputValue: function (el) {
+                                            return $(el[0]).val();
+                                        },
+                                        isInputValid: function (el, that) {
+                                            return $(el[0]).val().length !== 0;
+                                        },
+                                        search: function (value, comparison) {
+                                            return value % comparison === 0;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                }
+            } else {
+                $('#DetailBodyBisagN').empty();
+                listItem += "<tr><td class='text-center' colspan='7'>No Record Found</td></tr>";
+                $("#DetailBodyBisagN").html(listItem);
+            }
+        },
+        error: function (result) {
+            Swal.fire({ text: "Error loading data." });
+        }
+    });
+}
+
+//function getProjBisagN(spnstatusId, spnstatusActionsMappingId) {
+//    var listItem = "";
+//    var table = new DataTable('#dashboardApprovedBisagN');
+//    table.destroy();
+//    /* alert(spnstatusActionsMappingId)*/
+//    var userdata = {
+//        "StatusId": spnstatusId,
+//        "statusActionsMappingId": spnstatusActionsMappingId,
+//    };
+
+//    $.ajax({
+//        url: '/Home/GetDashboardApproved',
+//        contentType: 'application/x-www-form-urlencoded',
+//        data: userdata,
+//        type: 'POST',
+//        success: function (response) {
+//            if (response != "null" && response != null) {
+
+//                if (response == -1) {
+//                    Swal.fire({ text: "" });
+//                } else if (response == 0) {
+
+//                    $('#DetailBodyBisagN').empty();
+//                    listItem += "<tr><td class='text-center' colspan='7'>No Record Found</td></tr>";
+//                    $("#DetailBodyBisagN").html(listItem);
+//                    $("#lblTotal").html(0);
+
+
+//                } else {
+//                    var count = 1;
+
+
+//                    $('#DetailBodyBisagN').empty();
+//                    $('#dashboardApprovedBisagN').dataTable().fnClearTable();
+//                    $('#DetailBodyBisagN').dataTable().fnDestroy();
+//                    for (var i = 0; i < response.length; i++) {
+//                        listItem += "<tr>";
+//                        listItem += "<td class='align-middle'>" + count + "</td>";
+//                        listItem += "<td class='align-middle nowrap'><span id='ProjName'>" + response[i].projName + "</span></td>";
+//                        listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
+//                        listItem += "<td class='align-middle'><span id='ProjName'>" + DateFormateddMMyyyyhhmmss(response[i].timeStamp) + "</span></td>";
+//                        listItem += "</tr>";
+//                        count++;
+//                    }
+
+//                    $("#DetailBodyBisagN").html(listItem);
+
+//                    var table = $('#dashboardApprovedBisagN').DataTable({
+//                        lengthChange: true,
+//                        retrieve: true,
+//                        bDestroy: true,
+
+//                        searching: true,
+//                        stateSave: true,
+//                        "order": [[0, "asc"]],
+//                        "ordering": true,
+//                        "paging": true,
+//                        dom: 'lBfrtip',
+//                        buttons: [
+//                            'copy',
+//                            'excel',
+//                            'csv',
+//                        ],
+//                        searchBuilder: {
+//                            conditions: {
+//                                num: {
+//                                    'MultipleOf': {
+//                                        conditionName: 'Multiple Of',
+//                                        init: function (that, fn, preDefined = null) {
+//                                            var el = $('<input/>').on('input', function () { fn(that, this) });
+
+//                                            if (preDefined !== null) {
+//                                                $(el).val(preDefined[0]);
+//                                            }
+
+//                                            return el;
+//                                        },
+//                                        inputValue: function (el) {
+//                                            return $(el[0]).val();
+//                                        },
+//                                        isInputValid: function (el, that) {
+//                                            return $(el[0]).val().length !== 0;
+//                                        },
+//                                        search: function (value, comparison) {
+//                                            return value % comparison === 0;
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    });
+//                }
+//            }
+//            else {
+
+//                $('#DetailBodyBisagN').empty();
+//                listItem += "<tr><td class='text-center' colspan='7'>No Record Found</td></tr>";
+//                $("#DetailBodyBisagN").html(listItem);
+
+
+
+//            }
+//        },
+//        error: function (result) {
+//            Swal.fire({ text: "" });
+//        }
+//    });
+//}

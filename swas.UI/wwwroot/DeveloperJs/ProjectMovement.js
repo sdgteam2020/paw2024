@@ -14,7 +14,6 @@
         mMsater(0, "ddlfwdAction", 11, $("#ddlfwdSubStage").val())
     });
 
-
     $("#ddlfwdAction").change(function () {
 
         mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html());
@@ -58,60 +57,10 @@
         select: function (e, i) {
             e.preventDefault();
             $("#txtProjectName").val(i.item.label);
-
             GetProjectMovement(i.item.value);
-
         },
         appendTo: '#suggesstion-box'
     });
-
-    //$("#txtProjectName").autocomplete({
-    //    minLength: 2,
-    //    source: function (request, response) {
-    //        $.ajax({
-    //            url: '/Projects/GetALLByProjectName',
-    //            type: 'POST',
-    //            contentType: 'application/x-www-form-urlencoded',
-    //            data: { "ProjName": request.term },
-    //            success: function (data) {
-    //                if (data.length > 0) {
-    //                    response($.map(data, function (item) {
-    //                        return {
-    //                            label: item.name,
-    //                            value: item.id,
-    //                            description: item.description
-    //                        };
-    //                    }));
-    //                } else {
-    //                    $("#txtProjectName").val("");
-    //                    alert("Project not found.");
-    //                }
-    //            },
-    //            error: function (xhr) {
-    //                console.error(xhr.responseText);
-    //            }
-    //        });
-    //    },
-    //    select: function (event, ui) {
-    //        event.preventDefault();
-    //        $("#txtProjectName").val(ui.item.label);
-    //        GetProjectMovement(ui.item.value);
-    //    },
-    //    appendTo: '#suggesstion-box' // Ensure dropdown stays inside the form container
-    //}).autocomplete("instance")._renderItem = function (ul, item) {
-    //    return $("<li>")
-    //        .append("<div class='autocomplete-item'><strong>" + item.label + "</strong><br><small>" + item.description + "</small></div>")
-    //        .appendTo(ul);
-    //};
-
-    //// Ensure dropdown follows the input field dimensions
-    //$("#txtProjectName").on("keyup focus", function () {
-    //    $(".ui-autocomplete").css({
-    //        "width": $(this).outerWidth() + "px", // Set width same as input
-    //        "z-index": 1000, // Ensure it's above other elements
-    //        "position": "absolute"
-    //    });
-    //});
 
     $("#btnFwdNext").click(function () {
         requiredFields = $('#ProjFwd').find('.requiredField');
@@ -186,8 +135,6 @@
         });
     }
 
-
-
     $("#btnAttchMultiforpsmid").click(function () {
 
         requiredFields = $('#ProjFwd').find('.requiredFieldAttch');
@@ -220,11 +167,8 @@
     $("#btnFwdConfirm").click(function () {
 
         $('#ProjFwdEdit').modal('hide');
-
         GetProjectMovement($("#spanProjectId").html());
-
     });
-
 });
 
 
@@ -265,7 +209,6 @@ function UploadFiles() {
                     icon: "error",
                     title: "Oops...",
                     text: "Only Pdf File Upload!",
-
                 });
             }
         },
@@ -300,15 +243,12 @@ function AttechHistory() {
                     });
                 }
                 else if (response == 0) {
-
                     listItem += "<tr><td class='text-center' colspan=5>No Record Found</td></tr>";
-
                     $("#DetailBody3").html(listItem);
                     $("#lblTotal").html(0);
                 }
 
                 else {
-
 
                     // { attId: 8, psmId: 8, attPath: 'Swas_22ed1265-b2a0-4008-b7ff-b3eb5f704849.pdf', actionId: 0, timeStamp: '2024-05-02T16:17:45.6016413', … }
                     for (var i = 0; i < response.length; i++) {
@@ -320,8 +260,6 @@ function AttechHistory() {
                         listItem += "<td class='align-middle'><span id='corpsName'><a class='link-success' target='_blank' href=/uploads/" + response[i].attPath + ">" + response[i].actFileName + "</a></span></td>";
                         listItem += "<td class='align-middle'><span id='divName'>" + response[i].timeStamp + "</span></td>";
 
-
-
                         /*    listItem += "<td class='nowrap'><button type='button' class='cls-btnSend btn btn-outline-success mr-1'>Send To Verification</button></td>";*/
                         listItem += "</tr>";
                     }
@@ -329,13 +267,7 @@ function AttechHistory() {
                     $("#DetailBody3").html(listItem);
                     $("#lblTotal").html(response.length);
 
-
-
                     var rows;
-
-
-
-
 
                     $("body").on("click", ".cls-btnDelete", function () {
 
@@ -351,12 +283,9 @@ function AttechHistory() {
                             if (result.value) {
 
                                 Deleteattechment($(this).closest("tr").find("#spnattId").html());
-
                             }
                         });
                     });
-
-
                 }
             }
             else {
@@ -381,8 +310,6 @@ function Deleteattechment(AttechId) {
         data: { "AttechId": AttechId },
         success: function (response) {
             //console.log(response);
-
-
             if (response == 1) {
                 Swal.fire({
                     position: 'top-end',
@@ -391,11 +318,8 @@ function Deleteattechment(AttechId) {
                     showConfirmButton: false,
                     timer: 1500
                 });
-
                 AttechHistory();
-
             }
-
         }
     });
 }
@@ -546,8 +470,6 @@ function GetProjectMovement(ProjectId) {
                         $("#TimeStampToProjfwd").val($(this).closest("tr").find("#spnDate").html());
                         $("#SpnFwdStakeHolderId").html($(this).closest("tr").find("#spneditstakeHolderId").html());
 
-
-
                         mMsaterfwdStage($(this).closest("tr").find("#spnStageId").html(), "ddlfwdStage", 5, 0, 1)
                         mMsaterStage($(this).closest("tr").find("#spnStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#spnStageId").html(), 0)
                         /*mMsater($(this).closest("tr").find("#spnActionId").html(), "ddlfwdAction", 7, $(this).closest("tr").find("#spnStatusId").html())*/
@@ -555,13 +477,9 @@ function GetProjectMovement(ProjectId) {
                         mMsaterFwdTo($(this).closest("tr").find("#spnToUnitId").html(), "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html(), $(this).closest("tr").find("#spnToUnitId").html());
 
                     });
-
                 }
-
             }
-
         }
-
     }
     );
 
