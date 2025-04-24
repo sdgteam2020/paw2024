@@ -370,11 +370,11 @@ function AddProject(thistag) {
                 
 
             }
-            else if (result == -5) {
+            else if (result.indcludes("Error")) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Something went wrong or Invalid Entry!',
+                    text: result,
 
                 })
 

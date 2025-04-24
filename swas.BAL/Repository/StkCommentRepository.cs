@@ -29,7 +29,7 @@ namespace swas.BAL.Repository
                          join project in _context.Projects on comment.ProjId equals project.ProjId // Assuming 'ProjId' is in the 'Stk_Comments' table
                          //join users in _context.Users on comment.UpdatedByUserId equals users.UserIntId
                               where comment.ProjId == Data.ProjId //&& comment.StakeHolderId==Data.StakeHolderId // && comment.StakeHolderId == stakeholderId
-                              orderby comment.StkCommentId descending
+                              orderby comment.DateTimeOfUpdate descending
                          select new DTOProComments
                          {
                              Stakeholder = stakeholder.UnitName,

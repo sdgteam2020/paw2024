@@ -353,7 +353,7 @@ namespace swas.UI.Controllers
                             atthis.Reamarks = Reamarks;
                             atthis.PsmId = PsmId;
                             atthis.UpdatedByUserId = Logins.unitid;
-                            atthis.DateTimeOfUpdate = DateTime.Now;
+                            //atthis.DateTimeOfUpdate = DateTime.Now;
                             atthis.IsDeleted = false;
                             atthis.IsActive = true;
                             atthis.EditDeleteBy = Logins.unitid;
@@ -424,7 +424,8 @@ namespace swas.UI.Controllers
             }
             catch (Exception ex)
             {
-                return Json(-5);
+                swas.BAL.Utility.Error.ExceptionHandle("Add Project:-"+ex.Message);
+                return Json("Error :-" + ex.Message);
             }
         }
 
@@ -481,7 +482,7 @@ namespace swas.UI.Controllers
                     tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
                     // var project = await _projectsRepository.GetProjectByIdAsync(projid);
                     psmove = await _projectsRepository.GettXNByPsmIdAsync(PslmId);
-                    psmove.DateTimeOfUpdate = DateTime.Now;
+                    //psmove.DateTimeOfUpdate = DateTime.Now;
                     psmove.IsComplete = true;
                     await _projectsRepository.UpdateTxnAsync(psmove);
 
@@ -518,7 +519,7 @@ namespace swas.UI.Controllers
                     psmove = await _projectsRepository.GettXNByPsmIdwithUnitId(PsmId, Convert.ToInt32(Logins.unitid));
                     if (psmove != null)
                     {
-                        psmove.DateTimeOfUpdate = DateTime.Now;
+                        //psmove.DateTimeOfUpdate = DateTime.Now;
                         psmove.IsRead = true;
                         await _projectsRepository.UpdateTxnAsync(psmove);
                         return Json(PsmId);
@@ -625,7 +626,7 @@ namespace swas.UI.Controllers
                     tbl_Projects proj = new tbl_Projects();
                     // var project = await _projectsRepository.GetProjectByIdAsync(projid);
                     proj = await _projectsRepository.GetProjectByIdAsync(ProjId);
-                    proj.DateTimeOfUpdate = DateTime.Now;
+                    //proj.DateTimeOfUpdate = DateTime.Now;
                     proj.IsProcess = true;
 
                     await _projectsRepository.UpdateProjectAsync(proj);
@@ -857,7 +858,7 @@ namespace swas.UI.Controllers
                     movent.IsRead = false;
                     movent.UndoRemarks = Remarks;
                     movent.IsComplete = true;
-                    movent.DateTimeOfUpdate = DateTime.Now;
+                    //movent.DateTimeOfUpdate = DateTime.Now;
                     movent.IsPullBack = true;
                     var Ret = await _psmRepository.UpdateWithReturn(movent);
 
@@ -1036,7 +1037,8 @@ namespace swas.UI.Controllers
                     var projectStkHolderMovementData = await _projectsRepository.GetProjStkHolderMovmentByPsmiId(cmmets.PsmId);
                     if (projectStkHolderMovementData != null)
                     {
-                        projectStkHolderMovementData.TimeStamp = DateTime.Now;
+                        projectStkHolderMovementData.DateTimeOfUpdate = CommentDate; // To show the comment date on the dashboard btnGetsummay 
+                        //projectStkHolderMovementData.TimeStamp = DateTime.Now; // no need to update the TimeStamp on ProjectComment, this will affect the MovHistory of project update by Divyanshu on 12/03/2025
                         var rets = await _projectsRepository.UpdateProjectStkMovementAsync(projectStkHolderMovementData);
                         if (rets != null)
                         {
@@ -1435,7 +1437,7 @@ namespace swas.UI.Controllers
 
                     tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
                     psmove = await _projectsRepository.GettXNByPsmIdAsync(PsmId);
-                    psmove.DateTimeOfUpdate = DateTime.Now;
+                    //psmove.DateTimeOfUpdate = DateTime.Now;
                     psmove.IsRead = false;
                     await _projectsRepository.UpdateTxnAsync(psmove);
 
@@ -1468,7 +1470,7 @@ namespace swas.UI.Controllers
                     // Update IsRead to false for all records
                     foreach (var comment in inboxComments)
                     {
-                        comment.DateTimeOfUpdate = DateTime.Now;
+                        //comment.DateTimeOfUpdate = DateTime.Now;
                         comment.IsRead = false;
                         await _projectsRepository.UpdateTxnAsync(comment);
                     }
@@ -1773,7 +1775,7 @@ namespace swas.UI.Controllers
                     //{
                     if (inboxComments != null)
                     {
-                        inboxComments.DateTimeOfUpdate = DateTime.Now;
+                        //inboxComments.DateTimeOfUpdate = DateTime.Now;
                         if (inboxComments.IsRead == false)
                         {
                             inboxComments.IsRead = true;
