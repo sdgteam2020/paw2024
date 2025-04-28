@@ -110,7 +110,7 @@ namespace swas.UI.Controllers
                     var AttHistry = _context.AttHistory.FirstOrDefault();
                     ViewBag.AttHistry = AttHistry;
 
-                   // var proj = await _projectsRepository.GetProjforDocView();
+                    // var proj = await _projectsRepository.GetProjforDocView();
                     ViewBag.proj = null;
 
                     return View();
@@ -182,78 +182,88 @@ namespace swas.UI.Controllers
         ///Created by Mr Manish  
         public async Task<ActionResult> DownloadAction(string[] selectedCheckboxes)
         {
+            try
             {
-                Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
-                var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-                var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
-                var watermarkText = $" {ipAddress}\n {currentDatetime}";
-
-                if (selectedCheckboxes == null || selectedCheckboxes.Length < 2)
                 {
-                    return View("Error");
-                }
+                    Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
+                    var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+                    var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
+                    var watermarkText = $" {ipAddress}\n {currentDatetime}";
 
-                MemoryStream mergedPdfStream = new MemoryStream();
-                using (PdfWriter pdfWriter = new PdfWriter(mergedPdfStream))
-                using (PdfDocument pdf = new PdfDocument(pdfWriter))
-                using (Document document = new Document(pdf))
-                {
-                    string uploadsFolder = System.IO.Path.Combine(_environment.WebRootPath, "Uploads");
-
-                    foreach (var fileName in selectedCheckboxes)
+                    if (selectedCheckboxes == null || selectedCheckboxes.Length < 2)
                     {
-                        string filePath = System.IO.Path.Combine(uploadsFolder, fileName);
+                        return View("Error");
+                    }
 
-                        if (!System.IO.File.Exists(filePath))
+                    MemoryStream mergedPdfStream = new MemoryStream();
+                    using (PdfWriter pdfWriter = new PdfWriter(mergedPdfStream))
+                    using (PdfDocument pdf = new PdfDocument(pdfWriter))
+                    using (Document document = new Document(pdf))
+                    {
+                        string uploadsFolder = System.IO.Path.Combine(_environment.WebRootPath, "Uploads");
+
+                        foreach (var fileName in selectedCheckboxes)
                         {
-                            return Json(new { error = true, errorMessage = "PDF File Not Found" });
-                        }
+                            string filePath = System.IO.Path.Combine(uploadsFolder, fileName);
 
-                        string watermarkedFilePath = await generate2(filePath, watermarkText);
-
-                        using (PdfDocument sourcePdf = new PdfDocument(new PdfReader(watermarkedFilePath)))
-                        {
-                            int numberOfPages = sourcePdf.GetNumberOfPages();
-
-                            for (int i = 1; i <= numberOfPages; i++)
+                            if (!System.IO.File.Exists(filePath))
                             {
-                                PdfPage page = sourcePdf.GetPage(i);
-                                PdfPage newPage = pdf.AddNewPage(new PageSize(page.GetPageSize()));
-                                PdfCanvas canvas = new PdfCanvas(newPage);
-                                canvas.AddXObject(page.CopyAsFormXObject(pdf));
+                                return Json(new { error = true, errorMessage = "PDF File Not Found" });
                             }
-                        }
 
-                        System.IO.File.Delete(watermarkedFilePath);
+                            string watermarkedFilePath = await generate2(filePath, watermarkText);
+
+                            using (PdfDocument sourcePdf = new PdfDocument(new PdfReader(watermarkedFilePath)))
+                            {
+                                int numberOfPages = sourcePdf.GetNumberOfPages();
+
+                                for (int i = 1; i <= numberOfPages; i++)
+                                {
+                                    PdfPage page = sourcePdf.GetPage(i);
+                                    PdfPage newPage = pdf.AddNewPage(new PageSize(page.GetPageSize()));
+                                    PdfCanvas canvas = new PdfCanvas(newPage);
+                                    canvas.AddXObject(page.CopyAsFormXObject(pdf));
+                                }
+                            }
+
+                            System.IO.File.Delete(watermarkedFilePath);
+                        }
+                    }
+
+                    var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+                    var mergedPdfBytes = mergedPdfStream.ToArray();
+                    Random rnd = new Random();
+                    string Dfilename = rnd.Next(1, 1000).ToString();
+                    downloadFolderPath = System.IO.Path.Combine(_environment.ContentRootPath, "wwwroot/Download/" + Dfilename + ".pdf");
+
+                    System.IO.File.WriteAllBytes(downloadFolderPath, mergedPdfBytes);
+
+                    // Perform file download using HttpClient with TLS 1.2
+                    string downloadLink = await DownloadFileWithHttpClient(baseUrl, Dfilename);
+
+
+                    // Provide a download link to the user
+
+
+
+                    if (downloadLink != null)
+                    {
+                        // Provide a download link to the user
+                        return Json(new { downloadLink = downloadLink.ToString() });
+                    }
+                    else
+                    {
+                        // Handle the case where downloadLink is null (e.g., return an error message)
+                        return View("Error");
                     }
                 }
-
-                var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
-                var mergedPdfBytes = mergedPdfStream.ToArray();
-                Random rnd = new Random();
-                string Dfilename = rnd.Next(1, 1000).ToString();
-                downloadFolderPath = System.IO.Path.Combine(_environment.ContentRootPath, "wwwroot/Download/" + Dfilename + ".pdf");
-
-                System.IO.File.WriteAllBytes(downloadFolderPath, mergedPdfBytes);
-
-                // Perform file download using HttpClient with TLS 1.2
-                string downloadLink = await DownloadFileWithHttpClient(baseUrl, Dfilename);
-
-
-                // Provide a download link to the user
-
-
-
-                if (downloadLink != null)
-                {
-                    // Provide a download link to the user
-                    return Json(new { downloadLink = downloadLink.ToString() });
-                }
-                else
-                {
-                    // Handle the case where downloadLink is null (e.g., return an error message)
-                    return View("Error");
-                }
+            }
+            catch (Exception ex)
+            {
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "DownloadAction");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on Get All DownloadAction on DocumentsController.", ex, (s, e) => $"{s} - {e?.Message}");
+                return RedirectToAction("Error", "Home");
             }
         }
 
@@ -304,8 +314,6 @@ namespace swas.UI.Controllers
                 return "";
             }
         }
-
-
 
 
         [Authorize(Policy = "StakeHolders")]
@@ -366,10 +374,7 @@ namespace swas.UI.Controllers
                 // Comman.ExceptionHandle(ex.Message);
             }
         }
-
     }
-
-
 }
 
 

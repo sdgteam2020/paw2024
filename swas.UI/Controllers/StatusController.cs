@@ -19,14 +19,15 @@ namespace swas.UI.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IDataProtector _dataProtector;
         private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public StatusController( ApplicationDbContext context, IDataProtectionProvider DataProtector , IStatusRepository statusRepository, IHttpContextAccessor httpContextAccessor)
+        private readonly ILogger<StatusController> _logger;
+        public StatusController( ApplicationDbContext context, IDataProtectionProvider DataProtector , IStatusRepository statusRepository, IHttpContextAccessor httpContextAccessor, ILogger<StatusController> logger)
         {
             
             _context = context;
             _dataProtector = DataProtector.CreateProtector("swas.UI.Controllers.UnitDtlsController");
             _statusRepository = statusRepository;
             _httpContextAccessor = httpContextAccessor;
+            _logger = logger;
 
         }
 
@@ -97,42 +98,47 @@ namespace swas.UI.Controllers
         public async Task<IActionResult> Create(tbl_mStatus model)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
-            if (ModelState.IsValid)
+            try
             {
-                model.Status = model.Status;
-                model.IsDeleted = false;
-                model.IsActive = true;
-                model.UpdatedByUserId = (int)Logins.unitid; 
-                model.DateTimeOfUpdate = DateTime.Now;
-                model.EditDeleteDate = DateTime.Now;
-                model.EditDeleteBy = (int)Logins.unitid; 
-
-                model.InitiaalID = false;
-                model.FininshID = false;
-
-                if (model.StatusId == 0)
+                if (ModelState.IsValid)
                 {
-                    await _statusRepository.AddWithReturn(model);
-                    //await _actionsRepository.AddWithReturn(model);
-                    return Json(nmum.Save);
-                }
+                    model.Status = model.Status;
+                    model.IsDeleted = false;
+                    model.IsActive = true;
+                    model.UpdatedByUserId = (int)Logins.unitid;
+                    model.DateTimeOfUpdate = DateTime.Now;
+                    model.EditDeleteDate = DateTime.Now;
+                    model.EditDeleteBy = (int)Logins.unitid;
 
+                    model.InitiaalID = false;
+                    model.FininshID = false;
+
+                    if (model.StatusId == 0)
+                    {
+                        await _statusRepository.AddWithReturn(model);
+                        //await _actionsRepository.AddWithReturn(model);
+                        return Json(nmum.Save);
+                    }
+
+                    else
+                    {
+                        await _statusRepository.UpdateWithReturn(model);
+                        return Json(nmum.Update);
+                    }
+                }
                 else
                 {
-                    await _statusRepository.UpdateWithReturn(model);
-                    return Json(nmum.Update);
+                    return Json(nmum.NotSave);
                 }
-
-
-
             }
-            else
+            catch (Exception ex)
             {
-                return Json(nmum.NotSave);
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "Create");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on Create in StatusController.", ex, (s, e) => $"{s} - {e?.Message}");
+
+                return RedirectToAction("Error", "Home");
             }
-
-
         }
 
 
@@ -154,19 +160,31 @@ namespace swas.UI.Controllers
      
         public async Task<IActionResult> Edit(int id, tbl_mStatus status)
         {
-            if (id != status.StatusId)
+            try
             {
-                return NotFound();
-            }
+                if (id != status.StatusId)
+                {
+                    return NotFound();
+                }
 
-            if (ModelState.IsValid)
-            {
-                await _statusRepository.UpdateWithReturn(status);
+                if (ModelState.IsValid)
+                {
+                    await _statusRepository.UpdateWithReturn(status);
+                    return RedirectToAction(nameof(Index));
+                }
+
+                //return View(status);
                 return RedirectToAction(nameof(Index));
             }
+            catch (Exception ex)
+            {
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "Edit");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on Edit in StatusController.", ex, (s, e) => $"{s} - {e?.Message}");
 
-            //return View(status);
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction("Error", "Home");
+            }
+            
         }
 
 
@@ -188,8 +206,20 @@ namespace swas.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _statusRepository.Delete(id);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _statusRepository.Delete(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "DeleteConfirmed");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on DeleteConfirmed in StatusController.", ex, (s, e) => $"{s} - {e?.Message}");
+
+                return RedirectToAction("Error", "Home");
+            }
+           
         }
 
         

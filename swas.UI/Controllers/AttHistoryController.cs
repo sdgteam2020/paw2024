@@ -15,10 +15,11 @@ namespace swas.UI.Controllers
     public class AttHistoryController : Controller
     {
         private readonly IAttHistoryRepository _attHistoryRepository;
-
-        public AttHistoryController(IAttHistoryRepository attHistoryRepository)
+        private readonly ILogger<AttHistoryController> _logger;
+        public AttHistoryController(IAttHistoryRepository attHistoryRepository, ILogger<AttHistoryController> logger)
         {
             _attHistoryRepository = attHistoryRepository;
+            _logger = logger;
         }
 
         ///Created and Reviewed by : Sub Maj Sanal
@@ -65,12 +66,23 @@ namespace swas.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(tbl_AttHistory attHistory)
         {
-            if (ModelState.IsValid)
+            try
             {
-                await _attHistoryRepository.AddAttHistoryAsync(attHistory);
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    await _attHistoryRepository.AddAttHistoryAsync(attHistory);
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(attHistory);
             }
-            return View(attHistory);
+            catch (Exception ex)
+            {
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "Create");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on Get All Create on AttHistoryContoller.", ex, (s, e) => $"{s} - {e?.Message}");
+                return RedirectToAction("Error", "Home");
+            }
+            
         }
         ///Created and Reviewed by : Sub Maj Sanal
         ///Reviewed Date : 31 Jul 23
@@ -94,18 +106,27 @@ namespace swas.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, tbl_AttHistory attHistory)
         {
-            if (id != attHistory.AttId)
+            try
             {
-                return NotFound();
+                if (id != attHistory.AttId)
+                {
+                    return NotFound();
+                }
+                if (ModelState.IsValid)
+                {
+                    await _attHistoryRepository.UpdateAttHistoryAsync(attHistory);
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(attHistory);
             }
-
-            if (ModelState.IsValid)
+            catch (Exception ex)
             {
-                await _attHistoryRepository.UpdateAttHistoryAsync(attHistory);
-                return RedirectToAction(nameof(Index));
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "Edit");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on Get All Edit on AttHistoryContoller.", ex, (s, e) => $"{s} - {e?.Message}");
+                return RedirectToAction("Error", "Home");
             }
-
-            return View(attHistory);
+            
         }
         ///Created and Reviewed by : Sub Maj Sanal
         ///Reviewed Date : 31 Jul 23
@@ -129,8 +150,18 @@ namespace swas.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _attHistoryRepository.DeleteAttHistoryAsync(id);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _attHistoryRepository.DeleteAttHistoryAsync(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "Create");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on Get All DeleteConfirmed on AttHistoryContoller.", ex, (s, e) => $"{s} - {e?.Message}");
+                return RedirectToAction("Error", "Home");
+            }            
         }
     }
 }

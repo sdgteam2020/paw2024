@@ -19,12 +19,13 @@ namespace swas.UI.Controllers
 
         private readonly IStagesRepository _stagesRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
-
-        public ActionsController(IActionsRepository actionsRepository, IHttpContextAccessor httpContextAccessor, IStagesRepository stagesRepository)
+        private readonly ILogger<ActionsController> _logger;
+        public ActionsController(IActionsRepository actionsRepository, IHttpContextAccessor httpContextAccessor, IStagesRepository stagesRepository, ILogger<ActionsController> logger)
         {
             _actionsRepository = actionsRepository;
             _stagesRepository = stagesRepository;
             _httpContextAccessor = httpContextAccessor;
+            _logger = logger;
         }
 
         ///Created and Reviewed by : Sub Maj Sanal
@@ -78,45 +79,53 @@ namespace swas.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(tbl_mActions model)
         {
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
-            if (ModelState.IsValid)
+            try
             {
+                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
-                var existingAction = await _actionsRepository.getActionByName(model.Actions);
-                if (existingAction != null)
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError("ActionName", "Action already exists in the table.");
-                    return View(model);
-                }
 
-                model.ActionDesc = model.Actions;
-                model.IsDeleted = false;
-                model.IsActive = true;
-                model.UpdatedByUserId = Logins.unitid;
-                model.DateTimeOfUpdate = DateTime.Now;
-                model.EditDeleteDate = DateTime.Now;
-                model.EditDeleteBy = Logins.unitid;
-                if (model.ActionsId == 0)
-                {
-                    await _actionsRepository.AddWithReturn(model);
-                    return Json(nmum.Save);
-                }
+                    var existingAction = await _actionsRepository.getActionByName(model.Actions);
+                    if (existingAction != null)
+                    {
+                        ModelState.AddModelError("ActionName", "Action already exists in the table.");
+                        return View(model);
+                    }
 
+                    model.ActionDesc = model.Actions;
+                    model.IsDeleted = false;
+                    model.IsActive = true;
+                    model.UpdatedByUserId = Logins.unitid;
+                    model.DateTimeOfUpdate = DateTime.Now;
+                    model.EditDeleteDate = DateTime.Now;
+                    model.EditDeleteBy = Logins.unitid;
+                    if (model.ActionsId == 0)
+                    {
+                        await _actionsRepository.AddWithReturn(model);
+                        return Json(nmum.Save);
+                    }
+
+                    else
+                    {
+                        await _actionsRepository.UpdateWithReturn(model);
+                        return Json(nmum.Update);
+                    }
+
+                }
                 else
                 {
-                    await _actionsRepository.UpdateWithReturn(model);
-                    return Json(nmum.Update);
+                    return Json(nmum.NotSave);
                 }
 
-
-
             }
-            else {
-                return Json(nmum.NotSave);
-            }
-
-            
+            catch (Exception ex)
+            {
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "Create");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on Create on ActionsController.", ex, (s, e) => $"{s} - {e?.Message}");
+                return RedirectToAction("Error", "Home");
+            }            
         }
 
 
@@ -140,18 +149,30 @@ namespace swas.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, tbl_mActions model)
         {
-            if (id != model.ActionsId)
+            try
             {
-                return NotFound();
-            }
+                if (id != model.ActionsId)
+                {
+                    return NotFound();
+                }
 
-            if (ModelState.IsValid)
+                if (ModelState.IsValid)
+                {
+                    await _actionsRepository.UpdateWithReturn(model);
+                    return RedirectToAction(nameof(Index));
+                }
+
+                return View(model);
+            }
+            catch (Exception ex)
             {
-                await _actionsRepository.UpdateWithReturn(model);
-                return RedirectToAction(nameof(Index));
-            }
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "Edit");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on Edit on ActionsController.", ex, (s, e) => $"{s} - {e?.Message}");
 
-            return View(model);
+                return RedirectToAction("Error", "Home");
+            }
+            
         }
 
         [Authorize(Policy = "Admin")]
@@ -173,8 +194,19 @@ namespace swas.UI.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int ActionsId)
         {
-            await _actionsRepository.Delete(ActionsId);
-            return Json(1);
+            try
+            {
+                await _actionsRepository.Delete(ActionsId);
+                return Json(1);
+            }
+            catch (Exception ex)
+            {
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "DeleteConfirmed");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on DeleteConfirmed on ActionsController.", ex, (s, e) => $"{s} - {e?.Message}");
+
+                return RedirectToAction("Error", "Home");
+            }            
         }
 
         #endregion
@@ -202,7 +234,6 @@ namespace swas.UI.Controllers
                 {
                     animatedView += "<div class=\"link-line\"></div>";
                 }
-
             }
 
             animatedView += "</div>";

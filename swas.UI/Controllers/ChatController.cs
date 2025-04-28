@@ -17,11 +17,13 @@ namespace swas.UI.Controllers
         private readonly ITrnChatMsgRepository _trnChatMsg;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ILogger<ChatController> _logger;
         public ChatController(
             UserManager<ApplicationUser> userManager,
             IUserMapChatRepository userMapChatRepository,
             IHttpContextAccessor httpContextAccessor,
-            ITrnChatMsgRepository trnChatMsg
+            ITrnChatMsgRepository trnChatMsg,
+            ILogger<ChatController> logger
             )
         {
 
@@ -29,6 +31,7 @@ namespace swas.UI.Controllers
             _userMapChatRepository = userMapChatRepository;
             _httpContextAccessor = httpContextAccessor;
             _trnChatMsg = trnChatMsg;
+            _logger = logger;
         }
         public async Task<IActionResult> Index()
         {
@@ -76,6 +79,10 @@ namespace swas.UI.Controllers
             }
             catch (Exception ex)
             {
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "GetAllUsers");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on Get All Users in ChatController.", ex, (s, e) => $"{s} - {e?.Message}");
+
                 return Json(nmum.Exception);
             }
         }
@@ -155,6 +162,9 @@ namespace swas.UI.Controllers
             }
             catch (Exception ex)
             {
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "SaveUserMapChat");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on Get All SaveUserMapChat in ChatController.", ex, (s, e) => $"{s} - {e?.Message}");
 
                 return Json(nmum.Exception);
             }

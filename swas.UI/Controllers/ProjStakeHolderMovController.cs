@@ -23,9 +23,9 @@ namespace swas.UI.Controllers
         private readonly IDdlRepository _dlRepository;
         private readonly IWebHostEnvironment _environment;
         private readonly IDataProtector _dataProtector;
+        private readonly ILogger<ProjStakeHolderMovController> _logger;
 
-
-        public ProjStakeHolderMovController(IProjStakeHolderMovRepository psmRepo, IProjectsRepository projectsRepository, IAttHistoryRepository attHistoryRepository, IHttpContextAccessor httpContextAccessor, IDdlRepository dlRepository, IWebHostEnvironment ienvironments, IDataProtectionProvider DataProtector)
+        public ProjStakeHolderMovController(IProjStakeHolderMovRepository psmRepo, IProjectsRepository projectsRepository, IAttHistoryRepository attHistoryRepository, IHttpContextAccessor httpContextAccessor, IDdlRepository dlRepository, IWebHostEnvironment ienvironments, IDataProtectionProvider DataProtector, ILogger<ProjStakeHolderMovController> logger)
         {
             _psmRepo = psmRepo;
             _projectsRepository = projectsRepository;
@@ -34,6 +34,7 @@ namespace swas.UI.Controllers
             _dlRepository = dlRepository;
             _environment = ienvironments;
             _dataProtector = DataProtector.CreateProtector("swas.UI.Controllers.ProjectsController");
+            _logger = logger;
         }
         ///Created by : Sub Maj M Sanal Kumar
         // Reviewed Date : 30 Jul 23
@@ -101,18 +102,30 @@ namespace swas.UI.Controllers
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
             if (Logins != null)
             {
-                if (id != projStakeHolderMov.PsmId)
+                try
                 {
-                    return NotFound();
+                    if (id != projStakeHolderMov.PsmId)
+                    {
+                        return NotFound();
+                    }
+
+                    if (ModelState.IsValid)
+                    {
+                        await _psmRepo.UpdateProjStakeHolderMovAsync(projStakeHolderMov);
+                        return RedirectToAction(nameof(Index));
+                    }
+
+                    return View(projStakeHolderMov);
+                }
+                catch (Exception ex)
+                {
+                    int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                    var eventId = new EventId(dynamicEventId, "Edit");
+                    _logger.Log(LogLevel.Error, eventId, "An error occurred while on Edit in ProjStakeHolderMovController.", ex, (s, e) => $"{s} - {e?.Message}");
+
+                    return Json(-1);
                 }
 
-                if (ModelState.IsValid)
-                {
-                    await _psmRepo.UpdateProjStakeHolderMovAsync(projStakeHolderMov);
-                    return RedirectToAction(nameof(Index));
-                }
-
-                return View(projStakeHolderMov);
             }
             else
             {
@@ -154,29 +167,25 @@ namespace swas.UI.Controllers
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
             if (Logins != null)
             {
+                try
+                {
+                    await _psmRepo.DeleteProjStakeHolderMovAsync(id);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                    var eventId = new EventId(dynamicEventId, "DeleteConfirmed");
+                    _logger.Log(LogLevel.Error, eventId, "An error occurred while on DeleteConfirmed in ProjStakeHolderMovController.", ex, (s, e) => $"{s} - {e?.Message}");
 
-                await _psmRepo.DeleteProjStakeHolderMovAsync(id);
-                return RedirectToAction(nameof(Index));
+                    return Json(-1);
+                }
             }
             else
             {
                 return Redirect("/Identity/Account/login");
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
 }

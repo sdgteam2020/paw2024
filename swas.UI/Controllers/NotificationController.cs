@@ -15,14 +15,16 @@ namespace swas.UI.Controllers
         private readonly INotificationRepository _notificationRepository;
         private readonly IProjectsRepository _projectsRepository;
         private readonly ITrnChatMsgRepository _trnChatMsg;
+        private readonly ILogger<NotificationController> _logger;
 
         public NotificationController(IHttpContextAccessor httpContextAccessor, INotificationRepository notificationRepository, IProjectsRepository projectsRepository,
-              ITrnChatMsgRepository trnChatMsg)
+              ITrnChatMsgRepository trnChatMsg, ILogger<NotificationController> logger)
         {
             _httpContextAccessor = httpContextAccessor;
             _notificationRepository = notificationRepository;
             _projectsRepository = projectsRepository;
             _trnChatMsg = trnChatMsg;
+            _logger = logger;
         }
         public IActionResult Index()
         {
@@ -141,7 +143,14 @@ namespace swas.UI.Controllers
                     return Redirect("/Identity/Account/login");
                 }
             }
-            catch (Exception ex) { return Json(-1); }
+            catch (Exception ex)
+            {
+                swas.BAL.Utility.Error.ExceptionHandle("Add Notification:-" + ex.Message);
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "AddNotification");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on Get All AddNotification in NotificationController.", ex, (s, e) => $"{s} - {e?.Message}");
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [HttpPost]
@@ -195,7 +204,10 @@ namespace swas.UI.Controllers
                 catch (Exception ex)
                 {
                     swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                    return Json(0);
+                    int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                    var eventId = new EventId(dynamicEventId, "IsReadNotification");
+                    _logger.Log(LogLevel.Error, eventId, "An error occurred while on IsReadNotification in NotificationController.", ex, (s, e) => $"{s} - {e?.Message}");
+                    return RedirectToAction("Error", "Home");
                 }
             }
             else
@@ -268,7 +280,10 @@ namespace swas.UI.Controllers
                 catch (Exception ex)
                 {
                     swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                    return Json(0);
+                    int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                    var eventId = new EventId(dynamicEventId, "UnReadNotification");
+                    _logger.Log(LogLevel.Error, eventId, "An error occurred while on UnRead Notification in NotificationController.", ex, (s, e) => $"{s} - {e?.Message}");
+                    return RedirectToAction("Error", "Home");
                 }
             }
             else
@@ -312,7 +327,11 @@ namespace swas.UI.Controllers
                 catch (Exception ex)
                 {
                     swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                    return Json(0);
+                    int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                    var eventId = new EventId(dynamicEventId, "UndoNotification");
+                    _logger.Log(LogLevel.Error, eventId, "An error occurred while on Undo Notification in NotificationController.", ex, (s, e) => $"{s} - {e?.Message}");
+
+                    return RedirectToAction("Error", "Home");
                 }
             }
             else
@@ -337,6 +356,10 @@ namespace swas.UI.Controllers
             }
             catch (Exception ex)
             {
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "GetNotificationCountForChat");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on Undo GetNotificationCountForChat in NotificationController.", ex, (s, e) => $"{s} - {e?.Message}");
+
                 return new JsonResult(new { message = ex.Message })
                 {
                     StatusCode = 500

@@ -41,6 +41,8 @@ using Microsoft.Extensions.Options;
 using swas.DAL;
 using Document = iText.Layout.Document;
 using System.IO;
+using Microsoft.Extensions.Logging;
+using iText.Kernel.Events;
 
 namespace swas.UI.Controllers
 {
@@ -69,6 +71,7 @@ namespace swas.UI.Controllers
 
         private readonly IUnitRepository _unitRepository;
         private readonly IConfiguration _configuration;
+        private readonly ILogger<ProjectsController> _logger;
 
         public ProjectsController(IProjectsRepository projectsRepository, IDdlRepository ddlRepository,
             IProjStakeHolderMovRepository psmRepository, IHttpContextAccessor httpContextAccessor,
@@ -78,8 +81,8 @@ namespace swas.UI.Controllers
             ICommentRepository commentRepository, IActionsRepository actionsRepository,
             IProjComments projComments, IStkCommentRepository stkCommentRepository,
             IProjStakeHolderMovRepository projStakeHolderMovRepository,
-            UserManager<ApplicationUser> userManager, IUnitRepository unitRepository, IConfiguration configuration, ApplicationDbContext context
-
+            UserManager<ApplicationUser> userManager, IUnitRepository unitRepository, IConfiguration configuration, ApplicationDbContext context,
+            ILogger<ProjectsController> logger
 
             )
         {
@@ -103,6 +106,7 @@ namespace swas.UI.Controllers
             _unitRepository = unitRepository;
             _configuration = configuration;
             _dbContext = context;
+            _logger = logger;
 
         }
 
@@ -386,6 +390,8 @@ namespace swas.UI.Controllers
 
             try
             {
+                //int i = 20;
+                //int j = i / Convert.ToInt32("K");
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
                 int projid = 0;
                 Data.DateTimeOfUpdate = Data.InitiatedDate;
@@ -414,7 +420,6 @@ namespace swas.UI.Controllers
                         Data = await _projectsRepository.GetProjectByIdAsync(Data.ProjId);
 
                     }
-
                     return Json(Data);
                 }
                 else
@@ -424,7 +429,11 @@ namespace swas.UI.Controllers
             }
             catch (Exception ex)
             {
-                swas.BAL.Utility.Error.ExceptionHandle("Add Project:-"+ex.Message);
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "AddProjectError");
+
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while adding a project in ProjectsController.", ex, (s, e) => $"{s} - {e?.Message}");
+                swas.BAL.Utility.Error.ExceptionHandle("Add Project:-" + ex.Message);
                 return Json("Error :-" + ex.Message);
             }
         }
@@ -454,89 +463,111 @@ namespace swas.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> ProjectSubmited(int projid, int type)
         {
-            var project = await _projectsRepository.GetProjectByIdAsync(projid);
-            if (type == 1)
+            try
             {
-                project.IsSubmited = true;
+                var project = await _projectsRepository.GetProjectByIdAsync(projid);
+                if (type == 1)
+                {
+                    project.IsSubmited = true;
+                }
+                else
+                {
+                    project.IsSubmited = false;
+                }
+                await _projectsRepository.UpdateProjectAsync(project);
+                return Json(project.ProjId);
             }
-            else
+            catch (Exception ex)
             {
-                project.IsSubmited = false;
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "ProjectSubmited");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while Projected Submited in ProjectsController.", ex, (s, e) => $"{s} - {e?.Message}");
+                return Json(-1);
             }
-            await _projectsRepository.UpdateProjectAsync(project);
-            return Json(project.ProjId);
+
         }
         [HttpPost]
         public async Task<IActionResult> FwdProjConfirm(int PslmId)
         {
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
-            var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-
-
-            if (Logins != null)
+            try
             {
-
-                try
+                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+                var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+                if (Logins != null)
                 {
-                    tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
-                    // var project = await _projectsRepository.GetProjectByIdAsync(projid);
-                    psmove = await _projectsRepository.GettXNByPsmIdAsync(PslmId);
-                    //psmove.DateTimeOfUpdate = DateTime.Now;
-                    psmove.IsComplete = true;
-                    await _projectsRepository.UpdateTxnAsync(psmove);
-
-
-
-                    return Json(PslmId);
+                    try
+                    {
+                        tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
+                        // var project = await _projectsRepository.GetProjectByIdAsync(projid);
+                        psmove = await _projectsRepository.GettXNByPsmIdAsync(PslmId);
+                        //psmove.DateTimeOfUpdate = DateTime.Now;
+                        psmove.IsComplete = true;
+                        await _projectsRepository.UpdateTxnAsync(psmove);
+                        return Json(PslmId);
+                    }
+                    catch (Exception ex)
+                    {
+                        swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                        return Json(0);
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                    return Json(0);
+                    return Redirect("/Identity/Account/login");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return Redirect("/Identity/Account/login");
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "FwdProjConfirm");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while Fwd Proj Confirm in ProjectsController.", ex, (s, e) => $"{s} - {e?.Message}");
+                return Json(-1);
             }
+
         }
 
         [HttpPost]
         public async Task<IActionResult> IsReadInbox(int PsmId)
         {
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
-
-            if (Logins != null)
+            try
             {
-
-                try
+                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+                if (Logins != null)
                 {
-
-                    tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
-                    // var project = await _projectsRepository.GetProjectByIdAsync(projid);
-                    psmove = await _projectsRepository.GettXNByPsmIdwithUnitId(PsmId, Convert.ToInt32(Logins.unitid));
-                    if (psmove != null)
+                    try
                     {
-                        //psmove.DateTimeOfUpdate = DateTime.Now;
-                        psmove.IsRead = true;
-                        await _projectsRepository.UpdateTxnAsync(psmove);
-                        return Json(PsmId);
+                        tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
+                        // var project = await _projectsRepository.GetProjectByIdAsync(projid);
+                        psmove = await _projectsRepository.GettXNByPsmIdwithUnitId(PsmId, Convert.ToInt32(Logins.unitid));
+                        if (psmove != null)
+                        {
+                            //psmove.DateTimeOfUpdate = DateTime.Now;
+                            psmove.IsRead = true;
+                            await _projectsRepository.UpdateTxnAsync(psmove);
+                            return Json(PsmId);
+                        }
+                        else
+                            return Json(0);
                     }
-                    else
+                    catch (Exception ex)
+                    {
+                        swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
                         return Json(0);
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                    return Json(0);
+                    return Redirect("/Identity/Account/login");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return Redirect("/Identity/Account/login");
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "IsReadInbox");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while IsRead Inbox in ProjectsController.", ex, (s, e) => $"{s} - {e?.Message}");
+                return Json(-1);
             }
+
         }
 
 
@@ -610,38 +641,47 @@ namespace swas.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> IsProcessProjConfirm(int ProjId)
         {
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
-            var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-            var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
-            var watermarkText = $" {ipAddress}\n  {currentDatetime}";
-
-            TempData["ipadd"] = watermarkText;
-
-            if (Logins != null)
+            try
             {
+                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
-                try
+                var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+                var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
+                var watermarkText = $" {ipAddress}\n  {currentDatetime}";
+                TempData["ipadd"] = watermarkText;
+                if (Logins != null)
                 {
-                    tbl_Projects proj = new tbl_Projects();
-                    // var project = await _projectsRepository.GetProjectByIdAsync(projid);
-                    proj = await _projectsRepository.GetProjectByIdAsync(ProjId);
-                    //proj.DateTimeOfUpdate = DateTime.Now;
-                    proj.IsProcess = true;
 
-                    await _projectsRepository.UpdateProjectAsync(proj);
-                    return Json(ProjId);
+                    try
+                    {
+                        tbl_Projects proj = new tbl_Projects();
+                        // var project = await _projectsRepository.GetProjectByIdAsync(projid);
+                        proj = await _projectsRepository.GetProjectByIdAsync(ProjId);
+                        //proj.DateTimeOfUpdate = DateTime.Now;
+                        proj.IsProcess = true;
+
+                        await _projectsRepository.UpdateProjectAsync(proj);
+                        return Json(ProjId);
+                    }
+                    catch (Exception ex)
+                    {
+                        swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                        return Json(0);
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                    return Json(0);
+                    return Redirect("/Identity/Account/login");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return Redirect("/Identity/Account/login");
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "IsProcessProjConfirm");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while Process Project Confirm in ProjectsController.", ex, (s, e) => $"{s} - {e?.Message}");
+                return Json(-1);
             }
+
         }
         public async Task<IActionResult> DeleteAttech(int AttechId)
         {
@@ -704,7 +744,7 @@ namespace swas.UI.Controllers
                     doc.Close();
                     return memoryStream.ToArray();
                 }
-                
+
 
             }
             catch (Exception ex)
@@ -779,7 +819,15 @@ namespace swas.UI.Controllers
                     return Redirect("/Identity/Account/login");
                 }
             }
-            catch (Exception ex) { return Json(-1); }
+            catch (Exception ex)
+            {
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "ProcessMail");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while ProcessMail in ProjectsController.", ex, (s, e) => $"{s} - {e?.Message}");
+
+                swas.BAL.Utility.Error.ExceptionHandle("Process Mail:-" + ex.Message);
+                return Json(-1);
+            }
         }
 
 
@@ -877,6 +925,10 @@ namespace swas.UI.Controllers
             }
             catch (Exception ex)
             {
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "UndoProject");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while UndoProject in ProjectsController.", ex, (s, e) => $"{s} - {e?.Message}");
+
                 return Json(nmum.Exception);
             }
         }
@@ -957,6 +1009,10 @@ namespace swas.UI.Controllers
             }
             catch (Exception ex)
             {
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "PullBAckProject");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while Pull Back Project in ProjectsController.", ex, (s, e) => $"{s} - {e?.Message}");
+
                 return Json(nmum.Exception);
             }
         }
@@ -1069,6 +1125,10 @@ namespace swas.UI.Controllers
             }
             catch (Exception ex)
             {
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "SendCommentonProject");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while Send Comment on Project in ProjectsController.", ex, (s, e) => $"{s} - {e?.Message}");
+
                 return Json(nmum.Exception);
             }
         }
@@ -1388,6 +1448,11 @@ namespace swas.UI.Controllers
                 catch (Exception ex)
                 {
                     swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+
+                    int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                    var eventId = new EventId(dynamicEventId, "WatermarkWithPdf");
+                    _logger.Log(LogLevel.Error, eventId, "An error occurred while Watermark With Pdf in ProjectsController.", ex, (s, e) => $"{s} - {e?.Message}");
+
                     //Comman.ExceptionHandle(ex.Message);
                     return Json(0);
                 }
@@ -1426,33 +1491,41 @@ namespace swas.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> IsUnReadInbox(int PsmId)
         {
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
-
-            if (Logins != null)
+            try
             {
+                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
-                try
+                if (Logins != null)
                 {
+                    try
+                    {
+                        tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
+                        psmove = await _projectsRepository.GettXNByPsmIdAsync(PsmId);
+                        //psmove.DateTimeOfUpdate = DateTime.Now;
+                        psmove.IsRead = false;
+                        await _projectsRepository.UpdateTxnAsync(psmove);
 
-                    tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
-                    psmove = await _projectsRepository.GettXNByPsmIdAsync(PsmId);
-                    //psmove.DateTimeOfUpdate = DateTime.Now;
-                    psmove.IsRead = false;
-                    await _projectsRepository.UpdateTxnAsync(psmove);
-
-                    return Json(PsmId);
+                        return Json(PsmId);
+                    }
+                    catch (Exception ex)
+                    {
+                        swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                        return Json(0);
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                    return Json(0);
+                    return Redirect("/Identity/Account/login");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return Redirect("/Identity/Account/login");
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "IsUnReadInbox");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on IsUnReadInbox in ProjectsController.", ex, (s, e) => $"{s} - {e?.Message}");
+                return Json(-1);
             }
+
         }
 
 
@@ -1480,6 +1553,9 @@ namespace swas.UI.Controllers
                 catch (Exception ex)
                 {
                     swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                    int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                    var eventId = new EventId(dynamicEventId, "IsUnReadComment");
+                    _logger.Log(LogLevel.Error, eventId, "An error occurred while on IsUnReadComment in ProjectsController.", ex, (s, e) => $"{s} - {e?.Message}");
                     return Json(0);
                 }
             }
@@ -1683,10 +1759,14 @@ namespace swas.UI.Controllers
                     return Redirect("/Identity/Account/login");
                 }
             }
-            catch (Exception ex) { return Json(-1); }
+            catch (Exception ex)
+            {
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "ProcessNotification");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on Process Notification in ProjectsController.", ex, (s, e) => $"{s} - {e?.Message}");
+                return Json(-1);
+            }
         }
-
-
 
         //[HttpPost]
         //public async Task<IActionResult> IsUnReadNotification(int ProjId)
@@ -1756,12 +1836,10 @@ namespace swas.UI.Controllers
         //    }
         //}
 
-
-
-
         [HttpPost]
         public async Task<IActionResult> IsReadComment(int ProjId, int PsmId)
         {
+
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
             if (Logins != null)
             {
@@ -1787,6 +1865,9 @@ namespace swas.UI.Controllers
                 catch (Exception ex)
                 {
                     swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                    int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                    var eventId = new EventId(dynamicEventId, "IsReadComment");
+                    _logger.Log(LogLevel.Error, eventId, "An error occurred while on IsReadComment in ProjectsController.", ex, (s, e) => $"{s} - {e?.Message}");
                     return Json(0);
                 }
             }

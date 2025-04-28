@@ -12,6 +12,7 @@ using swas.BAL.Helpers;
 using swas.BAL.DTO;
 using swas.BAL.Interfaces;
 using swas.BAL;
+using Newtonsoft.Json;
 
 
 using swas.BAL.Repository;
@@ -25,6 +26,9 @@ using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using Microsoft.Extensions.Options;
+using System.Configuration;
+using Newtonsoft.Json;
 
 namespace swas.UI.Controllers
 {
@@ -51,8 +55,10 @@ namespace swas.UI.Controllers
         private readonly IRankRepository _rankRepository;
 
         private readonly IUserRepository _userRepository;
+        private readonly IConfiguration _configuration;
         public AccountController(Microsoft.AspNetCore.Identity.IUserStore<ApplicationUser> userStore, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager,
-        SignInManager<ApplicationUser> signInManager, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, ApplicationDbContext context, IUnitRepository unitRepository, ILogger<LoginModel> logger, IRankRepository rankRepository, IUserRepository userRepository)
+        SignInManager<ApplicationUser> signInManager, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, ApplicationDbContext context, IUnitRepository unitRepository, ILogger<LoginModel> logger, IRankRepository rankRepository, IUserRepository userRepository,
+        IConfiguration configuration)
         {
 
             this.userManager = userManager;
@@ -65,6 +71,7 @@ namespace swas.UI.Controllers
             _emailStore = GetEmailStore();
             _rankRepository = rankRepository;
             _userRepository = userRepository;
+            _configuration = configuration;
         }
 
 
@@ -240,11 +247,91 @@ namespace swas.UI.Controllers
             public string SAMLRole { get; set; }
         }
 
+        //[AllowAnonymous]
+        //public void UpdateAppSetting(string key, string value)
+        //{
+        //    // Get the path to the appsettings.json file
+        //    var configFilePath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
+
+        //    // Read the current content of appsettings.json
+        //    var json = System.IO.File.ReadAllText(configFilePath);
+
+        //    // Deserialize the JSON into a dynamic object
+        //    dynamic config = JsonConvert.DeserializeObject(json);
+
+        //    // Check if the AppSettings section exists, and create it if not
+        //    if (config.AppSettings == null)
+        //    {
+        //        config.AppSettings = new Newtonsoft.Json.Linq.JObject();
+        //    }
+
+        //    // Update or add the setting
+        //    if (config.AppSettings[key] != null)
+        //    {
+        //        // Update the existing value
+        //        config.AppSettings[key] = value;
+        //    }
+        //    else
+        //    {
+        //        // Add the new setting
+        //        config.AppSettings.Add(key, value);
+        //    }
+
+        //    // Serialize the updated configuration back to JSON format
+        //    var updatedJson = JsonConvert.SerializeObject(config, Formatting.Indented);
+
+        //    // Write the updated JSON back to the appsettings.json file
+        //    System.IO.File.WriteAllText(configFilePath, updatedJson);
+
+        //    // Optionally, you may want to log this or reload the config (if needed)
+        //    Console.WriteLine($"AppSetting '{key}' has been updated to: {value}");
+        //}
+
         [AllowAnonymous]
         public async Task<IActionResult> Login()
         {
+            String EncryptedResponse = "";
+            //var debugWithIAMflag = "false";                       
+            //if (debugWithIAMflag == "true")
+            //{
+            //    if (_configuration["LocalHostActive"] == "0")
+            //    {
+            //        // Get the SAML response from the form
+            //        EncryptedResponse = Request.Form["SAMLResponse"];
+
+            //        // Update the debugWithIAM setting to false using the UpdateAppSetting method
+            //        UpdateAppSetting("debugWithIAM", "false");
+
+            //        // Send the SAMLResponse to the server
+            //        using (HttpClient client = new HttpClient())
+            //        {
+            //            var values = new FormUrlEncodedContent(new[]
+            //            {
+            //                 new KeyValuePair<string, string>("SAMLResponse", EncryptedResponse)
+            //            });
+            //            HttpResponseMessage response = await client.PostAsync("https://localhost:7152/Account/Login", values);
+            //            string responseString = await response.Content.ReadAsStringAsync();
+            //            Console.WriteLine("Server Response: " + responseString);
+            //        }
+            //    }
+
+            //    else if (_configuration["debugWithIAM"] == "1")
+            //    {
+            //        EncryptedResponse = Request.Form["SAMLResponse"];
+            //        // Update settings dynamically using UpdateAppSetting method
+            //        UpdateAppSetting("hardSAMLResonoce", EncryptedResponse);
+            //        UpdateAppSetting("LocalHostActive", "2");
+            //        //stop code directelly from here to debug code with IAM, and Run this on this URL "https://localhost:7152/Account/Login". 
+            //    }
+            //    else
+            //    {
+            //        //EncryptedResponse = ConfigurationManager.AppSettings["hardSAMLResonoce"];
+            //        EncryptedResponse = _configuration["hardSAMLResonoce"];
+            //    }
+            //}
+
             //********************IAM COMMENTED CODE START**********************************
-            String EncryptedResponse = Request.Form["SAMLResponse"];
+            EncryptedResponse = Request.Form["SAMLResponse"];
             var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
             var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
             var watermarkText = $" {ipAddress}\n  {currentDatetime}";
@@ -274,8 +361,6 @@ namespace swas.UI.Controllers
                         var result = await signInManager.PasswordSignInAsync(log.NameId.ToLower(), "Dte@123", false, lockoutOnFailure: true);
                         if (result.Succeeded)  ///   registered user
                         {
-
-
                             ApplicationUser userdet = new ApplicationUser();
                             IdentityRole ss = new IdentityRole();
                             _logger.LogInformation("User logged in.");
@@ -325,7 +410,7 @@ namespace swas.UI.Controllers
                                     //////////////End Log////////////////////////
                                 }
 
-                                catch(Exception ex)
+                                catch (Exception ex)
                                 {
                                     Console.WriteLine("THE Print is 1");
                                 }
@@ -346,7 +431,7 @@ namespace swas.UI.Controllers
                             Db.cla = cla;
                             SessionHelper.SetObjectAsJson(HttpContext.Session, "User", Db);
 
-                           
+
 
                             if (Db.Role == "Dte")
                             {
@@ -365,7 +450,7 @@ namespace swas.UI.Controllers
                                 HttpContext.Session.SetString("UserName", log.NameId);
                                 return RedirectToAction("NewProject", "Home");
                             }
-                            
+
                         }
                     }
                     else
@@ -776,6 +861,10 @@ namespace swas.UI.Controllers
             }
             catch (Exception ex)
             {
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "UserDelete");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on UserDelete in AccountConfirmed.", ex, (s, e) => $"{s} - {e?.Message}");
+
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }

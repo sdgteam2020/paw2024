@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using swas.BAL.Helpers;
 using swas.BAL.Interfaces;
 using swas.DAL.Models;
 using System.Threading.Tasks;
@@ -14,10 +15,11 @@ namespace swas.UI.Controllers
         ///Tested Date : 
         ///Start
         private readonly ICommentRepository _commentRepository;
-
-        public CommentController(ICommentRepository commentRepository)
+        private readonly ILogger<CommentController> _logger;
+        public CommentController(ICommentRepository commentRepository, ILogger<CommentController> logger)
         {
             _commentRepository = commentRepository;
+            _logger = logger;
         }
         ///Created and Reviewed by : Sub Maj Sanal
         ///Reviewed Date : 31 Jul 23
@@ -62,12 +64,24 @@ namespace swas.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(tbl_Comment comment)
         {
-            if (ModelState.IsValid)
+            try
             {
-                await _commentRepository.AddCommentAsync(comment);
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    await _commentRepository.AddCommentAsync(comment);
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(comment);
             }
-            return View(comment);
+            catch (Exception ex)
+            {
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "Create");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on Get All Create in CommentController.", ex, (s, e) => $"{s} - {e?.Message}");
+
+                return RedirectToAction("Error", "Home");
+            }
+            
         }
         ///Created and Reviewed by : Sub Maj Sanal
         ///Reviewed Date : 31 Jul 23
@@ -91,18 +105,29 @@ namespace swas.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, tbl_Comment comment)
         {
-            if (id != comment.CommentId)
+            try
             {
-                return NotFound();
-            }
+                if (id != comment.CommentId)
+                {
+                    return NotFound();
+                }
 
-            if (ModelState.IsValid)
+                if (ModelState.IsValid)
+                {
+                    await _commentRepository.UpdateCommentAsync(comment);
+                    return RedirectToAction(nameof(Index));
+                }
+
+                return View(comment);
+            }
+            catch (Exception ex)
             {
-                await _commentRepository.UpdateCommentAsync(comment);
-                return RedirectToAction(nameof(Index));
-            }
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "Edit");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on Get All Edit in CommentController.", ex, (s, e) => $"{s} - {e?.Message}");
 
-            return View(comment);
+                return RedirectToAction("Error", "Home");
+            }
         }
         ///Created and Reviewed by : Sub Maj Sanal
         ///Reviewed Date : 31 Jul 23
@@ -128,8 +153,5 @@ namespace swas.UI.Controllers
             await _commentRepository.DeleteCommentAsync(id);
             return RedirectToAction(nameof(Index));
         }
-
-
-       
     }
 }

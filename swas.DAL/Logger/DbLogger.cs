@@ -34,7 +34,7 @@ namespace swas.DAL.Logger
         public async Task Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
         {
             //if (!IsEnabled(logLevel))
-            //    return;
+            //    return;       
             if (logLevel != LogLevel.Error)  // Log only if it's an error
                 return;
 

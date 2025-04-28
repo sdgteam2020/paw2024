@@ -108,6 +108,9 @@ namespace swas.UI.Controllers
             catch (Exception ex)
             {
                 swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "Edit");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on CurrentSearch in SearchController.", ex, (s, e) => $"{s} - {e?.Message}");
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -195,6 +198,11 @@ namespace swas.UI.Controllers
             catch (Exception ex)
             {
                 swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "Edit");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on SearchActionResult in SearchController.", ex, (s, e) => $"{s} - {e?.Message}");
+
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -221,24 +229,36 @@ namespace swas.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> GetProjLogview(string fromDate, string toDate)
         {
-            TempData["fromDate"] = fromDate;
-            TempData["toDate"] = toDate;
-            var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-            var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
-            var watermarkText = $" {ipAddress}\n  {currentDatetime}";
-
-            TempData["ipadd"] = watermarkText;
-            List<ProjLogView> ProjLV = await _psmRepository.GetProjLogviewAsync(fromDate, toDate);
-
-            if (ProjLV.IsNotNull())
+            try
             {
-                return View(ProjLV);
+                TempData["fromDate"] = fromDate;
+                TempData["toDate"] = toDate;
+                var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+                var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
+                var watermarkText = $" {ipAddress}\n  {currentDatetime}";
+
+                TempData["ipadd"] = watermarkText;
+                List<ProjLogView> ProjLV = await _psmRepository.GetProjLogviewAsync(fromDate, toDate);
+
+                if (ProjLV.IsNotNull())
+                {
+                    return View(ProjLV);
+                }
+                else
+                {
+                    List<ProjLogView> ProjLVs = new List<ProjLogView>();
+                    return View(ProjLVs);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                List<ProjLogView> ProjLVs = new List<ProjLogView>();
-                return View(ProjLVs);
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "GetProjLogview");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on GetProjLogview in SearchController.", ex, (s, e) => $"{s} - {e?.Message}");
+
+                return RedirectToAction("Error", "Home");
             }
+            
         }
 
     }

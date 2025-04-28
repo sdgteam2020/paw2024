@@ -22,11 +22,13 @@ namespace swas.UI.Controllers
         private readonly IStagesRepository _stagesRepository;
         private readonly ApplicationDbContext _context;
         private readonly IDataProtector _dataProtector;
-        public StagesController(ApplicationDbContext context, IDataProtectionProvider DataProtector, IStagesRepository stagesRepository)
+        private readonly ILogger<StagesController> _logger;
+        public StagesController(ApplicationDbContext context, IDataProtectionProvider DataProtector, IStagesRepository stagesRepository, ILogger<StagesController> logger)
         {
             _context = context;
             _dataProtector = DataProtector.CreateProtector("swas.UI.Controllers.UnitDtlsController");
             _stagesRepository = stagesRepository;
+            _logger = logger;
         }
         ///Created and Reviewed by : Sub Maj Sanal
         //Reviewed Date : 31 Jul 23
@@ -68,21 +70,33 @@ namespace swas.UI.Controllers
         public async Task<IActionResult> CreateStage(tbl_mStages stage)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
-            if (ModelState.IsValid)
+            try
             {
-                stage.EditDeleteBy = (int)Logins.unitid;
-                stage.UpdatedByUserId = (int)Logins.unitid;
-                stage.IsDeleted = false;
-                stage.IsActive = true;
-                stage.DateTimeOfUpdate = DateTime.Now;
-                stage.EditDeleteDate = DateTime.Now;
-                stage.InitiaalID = false;
-                stage.FininshID = false;
+                if (ModelState.IsValid)
+                {
+                    stage.EditDeleteBy = (int)Logins.unitid;
+                    stage.UpdatedByUserId = (int)Logins.unitid;
+                    stage.IsDeleted = false;
+                    stage.IsActive = true;
+                    stage.DateTimeOfUpdate = DateTime.Now;
+                    stage.EditDeleteDate = DateTime.Now;
+                    stage.InitiaalID = false;
+                    stage.FininshID = false;
 
-                await _stagesRepository.Add(stage);
-                return RedirectToAction(nameof(Create));
+                    await _stagesRepository.Add(stage);
+                    return RedirectToAction(nameof(Create));
+                }
+                return View(stage);
             }
-            return View(stage);
+            catch (Exception ex)
+            {
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "CreateStage");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on CreateStage in StagesController.", ex, (s, e) => $"{s} - {e?.Message}");
+
+                return RedirectToAction("Error", "Home");
+            }
+           
         }
         ///Created and Reviewed by : Sub Maj Sanal
         //Reviewed Date : 31 Jul 23
@@ -105,18 +119,30 @@ namespace swas.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, tbl_mStages stage)
         {
-            if (id != stage.StagesId)
+            try
             {
-                return NotFound();
-            }
+                if (id != stage.StagesId)
+                {
+                    return NotFound();
+                }
 
-            if (ModelState.IsValid)
+                if (ModelState.IsValid)
+                {
+                    await _stagesRepository.UpdateWithReturn(stage);
+                    return RedirectToAction(nameof(Index));
+                }
+
+                return View(stage);
+            }
+            catch (Exception ex)
             {
-                await _stagesRepository.UpdateWithReturn(stage);
-                return RedirectToAction(nameof(Index));
-            }
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "Edit");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on Edit in StagesController.", ex, (s, e) => $"{s} - {e?.Message}");
 
-            return View(stage);
+                return RedirectToAction("Error", "Home");
+            }
+            
         }
         ///Created and Reviewed by : Sub Maj Sanal
         //Reviewed Date : 31 Jul 23
@@ -139,8 +165,19 @@ namespace swas.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _stagesRepository.Delete(id);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _stagesRepository.Delete(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "DeleteConfirmed");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on DeleteConfirmed in StagesController.", ex, (s, e) => $"{s} - {e?.Message}");
+                return RedirectToAction("Error", "Home");
+            }
+         
         }
     }
 

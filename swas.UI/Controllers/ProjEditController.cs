@@ -63,7 +63,6 @@ namespace swas.UI.Controllers
         [Authorize(Policy = "StakeHolders")]
         public async Task<IActionResult> Index()
         {
-
             var dateTime = DateTime.Now;
             try
             {
@@ -109,10 +108,5 @@ namespace swas.UI.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-
-     
-
-     
-
     }
 }

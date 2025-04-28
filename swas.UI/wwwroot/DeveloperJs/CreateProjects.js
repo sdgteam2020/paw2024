@@ -7,19 +7,19 @@ $(document).ready(function () {
     });
 
     $("#sponsorNameInput").val($("#SponsorName").html());
-    
+
     $("#spanProjectId").html($("#ProjId").val());
-    mMsater($("#StakeHolderId").val(),"ddlStakeHolderId",1,0)
-    mMsater($("#HostTypeID").val(),"ddlHostTypeID",2,0)
+    mMsater($("#StakeHolderId").val(), "ddlStakeHolderId", 1, 0)
+    mMsater($("#HostTypeID").val(), "ddlHostTypeID", 2, 0)
     mMsater($("#Apptype").val(), "ddlApptype", 3, 0)
-   
+
     var current_fs, next_fs, previous_fs; //fieldsets
     var opacity;
 
 
     $("#uploadButton").click(function () {
 
-      var  requiredFields = $('#fwduploaditems').find('.requiredField');
+        var requiredFields = $('#fwduploaditems').find('.requiredField');
         var allFieldsComplete = true;
         requiredFields.each(function (index) {
             if (this.value.length == 0) {
@@ -43,10 +43,10 @@ $(document).ready(function () {
             UploadFiles();
         }
     });
-   
+
     $("#finalupload").click(function () {
         ProjectSubmited($(this));
-       
+
     });
     $("#draftUpload").click(function () {
         ProjectSaveAsDraft($(this));
@@ -54,15 +54,15 @@ $(document).ready(function () {
     $("#submitUpload").click(function () {
 
         var requiredFields = $('#tablebasic2').find('.requiredField');
-         var allFieldsComplete = true;
-         requiredFields.each(function (index) {
-             if (this.value.length == 0) {
-                 $(this).addClass('is-invalid');
-                 allFieldsComplete = false;
-             } else {
-                 $(this).removeClass('is-invalid');
-             }
-         });
+        var allFieldsComplete = true;
+        requiredFields.each(function (index) {
+            if (this.value.length == 0) {
+                $(this).addClass('is-invalid');
+                allFieldsComplete = false;
+            } else {
+                $(this).removeClass('is-invalid');
+            }
+        });
 
         // Validate character limits
         $('.char-limit').each(function () {
@@ -81,20 +81,20 @@ $(document).ready(function () {
             }
         });
 
-         if (!allFieldsComplete) {
+        if (!allFieldsComplete) {
 
-             Swal.fire({
-                 title: 'Error!',
-                 text: 'Please complete all required fields',
-                 icon: 'error',
-                 showConfirmButton: false,
-                 timer: 1000
-             })
-         }
-         else {
-             AddProject(this);
-         }
-       
+            Swal.fire({
+                title: 'Error!',
+                text: 'Please complete all required fields',
+                icon: 'error',
+                showConfirmButton: false,
+                timer: 1000
+            })
+        }
+        else {
+            AddProject(this);
+        }
+
 
     });
     $(".previous").click(function () {
@@ -128,7 +128,7 @@ $(document).ready(function () {
 
     $("#tempBasicDetails").click(function () {
         var number = 1 + Math.floor(Math.random() * 15000);
-        const predate = DateFormateyyy_mm_dd(new Date()-1);
+        const predate = DateFormateyyy_mm_dd(new Date() - 1);
         const todaydate = DateFormateyyy_mm_dd(new Date());
 
         $("#ProjName").val("New Project" + number);
@@ -170,10 +170,10 @@ $(document).ready(function () {
     });
     $(".requiredField").blur(function () {
 
-        
+
         if (this.value.length == 0) {
             $(this).addClass('is-invalid');
-            
+
         } else {
             $(this).removeClass('is-invalid');
             $(this).addClass('is-valid');
@@ -181,7 +181,7 @@ $(document).ready(function () {
     });
     $("#btnbasic").click(function () {
 
-        
+
         requiredFields = $('#tablebasic').find('.requiredField');
         var allFieldsComplete = true;
         requiredFields.each(function (index) {
@@ -193,7 +193,7 @@ $(document).ready(function () {
             }
         });
         // Validate character limits
-        
+
         $('.char-limit').each(function () {
             var inputField = $(this);
             var maxLength = inputField.data('maxlength'); // Get max length from data-maxlength attribute
@@ -211,7 +211,7 @@ $(document).ready(function () {
         });
 
         if (!allFieldsComplete) {
-           
+
             Swal.fire({
                 title: 'Error!',
                 text: 'Please complete all required fields',
@@ -250,7 +250,7 @@ $(document).ready(function () {
     });
 
 
-   
+
     $("body").on("click", ".btndeleteProject", function () {
 
         Swal.fire({
@@ -263,8 +263,8 @@ $(document).ready(function () {
             confirmButtonText: 'Yes, Delete It!'
         }).then((result) => {
             if (result.value) {
-                
-                
+
+
                 DeleteProject($(this).closest("tr").find(".tblspnprojectid").html());
 
             }
@@ -336,30 +336,22 @@ function AddProject(thistag) {
             "Database_reqmts": $("#Database_reqmts").val(),
             "Enhancement_upgradation": $("#Enhancement_upgradation").val(),
             "Details_licensing": $("#Details_licensing").val()
-           
+
         }, //get the search string
         success: function (result) {
-
-
-           
             if (result == -2) {
-                
-
                 Swal.fire({
                     title: "success!",
                     text: "User has been Updated!",
                     icon: "success"
                 });
-
             }
             else if (result == -3) {
-
                 Swal.fire({
                     title: "Error!",
                     text: "Project Name Already Exists!",
                     icon: "Error"
                 });
-
             }
             else if (result == -4) {
                 Swal.fire({
@@ -367,53 +359,42 @@ function AddProject(thistag) {
                     text: "Incorrect Data!",
                     icon: "Error"
                 });
-                
-
             }
-            else if (result.indcludes("Error")) {
+            //else if (result.indcludes("Error")) {
+            else if (result.includes("Error")) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     text: result,
-
                 })
-
             } else if (result != null) {
-               
-
-                    $("#spanProjectId").html(result.projId);
-                    $("#spanCurrentPslmId").html(result.currentPslmId);
-
-
-                    AttechHistory();
-                    current_fs = $(thistag).parent();
-                    next_fs = $(thistag).parent().next();
-
-
-                    //Add Class Active
-                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-
-                    //show the next fieldset
-                    next_fs.show();
-                    //hide the current fieldset with style
-                    current_fs.animate({ opacity: 0 }, {
-                        step: function (now) {
-                            // for making fielset appear animation
-                            opacity = 1 - now;
-
-                            current_fs.css({
-                                'display': 'none',
-                                'position': 'relative'
-                            });
-                            next_fs.css({ 'opacity': opacity });
-                        },
-                        duration: 600
-                    });
-
-
                 
+                $("#spanProjectId").html(result.projId);
+                $("#spanCurrentPslmId").html(result.currentPslmId);
 
+                AttechHistory();
+                current_fs = $(thistag).parent();
+                next_fs = $(thistag).parent().next();
 
+                //Add Class Active
+                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+                //show the next fieldset
+                next_fs.show();
+                //hide the current fieldset with style
+                current_fs.animate({ opacity: 0 }, {
+                    step: function (now) {
+                        // for making fielset appear animation
+                        opacity = 1 - now;
+
+                        current_fs.css({
+                            'display': 'none',
+                            'position': 'relative'
+                        });
+                        next_fs.css({ 'opacity': opacity });
+                    },
+                    duration: 600
+                });
             }
         }
     });
@@ -470,11 +451,11 @@ function FwdProjConfirm(thisdata) {
 
 
 function ProjectSubmited(thisdata) {
-     
+
     $.ajax({
         url: '/Projects/ProjectSubmited',
         type: 'POST',
-        data: { "projid": $("#spanProjectId").html(),"type": 1},
+        data: { "projid": $("#spanProjectId").html(), "type": 1 },
         success: function (response) {
             //console.log(response);
 
@@ -490,7 +471,7 @@ function ProjectSubmited(thisdata) {
 
                 current_fs = $(thisdata).parent();
                 next_fs = $(thisdata).parent().next();
-               
+
                 AddNotification($("#spanProjectId").html(), 2, 1);
                 //Add Class Active
                 $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
@@ -559,7 +540,7 @@ function validationIsSuccessful() {
 }
 function DateFormateyyy_mm_dd(date) {
 
-   
+
     var datef2 = new Date(date);
     var months = "" + `${(datef2.getMonth() + 1)}`;
     var days = "" + `${(datef2.getDate())}`;

@@ -116,15 +116,11 @@ namespace swas.UI.Controllers
             return actionsList;
         }
 
-
-        
-
         public Task<List<tbl_mStatus>> GetStatusByStage(int stageIds)
         {
             var statusList = _ddlRepository.GetStatusByStage(stageIds);
             return statusList;
         }
-
 
         public Task<List<tbl_mStages>> GetAllStages(int projIds)
         {
@@ -134,14 +130,12 @@ namespace swas.UI.Controllers
             return ss;
             //return RedirectToAction(nameof(Index));
         }
-
         public Task<List<mAppType>> DdlAppType()
         {
             var ss = _ddlRepository.DdlAppType();
             return ss;
             //return RedirectToAction(nameof(Index));
         }
-
 
     }
 }

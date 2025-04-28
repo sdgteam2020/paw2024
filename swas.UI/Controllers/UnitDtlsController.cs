@@ -136,6 +136,7 @@ namespace swas.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddOrEdit(UnitDtl UnitData)
         {
+
             var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
             var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
             var watermarkText = $" {ipAddress}\n  {currentDatetime}";
@@ -376,10 +377,6 @@ namespace swas.UI.Controllers
 
         }
 
-
-
-
-
         public int CheckNameExist(UnitDtl unit)
         {
             //var result = _context.tbl_mUnitBranch.Select(p => p.UnitName.ToUpper() == unit.UnitName.ToUpper() && p.Id != unit.Id).ToList();
@@ -516,8 +513,6 @@ namespace swas.UI.Controllers
         {
             try
             {
-
-
                 if (data.StatusActionsMappingId != null)
                 {
                     var ret1 = await _statusActionsMapping.Delete(data.StatusActionsMappingId);
@@ -543,8 +538,6 @@ namespace swas.UI.Controllers
             {
                 return Json(nmum.Exception);
             }
-
-
         }
 
         #endregion

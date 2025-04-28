@@ -77,9 +77,10 @@ namespace swas.UI.Controllers
         private readonly ICommentRepository _commentRepository;
         DateTime Currentdate = DateTime.Now;
         private System.Timers.Timer aTimer;
+        private readonly ILogger<HomeController> _logger;
         //private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager;
 
-        public HomeController(IProjectsRepository projectsRepository, ICommentRepository commentRepository, SignInManager<ApplicationUser> signInManager, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IDdlRepository dlRepository, ApplicationDbContext context, IUnitRepository unitRepository, IProjStakeHolderMovRepository stkholdmove, IChartService chartService, IWebHostEnvironment _webHostEnvironment, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, IDataProtectionProvider dataProtector, IActionsRepository actionsRepository, IAttHistoryRepository attHistoryRepository)
+        public HomeController(IProjectsRepository projectsRepository, ICommentRepository commentRepository, SignInManager<ApplicationUser> signInManager, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IDdlRepository dlRepository, ApplicationDbContext context, IUnitRepository unitRepository, IProjStakeHolderMovRepository stkholdmove, IChartService chartService, IWebHostEnvironment _webHostEnvironment, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, IDataProtectionProvider dataProtector, IActionsRepository actionsRepository, IAttHistoryRepository attHistoryRepository, ILogger<HomeController> logger)
         {
             //  _logger = logger; _repositoryUser = repositoryUser;
             _projectsRepository = projectsRepository;
@@ -98,6 +99,7 @@ namespace swas.UI.Controllers
             _dataProtector = dataProtector.CreateProtector("swas.UI.Controllers.ProjectsController");
             _ActionsRepository = actionsRepository;
             _attHistoryRepository = attHistoryRepository;
+            _logger = logger;
         }
 
 
@@ -1191,8 +1193,11 @@ s.IsDashboard,
             }
             catch (Exception ex)
             {
-                swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                return View("Error");
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "UpdateUnitStatus");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on Get All UpdateUnitStatus in CommentController.", ex, (s, e) => $"{s} - {e?.Message}");
+
+                return RedirectToAction("Error", "Home");
             }
         }
 
