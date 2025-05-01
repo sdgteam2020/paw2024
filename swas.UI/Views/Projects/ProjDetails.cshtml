@@ -197,11 +197,11 @@
         }
 
     /* .swal2-title{
-        background-color: #002b5e; 
-        color: white;
-        font-size: 18px;
-        padding-bottom: 26px;
-    } */
+            background-color: #002b5e;
+            color: white;
+            font-size: 18px;
+            padding-bottom: 26px;
+        } */
     .pullback-title {
         background-color: #002b5e;
         color: white;
@@ -210,15 +210,15 @@
         /* add any other styles you need */
     }
 
-   /*  .custom-swal-title {
-        background-color: #002b5e;
-        color: white;
-        font-size: 18px;
-        padding-bottom: 26px;
-        padding: 10px;
-        border-radius: 5px;
-        display: inline-block;
-    } */
+    /*  .custom-swal-title {
+            background-color: #002b5e;
+            color: white;
+            font-size: 18px;
+            padding-bottom: 26px;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+        } */
 
 
     .custom-modal-size {
@@ -567,19 +567,22 @@
 
                                                         @* Pull Back  *@
 
-                                                        @if (project.IsPullBack == false @* || project.IsPullBack == null *@) // project.undopsmId for the specified active project, excluding comments and records with undo remarks.
+
+                                                        @if (project.IsPullBack == false || project.IsPullBack == null) // project.undopsmId for the specified active project, excluding comments and records with undo remarks.
                                                         {
-                                                            if (project.StageId != 1 && project.IsComplete != true) // stageId!=1 means here this project in not in initial stage..
+                                                            if (project.StageId != 1 && project.PullbackAction == true) // stageId!=1 means here this project in not in initial stage..
                                                             {
+                                                                
                                                                 <button type="button" class="btn btn-success btn-Undo ml-2" style="padding: 1px !important;font-size: 13px !important;">Pull Back </button>
                                                             }
                                                         }
                                                         else
                                                         {
-                                                            if (project.IsPullBack == true)
-                                                            {
-                                                                <span class="btn btn-success ml-2" style="padding: 1px !important;font-size: 13px !important; cursor: not-allowed;">Pulled Back</span>
-                                                            }
+                                                            if (project.StageId != 1 && project.IsPullBack == true)
+                                                                if (project.IsPullBack == true )
+                                                                {
+                                                                    <span class="btn btn-success ml-2" style="padding: 1px !important;font-size: 13px !important; cursor: not-allowed;">Pulled Back</span>
+                                                                }
                                                         }
                                                     </div>
                                                     <div class="col-md-6">

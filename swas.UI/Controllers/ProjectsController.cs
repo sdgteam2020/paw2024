@@ -935,11 +935,12 @@ namespace swas.UI.Controllers
         #endregion
         #region PullBack
 
-        public async Task<IActionResult> PullBAckProject(int ProjectId, string Remarks, int StageId)
+        public async Task<IActionResult> PullBAckProject(int ProjectId, int PsmId, string Remarks, int StageId)
         {
             try
             {
-
+                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+                var movent = new tbl_ProjStakeHolderMov();
                 if (StageId == 1)
                 {
                     return Json(nmum.NotSave);
@@ -947,22 +948,44 @@ namespace swas.UI.Controllers
                 else
                 {
                     int psmData = _psmRepository.GetLastRecProjectMov(ProjectId);
-                    if (psmData != 0)
+                    if (psmData != 0 )
                     {
+                        if (psmData == PsmId)
+                        {
+                            movent = await _psmRepository.GetByByte(psmData);
+                            movent.IsRead = true;
+                            movent.UndoRemarks = Remarks;
+                            movent.IsComplete = true;
+                            movent.DateTimeOfUpdate = DateTime.Now;
+                            movent.IsPullBack = true;
+                            var Ret = await _psmRepository.UpdateWithReturn(movent);
+                        }
+                        else
+                        {
+                            movent = await _psmRepository.GetByByte(psmData);
+                            movent.IsComplete = true;
+                            await _psmRepository.UpdateWithReturn(movent);
 
-                        var movent = await _psmRepository.GetByByte(psmData);
-                        movent.IsRead = true;
-                        movent.UndoRemarks = Remarks;
-                        //movent.Remarks = Remarks;
-                        movent.IsComplete = true;
-                        movent.DateTimeOfUpdate = DateTime.Now;
-                        movent.IsPullBack = true;
-                        var Ret = await _psmRepository.UpdateWithReturn(movent);
-
-                        Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
+                            movent = await _psmRepository.GetByByte(PsmId);                          
+                            movent.IsRead = true;
+                            movent.UndoRemarks = Remarks;
+                            movent.IsComplete = true;
+                            movent.DateTimeOfUpdate = DateTime.Now;
+                            movent.IsPullBack = true;
+                            var Ret = await _psmRepository.UpdateWithReturn(movent);
+                        }
+                       
+                    
                         UnitDtl unitDetail = new UnitDtl();
-                        unitDetail = await _unitRepository.GetUnitDtl(movent.ToUnitId);
+                        if (psmData != PsmId)
+                        {
+                            movent = await _psmRepository.GetByByte(psmData);
+                            unitDetail = await _unitRepository.GetUnitDtl(movent.ToUnitId);
+                        }
+                        else
+                        {
+                            unitDetail = await _unitRepository.GetUnitDtl(movent.ToUnitId);
+                        }                       
                         if (unitDetail != null)
                         {
                             //ApplicationUser userdet = await _userManager.FindByNameAsync(unitDetail.UnitName);
@@ -982,9 +1005,17 @@ namespace swas.UI.Controllers
                                 movent.UserDetails = "";
                             }
                         }
-                        //Add New Record For Pull Request
+                        //Add New Record For Pull Request                       
+                        if (psmData != PsmId)
+                        {
+                            movent = await _psmRepository.GetByByte(psmData);
+                            movent.FromUnitId = movent.ToUnitId;
+                        }
+                        else
+                        {
+                            movent.FromUnitId = movent.ToUnitId;
+                        }
                         movent.PsmId = 0;
-                        movent.FromUnitId = movent.ToUnitId;
                         movent.ToUnitId = Convert.ToInt32(Logins.unitid);
                         movent.IsComplete = false;
                         movent.IsRead = false;

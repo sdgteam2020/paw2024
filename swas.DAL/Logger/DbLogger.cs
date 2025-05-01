@@ -52,7 +52,7 @@ namespace swas.DAL.Logger
                 EventId = eventId.Id,
                 EventName = eventName,
                 IpAddress = ipAddress,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = DateTime.Now,
                 ExceptionMessage = exception?.Message,
                 ExceptionStackTrace = exception?.StackTrace,
                 ExceptionSource = exception?.Source

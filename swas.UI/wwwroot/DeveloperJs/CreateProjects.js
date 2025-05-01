@@ -361,13 +361,14 @@ function AddProject(thistag) {
                 });
             }
             //else if (result.indcludes("Error")) {
-            else if (result.includes("Error")) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: result,
-                })
-            } else if (result != null) {
+            //else if (result.includes("Error")) {
+            //    Swal.fire({
+            //        icon: 'error',
+            //        title: 'Oops...',
+            //        text: result,
+            //    })
+            //}
+            else if (result != null) {
                 
                 $("#spanProjectId").html(result.projId);
                 $("#spanCurrentPslmId").html(result.currentPslmId);

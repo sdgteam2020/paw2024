@@ -49,5 +49,7 @@ namespace swas.BAL.DTO
         public bool IsComment { get; set; }
         public bool? IsPullBack { get; set; }
 
+        public bool PullbackAction { get; set; }
+
     }
 }
