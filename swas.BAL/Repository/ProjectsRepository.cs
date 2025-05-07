@@ -922,7 +922,16 @@ namespace swas.BAL.Repository
                                 IsComplete = b.IsComplete,
                                 IsRead = b.IsRead,
                                 IsPullBack = b.IsPullBack,
-                                PullbackAction = _dbContext.ProjStakeHolderMov.Where(p => p.ProjId == b.ProjId && p.IsComment == false).OrderByDescending(p => p.PsmId).FirstOrDefault().FromUnitId == b.ToUnitId ? false : true
+                                 PullbackAction = _dbContext.ProjStakeHolderMov
+                                .Where(p => p.ProjId == b.ProjId && !p.IsComment)
+                                .OrderByDescending(p => p.PsmId)
+                                .FirstOrDefault() != null  // 1. Check if any movement exists
+                              && _dbContext.ProjStakeHolderMov
+                                    .Where(p => p.ProjId == b.ProjId && !p.IsComment)
+                                    .OrderByDescending(p => p.PsmId)
+                                    .FirstOrDefault().ToUnitId != Logins.unitid   // 2. Check if latest ToUnitId != current user
+                                && !_dbContext.ProjStakeHolderMov
+                                    .Any(p => p.ProjId == b.ProjId && !p.IsComment && p.ToUnitId == Logins.unitid) // 3. Make sure no incomplete action is assigned to current user
 
                             };
 
@@ -990,7 +999,17 @@ namespace swas.BAL.Repository
                                     IsComplete = b.IsComplete,
                                     IsRead = b.IsRead,
                                     IsPullBack = b.IsPullBack,
-                                    PullbackAction = _dbContext.ProjStakeHolderMov.Where(p => p.ProjId == b.ProjId && p.IsComment == false).OrderByDescending(p => p.PsmId).FirstOrDefault().FromUnitId == b.ToUnitId ? false : true
+                                    PullbackAction = _dbContext.ProjStakeHolderMov
+                                .Where(p => p.ProjId == b.ProjId && !p.IsComment)
+                                .OrderByDescending(p => p.PsmId)
+                                .FirstOrDefault() != null  // 1. Check if any movement exists
+                              && _dbContext.ProjStakeHolderMov
+                                    .Where(p => p.ProjId == b.ProjId && !p.IsComment)
+                                    .OrderByDescending(p => p.PsmId)
+                                    .FirstOrDefault().ToUnitId != Logins.unitid   // 2. Check if latest ToUnitId != current user
+                                && !_dbContext.ProjStakeHolderMov
+                                    .Any(p => p.ProjId == b.ProjId && !p.IsComment && p.ToUnitId == Logins.unitid) // 3. Make sure no incomplete action is assigned to current user
+
                                 };
 
                 var history = await queryhist.ToListAsync();
