@@ -931,7 +931,7 @@ namespace swas.BAL.Repository
                                     .OrderByDescending(p => p.PsmId)
                                     .FirstOrDefault().ToUnitId != Logins.unitid   // 2. Check if latest ToUnitId != current user
                                 && !_dbContext.ProjStakeHolderMov
-                                    .Any(p => p.ProjId == b.ProjId && !p.IsComment && p.ToUnitId == Logins.unitid) // 3. Make sure no incomplete action is assigned to current user
+                                    .Any(p => p.ProjId == b.ProjId && !p.IsComment && !p.IsComplete && p.ToUnitId == Logins.unitid) // 3. Make sure no incomplete action is assigned to current user
 
                             };
 
@@ -1008,7 +1008,7 @@ namespace swas.BAL.Repository
                                     .OrderByDescending(p => p.PsmId)
                                     .FirstOrDefault().ToUnitId != Logins.unitid   // 2. Check if latest ToUnitId != current user
                                 && !_dbContext.ProjStakeHolderMov
-                                    .Any(p => p.ProjId == b.ProjId && !p.IsComment && p.ToUnitId == Logins.unitid) // 3. Make sure no incomplete action is assigned to current user
+                                    .Any(p => p.ProjId == b.ProjId && !p.IsComment && !p.IsComplete && p.ToUnitId == Logins.unitid) // 3. Make sure no incomplete action is assigned to current user
 
                                 };
 
