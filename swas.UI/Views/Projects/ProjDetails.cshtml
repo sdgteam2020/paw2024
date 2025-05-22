@@ -110,8 +110,11 @@
     }
 
     .s-no-column {
-        width: 1%;
+        min-width: 40px;
+        max-width: 60px;
+        width: 5vw;
     }
+
 
     /* ------------scrollar */
     /* styles.css */
@@ -244,6 +247,19 @@
         background-color: #5a8cd6;
     }
 
+    .to-unit-name {
+        min-width: 80px;
+        max-width: 120px;
+        width: 10vw; 
+    }
+
+    .projaction {
+        min-width: 80px;
+        max-width: 150px;
+        width: 10vw;
+    }
+
+    
 </style>
 
 
@@ -295,13 +311,13 @@
                                         <th class="s-no-column">Ser No</th>
                                         <th style="width:20%">Proj Name</th>
                                         <th>Sponsor</th>
-                                        <th style="width: 9%;">From</th>
-                                        <th>To Unit Name</th>
+                                        <th style="width:9%;">From</th>
+                                        <th class="to-unit-name">To Unit Name</th>
                                         <th>TimeStamp</th>
                                         <th>Stage</th>
                                         <th>SubStage</th>
                                         <th>Action</th>
-                                        <th>Project Action</th>
+                                        <th class="projaction">Project Action</th>
                                     </tr>
                                 </thead>
 
@@ -378,11 +394,12 @@
 
 
                                             <td>
-                                                <div class="row">
-                                                    <div class="col-md-4">
+                                                <div class="row ">
+                                                    <div class="col-md-12 d-flex">
+                                                    <div class="mr-2">
                                                         @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
                                                         {
-                                                            <a href="javascript:void(0);" class="processDetail" data-id="@project.EncyPsmID">
+                                                            <a href="javascript:void(0);" class="processDetail mr-2" data-id="@project.EncyPsmID">
                                                                 <img src="/assets/images/icons/process1.png" alt="Icon" style="height: 22px;">
                                                             </a>
                                                         }
@@ -391,14 +408,15 @@
                                                             <button type="button" class="btn btn-success btn-Fwd" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
                                                         }
                                                     </div>
-                                                    <div class="col-md-4">
+                                                        <div class="col-md-4">
                                                         @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
                                                         {
                                                             <button type="button" class="btn btn-success btn-Obsn" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;">Obsn</button>
                                                         }
                                                     </div>
-                                                    <div class="col-md-4">
+                                                         <div class="col-md-4"> 
                                                         <button type="button" class="btn btn-success btn-FwdHistory" data-proj-name="@project.ProjName" style="margin-top: 1px;" title="History"><i class="fa-solid fa-timeline"></i></button>
+                                                    </div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -480,12 +498,12 @@
                                         <th>Sponsor</th>
 
                                         <th class="col-width9">From</th>
-                                        <th>To Unit Name</th>
+                                        <th class="to-unit-name">To Unit Name</th>
                                         <th>TimeStamp</th>
                                         <th>Stage</th>
                                         <th>SubStage</th>
                                         <th>Action</th>
-                                        <th>Project Action</th>
+                                        <th class="projaction">Project Action</th>
 
                                     </tr>
                                 </thead>
@@ -615,7 +633,7 @@
                             <table id="Completed" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th style="width: 23.4375px;">Ser No</th>
+                                        <th class="s-no-column">Ser No</th>
                                         <th>Proj Name</th>
                                         <th>Sponsor Dte</th>
                                         <th>Completed By</th>
@@ -678,7 +696,7 @@
                             <table id="Draft" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th style="width: 23.4375px;">Ser No</th>
+                                        <th class="s-no-column">Ser No</th>
                                         @* <th>Proj ID</th> *@
                                         <th>Proj Name</th>
 

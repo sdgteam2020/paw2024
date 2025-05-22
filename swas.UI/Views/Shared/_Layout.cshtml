@@ -173,6 +173,8 @@
             margin: 0; /* Remove default margins for better centering */
         }
 
+       
+
     </style>
     <style>
 
@@ -2517,7 +2519,8 @@
 </script>
 
 <script>
-    $(document).ready(function () {
+
+    @* $(document).ready(function () {
         $('.dropdown').hover(
             function () {
                 $(this).children('.dropdown-menu').slideDown(200);
@@ -2526,7 +2529,24 @@
                 $(this).children('.dropdown-menu').slideUp(200);
             }
         );
-    });
+    }); *@
+
+      let hideTimeout;
+
+    $('.dropdown').hover(
+        function () {
+            // On hover in: clear any pending hide and show dropdown
+            clearTimeout(hideTimeout);
+            $(this).children('.dropdown-menu').stop(true, true).slideDown(200);
+        },
+        function () {
+            // On hover out: delay hide to prevent flicker
+            const $menu = $(this).children('.dropdown-menu');
+            hideTimeout = setTimeout(function () {
+                $menu.stop(true, true).slideUp(200);
+            }, 200); // You can adjust this delay as needed
+        }
+    );
 </script>
 
 <script>
@@ -2559,6 +2579,8 @@
 
 </script>
 
+<script src="~/DeveloperJs/Dashboard.js"></script>
+<script src="~/DeveloperJs/Account.js"></script>
 <script src="~/developerjs/projectstkholdercomments.js"></script>
 <script src="~/developerjs/ProjectstckholdercommentforProjHistory.js"></script>
 
