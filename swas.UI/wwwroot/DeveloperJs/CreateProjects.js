@@ -7,19 +7,19 @@ $(document).ready(function () {
     });
 
     $("#sponsorNameInput").val($("#SponsorName").html());
-
+    
     $("#spanProjectId").html($("#ProjId").val());
-    mMsater($("#StakeHolderId").val(), "ddlStakeHolderId", 1, 0)
-    mMsater($("#HostTypeID").val(), "ddlHostTypeID", 2, 0)
+    mMsater($("#StakeHolderId").val(),"ddlStakeHolderId",1,0)
+    mMsater($("#HostTypeID").val(),"ddlHostTypeID",2,0)
     mMsater($("#Apptype").val(), "ddlApptype", 3, 0)
-
+   
     var current_fs, next_fs, previous_fs; //fieldsets
     var opacity;
 
 
     $("#uploadButton").click(function () {
 
-        var requiredFields = $('#fwduploaditems').find('.requiredField');
+      var  requiredFields = $('#fwduploaditems').find('.requiredField');
         var allFieldsComplete = true;
         requiredFields.each(function (index) {
             if (this.value.length == 0) {
@@ -43,10 +43,10 @@ $(document).ready(function () {
             UploadFiles();
         }
     });
-
+   
     $("#finalupload").click(function () {
         ProjectSubmited($(this));
-
+       
     });
     $("#draftUpload").click(function () {
         ProjectSaveAsDraft($(this));
@@ -54,15 +54,15 @@ $(document).ready(function () {
     $("#submitUpload").click(function () {
 
         var requiredFields = $('#tablebasic2').find('.requiredField');
-        var allFieldsComplete = true;
-        requiredFields.each(function (index) {
-            if (this.value.length == 0) {
-                $(this).addClass('is-invalid');
-                allFieldsComplete = false;
-            } else {
-                $(this).removeClass('is-invalid');
-            }
-        });
+         var allFieldsComplete = true;
+         requiredFields.each(function (index) {
+             if (this.value.length == 0) {
+                 $(this).addClass('is-invalid');
+                 allFieldsComplete = false;
+             } else {
+                 $(this).removeClass('is-invalid');
+             }
+         });
 
         // Validate character limits
         $('.char-limit').each(function () {
@@ -81,20 +81,20 @@ $(document).ready(function () {
             }
         });
 
-        if (!allFieldsComplete) {
+         if (!allFieldsComplete) {
 
-            Swal.fire({
-                title: 'Error!',
-                text: 'Please complete all required fields',
-                icon: 'error',
-                showConfirmButton: false,
-                timer: 1000
-            })
-        }
-        else {
-            AddProject(this);
-        }
-
+             Swal.fire({
+                 title: 'Error!',
+                 text: 'Please complete all required fields',
+                 icon: 'error',
+                 showConfirmButton: false,
+                 timer: 1000
+             })
+         }
+         else {
+             AddProject(this);
+         }
+       
 
     });
     $(".previous").click(function () {
@@ -128,7 +128,7 @@ $(document).ready(function () {
 
     $("#tempBasicDetails").click(function () {
         var number = 1 + Math.floor(Math.random() * 15000);
-        const predate = DateFormateyyy_mm_dd(new Date() - 1);
+        const predate = DateFormateyyy_mm_dd(new Date()-1);
         const todaydate = DateFormateyyy_mm_dd(new Date());
 
         $("#ProjName").val("New Project" + number);
@@ -170,22 +170,24 @@ $(document).ready(function () {
     });
     $(".requiredField").blur(function () {
 
-
+        
         if (this.value.length == 0) {
             $(this).addClass('is-invalid');
-
+            
         } else {
             $(this).removeClass('is-invalid');
             $(this).addClass('is-valid');
         }
     });
     $("#btnbasic").click(function () {
+        debugger;
 
-
+        
         requiredFields = $('#tablebasic').find('.requiredField');
         var allFieldsComplete = true;
         requiredFields.each(function (index) {
             if (this.value.length == 0) {
+                console.log("testttt",this.value);
                 $(this).addClass('is-invalid');
                 allFieldsComplete = false;
             } else {
@@ -194,8 +196,41 @@ $(document).ready(function () {
         });
         // Validate character limits
 
-        $('.char-limit').each(function () {
-            var inputField = $(this);
+        //$('.char-limit').each(function () {
+        //    var inputField = $(this);
+        //    var maxLength = inputField.data('maxlength'); // Get max length from data-maxlength attribute
+        //    var currentLength = inputField.val().length;
+        //    var errorMsg = inputField.closest('td').find('.charErrorMsg');
+
+        //    if (currentLength > maxLength) {
+
+        //        inputField.addClass('is-invalid');
+        //        errorMsg.show();  // Show error message
+        //        allFieldsComplete = false; // Mark form as invalid
+        //    } else {
+        //        inputField.removeClass('is-invalid');
+        //        errorMsg.hide();  // Hide error message if within limit
+        //    }
+        //});
+
+
+
+        // Validate character limits
+        const required = [
+            "#ProjName",
+            "#InitiatedDate",
+            "#CompletionDate",
+            "#IsWhitelisted",
+            "#InitialRemark",
+            "#AimScope",
+            "#HQandITinfraReqd",
+            "#ContentofSWApp",
+            "#ReqmtJustification",
+            "#UsabilityofProposedAppln"
+        ];
+
+        required.forEach(function (selector) {
+            var inputField = $(selector);
             var maxLength = inputField.data('maxlength'); // Get max length from data-maxlength attribute
             var currentLength = inputField.val().length;
             var errorMsg = inputField.closest('td').find('.charErrorMsg');
@@ -211,7 +246,7 @@ $(document).ready(function () {
         });
 
         if (!allFieldsComplete) {
-
+           
             Swal.fire({
                 title: 'Error!',
                 text: 'Please complete all required fields',
@@ -250,7 +285,135 @@ $(document).ready(function () {
     });
 
 
+    function filterProjectNames(query) {
 
+        $.ajax({
+            url: '/Projects/GetRevettedProjects',
+            method: 'GET',
+            data: {
+                searchQuery: query
+            },
+            success: function (data) {
+
+                $("#projectNameDropdown").empty();
+                if (data.length > 0) {
+                    data.forEach(function (name) {
+                        $("#projectNameDropdown").append(`<li class="dropdown-item" data-id="${name.projId}">${name.projName}</li>`);
+                    });
+                    $("#projectNameDropdown").show();
+                } else {
+                    $("#projectNameDropdown").hide();
+                }
+            },
+            error: function (error) {
+                console.error('Error fetching project names:', error);
+            }
+        });
+    }
+
+
+    $("#ProjName").on("keyup", function () {
+        debugger;
+        var query = $(this).val();
+        if ($("#IsWhitelisted").val() === "Re-Vetted") {
+            filterProjectNames(query);
+        }
+    });
+
+
+    $(document).on("click", "#projectNameDropdown li", function () {
+        var projectId = $(this).data("id");
+        var projectName = $(this).data("name");
+
+
+        $("#ProjName").val(projectName);
+
+
+        $("#ProjId").val(projectId);
+
+
+        getProjectDetails(projectId);
+
+        $("#projectNameDropdown").hide();
+    });
+
+
+    function getProjectDetails(projId) {
+        $.ajax({
+            url: '/Projects/GetProjectDetails',
+            method: 'GET',
+            data: {
+                projId: projId
+            },
+            success: function (project) {
+
+
+                $("#spanOldPslmId").html(project.currentPslmId);
+                $("#ProjId").val(project.ProjId);
+                $("#ProjName").val(project.projName);
+
+
+                $("#InitialRemark").val(project.initialRemark);
+                $("#StakeHolderId").val(project.stakeHolderId);
+                $("#AimScope").val(project.aimScope);
+                $("#HQandITinfraReqd").val(project.hQandITinfraReqd);
+                $("#HostTypeID").val(project.hostTypeID);
+                $("#ContentofSWApp").val(project.contentofSWApp);
+                $("#ReqmtJustification").val(project.reqmtJustification);
+                $("#UsabilityofProposedAppln").val(project.usabilityofProposedAppln);
+                $("#ProjCode").val(project.projCode);
+                $("#Sponsor").val(project.sponsor);
+                $("#Technology_dependencies").val(project.technology_dependencies);
+                $("#Database_reqmts").val(project.database_reqmts);
+                $("#DetlsofUserBase").val(project.detlsofUserBase);
+                $("#EnvisagedCost").val(project.envisagedCost);
+                $("#NWBandWidthReqmt").val(project.nwBandWidthReqmt);
+                $("#MajTimeLines").val(project.majTimeLines);
+                $("#TechStackProposed").val(project.techStackProposed);
+                $("#DataSecurity_backup").val(project.dataSecurity_backup);
+                $("#ProposedDB_Engine").val(project.proposedDB_Engine);
+                $("#Detlsof_OS").val(project.detlsof_OS);
+                $("#DetlsofSw_Architecture").val(project.detlsofSw_Architecture);
+                $("#DetlsofProposed_Architecture").val(project.detlsofProposed_Architecture);
+                $("#DetlsPki_IAM").val(project.detlsPki_IAM);
+                $("#Enhancement_upgradation").val(project.enhancement_upgradation);
+                $("#Details_licensing").val(project.details_licensing);
+                $("#ddlApptype").val(project.apptype);
+                $("#ddlHostTypeID").val(project.hostTypeID);
+                $("#TypeofSW").val(project.typeofSW);
+                $("#BeingDevpInhouse").val(project.beingDevpInhouse);
+                $("#EndorsmentbyHeadof").val(project.endorsmentbyHeadof);
+
+
+
+            },
+            error: function (error) {
+                console.error('Error fetching project details:', error);
+            }
+        });
+    }
+
+
+    $("#IsWhitelisted").change(function () {
+        var selectedStatus = $(this).val();
+        if (selectedStatus === "Re-Vetted") {
+            $("#ProjName").prop("disabled", false);
+            $("#projectNameDropdown").show();
+        } else {
+
+            $("#projectNameDropdown").hide();
+        }
+    });
+
+
+    $(document).click(function (e) {
+        if (!$(e.target).closest('#projectNameDropdown').length) {
+            $("#projectNameDropdown").hide();
+        }
+    });
+
+
+   
     $("body").on("click", ".btndeleteProject", function () {
 
         Swal.fire({
@@ -263,8 +426,8 @@ $(document).ready(function () {
             confirmButtonText: 'Yes, Delete It!'
         }).then((result) => {
             if (result.value) {
-
-
+                
+                
                 DeleteProject($(this).closest("tr").find(".tblspnprojectid").html());
 
             }
@@ -335,23 +498,34 @@ function AddProject(thistag) {
             "Technology_dependencies": $("#Technology_dependencies").val(),
             "Database_reqmts": $("#Database_reqmts").val(),
             "Enhancement_upgradation": $("#Enhancement_upgradation").val(),
-            "Details_licensing": $("#Details_licensing").val()
-
+            "Details_licensing": $("#Details_licensing").val(),
+            "OldPsmid": parseInt($("#spanOldPslmId").html()) || 0,
+            "Date_type": $('input[name="mcalender_dates"]:checked').val(),
+            "RequestRemarks": $("#RequestRemarks").val()
+           
         }, //get the search string
         success: function (result) {
+
+
+           
             if (result == -2) {
+                
+
                 Swal.fire({
                     title: "success!",
                     text: "User has been Updated!",
                     icon: "success"
                 });
+
             }
             else if (result == -3) {
+
                 Swal.fire({
                     title: "Error!",
                     text: "Project Name Already Exists!",
                     icon: "Error"
                 });
+
             }
             else if (result == -4) {
                 Swal.fire({
@@ -359,43 +533,55 @@ function AddProject(thistag) {
                     text: "Incorrect Data!",
                     icon: "Error"
                 });
+                
+
             }
             //else if (result.indcludes("Error")) {
-            //else if (result.includes("Error")) {
+            //else if (result.include("Error")) {
             //    Swal.fire({
             //        icon: 'error',
             //        title: 'Oops...',
             //        text: result,
+
             //    })
+
             //}
             else if (result != null) {
+               
+
+                    $("#spanProjectId").html(result.projId);
+                    $("#spanCurrentPslmId").html(result.currentPslmId);
+
+
+                    AttechHistory();
+                    current_fs = $(thistag).parent();
+                    next_fs = $(thistag).parent().next();
+
+
+                    //Add Class Active
+                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+                    //show the next fieldset
+                    next_fs.show();
+                    //hide the current fieldset with style
+                    current_fs.animate({ opacity: 0 }, {
+                        step: function (now) {
+                            // for making fielset appear animation
+                            opacity = 1 - now;
+
+                            current_fs.css({
+                                'display': 'none',
+                                'position': 'relative'
+                            });
+                            next_fs.css({ 'opacity': opacity });
+                        },
+                        duration: 600
+                    });
+
+
                 
-                $("#spanProjectId").html(result.projId);
-                $("#spanCurrentPslmId").html(result.currentPslmId);
 
-                AttechHistory();
-                current_fs = $(thistag).parent();
-                next_fs = $(thistag).parent().next();
 
-                //Add Class Active
-                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-
-                //show the next fieldset
-                next_fs.show();
-                //hide the current fieldset with style
-                current_fs.animate({ opacity: 0 }, {
-                    step: function (now) {
-                        // for making fielset appear animation
-                        opacity = 1 - now;
-
-                        current_fs.css({
-                            'display': 'none',
-                            'position': 'relative'
-                        });
-                        next_fs.css({ 'opacity': opacity });
-                    },
-                    duration: 600
-                });
             }
         }
     });
@@ -452,11 +638,11 @@ function FwdProjConfirm(thisdata) {
 
 
 function ProjectSubmited(thisdata) {
-
+     
     $.ajax({
         url: '/Projects/ProjectSubmited',
         type: 'POST',
-        data: { "projid": $("#spanProjectId").html(), "type": 1 },
+        data: { "projid": $("#spanProjectId").html(),"type": 1},
         success: function (response) {
             //console.log(response);
 
@@ -472,7 +658,7 @@ function ProjectSubmited(thisdata) {
 
                 current_fs = $(thisdata).parent();
                 next_fs = $(thisdata).parent().next();
-
+               
                 AddNotification($("#spanProjectId").html(), 2, 1);
                 //Add Class Active
                 $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
@@ -513,7 +699,8 @@ function ProjectSaveAsDraft(thisdata) {
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: "Draft Saved Successfully",
+                    title: "Draft Saved Successfully in Initiated Projects",
+                    //title: "Draft Saved Successfully",
                     showConfirmButton: false,
                     timer: 1500
                 });
@@ -541,7 +728,7 @@ function validationIsSuccessful() {
 }
 function DateFormateyyy_mm_dd(date) {
 
-
+   
     var datef2 = new Date(date);
     var months = "" + `${(datef2.getMonth() + 1)}`;
     var days = "" + `${(datef2.getDate())}`;

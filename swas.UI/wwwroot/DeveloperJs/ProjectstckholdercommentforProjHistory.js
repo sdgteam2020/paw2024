@@ -31,7 +31,8 @@ function GetAllComments2() {
             tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">Datetime</th>';
             tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">Comment</th>';
             tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">Status</th>';
-            tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">PDF</th>';            
+            tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">PDF</th>'; 
+            tableHTML += '<th class="d-none">DateType</th>'; 
             tableHTML += '</tr>';
             tableHTML += '</thead>';
             tableHTML += '<tbody>';
@@ -59,6 +60,8 @@ function GetAllComments2() {
                         tableHTML += '<img src="/assets/images/icons/pdfimg.png" alt="PDF icon" style="width: 24px; height: 24px;">';
                         tableHTML += '</a>';
                     }
+                    tableHTML += '<td class="d-none noExport"><span class="DateType">' + data[i].adminApprovalStatus + '</span></td>';  
+
                     tableHTML += '</td>';
                     tableHTML += '</tr>';
                 }
@@ -69,18 +72,115 @@ function GetAllComments2() {
 
             $('#ChatBox').empty().html(tableHTML);
 
-            $('#ChatBox .table').DataTable({
-                "paging": true,    // Enable paging
-                "ordering": true,  // Enable ordering
-                "info": true,       // Enable info
-                "dom": '<"row"<"col-sm-12 col-md-6 add-comment-btn"><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+            //$('#ChatBox .table').DataTable({
+            //    "paging": true,    // Enable paging
+            //    "ordering": true,  // Enable ordering
+            //    "info": true,       // Enable info
+            //    "dom": '<"row"<"col-sm-12 col-md-6 add-comment-btn"><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+
+            //});
+
+            //$('#ChatBox .table').DataTable({
+            //    paging: true,
+            //    ordering: true,
+            //    info: true,
+            //    dom: '<"row"<"col-sm-12 col-md-6 add-comment-btn"><"col-sm-12 col-md-6"Bf>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+            //    buttons: [
+            //        'copy', 'excel', 'csv', 'pdf'
+            //    ]
+            //});
+
+            var table = $('#ChatBox .table').DataTable({
+                paging: true,
+                ordering: true,
+                info: true,
+                dom: '<"row"<"col-sm-2 col-md-1 add-comment-btn"><"col-sm-12 col-md-11"Bf>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+                buttons: [
+                    'copy',
+                    'excel',
+                    'csv',
+                    {
+                        text: 'PDF',
+                        extend: 'pdfHtml5',
+                        action: function (e, dt, node, config) {
+                            PdfDiv();
+                        }
+                    }
+                ]
             });
+
+            // Insert the +Add Comment button inside the left container
+            $('<button type="button" class="btn btn-primary">+Add Comment</button>')
+                .appendTo('.add-comment-btn')
+                .on('click', function () {
+                    // Your custom +Add Comment button click logic here
+                    alert('Add Comment clicked!');
+                });
+
+            function PdfDiv() {
+                var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+                popupWin.document.open();
+
+                var tableStyles = `
+            <style type="text/css">
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-bottom: 20px;
+                }
+                thead {
+                    vertical-align: bottom;
+                    background-color: red;
+                }
+                th, td {
+                    padding: 8px;
+                    border: 1px solid #ddd;
+                    text-align: center;
+                }
+                th {
+                    background-color: #f2f2f2;
+                    color: black;
+                }
+            </style>
+        `;
+
+                var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+                var tableHTML = '<table>';
+
+                tableHTML += '<thead><tr>';
+                table.columns().header().each(function (header) {
+                    tableHTML += '<th>' + header.innerHTML + '</th>';
+                });
+                tableHTML += '</tr></thead>';
+
+                tableHTML += '<tbody>';
+                for (var i = 0; i < filteredData.length; i++) {
+                    tableHTML += '<tr>';
+                    for (var j = 0; j < filteredData[i].length; j++) {
+                        tableHTML += '<td>' + filteredData[i][j] + '</td>';
+                    }
+                    tableHTML += '</tr>';
+                }
+                tableHTML += '</tbody></table>';
+
+                var ipadds = $("#ipAdd").html().replace(/\n/g, ' | ').trim();
+                var watermarkText = ipadds;
+
+                popupWin.document.write('<html><head>'
+                    + tableStyles + '</head><body onload="window.print()">'
+                    + tableHTML + `<div style="transform: rotate(-45deg); z-index:10000; opacity: 0.3; color: #8e9191; position: fixed; left: 6%; top: 39%; font-size: 80px; font-weight: 500; display: grid; justify-content: center; align-content: center;">`
+                    + watermarkText + '</div></body></html>');
+
+                popupWin.document.close();
+            }
+
 
             if ($("#IsCommentPsmiId").html() != 0)
                 $("div.add-comment-btn").html('<button id="add-comment" class="btn btn-primary"><i class="fas fa-plus"></i> Add Comment</button>');
 
             $("#add-comment").on("click", function () {
-
+                var projId = $(".ProjectcommentprojId").html().trim();
                 $("#ProjectcommentForStackHolderprojId").html($(".ProjectcommentprojId").html())
                 $("#ProjectcommentForStackHolderPsmId").html($("#IsCommentPsmiId").html())
                 mMsater(0, "ddlStatus", 4, 0)
@@ -94,7 +194,38 @@ function GetAllComments2() {
                 var finalTitle = "Mov History: " + shortProjName;
                 $('#addComment').text(finalTitle);
 
+                var pad = "00";
+                var datef2 = new Date();
+                var months = "" + (datef2.getMonth() + 1);
+                var days = "" + datef2.getDate();
+                var monthsans = pad.substring(0, pad.length - months.length) + months;
+                var dayans = pad.substring(0, pad.length - days.length) + days;
+                var year = datef2.getFullYear();
+                var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+                var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+                var ss = `${datef2.getSeconds()}`;
+
+                // Today's date and time in the required formats
+                var todayDate = `${year}-${monthsans}-${dayans}`;
+                var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+
+                fetchDdgitApproval(projId, function (isApproved) {
+
+
+                    if (isApproved) {
+                        $('#CommentDateFwd').attr('type', 'datetime-local');
+                        $('#CommentDateFwd').attr('max', todayDateTime);
+                        $('#CommentDateFwd').prop('disabled', false); // Allow user input
+                    } else {
+                        $('#CommentDateFwd').attr('type', 'date');
+                        $('#CommentDateFwd').val(todayDate); // Set today's date
+                        $('#CommentDateFwd').prop('disabled', true); // Freeze input
+                    }
+                });
+
             });
+
+
 
 
         },
@@ -103,7 +234,25 @@ function GetAllComments2() {
         }
     });
 }
+function fetchDdgitApproval(projId, callback) {
+    $.ajax({
+        url: '/Projects/GetDdgitApprovalStatus', // Your API endpoint here
+        type: 'GET',
+        data: { projId: projId },
+        success: function (response) {
 
+            if (callback && typeof callback === 'function') {
+                callback(response.isApproved);
+            }
+        },
+        error: function () {
+            // On error, assume not approved or handle accordingly
+            if (callback && typeof callback === 'function') {
+                callback(false);
+            }
+        }
+    });
+}
 
 function GetAllComments1() {
 

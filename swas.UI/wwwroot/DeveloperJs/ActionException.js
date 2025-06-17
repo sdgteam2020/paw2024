@@ -51,7 +51,7 @@ $(document).ready(function () {
         });
 
         $("#ddlfwdAction").change(function () {
-            mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html());
+            mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html(), 0, "");
         });
   
 });
@@ -87,7 +87,7 @@ $(document).on('click', '.btn-edit', function () {
     mMsaterfwdStage($(this).closest("tr").find("#spnStageId").html(), "ddlfwdStage", 5, 0, 1)
     mMsaterStage($(this).closest("tr").find("#spnStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#spnStageId").html(), 0)
     mMsater($(this).closest("tr").find("#spnActionId").html(), "ddlfwdAction", 10, $(this).closest("tr").find("#spnStatusId").html())
-    mMsaterFwdTo($(this).closest("tr").find("#spnToUnitId").html(), "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html(), $(this).closest("tr").find("#spnToUnitId").html());
+    mMsaterFwdTo($(this).closest("tr").find("#spnToUnitId").html(), "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html(), $(this).closest("tr").find("#spnToUnitId").html(), 0, "");
 
 });
 

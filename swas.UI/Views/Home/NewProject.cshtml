@@ -80,6 +80,10 @@
             display: unset;
         }
 
+        #EditWhiteListedProjectModal {
+            padding-right: 190px;
+        }
+
     </style>
     <style>
         /* Apply a common font family and size to all headings */
@@ -272,6 +276,7 @@
         .col-width6 {
             width: 7% !important; /* Adjust the width as needed */
         }
+
         .col-width9 {
             width: 12% !important; /* Adjust the width as needed */
         }
@@ -310,11 +315,12 @@
             cursor: pointer;
         }
 
-     /*    .card_title p {
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis; 
-        } */
+        /*    .card_title p {
+                                                    white-space: nowrap;
+                                                    overflow: hidden;
+                                                    text-overflow: ellipsis;
+                                                } */
+
 
     </style>
 
@@ -451,12 +457,12 @@
                                         </div>
                                     </td>
 
-                                   @*  <td class="f-12 col-width16">
-                                        <div class="tooltip-container" data-tooltip="@unitsa.ProjName">
-                                            <span class="short-text"></span>
-                                            <span class="tooltip tooltip-text"></span>
-                                        </div>
-                                    </td> *@
+                                    @*  <td class="f-12 col-width16">
+                            <div class="tooltip-container" data-tooltip="@unitsa.ProjName">
+                            <span class="short-text"></span>
+                            <span class="tooltip tooltip-text"></span>
+                            </div>
+                            </td> *@
 
                                     <td class="">
                                         <div class="tooltip-container" data-tooltip="@unitsa.ProjName">
@@ -478,11 +484,11 @@
                                     <td class="col-width6">@unitsa.ActionName</td>
 
                                     @* <td class="f-12">
-                                        <div class="tooltip-containerRemark" data-tooltip="@unitsa.Remark">
-                                            <span class="short-textRemark"></span>
-                                            <span class="tooltip tooltip-text1"></span>
-                                        </div>
-                                    </td> *@
+                            <div class="tooltip-containerRemark" data-tooltip="@unitsa.Remark">
+                            <span class="short-textRemark"></span>
+                            <span class="tooltip tooltip-text1"></span>
+                            </div>
+                            </td> *@
 
                                     <td class="col-width10">
                                         <div class="tooltip-container" data-tooltip="@unitsa.Remark">
@@ -516,23 +522,23 @@
                     <!-- Table header -->
 
                     <thead style="position: sticky;top:-18px">
-                        @*  <tr>
-                        <th colspan="3"></th>
-                        <th colspan="3" class="text-center">Sponsor Contact Details</th>
-                        <th colspan="6"></th>
-                        </tr> *@
                         <tr>
                             <th class="text-center s-no-column" style="width:1%">S.No</th>
                             <th class="text-nowrap text-center" style="width:10% !important">Name of Sw Appl</th>
-                            <th class="text-nowrap text-center" style="width:12% !important">Project Cat</th>
+                            <th class="text-nowrap text-center" style="width:12% !important">Hosted On</th>
 
                             <th class="text-nowrap text-center" style="width:4% !important">Appt</th>
-                            <th class="text-nowrap text-center" style="width:4% !important">Fmn</th>
-                            <th class="text-nowrap text-center" style="width:2% !important">Contact No</th>
+                            <th class="text-nowrap text-center" style="width:4% !important">Sponser</th>
+                            <th class="text-nowrap text-center" style="width:2% !important">Tel No</th>
                             <th class="text-nowrap text-center" style="width:2% !important">Dt of ACG Clearance</th>
-                            <th class="text-nowrap text-center" style="width:2% !important">Cert No & Date</th>
+                            <th class="text-nowrap text-center" style="width:2% !important">Cert No</th>
                             <th class="text-nowrap text-center" style="width:4% !important">Valid Upto</th>
                             <th class="text-nowrap text-center" style="width:4% !important">Remarks</th>
+
+                            @if (Logins?.unitid == 1)
+                            {
+                                <th class="text-nowrap text-center" style="width:4% !important">Action</th>
+                            }
                         </tr>
                     </thead>
                     <tbody>
@@ -543,36 +549,34 @@
                             int headerid = 0;
                             @foreach (var unitx in WhiteListed)
                             {
-                                @*  if (headerid != @unitx.HeaderID)
-                        {
-                        <tr>
-
-                        <td colspan="1" style="font-size:12px;">@unitx.Header</td>
-
-
-                        </tr>
-
-                        } *@
                                 <tr>
-
-
                                     <td class="s-no-column">@count</td>
                                     <td class="col-width16">@unitx.ProjName</td>
-                                    <td class="col-width9">@unitx.Header</td>
+                                    <td class="col-width9">@unitx.HostedOn</td>
 
                                     <td>@unitx.Appt</td>
                                     <td>@unitx.Fmn</td>
                                     <td class="col-width6">@unitx.ContactNo</td>
                                     <td class="col-width6">@unitx.Clearence</td>
-                                    <td>@unitx.CertNo @unitx.date</td>
+                                    <td>@unitx.CertNo</td>
                                     <td>@unitx.ValidUpto</td>
                                     <td>@unitx.Remarks</td>
-
-
+                                    @if (Logins?.unitid == 1)
+                                    {
+                                        <td>
+                                            <center>
+                                                <a class="EditWhiteListedProj" href="#" data-id="@unitx.Id">
+                                                    <div>
+                                                        <img src="/assets/images/icons/edit.png" alt="Icon" style="width: 35px; height: 30px; margin-right: 0px;">
+                                                    </div>
+                                                </a>
+                                            </center>
+                                        </td>
+                                    }
                                 </tr>
 
                                 count = count + 1;
-                                headerid = @unitx.HeaderID;
+                                @* headerid = @unitx.HeaderID; *@
                             }
                         }
 
@@ -581,6 +585,82 @@
 
 
             </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="EditWhiteListedProjectModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="editWhiteListedForm">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Whitelisted Project</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <input type="hidden" id="edit_Id" name="Id" />
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="edit_ProjName" class="form-label">Name of Sw Appl</label>
+                            <input type="text" id="edit_ProjName" name="ProjName" class="form-control" readonly />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="edit_HostedOn" class="form-label">Hosted On</label>
+                            <select id="edit_HostedOn" name="mHostTypeId" class="form-select">
+                                <option value="">-- Select Hosted On --</option>
+                                <option value="1">LAN</option>
+                                <option value="2">ADN</option>
+                                <option value="3">Internet</option>
+                                <option value="4">Standalone</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="edit_Appt" class="form-label">Appt</label>
+                            <input type="text" id="edit_Appt" name="Appt" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="edit_Sponser" class="form-label">Sponser</label>
+                            <input type="text" id="edit_Sponser" name="Fmn" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="edit_TelNo" class="form-label">TelNo</label>
+                            <input type="text" id="edit_TelNo" name="ContactNo" class="form-control" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="edit_Clearance" class="form-label">Clearance</label>
+                            <input type="date" id="edit_Clearance" name="Clearence" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="edit_Cert" class="form-label">Cert</label>
+                            <input type="text" id="edit_Cert" name="CertNo" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="edit_ValidUpto" class="form-label">Valid Upto</label>
+                            <input type="date" id="edit_ValidUpto" name="ValidUpto" class="form-control" />
+                        </div>
+
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="edit_Remarks" class="form-label">Remarks</label>
+                            <textarea id="edit_Remarks" name="Remarks" class="form-control" rows="2"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -629,7 +709,7 @@
                                                     </div>
                                                     <div class="col-md-8 col-12">
                                                         <div class="form-group">
-                                                            <input type="text" id="UserId" name="UserId" class="form-control readonly" value="@username" readonly required  />
+                                                            <input type="text" id="UserId" name="UserId" class="form-control readonly" value="@username" readonly required />
                                                             @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
                                                         </div>
                                                     </div>

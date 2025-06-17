@@ -198,13 +198,27 @@ namespace swas.BAL.Repository
             return await _dbContext.mAppType.ToListAsync();
         }
 
-        public async Task<List<DTODDLComman>> GetFwdTo(int UnitId)
+        public async Task<List<DTODDLComman>> GetFwdTo(int UnitId, int LoginUnitId, string Value, int Type)
         {
-            var unitOptions = await _dbContext.tbl_mUnitBranch.Where(c => c.TypeId == 1 || c.unitid == UnitId)
+            List<DTODDLComman> list = new List<DTODDLComman>();
+            if (Type == 1)
+            {
+                var usedUnitIds = await _dbContext.Users.Select(u => u.unitid).Distinct().ToListAsync();
+                list = await _dbContext.tbl_mUnitBranch.Where(c => c.unitid != LoginUnitId && usedUnitIds.Contains(c.unitid) &&
+                c.UnitName.ToLower().Contains(Value.ToLower())).Select(c => new DTODDLComman
+                {
+                    Id = c.unitid,
+                    Name = c.UnitName
+                }).ToListAsync();
+            }
+            else
+            {
+                list = await _dbContext.tbl_mUnitBranch.Where(c => c.TypeId == 1 || c.unitid == UnitId)
               .Select(c => new DTODDLComman { Id = c.unitid, Name = c.UnitName })
               .ToListAsync();
 
-            return unitOptions;
+            }
+            return list;
         }
     }
 }

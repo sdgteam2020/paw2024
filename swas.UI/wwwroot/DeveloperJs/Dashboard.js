@@ -29,7 +29,7 @@ function GetAllDashbaordCount() {
 
         },
         success: function (data) {
-            // console.log("Dashboard", data)
+             //console.log("DashboardData01", data)
             var dtoDashboardHeaderlst = data.dtoDashboardHeaderlst;
             var dTOApprovedCountlst = data.dtoApprovedCountlst;
             var dTODashboardCountlstForAction = data.dtoDashboardCountlstForAction;
@@ -40,6 +40,7 @@ function GetAllDashbaordCount() {
             var peding = 0;
             var sent = 0;
             if (data != null) {
+                dtoDashboardHeaderlst.sort((a, b) => a.stageId - b.stageId || a.statseq - b.statseq);
 
                 for (var i = 0; i < dtoDashboardHeaderlst.length; i++) {
                     if (stageId != dtoDashboardHeaderlst[i].stageId) {
@@ -120,6 +121,11 @@ function GetAllDashbaordCount() {
                                 listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span>' +
                                     '<h5 style="margin-top: 8px; padding-top: 10px;" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">' + approvedcount[0].total + ' </h5>';
                             }
+
+                            else if (dtoDashboardHeaderlst[i].status.includes("Re-Vetting")) {
+                                listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span>' +
+                                    '<h5 style="margin-top: 8px; padding-top: 10px;" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">' + approvedcount[0].total + ' </h5>';
+                            }
                             else {
                                 listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span>' +
                                     '<h5 style="margin-top: 8px;" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">' + approvedcount[0].total + ' </h5>';    
@@ -134,14 +140,14 @@ function GetAllDashbaordCount() {
                     //listitem += '<div class="cursorpointer btnGetsummay "><span class="d-none" id="spnstatus">' + dtoDashboardHeaderlst[i].status + '</span>';
                     listitem += '<div class="">';
 
-                    if (dtoDashboardHeaderlst[i].status.includes("BISAG-N")) {
+                    if (dtoDashboardHeaderlst[i].status.includes("BISAG-N") || dtoDashboardHeaderlst[i].status.includes("Re-Vetting")) {
                         listitem += '<div class="t-1 statusprojsummry" style="padding-top: 7px;" >' + dtoDashboardHeaderlst[i].status + '</div> ';
                     }
                     else {
                         listitem += '<div class="t-1 statusprojsummry">' + dtoDashboardHeaderlst[i].status + '</div> ';
                     }
 
-                    if (dtoDashboardHeaderlst[i].status.includes("BISAG-N")) {
+                    if (dtoDashboardHeaderlst[i].status.includes("BISAG-N") || dtoDashboardHeaderlst[i].status.includes("Re-Vetting")) {
 
                         listitem += '<span class="badge badge-light text-black d-none" style="font-size:18px" data-toggle="tooltip" data-placement="top" ><span class="badge bg-danger">' + peding + '</span> / <span class="badge bg-success">' + sent + '</span></span>';
 
@@ -224,8 +230,8 @@ function GetAllDashbaordCount() {
 
                         if (spnstatusId == 2 || spnstatusId == 3 || spnstatusId == 22) {
 
-                        } else if (spnstatusId == 44) {
-                            $('#ProjectApprovedTittle').html(tittle);
+                        } else if (parseInt(spnstatusId) == 44 || parseInt(spnstatusId) == 45) {
+                            $('#ProjectApprovedTittleBisag').html(tittle);
                             $('#BISAG-N').modal('show');
                             getProjBisagN(spnstatusId, spnstatusActionsMappingId);
                         } else {
@@ -239,7 +245,7 @@ function GetAllDashbaordCount() {
                 $("body").on("click", ".btnGetsummay", function () {
 
                     var spnstatusId = $(this).closest("div").find("#spnstatusId").html();
-                    if (spnstatusId != 44) {
+                    if (spnstatusId != 1041) {
                         $('#ProjGetsummay').modal('show');
                         ($(this).closest("div").find(".statusprojsummry").html());
                         $('#ProjectSummaryTittle').html("Total Proj Movement: " + $(this).closest("div").find(".statusprojsummry").html());
@@ -462,6 +468,7 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
         data: userdata,
         type: 'POST',
         success: function (response) {
+            //console.log("GetDashboardApprovedData", response);
             if (response != "null" && response != null) {
 
                 if (response == -1) {
@@ -477,14 +484,30 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                 } else {
                     var count = 1;
 
-
+                    var unitId = $('#spndashboardUnitId').text().trim();
+                    //alert(unitId);
+                    
                     $('#DetailBodyApproved').empty();
                     $('#dashboardApproved').dataTable().fnClearTable();
                     $('#dashboardApproved').dataTable().fnDestroy();
                     for (var i = 0; i < response.length; i++) {
+
+                        var projName = response[i].projName;
+                        var words = projName.split(" ");
+                        var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
+
                         listItem += "<tr>";
                         listItem += "<td class='align-middle'>" + count + "</td>";
-                        listItem += "<td class='align-middle nowrap'><span id='ProjName'>" + response[i].projName + "</span></td>";
+                        //listItem += "<td class='align-middle nowrap'><span id='ProjName'>" + response[i].projName + "</span></td>";
+                        if (unitId == 1 || unitId == 2 || unitId == 3 || unitId == 4 || unitId == 5 || unitId == 7) {
+                            listItem += "<td class='align-middle nowrap'>" +
+                                "<a class='ProjName' title='" + shortProjName + "' data-proj-id='" + response[i].projId + "' data-proj-name='" + shortProjName + "' " +
+                                "href='/Projects/ProjHistory?EncyID=" + response[i].encyID + "&Type=XRDC'>" +
+                                shortProjName + "</a></td>";
+                        } else {
+                            listItem += "<td class='align-middle nowrap'><span id='ProjName'>" + shortProjName + "</span></td>";
+                        }
+
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + DateFormateddMMyyyyhhmmss(response[i].timeStamp) + "</span></td>";
                         //if (response[i].status != "BISAG-N") {
@@ -608,16 +631,26 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                     $('#dashboardDeatils').dataTable().fnClearTable();
                     $('#dashboardDeatils').dataTable().fnDestroy();
 
+                    var unitId = $('#spndashboardUnitId').text().trim();
                     for (var i = 0; i < response.length; i++) {
+                        
                         var projName = response[i].projName;
                         var words = projName.split(" ");
                         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
 
-                        console.log("responseasfdas", response);
                         listItem += "<tr>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + count + "</span></td>";
                         //listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].projName + "</span></td>";
-                        listItem += "<td class='align-middle'><span id='ProjName' title='" + projName + "'>" + shortProjName + "</span></td>";
+                        //listItem += "<td class='align-middle'><span id='ProjName' title='" + projName + "'>" + shortProjName + "</span></td>";
+                        if (unitId == 1 || unitId == 2 || unitId == 3 || unitId == 4 || unitId == 5 || unitId == 7/*|| response[i].stakeHolder == unitId*/) {
+                            listItem += "<td class='align-middle'>" +
+                                "<a class='ProjName' title='" + projName + "' data-proj-id='" + response[i].projId + "' data-proj-name='" + projName + "' " +
+                                "href='/Projects/ProjHistory?EncyID=" + response[i].encyID + "&Type=XRDC'>" +
+                                shortProjName + "</a></td>";
+                        }
+                        else {
+                            listItem += "<td class='align-middle'><span id='ProjName' title='" + projName + "'>" + shortProjName + "</span></td>";
+                        }                       
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].fromUnitName + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].toUnitName + "</span></td>";

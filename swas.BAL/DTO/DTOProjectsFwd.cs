@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace swas.BAL.DTO
 {
+    [Keyless]
     public class DTOProjectsFwd
     {
         public int ProjId { get; set; }
@@ -48,8 +50,18 @@ namespace swas.BAL.DTO
 
         public bool IsComment { get; set; }
         public bool? IsPullBack { get; set; }
-
         public bool PullbackAction { get; set; }
+
+
+        public int Date_type { get; set; }
+
+
+        public bool AdminApprovalStatus { get; set; }
+
+        public bool? UserRequest { get; set; }
+
+        public int? RequestUnitId { get; set; }
+        public int? LatestActionType { get; set; }
 
     }
 }

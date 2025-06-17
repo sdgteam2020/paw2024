@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+   
     var pad = "00"
     var datef2 = new Date();
     var months = "" + `${(datef2.getMonth() + 1)}`;
@@ -17,35 +18,96 @@
     //var today = year + `-` + monthsans + `-` + dayans + `T` + hh + `:` + mm
 
 
+    //var today = year + `-` + monthsans + `-` + dayans;
+
+    //if ($("#isclaneder").html() == 1) {
+
+    //    $('input[type=date]').attr('min', today);
+    //    $('.datepicker1').datepicker({
+    //        minDate: 0
+    //    });
+    //    $("#InitiatedDate").val(today);
+    //    $('#InitiatedDate').attr('readonly', true);
+    //}
+    //else {
+    //    $('input[type=date]').attr('max', today);
+    //    $('.datepicker1').datepicker();
+
+    //}
+    //$('.datetimepicker1').datepicker();
+
+    //// Remove the max date setting for CompletionDate to allow future selection
+    //$("#InitiatedDate").change(function () {
+
+    //    $('#CompletionDate').val("");
+    //    $('#CompletionDate').attr('min', $("#InitiatedDate").val());
+    //    $('input[type=date]').attr('max', null);
+    //})
+
+
     var today = year + `-` + monthsans + `-` + dayans;
-   
-    if ($("#isclaneder").html() == 1) {
 
-        $('input[type=date]').attr('min', today);
-        $('.datepicker1').datepicker({
-            minDate: 0
-        });
-        $("#InitiatedDate").val(today);
-        $('#InitiatedDate').attr('readonly', true);
-    }   
-    else {
-        $('input[type=date]').attr('max', today);
-        $('.datepicker1').datepicker();
 
+    function applyDateLogic() {
+       
+        var selectedMode = $('input[name="mcalender_dates"]:checked').val();
+       
+
+        if (selectedMode == "0") {
+            $('input[type="date"]').attr('min', today);
+            $('input[type="date"]').removeAttr('max');
+            $('.datepicker1').datepicker({
+                minDate: 0
+            });
+            $("#InitiatedDate").val(today);
+            $('#InitiatedDate').attr('readonly', true);
+        } else {
+            $('input[type="date"]').attr('max', today);
+            $('input[type="date"]').removeAttr('min');
+            $('.datepicker1').datepicker(); // default no min/max
+            $('#InitiatedDate').attr('readonly', false);
+        }
+
+        $('.datetimepicker1').datepicker(); // always initialize
     }
-    $('.datetimepicker1').datepicker();
 
-    // Remove the max date setting for CompletionDate to allow future selection
+
+    applyDateLogic();
+
+    // Re-run when calendar toggle changes
+    $('input[name="mcalender_dates"]').change(function () {
+       
+        console.log($('input[name="mcalender_dates"]:checked').val());
+        applyDateLogic();
+    });
+
+    // Remove the max date setting for CompletionDate to allow future selection when InitiatedDate changes
     $("#InitiatedDate").change(function () {
-
         $('#CompletionDate').val("");
         $('#CompletionDate').attr('min', $("#InitiatedDate").val());
-        $('input[type=date]').attr('max', null);
-    })
-    
+        $('input[type="date"]').removeAttr('max');
+    });
 
+    $('input[name="mcalender_dates"]').change(function () {
 
+        var selectedValue = $('input[name="mcalender_dates"]:checked').val();
+       
 
+        // Send value to server to store in session
+        $.ajax({
+            url: '/Projects/SetCalendarModeInSession', // controller endpoint
+            type: 'POST',
+            data: { mode: selectedValue },
+            success: function (response) {
+                console.log("Session updated:", response.message);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error saving session:', error);
+            }
+        });
+    });
+
+   
     $('.form-control').keypress(function (e) {
         // Get the key code of the pressed key
         // Get the key code of the pressed key

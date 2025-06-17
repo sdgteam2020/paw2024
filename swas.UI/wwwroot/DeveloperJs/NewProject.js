@@ -16,7 +16,191 @@ $(document).ready(function () {
         $("#ProjWhiteListedProjectModal").modal('show');
 
     });
+
+    //$(".EditWhiteListedProj").click(function (e) {
+
+    //    var id = $(this).data('id'); 
+    //    $('#WhiteListedProjectDetail').modal('hide');
+
+    //    $.ajax({
+    //        url: '/Home/GetWhiteListedProjectById',
+    //        type: 'GET',
+    //        data: { id: id },
+    //            success: function (data) {
+    //                if (data) {
+    //                    $('#edit_Id').val(data.id);
+    //                    $('#edit_ProjName').val(data.projName);
+                       
+    //                    var hostedOnMap = {
+    //                        "1": "LAN",
+    //                        "2": "ADN",
+    //                        "3": "Internet",
+    //                        "4": "Standalone"
+    //                    };
+
+    //                    var hostedOnVal = data.mHostTypeId ? data.mHostTypeId.toString() : "";
+    //                    $('#edit_HostedOn').val(hostedOnVal);
+                      
+    //                    if ($('#edit_HostedOn').val() != hostedOnVal) {
+    //                        $('#edit_HostedOn option').each(function () {
+    //                            if ($(this).val() == hostedOnVal) {
+    //                                $(this).prop('selected', true);
+    //                            } else {
+    //                                $(this).prop('selected', false);
+    //                            }
+    //                        });
+    //                    }                        
+    //                    $('#edit_Appt').val(data.appt);
+    //                    $('#edit_Sponser').val(data.fmn);
+    //                    $('#edit_TelNo').val(data.contactNo);
+    //                    $('#edit_Clearance').val(data.clearence ? data.clearence.substring(0, 10) : '');
+    //                    $('#edit_Cert').val(data.certNo);
+    //                    $('#edit_ValidUpto').val(data.validUpto ? data.validUpto.substring(0, 10) : '');
+    //                    $('#edit_Remarks').val(data.remarks);
+
+    //                    $('#EditWhiteListedProjectModal').modal('show');
+    //                }
+    //            },
+    //        error: function () {
+    //            alert('Failed to fetch project details.');
+    //        }
+    //    });
+    //});
+
+    $('#WhitelistedTable tbody').on('click', '.EditWhiteListedProj', function (e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        $('#WhiteListedProjectDetail').modal('hide');
+
+        $.ajax({
+            url: '/Home/GetWhiteListedProjectById',
+            type: 'GET',
+            data: { id: id },
+            success: function (data) {
+                if (data) {
+                    $('#edit_Id').val(data.id);
+                    $('#edit_ProjName').val(data.projName);
+
+                    var hostedOnMap = {
+                        "1": "LAN",
+                        "2": "ADN",
+                        "3": "Internet",
+                        "4": "Standalone"
+                    };
+
+                    var hostedOnVal = data.mHostTypeId ? data.mHostTypeId.toString() : "";
+                    $('#edit_HostedOn').val(hostedOnVal);
+
+                    if ($('#edit_HostedOn').val() != hostedOnVal) {
+                        $('#edit_HostedOn option').each(function () {
+                            if ($(this).val() == hostedOnVal) {
+                                $(this).prop('selected', true);
+                            } else {
+                                $(this).prop('selected', false);
+                            }
+                        });
+                    }
+                    $('#edit_Appt').val(data.appt);
+                    $('#edit_Sponser').val(data.fmn);
+                    $('#edit_TelNo').val(data.contactNo);
+                    $('#edit_Clearance').val(data.clearence ? data.clearence.substring(0, 10) : '');
+                    $('#edit_Cert').val(data.certNo);
+                    $('#edit_ValidUpto').val(data.validUpto ? data.validUpto.substring(0, 10) : '');
+                    $('#edit_Remarks').val(data.remarks);
+
+                    $('#EditWhiteListedProjectModal').modal('show');
+                }
+            },
+            error: function () {
+                alert('Failed to fetch project details.');
+            }
+        });
+    })
+    $('#editWhiteListedForm').submit(function (e) {
+        e.preventDefault();       
+        $.ajax({
+            url: '/Home/UpdateWhiteListedProject', 
+            type: 'POST',
+            data: $('#editWhiteListedForm').serialize(),
+            success: function (data) {
+                if (data == 1) {
+                    
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Updated Successfully',
+                        icon: 'success',
+                        timer: 3000,             
+                        timerProgressBar: true,
+                        showConfirmButton: false, 
+                        willClose: () => {
+                            $('#EditWhiteListedProjectModal').modal('hide');
+                            location.reload();
+                        }
+                    });
+                }
+                else
+                {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Update Failde!',
+                        icon: 'error',
+                        timer: 2000,
+                        confirmButtonText: 'OK'
+                    });
+                }                
+            },
+            error: function () {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Something went wrong!',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
+    });
+
 });
+
+//$(document).on('click', '.EditWhiteListedProj', function (e) {
+//    e.preventDefault();
+//    var id = $(this).data('id');
+//    $('#WhiteListedProjectDetail').modal('hide');
+
+//    $.ajax({
+//        url: '/Home/GetWhiteListedProjectById',
+//        type: 'GET',
+//        data: { id: id },
+//        success: function (data) {
+//            if (data) {
+//                $('#edit_Id').val(data.id);
+//                $('#edit_ProjName').val(data.projName);
+
+//                var hostedOnVal = data.mHostTypeId ? data.mHostTypeId.toString() : "";
+//                $('#edit_HostedOn').val(hostedOnVal);
+
+//                if ($('#edit_HostedOn').val() != hostedOnVal) {
+//                    $('#edit_HostedOn option').each(function () {
+//                        $(this).prop('selected', $(this).val() == hostedOnVal);
+//                    });
+//                }
+
+//                $('#edit_Appt').val(data.appt);
+//                $('#edit_Sponser').val(data.fmn);
+//                $('#edit_TelNo').val(data.contactNo);
+//                $('#edit_Clearance').val(data.clearence ? data.clearence.substring(0, 10) : '');
+//                $('#edit_Cert').val(data.certNo);
+//                $('#edit_ValidUpto').val(data.validUpto ? data.validUpto.substring(0, 10) : '');
+//                $('#edit_Remarks').val(data.remarks);
+
+//                $('#EditWhiteListedProjectModal').modal('show');
+//            }
+//        },
+//        error: function () {
+//            alert('Failed to fetch project details.');
+//        }
+//    });
+//});
 
 
 function ValInData(input) {
@@ -38,7 +222,8 @@ function ButtonClick() {
         else {
             Swal.fire({
                 title: 'Warning!',
-                text: 'Contact ddgit for authorization before signing in.',
+                /*text: 'Contact DDGIT for Necessary Admin Approval (Tel No: 39865, 20862706)',*/
+                html: `Contact DDGIT for Necessary Admin Approval<br><strong>(Tele No:</strong> 39865, 20862706)`,
                 icon: 'warning',
                 confirmButtonColor: '#ffc107',
                 confirmButtonText: 'OK'
@@ -58,7 +243,8 @@ function ButtonClick() {
                             // Handle error if the session could not be cleared
                             Swal.fire({
                                 title: 'Error!',
-                                text: 'Contact ddgit for authorization before signing in.',
+                                //text: 'Contact DDGIT for Necessary Admin Approval (Tel No: 39865, 20862706)',
+                                html: `Contact DDGIT for Necessary Admin Approval<br><strong>(Tele No:</strong> 39865, 20862706)`,
                                 icon: 'error',
                                 confirmButtonText: 'OK'
                             });

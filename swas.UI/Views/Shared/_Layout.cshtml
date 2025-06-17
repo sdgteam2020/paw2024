@@ -173,8 +173,6 @@
             margin: 0; /* Remove default margins for better centering */
         }
 
-       
-
     </style>
     <style>
 
@@ -270,7 +268,7 @@
 
 
     <script src="~/DeveloperJs/ddlSanal.js"></script>
-    <script src="~/developerjs/comman.js"></script>
+    <script src="~/DeveloperJs/Comman.js?v1"></script>
     <script src="~/developerjs/notification.js"></script>
 
     <script>
@@ -1638,6 +1636,9 @@
 
         @if (Logins != null && Logins.Role == "Dte")
         {
+
+
+           
             <!--start sidebar -->
             <aside class="sidebar-wrapper" data-simplebar="true">
                 <div class="sidebar-header" style="background-color:#044c92 !important">
@@ -1820,12 +1821,27 @@
                 </div>
                 </a>
                 </li> *@
+                    @if (Logins != null && Logins.UserName == "gso1semg_asdc_ihqa" && Logins.unitid == 4)
+                    {
+                        <li>
+                            <a href="/Home/DateApproval">
+                                <div class="icon-container">
 
+                                    <ion-icon name="ellipse-outline"></ion-icon>
+
+                                    <span class="icon-name">Approve Legacy Project</span>
+                                    <span id="ProjectlegacyCount" class="badge5 d-none ProjectlegacyCount">0</span>
+                                </div>
+
+                            </a>
+                        </li>
+                        
+                    }
 
 
                     @if (Logins != null && Logins.Role == "Dte" && Logins.unitid == 1)
                     {
-
+                       
 
                         <li class="dropdown">
                             <div class="icon-container" style="margin-top: 10px; margin-left: 13px;">
@@ -2315,6 +2331,7 @@
                     <h5 class="modal-title btn-add-comment" id="addComment">Project Name:</h5>
                     <span class="d-none" id="ProjectcommentForStackHolderprojId"></span>
                     <span class="d-none" id="ProjectcommentForStackHolderPsmId"></span>
+                    <span class="d-none" id="ProjectcommentForStackHolderDate_type"></span>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -2519,8 +2536,7 @@
 </script>
 
 <script>
-
-    @* $(document).ready(function () {
+    $(document).ready(function () {
         $('.dropdown').hover(
             function () {
                 $(this).children('.dropdown-menu').slideDown(200);
@@ -2529,24 +2545,7 @@
                 $(this).children('.dropdown-menu').slideUp(200);
             }
         );
-    }); *@
-
-      let hideTimeout;
-
-    $('.dropdown').hover(
-        function () {
-            // On hover in: clear any pending hide and show dropdown
-            clearTimeout(hideTimeout);
-            $(this).children('.dropdown-menu').stop(true, true).slideDown(200);
-        },
-        function () {
-            // On hover out: delay hide to prevent flicker
-            const $menu = $(this).children('.dropdown-menu');
-            hideTimeout = setTimeout(function () {
-                $menu.stop(true, true).slideUp(200);
-            }, 200); // You can adjust this delay as needed
-        }
-    );
+    });
 </script>
 
 <script>
@@ -2579,8 +2578,6 @@
 
 </script>
 
-<script src="~/DeveloperJs/Dashboard.js"></script>
-<script src="~/DeveloperJs/Account.js"></script>
 <script src="~/developerjs/projectstkholdercomments.js"></script>
 <script src="~/developerjs/ProjectstckholdercommentforProjHistory.js"></script>
 

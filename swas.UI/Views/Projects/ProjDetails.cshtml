@@ -2,6 +2,7 @@
     Reviewd by Hav Mani on : 02 Aug 23
 *@
 @using Microsoft.AspNetCore.Identity
+@using static swas.DAL.Models.LegacyHistory
 @using swas.BAL.DTO
 @using swas.BAL.Helpers;
 @using swas.DAL.Models
@@ -12,7 +13,7 @@
 @{
     Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor.HttpContext.Session, "User");
 
-    ViewBag.Title = "Projects List";
+    // ViewBag.Title = "Projects List";
     Layout = "~/Views/Shared/_Layout.cshtml";
     int snoinbox = 0;
     int snosent = 0;
@@ -259,12 +260,28 @@
         width: 10vw;
     }
 
-    
+    .disabled-link {
+        pointer-events: none;
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
 </style>
 
 
 <link href="~/css/timeline.css" rel="stylesheet" />
 
+<!-- Include jQuery (required for jQuery UI) -->
+@* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
+@* <script src="~/content/jquery-3.6.0.min.js"></script> *@
+
+<!-- Include jQuery UI CSS -->
+@* <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> *@
+<link rel="stylesheet" href="~/content/jquery-ui.css" rel="stylesheet" />
+@* <link href="~/content/jquery-ui.css" rel="stylesheet" /> *@
+
+<!-- Include jQuery UI JS -->
+@* <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script> *@
+<script src="~/content/jquery-ui.min.js"></script>
 
 <body>
     <div class="tabs" id="tabs">
@@ -285,8 +302,8 @@
                     &nbsp;Sent
                 </a>
             </li>
-            <li><a href="#" data-tab="completed" id="tabcompleted">@*<span class="fa fa-camera"></span>*@<img src="~/assets/images/completed.png" width="20px;" height="20px;" />&nbsp;Completed</a></li>
-            <li><a href="#" data-tab="draft" id="tabdraft"><img src="~/assets/images/draft.png" width="20px;" height="20px;" />&nbsp;Draft Projects</a></li>
+            <li><a href="#" data-tab="completed" id="tabcompleted" style="width: 261px">@*<span class="fa fa-camera"></span>*@<img src="~/assets/images/completed.png" width="20px;" height="20px;" />&nbsp;Completed(Hosted On ADN)</a></li>
+            @* <li><a href="#" data-tab="draft" id="tabdraft"><img src="~/assets/images/draft.png" width="20px;" height="20px;" />&nbsp;Draft Projects</a></li> *@
             <li class="red-text" id="blinking-li">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 Inbox -->> click on project name for Add Comments, Attach file and Fwd to Stakeholders/Units
@@ -318,6 +335,7 @@
                                         <th>SubStage</th>
                                         <th>Action</th>
                                         <th class="projaction">Project Action</th>
+                                        <th>Ingest Legacy Project</th>
                                     </tr>
                                 </thead>
 
@@ -351,6 +369,7 @@
                                                 <span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
                                                 <span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
                                                 <span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
+                                                <span class="d-none" id="LatestActionType">@project.LatestActionType</span>
                                                 @* <span class="d-none" id="SpnTimeStampId">@project.TimeStamp.ToString().Substring(0, 10)</span> *@
                                                 <span class="d-none" id="SpnTimeStampId">@project.TimeStamp</span>
                                                 <span class="d-none" id="SpnStageId">@project.StageId</span>
@@ -359,7 +378,8 @@
                                                 <span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
                                                 <span class="d-none" id="SpnTimeActionId">@project.ActionId</span>
                                                 <span class="d-none" id="SpnTimeToUnitId">@project.ToUnitId</span>
-
+                                                <span class="d-none" id="SpnDate_type">@project.Date_type</span>
+                                                <span class="d-none" id="SpnApprove">@project.AdminApprovalStatus</span>
                                                 <a data-proj-name="@project.ProjName" id="ProjectName" class="ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XRDC">
                                                     <div class="tooltip-container" data-tooltip="@project.ProjName">
                                                         <span class="short-text">@truncateText(project.ProjName, 6)</span>
@@ -396,7 +416,7 @@
                                             <td>
                                                 <div class="row ">
                                                     <div class="col-md-12 d-flex">
-                                                    <div class="mr-2">
+                                                    @* <div class="mr-2">
                                                         @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
                                                         {
                                                             <a href="javascript:void(0);" class="processDetail mr-2" data-id="@project.EncyPsmID">
@@ -407,7 +427,20 @@
                                                         {
                                                             <button type="button" class="btn btn-success btn-Fwd" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
                                                         }
-                                                    </div>
+                                                    </div> *@
+
+                                                        <div class="mr-2">
+                                                            @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
+                                                            {
+                                                                <a href="javascript:void(0);" class="processDetail mr-2" data-id="@project.EncyPsmID">
+                                                                    <img src="/assets/images/icons/process1.png" alt="Icon" style="height: 22px;">
+                                                                </a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <button type="button" class="btn btn-success btn-Fwd" data-Date_type="@project.AdminApprovalStatus" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
+                                                            }
+                                                        </div>
                                                         <div class="col-md-4">
                                                         @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
                                                         {
@@ -419,6 +452,78 @@
                                                     </div>
                                                     </div>
                                                 </div>
+                                            </td>
+                                            <td>
+                                               @*  @{
+                                                    int currentUnitId = ViewBag.UnitId;
+                                                } *@
+
+                                               @*  @if (project.IsProcess == true && project.AdminApprovalStatus == true)
+                                                {
+                                                    <span title="Legacy Proj Granted by Admin">
+                                                    <a href="#" class="date-action mr-2 disabled-link" data-action="current" data-ids="@project.EncyPsmID">
+                                                        <img src="/assets/images/icons/Current_date.png" alt="Icon" style="height: 27px;">
+                                                    </a>
+                                                    </span>
+                                                }
+                                                else if (project.IsProcess == true && project.AdminApprovalStatus == false && project.UserRequest == true && project.RequestUnitId == currentUnitId)
+                                                {
+                                                    <!-- Pending shown only to the unit that requested -->
+                                                    <span title="Request Pending with Admin">
+                                                    <a href="#" class="date-action mr-2 disabled-link" data-action="Pending">
+                                                        <img src="/assets/images/icons/Pendingbtn.png" alt="Icon" style="height: 30px;">
+                                                    </a>
+                                                    </span>
+                                                }
+                                                else if (project.IsProcess == true && project.AdminApprovalStatus == false)
+                                                {
+                                                    <!-- Other units can still request -->
+                                                    <a href="#" class="date-action mr-2" data-action="back" data-ids="@project.EncyPsmID" title="Request for Ingestion of Proj in Back date from Admin">
+                                                        <img src="/assets/images/icons/Back_date.png" alt="Icon" style="height: 27px;">
+                                                    </a>
+                                                } *@
+
+                                                @if (project.IsProcess == true && project.LatestActionType != null)
+                                                {
+                                                    @if (project.IsProcess == true && project.LatestActionType == (int)ActionTypeEnum.Approved)
+                                                    {
+                                                        <span title="Apply Back Date">
+                                                           
+                                                        <a href="#" class="date-action mr-2 disabled-link" data-action="current" data-ids="@project.EncyPsmID">
+                                                            <img src="/assets/images/icons/Current_date.png" alt="Icon" style="height: 27px;">
+                                                        </a>
+                                                        </span>
+                                                    }
+                                                    else if (project.IsProcess == true && project.LatestActionType == (int)ActionTypeEnum.RequestSent @* project.AdminApprovalStatus == false && project.UserRequest == true && project.RequestUnitId == currentUnitId *@)
+                                                    {
+                                                        <span title="Approval Pending ">
+                                                        <!-- Pending shown only to the unit that requested -->
+                                                        <a href="#" class="date-action mr-2 disabled-link" data-action="Pending">
+                                                            <img src="/assets/images/icons/Pendingbtn.png" alt="Icon" style="height: 30px;">
+                                                        </a>
+                                                        </span>
+                                                    }
+                                                    else if (project.IsProcess == true && project.LatestActionType == (int)ActionTypeEnum.Rejected)
+                                                    {
+                                                        <!-- Other units can still request -->
+                                                        <a href="#" class="date-action mr-2" data-actiontype="1" data-action="back" data-ids="@project.EncyPsmID" title="Request for Back Date from Admin">
+                                                            <img src="/assets/images/icons/Back_date.png" alt="Icon" style="height: 27px;">
+                                                        </a>
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    if (project.IsProcess == true && project.LatestActionType == null)
+                                                    {
+                                                        <!-- Other units can still request -->
+                                                        <a href="#" class="date-action mr-2" data-actiontype="1" data-action="back" data-ids="@project.EncyPsmID" title="Request for Back Date from DDGIT">
+                                                            <img src="/assets/images/icons/Back_date.png" alt="Icon" style="height: 27px;">
+                                                        </a>
+                                                    }
+                                                }
+
+
                                             </td>
                                         </tr>
                                     }
@@ -452,7 +557,7 @@
                                     processing and comments of DG SIGS(SIGS-7), AHCC, ACG, ASDC. Pl Confirm!
                                 </b>
                             </p>
-                            @if (@Logins.cla == 1)
+                           @*  @if (@Logins.cla == 1)
                             {
                                 <div style="display:none">
                                     <p>
@@ -467,7 +572,12 @@
                                     <b>Please select Date & Time :</b>
                                 </p>
                                 <input type="date" id="datepicker" class="form-control" placeholder="Select Date" required>
-                            }
+                            } *@
+
+                            <div id="datepickerContainer" style="display: none;">
+                                <p><b>Please select Date & Time :</b></p>
+                                <input type="date" id="datepicker" class="form-control" placeholder="Select Date" required>
+                            </div>
 
                         </div>
                         <div class="modal-footer">
@@ -662,7 +772,8 @@
                                                 </a>
                                             </td>
                                             <td>@project.StakeHolder</td>
-                                            <td>@project.FwdBy</td>
+                                            @* <td>@project.FwdBy</td> *@
+                                            <td>@project.RecdFmUser</td>
                                             @* <td>@project.DateTimeOfUpdate?.ToString("dd-MM-yyyy")</td> *@
                                             <td>@project.DateTimeOfUpdate</td>
 
@@ -840,32 +951,35 @@
 
                                     <div class="form-row">
                                         <div class="form-group col-md-6 ProjectsFwd ">
-                                            <label for="inputEmail4">Stage</label>
+                                            <label for="inputEmail4">Select Stage</label>
                                             <select class="form-control requiredField" style="width: 100%;" tabindex="-1"
                                                     name="fwdoffrs" required id="ddlfwdStage">
                                                 <option value="0">Select Stage</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-6 ProjectsFwd">
-                                            <label for="SubStage">Sub Stage</label>
+                                            <label for="SubStage">Select Sub Stage</label>
                                             <select class="form-control requiredField" style="width: 100%;" tabindex="-1"
                                                     name="fwdoffrs" required id="ddlfwdSubStage">
                                                 <option value="0">Select Sub Stage</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-6 ProjectsFwd">
-                                            <label for="SubStage">Action</label>
+                                            <label for="SubStage">Select Action</label>
                                             <select class="form-control requiredField" style="width: 100%;" tabindex="-1"
                                                     name="fwdoffrs" required id="ddlfwdAction">
                                                 <option value="0">Select Action</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-6 ProjectsFwd">
-                                            <label for="SubStage">Fwd To</label>
+                                            <label for="SubStage">Select Addressee(Sent to)</label>
+                                            <img id="loadFwdTo" src="/assets/images/icons/Cross_red_circle.png" style="margin-left:20px; display:none; cursor:pointer;" width="22" height="22" alt="Readed">
                                             <select class="form-control requiredField" style="width: 100%;" tabindex="-1"
                                                     name="fwdoffrs" required id="ddlfwdFwdTo">
                                                 <option value="0">Select Fwd To</option>
                                             </select>
+
+                                            <input type="text" id="searchBox" class="form-control" style="display:none;" placeholder="Search..." />
                                         </div>
                                         <div class="form-group col-md-6 ProjectsFwd">
                                             <label for="SubStage">Remarks</label>
@@ -928,7 +1042,8 @@
                         </div>
                     </div>
                     <div class="form-group col-md-12 mt-4 text-center">
-                        <input type="button" id="btnFwdNext" value="Send & Att Docu (s)" class="btn btn-primary btn-lg ProjectsFwd" />
+                        @*  <input type="button" id="btnFwdNext" value="Send & Att Docu (s)" class="btn btn-primary btn-lg ProjectsFwd" /> *@
+                        <input type="button" id="btnFwdNext" value="Att Docu's & Send" class="btn btn-primary btn-lg ProjectsFwd" />
                         <input type="button" id="btnFwdConfirm" value="Confirm" class="btn btn-primary btn-lg Attmenthistory d-none" />
                     </div>
                 </div>
@@ -1139,37 +1254,73 @@
     </script> *@
 
     <script>
-        var pad = "00";
-        var datef2 = new Date();
+        // var pad = "00";
+        // var datef2 = new Date();
 
 
-        var months = "" + (datef2.getMonth() + 1);
-        var days = "" + datef2.getDate();
-        var monthsans = pad.substring(0, pad.length - months.length) + months;
-        var dayans = pad.substring(0, pad.length - days.length) + days;
-        var year = datef2.getFullYear();
-        var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-        var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-        var ss = `${datef2.getSeconds()}`;
+        // var months = "" + (datef2.getMonth() + 1);
+        // var days = "" + datef2.getDate();
+        // var monthsans = pad.substring(0, pad.length - months.length) + months;
+        // var dayans = pad.substring(0, pad.length - days.length) + days;
+        // var year = datef2.getFullYear();
+        // var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+        // var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+        // var ss = `${datef2.getSeconds()}`;
 
-        // Today's date and time in the required formats
-        var todayDate = `${year}-${monthsans}-${dayans}`;
-        var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+        // // Today's date and time in the required formats
+        // var todayDate = `${year}-${monthsans}-${dayans}`;
+        // var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
 
-        $(document).ready(function () {
-            var claValue = @Logins.cla;
+        // $(document).ready(function () {
+        //     var claValue = @Logins.cla;
 
-            if (claValue == 2) {
+        //     if (claValue == 2) {
+        //         $('#TimeStampToProjfwd').attr('type', 'datetime-local');
+        //         $('#TimeStampToProjfwd').attr('max', todayDateTime);
+        //         $('#TimeStampToProjfwd').prop('disabled', false); // Allow user input
+        //     } else {
+        //         $('#TimeStampToProjfwd').attr('type', 'date');
+        //         $('#TimeStampToProjfwd').val(todayDate); // Set today's date
+        //         $('#TimeStampToProjfwd').prop('disabled', true); // Freeze input
+        //     }
+
+        // });
+
+
+        $(".btn-Fwd").click(function () {
+            let date_type_raw = $(this).data("date_type"); // "True" or "False"
+            let date_type = (String(date_type_raw).toLowerCase() === "true");
+
+            var pad = "00";
+            var datef2 = new Date();
+
+            var months = "" + (datef2.getMonth() + 1);
+            var days = "" + datef2.getDate();
+            var monthsans = pad.substring(0, pad.length - months.length) + months;
+            var dayans = pad.substring(0, pad.length - days.length) + days;
+            var year = datef2.getFullYear();
+            var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+            var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+            var todayDate = `${year}-${monthsans}-${dayans}`;
+            var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+
+            if (date_type) {
                 $('#TimeStampToProjfwd').attr('type', 'datetime-local');
                 $('#TimeStampToProjfwd').attr('max', todayDateTime);
                 $('#TimeStampToProjfwd').prop('disabled', false); // Allow user input
+                $('#TimeStampToProjfwd').val(todayDateTime);
+
             } else {
                 $('#TimeStampToProjfwd').attr('type', 'date');
                 $('#TimeStampToProjfwd').val(todayDate); // Set today's date
                 $('#TimeStampToProjfwd').prop('disabled', true); // Freeze input
             }
 
+            // Optional: show a modal or scroll to the input
+            $('#TimeStampToProjfwd').focus();
         });
+
+
 
     </script>
 

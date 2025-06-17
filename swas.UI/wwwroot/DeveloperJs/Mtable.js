@@ -68,7 +68,7 @@
     });
 }
 
-function mMsaterfwdStage(sectid = '', ddl, TableId, ParentId, type) {
+function mMsaterfwdStage(sectid = '', ddl, TableId, ParentId, type, projecttype) {
     var userdata =
     {
         "id": TableId,
@@ -96,7 +96,16 @@ function mMsaterfwdStage(sectid = '', ddl, TableId, ParentId, type) {
 
 
                     for (var i = 0; i < response.length; i++) {
-                        listItemddl += '<option value="' + response[i].id + '">' + response[i].name + '</option>';
+                        //listItemddl += '<option value="' + response[i].id + '">' + response[i].name + '</option>';
+                        if (projecttype === "Re-Vetted") {
+                            if (response[i].id == 3) {
+                                listItemddl += '<option value="' + response[i].id + '" selected>' + response[i].name + '</option>';
+
+                            }
+                        } else {
+
+                            listItemddl += '<option value="' + response[i].id + '">' + response[i].name + '</option>';
+                        }
                     }
                     $("#" + ddl + "").html(listItemddl);
 
@@ -216,7 +225,7 @@ function mMsaterStage(sectid = '', ddl, TableId, ParentId, StakeHolderId) {
     });
 }
 
-function mMsaterFwdTo(sectid = '', ddl, TableId, ParentId, StakeHolderId) {
+function mMsaterFwdTo(sectid = '', ddl, TableId, ParentId, StakeHolderId, type, value) {
 
 
     var userdata =
@@ -224,6 +233,8 @@ function mMsaterFwdTo(sectid = '', ddl, TableId, ParentId, StakeHolderId) {
         "id": TableId,
         "ParentId": ParentId,
         "StakeHolderId": StakeHolderId,
+        "Type": type,
+        "Value": value
 
     };
     $.ajax({
@@ -233,6 +244,7 @@ function mMsaterFwdTo(sectid = '', ddl, TableId, ParentId, StakeHolderId) {
         type: 'POST',
 
         success: function (response) {
+            debugger;
             if (response != "null" && response != null) {
                 if (response == 0) {
                     listItemddl += '<option value="">Please Select</option>';
@@ -240,42 +252,48 @@ function mMsaterFwdTo(sectid = '', ddl, TableId, ParentId, StakeHolderId) {
                 }
 
                 else {
+                    if (type == 1) {
 
-                    var listItemddl = "";
+                        var listItemddl = "";
 
-                    listItemddl += '<option value="">Please Select</option>';
+                        listItemddl += '<option value="">Please Select</option>';
 
 
-                    for (var i = 0; i < response.length; i++) {
-                        listItemddl += '<option value="' + response[i].id + '">' + response[i].name + '</option>';
-                    }
-                    $("#" + ddl + "").html(listItemddl);
+                        for (var i = 0; i < response.length; i++) {
+                            listItemddl += '<option value="' + response[i].id + '">' + response[i].name + '</option>';
+                        }
+                        $("#" + ddl + "").html(listItemddl);
 
-                    //if (TableId == 5 || TableId == 7 || TableId == 8) {
+                        // If autocomplete returned list, switch UI from searchBox to dropdown
+                        if (response.length > 0) {
+                            $("#searchBox").hide();
+                            $("select[name='fwdoffrs']").show();
+                        }
 
-                    //    if (sectid != '') {
-                    //        $("#" + ddl + " option").filter(function () {
-                    //            return this.text == sectid;
-                    //        }).attr('selected', true);
+                        if (sectid != '') {
+                            $("#" + ddl + "").val(sectid);
 
-                    //    }
-                    //}
-                    //else
-                    //{
-                    if (sectid != '') {
-                        $("#" + ddl + "").val(sectid);
+                        }
 
                     }
+                    else {
+                        var listItemddl = "";
 
-                    //}
+                        listItemddl += '<option value="">Please Select</option>';
 
 
+                        for (var i = 0; i < response.length; i++) {
+                            listItemddl += '<option value="' + response[i].id + '">' + response[i].name + '</option>';
+                        }
+                        $("#" + ddl + "").html(listItemddl);
+                        if (sectid != '') {
+                            $("#" + ddl + "").val(sectid);
+
+                        }
+                    }
                 }
             }
             else {
-                //Swal.fire({
-                //    text: "No data found Offrs"
-                //});
             }
         },
         error: function (result) {

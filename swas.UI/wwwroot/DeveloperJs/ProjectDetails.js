@@ -47,9 +47,17 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
    
 
     $(".processDetail").click(function () {
+        debugger;
         var $row = $(this).closest('tr');
         var ProjId = $row.find("#SpnCurrentProjId").text().trim();
+        var date_type = $row.find("#SpnDate_type").text().trim();
         var psmId = $row.find("#SpnCurrentpsmId").text().trim();
+        var actiontype = $row.find("#LatestActionType").text().trim();
+        if (parseInt(actiontype) == 2 && ((actiontype) != 1 || actiontype != "")) {
+            $("#datepickerContainer").show();
+        } else {
+            $("#datepickerContainer").hide();
+        }
         $('#confirmationModal').modal('show');
 
         $('#confirmSend').off('click').on('click', function () {
@@ -463,6 +471,62 @@ function IsReadInbox(psmId) {
     });
 }
 
+
+
+//$(document).on("click", ".date-action", function (e) {
+//    e.preventDefault();
+
+//    const action = $(this).data("action");
+//    const userReq = (action === "back"); // true for 'back', false otherwise
+
+//    const $row = $(this).closest("tr");
+//    const projId = $row.find("#SpnCurrentProjId").text().trim();
+
+//    if (!projId) {
+//        Swal.fire("Error!", "Project ID not found in row.", "error");
+//        return;
+//    }
+
+//    Swal.fire({
+//        title: "Are you sure?",
+//        text: action === "back"
+//            ? "You want Back date to this project."
+//            : "You want to Current date to this project.",
+//        icon: "warning",
+//        showCancelButton: true,
+//        confirmButtonColor: "#3085d6",
+//        cancelButtonColor: "#d33",
+//        confirmButtonText: "Yes"
+//    }).then((result) => {
+//        if (result.isConfirmed) {
+//            $.ajax({
+//                url: "/Projects/LogDateApproval",
+//                type: "POST",
+//                data: {
+//                    ProjId: projId,
+//                    UserReq: userReq
+//                },
+//                success: function (response) {
+//                    Swal.fire({
+//                        title: response.success ? "Success!" : "Warning!",
+//                        text: response.message,
+//                        icon: response.success ? "success" : "warning"
+//                    })
+//                        .then(() => {
+//                            if (response.success) {
+//                                location.reload();
+//                            }
+//                        });
+//                },
+//                error: function (xhr, status, error) {
+//                    Swal.fire("Error!", "Something went wrong: " + error, "error");
+//                }
+//            });
+//        }
+//    });
+//});
+
+
 //function IsReadNotificationInbox(ProjId) {
 
 //    $.ajax({
@@ -476,3 +540,77 @@ function IsReadInbox(psmId) {
 //    });
 //}
 
+
+
+$(document).on("click", ".date-action", function (e) {
+    e.preventDefault();
+    debugger;
+
+    const action = $(this).data("action");
+    const userReq = (action === "back"); // true for 'back', false otherwise
+
+    const $row = $(this).closest("tr");
+    const projId = $row.find("#SpnCurrentProjId").text().trim();
+    const actiontype = $(this).data("actiontype");
+
+    if (!projId) {
+        Swal.fire("Error!", "Project ID not found in row.", "error");
+        return;
+    }
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: action === "back"
+            ? "You want Back date to this project. Please enter remarks:"
+            : "You want Current date to this project. Please enter remarks:",
+        input: "textarea",
+        inputPlaceholder: "Enter remarks here...",
+        inputAttributes: {
+            "aria-label": "Remarks"
+        },
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Submit",
+        preConfirm: (remarks) => {
+            if (!remarks) {
+                Swal.showValidationMessage("Remarks are required.");
+            }
+            return remarks;
+        }
+    }).then((result) => {
+        debugger;
+        if (result.isConfirmed && result.value) {
+            debugger;
+            var remarks = result.value;
+
+            $.ajax({
+                url: "/Projects/LogDateApprovalWithRemarks",
+                type: "POST",
+                data: {
+
+                    ProjId: projId,
+                    UserReq: userReq,
+                    actiontype: actiontype,
+                    remarks: remarks
+                },
+                success: function (response) {
+                    Swal.fire({
+                        title: response.success ? "Success!" : "Warning!",
+                        text: response.message,
+                        icon: response.success ? "success" : "warning"
+                    }).then(() => {
+                        if (response.success) {
+                            location.reload();
+                        }
+                    });
+                },
+                error: function (xhr, status, error) {
+                    debugger;
+                    Swal.fire("Error!", "Something went wrong: " + error, "error");
+                }
+            });
+        }
+    });
+
+});

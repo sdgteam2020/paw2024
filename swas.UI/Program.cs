@@ -23,6 +23,7 @@ using BAL;
 using swas.BAL.DTO;
 using swas.DAL.Logger;
 using swas.BAL.Helpers;
+using swas.DAL.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -90,6 +91,8 @@ builder.Services.AddScoped<IUserMapChatRepository, UserMapChatRepository>();
 builder.Services.AddScoped<ITrnChatMsgRepository, TrnChatMsgRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IActionExceptionRepository, ActionExceptionRepository>();
+builder.Services.AddScoped<IDateApprovalRepository, DateApprovalRepository>();
+builder.Services.AddScoped<ILegacyHistoryRepository, LegacyHistoryRepository>();
 
 
 builder.Services.AddAntiforgery(o => o.SuppressXFrameOptionsHeader = true);

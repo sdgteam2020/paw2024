@@ -20,6 +20,7 @@
     ViewBag.Title = "Projects List";
     Layout = "~/Views/Shared/_Layout.cshtml";
     Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor.HttpContext.Session, "User");
+    int calendarMode = Context.Session.GetInt32("CalendarMode") ?? 0;
     var ProjEncryId = ViewBag.ProjectEncyId;
 }
 
@@ -105,6 +106,34 @@
         background-color: #004b93 !important; /* Adjust color as needed */
         cursor: pointer !important;
         opacity: 1;
+    }
+
+
+    #projectNameDropdown {
+        position: absolute;
+        max-height: 200px;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        width: 250px;
+        z-index: 1000;
+        list-style: none;
+       /*  margin-left: 766px;
+        margin-top: 45px; */
+        padding: 0;
+    }
+
+        #projectNameDropdown li {
+            padding: 8px;
+            cursor: pointer;
+        }
+
+            #projectNameDropdown li:hover {
+                background-color: #f1f1f1;
+            }
+
+    .text-deep-blue {
+        color: #044c92 !important;
     }
 </style>
 
@@ -215,8 +244,51 @@
         <!-- Start This is Add Project Layout Open and hide-->
         <span id="spanProjectId" class="d-none">0</span>
         <span id="spanCurrentPslmId" class="d-none">0</span>
+        <span id="spanOldPslmId" class="d-none">0</span>
+        <span class="d-none" id="ProjectId" name="ProjectId">0</span>
         <div class="row justify-content-center">
             <div class="col-md-12 text-center p-0 mb-2">
+
+
+               @*  <div class="d-flex justify-content-start align-items-center">
+
+                    <label class="me-2 fw-bold" title="ON means calendars will accept past date">
+                        Ingest-Legacy Proj / Old Proj
+                    </label>
+
+                    <div class="btn-group" role="group" aria-label="Toggle switch">
+                        <input type="radio" class="btn-check" name="mcalender_dates" id="autoDate" autocomplete="off" value="1"
+                        @(calendarMode == 1 ? "checked" : "")>
+                        <label class="btn btn-outline-primary" for="autoDate" title="ON means calendars will accept past date">On</label>
+
+                        <input type="radio" class="btn-check" name="mcalender_dates" id="Manualdate" autocomplete="off" value="0"
+                        @(calendarMode == 0 ? "checked" : "") selected>
+                        <label class="btn btn-outline-primary" for="Manualdate" title="OFF means calendars will accept Current Date">Off</label>
+                    </div>
+                </div> *@
+
+
+                <div class="d-flex justify-content-start align-items-center">
+
+
+                    <label class="me-2 fw-bold" title="ON means calendars will accept past date">
+                        Ingest-Legacy Proj / Old Proj
+                    </label>
+
+                    <div class="btn-group" role="group" aria-label="Toggle switch">
+                        <input type="radio" class="btn-check" name="mcalender_dates" id="autoDate" autocomplete="off" value="1"
+                        @(calendarMode == 1 ? "checked" : "")>
+                        <label class="btn btn-outline-primary" for="autoDate" title="ON means calendars will accept past date">On</label>
+
+                        <input type="radio" class="btn-check" name="mcalender_dates" id="Manualdate" autocomplete="off" value="0"
+                        @(calendarMode == 0 ? "checked" : "") selected>
+                        <label class="btn btn-outline-primary" for="Manualdate" title="OFF means calendars will accept Current Date">Off</label>
+                    </div>
+                    <div class="d-flex justify-content-center my-3">
+                        <input type="text" class="form-control mb-2 ml-5 w-100 text-center RequestRemarks " id="RequestRemarks" onkeyup="ABC()" placeholder="Enter your legacy remarks">
+                    </div>
+                </div>
+
 
                 <div class="card px-0 pb-0 mb-3">
                     <div class="newprojectheading">
@@ -255,16 +327,39 @@
 
                                 <table class="new-table" id="tablebasic">
                                     <tr>
+                                    <tr>
+
+
                                         <td>
-                                            @Html.LabelFor(model => model.ProjName, "Project Name", new { id = "AddProjName" })<font style="color:red;"><b>*</b></font>
+                                                @Html.LabelFor(model => model.IsWhitelisted, "Already Whitelisted ?", new { id = "AddIsWhitelisted" })<font style="color:red;"><b>*</b></font>
+                                        </td>
+
+                                        <td>
+                                                @Html.DropDownListFor(model => model.IsWhitelisted,
+                                                         (IEnumerable<SelectListItem>)ViewBag.WhitelistOptions,
+                                                         new { @class = "form-select requiredField", required = "required" })
+
+                                            <div class="invalid-feedback">
+                                                Whitelist Status Required
+                                            </div>
+                                        </td>
+
+
+
+                                        <td>
+                                                @Html.LabelFor(model => model.ProjName, "Project Name", new { id = "AddProjName" })<font style="color:red;"><b>*</b></font>
                                         </td>
                                         <td>
-                                            @Html.EditorFor(model => model.ProjName, new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", @required = "required", @placeholder = "Max Char 200 " } })
-                                            <span class="charErrorMsg" style="color: red; display: none;">Cannot exceed 200 characters!</span>
+                                                @Html.EditorFor(model => model.ProjName, new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", @required = "required", @placeholder = "Max Char 200 ",@style="margin-bottom:0px;" } })
+                                            <ul id="projectNameDropdown" class="dropdown-list " style="display:none; width:477px">
+                                            </ul>
+                                                <span class="charErrorMsg" style="color: red; display: none;">Cannot exceed 200 characters!</span>
                                             <div class="invalid-feedback">
                                                 Project Name Required
                                             </div>
                                         </td>
+                                       
+
 
 
                                         <td>
@@ -286,27 +381,12 @@
 
 
 
-                                        <td>
-                                            @Html.LabelFor(model => model.CompletionDate, "Completion Date", new { id = "AddCompletionDate " })
-
-                                            <button type="button" class="btn btn-danger" id="btn-complition" style="margin-top: 1px;" title="Completion Date">
-                                                <i class="fa fa-info-circle" aria-hidden="true"></i>
-                                            </button>
-                                        </td>
-                                        <td>
-
-                                            @* @Html.TextBoxFor(model => model.CompletionDate, "{0:yyyy-MM-dd}", new { @class = "form-control ", type = "date", required = "required" }) *@
-                                            @Html.TextBoxFor(model => model.CompletionDate, "{0:yyyy-MM-dd}", new { @class = "form-control ", type = "date", required = "required" })
-
-                                            <div class="invalid-feedback">
-                                                Completion Date Required
-                                            </div>
-                                        </td>
+                                       
                                     </tr>
                                     <!--next row-->
                                     <tr>
 
-                                        <td>
+                                        @* <td>
                                             @Html.LabelFor(model => model.IsWhitelisted, "Already Whitelisted ?", new { id = "AddIsWhitelisted" })<font style="color:red;"><b>*</b></font>
                                         </td>
 
@@ -319,7 +399,23 @@
                                                 Whitelist Status Required
                                             </div>
                                         </td>
+ *@
+                                        <td>
+                                                @Html.LabelFor(model => model.CompletionDate, "Completion Date", new { id = "AddCompletionDate " })
 
+                                            <button type="button" class="btn btn-danger" id="btn-complition" style="margin-top: 1px;" title="Completion Date">
+                                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+
+                                                @* @Html.TextBoxFor(model => model.CompletionDate, "{0:yyyy-MM-dd}", new { @class = "form-control ", type = "date", required = "required" }) *@
+                                                @Html.TextBoxFor(model => model.CompletionDate, "{0:yyyy-MM-dd}", new { @class = "form-control ", type = "date", required = "required" })
+
+                                            <div class="invalid-feedback">
+                                                Completion Date Required
+                                            </div>
+                                        </td>
 
                                         <td>
                                             @Html.LabelFor(model => model.InitialRemark, "Remarks", new { id = "AddInitialRemark" })<font style="color:red; "><b>*</b></font>
@@ -780,7 +876,11 @@
                                 <div class="row justify-content-center">
                                     <center>
                                         <br><br>
-                                        <h2 class="purple-text text-center"><strong>Project Successfully Submitted..!</strong></h2>
+                                        <h2 class="text-deep-blue text-center" style="">
+                                            <strong>
+                                                Project Successfully submitted to DDGIT <br><br> (Tele No: 39865, 20862706)
+                                            </strong>
+                                        </h2>
                                         <br> <br />
                                         <a href="/Projects/ClearTempDataAndRedirect">
                                             <input type="button" class="next action-button" value="Add More Projects" />
@@ -813,7 +913,13 @@
 
     <div class="card radius-10 w-100">
         <div class="card-body">
-            Originated Projects
+            @* Originated Projects *@
+            <div class="projectheading" style="text-align: center;">
+                <h6 style="color: white;margin-top: 8px; font-weight: bold;">
+                    Initiated Projects (Drafts & Submissions to DDGIT )
+                </h6>
+
+            </div>
 
             <table id="SoftwareType1" class="table table-striped table-bordered">
                 <thead>
@@ -932,4 +1038,5 @@
 <script src="~/DeveloperJs/CreateProjects.js?v1"></script>
 <script src="~/developerjs/atthistory.js?v1"></script>
 <script src="~/developerjs/mtable.js?v1"></script>
+<script src="~/DeveloperJs/Comman.js?v1"></script>
 

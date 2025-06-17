@@ -55,7 +55,7 @@ namespace swas.DAL.Models
         public bool IsComment { get; set; }
 
         public string? UserDetails { get; set; }
-
+        public string? CertNo { get; set; }
 
     }
 

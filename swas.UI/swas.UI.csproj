@@ -52,6 +52,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\swas.BAL\swas.BAL.csproj" />
+    <ProjectReference Include="..\swas.DAL\swas.DAL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -68,6 +69,8 @@
     <None Include="Views\Projects\_ProjectForm.cshtml" />
     <None Include="Views\ProjEdit\EditWithHistory.cshtml" />
     <None Include="Views\ProjEdit\Index.cshtml" />
+    <None Include="wwwroot\Content\jquery-3.6.0.min.js" />
+    <None Include="wwwroot\Content\jquery-ui.min.js" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,8 @@ namespace swas.DAL.Models
     public class trnWhiteListed
     {
         public int Id { get; set; }
-        public int HeaderID { get; set; }
+        [ForeignKey("mHostType")]
+        public int mHostTypeId { get; set; }
         public string? ProjName { get; set; }
         public string? Fmn { get; set; }
         public string? Appt { get; set; }

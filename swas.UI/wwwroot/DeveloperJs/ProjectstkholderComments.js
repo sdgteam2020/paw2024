@@ -92,7 +92,8 @@ function GetProjCommentsByUnitId() {
                         } else {
                             listItem += "<tr>";
                         }
-                        listItem += "<td class='noExport d-none'><span class='noExport d-none' id='spnProjId'>" + response[i].projId + "</span><span class='noExport d-none' id='spnpsmId'>" + response[i].psmId + "</span></td>";
+                        //listItem += "<td class='noExport d-none'><span class='noExport d-none' id='spnProjId'>" + response[i].projId + "</span><span class='noExport d-none' id='spnpsmId'>" + response[i].psmId + "</span></td>";
+                        listItem += "<td class='noExport d-none'><span class='noExport d-none' id='spnProjId'>" + response[i].projId + "</span><span class='noExport d-none' id='spnpsmId'>" + response[i].psmId + "</span><span class='noExport d-none' id='DateType'>" + response[i].adminApprovalStatus + "</span></td>";
                         //listItem += "<td class='align-middle'><span id='divName'>" + count + "</span></td>";
                         listItem += "<td class='align-middle ser-no'>" + (i + 1) + "</td>";
 
@@ -287,6 +288,7 @@ function GetProjCommentsByUnitId() {
                     $("body").on("click", ".cls-btncomment", function () {
                         $("#ProjectcommentForStackHolderprojId").html($(this).closest("tr").find("#spnProjId").html());
                         $("#ProjectcommentForStackHolderPsmId").html($(this).closest("tr").find("#spnpsmId").html());
+                        $("#ProjectcommentForStackHolderDate_type").html($(this).closest("tr").find("#DateType").html());
 
                         IsReadComment($(this).closest("tr").find("#spnProjId").html(), $(this).closest("tr").find("#spnpsmId").html());
                         IsReadNotification($(this).closest("tr").find("#spnProjId").html(), 1);
@@ -306,6 +308,39 @@ function GetProjCommentsByUnitId() {
                         //var finalTitle = "Mov History: " + shortProjName;
                         var finalTitle = "Mov History: " + projName;
                         $('#addComment').text(finalTitle);
+
+
+                        const dateTypeText = $(this).closest("tr").find("#DateType").text().trim().toLowerCase();
+                        const dateType = (dateTypeText === "true");
+
+                        $("#ProjectcommentForStackHolderDate_type").text(dateType);
+                        var pad = "00";
+                        var datef2 = new Date();
+
+
+                        var months = "" + (datef2.getMonth() + 1);
+                        var days = "" + datef2.getDate();
+                        var monthsans = pad.substring(0, pad.length - months.length) + months;
+                        var dayans = pad.substring(0, pad.length - days.length) + days;
+                        var year = datef2.getFullYear();
+                        var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+                        var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+                        var ss = `${datef2.getSeconds()}`;
+
+                        // Today's date and time in the required formats
+                        var todayDate = `${year}-${monthsans}-${dayans}`;
+                        var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+
+                        if (dateType) {
+                            $('#CommentDateFwd').attr('type', 'datetime-local');
+                            $('#CommentDateFwd').attr('max', todayDateTime);
+                            $('#CommentDateFwd').prop('disabled', false); // Allow user input
+                        } else {
+                            $('#CommentDateFwd').attr('type', 'date');
+                            $('#CommentDateFwd').val(todayDate); // Set today's date
+                            $('#CommentDateFwd').prop('disabled', true); // Freeze input
+                        }
+
                     });
 
                     $("body").on("click", ".projNameDetail", function () {

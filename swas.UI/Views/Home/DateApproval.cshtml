@@ -1,0 +1,360 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using Newtonsoft.Json;
+@using swas.BAL.Helpers
+@using swas.BAL.Repository
+@using swas.DAL.Models
+@using swas.BAL.Interfaces
+@using swas.BAL.DTO
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	int sno = 1;
+
+
+	Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor.HttpContext.Session, "User");
+}
+<link href="~/css/timeline.css" rel="stylesheet" />
+<style>
+	.bold-text {
+		font-weight: bold;
+	}
+
+	
+	
+</style>
+
+<body>
+	<div id="tabledateContainer">
+		<div class="text-center mb-4">
+			<h3 class="fw-bold text-warning" style="text-transform: uppercase; letter-spacing: 1px;">
+				Ingest Legacy Projects
+			</h3>
+			<small class="text-muted fst-italic">Backdated calendar projects or ongoing legacy project intake</small>
+		</div>
+
+		<div class="card radius-10 w-100">
+			<div class="card-body" style="overflow-y:auto; height:700px">
+				<span id="IpAddress" style="display:none;"> @TempData["ipadd"]</span>
+				<table id="TableType1" class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>S/No</th>
+							<th>Project Name</th>
+							<th>User</th>
+							<th>From Unit</th>
+							<th>Request Date</th>
+							<th>Admin Approval Date</th>
+							<th>Requested Remarks</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody id="DateApproval"></tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="ProjFwdHistory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+
+					<h4 class="modal-title" id="lblHistory"> </h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+
+				<div class="modal-body ml-lg-5">
+
+					<div class="timeline" id="projectLegacyhistory">
+					</div>
+				</div>
+
+			</div><!-- modal-content -->
+		</div><!-- modal-dialog -->
+	</div>
+</body>
+
+<script src="~/DeveloperJs/DateApproval.js?v1"></script>
+<script src="~/DeveloperJs/Notification.js?v1"></script>
+@section Scripts {
+
+	<script>
+				function formatRemarks(remarks) {
+			if (!remarks) return "<span class='text-muted'>-</span>";
+
+			let words = remarks.split(" ");
+			let formatted = "";
+			for (let i = 0; i < words.length; i++) {
+				formatted += words[i] + " ";
+				if ((i + 1) % 5 === 0) {
+					formatted += "<br>";
+				}
+			}
+			return formatted.trim();
+		}
+		$(document).ready(function () {
+			loadDateApprovalTable();
+		});
+
+		function loadDateApprovalTable() {
+			$.ajax({
+				url: '/Home/GetDateApprovalList',
+				method: 'GET',
+				success: function (response) {
+				
+
+
+					let listItem = '';
+					for (let i = 0; i < response.length; i++) {
+
+
+
+
+						let item = response[i];
+						 if (response[i].isRead == false) {
+							listItem += "<tr class='bold-text'>";
+							/* boldCount++;*/
+						} else {
+							listItem += "<tr>";
+						}
+						var projName = item.projName;
+						var words = projName.split(" ");
+						var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
+
+
+
+						listItem += "<td class='align-middle'>" + (i + 1) + "</td>"; 
+						listItem += "<td id='dateApprovalProjName' class='align-middle'>" + shortProjName + "</td>";
+						listItem += "<td class='align-middle'>" + item.user + "</td>";
+						listItem += "<td class='align-middle'>" + item.unitName + "</td>";
+						listItem += "<td class='align-middle'>" + formatDate(item.request_Date) + "</td>";
+						//listItem += "<td class='align-middle'>" + formatDate(item.ddgiT_Approval_dat) + "</td>";
+						listItem += "<td style='Vertical-align:middle; text-align:center'>" + (item.ddgiT_Approval_dat ? formatDate(item.ddgiT_Approval_dat): "-") + "</td>";
+
+						// Fixed approval status check
+						let isApproved = item.ddgiT_approval === true || item.ddgiT_approval === "true";
+						listItem += "<td class='align-middle text-start'>" + formatRemarks(item.remarks) + "</td>";
+
+
+
+									if (isApproved) {
+			listItem += `<td class='align-middle'>
+				<button class='btn btn-success btn-sm approve-btn'
+					data-bold="${item.isRead}"
+					data-id="${item.id}"
+					data-project-name="${item.projName}"
+					data-actiontype="4"  disabled>Approved</button> <!-- 2 for Unapprove -->
+
+						<button class='btn btn-warning btn-sm ml-2  approve-btn'
+					data-id="${item.id}"
+					data-project-name="${item.projName}"
+							data-actiontype="3"  title="Request Reject">Reject</button>
+
+				<a href="#" class="ml-2 LegacyHistory" data-action="LegacyHistory" data-ids="${item.projId}" title="History of the Legacy">
+					<img src="/assets/images/icons/Legacyhistory.png" alt="Icon" style="height: 27px;">
+				</a>
+			</td>`;
+		} else {
+			listItem += `<td class='align-middle'>
+				<button class='btn btn-danger btn-sm approve-btn'
+					data-bold="${item.isRead}"
+					data-id="${item.id}"
+					data-project-name="${item.projName}"
+					data-actiontype="2">Approve</button> <!-- 1 for Approve -->
+
+						<button class='btn btn-warning btn-sm ml-2  approve-btn'
+					data-id="${item.id}"
+					data-project-name="${item.projName}"
+					data-actiontype="3" title="Request Reject">Reject</button>
+
+			 <!-- 3 for Reject -->
+
+				<a href="#" class="ml-2  LegacyHistory" data-action="LegacyHistory"  data-ids="${item.projId}" title="History of the Legacy">
+					<img src="/assets/images/icons/Legacyhistory.png" alt="Icon" style="height: 27px;">
+				</a>
+			</td>`;
+		}
+
+
+
+
+						listItem += "</tr>";
+					}
+
+					$('#DateApproval').html(listItem);
+
+
+						$("#DetailBody").html(listItem);
+						var table = $('#TableType1').DataTable({
+							lengthChange: true,
+							dom: 'lBfrtip',
+							retrieve: true,
+							bDestroy: true,
+							pageLength: -1,
+							lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+							buttons: [
+								{
+									extend: 'excel',
+									text: 'Excel',
+									exportOptions: {
+										columns: ':visible:not(:last-child)',
+										format: {
+											// body: function (data, row, column, node) {
+											//     var excelRowData = $(data).text().trim();
+											//     return column === 0 ? row + 1 : excelRowData;
+											// }
+													body: function (data, row, column, node) {
+													var text = typeof data === 'string' && data.indexOf('<') >= 0 ? $(data).text().trim() : data;
+													return column === 0 ? row + 1 : text;
+													}
+
+										}
+									}
+								},
+								{
+									extend: 'csv',
+									exportoptions: {
+										columns: ':visible:not(:last-child)',
+										format: {
+											body: function (data, row, column, node) {
+												var csvrowdata = $(data).text().trim();
+												return column === 0 ? row + 1 : csvrowdata; // fix ser no in export
+											}
+										}
+									}
+								},
+								{
+									extend: 'pdfHtml5',
+									text: 'PDF',
+									exportOptions: {
+										columns: ':visible:not(:last-child)'
+									},
+									action: function (e, dt, node, config) {
+										PdfDiv();
+									}
+								}
+							],
+							searchBuilder: {
+								conditions: {
+									num: {
+										'MultipleOf': {
+											conditionName: 'Multiple Of',
+											init: function (that, fn, preDefined = null) {
+												var el = $('<input>').on('input', function () { fn(that, this); });
+												if (preDefined !== null) {
+													$(el).val(preDefined[0]);
+												}
+												return el;
+											},
+											inputValue: function (el) {
+												return $(el[0]).val();
+											},
+											isInputValid: function (el, that) {
+												return $(el[0]).val().length !== 0;
+											},
+											search: function (value, comparison) {
+												return value % comparison === 0;
+											}
+										}
+									}
+								}
+							}
+						});
+				},
+				error: function () {
+					console.error('Error fetching data');
+				}
+			});
+		}
+
+		function formatDate(dateStr) {
+			let d = new Date(dateStr);
+			return d.toLocaleDateString() + " " + d.toLocaleTimeString();
+		}
+
+		function PdfDiv() {
+							var table = $('#TableType1').DataTable();
+							var filteredData = table.rows({ search: 'applied' }).data().toArray();
+
+							// Extract headers while excluding the last column (Action)
+							var headers = [];
+							table.columns(':visible').header().each(function (header, index) {
+								if (index !== table.columns().count() - 1) { // Exclude "Action" column
+									headers.push($(header).text().trim());
+								}
+							});
+
+
+									var data = [];
+		for (var i = 0; i < filteredData.length; i++) {
+			var rowData = [];
+			for (var j = 0; j < filteredData[i].length - 1; j++) { // Exclude "Action" column
+				var cellData = filteredData[i][j]; // ✅ define cellData
+				var cleanText = (typeof cellData === 'string' && cellData.indexOf('<') >= 0)
+					? $(cellData).text().trim()
+					: cellData;
+				rowData.push(j === 0 ? i + 1 : cleanText); // Fix Ser No (Starts at 1)
+			}
+			data.push(rowData);
+		}
+
+							var tableHTML = '<table>';
+							tableHTML += '<thead><tr>';
+							headers.forEach(header => {
+								tableHTML += '<th>' + header + '</th>';
+							});
+							tableHTML += '</tr></thead><tbody>';
+
+							data.forEach(row => {
+								tableHTML += '<tr>';
+								row.forEach(cell => {
+									tableHTML += '<td>' + cell + '</td>';
+								});
+								tableHTML += '</tr>';
+							});
+
+							tableHTML += '</tbody></table>';
+
+							// var watermarkText = $("#IpAddress").html();
+							var watermarkText = $("#IpAddress").html();
+
+							var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+							popupWin.document.open();
+
+							var tableStyles = `
+		<style type="text/css">
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				margin-bottom: 20px;
+			}
+			th, td {
+				padding: 8px;
+				border: 1px solid #ddd;
+				text-align: center;
+			}
+			th {
+				background-color: #f2f2f2;
+				color: black;
+			}
+		</style>`;
+
+							popupWin.document.write(`
+		<html>
+		<head>${tableStyles}</head>
+		<body onload="window.print()">
+			${tableHTML}
+			<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK;
+			position:fixed;left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;
+			display: grid;justify-content: center;align-content: center;">
+			${watermarkText}
+			</div>
+		</body>
+		</html>`);
+
+							popupWin.document.close();
+						}
+
+	</script>
+}
+

@@ -29,5 +29,8 @@ namespace swas.BAL.DTO
         public string? UpdatedByUserId { get; set; }
 
 
+        public bool AdminApprovalStatus { get; set; }
+
+
     }
 }

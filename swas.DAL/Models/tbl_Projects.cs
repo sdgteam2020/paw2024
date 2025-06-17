@@ -243,7 +243,14 @@ namespace swas.DAL.Models
         [NotMapped]
         public int StageId { get; set; }
 
-        
+        [NotMapped]
+        public int OldPsmid { get; set; }
+
+
+        [Display(Name = "Date Type")]
+        public int Date_type { get; set; }
+
+
     }
 
 

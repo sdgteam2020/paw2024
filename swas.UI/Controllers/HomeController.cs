@@ -78,9 +78,10 @@ namespace swas.UI.Controllers
         DateTime Currentdate = DateTime.Now;
         private System.Timers.Timer aTimer;
         private readonly ILogger<HomeController> _logger;
+        private readonly IDateApprovalRepository _repo;
         //private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager;
 
-        public HomeController(IProjectsRepository projectsRepository, ICommentRepository commentRepository, SignInManager<ApplicationUser> signInManager, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IDdlRepository dlRepository, ApplicationDbContext context, IUnitRepository unitRepository, IProjStakeHolderMovRepository stkholdmove, IChartService chartService, IWebHostEnvironment _webHostEnvironment, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, IDataProtectionProvider dataProtector, IActionsRepository actionsRepository, IAttHistoryRepository attHistoryRepository, ILogger<HomeController> logger)
+        public HomeController(IProjectsRepository projectsRepository, ICommentRepository commentRepository, SignInManager<ApplicationUser> signInManager, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IDdlRepository dlRepository, ApplicationDbContext context, IUnitRepository unitRepository, IProjStakeHolderMovRepository stkholdmove, IChartService chartService, IWebHostEnvironment _webHostEnvironment, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, IDataProtectionProvider dataProtector, IActionsRepository actionsRepository, IAttHistoryRepository attHistoryRepository, ILogger<HomeController> logger, IDateApprovalRepository repo)
         {
             //  _logger = logger; _repositoryUser = repositoryUser;
             _projectsRepository = projectsRepository;
@@ -100,6 +101,7 @@ namespace swas.UI.Controllers
             _ActionsRepository = actionsRepository;
             _attHistoryRepository = attHistoryRepository;
             _logger = logger;
+            _repo = repo;
         }
 
 
@@ -125,6 +127,7 @@ namespace swas.UI.Controllers
                 //{
                 //    return Redirect("/Identity/Account/Login");
                 //}
+                ViewBag.UnitId = Logins?.unitid;
                 return View();
             }
             catch (Exception ex)
@@ -133,6 +136,10 @@ namespace swas.UI.Controllers
                 return Redirect("/Home/Error");
             }
         }
+
+
+
+
         public async Task<IActionResult> GetDashboardStatusDetails(int StatusId, bool IsDuplicate)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
@@ -1611,6 +1618,89 @@ s.IsDashboard,
             HttpContext.Session.Clear();
             return Ok();
         }
+
+
+        [HttpGet]
+        public IActionResult GetWhiteListedProjectById(int id)
+        {
+            var record = _context.trnWhiteListed.FirstOrDefault(x => x.Id == id);
+            return Json(record);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateWhiteListedProject(trnWhiteListed model)
+        {
+            try
+            {
+                var record = _context.trnWhiteListed.FirstOrDefault(x => x.Id == model.Id);
+                if (record != null)
+                {
+                    record.mHostTypeId = model.mHostTypeId;
+                    record.Appt = model.Appt;
+                    record.Fmn = model.Fmn;
+                    record.ContactNo = model.ContactNo;
+                    record.Clearence = model.Clearence;
+                    record.CertNo = model.CertNo;
+                    record.ValidUpto = model.ValidUpto;
+                    record.Remarks = model.Remarks;
+                    _context.SaveChanges();
+
+                    return Json(1);
+                }
+                return Json(-1);
+            }
+            catch (Exception ex)
+            {
+                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                var eventId = new EventId(dynamicEventId, "UpdateWhiteListedProject");
+                _logger.Log(LogLevel.Error, eventId, "An error occurred while on UpdateWhiteListedProject in HomeController.", ex, (s, e) => $"{s} - {e?.Message}");
+                return Json(-1);
+            }
+        }
+
+
+        public async Task<IActionResult> DateApproval()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public JsonResult GetDateApprovalList()
+        {
+            var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+            var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
+            var watermarkText = $" {ipAddress}\n  {currentDatetime}";
+            TempData["ipadd"] = watermarkText;
+
+            var data = _repo.GetDateApprovalList();
+            return Json(data);
+        }
+
+        //[HttpPost]
+        //public async Task<IActionResult> ApproveDateRequest(int id)
+        //{
+        //    try
+        //    {
+        //        var entry = await _context.DateApproval.FindAsync(id);
+        //        if (entry == null)
+        //            return Json(new { success = false, message = "Record not found." });
+
+
+        //        entry.DDGIT_approval = !(entry.DDGIT_approval ?? false);
+        //        entry.DDGIT_Approval_dat = DateTime.Now;
+        //        //entry.IsRead = true;
+
+        //        await _context.SaveChangesAsync();
+
+        //        var message = entry.DDGIT_approval == true ? "Request approved successfully." : "Request unapproved.";
+
+        //        return Json(new { success = true, message = message, currentStatus = entry.DDGIT_approval });
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return Json(new { success = false, message = "An error occurred while updating." });
+        //    }
+        //}
 
     }
 }

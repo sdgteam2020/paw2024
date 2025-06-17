@@ -18,8 +18,8 @@ namespace swas.BAL.Interfaces
     ///Tested Date : 
     ///Start 
     public interface IProjectsRepository
-    { 
-        Task<int> AddProjectAsync(tbl_Projects project);
+    {
+        Task<int> AddProjectAsync(tbl_Projects project, string Remarks);
 
         Task<bool> ProjectNameExists(tbl_Projects project);
         Task<tbl_Projects> GetProjectByIdAsync(int projectId);
@@ -40,7 +40,7 @@ namespace swas.BAL.Interfaces
         Task<tbl_ProjStakeHolderMov> GettXNByPsmIdAsync(int psmId);
         Task<tbl_ProjStakeHolderMov> GettXNByPsmIdwithUnitId(int psmId,int unitid);
         Task<int> GetIsCommentPsmiId(int? ProjId, int? StackHolderId);
-        Task<List<DToWhiteListed>> GetWhiteListedActionProj();
+        Task<List<DToWhiteListeds>> GetWhiteListedActionProj();
 
         Task<List<DTOUnderProcessProj>> GetHoldActionProj();
         Task<List<tbl_Projects>> GetProcProjAsync();

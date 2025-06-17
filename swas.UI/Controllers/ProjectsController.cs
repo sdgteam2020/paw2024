@@ -43,6 +43,7 @@ using Document = iText.Layout.Document;
 using System.IO;
 using Microsoft.Extensions.Logging;
 using iText.Kernel.Events;
+using static swas.DAL.Models.LegacyHistory;
 
 namespace swas.UI.Controllers
 {
@@ -72,6 +73,7 @@ namespace swas.UI.Controllers
         private readonly IUnitRepository _unitRepository;
         private readonly IConfiguration _configuration;
         private readonly ILogger<ProjectsController> _logger;
+        private readonly ILegacyHistoryRepository _legacyHistoryRepository;
 
         public ProjectsController(IProjectsRepository projectsRepository, IDdlRepository ddlRepository,
             IProjStakeHolderMovRepository psmRepository, IHttpContextAccessor httpContextAccessor,
@@ -82,7 +84,7 @@ namespace swas.UI.Controllers
             IProjComments projComments, IStkCommentRepository stkCommentRepository,
             IProjStakeHolderMovRepository projStakeHolderMovRepository,
             UserManager<ApplicationUser> userManager, IUnitRepository unitRepository, IConfiguration configuration, ApplicationDbContext context,
-            ILogger<ProjectsController> logger
+            ILogger<ProjectsController> logger, ILegacyHistoryRepository legacyHistoryRepository
 
             )
         {
@@ -107,6 +109,7 @@ namespace swas.UI.Controllers
             _configuration = configuration;
             _dbContext = context;
             _logger = logger;
+            _legacyHistoryRepository = legacyHistoryRepository;
 
         }
 
@@ -385,7 +388,7 @@ namespace swas.UI.Controllers
             return Json(1);
 
         }
-        public async Task<IActionResult> AddProject(tbl_Projects Data)
+        public async Task<IActionResult> AddProject(tbl_Projects Data, string RequestRemarks)
         {
 
             try
@@ -404,28 +407,71 @@ namespace swas.UI.Controllers
                 Data.UpdatedByUserId = Logins.UserIntId;
                 Data.Comments = Data.InitialRemark;
                 Data.InitiatedDate = Data.InitiatedDate;
-                if (!await _projectsRepository.ProjectNameExists(Data))
+
+                bool projectExists = await _projectsRepository.ProjectNameExists(Data);
+
+
+                if (projectExists)
                 {
-                    if (Data.ProjId == 0)
-                    {
-                        Data.CurrentPslmId = 0;
-                        projid = await _projectsRepository.AddProjectAsync(Data);
-                        Data = await _projectsRepository.GetProjectByIdAsync(projid);
-                    }
-                    else
+                    if (Data.IsWhitelisted == "Re-Vetted")
                     {
 
-                        Data.EditDeleteDate = DateTime.Now;
-                        await _projectsRepository.UpdateProjectAsync(Data);
-                        Data = await _projectsRepository.GetProjectByIdAsync(Data.ProjId);
-
+                        Data.ProjName = await GetReVettedProjectName(Data);
                     }
-                    return Json(Data);
+                }
+                projectExists = await _projectsRepository.ProjectNameExists(Data);
+
+                if (projectExists)
+                {
+                    // If the new project name still exists, return a conflict error (-3)
+                    return Json(-3);
+                }
+
+                if (Data.ProjId == 0)
+                {
+                    Data.CurrentPslmId = 0;
+                    projid = await _projectsRepository.AddProjectAsync(Data, RequestRemarks);
+                    Data = await _projectsRepository.GetProjectByIdAsync(projid);
                 }
                 else
                 {
-                    return Json(-3);
+                    Data.EditDeleteDate = DateTime.Now;
+                    await _projectsRepository.UpdateProjectAsync(Data);
+                    Data = await _projectsRepository.GetProjectByIdAsync(Data.ProjId);
                 }
+
+
+                // Bind Attachment with Re-vetted projects
+
+                if (Data.OldPsmid != 0)
+                {
+                    var oldAttachments = _dbContext.AttHistory
+                        .Where(x => x.PsmId == Data.OldPsmid)
+                        .ToList();
+
+                    foreach (var old in oldAttachments)
+                    {
+                        var newAttachment = new tbl_AttHistory
+                        {
+                            PsmId = Data.CurrentPslmId,
+                            ActionId = old.ActionId,
+                            TimeStamp = DateTime.Now,
+                            IsDeleted = false,
+                            IsActive = true,
+                            EditDeleteBy = old.EditDeleteBy,
+                            AttPath = old.AttPath,
+                            EditDeleteDate = old.EditDeleteDate,
+                            UpdatedByUserId = old.UpdatedByUserId,
+                            ActFileName = old.ActFileName,
+                            Reamarks = old.Reamarks,
+                            DateTimeOfUpdate = old.DateTimeOfUpdate
+                        };
+                        _dbContext.AttHistory.Add(newAttachment);
+                    }
+
+                    await _dbContext.SaveChangesAsync();
+                }
+                return Json(Data);
             }
             catch (Exception ex)
             {
@@ -948,7 +994,7 @@ namespace swas.UI.Controllers
                 else
                 {
                     int psmData = _psmRepository.GetLastRecProjectMov(ProjectId);
-                    if (psmData != 0 )
+                    if (psmData != 0)
                     {
                         if (psmData == PsmId)
                         {
@@ -966,7 +1012,7 @@ namespace swas.UI.Controllers
                             movent.IsComplete = true;
                             await _psmRepository.UpdateWithReturn(movent);
 
-                            movent = await _psmRepository.GetByByte(PsmId);                          
+                            movent = await _psmRepository.GetByByte(PsmId);
                             movent.IsRead = true;
                             movent.UndoRemarks = Remarks;
                             movent.IsComplete = true;
@@ -974,8 +1020,8 @@ namespace swas.UI.Controllers
                             movent.IsPullBack = true;
                             var Ret = await _psmRepository.UpdateWithReturn(movent);
                         }
-                       
-                    
+
+
                         UnitDtl unitDetail = new UnitDtl();
                         if (psmData != PsmId)
                         {
@@ -985,7 +1031,7 @@ namespace swas.UI.Controllers
                         else
                         {
                             unitDetail = await _unitRepository.GetUnitDtl(movent.ToUnitId);
-                        }                       
+                        }
                         if (unitDetail != null)
                         {
                             //ApplicationUser userdet = await _userManager.FindByNameAsync(unitDetail.UnitName);
@@ -1907,6 +1953,231 @@ namespace swas.UI.Controllers
                 return Redirect("/Identity/Account/login");
             }
         }
+
+        [HttpPost]
+        public IActionResult SetCalendarModeInSession(int mode)
+        {
+            HttpContext.Session.SetInt32("CalendarMode", mode);
+            return Json(new { success = true, message = "Calendar mode saved in session." });
+        }
+
+
+
+
+
+
+
+        [HttpPost("Projects/LogDateApprovalWithRemarks")]
+        public async Task<IActionResult> LogDateApproval(int ProjId, bool UserReq, int actiontype, string remarks)
+        {
+            var user = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+
+            if (ProjId == 0 || user == null)
+                return BadRequest(new { success = false, message = "Invalid input." });
+
+            try
+            {
+                //bool alreadyRequested = await _dbContext.DateApproval
+                //    .AnyAsync(x => x.ProjId == Convert.ToInt32(ProjId) && x.UnitId == user.unitid);
+
+                //if (alreadyRequested)   
+                //{
+                //    return Json(new { success = false, message = "Request already exists for this project from your unit." });
+                //}
+
+                var dateApproval = new DateApproval
+                {
+                    ProjId = Convert.ToInt32(ProjId),
+                    UnitId = user.unitid,
+                    Request_Date = DateTime.Now,
+                    UserRequest = UserReq,
+                    DDGIT_approval = false,
+                    DDGIT_Approval_dat = null,
+                    User = user.Rank + " " + user.Offr_Name,
+                    IsRead = false
+                };
+
+                _dbContext.DateApproval.Add(dateApproval);
+                await _dbContext.SaveChangesAsync();
+
+
+                var legacyLog = new LegacyHistory
+                {
+                    ProjectId = ProjId,
+                    UnitId = user.unitid,
+                    FromUnit = user.unitid, // Optional: update if needed
+                    ActionBy = user.Rank + " " + user.Offr_Name,
+                    ActionType = (ActionTypeEnum)actiontype,
+                    Remarks = remarks,
+                    ActionDate = DateTime.Now,
+                    Userdetails = Helper1.LoginDetails(user)
+                };
+
+                await _legacyHistoryRepository.AddHistoryAsync(legacyLog);
+
+                //return Json(new { success = true, message = "Project has been sent to DDGIT for date approval." });
+                return Json(new { success = true, message = "Request has been forward to admin for legacy project ingection." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "Error logging date approval." });
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> ApproveDateRequest(int id, int actiontype, string remarks)
+        {
+            var user = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext?.Session, "User");
+            try
+            {
+                var entry = await _dbContext.DateApproval.FindAsync(id);
+                if (entry == null)
+                    return Json(new { success = false, message = "Record not found." });
+
+                entry.DDGIT_approval = !(entry.DDGIT_approval ?? false);
+                if (actiontype == 3)
+                {
+                    entry.DDGIT_approval = false;
+                    entry.UserRequest = false;
+                }
+
+                entry.DDGIT_Approval_dat = DateTime.Now;
+                //entry.IsRead = true;
+
+                await _dbContext.SaveChangesAsync();
+
+                var legacyLog = new LegacyHistory
+                {
+                    ProjectId = entry.ProjId ?? 0,
+                    UnitId = user?.unitid,
+                    FromUnit = user?.unitid, // Optional: update if needed
+                    ActionBy = (user?.Rank ?? "") + " " + (user?.Offr_Name ?? ""),
+                    ActionType = (ActionTypeEnum)actiontype,
+                    Remarks = remarks,
+                    ActionDate = DateTime.Now,
+                    Userdetails = Helper1.LoginDetails(user)
+                };
+
+                await _legacyHistoryRepository.AddHistoryAsync(legacyLog);
+
+                var message = entry.DDGIT_approval == true ? "Request approved successfully." : "Request Rejected.";
+
+                return Json(new { success = true, message = message, currentStatus = entry.DDGIT_approval });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false, message = "An error occurred while updating." });
+            }
+        }
+
+
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetRevettedProjects([FromQuery] string searchQuery)
+        {
+            var query = from p in _dbContext.Projects
+                        join stkmov in _dbContext.ProjStakeHolderMov on p.ProjId equals stkmov.ProjId
+                        join tsam in _dbContext.TrnStatusActionsMapping on stkmov.StatusActionsMappingId equals tsam.StatusActionsMappingId
+                        join ms in _dbContext.mStatus on tsam.StatusId equals ms.StatusId
+                        join ma in _dbContext.mActions on tsam.ActionsId equals ma.ActionsId
+                        where tsam.StatusActionsMappingId == 103
+                        select new
+                        {
+                            p.ProjId,
+                            p.ProjName,
+                            StatusName = ms.Status,
+                            ActionName = ma.Actions
+                        };
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                query = query.Where(x => x.ProjName.Contains(searchQuery));
+            }
+
+            var result = await query.ToListAsync();
+            return Ok(result);
+        }
+
+
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetProjectDetails([FromQuery] int projId)
+        {
+            var project = await _dbContext.Projects
+                                          .Where(p => p.ProjId == projId)
+                                          .FirstOrDefaultAsync();
+
+            if (project == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(project);
+        }
+
+        public async Task<string> GetReVettedProjectName(tbl_Projects project)
+        {
+            string originalName = project.ProjName.Trim();
+            string baseName = originalName;
+            int currentCount = 0;
+
+
+            var reVettedPattern = new System.Text.RegularExpressions.Regex(@"(.*)\sRe-Vetted\s(\d+)$", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
+            var match = reVettedPattern.Match(originalName);
+            if (match.Success)
+            {
+                baseName = match.Groups[1].Value.Trim();
+                currentCount = int.Parse(match.Groups[2].Value);
+            }
+            else
+            {
+
+                var existingProject = await _dbContext.Projects
+                    .Where(i => i.ProjName.Trim().ToUpper() == originalName.ToUpper() && i.ProjId != project.ProjId)
+                    .FirstOrDefaultAsync();
+
+                if (existingProject == null)
+                {
+
+                    return originalName;
+                }
+            }
+
+
+            var count = await _dbContext.Projects
+                .Where(i => i.ProjName.Trim().ToUpper().StartsWith(baseName.ToUpper()) &&
+                            i.ProjName.Contains("Re-Vetted"))
+                .CountAsync();
+
+
+            int newCount = Math.Max(count, currentCount) + 1;
+
+
+            return $"{baseName} Re-Vetted {newCount}";
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetProjectLegacyHistory(int ProjectId)
+        {
+
+            if (ProjectId <= 0)
+                return BadRequest(new { success = false, message = "Invalid project ID." });
+
+            var history = await _legacyHistoryRepository.GetHistoryByProjectIdAsync(ProjectId);
+
+
+            if (history == null || !history.Any())
+                return Json(new { success = false, message = "No legacy history found." });
+
+
+
+            return Json(history);
+        }
+
     }
 
 }

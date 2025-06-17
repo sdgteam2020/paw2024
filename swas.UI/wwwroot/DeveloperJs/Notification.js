@@ -155,6 +155,7 @@ $(document).ready(function () {
 
     updateNotificationCount(1, 'ProjectCommentCount'); // For project comments
     updateNotificationCount(2, 'InboxCount'); // For inbox
+    fetchProjectCommentsUnreadCount(); // For DateApproval
 });
 
 function AddNotification(ProjId, type, unitid) {
@@ -297,6 +298,33 @@ function updateNotificationCountForChat(type, elementId) {
             console.error(`Could not retrieve ${elementId} count.`);
             // In case of an error, set the count to 0 and hide the badge
             $(`#${elementId}`).text(0).hide();
+        }
+    });
+}
+
+
+function fetchProjectCommentsUnreadCount() {
+
+    $.ajax({
+        url: '/Notification/GetUnreadProjectCommentsCount',
+        type: 'get',
+
+        success: function (response) {
+
+            const count = response.count;
+            const badge = document.getElementById("ProjectlegacyCount");
+
+            if (badge) {
+                if (count > 0) {
+                    badge.textContent = count;
+                    badge.classList.remove("d-none");
+                } else {
+                    badge.classList.add("d-none");
+                }
+            }
+        },
+        error: function (err) {
+            console.error('Error fetching unread project comment count:', err);
         }
     });
 }

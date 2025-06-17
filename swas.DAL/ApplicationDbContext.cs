@@ -58,19 +58,22 @@ namespace swas.DAL
         public DbSet<trnWhiteListed> trnWhiteListed { get; set; }
         public DbSet<TrnUnitStatusMapping> TrnUnitStatusMapping { get; set; }
         public DbSet<TrnStatusActionsMapping> TrnStatusActionsMapping { get; set; }
-
+       
         public DbSet<mUserMapChat> mUserMapChat { get; set; }
         public DbSet<TrnChatMsg> TrnChatMsg { get; set; }
         public DbSet<mCalendar> mCalendar { get; set; }
 
         public DbSet<LogEntry> Errors { get; set; }
         public DbSet<AddNewProject> AddNewProjects   { get; set; }
-
+        public DbSet<DToWhiteListeds> WhiteListedProjects { get; set; }
+        public DbSet<DateApproval> DateApproval { get; set; }
+        public DbSet<LegacyHistory> LegacyHistory { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<Resultss>().HasNoKey();
 
             base.OnModelCreating(modelBuilder);
+
 
             modelBuilder.Entity<ApplicationUser>()
                 .Property(e => e.RoleName)
@@ -97,6 +100,10 @@ namespace swas.DAL
             modelBuilder.Entity<ApplicationUser>()
         .Property(e => e.appointment)
         .HasColumnType("nvarchar(max)");
+
+
+            modelBuilder.Entity<DateApproval>().ToTable("DateApproval");
+            modelBuilder.Entity<LegacyHistory>().ToTable("LegacyHistory");
 
             modelBuilder.Entity<AddNewProject>().HasNoKey(); // Mark as keyless entity
 

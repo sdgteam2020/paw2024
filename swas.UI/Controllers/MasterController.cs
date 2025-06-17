@@ -42,15 +42,15 @@ namespace swas.UI.Controllers
                 return Json(await _statusRepository.GetAllByStages_takeHolder(ParentId, Convert.ToInt32(Logins.unitid),false));
             
         }
-        public async Task<IActionResult> GetFwdTo(int id, int ParentId, int StakeHolderId)
+        public async Task<IActionResult> GetFwdTo(int id, int ParentId, int StakeHolderId, string Value, int Type)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-           
-           return Json(await _dlRepository.GetFwdTo(StakeHolderId));
-            
+
+            return Json(await _dlRepository.GetFwdTo(StakeHolderId, (int)Logins.unitid, Value, Type));
+
 
         }
-      
+
         public async Task<IActionResult> GetAllMasterTableforddl(int id, int ParentId ,int unitId)
         {
             try

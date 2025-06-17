@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using iText.Commons.Actions.Contexts;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using swas.BAL.DTO;
 using swas.BAL.Helpers;
 using swas.BAL.Interfaces;
 using swas.BAL.Repository;
+using swas.DAL;
 using swas.DAL.Models;
 using System.Security.Claims;
 
@@ -16,15 +18,17 @@ namespace swas.UI.Controllers
         private readonly IProjectsRepository _projectsRepository;
         private readonly ITrnChatMsgRepository _trnChatMsg;
         private readonly ILogger<NotificationController> _logger;
+        private readonly ApplicationDbContext _dbContext;
 
         public NotificationController(IHttpContextAccessor httpContextAccessor, INotificationRepository notificationRepository, IProjectsRepository projectsRepository,
-              ITrnChatMsgRepository trnChatMsg, ILogger<NotificationController> logger)
+              ITrnChatMsgRepository trnChatMsg, ILogger<NotificationController> logger, ApplicationDbContext dbContext)
         {
             _httpContextAccessor = httpContextAccessor;
             _notificationRepository = notificationRepository;
             _projectsRepository = projectsRepository;
             _trnChatMsg = trnChatMsg;
             _logger = logger;
+            _dbContext = dbContext;
         }
         public IActionResult Index()
         {
@@ -365,6 +369,32 @@ namespace swas.UI.Controllers
                     StatusCode = 500
                 };
             }
+
         }
+        [HttpGet]
+
+        public IActionResult GetUnreadProjectCommentsCount()
+        {
+            int count = _dbContext.DateApproval.Count(x => x.IsRead == false);
+            return Json(new { count });
+        }
+
+        [HttpPost]
+        public IActionResult GetUnreadProjectCommentsCount(int id)
+        {
+            var record = _dbContext.DateApproval.FirstOrDefault(x => x.Id == id);
+
+            if (record != null)
+            {
+                record.IsRead = true;
+                _dbContext.SaveChanges();
+            }
+
+            // Return updated unread count
+            int count = _dbContext.DateApproval.Count(x => x.IsRead == false);
+            return Json(new { success = true, message = "Marked as read", count });
+        }
+
+
     }
 }

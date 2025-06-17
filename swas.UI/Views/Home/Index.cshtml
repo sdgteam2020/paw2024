@@ -310,6 +310,10 @@
         h5[data-toggle="tooltip"] + .tooltip-inner {
             color: #5a8cd6 !important;
         }
+
+        .modal-lg {
+            max-width: 95% !important; /* Customize as needed */
+        }
         
     </style>
 
@@ -342,9 +346,10 @@
             </div>
 
             <div class="modal-body scroll">
-                <table id="dashboardDeatils" class="table table-striped table-bordered">
+                <table id="dashboardDeatils" class="table table-striped table-bordered">                    
                     <thead>
                         <tr>
+                            <span id="spndashboardUnitId" class="d-none">@ViewBag.UnitId</span>
                             <th style="white-space:nowrap;">Ser No</th>
                             <th class="nowrap">Proj Name</th>
                             <th class="nowrap">Stake Holder</th>
@@ -460,6 +465,7 @@
                 <table id="dashboardApproved" class="table table-striped table-bordered">
                     <thead>
                         <tr>
+                            <span id="spndashboardUnitId" class="d-none">@ViewBag.UnitId</span>
                             <th class="nowrap">Ser No</th>
                             <th class="nowrap">Proj Name</th>
                             <th class="nowrap">Stake Holder</th>
@@ -503,7 +509,9 @@
         <div class="modal-content modalSize">
             <div class="modal-header">
 
-                <h4 class="modal-title" id="ProjectApprovedTittle">Project Details</h4>
+                @* <h4 class="modal-title" id="ProjectApprovedTittle">Project Details</h4> *@
+                <h4 class="modal-title" id="ProjectApprovedTittleBisag">Project Details</h4>
+               @*  <h4 class="modal-title" id="ProjectApprovedTittle">Total Proj Movement : BISAG-N</h4> *@
                 <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -511,6 +519,7 @@
                 <table id="dashboardApprovedBisagN" class="table table-striped table-bordered">
                     <thead>
                         <tr>
+                            <span id="spndashboardUnitId" class="d-none">@ViewBag.UnitId</span>
                             <th class="nowrap">Ser No</th>
                             <th class="nowrap">Proj Name</th>
                             <th class="nowrap">Stake Holder</th>

@@ -11,7 +11,7 @@ namespace swas.BAL.Interfaces
 
     public interface IDdlRepository
     {
-        Task<List<DTODDLComman>> GetFwdTo(int UnitId);
+        Task<List<DTODDLComman>> GetFwdTo(int UnitId, int LoginUnitId, string Value, int Type);
         Task<List<tbl_mStatus>>ddlStatus();
         Task<List<tbl_mStages>> ddlStages(int projIds);
 
