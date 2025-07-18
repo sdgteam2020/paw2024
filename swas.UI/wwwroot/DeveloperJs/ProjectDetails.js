@@ -59,8 +59,59 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             $("#datepickerContainer").hide();
         }
         $('#confirmationModal').modal('show');
+        var pad = "00"
+        var datef2 = new Date();
+        var months = "" + `${(datef2.getMonth() + 1)}`;
+        var days = "" + `${(datef2.getDate())}`;
+        var monthsans = pad.substring(0, pad.length - months.length) + months
+        var dayans = pad.substring(0, pad.length - days.length) + days
+        var year = `${datef2.getFullYear()}`;
+        var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+        var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+        var ss = `${datef2.getSeconds()}`;
 
+      
+        var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+
+        var claValue = parseInt(actiontype);
+
+        if (claValue == 2) {
+            $('#datepicker').attr('type', 'datetime-local');
+           
+            $('#datepicker').attr('max', todayDateTime);
+            $('#datepicker').prop('disabled', false); // Allow user input
+            $('#datepicker').val(todayDateTime);
+        } else {
+            $('#datepicker').attr('type', 'date');
+           
+        }
         $('#confirmSend').off('click').on('click', function () {
+            //var pad = "00"
+            //var datef2 = new Date();
+            //var months = "" + `${(datef2.getMonth() + 1)}`;
+            //var days = "" + `${(datef2.getDate())}`;
+            //var monthsans = pad.substring(0, pad.length - months.length) + months
+            //var dayans = pad.substring(0, pad.length - days.length) + days
+            //var year = `${datef2.getFullYear()}`;
+            //var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+            //var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+            //var ss = `${datef2.getSeconds()}`;
+
+            //var today = year + `-` + monthsans + `-` + dayans;
+            
+            //    var claValue = parseInt(actiontype);
+
+            //    if (claValue == 2) {
+            //        $('#datepicker').attr('type', 'datetime-local');
+            //        $('#datepicker').attr('max', todayDateTime);
+            //        $('#datepicker').prop('disabled', false); // Allow user input
+            //    } else {
+            //        $('#datepicker').attr('type', 'date');
+            //        $('#datepicker').val(todayDate); // Set today's date
+            //        $('#datepicker').prop('disabled', true); // Freeze input
+            //    }
+         
+
             var dateValue = $('#datepicker').val();
             var currentDate = new Date();
 
@@ -85,19 +136,83 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             }
             $('#confirmationModal').modal('hide');
             SentForComment(ProjId, psmId, 0, FwdDateForComment);
-            AddNotification(ProjId, 1, 0);
+           /* AddNotification(ProjId, 1, 0);*/
             ProcessProjConfirm(ProjId);
+            IsReadInbox(psmId);
+            InboxNotificationCount();
         });
        
-        IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
+        //IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
        
-        IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
+        //IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
     });
 
     $('#x').on('hidden.bs.modal', function () {
         $('#datepicker').datepicker('setDate', null);
     });
 });
+
+
+
+$(document).on('click', '#btnRemainder', function () {
+    var projid = $(this).data('projid');
+    var projname = $(this).data('projname');
+    Swal.fire({
+        title: "Are you sure?",
+        html: `Please Enter Remarks For Remainder <br /><strong>${projname}</strong>`,
+        input: "textarea",
+        inputPlaceholder: "Enter remarks here...",
+        inputAttributes: {
+            "aria-label": "Remarks"
+        },
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Submit",
+        preConfirm: (remarks) => {
+            if (!remarks) {
+                Swal.showValidationMessage("Remarks are required.");
+            }
+            if (remarks.length < 10) {
+                Swal.showValidationMessage('Remarks Must be Atleast 10 characters');
+            }
+            if (remarks.length > 200) {
+                Swal.showValidationMessage('Remarks Must not exceed 100 characters');
+            }
+            return remarks;
+        }
+    }).then((result) => {
+        if (result.isConfirmed && result.value) {
+            SendRemainder(projid, result.value); // passing remarks too if needed
+        }
+    });
+
+   
+
+});
+
+function SendRemainder(projid, remarks) {
+    debugger;
+    $.ajax({
+        url: '/Projects/SendRemainder',
+        type: 'POST',
+        data: {
+            Id: projid,
+            Remarks: remarks // if you want to send remarks to backend
+        },
+        success: function (response) {
+            
+            if (response ==1) {
+                Swal.fire("Success", "Remainder sent successfully", "success");
+            } else {
+                Swal.fire("Error", "Something went wrong", "error");
+            }
+        },
+        error: function () {
+            Swal.fire("Error", "Ajax call failed", "error");
+        }
+    });
+}
 
 function GetForCommentStakeHolder(ProjId, psmId) {
 
@@ -290,9 +405,17 @@ function GetProjectMovHistory(ProjId) {
                         listitem += '<div class="col-md-4">';
                         listitem += '<div class="box-item"><strong>From</strong>: </div >';
                         listitem += '</div>';
+                     
+                         listitem += '<div class="col-md-8">';
+                        if (DTOProjectMovHistorypsmlst[i].isPulledBack == 0)
+                         {
+                          listitem += '<div class="box-item"><span class="rounded-pill bg-secondary" style="color: white;">' + DTOProjectMovHistorypsmlst[i].fromUnitName + '</span></div>';
+                         }
+                        else {
+                            let fromlist = DTOProjectMovHistorypsmlst[i].fromUnitName.split('(')
+                            listitem += '<div class="box-item"><span class="rounded-pill bg-secondary" style="color: white;">' + fromlist[1].replace(')','') + '</span></div>';
 
-                        listitem += '<div class="col-md-8">';
-                        listitem += '<div class="box-item"><span class="rounded-pill bg-secondary" style="color: white;">' + DTOProjectMovHistorypsmlst[i].fromUnitName + '</span></div>';
+                        }
                         listitem += '</div>';
                         listitem += '</div>';
 
@@ -309,7 +432,13 @@ function GetProjectMovHistory(ProjId) {
 
 
                         listitem += '</div>';
-                        listitem += '<div class="box-footer">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
+                        if (DTOProjectMovHistorypsmlst[i].isPulledBack == 0) {
+                            listitem += '<div class="box-footer">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
+                        } else {
+                            var fromlist1 = DTOProjectMovHistorypsmlst[i].fromUnitName.split('(')
+                            listitem += '<div class="box-footer">' + fromlist1[1].replace(')', '') + '</div>';
+                        }
+                      
                         listitem += '</div></div>';
 
 
@@ -410,15 +539,19 @@ function GetProjectMovHistory(ProjId) {
                         if (DTOProjectMovHistorypsmlst[i]?.isPulledBack === true && DTOProjectMovHistorypsmlst[i]?.undoRemarks == null) {
                             listitem += '<div class="box-item">' + '<strong>Pulled Back Remarks</strong> -  ' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
                         } else {
-                            listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].remarks +'</div>';
+                            listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
                         }
 
                         //listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
                         listitem += '</div>';
-                        if (DTOProjectMovHistorypsmlst[i].actions == "Obsn")
+                        if (DTOProjectMovHistorypsmlst[i].actions == "Obsn") {
                             listitem += '<div class="box-footer bg-warning">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
-                        else
+                        } else if (DTOProjectMovHistorypsmlst[i].isPulledBack == 0 && DTOProjectMovHistorypsmlst[i].actions != "Obsn") {
                             listitem += '<div class="box-footer ">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
+                        } else {
+                            
+                            listitem += '<div class="box-footer ">' + fromlist1[1].replace(')', '') + '</div>';
+                        }
                         listitem += '</div></div>';
                     }
                     //if (DTOProjectMovHistorypsmlst[i].undoRemarks != null) {
@@ -575,6 +708,12 @@ $(document).on("click", ".date-action", function (e) {
         preConfirm: (remarks) => {
             if (!remarks) {
                 Swal.showValidationMessage("Remarks are required.");
+            }
+            if (remarks.length < 10) {
+                Swal.showValidationMessage('Remarks Must be Atleast 10 characters');
+            }
+            if (remarks.length > 200) {
+                Swal.showValidationMessage('Remarks Must not exceed 200 characters');
             }
             return remarks;
         }

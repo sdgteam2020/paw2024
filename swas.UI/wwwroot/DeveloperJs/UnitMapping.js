@@ -1,12 +1,16 @@
 ﻿$(document).ready(function () {
+
+    initializeDataTable('#SoftwareType7');
+    initializeDataTable('#mapunit');
+
     var UnitId = $("#Spnmodalunitid").html();
 
-    $("#ddlStage").change(function () {
-        mMsaterStage(0, "ddlSubStage", 6, $("#ddlStage").val(), 100);
-    });
-    $("#ddlSubStage").change(function () {
-        mMsater($("#ddlSubStage").val(), "ddlAction", 7, $("#ddlSubStage").val());
-    });
+    //$("#ddlStage").change(function () {
+    //    mMsaterStage(0, "ddlSubStage1", 6, $("#ddlStage").val(), 100);
+    //});
+    //$("#ddlSubStage1").change(function () {
+    //    mMsater($("#ddlSubStage1").val(), "ddlAction1", 7, $("#ddlSubStage1").val());
+    //});
 
     $(document).on('click', '.btn-editmapping', function () {
         var closestRow = $(this).closest("tr");
@@ -14,8 +18,8 @@
         $('#SpnmodalStageid').val(hiddenData.find(".spanMappingStageId").text());
         $('#spanmodalStatusActionsMappingId').text(hiddenData.find(".spanStatusActionsMappingId").text());
         mMsater(hiddenData.find(".spanMappingStages").text(), "ddlStage", 5, 0);
-        mMsaterStage(hiddenData.find(".spanMappingSubStages").text(), "ddlSubStage", 6, hiddenData.find(".spanMappingStages").text(), 100);
-        mMsater(hiddenData.find(".spanMappingActions").text(), "ddlAction", 7, hiddenData.find(".spanMappingSubStages").text());
+        mMsaterStage(hiddenData.find(".spanMappingSubStages").text(), "ddlSubStage1", 6, hiddenData.find(".spanMappingStages").text(), 100);
+        mMsater(hiddenData.find(".spanMappingActions").text(), "ddlAction1", 7, hiddenData.find(".spanMappingSubStages").text());
     });
 
 
@@ -38,10 +42,10 @@
                         '<span class="spanMappingSubStages">' + data[i].subStagesId + '</span>' +
                         '<span class="spanMappingActions">' + data[i].actionsId + '</span>' +
                         '</td>';
-                    //tableRows += '<td>' +
-                    //    '<button class="btn btn-primary btn-editmapping">Edit</button>' +
-                    //    '<button class="btn btn-primary btn-deletemapping">Delete</button>' +
-                    //    '</td>';
+                    tableRows += '<td>' +
+                        '<button class="btn btn-primary btn-editmapping">Edit</button>' +
+                        '<button class="btn btn-primary btn-deletemapping">Delete</button>' +
+                        '</td>';
                     tableRows += '</tr>';
                 }
                 $('#mappingdetails').html(tableRows);
@@ -67,21 +71,21 @@
         fetchAndUpdateTable(StageId, StatusId);
 
         mMsater($(this).closest("tr").find("#CurrentStageId").html(), "ddlStage", 5, 0);
-        mMsater($(this).closest("tr").find("#CurrentStatusId").html(), "ddlSubStage", 6, $(this).closest("tr").find("#CurrentStageId").html());
-        mMsater(1, "ddlAction", 7, $(this).closest("tr").find("#CurrentStatusId").html());
+        mMsater($(this).closest("tr").find("#CurrentStatusId").html(), "ddlSubStage1", 6, $(this).closest("tr").find("#CurrentStageId").html());
+        mMsater(1, "ddlAction1", 7, $(this).closest("tr").find("#CurrentStatusId").html());
 
         $('#unitMapping').modal('show');
         $(".Fwdtitle").html("Status Mapping");
     });
 
-    $('#ddlSubStage').select2();
+    $('#ddlSubStage1').select2();
     $('#ddlSubStageedit').select2();
 
     $('#btnsave').click(function () {
         var StageId = $('#SpnmodalStageid').html();
         var StagesId = $('#ddlStage').val();
-        var SubStagesId = $('#ddlSubStage').val();
-        var ActionsId = $('#ddlAction').val();
+        var SubStagesId = $('#ddlSubStage1').val();
+        var ActionsId = $('#ddlAction1').val();
         var StatusActionsMappingId = $("#spanmodalStatusActionsMappingId").html();
 
         var data = {
@@ -113,7 +117,7 @@
                     });
 
                     var StageId = $('#ddlStage').val();
-                    var StatusId = $('#ddlAction').val();
+                    var StatusId = $('#ddlAction1').val();
                     fetchAndUpdateTable(StageId, StatusId); // Refresh table data
                 }
             },
@@ -173,55 +177,56 @@
 
 
 
+
 $(document).ready(function () {
-    function mMsater(id, elementId, type, parentId) {
-        // Implement your mMsater function logic here
-    }
+    //function mMsater(id, elementId, type, parentId) {
+    //    // Implement your mMsater function logic here
+    //}
 
-    function mMsaterStage(id, elementId, type, parentId, status) {
-        // Implement your mMsaterStage function logic here
-    }
+    //function mMsaterStage(id, elementId, type, parentId, status) {
+    //    // Implement your mMsaterStage function logic here
+    //}
 
-    function fetchAndUpdateTable(StageId, StatusId) {
-        $.ajax({
-            type: 'POST',
-            url: '/UnitDtls/GetMappingByUnitId',
-            data: { StageId: StageId, StatusId: StatusId },
-            dataType: "json",
-            success: function (data) {
-                var tableRows = '';
-                for (var i = 0; i < data.length; i++) {
-                    tableRows += '<tr>';
-                    tableRows += '<td>' + data[i].stagesName + '</td>';
-                    tableRows += '<td>' + data[i].subStagesName + '</td>';
-                    tableRows += '<td>' + data[i].actionsName + '</td>';
-                    tableRows += '<td class="hiddenData" style="display: none;">' +
-                        '<span class="spanStatusActionsMappingId">' + data[i].statusActionsMappingId + '</span>' +
-                        '<span class="spanMappingStageId">' + data[i].stagesId + '</span>' +
-                        '<span class="spanMappingSubStages">' + data[i].subStagesId + '</span>' +
-                        '<span class="spanMappingActions">' + data[i].actionsId + '</span>' +
-                        '</td>';
-                    tableRows += '<td>' +
-                        '<button class="btn btn-primary btn-editmapping">Edit</button>' +
-                        '<button class="btn btn-primary btn-deletemapping">Delete</button>' +
-                        '</td>';
-                    tableRows += '</tr>';
-                }
-                $('#mappingdetails').html(tableRows);
-            },
-            error: function (error) {
-                alert("Error fetching data");
-            }
-        });
-    }
+    //function fetchAndUpdateTable(StageId, StatusId) {
+    //    $.ajax({
+    //        type: 'POST',
+    //        url: '/UnitDtls/GetMappingByUnitId',
+    //        data: { StageId: StageId, StatusId: StatusId },
+    //        dataType: "json",
+    //        success: function (data) {
+    //            var tableRows = '';
+    //            for (var i = 0; i < data.length; i++) {
+    //                tableRows += '<tr>';
+    //                tableRows += '<td>' + data[i].stagesName + '</td>';
+    //                tableRows += '<td>' + data[i].subStagesName + '</td>';
+    //                tableRows += '<td>' + data[i].actionsName + '</td>';
+    //                tableRows += '<td class="hiddenData" style="display: none;">' +
+    //                    '<span class="spanStatusActionsMappingId">' + data[i].statusActionsMappingId + '</span>' +
+    //                    '<span class="spanMappingStageId">' + data[i].stagesId + '</span>' +
+    //                    '<span class="spanMappingSubStages">' + data[i].subStagesId + '</span>' +
+    //                    '<span class="spanMappingActions">' + data[i].actionsId + '</span>' +
+    //                    '</td>';
+    //                tableRows += '<td>' +
+    //                    '<button class="btn btn-primary btn-editmapping">Edit</button>' +
+    //                    '<button class="btn btn-primary btn-deletemapping">Delete</button>' +
+    //                    '</td>';
+    //                tableRows += '</tr>';
+    //            }
+    //            $('#mappingdetails').html(tableRows);
+    //        },
+    //        error: function (error) {
+    //            alert("Error fetching data");
+    //        }
+    //    });
+    //}
 
-    $('#ddlStage').change(function () {
-        mMsaterStage(0, "ddlSubStage", 6, $(this).val(), 100);
-    });
+    //$('#ddlStage').change(function () {
+    //    mMsaterStage(0, "ddlSubStage1", 6, $(this).val(), 100);
+    //});
 
-    $('#ddlSubStage').change(function () {
-        mMsater($(this).val(), "ddlAction", 7, $(this).val());
-    });
+    //$('#ddlSubStage1').change(function () {
+    //    mMsater($(this).val(), "ddlAction1", 7, $(this).val());
+    //});
 
     $(document).on('click', '.btn-editmapping', function () {
         var closestRow = $(this).closest("tr");
@@ -229,29 +234,29 @@ $(document).ready(function () {
         $('#SpnmodalStageid').text(hiddenData.find(".spanMappingStageId").text());
         $('#spanmodalStatusActionsMappingId').text(hiddenData.find(".spanStatusActionsMappingId").text());
         mMsater(hiddenData.find(".spanMappingStageId").text(), "ddlStage", 5, 0);
-        mMsaterStage(hiddenData.find(".spanMappingSubStages").text(), "ddlSubStage", 6, hiddenData.find(".spanMappingStageId").text(), 100);
-        mMsater(hiddenData.find(".spanMappingActions").text(), "ddlAction", 7, hiddenData.find(".spanMappingSubStages").text());
+        mMsaterStage(hiddenData.find(".spanMappingSubStages").text(), "ddlSubStage1", 6, hiddenData.find(".spanMappingStageId").text(), 100);
+        mMsater(hiddenData.find(".spanMappingActions").text(), "ddlAction1", 7, hiddenData.find(".spanMappingSubStages").text());
     });
 
-    $(".btn-Mapping").click(function () {
-        var currentRow = $(this).closest("tr");
-        $("#SpnmodalStageid").text(currentRow.find("#CurrentStageId").text());
-        $("#SpnmodalStatusId").text(currentRow.find("#CurrentStatusId").text());
+    //$(".btn-Mapping").click(function () {
+    //    var currentRow = $(this).closest("tr");
+    //    $("#SpnmodalStageid").text(currentRow.find("#CurrentStageId").text());
+    //    $("#SpnmodalStatusId").text(currentRow.find("#CurrentStatusId").text());
 
-        var StageId = $("#SpnmodalStageid").text();
-        var StatusId = $("#SpnmodalStatusId").text();
+    //    var StageId = $("#SpnmodalStageid").text();
+    //    var StatusId = $("#SpnmodalStatusId").text();
 
-        mMsater(0, "ddlStage", 5, 0);
+    //    mMsater(0, "ddlStage", 5, 0);
 
-        $('#unitMapping').modal('show');
-        $(".Fwdtitle").text("Status Mapping");
+    //    $('#unitMapping').modal('show');
+    //    $(".Fwdtitle").text("Status Mapping");
 
-        fetchAndUpdateTable(StageId, StatusId);
+    //    fetchAndUpdateTable(StageId, StatusId);
 
-        mMsater(currentRow.find("#CurrentStageId").text(), "ddlStage", 5, 0);
-        mMsater(currentRow.find("#CurrentStatusId").text(), "ddlSubStage", 6, currentRow.find("#CurrentStageId").text());
-        mMsater(1, "ddlAction", 7, currentRow.find("#CurrentStatusId").text());
-    });
+    //    mMsater(currentRow.find("#CurrentStageId").text(), "ddlStage", 5, 0);
+    //    mMsater(currentRow.find("#CurrentStatusId").text(), "ddlSubStage", 6, currentRow.find("#CurrentStageId").text());
+    //    mMsater(1, "ddlAction", 7, currentRow.find("#CurrentStatusId").text());
+    //});
 
     $('#ddlSubStage').select2();
     $('#ddlSubStageedit').select2();
@@ -259,8 +264,8 @@ $(document).ready(function () {
     $('#btnsave').click(function () {
         var StageId = $('#SpnmodalStageid').text();
         var StagesId = $('#ddlStage').val();
-        var SubStagesId = $('#ddlSubStage').val();
-        var ActionsId = $('#ddlAction').val();
+        var SubStagesId = $('#ddlSubStage1').val();
+        var ActionsId = $('#ddlAction1').val();
         var StatusActionsMappingId = $("#spanmodalStatusActionsMappingId").text();
 
         var data = {

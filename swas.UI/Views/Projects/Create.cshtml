@@ -22,6 +22,7 @@
     Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor.HttpContext.Session, "User");
     int calendarMode = Context.Session.GetInt32("CalendarMode") ?? 0;
     var ProjEncryId = ViewBag.ProjectEncyId;
+    var selectedvalue = Model?.Date_type ?? 0;
 }
 
 
@@ -277,15 +278,16 @@
 
                     <div class="btn-group" role="group" aria-label="Toggle switch">
                         <input type="radio" class="btn-check" name="mcalender_dates" id="autoDate" autocomplete="off" value="1"
-                        @(calendarMode == 1 ? "checked" : "")>
+                        @(selectedvalue == 1 ? "checked" : "")>
                         <label class="btn btn-outline-primary" for="autoDate" title="ON means calendars will accept past date">On</label>
 
                         <input type="radio" class="btn-check" name="mcalender_dates" id="Manualdate" autocomplete="off" value="0"
-                        @(calendarMode == 0 ? "checked" : "") selected>
+                        @(selectedvalue == 0 ? "checked" : "") selected>
                         <label class="btn btn-outline-primary" for="Manualdate" title="OFF means calendars will accept Current Date">Off</label>
                     </div>
+                    <label class="me-2 fw-bold ml-5">Legacy Remarks:</label>
                     <div class="d-flex justify-content-center my-3">
-                        <input type="text" class="form-control mb-2 ml-5 w-100 text-center RequestRemarks " id="RequestRemarks" onkeyup="ABC()" placeholder="Enter your legacy remarks">
+                        <input type="text" class="form-control mb-2 ml-5 w-100 text-center RequestRemarks requiredField" id="RequestRemarks" onkeyup="ABC()" placeholder="Enter your legacy remarks">
                     </div>
                 </div>
 
@@ -349,11 +351,23 @@
                                         <td>
                                                 @Html.LabelFor(model => model.ProjName, "Project Name", new { id = "AddProjName" })<font style="color:red;"><b>*</b></font>
                                         </td>
-                                        <td>
+                                       @*  <td>
                                                 @Html.EditorFor(model => model.ProjName, new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", @required = "required", @placeholder = "Max Char 200 ",@style="margin-bottom:0px;" } })
                                             <ul id="projectNameDropdown" class="dropdown-list " style="display:none; width:477px">
                                             </ul>
                                                 <span class="charErrorMsg" style="color: red; display: none;">Cannot exceed 200 characters!</span>
+                                            <div class="invalid-feedback">
+                                                Project Name Required
+                                            </div>
+                                        </td> *@
+                                        <td>
+                                            <div class="input-group" style="width:250px">
+                                                    @Html.EditorFor(model => model.ProjName, new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", @required = "required", @placeholder = "Max Char 200 ", @style = "margin-bottom:0px; width:100px; margin-right:0px" } })
+                                                <span class="input-group-text d-none" id="reVettedTag">Re-Vetting</span>
+                                            </div>
+                                            <ul id="projectNameDropdown" class="dropdown-list " style="display:none; width:477px">
+                                            </ul>
+                                            <span class="charErrorMsg" style="color: red; display: none;">Cannot exceed 200 characters!</span>
                                             <div class="invalid-feedback">
                                                 Project Name Required
                                             </div>

@@ -4,7 +4,9 @@
 @model UnitValidate
 @inject IHttpContextAccessor HttpContextAccessor
 
+
 @{
+
     ViewData["Title"] = "Software Whitelisting Autoation Software";
     int sno = 0;
     Layout = "";
@@ -30,12 +32,13 @@
 
 <head>
     <link href="~/css/newpage.css" rel="stylesheet" />
-
+    <link href="~/css/sweetalert2.min.css" rel="stylesheet">
     <link href="~/css/NewProject.css" rel="stylesheet" />
     <link href="~/assets/css/tooltip.css" rel="stylesheet" />
 
 
     <link href="~/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/css/select2.min.css" rel="stylesheet"/>
     <script src="~/assets/js/bootstrap.min.js"></script>
 
     <link href="~/assets/css/font-awesome/fonts/font-awesome.min.css" rel="stylesheet" />
@@ -57,269 +60,284 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <style>
+        .required-star {
+        color: red;
+        vertical-align: super;
+        font-size: 0.8em;
+        margin-left: 2px;
+        }
         .wrapper {
-            padding: 0rem;
+        padding: 0rem;
         }
 
         .page-content {
-            margin-top: 5rem;
+        margin-top: 5rem;
         }
 
         label {
-            /*  margin-top: 18px;*/
-            display: inline-flex;
+        /*  margin-top: 18px;*/
+        display: inline-flex;
         }
 
         input[type="search"] {
-            margin-left: 6px;
-            padding: 3px;
-            margin-bottom: 9px;
+        margin-left: 6px;
+        padding: 3px;
+        margin-bottom: 9px;
         }
 
         .form-control.form-control-sm {
-            display: unset;
+        display: unset;
         }
 
         #EditWhiteListedProjectModal {
-            padding-right: 190px;
+        padding-right: 190px;
+        }
+
+
+        .select2-container--open {
+        overflow: visible !important;
+        }
+
+        .modal-open .select2-container--open {
+        z-index: 999999 !important;
         }
 
     </style>
     <style>
         /* Apply a common font family and size to all headings */
         h1, h2, h3, h4, h5, h6 {
-            font-family: Arial, sans-serif !important;
-            font-size: 24px !important;
+        font-family: Arial, sans-serif !important;
+        font-size: 24px !important;
         }
 
         /* Make the page responsive */
         /* Example of how to make images and videos responsive */
         img, video {
-            max-width: 100% !important;
-            height: auto !important;
+        max-width: 100% !important;
+        height: auto !important;
         }
 
         /* Example of how to make tables responsive */
         .table-responsive {
-            overflow-x: auto !important;
+        overflow-x: auto !important;
         }
 
         div.dataTables_wrapper div.dataTables_filter {
-            text-align: right;
-            margin-top: -3rem !important;
+        text-align: right;
+        margin-top: -3rem !important;
         }
 
         .dgislogo {
-            width: 90px;
-            height: 60px;
-            padding: 0px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            margin-right: -30px px;
-            margin-top: -6px;
-            margin-left: 543%;
-            height: 60px;
-            margin-top: -7px;
+        width: 90px;
+        height: 60px;
+        padding: 0px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        margin-right: -30px px;
+        margin-top: -6px;
+        margin-left: 543%;
+        height: 60px;
+        margin-top: -7px;
         }
 
         .dgislogo1 {
-            width: 90px;
-            height: 60px;
-            padding: 0px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            margin-right: -30px px;
-            margin-top: -6px;
-            margin-left: 543%;
-            height: 60px;
-            margin-top: -7px;
+        width: 90px;
+        height: 60px;
+        padding: 0px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        margin-right: -30px px;
+        margin-top: -6px;
+        margin-left: 543%;
+        height: 60px;
+        margin-top: -7px;
         }
 
         .modal-content {
-            margin-left: -20rem !important;
-            width: 111rem !important;
-            height: auto; /* Remove fixed height to allow dynamic content */
+        margin-left: -20rem !important;
+        width: 111rem !important;
+        height: auto; /* Remove fixed height to allow dynamic content */
         }
 
         .modal-body {
-            padding: 20px; /* Add padding for a more spacious look */
+        padding: 20px; /* Add padding for a more spacious look */
         }
 
         .form-group {
-            margin-bottom: 20px; /* Add margin to form groups for spacing */
+        margin-bottom: 20px; /* Add margin to form groups for spacing */
         }
 
         /* Customize your form controls */
         .form-control {
-            width: 100%;
-            /*padding: 10px;*/
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
+        width: 100%;
+        /*padding: 10px;*/
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
         }
 
         /* Style your buttons */
         .btn-primary {
-            background-color: #007bff;
-            color: #fff;
+        background-color: #007bff;
+        color: #fff;
         }
 
         .btn-secondary {
-            background-color: #6c757d;
-            color: #fff;
+        background-color: #6c757d;
+        color: #fff;
         }
 
         .bold-underline {
-            font-weight: bold;
-            text-decoration: underline;
+        font-weight: bold;
+        text-decoration: underline;
         }
 
         .login {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 6vh;
-            margin: 0;
-            /*background-color: #f0f0f0;*/
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 6vh;
+        margin: 0;
+        /*background-color: #f0f0f0;*/
         }
 
         .login-header {
-            background-color: #044c92;
-            height: 3rem;
-            /* width: 60rem !important;*/
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 4px;
-            color: white;
-            width: 29rem; /* Optional: to make the header full width */
-            /* Optional: to limit the width */
-            text-align: center;
-            border-radius: 8px; /* Optional: to give rounded corners */
+        background-color: #044c92;
+        height: 3rem;
+        /* width: 60rem !important;*/
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 4px;
+        color: white;
+        width: 29rem; /* Optional: to make the header full width */
+        /* Optional: to limit the width */
+        text-align: center;
+        border-radius: 8px; /* Optional: to give rounded corners */
         }
 
         .headertext {
-            font-size: 2rem;
-            font-weight: bold;
+        font-size: 2rem;
+        font-weight: bold;
         }
 
         .pdf-link {
-            display: block;
-            margin-bottom: 10px;
+        display: block;
+        margin-bottom: 10px;
         }
 
         .headline {
-            margin-top: 1rem !important;
-            color: #044c92;
-            font-weight: 600;
+        margin-top: 1rem !important;
+        color: #044c92;
+        font-weight: 600;
         }
 
         .images {
-            margin-top: -1rem;
-            height: 12rem !important;
-            width: 12rem;
-            /*width: 18rem !important;*/
+        margin-top: -1rem;
+        height: 12rem !important;
+        width: 12rem;
+        /*width: 18rem !important;*/
         }
 
         .font-d {
-            padding: 6px !important;
-            background-color: #044c92;
-            color: white;
-            font-weight: 900;
+        padding: 6px !important;
+        background-color: #044c92;
+        color: white;
+        font-weight: 900;
         }
 
         .card {
-            cursor: pointer;
+        cursor: pointer;
         }
 
         .card1 {
-            box-shadow: 1px 1px 6px 1px gray !important;
+        box-shadow: 1px 1px 6px 1px gray !important;
         }
 
         .modal-header {
-            color: white;
-            background-color: #022649;
+        color: white;
+        background-color: #022649;
         }
 
         .modal-title {
-            margin-left: 39rem !important;
+        margin-left: 39rem !important;
         }
 
 
 
         .card-r {
-            margin-left: 0.9rem !important;
+        margin-left: 0.9rem !important;
         }
 
         .main-card {
-            background-image: url('/assets/images/test.jpg');
+        background-image: url('/assets/images/test.jpg');
         }
 
         .card1:hover {
-            transform: scale(1.1);
+        transform: scale(1.1);
         }
 
         .col-sponsor {
-            width: 20%;
+        width: 20%;
         }
 
         .col-project {
-            width: 30%;
+        width: 30%;
         }
 
         .card-box {
-            width: 47rem !important;
+        width: 47rem !important;
         }
 
         .col-width6 {
-            width: 7% !important; /* Adjust the width as needed */
+        width: 7% !important; /* Adjust the width as needed */
         }
 
         .col-width9 {
-            width: 12% !important; /* Adjust the width as needed */
+        width: 12% !important; /* Adjust the width as needed */
         }
 
         .s-no-column {
-            width: 1%; /* This is the percentage width you want */
+        width: 1%; /* This is the percentage width you want */
         }
 
         .col-width10 {
-            width: 10% !important; /* Adjust the width as needed */
+        width: 10% !important; /* Adjust the width as needed */
         }
 
         .col-width16 {
-            width: 15% !important; /* Adjust the width as needed */
+        width: 15% !important; /* Adjust the width as needed */
         }
 
         .dt-buttons {
-            margin-bottom: 10px !important;
+        margin-bottom: 10px !important;
         }
 
 
         .buttonsToHide {
-            display: none !important;
+        display: none !important;
         }
 
         .WhitelistedTablesss {
-            margin-top: 23px;
+        margin-top: 23px;
         }
 
-        body {
-            pointer-events: none;
-        }
+        /*    body {
+        pointer-events: none;
+        } */
 
         #ProcessId, #PolicyWhiteList, #whitelistCard, #WhiteListedProject {
-            pointer-events: auto;
-            cursor: pointer;
+        pointer-events: auto;
+        cursor: pointer;
         }
 
         /*    .card_title p {
-                                                    white-space: nowrap;
-                                                    overflow: hidden;
-                                                    text-overflow: ellipsis;
-                                                } */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        } */
 
 
     </style>
@@ -327,6 +345,7 @@
 </head>
 
 <body>
+
     <header class="top-headers" style="background-color: #333; color: #fff;">
         <div class="container">
             <div class="row align-items-center">
@@ -522,14 +541,20 @@
                     <!-- Table header -->
 
                     <thead style="position: sticky;top:-18px">
+                        @if(Logins.unitid == 1)
+                        {
+                             <button class="btn btn-primary" id="AddWhite_proj">Add WhiteList</button>
+                        }
+                       
                         <tr>
+                           
                             <th class="text-center s-no-column" style="width:1%">S.No</th>
                             <th class="text-nowrap text-center" style="width:10% !important">Name of Sw Appl</th>
                             <th class="text-nowrap text-center" style="width:12% !important">Hosted On</th>
 
                             <th class="text-nowrap text-center" style="width:4% !important">Appt</th>
-                            <th class="text-nowrap text-center" style="width:4% !important">Sponser</th>
-                            <th class="text-nowrap text-center" style="width:2% !important">Tel No</th>
+                            <th class="text-nowrap text-center" style="width:4% !important">Sponsor</th>
+                            <th class="text-nowrap text-center" style="width:2% !important">Tele No</th>
                             <th class="text-nowrap text-center" style="width:2% !important">Dt of ACG Clearance</th>
                             <th class="text-nowrap text-center" style="width:2% !important">Cert No</th>
                             <th class="text-nowrap text-center" style="width:4% !important">Valid Upto</th>
@@ -557,9 +582,11 @@
                                     <td>@unitx.Appt</td>
                                     <td>@unitx.Fmn</td>
                                     <td class="col-width6">@unitx.ContactNo</td>
-                                    <td class="col-width6">@unitx.Clearence</td>
+                                    <td class="col-width6">@(unitx.Clearence != null ? unitx.Clearence.ToString("yyyy-MM-dd") : "")</td>
+                                  
                                     <td>@unitx.CertNo</td>
-                                    <td>@unitx.ValidUpto</td>
+                                   
+                                    <td class="col-width6">@(unitx.ValidUpto != null ? unitx.ValidUpto.ToString("yyyy-MM-dd") : "")</td>
                                     <td>@unitx.Remarks</td>
                                     @if (Logins?.unitid == 1)
                                     {
@@ -624,13 +651,23 @@
                             <input type="text" id="edit_Appt" name="Appt" class="form-control" />
                         </div>
                         <div class="col-md-6">
-                            <label for="edit_Sponser" class="form-label">Sponser</label>
-                            <input type="text" id="edit_Sponser" name="Fmn" class="form-control" />
+                            <label for="edit_Sponser" class="form-label">Sponsor</label>
+                         @*    <input type="text" id="edit_Sponser" name="Fmn" class="form-control" /> *@
+                            <select class="form-control" id="edit_Sponser" name="Fmn" data-mdb-select-init multiple>
+                                <option value="">-- Select Sponsor --</option>
+                                @if (ViewBag.Units != null)
+                                {
+                                    foreach (var unit in ViewBag.Units)
+                                    {
+                                        <option value="@unit.UnitName">@unit.UnitName</option>
+                                    }
+                                }
+                            </select>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="edit_TelNo" class="form-label">TelNo</label>
+                            <label for="edit_TelNo" class="form-label">Tele No</label>
                             <input type="text" id="edit_TelNo" name="ContactNo" class="form-control" />
                         </div>
                         <div class="col-md-6">
@@ -677,7 +714,6 @@
         <span id="totalCounter"></span>
     </div>
 </footer>
-
 
 
 <section class="h-100 gradient-form main-card">
@@ -768,16 +804,17 @@
                                     </div>
 
                                     <div class="col-md-4" id="WhiteListedProject">
+                                        
                                         <div class="card1 hover-point">
                                             <div class="card_title title-white" style="text-align: center; color: black;">
                                                 @* <p class="font-d">WhiteListed Projects</p> *@
                                                 <p class="font-d">View WhiteListed Projs</p>
                                             </div>
                                             <div class="card_image"><img src="~/assets/images/Completed1.png" class="images" /></div>
-
+                                           
                                         </div>
                                     </div>
-
+                                   
                                 </div>
                             </div>
                         </div>
@@ -787,6 +824,123 @@
         </div>
     </div>
 </section>
+
+<!-- Add this modal just before the closing </body> tag or at the end of the file -->
+<div class="modal fade bd-example-modal-xl" id="WhiteListModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+   
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add to WhiteList</h5>
+                <button type="button" class="btn-close" onclick="cancelModal(this);" data-bs-dismiss="modal"></button>
+            </div>
+    
+
+            <div class="modal-body">
+                <form id="WhiteListForm">
+                   
+                    <div class="row">
+                        <div class="col-md-4 mb-2">
+                            <label for="swName" class="form-label">
+                                Name of SW Appl<span class="required-star">*</span>
+                            </label>
+                            <input type="text" class="form-control" id="swName" name="swName" required placeholder="Enter Software/Application Name" />
+                           
+                        <div class="invalid-feedback" style="color:red">This field is required.</div>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="hostedOn" class="form-label">Hosted On<span class="required-star">*</span></label>
+                            <select class="form-control" id="hostedOn" name="hostedOn" required>
+                                <option value="">-- Select Hosted On --</option>
+                                @if (ViewBag.hosttype != null)
+                                {
+                                    @foreach (var unit in (IEnumerable<dynamic>)ViewBag.hosttype)
+                                    {
+                                        <option value="@unit.HostTypeID">@unit.HostingDesc</option>
+                                    }
+                                }
+                            </select>
+                            <div class="invalid-feedback" style="color:red">This field is required.</div>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="appt" class="form-label">Appt<span class="required-star">*</span></label>
+                            <input type="text" class="form-control" id="appt" name="appt" required placeholder="Enter Appointment" />
+                            <div class="invalid-feedback" style="color:red">This field is required.</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-2">
+                            <label for="sponsor" class="form-label">Sponsor (Unit)<span class="required-star">*</span></label>
+                            <select class="form-control" id="sponsor" name="sponsor" required>
+                                <option value="">-- Select Sponsor --</option>
+                                @if (ViewBag.Units != null)
+                                {
+                                    foreach (var unit in ViewBag.Units)
+                                    {
+                                        <option value="@unit.UnitName">@unit.UnitName</option>
+                                    }
+                                }
+                            </select>
+                            <div class="invalid-feedback" style="color:red">This field is required.</div>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="telNo" class="form-label">Tele No<span class="required-star">*</span></label>
+                            <input type="text" class="form-control" id="telNo" name="telNo" required placeholder="Enter Telephone Number" />
+                            <div class="invalid-feedback" style="color:red">This field is required.</div>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="clearanceDate" class="form-label">Dt of ACG Clearance<span class="required-star">*</span></label>
+                            <input type="date" class="form-control" id="clearanceDate" name="clearanceDate" required placeholder="Select Clearance Date" />
+                            <div class="invalid-feedback" style="color:red">This field is required.</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-2">
+                            <label for="certNo" class="form-label">Cert No<span class="required-star">*</span></label>
+                            <input type="text" class="form-control" id="certNo" name="certNo" required placeholder="Enter Certificate Number" />
+                            <div class="invalid-feedback" style="color:red">This field is required.</div>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="validUpto" class="form-label">Valid UPTO<span class="required-star">*</span></label>
+                            <input type="date" class="form-control" id="validUpto" name="validUpto" required placeholder="Select Valid Upto Date" />
+                            <div class="invalid-feedback" style="color:red">This field is required.</div>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <label for="remarks" class="form-label">Remarks<span class="required-star">*</span></label>
+                            <textarea class="form-control" id="remarks" name="remarks" required placeholder="Enter Remarks"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="btn_Save">Save</button>
+                    <button type="button" class="btn btn-secondary" onclick="cancelModal(this);" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-success d-none" id="btnDummyData">dummy data</button>
+                    
+
+                   
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/assets/datatable/js/select2.min.js"></script>
+
+<script>
+    $('#AddWhite_proj').on('click', function () {
+
+      $("input[required], select[required], textarea[required]").removeClass("is-invalid");
+    $("input[required], select[required], textarea[required]").siblings(".invalid-feedback").hide();
+
+      $('#WhiteListModal').find('input').val('');
+    
+    $('#WhiteListModal').find('select').prop('selectedIndex', 0);
+    $('#WhiteListModal').find('textarea').val('');
+        $('#WhiteListModal').modal('show');
+        $('#WhiteListedProjectDetail .modal-content').css('filter', 'blur(4px)');
+    });
+    
+   
+</script>
 
 @functions {
     public string truncateText(string text, int maxWords)
@@ -805,6 +959,41 @@
 <script>
     $(document).ready(function () {
         // Fetch Daily Counter
+
+      // Ensure select2 is applied when modal is shown
+    $('#WhiteListModal').on('shown.bs.modal', function () {
+        $('#sponsor').select2({
+            placeholder: "-- Select Sponsor --",
+            allowClear: true,
+           
+            width: '100%',
+            dropdownParent: $('#WhiteListModal')
+        });
+
+
+    //      $('#sponsor').select2({
+    //     placeholder: "-- Select Sponsor --",
+    //     allowClear: true,
+    //     multiple: true,  // Enables multiple selection
+    //     width: '100%',
+    //     dropdownParent: $('#WhiteListModal'),
+    //      closeOnSelect: false,
+    //      templateResult: function (state) {
+    //         // Custom template to show checkboxes
+    //         var $state = $('<span><input type="checkbox" class="select2-checkbox" /> ' + state.text + '</span>');
+    //         return $state;
+    //     },
+    //     templateSelection: function (state) {
+    //         return state.text;  // This will just display the selected value
+    //     }
+    // });
+
+    
+    
+    });
+
+    
+ 
         $.get('/Home/getCountertoday', function (data) {
             // Update the DOM with fetched data
             $('#dailyCounter').text('Visitors Today: ' + data.today);
@@ -826,6 +1015,54 @@
 
         $('#WhiteListedProject').on('click', function () {
             $('#WhiteListedProjectDetail').modal('show');
+        });
+    });
+
+       
+</script>
+<script>
+    $(document).ready(function () {
+        $('#btnDummyData').on('click', function () {
+            // Generate dynamic dummy data
+            function randomString(length) {
+                var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+                var result = '';
+                for (var i = 0; i < length; i++) {
+                    result += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                return result;
+            }
+            function randomNumber(length) {
+                var chars = '0123456789';   
+                var result = '';
+                for (var i = 0; i < length; i++) {
+                    result += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                return result;
+            }
+            function randomDate(start, end) {
+                var date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+                return date.toISOString().split('T')[0];
+            }
+
+            $('#swName').val('SW_' + randomString(5));
+            $('#hostedOn').val(String(Math.floor(Math.random() * 4) + 1)); // 1-4
+            $('#appt').val('Appt_' + randomString(3));
+            // Select a random sponsor if available
+            var sponsorOptions = $('#sponsor option').not(':first');
+            if (sponsorOptions.length > 0) {
+                var randomSponsor = sponsorOptions.eq(Math.floor(Math.random() * sponsorOptions.length)).val();
+                $('#sponsor').val(randomSponsor);
+            }
+            $('#telNo').val(randomNumber(10));
+            $('#clearanceDate').val(randomDate(new Date(2023, 0, 1), new Date()));
+            $('#certNo').val('CERT-' + randomNumber(3));
+            $('#validUpto').val(randomDate(new Date(), new Date(2026, 11, 31)));
+            $('#remarks').val('Dummy data: ' + randomString(10));
+            // If select2 is used for sponsor, trigger change
+            if ($('#sponsor').hasClass('select2-hidden-accessible')) {
+                $('#sponsor').trigger('change');
+            }
         });
     });
 </script>

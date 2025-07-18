@@ -1,0 +1,119 @@
+﻿@using swas.BAL.DTO
+@using swas.DAL.Models
+@model List<UnitDtl>
+
+@{
+    ViewBag.Title = "Unit List";
+}
+
+<style>
+    .underline-h5 {
+        padding: 0.5rem;
+        width: 100%;
+        margin: -16px auto;
+        text-align: center;
+        border-color: #03c1fc;
+        background-color: #0cafff;
+        color: white;
+        font-family: Arial;
+        font-size: 15px;
+        margin-bottom: 0.5rem;
+    }
+
+    .s-no-column {
+        min-width: 40px;
+        max-width: 60px;
+        width: 5vw;
+    }
+
+    .plus {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        border-radius: 50%;
+        background-color: #044c92;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+</style>
+
+<div class="plus" id="UnitRegister">+</div>
+
+<div class="card radius-10 w-100">
+    <div class="card-body">
+        <table id="SoftwareType" class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th class="s-no-column">Ser No</th>
+                    <th>Unit Name</th>
+                    <th>Unit Type</th>
+                    <th>Edit/Delete Date</th>
+                    <th>Edit/Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="srno">@(Model.IndexOf(item) + 1)</td>
+                        <td>@item.UnitName</td>
+                        <td>@item.Types</td>
+                        <td>@item.UpdatedDate.ToString("dd-MM-yyyy")</td>
+                        <td>
+                            <a class="btn btn-secondary btn-edit"><i class='bx bx-edit'></i></a>
+                            <a onclick="functionConfirm1('@item.unitid')" class="btn btn-secondary btn-delete">
+                                <i class="bx bx-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="UnitAdd" tabindex="-1" aria-labelledby="UnitAddViewLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:650px;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="UnitAddLabel">Add Unit</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="UnitAddContent">
+
+               @*  @Html.Partial("_unitadd", new UnitDtl { UnitName = "" }) *@
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/js/sweetalert2.all.min.js"></script>
+<script src="~/DeveloperJs/UnitMapping.js"></script>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+
+<script>
+    $(document).ready(function () {
+
+        // Open modal on plus button click
+        $('#UnitRegister').on('click', function () {
+            $('#UnitAdd').modal('show');
+        });
+
+        // Initialize select2 if present
+        $('.dropdownsearch').select2();
+
+        // Optional: redirect on close button with id 'btn-close' (make sure button has this id if needed)
+        $("#btn-close").click(function () {
+            window.location.href = '/Identity/Account/Login';
+        });
+    });
+</script>

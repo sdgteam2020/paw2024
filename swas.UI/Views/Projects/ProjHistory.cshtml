@@ -823,7 +823,27 @@
                             </td>
                             @* <td>@history.Date.ToString().Substring(0,10)</td> *@
                             <td>@history.Date</td>
-                            <td>@history.FromUnitName</td>
+                        <td>
+                            @if (history.IsPulledBack == true)
+                            {
+                                var fromUnitName = history.FromUnitName ?? "";
+                                string insideBracket = "";
+
+                                int start = fromUnitName.IndexOf('(');
+                                int end = fromUnitName.IndexOf(')');
+
+                                if (start != -1 && end != -1 && end > start)
+                                {
+                                    insideBracket = fromUnitName.Substring(start + 1, end - start - 1).Trim();
+                                }
+
+                                @insideBracket
+                            }
+                            else
+                            {
+                                @history.FromUnitName
+                            }
+                        </td>
                             <td>@history.ToUnitName</td>
                             <td>@history.Stages</td>
                             <td>

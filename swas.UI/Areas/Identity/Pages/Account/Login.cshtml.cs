@@ -39,8 +39,8 @@ namespace swas.Areas.Identity.Pages.Account
 
         private readonly IUserRepository _userRepository;
         public readonly ApplicationDbContext _context;
-
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IUnitRepository unitRepository, IUserRepository userRepository, ApplicationDbContext context)
+        private readonly IConfiguration _configuration;
+        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IUnitRepository unitRepository, IUserRepository userRepository, ApplicationDbContext context, IConfiguration configuration)
         {
             _signInManager = signInManager;
             _logger = logger;
@@ -49,6 +49,8 @@ namespace swas.Areas.Identity.Pages.Account
             _unitRepository = unitRepository;
             _userRepository = userRepository;
             _context = context;
+            _configuration = configuration;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -120,22 +122,17 @@ namespace swas.Areas.Identity.Pages.Account
         [AllowAnonymous]
         public async Task OnGetAsync(string returnUrl = null)
         {
+            //IAM Code :
             //Response.Redirect("https://iam2.army.mil/IAM/User", true);
+
+            // Localhost code :
+
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
             }
 
             returnUrl ??= Url.Content("~/");
-
-            // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
-            // ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
-
-            ReturnUrl = returnUrl;
-
 
         }
 

@@ -7,9 +7,9 @@ using swas.DAL.Models;
 
 namespace swas.BAL.Interfaces
 {
-    public interface IDateApprovalRepository
+    public interface ILegacyHistoryRepository
     {
-        List<DateApproval> GetDateApprovalList();
-        List<DateApproval> GetDateApprovalListForAdmin();
+        Task AddHistoryAsync(LegacyHistory history);
+        Task<IEnumerable<LegacyHistory>> GetHistoryByProjectIdAsync(int projectId);
     }
 }

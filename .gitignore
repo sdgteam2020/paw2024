@@ -492,6 +492,3 @@ AppPackages/
 /swas.UI/wwwroot/DownloadFile
 /swas.UI/wwwroot/Error
 /swas.UI/wwwroot/SOP
-swas.UI/appsettings.json
-swas.DAL/Models/mWhiteListedHeader.cs
-swas.DAL/Models/mWhiteListedHeader.cs

@@ -1,5 +1,9 @@
 ﻿$(document).ready(function () {
 
+    $("#searchBox").select2({
+        dropdownParent: $('#ProjFwd') // or the container div of your popup
+    });
+
     mMsaterfwdStage(0, "ddlfwdStage", 5, 0)
 
     $("#ddlfwdStage").change(function () {
@@ -19,25 +23,54 @@
         mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html(),0, "");
     });
 
+    //$("select[name='fwdoffrs']").change(function () {
+    //    var selectedText = $(this).find("option:selected").text().trim();
+
+    //    if (selectedText === "More") {
+    //        $(this).hide();
+    //        $("#loadFwdTo").show().focus();
+    //        $("#searchBox").show().focus();
+    //    } else {
+    //        $(this).show();
+    //        $("#searchBox").hide();
+    //        $("#loadFwdTo").hide();
+    //    }
+    //});
+    //$("#loadFwdTo").click(function () {
+    //    mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html(), 0, "");
+    //    $(this).hide();
+    //    $("#searchBox").hide();
+    //    $("select[name='fwdoffrs']").show().focus();
+    //});
     $("select[name='fwdoffrs']").change(function () {
         var selectedText = $(this).find("option:selected").text().trim();
 
         if (selectedText === "More") {
-            $(this).hide();
-            $("#loadFwdTo").show().focus();
+            $('.FwdDropdown').removeClass('col-md-6');
+            $('.FwdDropdown').addClass('col-md-3');
+
+            $('.ProjectsFwdUnit').removeClass('d-none');
+
             $("#searchBox").show().focus();
+
+            mMsater(0, "searchBox", 12, 0)
+
+
+
+
+
+            // mMsaterFwdTo($(this).closest("tr").find("#SpnStakeHolderId").html(), 1);
         } else {
-            $(this).show();
+            $('.FwdDropdown').addClass('col-md-3');
+            $('.FwdDropdown').addClass('col-md-6');
+            $('.ProjectsFwdUnit').addClass('d-none');
+
+
             $("#searchBox").hide();
-            $("#loadFwdTo").hide();
+
         }
     });
-    $("#loadFwdTo").click(function () {
-        mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html(), 0, "");
-        $(this).hide();
-        $("#searchBox").hide();
-        $("select[name='fwdoffrs']").show().focus();
-    });
+
     //$("#ddlfwdSubStage").change(function () {
 
     //    mMsater(0, "ddlfwdAction", 9, $("#ddlfwdSubStage").val())
@@ -48,7 +81,7 @@
     //    mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnStakeHolderId").html())
     //});
     $(".btn-Undo").click(function () {
-
+        debugger;
         var projectName = $(this).closest("tr").find("a").data("proj-name");
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
 
@@ -80,8 +113,7 @@
         //    },
         //    allowOutsideClick: () => !Swal.isLoading()
         //})
-
-
+       
         Swal.fire({
             title: `Enter Pull Back Remarks: ${shortProjName}`, // your dynamic title
             input: 'text',
@@ -115,7 +147,8 @@
 
                 //For Notification
                 
-                AddNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2, $("#SpnCurrentUserStackholderID").html());
+                
+                //AddNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2, $("#SpnCurrentUserStackholderID").html());
 
 
                 //IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
@@ -126,8 +159,23 @@
 
             }
         });
+    }); 
+    $(".btn-FwdHistorySent").click(function () {
+        var projName = $(this).data('proj-name');
+        var words = projName.split(" ");
+        var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
+        //var finalTitle = "Mov History: " + shortProjName;
+        var finalTitle = "Mov History: " + projName;
+        $('#lblHistory').text(finalTitle);
+        $('#ProjFwdHistory').modal('show');
+
+        GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentProjId").html());
+       
+
+
     });
     $(".btn-FwdHistory").click(function () {
+        debugger;
         var projName = $(this).data('proj-name');
         var words = projName.split(" ");
         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
@@ -138,11 +186,14 @@
 
         GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentProjId").html());
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
-
-        IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
+        
+        //IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
 
         $(this).closest("tr").removeClass("bold-text")
+        setTimeout(function(){
 
+        InboxNotificationCount();
+        },500)
 
     });
     $(".btn-Fwd").click(function () {
@@ -177,22 +228,26 @@
         $("#SpnFwdStakeHolderId").html($(this).closest("tr").find("#SpnStakeHolderId").html())
 
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
-        IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
+        // IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
+        setTimeout(function () {
+
+            InboxNotificationCount();
+        }, 200)
 
         $(this).closest("tr").removeClass("bold-text")
 
         $('#ProjFwd').modal('show');
         
-        $("#searchBox").autocomplete({
-            minLength: 3,
-            source: function (request, response) {
-                var value = request.term;
-                if (value) {
-                    mMsaterFwdTo($(this).closest("tr").find("#SpnTimeToUnitId").html(), "ddlfwdFwdTo", 8, 0, $(this).closest("tr").find("#SpnStakeHolderId").html(), 1, value);
+        //$("#searchBox").autocomplete({
+        //    minLength: 3,
+        //    source: function (request, response) {
+        //        var value = request.term;
+        //        if (value) {
+        //            mMsaterFwdTo($(this).closest("tr").find("#SpnTimeToUnitId").html(), "ddlfwdFwdTo", 8, 0, $(this).closest("tr").find("#SpnStakeHolderId").html(), 1, value);
 
-                }
-            }
-        });
+        //        }
+        //    }
+        //});
 
         $(".Fwdtitle").html("Projects Move Details");
         $(".ProjectsFwd").removeClass("d-none");
@@ -205,9 +260,9 @@
     });
 
     // Ensure autocomplete works when the modal is opened or search box is focused
-    $("#searchBox").on("change", function () {
-        var value =  $(this).autocomplete("search", $(this).val());  
-    });
+    //$("#searchBox").on("change", function () {
+    //    var value =  $(this).autocomplete("search", $(this).val());  
+    //});
 
     $(".btn-Obsn").click(function () {
 
@@ -266,8 +321,8 @@
     $(".ProjName").click(function () {
         //var row = $(this).closest('tr');
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
-        IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
-
+       // IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
+        InboxNotificationCount()
         $(this).closest("tr").removeClass("bold-text")
         location.reload();
 
@@ -292,6 +347,11 @@
             CheckFwdCondition($("#spanFwdCurrentPslmId").html());
 
         }
+        $('.FwdDropdown').addClass('col-md-6');
+        $('.ProjectsFwdUnit').addClass('d-none');
+
+
+        $("#searchBox").hide()
     });
 
     $("#btnAttchMultiforpsmid").click(function () {
@@ -376,7 +436,7 @@ function CheckFwdCondition(CurrentPslmId) {
 
 }
 function SaveFwdTo(CurrentPslmId) {
-
+    debugger;
     var dateValue = $("#TimeStampToProjfwd").val();
     var currentDate = new Date();
 
@@ -396,6 +456,16 @@ function SaveFwdTo(CurrentPslmId) {
         }
         TimeStamps = dateValue.replace('T', ' '); // Format datetime-local to space-separated
     }
+    let fwdunitid = 0;
+    if ($("#ddlfwdFwdTo").val() != 'More') {
+        fwdunitid = $("#ddlfwdFwdTo").val()
+    }
+    else if ($("#ddlfwdFwdTo").val() == 'More') {
+
+        fwdunitid = $("#searchBox").val()
+
+    }
+
 
 
     //var currentDate = new Date();
@@ -408,7 +478,7 @@ function SaveFwdTo(CurrentPslmId) {
         /* "StatusId": $("#ddlfwdSubStage").val(),*/
         "StatusActionsMappingId": $("#ddlfwdAction").val(),
         "Remarks": $("#txtRemarksfwd").val(),
-        "ToUnitId": $("#ddlfwdFwdTo").val(),
+        "ToUnitId": fwdunitid,
 
         //"TimeStamp": $("#TimeStampToProjfwd").val()
         "TimeStamp": TimeStamps
@@ -425,8 +495,8 @@ function SaveFwdTo(CurrentPslmId) {
                 $(".Fwdtitle").html("Projects Attch Details");
                 $(".ProjectsFwd").addClass("d-none");
                 $(".Attmenthistory").removeClass("d-none");
-                AddNotification($("#spanFwdProjectId").html(), 2, $("#ddlfwdFwdTo").val());
-                IsReadNotification($("#spanFwdProjectId").html(), 2);
+               // AddNotification($("#spanFwdProjectId").html(), 2,fwdunitid);
+                //IsReadNotification($("#spanFwdProjectId").html(), 2);
             }
 
         }

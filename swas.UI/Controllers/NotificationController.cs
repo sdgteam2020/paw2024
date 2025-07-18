@@ -395,6 +395,18 @@ namespace swas.UI.Controllers
             return Json(new { success = true, message = "Marked as read", count });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetInboxUnreadCount()
+        {
+            var inboxList = await _projectsRepository.GetActInboxAsync();
+
+            // Filter unread
+            int unreadCount = inboxList.Count(x => x.IsRead == false);
+
+            return Json(unreadCount);
+        }
+
+
 
     }
 }

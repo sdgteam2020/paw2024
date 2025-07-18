@@ -1,11 +1,16 @@
 ﻿function mMsater(sectid = '', ddl, TableId, ParentId) {
-
+    
     var userdata =
-    {
-        "id": TableId,
-        "ParentId": ParentId,
+        {
+            "id": TableId,
+            "ParentId": ParentId,
+        
+       
 
     };
+    if (ddl == 'ddlAction1' || ddl =='ddlSubStage1') {
+        userdata.unitId = 1;
+    }
     $.ajax({
         url: '/Master/GetAllMasterTableforddl',
         contentType: 'application/x-www-form-urlencoded',
@@ -157,7 +162,7 @@ function mMsaterfwdStage(sectid = '', ddl, TableId, ParentId, type, projecttype)
     });
 }
 function mMsaterStage(sectid = '', ddl, TableId, ParentId, StakeHolderId) {
-
+   
     var userdata =
     {
         "id": TableId,
@@ -285,6 +290,12 @@ function mMsaterFwdTo(sectid = '', ddl, TableId, ParentId, StakeHolderId, type, 
                         for (var i = 0; i < response.length; i++) {
                             listItemddl += '<option value="' + response[i].id + '">' + response[i].name + '</option>';
                         }
+
+                        if (TableId == 8) {
+
+                            listItemddl += '<option value="More">More</option>';
+                        }
+
                         $("#" + ddl + "").html(listItemddl);
                         if (sectid != '') {
                             $("#" + ddl + "").val(sectid);

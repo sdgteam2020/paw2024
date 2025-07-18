@@ -43,6 +43,10 @@ using iText.Commons.Actions.Contexts;
 
 using iText.StyledXmlParser.Jsoup.Nodes;
 using Grpc.Core;
+using static swas.DAL.Models.LegacyHistory;
+using swas.UI.Helpers;
+using iText.Kernel.XMP.Impl;
+using System.Security.Cryptography.X509Certificates;
 
 namespace swas.UI.Controllers
 {
@@ -79,9 +83,10 @@ namespace swas.UI.Controllers
         private System.Timers.Timer aTimer;
         private readonly ILogger<HomeController> _logger;
         private readonly IDateApprovalRepository _repo;
+        private readonly ILegacyHistoryRepository _legacyHistoryRepository;
         //private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager;
 
-        public HomeController(IProjectsRepository projectsRepository, ICommentRepository commentRepository, SignInManager<ApplicationUser> signInManager, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IDdlRepository dlRepository, ApplicationDbContext context, IUnitRepository unitRepository, IProjStakeHolderMovRepository stkholdmove, IChartService chartService, IWebHostEnvironment _webHostEnvironment, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, IDataProtectionProvider dataProtector, IActionsRepository actionsRepository, IAttHistoryRepository attHistoryRepository, ILogger<HomeController> logger, IDateApprovalRepository repo)
+        public HomeController(IProjectsRepository projectsRepository, ICommentRepository commentRepository, SignInManager<ApplicationUser> signInManager, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IDdlRepository dlRepository, ApplicationDbContext context, IUnitRepository unitRepository, IProjStakeHolderMovRepository stkholdmove, IChartService chartService, IWebHostEnvironment _webHostEnvironment, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, IDataProtectionProvider dataProtector, IActionsRepository actionsRepository, IAttHistoryRepository attHistoryRepository, ILogger<HomeController> logger, IDateApprovalRepository repo, ILegacyHistoryRepository legacyHistoryRepository)
         {
             //  _logger = logger; _repositoryUser = repositoryUser;
             _projectsRepository = projectsRepository;
@@ -102,6 +107,7 @@ namespace swas.UI.Controllers
             _attHistoryRepository = attHistoryRepository;
             _logger = logger;
             _repo = repo;
+            _legacyHistoryRepository = legacyHistoryRepository;
         }
 
 
@@ -427,8 +433,6 @@ s.IsDashboard,
         ///    chart generation full dynamic tested and error rectified
         ///    
 
-
-
         [HttpGet]
         public async Task<IActionResult> NewProject()
         {
@@ -456,7 +460,7 @@ s.IsDashboard,
                     }
                     else
                     {
-
+                            
                         ViewBag.ProcessButtonColor = "red";
                         ViewBag.ButtonText = "Sign Up";
                     }
@@ -464,6 +468,9 @@ s.IsDashboard,
 
 
                     ViewBag.LoggedInUserName = Logins.UserName;
+                    ViewBag.Units = await _unitRepository.GetAllUnitAsync();
+                    var typeo = _context.mHostType.Select(x => new { x.HostTypeID, x.HostingDesc }).ToList();
+                    ViewBag.hosttype = typeo;
 
                     var users = await _userManager.FindByNameAsync(Logins.UserName);
                     var list = new List<Users>();
@@ -1664,15 +1671,81 @@ s.IsDashboard,
             return View();
         }
 
+        //[HttpGet]
+        //public JsonResult GetDateApprovalList()
+        //{
+        //    var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+        //    var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
+        //    var watermarkText = $" {ipAddress}\n  {currentDatetime}";
+        //    TempData["ipadd"] = watermarkText;
+
+        //    var data = _repo.GetDateApprovalList();
+        //    return Json(data);
+        //}
+
+
+
+
+
         [HttpGet]
-        public JsonResult GetDateApprovalList()
+        public async Task<JsonResult> GetDateApprovalList([FromQuery] int projId, [FromQuery] int requestType,string remarks)
         {
-            var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+            var user = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext?.Session!, "User");
+            var ipAddress = HttpContext.Connection?.RemoteIpAddress?.MapToIPv4().ToString() ?? string.Empty;
             var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
             var watermarkText = $" {ipAddress}\n  {currentDatetime}";
             TempData["ipadd"] = watermarkText;
 
-            var data = _repo.GetDateApprovalList();
+            if (projId > 0 && requestType == 2)
+            {
+                var existingRecord = await _context.DateApproval
+                    .AnyAsync(x => x.ProjId == projId && x.RequestType == 2);
+
+                if (existingRecord) // Now checking if the record exists (true/false)
+                {
+                    return Json(new { success = false, message = "Record already exists." });
+                }
+                // Save AdminApprovalForLegacy record 
+                var adminLegacy = new DateApproval
+                {
+                    ProjId = projId,
+                    Request_Date = DateTime.Now,
+                    User = Helper1.LoginDetails(user),
+                    IsRead = false,
+                    UnitId = user.unitid,
+                    UserRequest = false,
+                    DDGIT_approval = false,
+                    DDGIT_Approval_dat = null,
+                    RequestType = 2
+                };
+
+                _context.DateApproval.Add(adminLegacy);
+                await _context.SaveChangesAsync();
+
+                var legacyLog = new LegacyHistory
+                {
+                    ProjectId = projId,
+                    UnitId = user?.unitid,
+                    FromUnit = user?.unitid, // Optional: update if needed
+                    ActionBy = (user?.Rank ?? "") + " " + (user?.Offr_Name ?? ""),
+                    ActionType = (ActionTypeEnum)1,
+                    Remarks = remarks?? "No Remarks",
+                    ActionDate = DateTime.Now,
+                    Userdetails = Helper1.LoginDetails(user!)
+                };
+
+                await _legacyHistoryRepository.AddHistoryAsync(legacyLog);
+            }
+            List<DateApproval> data;
+            if (requestType == 2)
+            {
+                data = _repo.GetDateApprovalListForAdmin();
+            }
+            else
+            {
+                data = _repo.GetDateApprovalList();
+            }
+
             return Json(data);
         }
 
@@ -1701,6 +1774,63 @@ s.IsDashboard,
         //        return Json(new { success = false, message = "An error occurred while updating." });
         //    }
         //}
+
+        //public async Task<IActionResult> SaveWhiteList(trnWhiteListed whitelist)
+        //{
+        //    var message = "";
+        //    if (!ModelState.IsValid)
+        //    {
+
+        //        return BadRequest(new { message = "Please fill all the fields" });
+        //    }
+        //    _context.trnWhiteListed.Add(whitelist);
+
+
+        //    return Json(new { message = "Data Save successfully..." });
+        //}
+        public async Task<IActionResult> SaveWhiteList(trnWhiteListed whitelist)
+        {
+            var message = "";
+
+            if (!ModelState.IsValid)
+            {
+                // Return a BadRequest if the model is not valid with a custom message
+                return BadRequest(new { message = "Please fill all the fields" });
+            }
+
+            // Try to add and save the whitelist entry to the database
+            try
+            {
+                var Exist = _context.trnWhiteListed
+    .Any(x => x.ProjName == whitelist.ProjName
+           && x.Appt == whitelist.Appt
+           && x.Fmn == whitelist.Fmn
+           && x.mHostTypeId == whitelist.mHostTypeId);
+
+                if (Exist)
+                {
+                    return BadRequest(new { message = "Data Already WhiteListed" });
+                }
+
+
+                whitelist.date = DateTime.Now;
+                _context.trnWhiteListed.Add(whitelist);
+                await _context.SaveChangesAsync();  // Ensure the changes are saved asynchronously
+
+                // Return success message dynamically
+                message = "Whitelisted entry saved successfully!";
+            }
+            catch (Exception ex)
+            {
+                // Handle any errors that may occur during the insert
+                message = $"Error: {ex.Message}";
+                return StatusCode(500, new { message });
+            }
+
+          
+            return Json(new { message });
+        }
+
 
     }
 }

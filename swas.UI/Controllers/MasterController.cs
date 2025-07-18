@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using iText.IO.Image;
+using Microsoft.AspNetCore.Mvc;
+using swas.BAL;
 using swas.BAL.DTO;
 using swas.BAL.Helpers;
 using swas.BAL.Interfaces;
@@ -14,8 +16,9 @@ namespace swas.UI.Controllers
         private readonly IStagesRepository _stagesRepository;
         private readonly IStatusRepository _statusRepository;
         private readonly IActionsRepository _actionsRepository;
+        private readonly IUnitRepository _unitRepository;
         public MasterController(IHttpContextAccessor httpContextAccessor, IDdlRepository ddlRepository,
-            IStkStatusRepository stkStatusRepository, IStagesRepository stagesRepository, IStatusRepository statusRepository, IActionsRepository actionsRepository)
+            IStkStatusRepository stkStatusRepository, IStagesRepository stagesRepository, IStatusRepository statusRepository, IActionsRepository actionsRepository, IUnitRepository unitRepository)
         {
             _httpContextAccessor = httpContextAccessor;
             _dlRepository = ddlRepository;
@@ -23,6 +26,7 @@ namespace swas.UI.Controllers
             _stagesRepository = stagesRepository;
             _statusRepository = statusRepository;
             _actionsRepository = actionsRepository;
+            _unitRepository = unitRepository;
         }
         public IActionResult Index()
         {
@@ -142,8 +146,13 @@ namespace swas.UI.Controllers
                     }
                     else
                     {
-                        var ret = await _statusRepository.GetAllByStages_takeHolder(ParentId, Convert.ToInt32(Logins.unitid), false);
-
+                        bool type = false;
+                        if(unitId == 1)
+                        {
+                             type = true;
+                        }
+                          var ret = await _statusRepository.GetAllByStages_takeHolder(ParentId, Convert.ToInt32(Logins.unitid), type);
+                     //   var ret = await _statusRepository.GetAll();
 
                         return Json(ret);
 
@@ -153,7 +162,8 @@ namespace swas.UI.Controllers
                 }
                 else if (id == Mastertablenmumcs.mActions)
                 {
-                    var ret = await _actionsRepository.GetActionByStatusIdlogin(ParentId, Convert.ToInt32(Logins.unitid));
+                    int type = unitId;
+                    var ret = await _actionsRepository.GetActionByStatusIdlogin(ParentId, Convert.ToInt32(Logins.unitid), type);
                     return Json(ret);
 
                 }
@@ -177,9 +187,14 @@ namespace swas.UI.Controllers
 
                 //    return Json(ret);
 
-                //}
+                //} else if (id == Mastertablenmumcs.mAnyUnut)
+                {
+                    var ret = await _unitRepository.GetAllUnitNotDte();
+                    return Json(ret);
+                }
                 return Json(null);
             }
+           
             catch(Exception ex)
             {
                 return Json(nmum.Exception);

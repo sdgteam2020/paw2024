@@ -204,7 +204,7 @@
     <!-- CSS Files -->
 
 
-    <link href="~/css/select2.min.css" rel="stylesheet" />
+    <link href="~/css/select2.min.css" rel="stylesheet"/>
 
     <link href="~/assets/css/icons.css" rel="stylesheet">
     <link href="~/assets/css/font-awesome.min.css" rel="stylesheet">
@@ -522,124 +522,124 @@
 
 
     <script>
-        $(document).ready(function () {
-            var table = $('#mapunit').DataTable({
-                lengthChange: true,
-                dom: 'lBfrtip',
-                buttons: [
-                    'copy',
-                    'excel',
-                    'csv',
-                    {
-                        text: 'PDF',
-                        extend: 'pdfHtml5',
-                        action: function (e, dt, node, config) {
-                            PdfDiv();
-                        }
-                    },
-                ],
-                searchBuilder: {
-                    conditions: {
-                        num: {
-                            'MultipleOf': {
-                                conditionName: 'Multiple Of',
-                                init: function (that, fn, preDefined = null) {
-                                    var el = $('<input/>').on('input', function () { fn(that, this) });
+        // $(document).ready(function () {
+        //     var table = $('#mapunit').DataTable({
+        //         lengthChange: true,
+        //         dom: 'lBfrtip',
+        //         buttons: [
+        //             'copy',
+        //             'excel',
+        //             'csv',
+        //             {
+        //                 text: 'PDF',
+        //                 extend: 'pdfHtml5',
+        //                 action: function (e, dt, node, config) {
+        //                     PdfDiv();
+        //                 }
+        //             },
+        //         ],
+        //         searchBuilder: {
+        //             conditions: {
+        //                 num: {
+        //                     'MultipleOf': {
+        //                         conditionName: 'Multiple Of',
+        //                         init: function (that, fn, preDefined = null) {
+        //                             var el = $('<input/>').on('input', function () { fn(that, this) });
 
-                                    if (preDefined !== null) {
-                                        $(el).val(preDefined[0]);
-                                    }
+        //                             if (preDefined !== null) {
+        //                                 $(el).val(preDefined[0]);
+        //                             }
 
-                                    return el;
-                                },
-                                inputValue: function (el) {
-                                    return $(el[0]).val();
-                                },
-                                isInputValid: function (el, that) {
-                                    return $(el[0]).val().length !== 0;
-                                },
-                                search: function (value, comparison) {
-                                    return value % comparison === 0;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
+        //                             return el;
+        //                         },
+        //                         inputValue: function (el) {
+        //                             return $(el[0]).val();
+        //                         },
+        //                         isInputValid: function (el, that) {
+        //                             return $(el[0]).val().length !== 0;
+        //                         },
+        //                         search: function (value, comparison) {
+        //                             return value % comparison === 0;
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     });
 
-            //var buttonContainer = table.buttons().container();
-            //var searchBuilderContainer = table.searchBuilder.container();
-            //buttonContainer.insertBefore(table.table().container());
-            //searchBuilderContainer.insertBefore(table.table().container());
+        //     //var buttonContainer = table.buttons().container();
+        //     //var searchBuilderContainer = table.searchBuilder.container();
+        //     //buttonContainer.insertBefore(table.table().container());
+        //     //searchBuilderContainer.insertBefore(table.table().container());
 
-            function PdfDiv() {
-                var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
-                popupWin.document.open();
+        //     function PdfDiv() {
+        //         var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
+        //         popupWin.document.open();
 
-                var tableStyles = `
-                                                                               <style type="text/css">
-                                                                                    table {
-                                                                                        width: 100%;
-                                                                                        border-collapse: collapse;
-                                                                                        margin-bottom: 20px;
-                                                                                    }
+        //         var tableStyles = `
+        //                                                                        <style type="text/css">
+        //                                                                             table {
+        //                                                                                 width: 100%;
+        //                                                                                 border-collapse: collapse;
+        //                                                                                 margin-bottom: 20px;
+        //                                                                             }
 
-                                                                                    .table > thead {
-                                                                                        vertical-align: bottom;
-                                                                                        background-color: red;
-                                                                                    }
+        //                                                                             .table > thead {
+        //                                                                                 vertical-align: bottom;
+        //                                                                                 background-color: red;
+        //                                                                             }
 
-                                                                                    th, td {
-                                                                                        padding: 8px;
-                                                                                        border: 1px solid #ddd;
-                                                                                        text-align: center;
-                                                                                    }
+        //                                                                             th, td {
+        //                                                                                 padding: 8px;
+        //                                                                                 border: 1px solid #ddd;
+        //                                                                                 text-align: center;
+        //                                                                             }
 
-                                                                                    th {
-                                                                                        background-color: #f2f2f2;
-                                                                                        color: black;
-                                                                                    }
-                                                                                </style>
-                                                                            `;
+        //                                                                             th {
+        //                                                                                 background-color: #f2f2f2;
+        //                                                                                 color: black;
+        //                                                                             }
+        //                                                                         </style>
+        //                                                                     `;
 
-                var table = $('#mapunit').DataTable();
+        //         var table = $('#mapunit').DataTable();
 
-                var filteredData = table.rows({ search: 'applied' }).data().toArray();
+        //         var filteredData = table.rows({ search: 'applied' }).data().toArray();
 
-                var tableHTML = '<table>';
+        //         var tableHTML = '<table>';
 
-                tableHTML += '<thead>';
-                tableHTML += '<tr>';
-                table.columns().header().each(function (header) {
-                    tableHTML += '<th>' + header.innerHTML + '</th>';
-                });
-                tableHTML += '</tr>';
-                tableHTML += '</thead>';
+        //         tableHTML += '<thead>';
+        //         tableHTML += '<tr>';
+        //         table.columns().header().each(function (header) {
+        //             tableHTML += '<th>' + header.innerHTML + '</th>';
+        //         });
+        //         tableHTML += '</tr>';
+        //         tableHTML += '</thead>';
 
-                tableHTML += '<tbody>';
-                for (var i = 0; i < filteredData.length; i++) {
-                    tableHTML += '<tr>';
-                    for (var j = 0; j < filteredData[i].length; j++) {
-                        tableHTML += '<td>' + filteredData[i][j] + '</td>';
-                    }
-                    tableHTML += '</tr>';
-                }
-                tableHTML += '</tbody>';
+        //         tableHTML += '<tbody>';
+        //         for (var i = 0; i < filteredData.length; i++) {
+        //             tableHTML += '<tr>';
+        //             for (var j = 0; j < filteredData[i].length; j++) {
+        //                 tableHTML += '<td>' + filteredData[i][j] + '</td>';
+        //             }
+        //             tableHTML += '</tr>';
+        //         }
+        //         tableHTML += '</tbody>';
 
-                tableHTML += '</table>';
+        //         tableHTML += '</table>';
 
-                var watermarkText = '@(TempData["ipadd"])';
+        //         var watermarkText = '@(TempData["ipadd"])';
 
-                popupWin.document.write('<html><head>'
-                    + tableStyles + '</head><body onload="window.print()">'
-                    + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
-                    + watermarkText + '</div></body></html>');
+        //         popupWin.document.write('<html><head>'
+        //             + tableStyles + '</head><body onload="window.print()">'
+        //             + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
+        //             + watermarkText + '</div></body></html>');
 
-                popupWin.document.close();
-            }
-        });
+        //         popupWin.document.close();
+        //     }
+        // });
     </script>
-
+   
     <script>
         $(document).ready(function () {
             var table = $('#SoftwareType').DataTable({
@@ -685,6 +685,8 @@
                     }
                 }
             });
+             
+
 
             //var buttonContainer = table.buttons().container();
             //var searchBuilderContainer = table.searchBuilder.container();
@@ -1821,7 +1823,7 @@
                 </div>
                 </a>
                 </li> *@
-                    @if (Logins != null && Logins.UserName == "gso1semg_asdc_ihqa" && Logins.unitid == 4)
+                    @if (Logins != null && Logins.unitid == 4)
                     {
                         <li>
                             <a href="/Home/DateApproval">
@@ -1861,6 +1863,15 @@
                                 </li>
                                 <li class="selected">
                                     <a href="/UnitDtls/AddOrEdit">
+                                        <div class="icon-container">
+
+                                            <ion-icon name="ellipse-outline"></ion-icon>
+                                            <span class="icon-name">View Mapping</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="selected">
+                                    <a href="/UnitDtls/GetAllUnits">
                                         <div class="icon-container">
 
                                             <ion-icon name="ellipse-outline"></ion-icon>
@@ -2197,6 +2208,7 @@
 
                             <li class="nav-item dropdown">
                                 <span class="d-none" id="IpAddress">@Logins.IpAddress</span>
+                                <span class="d-none" id="SpnCurrentUserStackholderID">@Logins.unitid</span>
                                 <div class="text-white mr-2">
                                     Welcome :  @Logins.UserName.ToLower()
                                     <div class="text-white mr-2 text-capitalize">@Logins.Rank @Logins.Offr_Name</div>
@@ -2420,7 +2432,7 @@
 <!-- JavaScript code -->
 
 <script>
-    var pad = "00";
+  @*   var pad = "00";
     var datef2 = new Date();
 
 
@@ -2450,7 +2462,7 @@
             $('#CommentDateFwd').prop('disabled', true); // Freeze input
         }
 
-    });
+    }); *@
 
 </script>
 
@@ -2536,7 +2548,7 @@
 </script>
 
 <script>
-    $(document).ready(function () {
+   @*  $(document).ready(function () {
         $('.dropdown').hover(
             function () {
                 $(this).children('.dropdown-menu').slideDown(200);
@@ -2545,7 +2557,23 @@
                 $(this).children('.dropdown-menu').slideUp(200);
             }
         );
-    });
+    }); *@
+        let hideTimeout;
+
+    $('.dropdown').hover(
+        function () {
+            // On hover in: clear any pending hide and show dropdown
+            clearTimeout(hideTimeout);
+            $(this).children('.dropdown-menu').stop(true, true).slideDown(200);
+        },
+        function () {
+            // On hover out: delay hide to prevent flicker
+            const $menu = $(this).children('.dropdown-menu');
+            hideTimeout = setTimeout(function () {
+                $menu.stop(true, true).slideUp(200);
+            }, 200); // You can adjust this delay as needed
+        }
+    );
 </script>
 
 <script>
@@ -2578,7 +2606,8 @@
 
 </script>
 
-<script src="~/developerjs/projectstkholdercomments.js"></script>
+<script src="~/DeveloperJs/ProjectstkholderComments.js"></script>
+
 <script src="~/developerjs/ProjectstckholdercommentforProjHistory.js"></script>
 
 @RenderSection("scripts", required: false)

@@ -153,13 +153,14 @@ $(document).ready(function () {
    
     updateNotificationCountForChat(3, 'InterUserMsgCount'); // For Inter-User Msg
 
-    updateNotificationCount(1, 'ProjectCommentCount'); // For project comments
-    updateNotificationCount(2, 'InboxCount'); // For inbox
+   /* updateNotificationCount(1, 'ProjectCommentCount'); // For project comments*/
+  /*  updateNotificationCount(2, 'InboxCount'); // For inbox*/
     fetchProjectCommentsUnreadCount(); // For DateApproval
 });
 
 function AddNotification(ProjId, type, unitid) {
-
+  
+    
     $.ajax({
         url: '/Notification/AddNotification',
         type: 'POST',
@@ -180,8 +181,8 @@ function AddNotification(ProjId, type, unitid) {
                     timer: 700
                 });
             }
-            updateNotificationCount(1, 'ProjectCommentCount'); // For project comments
-            updateNotificationCount(2, 'InboxCount'); // For inbox
+            //updateNotificationCount(1, 'ProjectCommentCount'); // For project comments
+            //updateNotificationCount(2, 'InboxCount'); // For inbox
             updateNotificationCountForChat(3, 'InterUserMsgCount'); // For Inter-User Msg
 
         },
@@ -202,8 +203,8 @@ function IsReadNotification(ProjId, type) {
         },
         success: function (response) {
             //console.log(response);
-            updateNotificationCount(1, 'ProjectCommentCount'); // For project comments
-            updateNotificationCount(2, 'InboxCount'); // For inbox
+            //updateNotificationCount(1, 'ProjectCommentCount'); // For project comments
+            //updateNotificationCount(2, 'InboxCount'); // For inbox
             updateNotificationCountForChat(3, 'InterUserMsgCount'); // For Inter-User Msg
         }
     });

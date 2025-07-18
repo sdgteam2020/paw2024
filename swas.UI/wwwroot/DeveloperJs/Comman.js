@@ -49,11 +49,12 @@
 
 
     function applyDateLogic() {
-       
+        debugger;
         var selectedMode = $('input[name="mcalender_dates"]:checked').val();
        
 
         if (selectedMode == "0") {
+            debugger;
             $('input[type="date"]').attr('min', today);
             $('input[type="date"]').removeAttr('max');
             $('.datepicker1').datepicker({
@@ -61,11 +62,17 @@
             });
             $("#InitiatedDate").val(today);
             $('#InitiatedDate').attr('readonly', true);
+            $("#RequestRemarks").attr('disabled', true);
         } else {
             $('input[type="date"]').attr('max', today);
             $('input[type="date"]').removeAttr('min');
             $('.datepicker1').datepicker(); // default no min/max
             $('#InitiatedDate').attr('readonly', false);
+            $("#RequestRemarks").removeAttr('disabled');
+
+            $('#CompletionDate').val("");
+            $('#CompletionDate').attr('min', $("#InitiatedDate").val());
+            $('#CompletionDate').removeAttr('max');
         }
 
         $('.datetimepicker1').datepicker(); // always initialize
@@ -81,12 +88,19 @@
         applyDateLogic();
     });
 
-    // Remove the max date setting for CompletionDate to allow future selection when InitiatedDate changes
-    $("#InitiatedDate").change(function () {
-        $('#CompletionDate').val("");
-        $('#CompletionDate').attr('min', $("#InitiatedDate").val());
-        $('input[type="date"]').removeAttr('max');
+    $('#InitiatedDate').on('change', function () {
+
+        var initiatedDate = $(this).val();
+        $('#CompletionDate').attr('min', initiatedDate);
+        $('#CompletionDate').val(""); // Clear any old value if it’s before the new min
     });
+
+    // Remove the max date setting for CompletionDate to allow future selection when InitiatedDate changes
+    //$("#InitiatedDate").change(function () {
+    //    $('#CompletionDate').val("");
+    //    $('#CompletionDate').attr('min', $("#InitiatedDate").val());
+    //    $('input[type="date"]').removeAttr('max');
+    //});
 
     $('input[name="mcalender_dates"]').change(function () {
 
@@ -253,4 +267,115 @@ function formatDateToDDMMYYYY(date) {
 
     // Return the formatted date
     return `${day}-${month}-${year}`;
+}
+
+
+
+function bindLiveProjectSearch(inputSelector, dropdownSelector, endpointUrl, onItemSelect) {
+    debugger;
+   
+    $(inputSelector).on("keyup", function () {
+        debugger;
+        let query = $(this).val();
+        //query = query.replace(/\u00A0/g, "");
+        //const validpattern =/^[a-zA-Z0-9]*$/;
+
+        //if (!validpattern.test(query)) {
+        //    Swal.fire({
+        //        icon: 'error',
+        //        title: 'Invalid Input',
+        //        text: 'Special Characters are not allowed',
+        //    });
+        //    $(this).val(query.Replace(/[a-zA-Z0-9]/g,' '));
+        //    return;
+        //}
+        if (query.length > 200) {
+      
+            Swal.fire({
+                icon: 'error',
+                title: 'Only maximaum characters limit is 200',
+            });
+            return $(this).val("") ;
+        }
+        
+           
+           
+
+        if (query.length < 2) {
+            $(dropdownSelector).hide();
+            return;
+        }
+
+        $.ajax({
+            url: endpointUrl,
+            method: 'GET',
+            data: { searchQuery: query },
+            success: function (data) {
+                $(dropdownSelector).empty();
+                if (data.length > 0) {
+                    data.forEach(function (item) {
+                        $(dropdownSelector).append(`
+                            <li class="dropdown-item" data-id="${item.projId}" data-name="${item.projName}">${item.projName}</li>
+                        `);
+                    });
+                    $(dropdownSelector).show();
+                } else {
+                    $(dropdownSelector).hide();
+                }
+            },
+            error: function (err) {
+                console.error("Error fetching project data:", err);
+                $(dropdownSelector).hide();
+            }
+        });
+    });
+
+    $(document).on("click", `${dropdownSelector} li`, function () {
+        debugger;
+        const projId = $(this).data("id");
+
+        const projName = $(this).data("name");
+
+        Swal.fire({
+            title: 'Enter Remarks',
+            input: 'text',
+            inputLabel: `Project Name: ${projName}`,
+            inputPlaceholder: 'Type your Remarks here....',
+            ShowCancelButton: true,
+            confirmButtonText: 'Submit',
+            preConfirm: (remarks) => {
+                if (!remarks) {
+                    debugger;
+                    Swal.ShowValidationMessage('Remarks are Required');
+                } if (remarks.length < 10) {
+                    Swal.showValidationMessage('Remarks Must be Atleast 10 characters');
+                }
+                if (remarks.length > 200) {
+                    Swal.showValidationMessage('Remarks Must not exceed 200 characters');
+                }
+                    return remarks;
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                const remarks = result.value;
+
+                if (typeof onItemSelect === "function") {
+                    onItemSelect(projId, projName, remarks);
+                }
+
+                $(dropdownSelector).hide();
+            }
+
+        });
+
+        
+    });
+
+    // Optional: Hide dropdown when clicking outside
+    $(document).on("click", function (e) {
+        if (!$(e.target).closest(inputSelector).length && !$(e.target).closest(dropdownSelector).length) {
+            $(dropdownSelector).hide();
+        }
+    });
 }

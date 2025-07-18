@@ -127,7 +127,7 @@ namespace swas.BAL.Repository
                                    Actions = act.Actions,
                                    FromUnitName = " " + b.UserDetails + " ( " + fromunit.UnitName + ")",
                                    ToUnitName = tounit.UnitName,
-                                   FromUser = "",
+                                   FromUser = "", 
                                    ToUser = "",
                                    Date = b.TimeStamp,
                                    Remarks = b.Remarks,

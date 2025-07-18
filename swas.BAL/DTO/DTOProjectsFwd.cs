@@ -62,6 +62,7 @@ namespace swas.BAL.DTO
 
         public int? RequestUnitId { get; set; }
         public int? LatestActionType { get; set; }
+        public int IsHosted { get; set; }
 
     }
 }

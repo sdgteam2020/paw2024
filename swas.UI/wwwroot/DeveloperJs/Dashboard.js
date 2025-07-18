@@ -2,6 +2,7 @@
 var Status = "";
 $(document).ready(function () {
     GetAllDashbaordCount();
+    InboxNotificationCount();
 
     $("#IsNotduplicate").change(function () {
 
@@ -230,7 +231,7 @@ function GetAllDashbaordCount() {
 
                         if (spnstatusId == 2 || spnstatusId == 3 || spnstatusId == 22) {
 
-                        } else if (parseInt(spnstatusId) == 44 || parseInt(spnstatusId) == 45) {
+                        } else if (parseInt(spnstatusId) == 44 || parseInt(spnstatusId) == 46) {
                             $('#ProjectApprovedTittleBisag').html(tittle);
                             $('#BISAG-N').modal('show');
                             getProjBisagN(spnstatusId, spnstatusActionsMappingId);

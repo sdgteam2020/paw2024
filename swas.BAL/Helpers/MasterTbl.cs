@@ -20,7 +20,7 @@ namespace swas.BAL.Helpers
 
         public const int mMappingActionsException  = 10;
         public const int ProjMovement_mActions = 11;
-
+        public const int mAnyUnut = 12;
 
     }
 }

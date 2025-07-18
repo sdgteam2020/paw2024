@@ -1,7 +1,7 @@
 ﻿var memberTable = "";
 
 $(document).ready(function () {
-
+    InboxNotificationCount()
     GetProjCommentsByUnitId();
 
     $("#btnStatusUpdate").unbind().click(function () {
@@ -75,6 +75,7 @@ function GetProjCommentsByUnitId() {
                 else {
 
                     var count = 1;
+                    var commentFalseCount = 0;
                     for (var i = 0; i < response.length; i++) {
                         var date = new Date(response[i].timeStamp);
                         var TimeStamp =
@@ -88,6 +89,7 @@ function GetProjCommentsByUnitId() {
 
                         if (response[i].isComment == false) {
                             listItem += "<tr class='bold-text'>";
+                            commentFalseCount++;
                             /* boldCount++;*/
                         } else {
                             listItem += "<tr>";
@@ -130,6 +132,14 @@ function GetProjCommentsByUnitId() {
                         count++;
 
                     }
+                    $("#ProjectCommentCount").text(commentFalseCount);
+
+                    if (commentFalseCount > 0) {
+                        $("#ProjectCommentCount").removeClass("d-none");
+                    }
+                    else {
+                        $("#ProjectCommentCount").addClass("d-none");
+                    }
 
                     $("#DetailBody").html(listItem);
                     var table = $('#Comment').DataTable({
@@ -165,7 +175,7 @@ function GetProjCommentsByUnitId() {
                                         }
                                     }
                                 }
-                            },                            
+                            },
                             {
                                 extend: 'pdfHtml5',
                                 text: 'PDF',
@@ -175,7 +185,7 @@ function GetProjCommentsByUnitId() {
                                 action: function (e, dt, node, config) {
                                     PdfDiv();
                                 }
-                            }                           
+                            }
                         ],
                         searchBuilder: {
                             conditions: {
@@ -286,13 +296,22 @@ function GetProjCommentsByUnitId() {
                     /* $('#ProjectCommentCount').html(boldCount);*/
 
                     $("body").on("click", ".cls-btncomment", function () {
+                /* $('.cls-btncomment').click(function () {*/
+
                         $("#ProjectcommentForStackHolderprojId").html($(this).closest("tr").find("#spnProjId").html());
                         $("#ProjectcommentForStackHolderPsmId").html($(this).closest("tr").find("#spnpsmId").html());
                         $("#ProjectcommentForStackHolderDate_type").html($(this).closest("tr").find("#DateType").html());
 
                         IsReadComment($(this).closest("tr").find("#spnProjId").html(), $(this).closest("tr").find("#spnpsmId").html());
-                        IsReadNotification($(this).closest("tr").find("#spnProjId").html(), 1);
-                        $(this).closest("tr").removeClass("bold-text")
+                        // IsReadNotification($(this).closest("tr").find("#spnProjId").html(), 1);
+                     $(this).closest("tr").removeClass("bold-text")
+                    
+
+
+
+
+                   
+                    
                         reset()
                         mMsater(0, "ddlStatus", 4, 0)
                         $("#ProjCommentModal").modal('show');
@@ -340,13 +359,16 @@ function GetProjCommentsByUnitId() {
                             $('#CommentDateFwd').val(todayDate); // Set today's date
                             $('#CommentDateFwd').prop('disabled', true); // Freeze input
                         }
-
+                        setTimeout(function () {
+                            GetProjCommentsByUnitId();
+                        },200)
+                      
                     });
 
                     $("body").on("click", ".projNameDetail", function () {
 
                         IsReadComment($(this).closest("tr").find("#spnProjId").html(), $(this).closest("tr").find("#spnpsmId").html());
-                        IsReadNotification($(this).closest("tr").find("#spnProjId").html(), 1);
+                        // IsReadNotification($(this).closest("tr").find("#spnProjId").html(), 1);
 
                     });
 
@@ -426,7 +448,9 @@ function SendMsg() {
                     title: 'Comment Sent successfully',
                     showConfirmButton: false,
                     timer: 3000
+                
                 }).then(() => {
+                    debugger;
                     //  if ($("#ddlStatus").val() == 1) {
                     FwdProjConfirm($("#ProjectcommentForStackHolderPsmId").html());
                     // }
@@ -533,8 +557,6 @@ function GetAllComments(PsmId, projId) {
                     commentContainer += '<div class="comment-content formated-text"><p>' + data[i].comments + '</p></div>';
                     commentContainer += '</div>';
                 }
-
-
 
                 commentContainer += '</div>'; // Close the container
                 $('#ChatBoxForStackholdercomment').empty().html(commentContainer);
@@ -671,7 +693,29 @@ function FwdProjConfirm(psmid) {
     });
 }
 
+ 
+function InboxNotificationCount() {
+    $.ajax({
+        url: '/Notification/GetInboxUnreadCount', // Replace with your actual route
+        type: 'GET',
+        success: function (unreadCount) {
+            debugger;
+          
+            $('#InboxCount').text(unreadCount);
 
+
+            if (unreadCount > 0) {
+                $("#InboxCount").removeClass("d-none");
+            }
+            else {
+                $("#InboxCount").addClass("d-none");
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error('Error fetching unread count:', error);
+        }
+    });
+}
 function IsCommentedUnreadNotification(ProjId) {
 
     $.ajax({

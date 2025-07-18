@@ -236,7 +236,7 @@ namespace swas.BAL
             return resultList;
         }
 
-       
+
 
 
 
@@ -261,6 +261,22 @@ namespace swas.BAL
         //    return result;
 
         //}
+        public Task<List<DTODDLComman>> GetAllUnitNotDte()
+        {
+            var ret = _context.tbl_mUnitBranch
+     .Where(i => i.TypeId == 6)
+     .Select(i => new DTODDLComman
+     {
+         Id = i.unitid,
+         Name = i.UnitName
+     })
+     .ToListAsync();
+
+
+            return ret;
+
+        }
+
 
     }
 }

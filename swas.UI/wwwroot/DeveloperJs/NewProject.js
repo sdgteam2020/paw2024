@@ -257,3 +257,212 @@ function ButtonClick() {
 
     }
 }
+
+$("#telNo").on("keypress", function () {
+    var input = $(this).val();
+    input = input.replace(/\D/g, '');
+
+    // Optional: limit to 10 digits
+    if (input.length > 10) {
+        input = input.substring(0, 10);
+    }
+
+    $(this).val(input);
+});
+$("#telNo").on("keypress", function (e) {
+    var charCode = e.which ? e.which : e.keyCode;
+
+    // Allow only digits (0–9)
+    if (charCode < 48 || charCode > 57) {
+        e.preventDefault();
+        $(this).siblings(".invalid-feedback")
+            .text("Only Numbers are allowd.")
+            .show();
+    }
+
+    else {
+        $(this).siblings(".invalid-feedback")
+            .text("Only Numbers are allowd.")
+            .hide();
+    }
+});
+var validPattern = /^[a-zA-Z0-9 ]*$/;
+
+$("#swName, #hostedOn,  #certNo, #remarks, #appt").on("input", function () {
+    var currentVal = $(this).val();
+    var maxLength = 200;
+
+    // For remarks, use 500
+    if ($(this).attr('id') === 'remarks') {
+        maxLength = 500;
+    }
+
+    if (!validPattern.test(currentVal)) {
+        // Remove any invalid characters
+        $(this).val(currentVal.replace(/[^a-zA-Z0-9 ]/g, ""));
+        $(this).siblings(".invalid-feedback")
+            .text("Special characters are not allowed.")
+            .show();
+    }
+    else if (currentVal.length > maxLength) {
+        isValid = false;
+
+        $(this).addClass("is-invalid");
+        $(this).siblings(".invalid-feedback")
+            .text("Cannot exceed " + maxLength + " characters.")
+            .show();
+
+    }
+
+    else {
+        $(this).siblings(".invalid-feedback").hide();
+    }
+    $("input[required], textarea[required]").on("input", function () {
+        var maxLength = 200;
+        if ($(this).attr('id') === 'remarks') {
+            maxLength = 500;
+        }
+
+        var value = $(this).val();
+
+        if (value && value.trim() !== "" && value.length <= maxLength) {
+            $(this).removeClass("is-invalid");
+            $(this).siblings(".invalid-feedback").hide();
+        }
+    });
+});
+
+
+$("#btn_Save").on('click', function (e) {
+    e.preventDefault();
+    debugger;
+    // Gather form inputs
+    var formData = {
+        ProjName: $('#swName').val(),
+        mHostTypeId: $('#hostedOn').val(),
+        appt: $('#appt').val(),
+        Fmn: $('#sponsor').val(),
+        ContactNo: $('#telNo').val(),
+        Clearence: $('#clearanceDate').val(),
+        CertNo: $('#certNo').val(),
+        ValidUpto: $('#validUpto').val(),
+        Remarks: $('#remarks').val(),
+    };
+   
+    // Validation
+    var isValid = true;
+   
+    $("input[required], select[required], textarea[required]").each(function () {
+        debugger;
+        var value = $(this).val();
+        var maxLength = 200;
+
+        // For remarks, use 500
+        if ($(this).attr('id') === 'remarks') {
+            maxLength = 500;
+        }
+
+        if (!value || value.trim() === "") {
+           
+            isValid = false;
+
+            $(this).addClass("is-invalid");
+            $(this).siblings(".invalid-feedback").text("This field is required.").show();
+
+        } else if (value.length > maxLength) {
+            isValid = false;
+
+            $(this).addClass("is-invalid");
+            $(this).siblings(".invalid-feedback")
+                .text("Cannot exceed " + maxLength + " characters.")
+                .show();
+
+        } else {
+            $(this).removeClass("is-invalid");
+            $(this).siblings(".invalid-feedback").hide();
+        }
+    });
+
+    // Remove invalid class and feedback when user fixes input
+    $("input[required], textarea[required]").on("input", function () {
+        var maxLength = 200;
+        if ($(this).attr('id') === 'remarks') {
+            maxLength = 500;
+        }
+
+        var value = $(this).val();
+
+        if (value && value.trim() !== "" && value.length <= maxLength) {
+            $(this).removeClass("is-invalid");
+            $(this).siblings(".invalid-feedback").hide();
+        }
+    });
+
+    // For selects, use change event
+    $("select[required]").on("change", function () {
+        var value = $(this).val();
+        if (value && value.trim() !== "") {
+            $(this).removeClass("is-invalid");
+            $(this).siblings(".invalid-feedback").hide();
+        }
+    });
+
+
+   
+
+    // Proceed with AJAX if validation passes
+    if (isValid) {
+        $.ajax({
+            url: '/Home/SaveWhiteList',
+            type: 'POST',
+            data: formData,
+            success: function (response) {
+
+                $('#WhiteListedProjectDetail .modal-content').css('filter', '');
+                $('#WhiteListModal').modal('hide');
+
+
+
+                Swal.fire({
+                    title: 'Success',
+                    text: response.message,
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    // Refresh the page to reload the updated list
+                    location.reload();
+                });
+
+            },
+            error: function (xhr, status, error) {
+                Swal.fire('Error', xhr.responseJSON ? xhr.responseJSON.message : 'An error occurred', 'error');
+            }
+        });
+    } else {
+        console.log("This is not valid");
+    }
+});
+
+function cancelModal(elem) {
+
+    $('#WhiteListedProjectDetail .modal-content').css('filter', '');
+}
+
+$(document).ready(function () {
+    $(document).on('click', function () {
+        setTimeout(function () {
+
+        if ($('#WhiteListModal').is(':hidden')) {
+
+
+            $('#WhiteListedProjectDetail .modal-content').css('filter', '');
+        }
+        },200)
+        
+    });
+
+    $('#WhiteListedProjectDetail .modal-content').on('click', function (e) {
+        e.stopPropagation(); // prevent closing when clicking inside modal
+    });
+});
+

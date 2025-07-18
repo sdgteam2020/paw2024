@@ -187,7 +187,6 @@ $(document).ready(function () {
         var allFieldsComplete = true;
         requiredFields.each(function (index) {
             if (this.value.length == 0) {
-                console.log("testttt",this.value);
                 $(this).addClass('is-invalid');
                 allFieldsComplete = false;
             } else {
@@ -212,8 +211,7 @@ $(document).ready(function () {
         //        errorMsg.hide();  // Hide error message if within limit
         //    }
         //});
-
-
+     
 
         // Validate character limits
         const required = [
@@ -226,7 +224,9 @@ $(document).ready(function () {
             "#HQandITinfraReqd",
             "#ContentofSWApp",
             "#ReqmtJustification",
-            "#UsabilityofProposedAppln"
+            "#UsabilityofProposedAppln",
+            "#RequestRemarks"
+            
         ];
 
         required.forEach(function (selector) {
@@ -397,11 +397,31 @@ $(document).ready(function () {
     $("#IsWhitelisted").change(function () {
         var selectedStatus = $(this).val();
         if (selectedStatus === "Re-Vetted") {
+            Swal.fire({
+                title: 'Re-Vetting Project will be added as per details of Appx C to SOP , Also before filling the form, ensure that you have all the docus(PDF) ready as per SOP on Whitelisting of Sw Appl in IA',
+                html: `
+      <div class=text-left><div><ol><li><h5 class=p-2>Upload 02 x PDF Documents Before Submitting</h5><ul class=text-left><div><strong>(a) ACG Clearance Certificate </strong></div><div><strong>(b) DDGIT Whitelisted Clearance Certificate</strong></div></ul></li><li><h5 class=p-2>Declaration</h5><p class=text-left>I declare that all the information which I will be providing is correct to the best of my knowledge.</p></li></ol>
+    `,
+                icon: 'warning',
+                confirmButtonColor: '#072697',
+                confirmButtonText: '<i class="fa fa-check-circle"></i> Proceed',
+                customClass: {
+                    popup: 'swal2-border-radius'
+                }
+            });
+
+
             $("#ProjName").prop("disabled", false);
             $("#projectNameDropdown").show();
+            // Show Re-Vetted tag
+            $("#reVettedTag").removeClass("d-none");
         } else {
+            var currentval = $("#ProjName").val();
+            var cleanval = currentval.replace(/\s*Re-Vetted\s*\d+/i, "").trim();
+            $("#ProjName").val(cleanval)
 
             $("#projectNameDropdown").hide();
+            $("#reVettedTag").addClass("d-none");
         }
     });
 
@@ -536,6 +556,14 @@ function AddProject(thistag) {
                 
 
             }
+            else if (result == -5) {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Incorrect Selection Click Again on Edit!",
+                    icon: "Error"
+                });
+            }
+
             //else if (result.indcludes("Error")) {
             //else if (result.include("Error")) {
             //    Swal.fire({
@@ -638,13 +666,16 @@ function FwdProjConfirm(thisdata) {
 
 
 function ProjectSubmited(thisdata) {
-     
+    var Remarks = $("#RequestRemarks").val();
     $.ajax({
         url: '/Projects/ProjectSubmited',
         type: 'POST',
-        data: { "projid": $("#spanProjectId").html(),"type": 1},
+        data: { "projid": $("#spanProjectId").html(), "type": 1, "Remarks": Remarks },
         success: function (response) {
             //console.log(response);
+            if (response >= 1) {
+                $("#RequestRemarks").val("");
+            }
 
             if (response >= 1) {
 
@@ -659,7 +690,7 @@ function ProjectSubmited(thisdata) {
                 current_fs = $(thisdata).parent();
                 next_fs = $(thisdata).parent().next();
                
-                AddNotification($("#spanProjectId").html(), 2, 1);
+               /* AddNotification($("#spanProjectId").html(), 2, 1);*/
                 //Add Class Active
                 $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
 
@@ -692,7 +723,7 @@ function ProjectSaveAsDraft(thisdata) {
     $.ajax({
         url: '/Projects/ProjectSubmited',
         type: 'POST',
-        data: { "projid": $("#spanProjectId").html(), "type": 2 },
+        data: { "projid": $("#spanProjectId").html(), "type": 2, "Remarks": "" },
         success: function (response) {
             //console.log(response);
             if (response >= 1) {

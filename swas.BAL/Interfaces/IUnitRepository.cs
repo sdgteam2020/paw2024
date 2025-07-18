@@ -36,6 +36,7 @@ namespace swas.BAL.Interfaces
 
         Task<UnitDtl> GetUnitDtlwithname(string UnitName);
         Task<UnitDtl> GetUnitDtls(int unitid);
+        Task<List<DTODDLComman>> GetAllUnitNotDte();
 
 
     }

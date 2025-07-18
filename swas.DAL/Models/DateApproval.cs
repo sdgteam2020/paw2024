@@ -24,6 +24,7 @@ namespace swas.DAL.Models
 
         public string User { get; set; }
         public bool? IsRead { get; set; }
+        public int? RequestType { get; set; }
 
         [NotMapped]
         public string ProjName { get; set; }
@@ -38,6 +39,8 @@ namespace swas.DAL.Models
 
         [NotMapped]
         public string? Remarks { get; set; }
+        [NotMapped]
+        public string? EncyID { get; set; }
 
 
 

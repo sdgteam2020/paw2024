@@ -40,7 +40,7 @@ namespace swas.BAL.Repository
                                          ProjectId = LH.ProjectId,
                                          ActionType = LH.ActionType,
                                          ActionDate = LH.ActionDate,
-                                         Remarks = LH.Remarks,
+                                         Remarks = LH.Remarks ??  "No Remarks",
                                          Userdetails = LH.Userdetails,
                                          ProjectName = p.ProjName,
                                          ToUnitName = u.UnitName,
