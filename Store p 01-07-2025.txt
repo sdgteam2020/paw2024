@@ -1,0 +1,226 @@
+ALTER PROCEDURE [dbo].[usp_GetActSendItems]
+    @UnitId INT
+AS
+BEGIN
+    -- Current Outbox Items (IsComplete = 0)
+    SELECT
+        a.ProjId,
+        b.PsmId AS PsmIds,
+        a.ProjName,
+        a.Sponsor,
+        a.StakeHolderId,
+        stake.UnitName AS StakeHolder,
+        stage.Stages,
+        stage.StagesId AS StageId,
+        status.Status,
+        status.StatusId,
+        b.FromUnitId,
+        fromUnits.UnitName AS FromUnitUserDetail,
+        CONCAT(fromUnits.UnitName, ' ( ', b.UserDetails, ')') AS FromUnitName,
+        b.ToUnitId,
+        toUnits.UnitName AS ToUnitName,
+        actions.Actions,
+        actions.ActionsId AS ActionId,
+        0 AS TotalDays,
+        b.TimeStamp,
+        a.IsProcess,
+        b.IsRead,
+        b.IsComplete,
+        b.IsPullBack,
+        'OUTBOX' AS RecordType,
+
+        -- PullbackAction logic added
+        CASE 
+            WHEN EXISTS (
+                SELECT TOP 1 1 FROM ProjStakeHolderMov p1
+                WHERE p1.ProjId = b.ProjId AND p1.IsComment = 0
+                ORDER BY p1.PsmId DESC
+            )
+            AND (
+                SELECT TOP 1 p2.ToUnitId FROM ProjStakeHolderMov p2
+                WHERE p2.ProjId = b.ProjId AND p2.IsComment = 0
+                ORDER BY p2.PsmId DESC
+            ) != @UnitId
+            AND NOT EXISTS (
+                SELECT 1 FROM ProjStakeHolderMov p3
+                WHERE p3.ProjId = b.ProjId AND p3.IsComment = 0 AND p3.IsComplete = 0 AND p3.ToUnitId = @UnitId
+            )
+            THEN CAST(1 AS BIT)
+            ELSE CAST(0 AS BIT)
+        END AS PullbackAction
+		 ,(select distinct ProjId from ProjStakeHolderMov where ProjId=a.ProjId and StatusActionsMappingId=103) IsHosted
+
+    FROM Projects a
+    INNER JOIN ProjStakeHolderMov b ON a.ProjId = b.ProjId
+    LEFT JOIN tbl_mUnitBranch stake ON a.StakeHolderId = stake.unitid
+    LEFT JOIN TrnStatusActionsMapping map ON b.StatusActionsMappingId = map.StatusActionsMappingId
+    LEFT JOIN mStatus status ON map.StatusId = status.StatusId
+    LEFT JOIN mStages stage ON status.StageId = stage.StagesId
+    LEFT JOIN mActions actions ON map.ActionsId = actions.ActionsId
+    LEFT JOIN tbl_mUnitBranch toUnits ON b.ToUnitId = toUnits.unitid
+    LEFT JOIN tbl_mUnitBranch fromUnits ON b.FromUnitId = fromUnits.unitid
+    WHERE a.IsActive = 1 AND a.IsDeleted = 0
+      AND b.IsActive = 1 AND b.IsDeleted = 0
+      AND a.IsSubmited = 1 AND b.IsComplete = 0
+      AND b.IsComment = 0 AND b.FromUnitId = @UnitId
+
+    UNION ALL
+
+    -- Historical Outbox Items (IsComplete = 1)
+    SELECT
+        a.ProjId,
+        b.PsmId AS PsmIds,
+        a.ProjName,
+        a.Sponsor,
+        a.StakeHolderId,
+        stake.UnitName AS StakeHolder,
+        stage.Stages,
+        stage.StagesId AS StageId,
+        status.Status,
+        status.StatusId,
+        b.FromUnitId,
+        fromUnits.UnitName AS FromUnitUserDetail,
+        CONCAT(fromUnits.UnitName, ' ( ', b.UserDetails, ')') AS FromUnitName,
+        b.ToUnitId,
+        toUnits.UnitName AS ToUnitName,
+        actions.Actions,
+        actions.ActionsId AS ActionId,
+        0 AS TotalDays,
+        b.TimeStamp,
+        a.IsProcess,
+        b.IsRead,
+        b.IsComplete,
+        b.IsPullBack,
+        'HISTORY' AS RecordType,
+
+        -- PullbackAction logic added
+        CASE 
+            WHEN EXISTS (
+                SELECT TOP 1 1 FROM ProjStakeHolderMov p1
+                WHERE p1.ProjId = b.ProjId AND p1.IsComment = 0
+                ORDER BY p1.PsmId DESC
+            )
+            AND (
+                SELECT TOP 1 p2.ToUnitId FROM ProjStakeHolderMov p2
+                WHERE p2.ProjId = b.ProjId AND p2.IsComment = 0
+                ORDER BY p2.PsmId DESC
+            ) != @UnitId
+            AND NOT EXISTS (
+                SELECT 1 FROM ProjStakeHolderMov p3
+                WHERE p3.ProjId = b.ProjId AND p3.IsComment = 0 AND p3.IsComplete = 0 AND p3.ToUnitId = @UnitId
+            )
+            THEN CAST(1 AS BIT)
+            ELSE CAST(0 AS BIT)
+        END AS PullbackAction
+		 ,(select distinct ProjId from ProjStakeHolderMov where ProjId=a.ProjId and StatusActionsMappingId=103) IsHosted
+
+    FROM Projects a
+    INNER JOIN ProjStakeHolderMov b ON a.ProjId = b.ProjId
+    LEFT JOIN tbl_mUnitBranch stake ON a.StakeHolderId = stake.unitid
+    LEFT JOIN TrnStatusActionsMapping map ON b.StatusActionsMappingId = map.StatusActionsMappingId
+    LEFT JOIN mStatus status ON map.StatusId = status.StatusId
+    LEFT JOIN mStages stage ON status.StageId = stage.StagesId
+    LEFT JOIN mActions actions ON map.ActionsId = actions.ActionsId
+    LEFT JOIN tbl_mUnitBranch toUnits ON b.ToUnitId = toUnits.unitid
+    LEFT JOIN tbl_mUnitBranch fromUnits ON b.FromUnitId = fromUnits.unitid
+    WHERE a.IsActive = 1 AND a.IsDeleted = 0
+      AND b.IsActive = 1 AND b.IsDeleted = 0
+      AND a.IsSubmited = 1 AND b.IsComplete = 1
+      AND b.IsComment = 0 AND b.FromUnitId = @UnitId
+END
+
+
+
+-------------------------------------------------------------
+
+
+ALTER PROCEDURE [dbo].[usp_GetActInbox]
+    @UnitId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT
+        a.ProjId,
+        b.PsmId AS PsmIds,
+        a.ProjName,
+        a.StakeHolderId,
+        stackcs.UnitName AS StakeHolder,
+        s.Status,
+        s.StatusId,
+        b.FromUnitId,
+        b.ToUnitId,
+        toUnit.UnitName AS ToUnitName,
+        act.Actions AS Action,
+        0 AS TotalDays,
+        map.ActionsId AS ActionId,
+        a.Sponsor,
+        ISNULL(fromUnit.UnitName, '') AS UnitName,
+        fromUnit.UnitName AS FromUnitUserDetail,
+        fromUnit.UnitName + ' ( ' + ISNULL(b.UserDetails, '') + ')' AS FromUnitName,
+        stg.Stages AS Stage,
+        stg.StagesId AS StageId,
+        b.IsRead,
+        a.IsProcess,
+        b.TimeStamp,
+        
+        -- Date_type field
+        a.Date_type,
+
+        -- AdminApprovalStatus field (Check for DDGIT_approval == true)
+        CASE 
+            WHEN adminApproval.DDGIT_approval = 1 THEN 1
+            ELSE 0
+        END AS AdminApprovalStatus,
+
+        -- UserRequest field (Check if any DateApproval record exists with DDGIT_approval false or null)
+        CASE 
+            WHEN EXISTS ( 
+                SELECT 1 
+                FROM DateApproval da 
+                WHERE da.ProjId = a.ProjId AND (da.DDGIT_approval = 0 OR da.DDGIT_approval IS NULL)
+            ) THEN 1
+            ELSE 0
+        END AS UserRequest,
+
+		   -- LatestActionType field from LegacyHistory
+        (
+            SELECT TOP 1 lh.ActionType
+            FROM LegacyHistory lh
+            WHERE lh.ProjectId = a.ProjId
+            ORDER BY lh.ActionDate DESC
+        ) AS LatestActionType,
+
+        -- RequestUnitId field (Fetch the UnitId where DDGIT_approval is false or null, and order by Request_Date)
+        (SELECT TOP 1 da.UnitId
+         FROM DateApproval da
+         WHERE da.ProjId = a.ProjId AND (da.DDGIT_approval = 0 OR da.DDGIT_approval IS NULL)
+         ORDER BY da.Request_Date DESC) AS RequestUnitId
+
+		  ,(select distinct ProjId from ProjStakeHolderMov where ProjId=a.ProjId and StatusActionsMappingId=103) IsHosted
+
+    FROM Projects a
+    JOIN ProjStakeHolderMov b ON a.ProjId = b.ProjId
+    LEFT JOIN tbl_mUnitBranch stackcs ON a.StakeHolderId = stackcs.unitid
+    LEFT JOIN DateApproval adminApproval ON a.ProjId = adminApproval.ProjId AND adminApproval.DDGIT_approval = 1
+    JOIN TrnStatusActionsMapping map ON b.StatusActionsMappingId = map.StatusActionsMappingId
+    JOIN mStatus s ON map.StatusId = s.StatusId
+    JOIN mActions act ON map.ActionsId = act.ActionsId
+    LEFT JOIN tbl_mUnitBranch toUnit ON b.ToUnitId = toUnit.unitid
+    LEFT JOIN tbl_mUnitBranch fromUnit ON b.FromUnitId = fromUnit.unitid
+    LEFT JOIN mStages stg ON s.StageId = stg.StagesId
+    WHERE a.IsActive = 1 AND a.IsDeleted = 0
+      AND b.IsActive = 1 AND b.IsDeleted = 0
+      AND a.IsSubmited = 1 AND b.IsComplete = 0
+      AND b.ToUnitId = @UnitId AND b.IsComment = 0
+    ORDER BY b.TimeStamp DESC;
+END
+
+
+-----------------------------------------------------
+
+
+add one column in the DateApproval table 
+
+ALTER TABLE DateApproval
+ADD RequestType INT CONSTRAINT DF_DateApproval_RequestType  DEFAULT 1;
