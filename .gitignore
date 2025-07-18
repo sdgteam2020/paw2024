@@ -492,3 +492,9 @@ AppPackages/
 /swas.UI/wwwroot/DownloadFile
 /swas.UI/wwwroot/Error
 /swas.UI/wwwroot/SOP
+/swasUnitTest/obj/Debug/net6.0/swasUnitTest.AssemblyInfo.cs
+/swasUnitTest/obj/Release/net6.0/swasUnitTest.AssemblyInfo.cs
+/swasUnitTest/obj/Debug/net6.0/swasUnitTest.AssemblyInfoInputs.cache
+/swasUnitTest/obj/Debug/net6.0/swasUnitTest.GeneratedMSBuildEditorConfig.editorconfig
+/swasUnitTest/obj/Release/net6.0/swasUnitTest.GeneratedMSBuildEditorConfig.editorconfig
+/swasUnitTest/obj/Release/net6.0/swasUnitTest.AssemblyInfoInputs.cache
