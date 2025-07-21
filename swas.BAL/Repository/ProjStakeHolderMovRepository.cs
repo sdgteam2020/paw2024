@@ -204,6 +204,7 @@ namespace swas.BAL.Repository
             {
                 DTOProjectHold db = new DTOProjectHold();
                 db.PsmId = databyprojectid[i].PsmId;
+                
                 if (databyprojectid[i].IsComment == false)
                 {
 
@@ -217,7 +218,21 @@ namespace swas.BAL.Repository
                         db.IsComment = databyprojectid[i].IsComment;
                     
                         db.IsComplete = databyprojectid[i].IsComplete;
-                        db.TimeStampTo = databyprojectid[i].DateTimeOfUpdate;
+                      
+                        
+                        if (databyprojectid.Count()==1)
+                        {
+                            db.TimeStampTo = DateTime.Now;
+                        }
+                        //else
+                        //{
+                           
+                        //     db.TimeStampTo = databyprojectid[i].TimeStamp;
+                            
+
+                        //}
+                       
+
                         db.TounitId = databyprojectid[i].TounitId;
                         db.Tounit = databyprojectid[i].Tounit;
                         db.Status = databyprojectid[i].Status;
@@ -226,6 +241,9 @@ namespace swas.BAL.Repository
                     }
                     else
                     {
+                        if (lst[0].TimeStampTo==null)
+                        lst[0].TimeStampTo = databyprojectid[i].TimeStamp;
+
                         db.FromunitId = databyprojectid[i].FromunitId;
                         db.Fromunit = databyprojectid[i].Fromunit;
                         db.TimeStampfrom = databyprojectid[i].TimeStamp;
