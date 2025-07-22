@@ -150,6 +150,12 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     $('#x').on('hidden.bs.modal', function () {
         $('#datepicker').datepicker('setDate', null);
     });
+
+
+    $("#tabCC").click(function () {
+       
+        GetCCProject();
+    });
 });
 
 
@@ -294,6 +300,7 @@ function GetProjectMovHistory(ProjId) {
                 /*listitem += '  ' + DateTimeFormatedd_mm_yyyy(new Date($.now())) + '';*/
                 DTOProjectMovHistorypsmlst = response.dtoProjectMovHistorypsmlst;
                 DTOProjectMovHistorycmdlst = response.dtoProjectMovHistorycmdlst;
+                DTOProjectCCHistorylst = response.dtoProjectCCHistorylst;
                 listitem += '  ' + DateTimeFormatedd_mm_yyyy(new Date($.now())) + '';
                 listitem += '<span>' + DTOProjectMovHistorypsmlst.length + ' Entries</span>';
                 listitem += '</div>';
@@ -494,6 +501,36 @@ function GetProjectMovHistory(ProjId) {
                         }
                         listitem += '</div></div>';
                     }
+                    var DTOProjectCCHistorycccpsmid = DTOProjectCCHistorylst.filter(function (element) { return element.psmId == DTOProjectMovHistorypsmlst[i].psmId; });
+
+                    if (DTOProjectCCHistorycccpsmid.length > 0) {
+                        for (let cc = 0; cc < DTOProjectCCHistorycccpsmid.length; cc++) {
+                        listitem += '<div class="col-sm-4">';
+                        listitem += '<div class="timeline-box">';
+                        listitem += '<div class="box-title bg-warning">';
+                        listitem += '<i class="fa-solid fa-closed-captioning fa-2x"></i>';
+                        listitem += '</div>';
+                        listitem += '<div class="box-content">';
+                       
+                            let readon = "";
+
+                           
+                            listitem += '<div class="box-item">' + '<strong>Unit Name : </strong>' + DTOProjectCCHistorycccpsmid[cc].unitName + ' </div>';
+                            if (DTOProjectCCHistorycccpsmid[cc].isRead == true) {
+
+                                listitem += '<div class="box-item">' + '<strong>Read on : </strong>' + DateTimeFormatedd_mm_yyyy(DTOProjectCCHistorycccpsmid[cc].readDate) + ' </div>';
+                                listitem += '<div class="box-item">' + '<strong>Read By : </strong>' + DTOProjectCCHistorycccpsmid[cc].userDetails + ' </div>';
+                            }
+                           
+                       
+                        
+                        listitem += '</div>';
+                        listitem += '</div></div>';
+                        }
+                    }
+                   
+                   // if (DTOProjectCCHistorylst)
+                   
                     //if (DTOProjectMovHistorypsmlst[i].undoRemarks != null) {
                     //    listitem += '<div class="col-sm-4">';
                     //    listitem += '<div class="timeline-box">';
@@ -544,6 +581,87 @@ function IsReadInbox(psmId) {
     });
 }
 
+function GetCCProject() {
+
+    let listitem = "";
+    $.ajax({
+        url: '/Projects/GetActCcProject',
+        type: 'POST',
+       
+        success: function (response) {
+            if (response != null) {
+                
+                for (let i=0; i < response.length; i++) {
+                    listitem += '<tr>';
+                    listitem += '<td> <span class="d-none" id="SpnCurrentccProjId"> ' + response[i].projId +'</span> ';
+                    if (response[i].isRead == false)
+                        listitem += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="color:#18bb6b" fill = "currentColor" class="bi bi-check" viewBox = "0 0 16 16" ><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" /></svg >';
+                    else
+                        listitem += '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" style="color:#18bb6b" height = "16" fill = "currentColor" > <path d="M342.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l80 80c12.5 12.5 32.8 12.5 45.3 0l160-160zm96 128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 402.7 54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l256-256z" /> </svg >';
+
+                    listitem += '</td>';
+                    listitem += '<td> <a data-proj-name="' + response[i].projName +'" data-proj-id="' + response[i].projId +'" href="/Projects/ProjHistory?EncyID=' + response[i].encyID +'&amp;Type=XR12">' +
+                        '<div class="tooltip-container" data-tooltip="' + response[i].projName+'">' +
+                        '<span class="short-text">' + truncateText(response[i].projName, 6) +'</span>' +
+                        '<span class="tooltip tooltip-text" id="projNamecc">"' + response[i].projName +'"</span>' +
+                        '</div>' +
+                        '</a> </td>';
+
+                    listitem += '<td class="RefLetter-container">'+
+                        '' + response[i].unitName+''+
+                                            '<div class="RefLetter">'+
+                                            '' + response[i].sponsor+''+
+                        '</div></td>';
+                    listitem += '<td class="RefLetter-container">' +
+                        '' + response[i].fromUnitUserDetail + '' +
+                        '<div class="RefLetter">' +
+                        '' + response[i].fromUnitName + '' +
+                        '</div></td>';
+                   /* listitem += '<td>' + response[i].toUnitName + '</td>'*/
+                    listitem += '<td>' + DateFormateddMMyyyyhhmmss(response[i].timeStamp) + '</td>'
+                    if (response[i].userDetails!="")
+                        listitem += '<td>' + DateFormateddMMyyyyhhmmss(response[i].readDate) + '</td>'
+                    else
+                        listitem += '<td></td>'
+                    listitem += '<td>' + response[i].userDetails + '</td>'
+                    listitem += '<td>' + response[i].stage + '</td>'
+                    listitem += '<td>' +response[i].status+ '</td>'
+                    listitem += '<td>' +
+                        '<div class="RefLetter-container btn btn-warning p-2" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">' +
+                            '<span>Cc</span>' +
+                            '<div class="RefLetter">' +
+                        '' + response[i].ccUnitName+'' +
+                                '</div>' +
+                            '</div>' +
+					'</td>'
+                   
+                    listitem += '<td><div class="row d-flex">'+
+                        '<div class="col-md-2">' +
+                        '<button type="button" class="btn btn-success btn-FwdHistoryCcc" data-proj-name="@project.ProjName" title="History" style="margin-top: 1px;"><i class="fa-solid fa-timeline"></i></button>' +
+                        '</div>' +
+                        '</div>' +
+                                    '</td>';
+                    listitem += '';
+                 
+                }
+                $("#cctblData").html(listitem);
+                initializeDataTable("#CCtable");
+                $(".btn-FwdHistoryCcc").click(function () {
+                    var projName = $(this).closest("tr").find("#projNamecc").html(); //$(this).data('projNamecc');
+                    var words = projName.split(" ");
+                    var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
+                    //var finalTitle = "Mov History: " + shortProjName;
+                    var finalTitle = "Mov History: " + projName;
+                    $('#lblHistory').text(finalTitle);
+                    $('#ProjFwdHistory').modal('show');
+                   
+                    GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentccProjId").html());
+                });
+            }
+
+        }
+    });
+}
 
 
 //$(document).on("click", ".date-action", function (e) {
@@ -614,6 +732,15 @@ function IsReadInbox(psmId) {
 //}
 
 
+function truncateText(text, maxWords) {
+    if (!text || text.trim() === '') {
+        return '';
+    }
+
+    var words = text.trim().split(/\s+/); // split by whitespace
+    var truncated = words.slice(0, maxWords).join(' ');
+    return truncated;
+}
 
 $(document).on("click", ".date-action", function (e) {
     e.preventDefault();

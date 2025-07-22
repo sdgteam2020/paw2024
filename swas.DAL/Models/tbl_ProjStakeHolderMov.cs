@@ -53,9 +53,12 @@ namespace swas.DAL.Models
 
         public bool IsComplete { get; set; }
         public bool IsComment { get; set; }
+        public bool IsCc { get; set; }
 
         public string? UserDetails { get; set; }
         public string? CertNo { get; set; }
+        [NotMapped]
+        public int[]? CcId { get; set; }
 
     }
 

@@ -11,6 +11,7 @@ namespace swas.BAL.DTO
     {
         public List<DTOProjectMovHistorycmd> DTOProjectMovHistorycmdlst { get; set; }
         public List<DTOProjectMovHistorypsm> DTOProjectMovHistorypsmlst { get; set; }
+        public List<DTOProjectCCHistory> DTOProjectCCHistorylst { get; set; }
     }
     public class DTOProjectMovHistorypsm
     {
@@ -39,5 +40,13 @@ namespace swas.BAL.DTO
         public string? Status { get; set; }
         public string? UserDetails { get; set; }
         public DateTime? DateTimeOfUpdate { get; set; }
+    }
+    public class DTOProjectCCHistory
+    {
+        public int PsmId { get; set; }
+        public string? UnitName { get; set; }
+        public bool IsRead { get; set; }
+        public DateTime ReadDate { get; set; }
+        public string? UserDetails { get; set; }
     }
 }

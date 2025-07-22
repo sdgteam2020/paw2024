@@ -166,7 +166,20 @@ namespace swas.BAL.Repository
             //    lastInitialStageRecord.Status = lastInitialStageRecord.ToUnitName;
             //}
             lst.DTOProjectMovHistorycmdlst = comments;
-           
+
+            var retcc = await (from a in _dbContext.Projects
+                               join b in _dbContext.ProjStakeHolderCcMov on a.ProjId equals b.ProjId
+                               join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid
+                               join tounit in _dbContext.tbl_mUnitBranch on b.ToCcUnitId equals tounit.unitid
+                               select new DTOProjectCCHistory
+                               {
+                                   PsmId=b.PsmId,
+                                   UnitName = tounit.UnitName,
+                                   IsRead=b.IsRead,
+                                   ReadDate = b.ReadDate,
+                                   UserDetails=b.UserDetails != null ? b.UserDetails : "____"
+                               }).ToListAsync();
+           lst.DTOProjectCCHistorylst = retcc;
             return lst;
         }
         public async Task<List<DTOProjectHold>> ProjectHolsTimeCalculate(int ProjectId)

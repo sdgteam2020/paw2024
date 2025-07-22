@@ -80,6 +80,7 @@ builder.Services.AddScoped<IDdlRepository, DdlRepository>();
 builder.Services.AddScoped<ISoftwareTypeRepository, SoftwareTypeRepository>();
 builder.Services.AddScoped<IProjectsRepository, ProjectsRepository>();
 builder.Services.AddScoped<IProjStakeHolderMovRepository, ProjStakeHolderMovRepository>();
+builder.Services.AddScoped<IProjStakeHolderCcMovRepository, ProjStakeHolderCcMovRepository>();
 builder.Services.AddScoped<IStagesRepository, StagesRepository>();
 builder.Services.AddScoped<IStakeHolderRepository, StakeHolderRepository>();
 builder.Services.AddScoped<IStatusRepository, StatusRepository>();

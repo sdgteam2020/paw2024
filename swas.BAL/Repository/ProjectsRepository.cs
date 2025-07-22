@@ -1232,7 +1232,10 @@ namespace swas.BAL.Repository
                             LatestActionType = reader.IsDBNull(reader.GetOrdinal("LatestActionType")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("LatestActionType")),
 
 
-                            RequestUnitId = reader.IsDBNull(reader.GetOrdinal("RequestUnitId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("RequestUnitId"))
+                            RequestUnitId = reader.IsDBNull(reader.GetOrdinal("RequestUnitId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("RequestUnitId")),
+                           IsCc = (bool)reader["IsCc"],
+                            IssentCC = (bool)reader["IssentCC"],
+                            CCUnitName = reader["CCUnitName"]?.ToString()
                         });
 
                     }
@@ -1484,7 +1487,9 @@ namespace swas.BAL.Repository
                                 EncyPsmID = _dataProtector.Protect(reader["PsmIds"].ToString()),
                                 PullbackAction = reader["PullbackAction"] != DBNull.Value && Convert.ToBoolean(reader["PullbackAction"]),
                                 IsHosted= Convert.ToInt32(reader["IsHosted"] != DBNull.Value ? Convert.ToInt32(reader["IsHosted"]) : 0),
-
+                                IsCc = (bool)reader["IsCc"],
+                              
+                                CCUnitName = reader["CCUnitName"]?.ToString()
 
                             };
 
@@ -1496,6 +1501,93 @@ namespace swas.BAL.Repository
 
             return lst;
 
+            #endregion
+
+        }
+        public async Task<List<DTOProjectsFwd>> GetActCcItemsAsync()
+        {
+
+            #region GetActSendItemsWithProc
+            try
+            {
+                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+                if (Logins == null) return null;
+
+                var lst = new List<DTOProjectsFwd>();
+                int unitId = Logins.unitid ?? 0;
+
+
+                using (SqlConnection conn = new SqlConnection(_dbContext.Database.GetConnectionString()))
+                {
+                    using (SqlCommand cmd = new SqlCommand("usp_GetActCcItems", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@UnitId", unitId);
+
+
+                        await conn.OpenAsync();
+                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                        DataTable dt = new DataTable();
+                        adapter.Fill(dt);
+                        var data = dt;
+
+
+                        using (var reader = await cmd.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                var dto = new DTOProjectsFwd
+                                {
+                                    ProjId = reader.GetInt32(reader.GetOrdinal("ProjId")),
+                                    PsmIds = reader.GetInt32(reader.GetOrdinal("PsmIds")),
+                                    ProjName = reader["ProjName"]?.ToString(),
+                                    Sponsor = reader["Sponsor"]?.ToString(),
+                                    StakeHolderId = reader.GetInt32(reader.GetOrdinal("StakeHolderId")),
+                                    StakeHolder = reader["StakeHolder"]?.ToString(),
+                                    Stage = reader["Stages"]?.ToString(),
+                                    StageId = reader.GetInt32(reader.GetOrdinal("StageId")),
+                                    Status = reader["Status"]?.ToString(),
+                                    StatusId = reader["StatusId"] != DBNull.Value ? Convert.ToInt32(reader["StatusId"]) : 0,
+                                    FromUnitId = reader.GetInt32(reader.GetOrdinal("FromUnitId")),
+                                    FromUnitUserDetail = reader["FromUnitUserDetail"]?.ToString(),
+                                    FromUnitName = reader["FromUnitName"]?.ToString(),
+                                    ToUnitId = reader.GetInt32(reader.GetOrdinal("ToUnitId")),
+                                    ToUnitName = reader["ToUnitName"]?.ToString(),
+                                    Action = reader["Actions"]?.ToString(),
+                                    ActionId = reader.GetInt32(reader.GetOrdinal("ActionId")),
+                                    TotalDays = 0,
+                                    TimeStamp = reader["TimeStamp"] != DBNull.Value ? Convert.ToDateTime(reader["TimeStamp"]) : DateTime.MinValue,
+                                    IsProcess = reader["IsProcess"] != DBNull.Value && Convert.ToBoolean(reader["IsProcess"]),
+                                    IsRead = reader["IsRead"] != DBNull.Value && Convert.ToBoolean(reader["IsRead"]),
+                                   
+                                    //IsPullBack = reader["IsPullBack"] != DBNull.Value && Convert.ToBoolean(reader["IsPullBack"]),
+                                    UnitName = reader["StakeHolder"]?.ToString(),
+                                    EncyID = _dataProtector.Protect(reader["ProjId"].ToString()),
+                                    EncyPsmID = _dataProtector.Protect(reader["PsmIds"].ToString()),
+                                    //PullbackAction = reader["PullbackAction"] != DBNull.Value && Convert.ToBoolean(reader["PullbackAction"]),
+                                    IsHosted = Convert.ToInt32(reader["IsHosted"] != DBNull.Value ? Convert.ToInt32(reader["IsHosted"]) : 0),
+                                    IsCc = (bool)reader["IsCc"],
+                                    CCUnitName = reader["CCUnitName"]?.ToString(),
+                                    ReadDate = reader["ReadDate"] != DBNull.Value ? Convert.ToDateTime(reader["ReadDate"]) : DateTime.MinValue,
+                                    UserDetails = reader["UserDetails"]?.ToString()
+
+                                };
+
+                                lst.Add(dto);
+                            }
+                        }
+                    }
+
+                }
+
+
+                return lst;
+            }
+            catch(Exception ex)
+            {
+                // Log the exception or handle it as needed
+                throw;
+            }
             #endregion
 
         }
