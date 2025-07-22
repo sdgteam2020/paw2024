@@ -68,7 +68,7 @@ namespace swas.DAL
         public DbSet<DToWhiteListeds> WhiteListedProjects { get; set; }
         public DbSet<DateApproval> DateApproval { get; set; }
         public DbSet<LegacyHistory> LegacyHistory { get; set; }
-        public DbSet<trnRemainder> Remainders { get; set; }
+        public virtual DbSet<trnRemainder> TrnRemainders { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<Resultss>().HasNoKey();
@@ -105,6 +105,7 @@ namespace swas.DAL
 
             modelBuilder.Entity<DateApproval>().ToTable("DateApproval");
             modelBuilder.Entity<LegacyHistory>().ToTable("LegacyHistory");
+            modelBuilder.Entity<trnRemainder>().ToTable("trnRemainder");
 
             modelBuilder.Entity<AddNewProject>().HasNoKey(); // Mark as keyless entity
 

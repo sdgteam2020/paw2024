@@ -22,10 +22,10 @@
 	var remainderList = ViewBag.remainder as List<swas.DAL.Models.trnRemainder>;
 }
 
-	
 
 
 
+<link href="~/css/timeline.css" rel="stylesheet" />
 <link href="~/assets/css/tooltip.css" rel="stylesheet" />
 
 <style>
@@ -313,6 +313,14 @@
 				</a>
 			</li>
 			<li><a href="#" data-tab="completed" id="tabcompleted" style="width: 261px">@*<span class="fa fa-camera"></span>*@<img src="~/assets/images/completed.png" width="20px;" height="20px;" />&nbsp;Completed(Hosted On ADN)</a></li>
+
+			<li>
+				<a href="#" data-tab="Remainder" id="tabRemainder">
+					@*<span class="fa fa-edit"></span>*@
+					<img src="~/assets/images/bell.png" width="25px;" height="25px;" />
+					&nbsp;Remainder Mov
+				</a>
+			</li>
 			@* <li><a href="#" data-tab="draft" id="tabdraft"><img src="~/assets/images/draft.png" width="20px;" height="20px;" />&nbsp;Draft Projects</a></li> *@
 			<li class="red-text" id="blinking-li">
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -359,87 +367,87 @@
 											classname = "bold-text";
 										}
 										else
-										{	
+										{
 											classname = "";
 										}
-										bool hasRemainder = remainderList?.Any(r => r.psmid == project.PsmIds) ?? false;
-										int remainderCount = remainderList?.Count(r => r.psmid == project.PsmIds) ?? 0;
-										<tr class="@classname" >
+										bool hasRemainder = remainderList?.Any(r => r.Projid == project.ProjId) ?? false;
+										int remainderCount = remainderList?.Count(r => r.Projid == project.ProjId) ?? 0;
+											<tr class="@classname" >
 
-											<td data-order="@snoinbox">
+												<td data-order="@snoinbox">
 												@{
 													snoinbox++;
 												}
-												<span>@snoinbox</span>
+													<span>@snoinbox</span>
 												@* Visible content *@
 
-												@if (hasRemainder  && project.IsComplete == false)
+												@if (hasRemainder && project.IsComplete == false)
 												{
-													<div style="position: relative; display: inline-block; margin-left: 5px;">
-														<img src="/assets/images/icons/notification-unscreen.gif" alt="Notification" style="width:30px; height:30px;">
-														<span class="badge3" id="Remainderbedge" style="position: absolute; top: -5px; right: -5px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px;">@remainderCount</span>
-													</div>
+															<div style="position: relative; display: inline-block; margin-left: 5px;">
+																<img src="/assets/images/icons/notification-unscreen.gif" alt="Notification" style="width:30px; height:30px;">
+																<span class="badge3" id="Remainderbedge" style="position: absolute; top: -5px; right: -5px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px;">@remainderCount</span>
+															</div>
 												}
-												
 
-											
-												
-												
-											</td>
-											
 
-											<td class="f-12">
 
-												<span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
-												<span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
-												<span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
-												<span class="d-none" id="LatestActionType">@project.LatestActionType</span>
+
+
+												</td>
+
+
+												<td class="f-12">
+
+													<span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
+													<span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
+													<span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
+													<span class="d-none" id="LatestActionType">@project.LatestActionType</span>
 												@* <span class="d-none" id="SpnTimeStampId">@project.TimeStamp.ToString().Substring(0, 10)</span> *@
-												<span class="d-none" id="SpnTimeStampId">@project.TimeStamp</span>
-												<span class="d-none" id="SpnStageId">@project.StageId</span>
-												<span class="d-none" id="SpnTimeStatusId">@project.StatusId</span>
+													<span class="d-none" id="SpnTimeStampId">@project.TimeStamp</span>
+													<span class="d-none" id="SpnStageId">@project.StageId</span>
+													<span class="d-none" id="SpnTimeStatusId">@project.StatusId</span>
 
-												<span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
-												<span class="d-none" id="SpnTimeActionId">@project.ActionId</span>
-												<span class="d-none" id="SpnTimeToUnitId">@project.ToUnitId</span>
-												<span class="d-none" id="SpnDate_type">@project.Date_type</span>
-												<span class="d-none" id="SpnApprove">@project.AdminApprovalStatus</span>
-												<a data-proj-name="@project.ProjName" id="ProjectName" class="ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XRDC">
-													<div class="tooltip-container" data-tooltip="@project.ProjName">
-														<span class="short-text">@truncateText(project.ProjName, 6)</span>
-														<span class="tooltip tooltip-text">@project.ProjName</span>
-													</div>
-												</a>
-											</td>
+													<span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
+													<span class="d-none" id="SpnTimeActionId">@project.ActionId</span>
+													<span class="d-none" id="SpnTimeToUnitId">@project.ToUnitId</span>
+													<span class="d-none" id="SpnDate_type">@project.Date_type</span>
+													<span class="d-none" id="SpnApprove">@project.AdminApprovalStatus</span>
+													<a data-proj-name="@project.ProjName" id="ProjectName" class="ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XRDC">
+														<div class="tooltip-container" data-tooltip="@project.ProjName">
+															<span class="short-text">@truncateText(project.ProjName, 6)</span>
+															<span class="tooltip tooltip-text">@project.ProjName</span>
+														</div>
+													</a>
+												</td>
 
 
 
-											<td class="RefLetter-container">
+												<td class="RefLetter-container">
 												@project.UnitName
-												<div class="RefLetter">
+													<div class="RefLetter">
 													@project.Sponsor
-												</div>
-											</td>
-											<td class="RefLetter-container col-width9">
+													</div>
+												</td>
+												<td class="RefLetter-container col-width9">
 												@project.FromUnitUserDetail
-												<div class="RefLetter">
+													<div class="RefLetter">
 													@project.FromUnitName
-												</div>
-											</td>
+													</div>
+												</td>
 
-											<td>@project.ToUnitName</td>
+												<td>@project.ToUnitName</td>
 											@* <td>@project.TimeStamp.ToString().Substring(0,10)</td> *@
-											<td>@project.TimeStamp</td>
-											<td>@project.Stage</td>
-											<td>@project.Status</td>
-											<td>@project.Action</td>
+												<td>@project.TimeStamp</td>
+												<td>@project.Stage</td>
+												<td>@project.Status</td>
+												<td>@project.Action</td>
 
 
 
 
-											<td>
-												<div class="row ">
-													<div class="col-md-12 d-flex">
+												<td>
+													<div class="row ">
+														<div class="col-md-12 d-flex">
 														@* <div class="mr-2">
                                                         @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
                                                         {
@@ -453,31 +461,31 @@
                                                         }
                                                     </div> *@
 
-														<div class="mr-2">
+															<div class="mr-2">
 															@if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
 															{
-																<a href="javascript:void(0);" class="processDetail mr-2" data-id="@project.EncyPsmID">
-																	<img src="/assets/images/icons/process1.png" alt="Icon" style="height: 22px;">
-																</a>
+																		<a href="javascript:void(0);" class="processDetail mr-2" data-id="@project.EncyPsmID">
+																			<img src="/assets/images/icons/process1.png" alt="Icon" style="height: 22px;">
+																		</a>
 															}
 															else
 															{
-																<button type="button" class="btn btn-success btn-Fwd" data-Date_type="@project.AdminApprovalStatus" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
+																		<button type="button" class="btn btn-success btn-Fwd" data-Date_type="@project.AdminApprovalStatus" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
 															}
-														</div>
-														<div class="col-md-4">
+															</div>
+															<div class="col-md-4">
 															@if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
 															{
-																<button type="button" class="btn btn-success btn-Obsn" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;">Obsn</button>
+																		<button type="button" class="btn btn-success btn-Obsn" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;">Obsn</button>
 															}
-														</div>
-														<div class="col-md-4">
-															<button type="button" class="btn btn-success btn-FwdHistory" data-proj-name="@project.ProjName" style="margin-top: 1px;" title="History"><i class="fa-solid fa-timeline"></i></button>
+															</div>
+															<div class="col-md-4">
+																<button type="button" class="btn btn-success btn-FwdHistory" data-proj-name="@project.ProjName" style="margin-top: 1px;" title="History"><i class="fa-solid fa-timeline"></i></button>
+															</div>
 														</div>
 													</div>
-												</div>
-											</td>
-											<td>
+												</td>
+												<td>
 												@*  @{
                                                     int currentUnitId = ViewBag.UnitId;
                                                 } *@
@@ -511,28 +519,28 @@
 												{
 													@if (project.IsProcess == true && project.LatestActionType == (int)ActionTypeEnum.Approved)
 													{
-														<span title="Approved Legacy Project">
+																	<span title="Approved Legacy Project">
 
-															<a href="#" class="date-action mr-2 disabled-link" data-action="current" data-ids="@project.EncyPsmID">
-																<img src="/assets/images/icons/Current_date.png" alt="Icon" style="height: 27px;">
-															</a>
-														</span>
+																		<a href="#" class="date-action mr-2 disabled-link" data-action="current" data-ids="@project.EncyPsmID">
+																			<img src="/assets/images/icons/Current_date.png" alt="Icon" style="height: 27px;">
+																		</a>
+																	</span>
 													}
 													else if (project.IsProcess == true && project.LatestActionType == (int)ActionTypeEnum.RequestSent @* project.AdminApprovalStatus == false && project.UserRequest == true && project.RequestUnitId == currentUnitId *@)
 													{
-														<span title="Pending From Admin">
-															<!-- Pending shown only to the unit that requested -->
-															<a href="#" class="date-action mr-2 disabled-link" data-action="Pending">
-																<img src="/assets/images/icons/Pendingbtn.png" alt="Icon" style="height: 30px;">
-															</a>
-														</span>
+																	<span title="Pending From Admin">
+																		<!-- Pending shown only to the unit that requested -->
+																		<a href="#" class="date-action mr-2 disabled-link" data-action="Pending">
+																			<img src="/assets/images/icons/Pendingbtn.png" alt="Icon" style="height: 30px;">
+																		</a>
+																	</span>
 													}
 													else if (project.IsProcess == true && project.LatestActionType == (int)ActionTypeEnum.Rejected)
 													{
-														<!-- Other units can still request -->
-														<a href="#" class="date-action mr-2" data-actiontype="1" data-action="back" data-ids="@project.EncyPsmID" title="Request for Back Date from Admin">
-															<img src="/assets/images/icons/Back_date.png" alt="Icon" style="height: 27px;">
-														</a>
+																	<!-- Other units can still request -->
+																	<a href="#" class="date-action mr-2" data-actiontype="1" data-action="back" data-ids="@project.EncyPsmID" title="Request for Back Date from Admin">
+																		<img src="/assets/images/icons/Back_date.png" alt="Icon" style="height: 27px;">
+																	</a>
 
 													}
 
@@ -541,16 +549,16 @@
 												{
 													if (project.IsProcess == true && project.LatestActionType == null)
 													{
-														<!-- Other units can still request -->
-														<a href="#" class="date-action mr-2" data-actiontype="1" data-action="back" data-ids="@project.EncyPsmID" title="Request for Back Date from Admin">
-															<img src="/assets/images/icons/Back_date.png" alt="Icon" style="height: 27px;">
-														</a>
+																	<!-- Other units can still request -->
+																	<a href="#" class="date-action mr-2" data-actiontype="1" data-action="back" data-ids="@project.EncyPsmID" title="Request for Back Date from Admin">
+																		<img src="/assets/images/icons/Back_date.png" alt="Icon" style="height: 27px;">
+																	</a>
 													}
 												}
 
 
-											</td>
-										</tr>
+												</td>
+											</tr>
 									}
 								</tbody>
 
@@ -647,9 +655,10 @@
 								<tbody class="FontSize">
 									@foreach (var project in Model.SendItems.OrderByDescending(i => i.TimeStamp).ToList())
 									{
+										bool hasRemainder = remainderList?.Any(r => r.Projid == project.ProjId && r.IsRead == false) ?? false;
 
-										<tr>
-											<td class="s-no-column">
+											<tr>
+												<td class="s-no-column">
 
 												@{
 													snosent++;
@@ -659,69 +668,73 @@
 												@snosent
 												@if (project.IsRead == false)
 												{
-													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="color:#18bb6b"
-													fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
-														<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />
-													</svg>
+															<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="color:#18bb6b"
+															fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+																<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />
+															</svg>
 												}
 												else
 												{
-													<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" style="color:#18bb6b"
-													height="16" fill="currentColor">
-														<path d="M342.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l80 80c12.5 12.5 32.8 12.5 45.3 0l160-160zm96 128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 402.7 54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l256-256z" />
-													</svg>
+															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" style="color:#18bb6b"
+															height="16" fill="currentColor">
+																<path d="M342.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l80 80c12.5 12.5 32.8 12.5 45.3 0l160-160zm96 128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 402.7 54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l256-256z" />
+															</svg>
 												}
-												@if( project.IsRead == true)
+												@if (project.IsRead == true && project.IsComplete == true)
 												{
-													<img src="/assets/images/icons/greenRemainder.png" id="btnRemainder" alt="Computer man" data-projid="@project.ProjId" data-projname="@project.ProjName" style="width:20px; height:20px;">
+															<img src="/assets/images/icons/add-reminder1.png" id="btnRemainder" alt="Computer man" data-projid="@project.ProjId" data-projname="@project.ProjName" style="width:20px; height:20px;">
+												}
+												else if (project.IsRead == false && project.IsComplete == false || project.IsRead == true && project.IsComplete == false)
+												{
+															<img src="/assets/images/icons/greenRemainder.png" id="btnRemainder" alt="Computer man" data-projid="@project.ProjId" data-projname="@project.ProjName" style="width:20px; height:20px;">
 												}
 
-												
 
-											</td>
 
-											<td class="f-12">
-												<span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
-												<span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
-												<span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
+												</td>
+
+												<td class="f-12">
+													<span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
+													<span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
+													<span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
 												@* <span class="d-none" id="SpnTimeStampId">@project.TimeStamp.ToString().Substring(0,10)</span> *@
-												<span class="d-none" id="SpnTimeStampId">@project.TimeStamp</span>
-												<span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
-												<span class="d-none" id="SpnprojectStageId">@project.StageId</span>
-												<span class="d-none" id="SpnprojectToUnitId">@project.ToUnitId</span>
+													<span class="d-none" id="SpnTimeStampId">@project.TimeStamp</span>
+													<span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
+													<span class="d-none" id="SpnprojectStageId">@project.StageId</span>
+													<span class="d-none" id="SpnprojectToUnitId">@project.ToUnitId</span>
 
-												<a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XR12">
-													<div class="tooltip-container" data-tooltip="@project.ProjName">
-														<span class="short-text">@truncateText(project.ProjName, 6)</span>
-														<span class="tooltip tooltip-text">@project.ProjName</span>
-													</div>
-												</a>
-											</td>
-											<td class="RefLetter-container">
+													<a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XR12">
+														<div class="tooltip-container" data-tooltip="@project.ProjName">
+															<span class="short-text">@truncateText(project.ProjName, 6)</span>
+															<span class="tooltip tooltip-text">@project.ProjName</span>
+														</div>
+													</a>
+												</td>
+												<td class="RefLetter-container">
 												@project.UnitName
-												<div class="RefLetter">
+													<div class="RefLetter">
 													@project.Sponsor
-												</div>
-											</td>
-											<td class="RefLetter-container col-width9">
+													</div>
+												</td>
+												<td class="RefLetter-container col-width9">
 												@project.FromUnitUserDetail
-												<div class="RefLetter">
+													<div class="RefLetter">
 													@project.FromUnitName
-												</div>
-											</td>
+													</div>
+												</td>
 
-											<td>@project.ToUnitName</td>
+												<td>@project.ToUnitName</td>
 											@* <td>@project.TimeStamp.ToString().Substring(0, 10)</td> *@
-											<td>@project.TimeStamp</td>
-											<td>@project.Stage</td>
-											<td>@project.Status</td>
-											<td>@project.Action</td>
+												<td>@project.TimeStamp</td>
+												<td>@project.Stage</td>
+												<td>@project.Status</td>
+												<td>@project.Action</td>
 
-											<td>
-												<div class="row d-flex">
+												<td>
+													<div class="row d-flex">
 													@if (project.IsHosted == 0)
 													{
-														<div class="col-md-6">
+																<div class="col-md-6">
 
 															@* Undo Code  *@
 															@*@if (project.PsmIds == project.undopsmId && project.IsRead == false)
@@ -742,7 +755,7 @@
 																if (project.StageId != 1 && project.PullbackAction == true) // stageId!=1 means here this project in not in initial stage..
 																{
 
-																	<button type="button" class="btn btn-success btn-Undo ml-2" style="padding: 1px !important;font-size: 13px !important;">Pull Back </button>
+																					<button type="button" class="btn btn-success btn-Undo ml-2" style="padding: 1px !important;font-size: 13px !important;">Pull Back </button>
 																}
 															}
 															else
@@ -750,27 +763,27 @@
 																if (project.StageId != 1 && project.IsPullBack == true)
 																	if (project.IsPullBack == true)
 																	{
-																		<span class="btn btn-success ml-2" style="padding: 1px !important;font-size: 13px !important; cursor: not-allowed;">Pulled Back</span>
+																							<span class="btn btn-success ml-2" style="padding: 1px !important;font-size: 13px !important; cursor: not-allowed;">Pulled Back</span>
 																	}
 															}
-														</div>
+																</div>
 													}
 													else
 													{
-														<div class="col-md-6">
-															<button class="btn btn-success invisible" disabled>Pull Back </button>
-														</div>
+																<div class="col-md-6">
+																	<button class="btn btn-success invisible" disabled>Pull Back </button>
+																</div>
 													}
 
 
-													<div class="col-md-2">
-														<button type="button" class="btn btn-success btn-FwdHistorySent" data-proj-name="@project.ProjName" title="History" style="margin-top: 1px;"><i class="fa-solid fa-timeline"></i></button>
+														<div class="col-md-2">
+															<button type="button" class="btn btn-success btn-FwdHistorySent" data-proj-name="@project.ProjName" title="History" style="margin-top: 1px;"><i class="fa-solid fa-timeline"></i></button>
+														</div>
 													</div>
-												</div>
 
-											</td>
+												</td>
 
-										</tr>
+											</tr>
 
 									}
 								</tbody>
@@ -807,33 +820,33 @@
 								<tbody>
 									@foreach (var project in Model.CompletedItems)
 									{
-										<tr>
+											<tr>
 
-											<td>
+												<td>
 												@{
 													snocompleted++;
 												}
 												@snocompleted
-											</td>
-											<span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
-											<td>
-												<a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XR">
+												</td>
+												<span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
+												<td>
+													<a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XR">
 													@project.ProjName
-												</a>
-											</td>
-											<td>@project.StakeHolder</td>
+													</a>
+												</td>
+												<td>@project.StakeHolder</td>
 											@* <td>@project.FwdBy</td> *@
-											<td>@project.RecdFmUser</td>
+												<td>@project.RecdFmUser</td>
 											@* <td>@project.DateTimeOfUpdate?.ToString("dd-MM-yyyy")</td> *@
-											<td>@project.DateTimeOfUpdate</td>
+												<td>@project.DateTimeOfUpdate</td>
 
 
-											<td>
+												<td>
 												@project.Status
-											</td>
-											<td>@project.Action</td>
+												</td>
+												<td>@project.Action</td>
 
-										</tr>
+											</tr>
 
 									}
 								</tbody>
@@ -882,20 +895,20 @@
 								<tbody>
 									@foreach (var project in Model.Draft)
 									{
-										<tr>
+											<tr>
 
-											<td>
+												<td>
 												@{
 													snodraft++;
 												}
 												@snodraft
-											</td>
+												</td>
 											@* <td>@project.ProjId</td> *@
-											<td>
+												<td>
 
 												@project.ProjName
-											</td>
-											<td>@project.RecdFmUser</td>
+												</td>
+												<td>@project.RecdFmUser</td>
 											@*     <td>@project.EditDeleteDate?.ToString("dd-MM-yyyy")</td>
 
                                         <td>@project.FwdtoUser</td>
@@ -913,22 +926,22 @@
                                         @project.Comments
 
                                         </td> *@
-											<td>
+												<td>
 												@project.AdRemarks
 
-											</td>
+												</td>
 											@*   <td>
                                         @project.TotalDays
 
                                         </td> *@
-											<td>
+												<td>
 
 												@if (project.AttCnt > 0)
 												{
 
-													<a href="javascript:void(0);" class="anchorDetail" data-id="@project.CurrentPslmId">
-														<img src="/assets/images/icons/attachemnts_clip.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
-													</a>
+															<a href="javascript:void(0);" class="anchorDetail" data-id="@project.CurrentPslmId">
+																<img src="/assets/images/icons/attachemnts_clip.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
+															</a>
 
 
 												}
@@ -936,31 +949,31 @@
 												{
 
 												}
-											</td>
-											<td>
+												</td>
+												<td>
 												@if (project.IsSubmited == false)
 												{
 
-													<center>
+															<center>
 
 
-														<a href="@Url.Action("Create", "Projects", new { id = project.EncyID })">
-															<div data-project-id="@project.EncyID" id="ProjDetailId-@project.ProjId">
-																<img src="/assets/images/icons/edit.png" alt="Icon" style="width: 35px; height: 30px; margin-right: 0px;">
+																<a href="@Url.Action("Create", "Projects", new { id = project.EncyID })">
+																	<div data-project-id="@project.EncyID" id="ProjDetailId-@project.ProjId">
+																		<img src="/assets/images/icons/edit.png" alt="Icon" style="width: 35px; height: 30px; margin-right: 0px;">
 
 
-															</div>
-														</a>
+																	</div>
+																</a>
 
 
-													</center>
+															</center>
 												}
 												@*  <div class="ProjDetailUndo" data-project-id="@project.EncyID" id="ProjDetailId-@project.ProjId">
                                             <img src="/assets/images/icons/undo.png" alt="Icon" style="width: 25px; height: 20px; margin-right: 0px;">
                                             </div>*@
 
-											</td>
-										</tr>
+												</td>
+											</tr>
 
 									}
 								</tbody>
@@ -973,10 +986,75 @@
 				</div>
 			</div>
 			<!---END-DRAFT-->
+			<!---Start-Remainder-->
+			@{
+				snosent = 0;
+			}
+
+			<div class="tabs__content">
+				<div class="tabs__content__item" id="Remainder" style="height:100%; ">
+					<div class="content" style="height:100%;">
+						<div class="card radius-10 w-100" style="height:100%;">
+							<div class="card-body" style="height:100%; overflow-y: scroll;">
+
+								<table id="Remainders" class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<th style="width:8%">Ser No</th>
+											<th style="width:20%">Proj Name</th>
+											<th>Sponsor</th>
+											<th>UserDetails</th>
+											<th>Sent On</th>
+											<th class="col-width9">Remarks</th>
+											<th>Action</th>
 
 
+										</tr>
+									</thead>
+
+									<tbody class="FontSize">
+										@{
+											int serNo = 0;
+											foreach (var project in Model.Remainder)
+											{
+														<tr>
+															<td>
+														@{
+															serNo++;
+														}
+														@serNo
+															</td>
+															<td>@project.ProjName</td>
+															<td>@project.Sponsor</td>
+															<td>@project.Domain</td>
+															<td>@project.SentOn</td>
+															<td>@project.Remarks</td>
+															<td>
+														<a href="#" class="btn btn-sm btn-primary" id="btnRemMove" data-proj-name="@project.ProjName" data-action="@project.projid">View</a>
+															</td>
+														</tr>
+
+											}
+										}
+										
+
+									</tbody>
+
+								</table>
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
+
+
+
+
+
 	<div class="modal fade" id="ProjFwd" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog modal-xl custom-modal-size">
 			<div class="modal-content custom-modal-content">
@@ -1137,6 +1215,10 @@
 			</div><!-- modal-content -->
 		</div><!-- modal-dialog -->
 	</div>
+
+
+
+
 	<div class="modal fade right" id="Projibutton" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-xl" role="document">
 			<div class="modal-content">
@@ -1171,6 +1253,36 @@
 		</div>
 
 	</div>
+
+
+
+	<div class="modal fade" id="ProjRemainderMov" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+
+					<h4 class="modal-title" id="RemProjName"></h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+
+				<div class="modal-body ml-lg-5">
+
+					<div class="timeline" id="ProjRemMov">
+					</div>
+				</div>
+
+			</div><!-- modal-content -->
+		</div><!-- modal-dialog -->
+	</div>
+
+
+
+
+
+
+
+
+
 </body>
 @functions {
 	public string truncateText(string text, int maxWords)
@@ -1195,6 +1307,7 @@
 <script src="~/developerjs/projectstckholdercommentforprojhistory.js"></script>
 
 <script src="~/developerjs/ProjectDetailDatatable.js"></script>
+<script src="~/developerjs/CommanDatatable.js"></script>
 
 
 
@@ -1321,76 +1434,76 @@
         });
     </script> *@
 
-	<script>
-		// var pad = "00";
-		// var datef2 = new Date();
+		<script>
+			// var pad = "00";
+			// var datef2 = new Date();
 
 
-		// var months = "" + (datef2.getMonth() + 1);
-		// var days = "" + datef2.getDate();
-		// var monthsans = pad.substring(0, pad.length - months.length) + months;
-		// var dayans = pad.substring(0, pad.length - days.length) + days;
-		// var year = datef2.getFullYear();
-		// var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-		// var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-		// var ss = `${datef2.getSeconds()}`;
+			// var months = "" + (datef2.getMonth() + 1);
+			// var days = "" + datef2.getDate();
+			// var monthsans = pad.substring(0, pad.length - months.length) + months;
+			// var dayans = pad.substring(0, pad.length - days.length) + days;
+			// var year = datef2.getFullYear();
+			// var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+			// var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+			// var ss = `${datef2.getSeconds()}`;
 
-		// // Today's date and time in the required formats
-		// var todayDate = `${year}-${monthsans}-${dayans}`;
-		// var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+			// // Today's date and time in the required formats
+			// var todayDate = `${year}-${monthsans}-${dayans}`;
+			// var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
 
-		// $(document).ready(function () {
-		//     var claValue = @Logins.cla;
+			// $(document).ready(function () {
+			//     var claValue = @Logins.cla;
 
-		//     if (claValue == 2) {
-		//         $('#TimeStampToProjfwd').attr('type', 'datetime-local');
-		//         $('#TimeStampToProjfwd').attr('max', todayDateTime);
-		//         $('#TimeStampToProjfwd').prop('disabled', false); // Allow user input
-		//     } else {
-		//         $('#TimeStampToProjfwd').attr('type', 'date');
-		//         $('#TimeStampToProjfwd').val(todayDate); // Set today's date
-		//         $('#TimeStampToProjfwd').prop('disabled', true); // Freeze input
-		//     }
+			//     if (claValue == 2) {
+			//         $('#TimeStampToProjfwd').attr('type', 'datetime-local');
+			//         $('#TimeStampToProjfwd').attr('max', todayDateTime);
+			//         $('#TimeStampToProjfwd').prop('disabled', false); // Allow user input
+			//     } else {
+			//         $('#TimeStampToProjfwd').attr('type', 'date');
+			//         $('#TimeStampToProjfwd').val(todayDate); // Set today's date
+			//         $('#TimeStampToProjfwd').prop('disabled', true); // Freeze input
+			//     }
 
-		// });
-
-
-		$(".btn-Fwd").click(function () {
-			let date_type_raw = $(this).data("date_type"); // "True" or "False"
-			let date_type = (String(date_type_raw).toLowerCase() === "true");
-
-			var pad = "00";
-			var datef2 = new Date();
-
-			var months = "" + (datef2.getMonth() + 1);
-			var days = "" + datef2.getDate();
-			var monthsans = pad.substring(0, pad.length - months.length) + months;
-			var dayans = pad.substring(0, pad.length - days.length) + days;
-			var year = datef2.getFullYear();
-			var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-			var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-			var todayDate = `${year}-${monthsans}-${dayans}`;
-			var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
-
-			if (date_type) {
-				$('#TimeStampToProjfwd').attr('type', 'datetime-local');
-				$('#TimeStampToProjfwd').attr('max', todayDateTime);
-				$('#TimeStampToProjfwd').prop('disabled', false); // Allow user input
-				$('#TimeStampToProjfwd').val(todayDateTime);
-
-			} else {
-				$('#TimeStampToProjfwd').attr('type', 'date');
-				$('#TimeStampToProjfwd').val(todayDate); // Set today's date
-				$('#TimeStampToProjfwd').prop('disabled', true); // Freeze input
-			}
-
-			// Optional: show a modal or scroll to the input
-			$('#TimeStampToProjfwd').focus();
-		});
+			// });
 
 
+			$(".btn-Fwd").click(function () {
+				let date_type_raw = $(this).data("date_type"); // "True" or "False"
+				let date_type = (String(date_type_raw).toLowerCase() === "true");
 
-	</script>
+				var pad = "00";
+				var datef2 = new Date();
+
+				var months = "" + (datef2.getMonth() + 1);
+				var days = "" + datef2.getDate();
+				var monthsans = pad.substring(0, pad.length - months.length) + months;
+				var dayans = pad.substring(0, pad.length - days.length) + days;
+				var year = datef2.getFullYear();
+				var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+				var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+				var todayDate = `${year}-${monthsans}-${dayans}`;
+				var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+
+				if (date_type) {
+					$('#TimeStampToProjfwd').attr('type', 'datetime-local');
+					$('#TimeStampToProjfwd').attr('max', todayDateTime);
+					$('#TimeStampToProjfwd').prop('disabled', false); // Allow user input
+					$('#TimeStampToProjfwd').val(todayDateTime);
+
+				} else {
+					$('#TimeStampToProjfwd').attr('type', 'date');
+					$('#TimeStampToProjfwd').val(todayDate); // Set today's date
+					$('#TimeStampToProjfwd').prop('disabled', true); // Freeze input
+				}
+
+				// Optional: show a modal or scroll to the input
+				$('#TimeStampToProjfwd').focus();
+			});
+
+
+
+		</script>
 
 	@* <script>
         // TimeStampToProjfwd
@@ -1424,38 +1537,38 @@
         });
 
     </script> *@
-	<script>
-		// var pad = "00";
-		// var datef2 = new Date();
+		<script>
+			// var pad = "00";
+			// var datef2 = new Date();
 
-		// const formattedDate = datef2.toLocaleString("sv-SE").replace("T", " ");
+			// const formattedDate = datef2.toLocaleString("sv-SE").replace("T", " ");
 
-		// // Formatting the current date and time
-		// var months = "" + (datef2.getMonth() + 1);
-		// var days = "" + datef2.getDate();
-		// var monthsans = pad.substring(0, pad.length - months.length) + months;
-		// var dayans = pad.substring(0, pad.length - days.length) + days;
-		// var year = datef2.getFullYear();
-		// var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-		// var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-		// var ss = `${datef2.getSeconds()}`;
+			// // Formatting the current date and time
+			// var months = "" + (datef2.getMonth() + 1);
+			// var days = "" + datef2.getDate();
+			// var monthsans = pad.substring(0, pad.length - months.length) + months;
+			// var dayans = pad.substring(0, pad.length - days.length) + days;
+			// var year = datef2.getFullYear();
+			// var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+			// var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+			// var ss = `${datef2.getSeconds()}`;
 
-		// // Today's date and time in the required formats
-		// var todayDate = `${year}-${monthsans}-${dayans}`;
-		// var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+			// // Today's date and time in the required formats
+			// var todayDate = `${year}-${monthsans}-${dayans}`;
+			// var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
 
-		// $(document).ready(function () {
-		//     var claValue = @Logins.cla; // Get the value of Logins.cla
+			// $(document).ready(function () {
+			//     var claValue = @Logins.cla; // Get the value of Logins.cla
 
-		//     if (claValue == 2) {
-		//         // Set type to datetime-local and max to today with current time
-		//         $('#datepicker').attr('type', 'datetime-local');
-		//         $('#datepicker').attr('max', todayDateTime);
-		//     } else {
-		//         $('#datepicker').attr('type', 'date');
-		//     }
-		// });
-	</script>
+			//     if (claValue == 2) {
+			//         // Set type to datetime-local and max to today with current time
+			//         $('#datepicker').attr('type', 'datetime-local');
+			//         $('#datepicker').attr('max', todayDateTime);
+			//     } else {
+			//         $('#datepicker').attr('type', 'date');
+			//     }
+			// });
+		</script>
 
 }
 

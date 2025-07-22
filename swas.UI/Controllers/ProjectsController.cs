@@ -44,6 +44,7 @@ using System.IO;
 using Microsoft.Extensions.Logging;
 using iText.Kernel.Events;
 using static swas.DAL.Models.LegacyHistory;
+using System.Threading.Tasks;
 
 namespace swas.UI.Controllers
 {
@@ -74,6 +75,7 @@ namespace swas.UI.Controllers
         private readonly IConfiguration _configuration;
         private readonly ILogger<ProjectsController> _logger;
         private readonly ILegacyHistoryRepository _legacyHistoryRepository;
+        private readonly IRemainder _Remainder;
 
         public ProjectsController(IProjectsRepository projectsRepository, IDdlRepository ddlRepository,
             IProjStakeHolderMovRepository psmRepository, IHttpContextAccessor httpContextAccessor,
@@ -84,7 +86,7 @@ namespace swas.UI.Controllers
             IProjComments projComments, IStkCommentRepository stkCommentRepository,
             IProjStakeHolderMovRepository projStakeHolderMovRepository,
             UserManager<ApplicationUser> userManager, IUnitRepository unitRepository, IConfiguration configuration, ApplicationDbContext context,
-            ILogger<ProjectsController> logger, ILegacyHistoryRepository legacyHistoryRepository
+            ILogger<ProjectsController> logger, ILegacyHistoryRepository legacyHistoryRepository, IRemainder Remainder
 
             )
         {
@@ -110,6 +112,7 @@ namespace swas.UI.Controllers
             _dbContext = context;
             _logger = logger;
             _legacyHistoryRepository = legacyHistoryRepository;
+            _Remainder = Remainder;
 
         }
 
@@ -199,7 +202,9 @@ namespace swas.UI.Controllers
                     TempData["ipadd"] = watermarkText;
                     ViewBag.SubmitCde = "0";
 
+                    ViewBag.remainder = _dbContext.TrnRemainders.ToList();
                     MailBox mbx = new MailBox();
+                    mbx.Remainder = await  _Remainder.GetAllAsync();
 
                     //ViewBag.unitid = Logins.unitid;
 
@@ -211,11 +216,10 @@ namespace swas.UI.Controllers
                     {
                         ViewBag.unitid = Logins.unitid;
                     }
-                    ViewBag.remainder =  _dbContext.Remainders.ToList();
-
+                    
                     mbx.InBox = await _projectsRepository.GetActInboxAsync();
 
-
+                   
 
                     mbx.Draft = await _projectsRepository.GetActDraftItemsAsync();
 
@@ -2296,37 +2300,53 @@ namespace swas.UI.Controllers
             return Ok(result);
         }
         [HttpPost]
-        public IActionResult SendRemainder(int Id, string Remarks)
+        public async Task<IActionResult> SendRemainder(int ProjId, string Remarks)
         {
             var user = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext?.Session, "User");
-            var latestpsmid = _projStakeHolderMovRepository.GetLastRecProjectMov(Id);
+            if (user == null)
+                return Json(0); // or return Unauthorized();
+
+            var latestpsmid = _projStakeHolderMovRepository.GetLastRecProjectMov(ProjId);
             var latestpsmiddata = _dbContext.ProjStakeHolderMov.Find(latestpsmid);
-         
-
-
-
-            trnRemainder tblRemainder = new trnRemainder
-            {
-                psmid = latestpsmid,
-                FromUnitId = user.unitid,
-                Tounitid = latestpsmiddata.ToUnitId,
-                Remarks = Remarks,
-                UserDetails = Helper1.LoginDetails(user),
-                SendDate = DateTime.Now.ToString(),
-                IsRemainder = true
-            };
-
-
             latestpsmiddata.IsRead = false;
 
-            _dbContext.ProjStakeHolderMov.UpdateRange(latestpsmiddata);
+            _dbContext.ProjStakeHolderMov.Update(latestpsmiddata);
+            if (latestpsmiddata == null)
+                return Json(0); // not found
 
-            _dbContext.Remainders.Add(tblRemainder);
-            _dbContext.SaveChanges();
+            // Prepare required values
+            int fromUnitId = user.unitid ?? 0;
+            int toUnitId = latestpsmiddata.ToUnitId;
+            string userDetails = Helper1.LoginDetails(user);
 
-            return Json(1); // success
+            // Call repository method
+            int result = await _Remainder.AddRemainder(ProjId, fromUnitId, toUnitId, Remarks, userDetails);
+
+            return Json(result); // 1 if success
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetProjectRemainderHistory(int ProjectId)
+        {
+            try
+            {
+                _logger.LogInformation("Fetching history for ProjectId: {ProjectId}", ProjectId);
+                if (ProjectId <= 0)
+                    return BadRequest(new { success = false, message = "Invalid project ID." });
+
+                var history = await _Remainder.ProjectRemainderMovHistory(ProjectId);
+
+                if (history == null || !history.Any())
+                    return Json(new { success = false, message = "No legacy history found." });
+
+                return Json(new { success = true, data = history });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching project history for ProjectId: {ProjectId}", ProjectId);
+                return StatusCode(500, new { success = false, message = "An error occurred while fetching project remainder history." });
+            }
+        }
 
     }
 

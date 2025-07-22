@@ -15,7 +15,8 @@ namespace swas.DAL.Models
         public int RemainderId { get; set; }
 
         
-        public int psmid { get; set; }
+        public int Projid { get; set; }
+        public bool IsRead { get; set; }
 
 
         public int? FromUnitId { get; set; }
