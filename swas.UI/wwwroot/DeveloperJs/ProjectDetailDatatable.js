@@ -457,8 +457,8 @@ $(document).ready(function () {
 
         popupWin.document.close();
     }
+initializeDataTable("#Remainders");
 });
-
 
 
 

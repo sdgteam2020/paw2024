@@ -1,5 +1,5 @@
 ﻿function initializeDataTable(tableSelector) {
-    debugger;
+  
     return $(tableSelector).DataTable({
         lengthChange: true,
         dom: 'lBfrtip',

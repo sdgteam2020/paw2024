@@ -24,6 +24,7 @@ using swas.BAL.DTO;
 using swas.DAL.Logger;
 using swas.BAL.Helpers;
 using swas.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +47,11 @@ var builder = WebApplication.CreateBuilder(args);
 ///Developer :- Sub Maj M Sanal Kumar 
 ///Created On :  29 Jul 23
 
+
+
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("DB");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -93,7 +99,11 @@ builder.Services.AddScoped<ITrnChatMsgRepository, TrnChatMsgRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<IActionExceptionRepository, ActionExceptionRepository>();
 builder.Services.AddScoped<IDateApprovalRepository, DateApprovalRepository>();
+builder.Services.AddScoped<IRemainder, RemainderRepository>();
 builder.Services.AddScoped<ILegacyHistoryRepository, LegacyHistoryRepository>();
+
+
+
 
 
 builder.Services.AddAntiforgery(o => o.SuppressXFrameOptionsHeader = true);

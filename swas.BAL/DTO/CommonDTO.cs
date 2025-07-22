@@ -46,8 +46,10 @@ namespace swas.BAL.DTO
 
         public List<tbl_Projects> Draft { get; set; }
         public List<DTOProjectsFwd> CcItems { get; set; }
-    }
+        public List<RemainderDisplayDto> Remainder { get; set; }
 
+    }
+        
     public class DTOViews
     {
 

@@ -160,66 +160,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
 
 
-$(document).on('click', '#btnRemainder', function () {
-    var projid = $(this).data('projid');
-    var projname = $(this).data('projname');
-    Swal.fire({
-        title: "Are you sure?",
-        html: `Please Enter Remarks For Remainder <br /><strong>${projname}</strong>`,
-        input: "textarea",
-        inputPlaceholder: "Enter remarks here...",
-        inputAttributes: {
-            "aria-label": "Remarks"
-        },
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, Submit",
-        preConfirm: (remarks) => {
-            if (!remarks) {
-                Swal.showValidationMessage("Remarks are required.");
-            }
-            if (remarks.length < 10) {
-                Swal.showValidationMessage('Remarks Must be Atleast 10 characters');
-            }
-            if (remarks.length > 200) {
-                Swal.showValidationMessage('Remarks Must not exceed 100 characters');
-            }
-            return remarks;
-        }
-    }).then((result) => {
-        if (result.isConfirmed && result.value) {
-            SendRemainder(projid, result.value); // passing remarks too if needed
-        }
-    });
-
-   
-
-});
-
-function SendRemainder(projid, remarks) {
-    debugger;
-    $.ajax({
-        url: '/Projects/SendRemainder',
-        type: 'POST',
-        data: {
-            Id: projid,
-            Remarks: remarks // if you want to send remarks to backend
-        },
-        success: function (response) {
-            
-            if (response ==1) {
-                Swal.fire("Success", "Remainder sent successfully", "success");
-            } else {
-                Swal.fire("Error", "Something went wrong", "error");
-            }
-        },
-        error: function () {
-            Swal.fire("Error", "Ajax call failed", "error");
-        }
-    });
-}
-
 function GetForCommentStakeHolder(ProjId, psmId) {
 
     $.ajax({
@@ -879,4 +819,210 @@ $(document).on("click", ".date-action", function (e) {
         }
     });
 
+
+
 });
+
+
+
+
+
+$(document).on('click', '#btnRemainder', function () {
+    var projid = $(this).data('projid');
+    var projname = $(this).data('projname');
+    Swal.fire({
+        title: "Are you sure?",
+        html: `Please Enter Remarks For Remainder <br /><strong>${projname}</strong>`,
+        input: "textarea",
+        inputPlaceholder: "Enter remarks here...",
+        inputAttributes: {
+            "aria-label": "Remarks"
+        },
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Submit",
+        preConfirm: (remarks) => {
+            if (!remarks) {
+                Swal.showValidationMessage("Remarks are required.");
+            }
+            if (remarks.length < 10) {
+                Swal.showValidationMessage('Remarks Must be Atleast 10 characters');
+            }
+            if (remarks.length > 200) {
+                Swal.showValidationMessage('Remarks Must not exceed 100 characters');
+            }
+            return remarks;
+        }
+    }).then((result) => {
+        if (result.isConfirmed && result.value) {
+            SendRemainder(projid, result.value); // passing remarks too if needed
+        }
+    });
+
+
+
+});
+
+function SendRemainder(projid, remarks) {
+    debugger;
+    $.ajax({
+        url: '/Projects/SendRemainder',
+        type: 'POST',
+        data: {
+            ProjId: projid,
+            Remarks: remarks // if you want to send remarks to backend
+        },
+        success: function (response) {
+            debugger;
+            console.log(response);
+            if (response > 0) {
+                Swal.fire("Success", "Remainder sent successfully", "success");
+            } else {
+                Swal.fire("Error", "Something went wrong", "error");
+            }
+        },
+        error: function () {
+            Swal.fire("Error", "Ajax call failed", "error");
+        }
+    });
+}
+
+
+
+
+
+
+
+
+//$("#tabRemainder").on("click", function () {
+//    debugger;
+
+//    $.ajax({
+//        url: "/Projects/GetRemainderList",
+//        type: "GET",
+//        success: function (response) {
+//            alert(1);
+//            console.log(response); // Fix typo here
+//        },
+//        error: function (xhr, status, error) {
+//            debugger;
+//            Swal.fire("Error!", "Something went wrong: " + error, "error");
+//        }
+//    });
+//});
+
+
+
+$(document).on('click', '#btnRemMove', function () {
+    debugger;
+
+
+    var ProjId = parseInt($(this).data("action"));
+
+    var projName = $(this).data('proj-name');
+    var words = projName.split(" ");
+    var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
+    //var finalTitle = "Mov History: " + shortProjName;
+    var finalTitle = "Remainder History: " + projName;
+    $('#RemProjName').text(finalTitle);
+    $('#ProjRemainderMov').modal('show');
+
+    GetProjRemainderMov(ProjId); // <-- fixed this line
+});
+
+
+
+//function GetProjRemainderMov(ProjId) {
+//    $.ajax({
+//        url: '/Projects/GetProjectRemainderHistory',
+//        type: 'GET',
+//        data: { ProjectId: ProjId },
+//        success: function (response) {
+
+
+//            if (response.success) {
+//                console.log(response.data);
+//                // Process the history data
+//            } else {
+//                console.error('Error: ' + response.message);
+//                alert('Failed to load history: ' + response.message);
+//            }
+//        }
+//    });
+
+//}
+function GetProjRemainderMov(ProjId) {
+$.ajax({
+    url: '/Projects/GetProjectRemainderHistory',
+    type: 'GET',
+    data: { ProjectId: ProjId },
+    success: function (response) {
+        console.log(response); // Debugging
+        debugger;
+
+        const data = response.data || []; // Expecting data as array
+        const length = data.length;
+        let listitem = '';
+
+        if (length > 0) {
+            // Set project name once
+            
+
+            listitem += '<div class="timeline-month">';
+            listitem += '<span>' + length + ' Entries</span>';
+            listitem += '</div>';
+
+            for (let i = 0; i < length; i++) {
+                const item = data[i];
+
+                listitem += '<div class="timeline-section">';
+                listitem += '<div class="timeline-date">' + (item.sentOn || '-') + '</div>';
+
+                listitem += '<div class="row g-3">';
+
+                // Action Type Box
+                listitem += '<div class="col-md-6">';
+                listitem += '<div class="timeline-box">';
+                listitem += '<div class="box-title bg-success text-white"><i class="fa-solid fa-forward"></i>Remainder Forward</div>';
+
+                listitem += '<div class="box-content">';
+                listitem += '<div class="row mb-1"><div class="col-4"><strong>Remainder By</strong>:</div><div class="col-8"><span class="badge bg-secondary">' + (item.fromUnit || 'N/A') + '</span></div></div>';
+                listitem += '</div>'; // .box-content
+                listitem += '<div class="box-content">';
+                listitem += '<div class="row mb-1"><div class="col-4"><strong>Remainder To</strong>:</div><div class="col-8"><span class="badge bg-secondary">' + (item.toUnit || 'N/A') + '</span></div></div>';
+                listitem += '</div>'; // .box-content
+
+                listitem += '<div class="box-content">';
+                listitem += '<div class="row mb-1"><div class="col-4"><strong>Sponsor</strong>:</div><div class="col-8"><span class="badge bg-secondary">' + (item.sponsor || 'N/A') + '</span></div></div>';
+                listitem += '</div>'; 
+
+
+
+                listitem += '<div class="box-footer">' + (item.userDetails || 'Unknown User') + '</div>';
+                listitem += '</div></div>'; // End Action Box
+
+                // Remarks Box (if any)
+                if (item.remarks) {
+                    listitem += '<div class="col-md-6">';
+                    listitem += '<div class="timeline-box">';
+                    listitem += '<div class="box-title"><i class="fa fa-pencil text-info"></i> Remarks On ' + (item.sentOn || '-') + '</div>';
+                    listitem += '<div class="box-content"><div class="box-item">' + item.remarks + '</div></div>';
+                    listitem += '<div class="box-footer"><strong>Remarks To</strong>:' + (item.toUnit || 'Unknown User') + '</div>';
+                    listitem += '</div></div>';
+                }
+
+                listitem += '</div>'; // End row
+                listitem += '</div>'; // End section
+            }
+         
+            $("#ProjRemMov").html(listitem);
+        } else {
+            $("#ProjRemMov").html('<div class="alert alert-info">No history available.</div>');
+        }
+    },
+    error: function () {
+        $("#ProjRemMov").html('<div class="alert alert-danger">Failed to load history.</div>');
+    }
+});
+}
