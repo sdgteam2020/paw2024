@@ -69,7 +69,7 @@ namespace swas.UI.Controllers
         private System.Timers.Timer aTimer;
         private readonly IStkCommentRepository _stkCommentRepository;
         private readonly IProjStakeHolderMovRepository _stkholdmove;
-
+        private readonly IProjStakeHolderCcMovRepository _projStakeHolderCcMovRepository;
         private readonly IUnitRepository _unitRepository;
         private readonly IConfiguration _configuration;
         private readonly ILogger<ProjectsController> _logger;
@@ -84,8 +84,8 @@ namespace swas.UI.Controllers
             IProjComments projComments, IStkCommentRepository stkCommentRepository,
             IProjStakeHolderMovRepository projStakeHolderMovRepository,
             UserManager<ApplicationUser> userManager, IUnitRepository unitRepository, IConfiguration configuration, ApplicationDbContext context,
-            ILogger<ProjectsController> logger, ILegacyHistoryRepository legacyHistoryRepository
-
+            ILogger<ProjectsController> logger, ILegacyHistoryRepository legacyHistoryRepository,
+            IProjStakeHolderCcMovRepository projStakeHolderCcMovRepository
             )
         {
             _projectsRepository = projectsRepository;
@@ -110,7 +110,7 @@ namespace swas.UI.Controllers
             _dbContext = context;
             _logger = logger;
             _legacyHistoryRepository = legacyHistoryRepository;
-
+            _projStakeHolderCcMovRepository = projStakeHolderCcMovRepository;
         }
 
 
@@ -211,7 +211,7 @@ namespace swas.UI.Controllers
                     {
                         ViewBag.unitid = Logins.unitid;
                     }
-                    ViewBag.remainder =  _dbContext.Remainders.ToList();
+                    //ViewBag.remainder =  _dbContext.Remainders.ToList();
 
                     mbx.InBox = await _projectsRepository.GetActInboxAsync();
 
@@ -222,7 +222,7 @@ namespace swas.UI.Controllers
 
                     mbx.SendItems = await _projectsRepository.GetActSendItemsAsync();
                     mbx.CompletedItems = await _projectsRepository.GetActComplettemsAsync();
-
+                   
 
                     return View(mbx);
 
@@ -242,7 +242,11 @@ namespace swas.UI.Controllers
             }
         }
 
-
+        [HttpPost]
+        public async Task<IActionResult> GetActCcProject()
+        {
+          return Json(await _projectsRepository.GetActCcItemsAsync());
+        }
 
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> GetAllStatus()
@@ -623,8 +627,19 @@ namespace swas.UI.Controllers
                             await _projectsRepository.UpdateTxnAsync(psmove);
                             return Json(PsmId);
                         }
-                        else
-                            return Json(0);
+                        // Update Isread for Project Stakeholder CC Movement
+                        var psCcmove = await _projStakeHolderCcMovRepository.GetdataBuPsmiandTounitId(PsmId, Convert.ToInt32(Logins.unitid));
+                        if (psCcmove != null)
+                        {
+                            //psmove.DateTimeOfUpdate = DateTime.Now;
+                            psCcmove.IsRead = true;
+                            psCcmove.ReadDate=DateTime.Now;
+                            psCcmove.UserDetails = Helper.LoginDetails(Logins);
+                            await _projStakeHolderCcMovRepository.Update(psCcmove);
+                            return Json(PsmId);
+                        }
+
+                        return Json(0);
                     }
                     catch (Exception ex)
                     {
@@ -918,55 +933,91 @@ namespace swas.UI.Controllers
         public async Task<IActionResult> FwdToProject(tbl_ProjStakeHolderMov psmove)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
-            psmove.ProjId = psmove.ProjId;
-            psmove.StatusActionsMappingId = psmove.StatusActionsMappingId;
-            // psmove.ActionId = psmove.ActionId;
-            psmove.Remarks = psmove.Remarks;
-            psmove.FromUnitId = Logins.unitid ?? 0;
-            psmove.ToUnitId = psmove.ToUnitId; //  
-            //psmove.TostackholderDt = DateTime.Now;  
-            psmove.UserDetails = Helper.LoginDetails(Logins);
-            psmove.UpdatedByUserId = Logins.UserIntId; // change with userid
-            psmove.DateTimeOfUpdate = psmove.TimeStamp;
-            psmove.IsActive = true;
-
-            psmove.EditDeleteDate = psmove.TimeStamp;
-            psmove.EditDeleteBy = Logins.UserIntId;
-            psmove.TimeStamp = psmove.TimeStamp;
-            psmove.IsComplete = false;
-            psmove.IsComment = false;
-            psmove.IsPullBack = false;
-            if (psmove.FromUnitId == psmove.ToUnitId)
+            bool ret = false;
+            if (psmove.CcId!=null)
             {
-                psmove.IsRead = true;
+                ret = psmove.CcId.Contains(psmove.ToUnitId);
             }
 
-           
-            var projectMovements = await _dbContext.ProjStakeHolderMov
-                .Where(x => x.ProjId == psmove.ProjId && x.IsRead == true && x.IsComment == true)
-                .ToListAsync();
-
-           
-            foreach (var item in projectMovements)
+            if (!ret)
             {
-                item.IsRead = false;
-            }
+                psmove.ProjId = psmove.ProjId;
+                psmove.StatusActionsMappingId = psmove.StatusActionsMappingId;
+                // psmove.ActionId = psmove.ActionId;
+                psmove.Remarks = psmove.Remarks;
+                psmove.FromUnitId = Logins.unitid ?? 0;
+                psmove.ToUnitId = psmove.ToUnitId; //  
+                                                   //psmove.TostackholderDt = DateTime.Now;  
+                psmove.UserDetails = Helper.LoginDetails(Logins);
+                psmove.UpdatedByUserId = Logins.UserIntId; // change with userid
+                psmove.DateTimeOfUpdate = psmove.TimeStamp;
+                psmove.IsActive = true;
 
-           
-            _dbContext.ProjStakeHolderMov.UpdateRange(projectMovements);
-            await _dbContext.SaveChangesAsync();
+                psmove.EditDeleteDate = psmove.TimeStamp;
+                psmove.EditDeleteBy = Logins.UserIntId;
+                psmove.TimeStamp = psmove.TimeStamp;
+                psmove.IsComplete = false;
+                psmove.IsComment = false;
+                psmove.IsPullBack = false;
+                if (psmove.FromUnitId == psmove.ToUnitId)
+                {
+                    psmove.IsRead = true;
+                }
+                if (psmove.CcId !=null && psmove.CcId.Length > 0)
+                {
+                    psmove.IsCc = true;
+                }
+
+                var projectMovements = await _dbContext.ProjStakeHolderMov
+                    .Where(x => x.ProjId == psmove.ProjId && x.IsRead == true && x.IsComment == true)
+                    .ToListAsync();
+
+
+                foreach (var item in projectMovements)
+                {
+                    item.IsRead = false;
+                }
+
+
+                _dbContext.ProjStakeHolderMov.UpdateRange(projectMovements);
+                await _dbContext.SaveChangesAsync();
 
 
 
-            var Ret = await _psmRepository.AddWithReturn(psmove);
-            if (Ret != null)
-            {
-                return Json(Ret);
+         
+                var Ret = await _psmRepository.AddWithReturn(psmove);
+             
+
+                if (Ret != null)
+                {
+                    if (psmove.CcId != null && psmove.CcId.Length > 0)
+                    {
+                    foreach (int ccId in psmove.CcId)
+                    {
+                        tbl_ProjStakeHolderCcMov ccMov = new tbl_ProjStakeHolderCcMov();
+                        ccMov.PsmId = Ret.PsmId;
+                        ccMov.ProjId = psmove.ProjId;
+                        ccMov.ToCcUnitId = ccId;
+                        ccMov.IsActive = true;
+                        ccMov.IsDeleted = false;
+                        ccMov.IsRead = false;
+                        ccMov.UserDetails = "";
+                        ccMov.ReadDate = DateTime.Now;
+
+                        var Retcc = await _projStakeHolderCcMovRepository.AddWithReturn(ccMov);
+                    }
+                    }
+
+                    return Json(Ret);
+                }
+                else
+                {
+                    return Json(nmum.NotSave);
+                }
             }
             else
             {
-                return Json(nmum.NotSave);
+                return Json(nmum.TounitEqualsCCUnitID);
             }
 
         }
@@ -1126,6 +1177,8 @@ namespace swas.UI.Controllers
                         movent.TimeStamp = DateTime.Now;
                         movent.IsComplete = false;
                         movent.IsComment = false;
+
+                        movent.IsCc = false;
                         var Ret1 = await _psmRepository.AddWithReturn(movent);
                         return Json(nmum.Update);
                     }

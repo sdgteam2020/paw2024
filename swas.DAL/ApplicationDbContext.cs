@@ -35,6 +35,7 @@ namespace swas.DAL
         public DbSet<tbl_mActions> mActions { get; set; }
         public DbSet<tbl_Comment> Comment { get; set; }
         public DbSet<tbl_ProjStakeHolderMov> ProjStakeHolderMov { get; set; }
+        public DbSet<tbl_ProjStakeHolderCcMov> ProjStakeHolderCcMov { get; set; }
         public DbSet<mCommand> mCommand { get; set; }
         public DbSet<mCorps> mCorps { get; set; }
         //public DbSet<tbl_users> Users { get; set; }

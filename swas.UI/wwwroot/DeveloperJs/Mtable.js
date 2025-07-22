@@ -230,7 +230,7 @@ function mMsaterStage(sectid = '', ddl, TableId, ParentId, StakeHolderId) {
     });
 }
 
-function mMsaterFwdTo(sectid = '', ddl, TableId, ParentId, StakeHolderId, type, value) {
+function mMsaterFwdTo(sectid = '', ddl, TableId, ParentId, StakeHolderId, type, value) { 
 
 
     var userdata =
@@ -260,7 +260,7 @@ function mMsaterFwdTo(sectid = '', ddl, TableId, ParentId, StakeHolderId, type, 
                     if (type == 1) {
 
                         var listItemddl = "";
-
+                        if (ddl != "ddlfwdCCTo")
                         listItemddl += '<option value="">Please Select</option>';
 
 
@@ -291,7 +291,7 @@ function mMsaterFwdTo(sectid = '', ddl, TableId, ParentId, StakeHolderId, type, 
                             listItemddl += '<option value="' + response[i].id + '">' + response[i].name + '</option>';
                         }
 
-                        if (TableId == 8) {
+                        if (TableId == 8 && ddl =="ddlfwdFwdTo") {
 
                             listItemddl += '<option value="More">More</option>';
                         }

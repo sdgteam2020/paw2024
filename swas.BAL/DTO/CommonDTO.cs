@@ -45,7 +45,7 @@ namespace swas.BAL.DTO
         public List<tbl_Projects> CompletedItems { get; set; }
 
         public List<tbl_Projects> Draft { get; set; }
-
+        public List<DTOProjectsFwd> CcItems { get; set; }
     }
 
     public class DTOViews

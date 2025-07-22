@@ -63,6 +63,11 @@ namespace swas.BAL.DTO
         public int? RequestUnitId { get; set; }
         public int? LatestActionType { get; set; }
         public int IsHosted { get; set; }
+        public bool IsCc { get; set; }
+        public bool IssentCC { get; set; }
+        public string? CCUnitName { get; set; }
+        public string? UserDetails { get; set; }
+        public DateTime? ReadDate { get; set; }
 
     }
 }

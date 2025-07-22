@@ -32,6 +32,7 @@ namespace swas.BAL.Interfaces
         Task<List<DTOProjectsFwd>> GetDashboardApproved(int StatuId,int statusActionsMappingId);
         Task<DTOProjectWiseStatus> GetProjectWiseStatus();
         Task<List<DTOProjectsFwd>> GetActSendItemsAsync();
+        Task<List<DTOProjectsFwd>> GetActCcItemsAsync();
         Task<List<tbl_Projects>> GetActComplettemsAsync();
         Task<List<tbl_Projects>> GetActDraftItemsAsync();
         Task<List<tbl_Projects>> GetStatusProjAsync(int statusid);
