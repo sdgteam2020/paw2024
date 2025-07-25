@@ -88,7 +88,7 @@ namespace swas.UI.Controllers
             UserManager<ApplicationUser> userManager, IUnitRepository unitRepository, IConfiguration configuration, ApplicationDbContext context,
             ILogger<ProjectsController> logger, ILegacyHistoryRepository legacyHistoryRepository,
             IProjStakeHolderCcMovRepository projStakeHolderCcMovRepository
-            ILogger<ProjectsController> logger, ILegacyHistoryRepository legacyHistoryRepository, IRemainder Remainder
+            , IRemainder Remainder
 
             )
         {
@@ -219,7 +219,7 @@ namespace swas.UI.Controllers
                     {
                         ViewBag.unitid = Logins.unitid;
                     }
-                    ViewBag.remainder =  _dbContext.Remainders.ToList();
+                    //ViewBag.remainder =  _dbContext.Remainders.ToList();
 
                     mbx.InBox = await _projectsRepository.GetActInboxAsync();
 

@@ -250,7 +250,13 @@ function DateCalculateago(fmDate, end_actual_time) {
     //}
     return ago;
 }
-
+function DateCalculateagoForChart(fmDate, end_actual_time) {
+    const diffMs = new Date(end_actual_time) - new Date(fmDate);
+    const totalMinutes = diffMs / 60000;
+    const totalHoursDecimal = (totalMinutes / 60).toFixed(1); // 1 decimal place
+    return parseFloat(totalHoursDecimal);
+   
+}
 function formatDateToDDMMYYYY(date) {
     // Parse the input date
     var dateObj = new Date(date);

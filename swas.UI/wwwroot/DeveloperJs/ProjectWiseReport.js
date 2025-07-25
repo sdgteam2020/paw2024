@@ -102,8 +102,11 @@ function ProjectWiseStatus() {
                     $("#tblProjectWiseStatus").html(listItem);
 
                     $("body").unbind().on("click", ".btn-clsprojName", function () {
+                       
                         $('#ProjHoldHistory').modal('show');
-                       // alert($(this).closest("tr").find(".clsspnprojId").html())
+                        // alert($(this).closest("tr").find(".clsspnprojId").html())
+                        $(".lblProjHoldHistory").html($(this).html())
+                        $("#cardforProjHoldHistory").removeClass("d-none");
                         GetProjHold($(this).closest("tr").find(".clsspnprojId").html())
                     });
                     
@@ -189,7 +192,7 @@ function GetProjHold(ProjId) {
         type: 'POST',
         success: function (response) {
             if (response != "null" && response != null) {
-
+               
                 if (response == -1) {
                     Swal.fire({ text: "" });
                 } else if (response == 0) {
@@ -203,9 +206,21 @@ function GetProjHold(ProjId) {
 
                     $('#tblprojhold').dataTable().fnClearTable();
                     $('#tblprojhold').dataTable().fnDestroy();
-                  
+                    const labels = []; // label array
+                    const totals = []; // total array
+                    const totalsForlabel = []; // total array
+                    for (var j = response.length-1; j >= 0; j--) {
+                        if (response[j].isComment == false) {
+
+                            labels.push(response[j].status + '(' + response[j].fromunit + ')');
+                            totals.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
+                            totalsForlabel.push(DateCalculateago(response[j].timeStampfrom, response[j].timeStampTo).replace("</h6>",""));
+                        }
+                    }
                     for (var j = 0; j < response.length; j++) {
                         if (response[j].isComment == false) {
+                           // labels.push(response[j].status + '(' + response[j].fromunit+')');
+
                             if (response[j].isComplete == false )
                             {
                                 if (response[j].undoRemarks != null)
@@ -241,10 +256,11 @@ function GetProjHold(ProjId) {
                                 listItem += '<td class="align-middle">' + DateFormateddMMyyyyhhmmss(response[j].timeStampTo) + '</td>';
                             else if (response[j].isComment == true) {
 
+                               
                                 listItem += '<td class="align-middle">' + DateFormateddMMyyyyhhmmss(response[j].timeStampTo) + '</td>';
 
                             }
-
+                           // totals.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
                             listItem += '<td class="align-middle">' + DateCalculateago(response[j].timeStampfrom, response[j].timeStampTo) + '</td>';
 
 
@@ -286,11 +302,15 @@ function GetProjHold(ProjId) {
                                     listItemc += '<td class="align-middle">' + DateFormateddMMyyyyhhmmss(response[j].timeStampTo) + '</td>';
 
                                 }
-                            if (response[j].isComplete == true)
+                            if (response[j].isComplete == true) {
+                               
                                 listItemc += '<td class="align-middle">' + DateCalculateago(response[j].timeStampfrom, response[j].timeStampTo) + '</td>';
-                            else
+                            }
+                            else {
                                 listItemc += '<td class="align-middle">' + DateCalculateago(response[j].timeStampfrom, currentdate) + '</td>';
-
+                                
+                            }
+                              
                                 listItemc += '</tr>';
                                 countc++;
                             
@@ -359,7 +379,7 @@ function GetProjHold(ProjId) {
                             }
                         }
                     });
-                var table = $('#tblprojhold').DataTable({
+                   var table = $('#tblprojhold').DataTable({
                         lengthChange: true,
                         retrieve: true,
                         bDestroy: true,
@@ -409,7 +429,26 @@ function GetProjHold(ProjId) {
                                 }
                             }
                         }
-                    });
+                });
+
+
+                 
+                    const colors = [
+                        "#73a3f9", "#fbbb4b", "#c3cad4", "#48d0ad", "#a88bfa",
+                        "#4ee17e", "#fee47d", "#f76e6e", "#8f88f9", "#3edfd0",
+                        "#f9cb48", "#d7aaff", "#4fd4ff", "#faa4a4", "#a6eb48",
+                        "#faa6d6", "#c6b4ff", "#40dff4", "#fa4d78", "#a285ff"
+                    ];
+
+                    // Map names and totals
+                    //const labels = ProjectStatus.map(x => x.status);
+                   // const totals = ProjectStatus.map(x => x.timeStampfrom);
+                    // Reset and bind chart with new data
+                    bindProjHoldChart(labels, totals, totalsForlabel,colors,);
+
+                  
+
+
                 }
             }
             else {
@@ -420,5 +459,49 @@ function GetProjHold(ProjId) {
         error: function (result) {
             Swal.fire({ text: "" });
         }
+    });
+}
+// Declare chart globally so you can destroy it later
+let projHoldChart;
+
+// Function to create/rebind the chart
+function bindProjHoldChart(labels, totals, totalsForlabel, colors) {
+    // If chart already exists, destroy it before creating new
+    if (projHoldChart) {
+        projHoldChart.destroy();
+    }
+
+    // Create new chart
+    projHoldChart = new Chart(document.getElementById('ProjHoldHistoryChart'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Projects',
+                backgroundColor: colors,
+                data: totals
+            }]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Project Hold History (in Hours.Minute)'
+                },
+                legend: { display: false },
+                datalabels: {
+                    anchor: 'end',
+                    align: 'top',
+                    color: '#000',
+                    font: {
+                        weight: 'bold'
+                    }, formatter: function (value, context) {
+                        // Use value from holdLabels array by index
+                        return totalsForlabel[context.dataIndex];
+                    }
+                }
+            }
+        },
+        plugins: [ChartDataLabels]
     });
 }

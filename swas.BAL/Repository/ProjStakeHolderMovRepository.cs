@@ -737,6 +737,97 @@ namespace swas.BAL.Repository
 
             return db;
         }
+
+
+        public async Task<DTOChartSummarylist> CreateChartSummary(int UserId)
+        {
+            try
+            {
+                DTOChartSummarylist lst = new DTOChartSummarylist();
+                using (var conn = _dbContext.Database.GetDbConnection())
+                {
+                    await conn.OpenAsync();
+
+                    using (var cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = "dbo.usp_DashboardChartSummary";
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        // Add parameter
+                        cmd.Parameters.Add(new SqlParameter("@UserId", SqlDbType.Int) { Value = UserId });
+
+                        using (var reader = await cmd.ExecuteReaderAsync())
+                        {
+                            // 1st Result Set - Project Status (Year-wise)
+                            List<DTOChartSummary> lstdb = new List<DTOChartSummary>();
+                            while (await reader.ReadAsync())
+                            {
+                                DTOChartSummary db = new DTOChartSummary();
+                                db.Name = Convert.ToString(reader["Year"]);
+                                db.Total = Convert.ToInt32(reader["Total"]);
+                                lstdb.Add(db);
+                            }
+                            lst.ProjectStatus=lstdb;
+
+                            // 2nd Result Set - Approved Projects (Stage-wise)
+                            if (await reader.NextResultAsync())
+                            {
+                                List<DTOChartSummary> lstdbApproved = new List<DTOChartSummary>();
+                                while (await reader.ReadAsync())
+                                {
+                                    DTOChartSummary db = new DTOChartSummary();
+                                    db.Name = Convert.ToString(reader["Status"]);
+                                    db.Total = Convert.ToInt32(reader["Total"]);
+                                    lstdbApproved.Add(db);
+                                    
+                                }
+                                lst.ApprovedProjects = lstdbApproved;
+                            }
+
+                            // 3rd Result Set - Whitelisted Projects (Year-wise)
+                            if (await reader.NextResultAsync())
+                            {
+                                List<DTOChartSummary> lstdbWhitelisted = new List<DTOChartSummary>();
+                                while (await reader.ReadAsync())
+                                {
+                                    DTOChartSummary db = new DTOChartSummary();
+                                    db.Name = Convert.ToString(reader["Year"]);
+                                    db.Total = Convert.ToInt32(reader["Total"]);
+                                    lstdbWhitelisted.Add(db);
+                                }
+                                lst.WhitelistedProjects = lstdbWhitelisted;
+                            }
+
+                            // 4th Result Set - Total Projects (Processed vs Pending)
+                            if (await reader.NextResultAsync())
+                            {
+                                List<DTOChartSummary> lstdbTotalProjects = new List<DTOChartSummary>();
+                                while (await reader.ReadAsync())
+                                {
+                                    DTOChartSummary db = new DTOChartSummary();
+
+                                    db.Name = Convert.ToString(reader["Status"]);
+                                    db.Total = Convert.ToInt32(reader["Total"]);
+                                    lstdbTotalProjects.Add(db);
+                                }
+                                lst.TotalProjects = lstdbTotalProjects;
+                            }
+                        }
+                    }
+
+
+                }
+                return lst;
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
         public async Task<bool> CheckFwdCondition(int ProjId, int StatusId)
         {
             if (StatusId != 1)
@@ -1085,5 +1176,7 @@ namespace swas.BAL.Repository
             return await _dbContext.SaveChangesAsync();
 
         }
+
+      
     }
 }

@@ -14,7 +14,8 @@
     }
 <head>
     <link href="~/assets/css/style.css" rel="stylesheet">
-
+    <script src="~/js/chart.js"></script>
+    <script src="~/js/chartjs-plugin-datalabels.js"></script>
     <style>
         #litabs {
             white-space: nowrap;
@@ -314,7 +315,26 @@
         .modal-lg {
             max-width: 95% !important; /* Customize as needed */
         }
-        
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .chart-box {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+           
+        }
+
+
+
+        canvas {
+            max-width: 100%;
+        }
     </style>
 
 
@@ -323,7 +343,47 @@
 <div class="card" id="carddashboardcount" >
     
 </div>
+<div class="card" >
+    <div class="dashboard">
+        <!-- Years Wise Status -->
+        <div>
+            <div class="newprojectheading text-center"> Projects Status </div>
+            <div class="chart-box">
 
+                <canvas id="yearsStatusChart"></canvas>
+            </div>
+        </div>
+       
+
+        <!-- Approved Projects -->
+        <div>
+            <div class="newprojectheading text-center"> Approved Projects </div>
+        <div class="chart-box">
+           
+            <canvas id="approvedProjectsChart"></canvas>
+        </div>
+        </div>
+
+        <!-- Whitelisted Projects -->
+        <div>
+            <div class="newprojectheading text-center">Whitelisted Projects</div>
+        <div class="chart-box">
+            
+            <canvas id="whitelistedChart"></canvas>
+        </div>
+        </div>
+
+        <!-- Total Projects -->
+        <div>
+            <div class="newprojectheading text-center">Total Projects</div>
+        <div class="chart-box">
+                <div style="  width: 500px; height: 500px; display: flex; align-items: center; justify-content: center; margin: auto; border: 1px solid #ddd;" class="text-center">
+            <canvas id="totalProjectsChart"></canvas>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
 @* Previous popup *@
 <div class="modal fade" id="ProjGetsummay" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">

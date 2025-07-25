@@ -194,7 +194,20 @@ namespace swas.UI.Controllers
                 return Json(nmum.Exception);
             }
         }
+        public async Task<IActionResult> CreateChartSummary(int Id)
+        {
+            try
+            {
+                Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
 
+
+                return Json(await _stkholdmove.CreateChartSummary(Convert.ToInt32(Logins.unitid)));
+            }
+            catch (Exception ex)
+            {
+                return Json(nmum.Exception);
+            }
+        }
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> ProjComments()
         {

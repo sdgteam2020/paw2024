@@ -3,7 +3,7 @@ var Status = "";
 $(document).ready(function () {
     GetAllDashbaordCount();
     InboxNotificationCount();
-
+    CreateChartSummary();
     $("#IsNotduplicate").change(function () {
 
 
@@ -1119,3 +1119,189 @@ function getProjBisagN(spnstatusId, spnstatusActionsMappingId) {
 //        }
 //    });
 //}
+
+function CreateChartSummary() {
+
+    $.ajax({
+        type: "POST",
+        url: '/Home/CreateChartSummary',
+        data: {
+            "Id": 0,
+
+        },
+        success: function (data) {
+            const ProjectStatus = data.projectStatus;
+            const colors = [
+                "#73a3f9", "#fbbb4b", "#c3cad4", "#48d0ad", "#a88bfa",
+                "#4ee17e", "#fee47d", "#f76e6e", "#8f88f9", "#3edfd0",
+                "#f9cb48", "#d7aaff", "#4fd4ff", "#faa4a4", "#a6eb48",
+                "#faa6d6", "#c6b4ff", "#40dff4", "#fa4d78", "#a285ff"
+            ];
+          
+            // Map names and totals
+            const labels = ProjectStatus.map(x => x.name);
+            const totals = ProjectStatus.map(x => x.total);
+
+            new Chart(document.getElementById('yearsStatusChart'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Projects',
+                        backgroundColor: colors,
+                        data: totals
+                    }]
+                },
+               
+                      options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Years Wise Status'
+                        },
+                        legend: {
+                            display: false
+                        },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'end',
+                            color: '#000',
+                            font: {
+                                weight: 'bold'
+                            },
+                            formatter: function (value) {
+                                return value;
+                            }
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels] // Register the plugin
+            });
+            // Approved Projects Chart
+            const ApprovedProjects = data.approvedProjects;
+
+            // Map names and totals
+            const labels1 = ApprovedProjects.map(x => x.name);
+            const totals1 = ApprovedProjects.map(x => x.total);
+            new Chart(document.getElementById('approvedProjectsChart'), {
+                type: 'bar',
+                data: {
+                    labels: labels1,
+                    datasets: [{
+                        label: 'Projects',
+                        backgroundColor: colors,
+                        data: totals1
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Stage Approve Status'
+                        },
+                        legend: {
+                            display: false
+                        },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'end',
+                            color: '#000',
+                            font: {
+                                weight: 'bold'
+                            },
+                            formatter: function (value) {
+                                return value;
+                            }
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels] // Register the plugin
+            });
+
+
+            // Whitelisted Projects Chart
+            const WhitelistedProjects = data.whitelistedProjects;
+
+            // Map names and totals
+            const labels2 = WhitelistedProjects.map(x => x.name);
+            const totals2 = WhitelistedProjects.map(x => x.total);
+            new Chart(document.getElementById('whitelistedChart'), {
+                type: 'bar',
+                data: {
+                    labels: labels2,
+                    datasets: [{
+                        label: 'Whitelisted',
+                        backgroundColor: colors,
+                        data: totals2
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Years Wise Total Project'
+                        },
+                        legend: {
+                            display: false
+                        },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'end',
+                            color: '#000',
+                            font: {
+                                weight: 'bold'
+                            },
+                            formatter: function (value) {
+                                return value;
+                            }
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels] // Register the plugin
+            });
+
+            // Total Projects Pie Chart
+            const TotalProjects = data.totalProjects;
+
+            // Map names and totals
+            const labels3 = TotalProjects.map(x => x.name);
+            const totals3 = TotalProjects.map(x => x.total);
+            new Chart(document.getElementById('totalProjectsChart'), {
+                type: 'pie',
+                data: {
+                    labels: labels3, // e.g. ['Processed - 72', 'Pending - 9']
+                    datasets: [{
+                        backgroundColor: colors,
+                        data: totals3      // e.g. [72, 9]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Total Projects'
+                        },
+                        datalabels: {
+                            color: '#fff',
+                            font: {
+                                weight: 'bold',
+                                size: 18
+                            },
+                            formatter: (value) => value
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels] // register the plugin
+            });
+
+        }
+
+    });
+
+ 
+}
