@@ -493,6 +493,7 @@ function bindProjHoldChart(labels, totals, totalsForlabel, colors) {
                     anchor: 'end',
                     align: 'top',
                     color: '#000',
+                    innerWidth: 0,
                     font: {
                         weight: 'bold'
                     }, formatter: function (value, context) {
