@@ -954,6 +954,7 @@ $(document).on('click', '#btnRemMove', function () {
 
 //}
 function GetProjRemainderMov(ProjId) {
+    debugger;
     $('#ProjRemainderMov').modal('show');
 
     $.ajax({
@@ -1003,7 +1004,18 @@ function GetProjRemainderMov(ProjId) {
                         '<div class="RefLetter">' +
                         '' + (item.touserDetails || 'Action Pending...')+ '' +
                         '</div></td>';
-                    listItem += "<td class='align-middle'>" + (item.remarks || '') + "</td>";
+                  /*  listItem += "<td class='align-middle'>" + (item.remarks || '') + "</td>";*/
+
+
+                    const remarks = item.remarks || 'No Remarks';
+                    const remarkWords = remarks.split(" ");
+                    const shortRemarks = remarkWords.length > 3 ? remarkWords.slice(0, 4).join(" ") + "..." : remarks;
+
+                    listItem += '<td class="RefLetter-container align-middle" style="display:block">' +
+                        shortRemarks +
+                        '<div class="RefLetter" >' +
+                        remarks +
+                        '</div></td>';
                     listItem += "</tr>";
                 }
 
@@ -1035,6 +1047,7 @@ function GetProjRemainderMov(ProjId) {
 
 $(document).on("click", "#ReadRemainderNoti", function (e) {
     e.preventDefault();
+    alert(1);
     debugger;
 
     var $this = $(this);

@@ -1424,7 +1424,7 @@ namespace swas.UI.Controllers
             try
             {
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
+             
                 ViewBag.logins = Logins;
                 string actufilename = "";
                 string AttDocuDescs = "";
@@ -1552,9 +1552,11 @@ namespace swas.UI.Controllers
                     }
 
                     atthis = await _attHistoryRepository.GetAttHistoryByIdAsync(psmid ?? 0);
+
                     prohis[0].Atthistory = atthis;
                     prohis[0].ProjectDetl.Add(projects);
 
+                    
                     return View(prohis);
                 }
 
