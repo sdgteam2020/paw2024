@@ -1093,7 +1093,7 @@ namespace swas.BAL.Repository
 
                 return result;
             }
-            
+
             #endregion
 
         }
@@ -1233,21 +1233,28 @@ namespace swas.BAL.Repository
 
 
                             RequestUnitId = reader.IsDBNull(reader.GetOrdinal("RequestUnitId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("RequestUnitId")),
-                           IsCc = (bool)reader["IsCc"],
+                            IsCc = (bool)reader["IsCc"],
                             IssentCC = (bool)reader["IssentCC"],
-                            CCUnitName = reader["CCUnitName"]?.ToString()
+                            CCUnitName = reader["CCUnitName"]?.ToString(),
+
+                            // ✅ New fields
+                            LatestRemarks = reader["LatestRemarks"]?.ToString(),
+                            HasRemainder1 = reader.GetInt32(reader.GetOrdinal("HasRemainder1")) == 1,
+                            RemainderCount = reader.GetInt32(reader.GetOrdinal("RemainderCount"))
                         });
+
 
                     }
 
                     return result.OrderByDescending(x => x.TimeStamp).ToList();
-                };
+                }
+                ;
             }
             catch (Exception ex)
             {
 
                 throw;
-            }          
+            }
 
             #endregion
         }
@@ -1436,7 +1443,7 @@ namespace swas.BAL.Repository
 
             var lst = new List<DTOProjectsFwd>();
             int unitId = Logins.unitid ?? 0;
-           
+
 
             using (SqlConnection conn = new SqlConnection(_dbContext.Database.GetConnectionString()))
             {
@@ -1451,7 +1458,7 @@ namespace swas.BAL.Repository
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
                     var data = dt;
-                    
+
 
                     using (var reader = await cmd.ExecuteReaderAsync())
                     {
@@ -1486,9 +1493,10 @@ namespace swas.BAL.Repository
                                 EncyID = _dataProtector.Protect(reader["ProjId"].ToString()),
                                 EncyPsmID = _dataProtector.Protect(reader["PsmIds"].ToString()),
                                 PullbackAction = reader["PullbackAction"] != DBNull.Value && Convert.ToBoolean(reader["PullbackAction"]),
-                                IsHosted= Convert.ToInt32(reader["IsHosted"] != DBNull.Value ? Convert.ToInt32(reader["IsHosted"]) : 0),
+                                IsHosted = Convert.ToInt32(reader["IsHosted"] != DBNull.Value ? Convert.ToInt32(reader["IsHosted"]) : 0),
+                                HasRemainder = reader["HasRemainder"] != DBNull.Value && Convert.ToBoolean(reader["HasRemainder"]),
                                 IsCc = (bool)reader["IsCc"],
-                              
+
                                 CCUnitName = reader["CCUnitName"]?.ToString()
 
                             };
@@ -1559,7 +1567,7 @@ namespace swas.BAL.Repository
                                     TimeStamp = reader["TimeStamp"] != DBNull.Value ? Convert.ToDateTime(reader["TimeStamp"]) : DateTime.MinValue,
                                     IsProcess = reader["IsProcess"] != DBNull.Value && Convert.ToBoolean(reader["IsProcess"]),
                                     IsRead = reader["IsRead"] != DBNull.Value && Convert.ToBoolean(reader["IsRead"]),
-                                   
+
                                     //IsPullBack = reader["IsPullBack"] != DBNull.Value && Convert.ToBoolean(reader["IsPullBack"]),
                                     UnitName = reader["StakeHolder"]?.ToString(),
                                     EncyID = _dataProtector.Protect(reader["ProjId"].ToString()),
@@ -1583,7 +1591,7 @@ namespace swas.BAL.Repository
 
                 return lst;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 // Log the exception or handle it as needed
                 throw;
@@ -1679,7 +1687,7 @@ namespace swas.BAL.Repository
             }
         }
 
-       
+
         public async Task<List<AddNewProject>> GetMyProjects()
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
@@ -1885,16 +1893,16 @@ namespace swas.BAL.Repository
             return await _dbContext.ProjStakeHolderMov
                .FirstOrDefaultAsync(a => a.PsmId == psmId && a.ToUnitId == UnitID);
         }
-		
-		public async Task<bool> UpdateProjectAsync(tbl_Projects project, string Remarks)
-		{
-			Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-			if (Logins != null)
-			{
-				// tbl_ProjStakeHolderMov psmove = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == project.CurrentPslmId);
 
-				if (project.Date_type == 1 && project.IsSubmited == true)
-				{
+        public async Task<bool> UpdateProjectAsync(tbl_Projects project, string Remarks)
+        {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            if (Logins != null)
+            {
+                // tbl_ProjStakeHolderMov psmove = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == project.CurrentPslmId);
+
+                if (project.Date_type == 1 && project.IsSubmited == true)
+                {
 
                     var existpsmid = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == project.CurrentPslmId);
 
@@ -1904,93 +1912,93 @@ namespace swas.BAL.Repository
                         _dbContext.ProjStakeHolderMov.Update(existpsmid);
                         _dbContext.SaveChanges();
                     }
-					// Handle DateApproval
-					var dateApp = _dbContext.DateApproval
-						.Where(x => x.ProjId == project.ProjId)
-						.OrderByDescending(x => x.ProjId) // Ideally use a DateTime or Id field
-						.FirstOrDefault();
+                    // Handle DateApproval
+                    var dateApp = _dbContext.DateApproval
+                        .Where(x => x.ProjId == project.ProjId)
+                        .OrderByDescending(x => x.ProjId) // Ideally use a DateTime or Id field
+                        .FirstOrDefault();
 
-					if (dateApp == null)
-					{
-						dateApp = new DateApproval
-						{
-							ProjId = project.ProjId,
-							UnitId = Logins.unitid,
-							Request_Date = DateTime.Now,
-							UserRequest = true,
-							User = Helper1.LoginDetails(Logins),
-							IsRead = false,
-							RequestType = 1
-						};
-						_dbContext.DateApproval.Add(dateApp);
-					}
-					else
-					{
-						dateApp.ProjId = project.ProjId;
-						dateApp.UnitId = Logins.unitid;
-						dateApp.Request_Date = DateTime.Now;
-						dateApp.UserRequest = true;
-						dateApp.User = Helper1.LoginDetails(Logins);
-						dateApp.IsRead = false;
-						dateApp.RequestType = 1;
+                    if (dateApp == null)
+                    {
+                        dateApp = new DateApproval
+                        {
+                            ProjId = project.ProjId,
+                            UnitId = Logins.unitid,
+                            Request_Date = DateTime.Now,
+                            UserRequest = true,
+                            User = Helper1.LoginDetails(Logins),
+                            IsRead = false,
+                            RequestType = 1
+                        };
+                        _dbContext.DateApproval.Add(dateApp);
+                    }
+                    else
+                    {
+                        dateApp.ProjId = project.ProjId;
+                        dateApp.UnitId = Logins.unitid;
+                        dateApp.Request_Date = DateTime.Now;
+                        dateApp.UserRequest = true;
+                        dateApp.User = Helper1.LoginDetails(Logins);
+                        dateApp.IsRead = false;
+                        dateApp.RequestType = 1;
 
-						_dbContext.DateApproval.Update(dateApp);
-					}
+                        _dbContext.DateApproval.Update(dateApp);
+                    }
 
-					_dbContext.SaveChanges();
-
-                    
-					// Handle LegacyHistory
-					var legacyHistory = _dbContext.LegacyHistory
-						.Where(x => x.ProjectId == project.ProjId)
-						.OrderByDescending(x => x.ProjectId)
-						.FirstOrDefault();
-
-					if (legacyHistory == null)
-					{
-						legacyHistory = new LegacyHistory
-						{
-							ProjectId = project.ProjId,
-							UnitId = Logins.unitid,
-							FromUnit = Logins.unitid,
-							ActionBy = Logins.Rank + " " + Logins.Offr_Name,
-							ActionType = (LegacyHistory.ActionTypeEnum)1,
-							Remarks = Remarks?? "No Remarks",
-							ActionDate = DateTime.Now,
-							Userdetails = Helper1.LoginDetails(Logins)
-						};
-						_dbContext.LegacyHistory.Add(legacyHistory);
-					}
-					else
-					{
-						legacyHistory.ProjectId = project.ProjId;
-						legacyHistory.UnitId = Logins.unitid;
-						legacyHistory.FromUnit = Logins.unitid;
-						legacyHistory.ActionBy = Logins.Rank + " " + Logins.Offr_Name;
-						legacyHistory.ActionType = (LegacyHistory.ActionTypeEnum)1;
-						legacyHistory.Remarks = Remarks?? "No Remarks";
-						legacyHistory.ActionDate = DateTime.Now;
-						legacyHistory.Userdetails = Helper1.LoginDetails(Logins);
-
-						_dbContext.LegacyHistory.Update(legacyHistory);
-					
                     _dbContext.SaveChanges();
+
+
+                    // Handle LegacyHistory
+                    var legacyHistory = _dbContext.LegacyHistory
+                        .Where(x => x.ProjectId == project.ProjId)
+                        .OrderByDescending(x => x.ProjectId)
+                        .FirstOrDefault();
+
+                    if (legacyHistory == null)
+                    {
+                        legacyHistory = new LegacyHistory
+                        {
+                            ProjectId = project.ProjId,
+                            UnitId = Logins.unitid,
+                            FromUnit = Logins.unitid,
+                            ActionBy = Logins.Rank + " " + Logins.Offr_Name,
+                            ActionType = (LegacyHistory.ActionTypeEnum)1,
+                            Remarks = Remarks ?? "No Remarks",
+                            ActionDate = DateTime.Now,
+                            Userdetails = Helper1.LoginDetails(Logins)
+                        };
+                        _dbContext.LegacyHistory.Add(legacyHistory);
+                    }
+                    else
+                    {
+                        legacyHistory.ProjectId = project.ProjId;
+                        legacyHistory.UnitId = Logins.unitid;
+                        legacyHistory.FromUnit = Logins.unitid;
+                        legacyHistory.ActionBy = Logins.Rank + " " + Logins.Offr_Name;
+                        legacyHistory.ActionType = (LegacyHistory.ActionTypeEnum)1;
+                        legacyHistory.Remarks = Remarks ?? "No Remarks";
+                        legacyHistory.ActionDate = DateTime.Now;
+                        legacyHistory.Userdetails = Helper1.LoginDetails(Logins);
+
+                        _dbContext.LegacyHistory.Update(legacyHistory);
+
+                        _dbContext.SaveChanges();
                     }
 
                 }
-               
 
-				_dbContext.Entry(project).State = EntityState.Modified;
-				await _dbContext.SaveChangesAsync();
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
 
-		public async Task<bool> UpdateTxnAsync(tbl_ProjStakeHolderMov psmov)
+                _dbContext.Entry(project).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> UpdateTxnAsync(tbl_ProjStakeHolderMov psmov)
         {
             _dbContext.ProjStakeHolderMov.Update(psmov);
             await _dbContext.SaveChangesAsync();
@@ -2139,7 +2147,7 @@ namespace swas.BAL.Repository
 
                 throw;
             }
-           
+
         }
         public async Task<List<tbl_Projects>> GetProcProjAsync()
         {
@@ -2657,7 +2665,7 @@ namespace swas.BAL.Repository
             //    .OrderBy(n => n.ToUnitId) // Replace psmId with toUnitId
             //    .ToList();
             var result = comments
-               
+
                .OrderBy(n => n.ToUnitId) // Replace psmId with toUnitId
                .ToList();
 
@@ -2674,14 +2682,14 @@ namespace swas.BAL.Repository
 
         public async Task<int> GetIsCommentPsmiId(int? ProjId, int? StackHolderId)
         {
-            var ret = await _dbContext.ProjStakeHolderMov.Where(i => i.ProjId == ProjId && i.IsComment == true && i.ToUnitId == StackHolderId && i.IsActive==true).SingleOrDefaultAsync();
+            var ret = await _dbContext.ProjStakeHolderMov.Where(i => i.ProjId == ProjId && i.IsComment == true && i.ToUnitId == StackHolderId && i.IsActive == true).SingleOrDefaultAsync();
             if (ret != null)
                 return ret.PsmId;
             else
                 return 0;
         }
 
-       
+
 
         public async Task<tbl_ProjStakeHolderMov> GetProjStkHolderMovmentByPsmiId(int? PsmId)
         {
@@ -2716,7 +2724,7 @@ namespace swas.BAL.Repository
                 return new ApplicationUser();
         }
 
-   
+
         //public async Task<int> GetProjIdByPsmiId(int? Psmid, int? StackHolderId)
         //{
         //    var ret = await _dbContext.ProjStakeHolderMov.Where(i => i.PsmId == Psmid).FirstOrDefaultAsync();

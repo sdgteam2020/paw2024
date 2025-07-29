@@ -1,12 +1,12 @@
 ﻿$(document).ready(function () {
 
     var param = sessionStorage.getItem("spntabType");
-    
+
     if (param != null) {
         if (param == "XR12") {
             $("#tabinbox").removeClass("active-link");
             $("#tabsent").addClass("active-link");
-            
+
             $("#tabcompleted").removeClass("active-link");
             $("#tabdraft").removeClass("active-link");
 
@@ -16,15 +16,15 @@
         } else if (param == "XRDC") {
             $("#tabinbox").addClass("active-link");
             $("#tabsent").removeClass("active-link");
-           
+
             $("#tabcompleted").removeClass("active-link");
-            
+
             $("#tabdraft").removeClass("active-link");
 
             $("#sent").removeClass("active-tab");
             $("#inbox").addClass("active-tab");
             $("#Completed").removeClass("active-tab");
-           
+
         } else if (param == "XR") {
             $("#tabinbox").removeClass("active-link");
             $("#tabsent").removeClass("active-link");
@@ -34,17 +34,17 @@
             $("#sent").removeClass("active-tab");
             $("#inbox").removeClass("active-tab");
             $("#completed").addClass("active-tab");
-           
+
         }
         sessionStorage.setItem("spntabType", null);
     }
 
 
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
-})
-   
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+
 
     $(".processDetail").click(function () {
         debugger;
@@ -70,20 +70,20 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
         var ss = `${datef2.getSeconds()}`;
 
-      
+
         var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
 
         var claValue = parseInt(actiontype);
 
         if (claValue == 2) {
             $('#datepicker').attr('type', 'datetime-local');
-           
+
             $('#datepicker').attr('max', todayDateTime);
             $('#datepicker').prop('disabled', false); // Allow user input
             $('#datepicker').val(todayDateTime);
         } else {
             $('#datepicker').attr('type', 'date');
-           
+
         }
         $('#confirmSend').off('click').on('click', function () {
             //var pad = "00"
@@ -98,7 +98,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             //var ss = `${datef2.getSeconds()}`;
 
             //var today = year + `-` + monthsans + `-` + dayans;
-            
+
             //    var claValue = parseInt(actiontype);
 
             //    if (claValue == 2) {
@@ -110,7 +110,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             //        $('#datepicker').val(todayDate); // Set today's date
             //        $('#datepicker').prop('disabled', true); // Freeze input
             //    }
-         
+
 
             var dateValue = $('#datepicker').val();
             var currentDate = new Date();
@@ -136,14 +136,14 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             }
             $('#confirmationModal').modal('hide');
             SentForComment(ProjId, psmId, 0, FwdDateForComment);
-           /* AddNotification(ProjId, 1, 0);*/
+            /* AddNotification(ProjId, 1, 0);*/
             ProcessProjConfirm(ProjId);
             IsReadInbox(psmId);
             InboxNotificationCount();
         });
-       
+
         //IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
-       
+
         //IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
     });
 
@@ -153,7 +153,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
 
     $("#tabCC").click(function () {
-       
+
         GetCCProject();
     });
 });
@@ -265,25 +265,25 @@ function ProcessProjConfirm(ProjId) {
     });
 }
 function FwdProjConfirm(psmId) {
-        $.ajax({
-            url: '/Projects/FwdProjConfirm',
-            type: 'POST',
-            data: { "PslmId": psmId },
-            success: function (response) {
-                //console.log(response);
-                if (response >= 1) {
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Project Successfully Submitted..!",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+    $.ajax({
+        url: '/Projects/FwdProjConfirm',
+        type: 'POST',
+        data: { "PslmId": psmId },
+        success: function (response) {
+            //console.log(response);
+            if (response >= 1) {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Project Successfully Submitted..!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
 
-                }
             }
-        });
-    }
+        }
+    });
+}
 
 function GetProjectMovHistory(ProjId) {
     var listitem = "";
@@ -296,7 +296,7 @@ function GetProjectMovHistory(ProjId) {
             /*console.log(response);*/
             if (response.dtoProjectMovHistorypsmlst.length) {
                 listitem += '<div class="timeline-month">';
-                
+
                 /*listitem += '  ' + DateTimeFormatedd_mm_yyyy(new Date($.now())) + '';*/
                 DTOProjectMovHistorypsmlst = response.dtoProjectMovHistorypsmlst;
                 DTOProjectMovHistorycmdlst = response.dtoProjectMovHistorycmdlst;
@@ -352,15 +352,14 @@ function GetProjectMovHistory(ProjId) {
                         listitem += '<div class="col-md-4">';
                         listitem += '<div class="box-item"><strong>From</strong>: </div >';
                         listitem += '</div>';
-                     
-                         listitem += '<div class="col-md-8">';
-                        if (DTOProjectMovHistorypsmlst[i].isPulledBack == 0)
-                         {
-                          listitem += '<div class="box-item"><span class="rounded-pill bg-secondary" style="color: white;">' + DTOProjectMovHistorypsmlst[i].fromUnitName + '</span></div>';
-                         }
+
+                        listitem += '<div class="col-md-8">';
+                        if (DTOProjectMovHistorypsmlst[i].isPulledBack == 0) {
+                            listitem += '<div class="box-item"><span class="rounded-pill bg-secondary" style="color: white;">' + DTOProjectMovHistorypsmlst[i].fromUnitName + '</span></div>';
+                        }
                         else {
                             let fromlist = DTOProjectMovHistorypsmlst[i].fromUnitName.split('(')
-                            listitem += '<div class="box-item"><span class="rounded-pill bg-secondary" style="color: white;">' + fromlist[1].replace(')','') + '</span></div>';
+                            listitem += '<div class="box-item"><span class="rounded-pill bg-secondary" style="color: white;">' + fromlist[1].replace(')', '') + '</span></div>';
 
                         }
                         listitem += '</div>';
@@ -385,7 +384,7 @@ function GetProjectMovHistory(ProjId) {
                             var fromlist1 = DTOProjectMovHistorypsmlst[i].fromUnitName.split('(')
                             listitem += '<div class="box-footer">' + fromlist1[1].replace(')', '') + '</div>';
                         }
-                      
+
                         listitem += '</div></div>';
 
 
@@ -470,7 +469,7 @@ function GetProjectMovHistory(ProjId) {
                             listitem += '</div></div>';
                         }
                     }
-                  
+
                     if (DTOProjectMovHistorypsmlst[i].remarks != "") {
                         //console.log(DTOProjectMovHistorypsmlst);
                         listitem += '<div class="col-sm-4">';
@@ -496,7 +495,7 @@ function GetProjectMovHistory(ProjId) {
                         } else if (DTOProjectMovHistorypsmlst[i].isPulledBack == 0 && DTOProjectMovHistorypsmlst[i].actions != "Obsn") {
                             listitem += '<div class="box-footer ">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
                         } else {
-                            
+
                             listitem += '<div class="box-footer ">' + fromlist1[1].replace(')', '') + '</div>';
                         }
                         listitem += '</div></div>';
@@ -505,32 +504,32 @@ function GetProjectMovHistory(ProjId) {
 
                     if (DTOProjectCCHistorycccpsmid.length > 0) {
                         for (let cc = 0; cc < DTOProjectCCHistorycccpsmid.length; cc++) {
-                        listitem += '<div class="col-sm-4">';
-                        listitem += '<div class="timeline-box">';
-                        listitem += '<div class="box-title bg-warning">';
-                        listitem += '<i class="fa-solid fa-closed-captioning fa-2x"></i>';
-                        listitem += '</div>';
-                        listitem += '<div class="box-content">';
-                       
+                            listitem += '<div class="col-sm-4">';
+                            listitem += '<div class="timeline-box">';
+                            listitem += '<div class="box-title bg-warning">';
+                            listitem += '<i class="fa-solid fa-closed-captioning fa-2x"></i>';
+                            listitem += '</div>';
+                            listitem += '<div class="box-content">';
+
                             let readon = "";
 
-                           
+
                             listitem += '<div class="box-item">' + '<strong>Unit Name : </strong>' + DTOProjectCCHistorycccpsmid[cc].unitName + ' </div>';
                             if (DTOProjectCCHistorycccpsmid[cc].isRead == true) {
 
                                 listitem += '<div class="box-item">' + '<strong>Read on : </strong>' + DateTimeFormatedd_mm_yyyy(DTOProjectCCHistorycccpsmid[cc].readDate) + ' </div>';
                                 listitem += '<div class="box-item">' + '<strong>Read By : </strong>' + DTOProjectCCHistorycccpsmid[cc].userDetails + ' </div>';
                             }
-                           
-                       
-                        
-                        listitem += '</div>';
-                        listitem += '</div></div>';
+
+
+
+                            listitem += '</div>';
+                            listitem += '</div></div>';
                         }
                     }
-                   
-                   // if (DTOProjectCCHistorylst)
-                   
+
+                    // if (DTOProjectCCHistorylst)
+
                     //if (DTOProjectMovHistorypsmlst[i].undoRemarks != null) {
                     //    listitem += '<div class="col-sm-4">';
                     //    listitem += '<div class="timeline-box">';
@@ -569,14 +568,14 @@ function Reset() {
     $("#pdfFileInput").val("");
 }
 function IsReadInbox(psmId) {
-   
+
     $.ajax({
         url: '/Projects/IsReadInbox',
         type: 'POST',
         data: { "PsmId": psmId },
         success: function (response) {
             console.log(response);
-            
+
         }
     });
 }
@@ -587,62 +586,64 @@ function GetCCProject() {
     $.ajax({
         url: '/Projects/GetActCcProject',
         type: 'POST',
-       
+
         success: function (response) {
             if (response != null) {
-                
-                for (let i=0; i < response.length; i++) {
+                let count =0;
+                for (let i = 0; i < response.length; i++) {
+                    count++
                     listitem += '<tr>';
-                    listitem += '<td> <span class="d-none" id="SpnCurrentccProjId"> ' + response[i].projId +'</span> ';
+
+                    listitem += '<td>' + count +'';
                     if (response[i].isRead == false)
                         listitem += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="color:#18bb6b" fill = "currentColor" class="bi bi-check" viewBox = "0 0 16 16" ><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" /></svg >';
                     else
                         listitem += '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" style="color:#18bb6b" height = "16" fill = "currentColor" > <path d="M342.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l80 80c12.5 12.5 32.8 12.5 45.3 0l160-160zm96 128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 402.7 54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l256-256z" /> </svg >';
 
                     listitem += '</td>';
-                    listitem += '<td> <a data-proj-name="' + response[i].projName +'" data-proj-id="' + response[i].projId +'" href="/Projects/ProjHistory?EncyID=' + response[i].encyID +'&amp;Type=XR12">' +
-                        '<div class="tooltip-container" data-tooltip="' + response[i].projName+'">' +
-                        '<span class="short-text">' + truncateText(response[i].projName, 6) +'</span>' +
-                        '<span class="tooltip tooltip-text" id="projNamecc">"' + response[i].projName +'"</span>' +
+                    listitem += '<td><span class="d-none" id="SpnCurrentccProjId"> ' + response[i].projId + '</span>  <a data-proj-name="' + response[i].projName + '" data-proj-id="' + response[i].projId + '" href="/Projects/ProjHistory?EncyID=' + response[i].encyID + '&amp;Type=XR12">' +
+                        '<div class="tooltip-container" data-tooltip="' + response[i].projName + '">' +
+                        '<span class="short-text">' + truncateText(response[i].projName, 6) + '</span>' +
+                        '<span class="tooltip tooltip-text" id="projNamecc">"' + response[i].projName + '"</span>' +
                         '</div>' +
                         '</a> </td>';
 
-                    listitem += '<td class="RefLetter-container">'+
-                        '' + response[i].unitName+''+
-                                            '<div class="RefLetter">'+
-                                            '' + response[i].sponsor+''+
+                    listitem += '<td class="RefLetter-container">' +
+                        '' + response[i].unitName + '' +
+                        '<div class="RefLetter">' +
+                        '' + response[i].sponsor + '' +
                         '</div></td>';
                     listitem += '<td class="RefLetter-container">' +
                         '' + response[i].fromUnitUserDetail + '' +
                         '<div class="RefLetter">' +
                         '' + response[i].fromUnitName + '' +
                         '</div></td>';
-                   /* listitem += '<td>' + response[i].toUnitName + '</td>'*/
+                    /* listitem += '<td>' + response[i].toUnitName + '</td>'*/
                     listitem += '<td>' + DateFormateddMMyyyyhhmmss(response[i].timeStamp) + '</td>'
-                    if (response[i].userDetails!="")
+                    if (response[i].userDetails != "")
                         listitem += '<td>' + DateFormateddMMyyyyhhmmss(response[i].readDate) + '</td>'
                     else
                         listitem += '<td></td>'
                     listitem += '<td>' + response[i].userDetails + '</td>'
                     listitem += '<td>' + response[i].stage + '</td>'
-                    listitem += '<td>' +response[i].status+ '</td>'
+                    listitem += '<td>' + response[i].status + '</td>'
                     listitem += '<td>' +
                         '<div class="RefLetter-container btn btn-warning p-2" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">' +
-                            '<span>Cc</span>' +
-                            '<div class="RefLetter">' +
-                        '' + response[i].ccUnitName+'' +
-                                '</div>' +
-                            '</div>' +
-					'</td>'
-                   
-                    listitem += '<td><div class="row d-flex">'+
+                        '<span>Cc</span>' +
+                        '<div class="RefLetter">' +
+                        '' + response[i].ccUnitName + '' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>'
+
+                    listitem += '<td><div class="row d-flex">' +
                         '<div class="col-md-2">' +
                         '<button type="button" class="btn btn-success btn-FwdHistoryCcc" data-proj-name="@project.ProjName" title="History" style="margin-top: 1px;"><i class="fa-solid fa-timeline"></i></button>' +
                         '</div>' +
                         '</div>' +
-                                    '</td>';
+                        '</td>';
                     listitem += '';
-                 
+
                 }
                 $("#cctblData").html(listitem);
                 initializeDataTable("#CCtable");
@@ -654,7 +655,7 @@ function GetCCProject() {
                     var finalTitle = "Mov History: " + projName;
                     $('#lblHistory').text(finalTitle);
                     $('#ProjFwdHistory').modal('show');
-                   
+
                     GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentccProjId").html());
                 });
             }
@@ -831,8 +832,8 @@ $(document).on('click', '#btnRemainder', function () {
     var projid = $(this).data('projid');
     var projname = $(this).data('projname');
     Swal.fire({
-        title: "Are you sure?",
-        html: `Please Enter Remarks For Remainder <br /><strong>${projname}</strong>`,
+        title: `Project:${projname}`,
+        html: `Please Enter Remarks For Reminder`,
         input: "textarea",
         inputPlaceholder: "Enter remarks here...",
         inputAttributes: {
@@ -865,7 +866,7 @@ $(document).on('click', '#btnRemainder', function () {
 });
 
 function SendRemainder(projid, remarks) {
-    debugger;
+  
     $.ajax({
         url: '/Projects/SendRemainder',
         type: 'POST',
@@ -877,7 +878,7 @@ function SendRemainder(projid, remarks) {
             debugger;
             console.log(response);
             if (response > 0) {
-                Swal.fire("Success", "Remainder sent successfully", "success");
+                Swal.fire("Success", "Reminder sent successfully", "success");
             } else {
                 Swal.fire("Error", "Something went wrong", "error");
             }
@@ -924,9 +925,9 @@ $(document).on('click', '#btnRemMove', function () {
     var words = projName.split(" ");
     var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
     //var finalTitle = "Mov History: " + shortProjName;
-    var finalTitle = "Remainder History: " + projName;
+    var finalTitle = "Reminder History: " + projName;
     $('#RemProjName').text(finalTitle);
-    $('#ProjRemainderMov').modal('show');
+
 
     GetProjRemainderMov(ProjId); // <-- fixed this line
 });
@@ -953,76 +954,135 @@ $(document).on('click', '#btnRemMove', function () {
 
 //}
 function GetProjRemainderMov(ProjId) {
-$.ajax({
-    url: '/Projects/GetProjectRemainderHistory',
-    type: 'GET',
-    data: { ProjectId: ProjId },
-    success: function (response) {
-        console.log(response); // Debugging
-        debugger;
+    $('#ProjRemainderMov').modal('show');
 
-        const data = response.data || []; // Expecting data as array
-        const length = data.length;
-        let listitem = '';
+    $.ajax({
+        url: '/Projects/GetProjectRemainderHistory',
+        type: 'GET',
+        data: { ProjectId: ProjId },
+        success: function (response) {
+            console.log(response); // Debugging
+            debugger;
 
-        if (length > 0) {
-            // Set project name once
-            
+            const data = response.data || []; // Expecting array
+            const length = data.length;
+            let listItem = '';
 
-            listitem += '<div class="timeline-month">';
-            listitem += '<span>' + length + ' Entries</span>';
-            listitem += '</div>';
+            if (length > 0) {
+                for (let i = 0; i < length; i++) {
+                    const item = data[i];
+                    const projName = item.projName || 'N/A';
+                    const words = projName.split(" ");
+                    const shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
 
-            for (let i = 0; i < length; i++) {
-                const item = data[i];
+                    listItem += "<tr>";
+                    listItem += "<td class='align-middle'>" + (i + 1) + "</td>";
+                    //listItem += "<td class='align-middle nowrap'>" +
+                    //    "<a class='ProjName' title='" + projName + "' data-proj-name='" + shortProjName + "'>" +
+                    //    shortProjName + "</a></td>";
 
-                listitem += '<div class="timeline-section">';
-                listitem += '<div class="timeline-date">' + (item.sentOn || '-') + '</div>';
+                    listItem += '<td class="RefLetter-container align-middle">' +
+                        '' + item.unitName + '' +
+                        '<div class="RefLetter">' +
+                        '' + item.sponsor + '' +
+                        '</div></td>';
 
-                listitem += '<div class="row g-3">';
+                   /* listItem += "<td class='align-middle'>" + (item.sponsor || 'N/A') + "</td>";*/
+                    listItem += "<td class='align-middle'><div class='col-md-24'>" + (item.sentOn || '-') + "</div></td>";
 
-                // Action Type Box
-                listitem += '<div class="col-md-6">';
-                listitem += '<div class="timeline-box">';
-                listitem += '<div class="box-title bg-success text-white"><i class="fa-solid fa-forward"></i>Remainder Forward</div>';
-
-                listitem += '<div class="box-content">';
-                listitem += '<div class="row mb-1"><div class="col-4"><strong>Remainder By</strong>:</div><div class="col-8"><span class="badge bg-secondary">' + (item.fromUnit || 'N/A') + '</span></div></div>';
-                listitem += '</div>'; // .box-content
-                listitem += '<div class="box-content">';
-                listitem += '<div class="row mb-1"><div class="col-4"><strong>Remainder To</strong>:</div><div class="col-8"><span class="badge bg-secondary">' + (item.toUnit || 'N/A') + '</span></div></div>';
-                listitem += '</div>'; // .box-content
-
-                listitem += '<div class="box-content">';
-                listitem += '<div class="row mb-1"><div class="col-4"><strong>Sponsor</strong>:</div><div class="col-8"><span class="badge bg-secondary">' + (item.sponsor || 'N/A') + '</span></div></div>';
-                listitem += '</div>'; 
-
-
-
-                listitem += '<div class="box-footer">' + (item.userDetails || 'Unknown User') + '</div>';
-                listitem += '</div></div>'; // End Action Box
-
-                // Remarks Box (if any)
-                if (item.remarks) {
-                    listitem += '<div class="col-md-6">';
-                    listitem += '<div class="timeline-box">';
-                    listitem += '<div class="box-title"><i class="fa fa-pencil text-info"></i> Remarks On ' + (item.sentOn || '-') + '</div>';
-                    listitem += '<div class="box-content"><div class="box-item">' + item.remarks + '</div></div>';
-                    listitem += '<div class="box-footer"><strong>Remarks To</strong>:' + (item.toUnit || 'Unknown User') + '</div>';
-                    listitem += '</div></div>';
+                  /*  listItem += "<td class='align-middle'>" + (item.fromUnit || 'N/A') + "</td>";*/
+                    listItem += '<td class="RefLetter-container align-middle">' +
+                        '' + item.fromUnit + '' +
+                        '<div class="RefLetter">' +
+                        '' + item.userDetails + '' +
+                        '</div></td>';
+                    listItem += "<td class='align-middle' ><div class='col-md-24'>" + (item.readOn || '-') + "</div></td>"; 
+                  /*  listItem += "<td class='align-middle'>" + (item.toUnit || 'N/A') + "</td>";*/
+                    listItem += '<td class="RefLetter-container align-middle">' +
+                        '' + item.toUnit + '' +
+                        '<div class="RefLetter">' +
+                        '' + (item.touserDetails || 'Action Pending...')+ '' +
+                        '</div></td>';
+                    listItem += "<td class='align-middle'>" + (item.remarks || '') + "</td>";
+                    listItem += "</tr>";
                 }
 
-                listitem += '</div>'; // End row
-                listitem += '</div>'; // End section
+
+                if ($.fn.DataTable.isDataTable("#Trakingtable")) {
+                    $("#Trakingtable").DataTable().clear().destroy();
+                }
+
+                $("#ProjRemMov").html(listItem);
+                initializeDataTable("#Trakingtable")
+
+                if (data[0].projName) {
+                    $("#RemProjName").text(data[0].projName);
+                }
+
+            } else {
+                $("#ProjRemMov").html('<tr><td colspan="8" class="text-center">No history available.</td></tr>');
+                $("#RemProjName").text('');
             }
-         
-            $("#ProjRemMov").html(listitem);
-        } else {
-            $("#ProjRemMov").html('<div class="alert alert-info">No history available.</div>');
+        },
+        error: function () {
+            $("#ProjRemMov").html('<tr><td colspan="8" class="text-center text-danger">Failed to load history.</td></tr>');
+            $("#RemProjName").text('');
         }
-    },
-    error: function () {
-        $("#ProjRemMov").html('<div class="alert alert-danger">Failed to load history.</div>');
-    }
-});
+    });
 }
+
+
+
+$(document).on("click", "#ReadRemainderNoti", function (e) {
+    e.preventDefault();
+    debugger;
+
+    var $this = $(this);
+    var projId = parseInt($this.data("projid"));
+
+    // Remove bold styling to indicate it is read
+    $this.closest("tr").removeClass("bold-text");
+
+    // Get and pass current PSM ID to mark as read
+    var psmId = $this.closest("tr").find("#SpnCurrentpsmId").text();
+    IsReadInbox(psmId);
+
+    // Hide or reset the badge
+    $("#Remainderbedge").text("0").hide();
+
+    // Update the read date in the backend
+    updateReadDateForRemainder(projId);
+
+    // Refresh remainder movement and notification count after a short delay
+   
+});
+
+
+function updateReadDateForRemainder(ProjId) {
+    $.ajax({
+        url: '/Projects/UpdateRemaRead',
+        type: 'GET',
+        data: { ProjectId: ProjId },
+        success: function (response) {
+            setTimeout(function () {
+                GetProjRemainderMov(ProjId);
+                InboxNotificationCount();
+            }, 200);
+          
+        },
+        error: function (error, xhr) {
+            console.log(error);
+        }
+
+    });
+};
+$(document).ready(function () {
+    $('.hover-container').hover(
+        function () {
+            $(this).find('.hover-popup').stop(true, true).fadeIn(200);
+        },
+        function () {
+            $(this).find('.hover-popup').stop(true, true).fadeOut(200);
+        }
+    );
+});

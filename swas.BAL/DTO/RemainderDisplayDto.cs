@@ -13,6 +13,7 @@ namespace swas.BAL.DTO
 
         [JsonPropertyName("projectId")]
         public int projid { get; set; }
+        public int Psmid { get; set; }
         public string ProjName { get; set; }
         public string Sponsor { get; set; }
         public string Domain { get; set; }
@@ -22,8 +23,11 @@ namespace swas.BAL.DTO
       
       
         public string userDetails { get; set; }
+        public string TouserDetails { get; set; }
         public string SentOn { get; set; }
         public string ReadOn { get; set; }
+        public string unitName { get; set; }
+        public string EncyID { get; set; }
 
     }
 }

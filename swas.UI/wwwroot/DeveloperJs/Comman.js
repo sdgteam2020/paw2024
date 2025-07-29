@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-   
+
     var pad = "00"
     var datef2 = new Date();
     var months = "" + `${(datef2.getMonth() + 1)}`;
@@ -9,7 +9,7 @@
     var year = `${datef2.getFullYear()}`;
     var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
     var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-   // var mm = `${datef2.getMinutes()}`;
+    // var mm = `${datef2.getMinutes()}`;
     var ss = `${datef2.getSeconds()}`;
 
     //var today = new Date().toISOString().split('T');  // Get today's date in YYYY-MM-DD format
@@ -51,7 +51,7 @@
     function applyDateLogic() {
         debugger;
         var selectedMode = $('input[name="mcalender_dates"]:checked').val();
-       
+
 
         if (selectedMode == "0") {
             debugger;
@@ -83,8 +83,8 @@
 
     // Re-run when calendar toggle changes
     $('input[name="mcalender_dates"]').change(function () {
-       
-        console.log($('input[name="mcalender_dates"]:checked').val());
+
+
         applyDateLogic();
     });
 
@@ -92,7 +92,7 @@
 
         var initiatedDate = $(this).val();
         $('#CompletionDate').attr('min', initiatedDate);
-        $('#CompletionDate').val(""); // Clear any old value if it’s before the new min
+
     });
 
     // Remove the max date setting for CompletionDate to allow future selection when InitiatedDate changes
@@ -105,7 +105,7 @@
     $('input[name="mcalender_dates"]').change(function () {
 
         var selectedValue = $('input[name="mcalender_dates"]:checked').val();
-       
+
 
         // Send value to server to store in session
         $.ajax({
@@ -121,12 +121,12 @@
         });
     });
 
-   
+
     $('.form-control').keypress(function (e) {
         // Get the key code of the pressed key
         // Get the key code of the pressed key
         var keyCode = e.which;
-       
+
         // Allow only alphabets (A-Z, a-z) and numbers (0-9)
         if ((keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (keyCode >= 48 && keyCode <= 57) || (keyCode == 32)) {
             return true; // Allow the keypress
@@ -136,9 +136,9 @@
                 return true; // Allow the keypress
             else {
                 alert('Only Alphabets and Numbers allowed');
-            return false; // Block the keypress
+                return false; // Block the keypress
             }
-            
+
         }
     });
 });
@@ -216,7 +216,7 @@ function DateCalculateago(fmDate, end_actual_time) {
     ////////ago///////////
     var ago = "";
     var start_actual_time = fmDate;
-   /* var end_actual_time = new Date();*/
+    /* var end_actual_time = new Date();*/
 
     start_actual_time = new Date(start_actual_time);
     end_actual_time = new Date(end_actual_time);
@@ -235,12 +235,11 @@ function DateCalculateago(fmDate, end_actual_time) {
     var hours = Math.floor(milliseconds / (60 * 60 * 1000));
     var formatted1 = formatted.substring(0, 2);
     if (hours <= 24) {
-        ago = formatted +' Min </h6>';
+        ago = formatted + ' Min </h6>';
     }
-    else /*if (hours <= 730)*/
-    {
-        
-        ago = Math.floor(hours / 24) + ' Days (' + formatted  +')</h6>';;
+    else /*if (hours <= 730)*/ {
+
+        ago = Math.floor(hours / 24) + ' Days (' + formatted + ')</h6>';;
     }
     //else if (hours <= 8766) {
     //    ago = Math.floor(Math.floor(hours / 24) / 30) + ' Months</h6>';;
@@ -255,7 +254,7 @@ function DateCalculateagoForChart(fmDate, end_actual_time) {
     const totalMinutes = diffMs / 60000;
     const totalHoursDecimal = (totalMinutes / 60).toFixed(1); // 1 decimal place
     return parseFloat(totalHoursDecimal);
-   
+
 }
 function formatDateToDDMMYYYY(date) {
     // Parse the input date
@@ -279,7 +278,7 @@ function formatDateToDDMMYYYY(date) {
 
 function bindLiveProjectSearch(inputSelector, dropdownSelector, endpointUrl, onItemSelect) {
     debugger;
-   
+
     $(inputSelector).on("keyup", function () {
         debugger;
         let query = $(this).val();
@@ -296,16 +295,16 @@ function bindLiveProjectSearch(inputSelector, dropdownSelector, endpointUrl, onI
         //    return;
         //}
         if (query.length > 200) {
-      
+
             Swal.fire({
                 icon: 'error',
                 title: 'Only maximaum characters limit is 200',
             });
-            return $(this).val("") ;
+            return $(this).val("");
         }
-        
-           
-           
+
+
+
 
         if (query.length < 2) {
             $(dropdownSelector).hide();
@@ -359,7 +358,7 @@ function bindLiveProjectSearch(inputSelector, dropdownSelector, endpointUrl, onI
                 if (remarks.length > 200) {
                     Swal.showValidationMessage('Remarks Must not exceed 200 characters');
                 }
-                    return remarks;
+                return remarks;
             }
         }).then((result) => {
             if (result.isConfirmed) {
@@ -375,7 +374,7 @@ function bindLiveProjectSearch(inputSelector, dropdownSelector, endpointUrl, onI
 
         });
 
-        
+
     });
 
     // Optional: Hide dropdown when clicking outside

@@ -146,12 +146,7 @@ namespace swas.UI.Controllers
                     }
                     else
                     {
-                        bool type = false;
-                        if(unitId == 1)
-                        {
-                             type = true;
-                        }
-                          var ret = await _statusRepository.GetAllByStages_takeHolder(ParentId, Convert.ToInt32(Logins.unitid), type);
+                          var ret = await _statusRepository.GetAllByStages_takeHolder(ParentId, Convert.ToInt32(Logins.unitid), false);
                      //   var ret = await _statusRepository.GetAll();
 
                         return Json(ret);
