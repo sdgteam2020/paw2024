@@ -7,7 +7,7 @@
         formData.append("Reamarks", $("#Reamarks").val());
         formData.append("PsmId", $("#spanCurrentPslmId").html());
     }
-    
+
     $.ajax({
         type: "POST",
         url: '/Projects/UploadMultiFile',
@@ -15,7 +15,8 @@
         contentType: false,
         processData: false,
         success: function (response) {
-
+            $('#uploadLoader').hide();
+        
             if (response == 1) {
                 AttechHistory();
                 $("#Reamarks").val("");
@@ -48,6 +49,7 @@
 
         },
         error: function (error) {
+            $('#uploadLoader').hide();
             $(".error-msg").removeClass("d-none")
             $("#error-msg").html("Somthing is wrong");;
 

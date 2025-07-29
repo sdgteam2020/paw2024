@@ -119,8 +119,8 @@
         width: 250px;
         z-index: 1000;
         list-style: none;
-       /*  margin-left: 766px;
-        margin-top: 45px; */
+        /*  margin-left: 766px;
+            margin-top: 45px; */
         padding: 0;
     }
 
@@ -251,7 +251,7 @@
             <div class="col-md-12 text-center p-0 mb-2">
 
 
-               @*  <div class="d-flex justify-content-start align-items-center">
+                @*  <div class="d-flex justify-content-start align-items-center">
 
                     <label class="me-2 fw-bold" title="ON means calendars will accept past date">
                         Ingest-Legacy Proj / Old Proj
@@ -291,7 +291,16 @@
                     </div>
                 </div>
 
-
+                <div id="uploadLoader" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background-color:rgba(0,0,0,0.4); z-index:1050;">
+                    <div class="d-flex justify-content-center align-items-center h-100">
+                        <div class="text-center">
+                            <div class="spinner-border text-success" role="status" style="width: 4rem; height: 4rem;">
+                                <span class="visually-hidden">Uploading...</span>
+                            </div>
+                            <div class="mt-3 text-white">Uploading, please wait...</div>
+                        </div>
+                    </div>
+                </div>
                 <div class="card px-0 pb-0 mb-3">
                     <div class="newprojectheading">
                         New Project
@@ -351,7 +360,7 @@
                                         <td>
                                                 @Html.LabelFor(model => model.ProjName, "Project Name", new { id = "AddProjName" })<font style="color:red;"><b>*</b></font>
                                         </td>
-                                       @*  <td>
+                                            @*  <td>
                                                 @Html.EditorFor(model => model.ProjName, new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", @required = "required", @placeholder = "Max Char 200 ",@style="margin-bottom:0px;" } })
                                             <ul id="projectNameDropdown" class="dropdown-list " style="display:none; width:477px">
                                             </ul>
@@ -372,12 +381,12 @@
                                                 Project Name Required
                                             </div>
                                         </td>
-                                       
+
 
 
 
                                         <td>
-                                            @Html.LabelFor(model => model.InitiatedDate, "Initiation Date", new { id = "AddInitiatedDate" })
+                                                @Html.LabelFor(model => model.InitiatedDate, "Initiation Date", new { id = "AddInitiatedDate" })
                                             <font style="color:red;"><b>*</b></font>
                                             <button type="button" class="btn btn-danger" id="btn-Initiation" style="margin-top: 1px;" title="Initiation Date">
                                                 <i class="fa fa-info-circle" aria-hidden="true"></i>
@@ -385,8 +394,8 @@
 
                                         </td>
                                         <td>
-                                            @* @Html.TextBoxFor(model => model.InitiatedDate, "{0:yyyy-MM-dd}", new { @class = "form-control requiredField", type = "date", required = "required" }) *@
-                                            @Html.TextBoxFor(model => model.InitiatedDate, "{0:yyyy-MM-dd}", new { @class = "form-control requiredField", type = "date", required = "required" })
+                                                @* @Html.TextBoxFor(model => model.InitiatedDate, "{0:yyyy-MM-dd}", new { @class = "form-control requiredField", type = "date", required = "required" }) *@
+                                                @Html.TextBoxFor(model => model.InitiatedDate, "{0:yyyy-MM-dd}", new { @class = "form-control requiredField", type = "date", required = "required" })
 
                                             <div class="invalid-feedback">
                                                 Initiation Date Required
@@ -395,12 +404,12 @@
 
 
 
-                                       
+
                                     </tr>
                                     <!--next row-->
                                     <tr>
 
-                                        @* <td>
+                                            @* <td>
                                             @Html.LabelFor(model => model.IsWhitelisted, "Already Whitelisted ?", new { id = "AddIsWhitelisted" })<font style="color:red;"><b>*</b></font>
                                         </td>
 
@@ -432,11 +441,11 @@
                                         </td>
 
                                         <td>
-                                            @Html.LabelFor(model => model.InitialRemark, "Remarks", new { id = "AddInitialRemark" })<font style="color:red; "><b>*</b></font>
+                                                @Html.LabelFor(model => model.InitialRemark, "Remarks", new { id = "AddInitialRemark" })<font style="color:red; "><b>*</b></font>
 
                                         </td>
                                         <td>
-                                            @Html.EditorFor(model => model.InitialRemark, new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", required = "required", @placeholder = "Max Char 200 " } })
+                                                @Html.EditorFor(model => model.InitialRemark, new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", required = "required", @placeholder = "Max Char 200 " } })
                                             <span class="charErrorMsg" style="color: red; display: none;">Cannot exceed 200 characters!</span>
                                             <div class="invalid-feedback">
                                                 Initial Remark Required
@@ -444,7 +453,7 @@
 
                                         </td>
                                         <td>
-                                            @Html.LabelFor(model => model.Sponsor, "Sponsor", new { id = "AddStakeholderId1" })<font style="color:red;"><b>*</b></font>
+                                                @Html.LabelFor(model => model.Sponsor, "Sponsor", new { id = "AddStakeholderId1" })<font style="color:red;"><b>*</b></font>
                                             <button type="button" class="btn btn-danger" id="btn-Sponsor" style="margin-top: 1px;" title="Sponsor">
                                                 <i class="fa fa-info-circle" aria-hidden="true"></i>
                                             </button>
@@ -462,11 +471,11 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            @Html.LabelFor(model => model.AimScope, "Aim and Scope", new { id = "AddAimScope1" })<font style="color:red; "><b>*</b></font>
+                                                @Html.LabelFor(model => model.AimScope, "Aim and Scope", new { id = "AddAimScope1" })<font style="color:red; "><b>*</b></font>
 
                                         </td>
                                         <td>
-                                            @Html.TextAreaFor(model => model.AimScope, new { @class = "form-control requiredField char-limit", @data_maxlength = "500", required = "required", @placeholder = "Max Char 500" })
+                                                @Html.TextAreaFor(model => model.AimScope, new { @class = "form-control requiredField char-limit", @data_maxlength = "500", required = "required", @placeholder = "Max Char 500" })
                                             <span class="charErrorMsg" style="color: red; display: none;">Cannot exceed 500 characters!</span>
                                             <div class="invalid-feedback">
                                                 Aim and Scope Required
@@ -475,18 +484,18 @@
 
                                         </td>
                                         <td>
-                                            @Html.LabelFor(model => model.HQandITinfraReqd, "IT Infra Required", new { id = "AddHQandITinfraReqd" })<font style="color:red;"><b>*</b></font>
+                                                @Html.LabelFor(model => model.HQandITinfraReqd, "IT Infra Required", new { id = "AddHQandITinfraReqd" })<font style="color:red;"><b>*</b></font>
 
                                         </td>
                                         <td>
-                                            @Html.EditorFor(model => model.HQandITinfraReqd, new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", required = "required", @placeholder = "Max Char 200 " } })
+                                                @Html.EditorFor(model => model.HQandITinfraReqd, new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", required = "required", @placeholder = "Max Char 200 " } })
                                             <span class="charErrorMsg" style="color: red; display: none;">Cannot exceed 200 characters!</span>
                                             <div class="invalid-feedback">
                                                 HQ and IT Infrastructure Required
                                             </div>
                                         </td>
                                         <td>
-                                            @Html.LabelFor(model => model.HostTypeID, new { id = "AddHost" })<font style="color:red;"><b>*</b></font>
+                                                @Html.LabelFor(model => model.HostTypeID, new { id = "AddHost" })<font style="color:red;"><b>*</b></font>
 
                                         </td>
                                         <td>
@@ -505,11 +514,11 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            @Html.LabelFor(model => model.ContentofSWApp, new { id = "AddContentofSWApp1" })<font style="color:red; "><b>*</b></font>
+                                                @Html.LabelFor(model => model.ContentofSWApp, new { id = "AddContentofSWApp1" })<font style="color:red; "><b>*</b></font>
 
                                         </td>
                                         <td>
-                                            @Html.TextAreaFor(model => model.ContentofSWApp, new { @class = "form-control requiredField char-limit", @data_maxlength = "500", required = "required", @placeholder = "Max Char 500 " })
+                                                @Html.TextAreaFor(model => model.ContentofSWApp, new { @class = "form-control requiredField char-limit", @data_maxlength = "500", required = "required", @placeholder = "Max Char 500 " })
                                             <span class="charErrorMsg" style="color: red; display: none;">Cannot exceed 500 characters!</span>
                                             <div class="invalid-feedback">
                                                 Contents app Required
@@ -517,11 +526,11 @@
                                         </td>
 
                                         <td>
-                                            @Html.LabelFor(model => model.ReqmtJustification, new { id = "AddReqmtJustification1" })<font style="color:red;"><b>*</b></font>
+                                                @Html.LabelFor(model => model.ReqmtJustification, new { id = "AddReqmtJustification1" })<font style="color:red;"><b>*</b></font>
 
                                         </td>
                                         <td>
-                                            @Html.TextAreaFor(model => model.ReqmtJustification, new { @class = "form-control requiredField char-limit", @data_maxlength = "500", required = "required", @placeholder = "Max Char 500 " })
+                                                @Html.TextAreaFor(model => model.ReqmtJustification, new { @class = "form-control requiredField char-limit", @data_maxlength = "500", required = "required", @placeholder = "Max Char 500 " })
                                             <span class="charErrorMsg" style="color: red; display: none;">Cannot exceed 500 characters!</span>
                                             <div class="invalid-feedback">
                                                 Reqmt Justification  Required
@@ -530,11 +539,11 @@
                                         </td>
 
                                         <td>
-                                            @Html.LabelFor(model => model.UsabilityofProposedAppln, new { id = "AddUsabilityofProposedAppln1" })<font style="color:red;"><b>*</b></font>
+                                                @Html.LabelFor(model => model.UsabilityofProposedAppln, new { id = "AddUsabilityofProposedAppln1" })<font style="color:red;"><b>*</b></font>
 
                                         </td>
                                         <td>
-                                            @Html.EditorFor(model => model.UsabilityofProposedAppln, new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", required = "required", @placeholder = "Max Char 200 " } })
+                                                @Html.EditorFor(model => model.UsabilityofProposedAppln, new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", required = "required", @placeholder = "Max Char 200 " } })
                                             <span class="charErrorMsg" style="color: red; display: none;">Cannot exceed 200 characters!</span>
                                             <div class="invalid-feedback">
                                                 Usability of Proposed Appln Date Required
@@ -546,7 +555,7 @@
                                     <tr>
 
                                         <td>
-                                            @Html.LabelFor(model => model.Apptype, "Application Type", new { id = "AddApptype" })<font style="color:red;"><b>*</b></font>
+                                                @Html.LabelFor(model => model.Apptype, "Application Type", new { id = "AddApptype" })<font style="color:red;"><b>*</b></font>
 
                                         </td>
                                         <td>
@@ -862,7 +871,7 @@
                                 <input type="button" id="finalupload" name="next" class="next action-button disabled-button" value="Submit to DDGIT" disabled />
                             }
 
-                           
+
                             @* <input type="button" id="draftUpload" name="next" class="next action-button enabled-button" value="Save" />
 
                             <input type="button" id="finalupload" name="next" class="next action-button disabled-button" value="Submit to DDGIT" disabled /> *@

@@ -28,23 +28,8 @@ namespace swas.BAL.Repository
         {
             
             List<DTODDLComman> lst = new List<DTODDLComman>();
-               if ((IsOwnProj == true && ParentId == 2) || (IsOwnProj == true && ParentId == 1))
-            {
-
-                var ret = await _dbContext.mStatus
-        .Where(stat => stat.IsActive == true) // if you have IsActive here
-
-        .Select(stat => new DTODDLComman
-        {
-            Id = stat.StatusId,       // Use ActionsId as Id instead of StatusActionsMappingId
-            Name = stat.Status,
-        })
-        .ToListAsync();
-
-                lst = ret;
-
-            }
-            else if(ParentId == 1)
+           
+             if(ParentId == 1)
             {
                 var ret = (from Status in _dbContext.mStatus
                            join Stages in _dbContext.mStages on Status.StageId equals Stages.StagesId

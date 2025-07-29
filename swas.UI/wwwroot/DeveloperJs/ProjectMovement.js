@@ -63,6 +63,7 @@
     });
 
     $("#btnFwdNext").click(function () {
+       
         requiredFields = $('#ProjFwd').find('.requiredField');
         var allFieldsComplete = true;
         requiredFields.each(function (index) {
@@ -158,7 +159,11 @@
                 confirmButtonText: "Yes, Upload it!"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    UploadFiles();
+                    $('#uploadLoader').show();
+                    setTimeout(function () {
+                        UploadFiles();
+                    }, 1000)
+                   
                 }
             });
         }
@@ -190,7 +195,7 @@ function UploadFiles() {
         contentType: false,
         processData: false,
         success: function (response) {
-
+            $('#uploadLoader').hide();
             if (response == 1) {
                 AttechHistory();
                 $("#Reamarks").val("");
@@ -213,6 +218,7 @@ function UploadFiles() {
             }
         },
         error: function (error) {
+            $('#uploadLoader').hide();
             $(".error-msg").removeClass("d-none")
             $("#error-msg").html("Somthing is wrong");
 

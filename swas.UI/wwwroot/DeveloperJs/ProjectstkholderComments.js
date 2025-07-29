@@ -30,7 +30,11 @@ $(document).ready(function () {
 
         }
         else {
-            SendMsg();
+            $('#uploadLoader').show();
+            setTimeout(function () {
+                SendMsg();
+            },500);
+           
         }
     });
 
@@ -438,10 +442,12 @@ function SendMsg() {
         contentType: false,
         processData: false,
         success: function (response) {
+            $('#uploadLoader').hide();
             if (response == 0) {
 
             }
             if (response == 1) {
+                $('#uploadLoader').hide();
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
@@ -499,7 +505,7 @@ function SendMsg() {
         },
         error: function (error) {
 
-
+            $('#uploadLoader').hide();
         }
     });
 }

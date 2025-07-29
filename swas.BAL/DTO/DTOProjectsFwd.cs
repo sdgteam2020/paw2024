@@ -67,6 +67,10 @@ namespace swas.BAL.DTO
         public bool IssentCC { get; set; }
         public string? CCUnitName { get; set; }
         public string? UserDetails { get; set; }
+        public string? LatestRemarks { get; set; }
+        public bool? HasRemainder1 { get; set; }
+        public int RemainderCount { get; set; }
+        public bool HasRemainder { get; set; }
         public DateTime? ReadDate { get; set; }
 
     }

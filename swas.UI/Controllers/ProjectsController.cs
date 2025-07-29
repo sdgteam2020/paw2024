@@ -206,8 +206,9 @@ namespace swas.UI.Controllers
                     ViewBag.SubmitCde = "0";
 
                     ViewBag.remainder = _dbContext.TrnRemainders.ToList();
+                    ViewBag.tbl_mUnitBranch = _dbContext.tbl_mUnitBranch.ToList();
                     MailBox mbx = new MailBox();
-                    mbx.Remainder = await  _Remainder.GetAllAsync();
+                    mbx.Remainder = await _Remainder.GetAllAsync();
 
                     //ViewBag.unitid = Logins.unitid;
 
@@ -219,18 +220,18 @@ namespace swas.UI.Controllers
                     {
                         ViewBag.unitid = Logins.unitid;
                     }
-                    //ViewBag.remainder =  _dbContext.Remainders.ToList();
+                    ViewBag.remainder = _dbContext.TrnRemainders.ToList();
 
                     mbx.InBox = await _projectsRepository.GetActInboxAsync();
 
-                   
+
 
                     mbx.Draft = await _projectsRepository.GetActDraftItemsAsync();
 
 
                     mbx.SendItems = await _projectsRepository.GetActSendItemsAsync();
                     mbx.CompletedItems = await _projectsRepository.GetActComplettemsAsync();
-                   
+
 
                     return View(mbx);
 
@@ -253,7 +254,7 @@ namespace swas.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> GetActCcProject()
         {
-          return Json(await _projectsRepository.GetActCcItemsAsync());
+            return Json(await _projectsRepository.GetActCcItemsAsync());
         }
 
         [ValidateAntiForgeryToken]
@@ -423,44 +424,44 @@ namespace swas.UI.Controllers
                 Data.InitiatedDate = Data.InitiatedDate;
 
 
-				bool isEdit = Data.ProjId != 0;
+                bool isEdit = Data.ProjId != 0;
 
-				if (!isEdit)
-				{
-
-
-					if (Data.IsWhitelisted == "Re-Vetted")
-					{
-						Data.ProjName = await GetReVettedProjectName(Data);
-					}
-					bool projectExists = await _projectsRepository.ProjectNameExists(Data);
+                if (!isEdit)
+                {
 
 
-					if (projectExists)
-					{
-						return Json(-3);
-					}
-				}
-				else
-				{
-
-					var existingProject = await _projectsRepository.GetProjectByIdAsync(Data.ProjId);
+                    if (Data.IsWhitelisted == "Re-Vetted")
+                    {
+                        Data.ProjName = await GetReVettedProjectName(Data);
+                    }
+                    bool projectExists = await _projectsRepository.ProjectNameExists(Data);
 
 
-					_dbContext.Entry(existingProject).State = EntityState.Detached;
+                    if (projectExists)
+                    {
+                        return Json(-3);
+                    }
+                }
+                else
+                {
+
+                    var existingProject = await _projectsRepository.GetProjectByIdAsync(Data.ProjId);
 
 
-					if (Data.IsWhitelisted == "Re-Vetted" && existingProject?.IsWhitelisted != "Re-Vetted")
-					{
-						Data.ProjName = await GetReVettedProjectName(Data);
+                    _dbContext.Entry(existingProject).State = EntityState.Detached;
 
 
-						bool projectExists = await _projectsRepository.ProjectNameExists(Data);
-						if (projectExists)
-						{
-							return Json(-3);
-						}
-					}
+                    if (Data.IsWhitelisted == "Re-Vetted" && existingProject?.IsWhitelisted != "Re-Vetted")
+                    {
+                        Data.ProjName = await GetReVettedProjectName(Data);
+
+
+                        bool projectExists = await _projectsRepository.ProjectNameExists(Data);
+                        if (projectExists)
+                        {
+                            return Json(-3);
+                        }
+                    }
                     else if (Data.IsWhitelisted == "Re-Vetted" && existingProject?.IsWhitelisted == "Re-Vetted" && !Data.ProjName.Contains("Re-Vetted"))
                     {
                         return Json(-5);
@@ -478,7 +479,7 @@ namespace swas.UI.Controllers
                 else
                 {
                     Data.EditDeleteDate = DateTime.Now;
-                    await _projectsRepository.UpdateProjectAsync(Data,RequestRemarks);
+                    await _projectsRepository.UpdateProjectAsync(Data, RequestRemarks);
                     Data = await _projectsRepository.GetProjectByIdAsync(Data.ProjId);
                 }
 
@@ -641,7 +642,7 @@ namespace swas.UI.Controllers
                         {
                             //psmove.DateTimeOfUpdate = DateTime.Now;
                             psCcmove.IsRead = true;
-                            psCcmove.ReadDate=DateTime.Now;
+                            psCcmove.ReadDate = DateTime.Now;
                             psCcmove.UserDetails = Helper.LoginDetails(Logins);
                             await _projStakeHolderCcMovRepository.Update(psCcmove);
                             return Json(PsmId);
@@ -760,7 +761,7 @@ namespace swas.UI.Controllers
                         //proj.DateTimeOfUpdate = DateTime.Now;
                         proj.IsProcess = true;
 
-                        await _projectsRepository.UpdateProjectAsync(proj,"1");
+                        await _projectsRepository.UpdateProjectAsync(proj, "1");
                         return Json(ProjId);
                     }
                     catch (Exception ex)
@@ -942,10 +943,12 @@ namespace swas.UI.Controllers
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
             bool ret = false;
-            if (psmove.CcId!=null)
+            if (psmove.CcId != null)
             {
                 ret = psmove.CcId.Contains(psmove.ToUnitId);
             }
+
+
 
             if (!ret)
             {
@@ -971,10 +974,22 @@ namespace swas.UI.Controllers
                 {
                     psmove.IsRead = true;
                 }
-                if (psmove.CcId !=null && psmove.CcId.Length > 0)
+                if (psmove.CcId != null && psmove.CcId.Length > 0)
                 {
                     psmove.IsCc = true;
                 }
+
+                var remainders = await _dbContext.TrnRemainders
+               .Where(r => r.Projid == psmove.ProjId && r.ReadDate == null && r.ToUserDetails ==null && r.Tounitid == Logins.unitid)
+               .ToListAsync();
+
+                if(remainders.Count > 0)
+                {
+
+                    _Remainder.UpdateReaminderRead(psmove.ProjId);
+                   
+                }
+
 
                 var projectMovements = await _dbContext.ProjStakeHolderMov
                     .Where(x => x.ProjId == psmove.ProjId && x.IsRead == true && x.IsComment == true)
@@ -992,28 +1007,28 @@ namespace swas.UI.Controllers
 
 
 
-         
+
                 var Ret = await _psmRepository.AddWithReturn(psmove);
-             
+
 
                 if (Ret != null)
                 {
                     if (psmove.CcId != null && psmove.CcId.Length > 0)
                     {
-                    foreach (int ccId in psmove.CcId)
-                    {
-                        tbl_ProjStakeHolderCcMov ccMov = new tbl_ProjStakeHolderCcMov();
-                        ccMov.PsmId = Ret.PsmId;
-                        ccMov.ProjId = psmove.ProjId;
-                        ccMov.ToCcUnitId = ccId;
-                        ccMov.IsActive = true;
-                        ccMov.IsDeleted = false;
-                        ccMov.IsRead = false;
-                        ccMov.UserDetails = "";
-                        ccMov.ReadDate = DateTime.Now;
+                        foreach (int ccId in psmove.CcId)
+                        {
+                            tbl_ProjStakeHolderCcMov ccMov = new tbl_ProjStakeHolderCcMov();
+                            ccMov.PsmId = Ret.PsmId;
+                            ccMov.ProjId = psmove.ProjId;
+                            ccMov.ToCcUnitId = ccId;
+                            ccMov.IsActive = true;
+                            ccMov.IsDeleted = false;
+                            ccMov.IsRead = false;
+                            ccMov.UserDetails = "";
+                            ccMov.ReadDate = DateTime.Now;
 
-                        var Retcc = await _projStakeHolderCcMovRepository.AddWithReturn(ccMov);
-                    }
+                            var Retcc = await _projStakeHolderCcMovRepository.AddWithReturn(ccMov);
+                        }
                     }
 
                     return Json(Ret);
@@ -1287,13 +1302,13 @@ namespace swas.UI.Controllers
                         foreach (var item in projectMovements)
                         {
                             item.IsRead = false;
-                            if(item.PsmId == 5434)
+                            if (item.PsmId == 5434)
                             {
                                 break;
                             }
                         }
                         var latestPsmId = await _dbContext.ProjStakeHolderMov
-         .Where(x => x.ProjId == projectStkHolderMovementData.ProjId && x.IsComplete ==false)
+         .Where(x => x.ProjId == projectStkHolderMovementData.ProjId && x.IsComplete == false)
          .OrderByDescending(x => x.PsmId)
          .Select(x => x.PsmId)
          .FirstOrDefaultAsync();
@@ -1314,7 +1329,7 @@ namespace swas.UI.Controllers
                             if (latestMovement != null)
                             {
                                 latestMovement.IsRead = false;
-                                
+
                                 await _dbContext.SaveChangesAsync();
                             }
                         }
@@ -1330,10 +1345,10 @@ namespace swas.UI.Controllers
                         projectStkHolderMovementData.DateTimeOfUpdate = CommentDate; // To show the comment date on the dashboard btnGetsummay 
                         //projectStkHolderMovementData.TimeStamp = DateTime.Now; // no need to update the TimeStamp on ProjectComment, this will affect the MovHistory of project update by Divyanshu on 12/03/2025
                         var rets = await _projectsRepository.UpdateProjectStkMovementAsync(projectStkHolderMovementData);
-                       
+
                         if (rets != null)
                         {
-                            if(cmmets.PsmId == 5434)
+                            if (cmmets.PsmId == 5434)
                             {
                                 Console.WriteLine("Break");
                             }
@@ -2158,7 +2173,7 @@ namespace swas.UI.Controllers
                     DDGIT_Approval_dat = null,
                     User = user.Rank + " " + user.Offr_Name,
                     IsRead = false,
-                    RequestType =1
+                    RequestType = 1
                 };
 
                 _dbContext.DateApproval.Add(dateApproval);
@@ -2349,9 +2364,9 @@ namespace swas.UI.Controllers
 
             var query = _dbContext.Projects.AsQueryable();
 
-            if(!string.IsNullOrWhiteSpace(searchQuery))
+            if (!string.IsNullOrWhiteSpace(searchQuery))
             {
-                query =  query.Where(x => x.ProjName.Contains(searchQuery));
+                query = query.Where(x => x.ProjName.Contains(searchQuery));
             }
             var result = await query.ToListAsync();
             return Ok(result);
@@ -2365,19 +2380,23 @@ namespace swas.UI.Controllers
 
             var latestpsmid = _projStakeHolderMovRepository.GetLastRecProjectMov(ProjId);
             var latestpsmiddata = _dbContext.ProjStakeHolderMov.Find(latestpsmid);
+
             latestpsmiddata.IsRead = false;
 
+
             _dbContext.ProjStakeHolderMov.Update(latestpsmiddata);
+
             if (latestpsmiddata == null)
                 return Json(0); // not found
 
             // Prepare required values
+            int Psmid = latestpsmid;
             int fromUnitId = user.unitid ?? 0;
             int toUnitId = latestpsmiddata.ToUnitId;
             string userDetails = Helper1.LoginDetails(user);
 
             // Call repository method
-            int result = await _Remainder.AddRemainder(ProjId, fromUnitId, toUnitId, Remarks, userDetails);
+            int result = await _Remainder.AddRemainder(ProjId, Psmid, fromUnitId, toUnitId, Remarks, userDetails);
 
             return Json(result); // 1 if success
         }
@@ -2402,6 +2421,22 @@ namespace swas.UI.Controllers
             {
                 _logger.LogError(ex, "Error fetching project history for ProjectId: {ProjectId}", ProjectId);
                 return StatusCode(500, new { success = false, message = "An error occurred while fetching project remainder history." });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateRemaRead(int ProjectId)
+        {
+            try
+            {
+                var udpate = await _Remainder.UpdateReaminderRead(ProjectId);
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, new { success = false, message = "An error occurred while Update project remainder history." });
             }
         }
 

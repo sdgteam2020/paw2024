@@ -16,6 +16,7 @@ namespace swas.DAL.Models
 
         
         public int Projid { get; set; }
+        public int Psmid { get; set; }
         public bool IsRead { get; set; }
 
 
@@ -25,6 +26,7 @@ namespace swas.DAL.Models
         public string? SendDate { get; set; }
         public string? ReadDate { get; set; }
         public string? UserDetails { get; set; }
+        public string? ToUserDetails { get; set; }
         public string? Remarks { get; set; }
 
     }

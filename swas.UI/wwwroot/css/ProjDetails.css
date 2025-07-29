@@ -1,0 +1,104 @@
+﻿.notification-icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+    .notification-icon:hover {
+        transform: scale(1.1);
+    }
+
+.hover-popup {
+    display: none;
+}
+
+.custom-popup-glass {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    padding: 16px;
+    min-width: 260px;
+    max-width: 320px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    animation: fadeInUp 0.3s ease-out;
+}
+
+.popup-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 4px;
+}
+
+.popup-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    .popup-list li {
+        font-size: 14px;
+        color: #444;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: flex-start;
+    }
+
+        .popup-list li i {
+            color: #4a90e2;
+            margin-right: 8px;
+            font-size: 14px;
+            margin-top: 2px;
+        }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.custom-popup-glass {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+    color: #2c2c2c;
+    max-width: 350px;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 14px;
+    overflow-wrap: break-word;
+    z-index: 999;
+}
+
+.popup-title {
+    font-weight: 600;
+    color: #1e1e2f;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.popup-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    max-height: 180px;
+    overflow-y: auto;
+}

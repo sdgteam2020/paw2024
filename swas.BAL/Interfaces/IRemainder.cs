@@ -10,11 +10,11 @@ namespace swas.BAL.Interfaces
 {
     public interface IRemainder
     {
-        Task<int> AddRemainder(int psmid, int fromUnitId, int toUnitId, string remarks, string userDetails);
+        Task<int> AddRemainder(int psmid, int Psmid, int fromUnitId, int toUnitId, string remarks, string userDetails);
         Task<List<RemainderDisplayDto>> ProjectRemainderMovHistory(int? ProjectId);
 
         Task<int> GetProjectById(string? ProjName);
-
+        Task<int> UpdateReaminderRead(int Projid);
         Task<List<RemainderDisplayDto>> GetAllAsync();
         //Task<DTOpR>
 
