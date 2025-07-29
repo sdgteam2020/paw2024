@@ -1064,10 +1064,13 @@ function updateReadDateForRemainder(ProjId) {
         type: 'GET',
         data: { ProjectId: ProjId },
         success: function (response) {
-            setTimeout(function () {
-                GetProjRemainderMov(ProjId);
-                InboxNotificationCount();
-            }, 200);
+           
+            if (response.success) {
+                setTimeout(function () {
+                    GetProjRemainderMov(ProjId);
+                    InboxNotificationCount();
+                }, 200);
+            }
           
         },
         error: function (error, xhr) {

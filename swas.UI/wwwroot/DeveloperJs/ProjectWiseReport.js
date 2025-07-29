@@ -209,12 +209,23 @@ function GetProjHold(ProjId) {
                     const labels = []; // label array
                     const totals = []; // total array
                     const totalsForlabel = []; // total array
+                    const labelscmd = []; // label array
+                    const totalscmd = []; // total array
+                    const totalsForlabelcmd = []; // total array
                     for (var j = response.length-1; j >= 0; j--) {
                         if (response[j].isComment == false) {
 
                             labels.push(response[j].status + '(' + response[j].fromunit + ')');
                             totals.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
-                            totalsForlabel.push(DateCalculateago(response[j].timeStampfrom, response[j].timeStampTo).replace("</h6>",""));
+                            totalsForlabel.push(DateCalculateago(response[j].timeStampfrom, response[j].timeStampTo).replace("</h6>", ""));
+                        }
+                        else {
+                            if (response[j].isComment == true) {
+
+                                labelscmd.push(response[j].status + '(' + response[j].fromunit + ')');
+                                totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
+                                totalsForlabelcmd.push(DateCalculateago(response[j].timeStampfrom, response[j].timeStampTo).replace("</h6>", ""));
+                            }
                         }
                     }
                     for (var j = 0; j < response.length; j++) {
@@ -445,7 +456,7 @@ function GetProjHold(ProjId) {
                    // const totals = ProjectStatus.map(x => x.timeStampfrom);
                     // Reset and bind chart with new data
                     bindProjHoldChart(labels, totals, totalsForlabel,colors,);
-
+                    bindProjHoldCommentsChart(labelscmd, totalscmd, totalsForlabelcmd, colors,);
                   
 
 
@@ -479,7 +490,51 @@ function bindProjHoldChart(labels, totals, totalsForlabel, colors) {
             datasets: [{
                 label: 'Projects',
                 backgroundColor: colors,
-                data: totals
+                data: totals,
+                barThickness: 50, 
+            }]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Project Hold History (in Hours.Minute)'
+                },
+                legend: { display: false },
+                datalabels: {
+                    anchor: 'end',
+                    align: 'top',
+                    color: '#000',
+                    innerWidth: 0,
+                    font: {
+                        weight: 'bold'
+                    }, formatter: function (value, context) {
+                        // Use value from holdLabels array by index
+                        return totalsForlabel[context.dataIndex];
+                    }
+                }
+            }
+        },
+        plugins: [ChartDataLabels]
+    });
+}
+let projHoldChartcomment;
+function bindProjHoldCommentsChart(labels, totals, totalsForlabel, colors) {
+    // If chart already exists, destroy it before creating new
+    if (projHoldChartcomment) {
+        projHoldChartcomment.destroy();
+    }
+
+    // Create new chart
+    projHoldChartcomment = new Chart(document.getElementById('ProjHoldHistoryCommentChart'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Projects',
+                backgroundColor: colors,
+                data: totals,
+                barThickness: 50,
             }]
         },
         options: {

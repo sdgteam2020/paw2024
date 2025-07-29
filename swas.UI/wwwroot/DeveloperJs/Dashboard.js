@@ -1149,7 +1149,8 @@ function CreateChartSummary() {
                     datasets: [{
                         label: 'Projects',
                         backgroundColor: colors,
-                        data: totals
+                        data: totals,
+                        barThickness: 50,      
                     }]
                 },
                
@@ -1190,7 +1191,7 @@ function CreateChartSummary() {
                     datasets: [{
                         label: 'Projects',
                         backgroundColor: colors,
-                        data: totals1
+                        data: totals1,barThickness: 50,    
                     }]
                 },
                 options: {
@@ -1232,7 +1233,7 @@ function CreateChartSummary() {
                     datasets: [{
                         label: 'Whitelisted',
                         backgroundColor: colors,
-                        data: totals2
+                        data: totals2,barThickness: 50, 
                     }]
                 },
                 options: {
@@ -1272,7 +1273,8 @@ function CreateChartSummary() {
                     labels: labels3, // e.g. ['Processed - 72', 'Pending - 9']
                     datasets: [{
                         backgroundColor: colors,
-                        data: totals3      // e.g. [72, 9]
+                        data: totals3,     // e.g. [72, 9]
+                           
                     }]
                 },
                 options: {

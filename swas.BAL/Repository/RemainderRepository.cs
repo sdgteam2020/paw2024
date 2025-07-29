@@ -191,7 +191,7 @@ namespace swas.BAL.Repository
 
             
 
-            string domain = Logins.Unit +
+            string domain = Logins.Unit + 
                 " " + Logins.UserName.Trim() +
                "(" + Logins.Rank.Trim() +
                " " + Logins.Offr_Name.Trim() + ")";

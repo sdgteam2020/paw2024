@@ -18,6 +18,11 @@
             
         }
 
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
 
 
         canvas {
@@ -57,7 +62,13 @@
                                 <canvas id="ProjHoldHistoryChart"></canvas>
                             </div>
                         </div>
+                        <div>
+                            <div class="newprojectheading text-center"> Proj Hold Comment History of <span class="lblProjHoldHistory"></span> </div>
+                            <div class="chart-box">
 
+                                <canvas id="ProjHoldHistoryCommentChart"></canvas>
+                            </div>
+                        </div>
 
 
 
