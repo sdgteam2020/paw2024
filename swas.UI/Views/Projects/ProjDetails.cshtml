@@ -327,7 +327,7 @@
 				<a href="#" data-tab="Remainder" id="tabRemainder">
 					@*<span class="fa fa-edit"></span>*@
 					<img src="~/assets/images/bell.png" width="25px;" height="25px;" />
-					&nbsp;Remainder Mov
+					&nbsp;Reminder Mov
 				</a>
 			</li>
 			@* <li><a href="#" data-tab="draft" id="tabdraft"><img src="~/assets/images/draft.png" width="20px;" height="20px;" />&nbsp;Draft Projects</a></li> *@
@@ -1164,12 +1164,12 @@
 													<a data-proj-name="@project.ProjName" id="ProjectName" class="ProjName" data-proj-id="@project.projid" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XRDC">
 														<div class="tooltip-container" data-tooltip="@project.ProjName">
 															<span class="short-text">@truncateText(project.ProjName, 6)</span>
-															<span class="tooltip tooltip-text">@project.ProjName</span>
+															<span class="tooltip tooltip-text noExport">@project.ProjName</span>
 														</div>
 													</a>
 												</td>
 												<td class="RefLetter-container">@project.unitName
-													<div class="RefLetter">
+													<div class="RefLetter noExport">
 
 														@project.Sponsor
 
@@ -1188,9 +1188,9 @@
 													: remarks;
 												}
 												<td>
-													<div class="RefLetter-container ">
+													<div class="RefLetter-container">
 														@shortRemarks
-														<div class="RefLetter">
+														<div class="RefLetter noExport">
 															@project.Remarks
 														</div>
 													</div>
@@ -1530,7 +1530,7 @@
 						<thead>
 							<tr>
 
-								<th class="nowrap">Ser No</th>
+								<th class="nowrap" style="padding-right:0px;">Ser No</th>
 								@* <th class="nowrap">Proj Name</th> *@
 								<th class="nowrap">Stake Holder</th>
 								<th class="nowrap col-md-24">Sent on</th>

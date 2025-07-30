@@ -18,7 +18,7 @@ $(document).ready(function () {
 
 
     $("#uploadButton").click(function () {
-        $('#uploadLoader').show();
+       
         var requiredFields = $('#fwduploaditems').find('.requiredField');
         var allFieldsComplete = true;
 
@@ -56,6 +56,7 @@ $(document).ready(function () {
             })
         }
         else {
+            $('#uploadLoader').show();
             setTimeout(function () {
                 UploadFiles();
             }, 1000)

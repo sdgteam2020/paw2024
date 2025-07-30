@@ -1,5 +1,5 @@
 ﻿function initializeDataTable(tableSelector) {
-  
+
     return $(tableSelector).DataTable({
         lengthChange: true,
         dom: 'lBfrtip',
@@ -15,8 +15,13 @@
                     columns: ':visible:not(:last-child)',
                     format: {
                         body: function (data, row, column, node) {
-                            var text = typeof data === 'string' && data.indexOf('<') >= 0 ? $(data).text().trim() : data;
-                            return column === 0 ? row + 1 : text;
+                            // 🔄 CHANGED: added logic to remove `.noExport` content
+                            if (typeof data === 'string' && data.indexOf('<') >= 0) {
+                                var el = $('<div>' + data + '</div>'); // ✅ ADDED
+                                el.find('.noExport').remove();        // ✅ ADDED
+                                return column === 0 ? row + 1 : el.text().trim(); // ✅ ADDED
+                            }
+                            return column === 0 ? row + 1 : data;
                         }
                     }
                 }
@@ -27,8 +32,13 @@
                     columns: ':visible:not(:last-child)',
                     format: {
                         body: function (data, row, column, node) {
-                            var text = typeof data === 'string' && data.indexOf('<') >= 0 ? $(data).text().trim() : data;
-                            return column === 0 ? row + 1 : text;
+                            // 🔄 CHANGED: added logic to remove `.noExport` content
+                            if (typeof data === 'string' && data.indexOf('<') >= 0) {
+                                var el = $('<div>' + data + '</div>'); // ✅ ADDED
+                                el.find('.noExport').remove();        // ✅ ADDED
+                                return column === 0 ? row + 1 : el.text().trim(); // ✅ ADDED
+                            }
+                            return column === 0 ? row + 1 : data;
                         }
                     }
                 }
@@ -88,10 +98,17 @@ function PdfDiv(tableSelector, watermarkSelector = "#IpAddress") {
         let rowData = [];
         for (let j = 0; j < filteredData[i].length - 1; j++) {
             let cellData = filteredData[i][j];
-            let cleanText = (typeof cellData === 'string' && cellData.indexOf('<') >= 0)
-                ? cellData.replace(/<br\s*\/?>/gi, '\n').replace(/<\/?[^>]+(>|$)/g, "").trim()
-                : cellData;
-            rowData.push(j === 0 ? i + 1 : cleanText);
+            if (typeof cellData === 'string' && cellData.indexOf('<') >= 0) {
+                let $html = $('<div>' + cellData + '</div>'); // ✅ Wrap in DOM element
+                $html.find('.noExport').remove();              // ✅ Remove .noExport content
+                let cleanText = $html.html()
+                    .replace(/<br\s*\/?>/gi, '\n')              // ✅ Keep line breaks
+                    .replace(/<\/?[^>]+(>|$)/g, "")             // ✅ Strip remaining HTML
+                    .trim();
+                rowData.push(j === 0 ? i + 1 : cleanText);
+            } else {
+                rowData.push(j === 0 ? i + 1 : cellData);
+            }
         }
         data.push(rowData);
     }
