@@ -17,7 +17,7 @@
 
 
     $(".img_cont_msg").click(function () {
-        alert(1)
+       
     });
     $("#chatProfileSearch").keyup(function () {
 
@@ -215,7 +215,7 @@ function UserChat(userMapChatId, FromUserId, sortname) {
                     GetAllUsers();
                     $("body").on("click", ".msg_del", function () {
                         // alert($(this).closest("div").find(".spnmsgchatId").html())
-                        alert(1)
+                      
                     });
                 }
                 else {

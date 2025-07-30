@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-
+    initializeDataTable("#Remainders");
     var param = sessionStorage.getItem("spntabType");
 
     if (param != null) {
@@ -601,21 +601,21 @@ function GetCCProject() {
                         listitem += '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" style="color:#18bb6b" height = "16" fill = "currentColor" > <path d="M342.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l80 80c12.5 12.5 32.8 12.5 45.3 0l160-160zm96 128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 402.7 54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l256-256z" /> </svg >';
 
                     listitem += '</td>';
-                    listitem += '<td><span class="d-none" id="SpnCurrentccProjId"> ' + response[i].projId + '</span>  <a data-proj-name="' + response[i].projName + '" data-proj-id="' + response[i].projId + '" href="/Projects/ProjHistory?EncyID=' + response[i].encyID + '&amp;Type=XR12">' +
+                    listitem += '<td><span class="d-none noExport" id="SpnCurrentccProjId"> ' + response[i].projId + '</span>  <a data-proj-name="' + response[i].projName + '" data-proj-id="' + response[i].projId + '" href="/Projects/ProjHistory?EncyID=' + response[i].encyID + '&amp;Type=XR12">' +
                         '<div class="tooltip-container" data-tooltip="' + response[i].projName + '">' +
                         '<span class="short-text">' + truncateText(response[i].projName, 6) + '</span>' +
-                        '<span class="tooltip tooltip-text" id="projNamecc">"' + response[i].projName + '"</span>' +
+                        '<span class="tooltip tooltip-text noExport" id="projNamecc">"' + response[i].projName + '"</span>' +
                         '</div>' +
                         '</a> </td>';
 
                     listitem += '<td class="RefLetter-container">' +
                         '' + response[i].unitName + '' +
-                        '<div class="RefLetter">' +
+                        '<div class="RefLetter noExport">' +
                         '' + response[i].sponsor + '' +
                         '</div></td>';
                     listitem += '<td class="RefLetter-container">' +
                         '' + response[i].fromUnitUserDetail + '' +
-                        '<div class="RefLetter">' +
+                        '<div class="RefLetter noExport">' +
                         '' + response[i].fromUnitName + '' +
                         '</div></td>';
                     /* listitem += '<td>' + response[i].toUnitName + '</td>'*/
@@ -630,7 +630,7 @@ function GetCCProject() {
                     listitem += '<td>' +
                         '<div class="RefLetter-container btn btn-warning p-2" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">' +
                         '<span>Cc</span>' +
-                        '<div class="RefLetter">' +
+                        '<div class="RefLetter noExport">' +
                         '' + response[i].ccUnitName + '' +
                         '</div>' +
                         '</div>' +
@@ -954,6 +954,7 @@ $(document).on('click', '#btnRemMove', function () {
 
 //}
 function GetProjRemainderMov(ProjId) {
+    debugger;
     $('#ProjRemainderMov').modal('show');
 
     $.ajax({
@@ -983,7 +984,7 @@ function GetProjRemainderMov(ProjId) {
 
                     listItem += '<td class="RefLetter-container align-middle">' +
                         '' + item.unitName + '' +
-                        '<div class="RefLetter">' +
+                        '<div class="RefLetter noExport">' +
                         '' + item.sponsor + '' +
                         '</div></td>';
 
@@ -993,17 +994,28 @@ function GetProjRemainderMov(ProjId) {
                   /*  listItem += "<td class='align-middle'>" + (item.fromUnit || 'N/A') + "</td>";*/
                     listItem += '<td class="RefLetter-container align-middle">' +
                         '' + item.fromUnit + '' +
-                        '<div class="RefLetter">' +
+                        '<div class="RefLetter noExport">' +
                         '' + item.userDetails + '' +
                         '</div></td>';
                     listItem += "<td class='align-middle' ><div class='col-md-24'>" + (item.readOn || '-') + "</div></td>"; 
                   /*  listItem += "<td class='align-middle'>" + (item.toUnit || 'N/A') + "</td>";*/
                     listItem += '<td class="RefLetter-container align-middle">' +
                         '' + item.toUnit + '' +
-                        '<div class="RefLetter">' +
+                        '<div class="RefLetter noExport">' +
                         '' + (item.touserDetails || 'Action Pending...')+ '' +
                         '</div></td>';
-                    listItem += "<td class='align-middle'>" + (item.remarks || '') + "</td>";
+                  /*  listItem += "<td class='align-middle'>" + (item.remarks || '') + "</td>";*/
+
+
+                    const remarks = item.remarks || 'No Remarks';
+                    const remarkWords = remarks.split(" ");
+                    const shortRemarks = remarkWords.length > 3 ? remarkWords.slice(0, 4).join(" ") + "..." : remarks;
+
+                    listItem += '<td class="RefLetter-container align-middle" style="display:block">' +
+                        shortRemarks +
+                        '<div class="RefLetter noExport" >' +
+                        remarks +
+                        '</div></td>';
                     listItem += "</tr>";
                 }
 
@@ -1035,6 +1047,7 @@ function GetProjRemainderMov(ProjId) {
 
 $(document).on("click", "#ReadRemainderNoti", function (e) {
     e.preventDefault();
+   
     debugger;
 
     var $this = $(this);

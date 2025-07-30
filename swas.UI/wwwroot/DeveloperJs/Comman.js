@@ -70,7 +70,7 @@
             $('#InitiatedDate').attr('readonly', false);
             $("#RequestRemarks").removeAttr('disabled');
 
-            $('#CompletionDate').val("");
+          
             $('#CompletionDate').attr('min', $("#InitiatedDate").val());
             $('#CompletionDate').removeAttr('max');
         }

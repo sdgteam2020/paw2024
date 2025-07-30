@@ -355,7 +355,7 @@
         $('#Projibutton').modal('show');
     });
     $("#btnFwdNext").click(function () {
-        alert(1);
+       
         requiredFields = $('#ProjFwd').find('.requiredField');
         var allFieldsComplete = true;
         requiredFields.each(function (index) {
