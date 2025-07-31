@@ -7,3 +7,51 @@ Date : 29-07-2025 10:35:23
 -----------------------------------------------------------------------------
 Date : 29-07-2025 10:35:28
 'System.Dynamic.DynamicObject' does not contain a definition for 'ProcessButtonColor'
+-----------------------------------------------------------------------------
+Date : 2025-07-30 11:41:45
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 2025-07-30 11:42:27
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 2025-07-30 11:43:25
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 2025-07-30 11:43:35
+A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
+-----------------------------------------------------------------------------
+Date : 2025-07-31 11:21:32
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 2025-07-31 11:21:32
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 2025-07-31 11:21:33
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 2025-07-31 11:21:33
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 2025-07-31 11:21:36
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 2025-07-31 11:21:36
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 2025-07-31 11:21:37
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 2025-07-31 11:21:37
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 2025-07-31 11:21:37
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 2025-07-31 11:21:37
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 2025-07-31 11:23:30
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 2025-07-31 11:23:30
+Request failed & Status Code : 200

@@ -460,7 +460,7 @@
 												<span class="d-none" id="SpnTimeToUnitId">@project.ToUnitId</span>
 												<span class="d-none" id="SpnDate_type">@project.Date_type</span>
 												<span class="d-none" id="SpnApprove">@project.AdminApprovalStatus</span>
-												<a data-proj-name="@project.ProjName" id="ProjectName" class="ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XRDC">
+												<a data-proj-name="@project.ProjName" id="ProjectName" class="ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XRDC&psmid=@project.PsmIds">
 													<div class="tooltip-container" data-tooltip="@project.ProjName">
 														<span class="short-text">@truncateText(project.ProjName, 6)</span>
 														<span class="tooltip tooltip-text">@project.ProjName</span>
@@ -1530,7 +1530,7 @@
 						<thead>
 							<tr>
 
-								<th class="nowrap" style="padding-right:0px;">Ser No</th>
+								<th class="nowrap" style="padding-right:0px; width:10px;">Ser No</th>
 								@* <th class="nowrap">Proj Name</th> *@
 								<th class="nowrap">Stake Holder</th>
 								<th class="nowrap col-md-24">Sent on</th>

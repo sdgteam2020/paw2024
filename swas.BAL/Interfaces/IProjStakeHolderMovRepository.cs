@@ -27,6 +27,7 @@ namespace swas.BAL.Interfaces
         Task<int> GetLastRecProjectMovForUnod(int ProjectId,int? TounitId);
         Task<DTODashboard> DashboardCount(int UserId);
         Task<DTOChartSummarylist> CreateChartSummary(int UserId);
+       
 
         Task<bool> CheckFwdCondition(int ProjId, int StatusId); 
 

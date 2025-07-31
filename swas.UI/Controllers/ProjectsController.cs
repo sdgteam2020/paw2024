@@ -1435,6 +1435,7 @@ namespace swas.UI.Controllers
                     ViewBag.EncyID = EncyID;
                     ViewBag.Type = Type;
                 }
+               
                 if (userid == null && dataProjId == null && dtaProjID == null && AttPath == null && psmid == null && EncyID == null)
                 {
                     EncyID = ViewBag.EncyID;

@@ -181,7 +181,7 @@ namespace swas.BAL.Repository
                                }).ToListAsync();
            lst.DTOProjectCCHistorylst = retcc;
             return lst;
-        }
+        } 
         public async Task<List<DTOProjectHold>> ProjectHolsTimeCalculate(int ProjectId)
         {
             List<DTOProjectHold> lst=new List<DTOProjectHold>();
@@ -206,10 +206,12 @@ namespace swas.BAL.Repository
                                            TimeStamp = mov.TimeStamp,
                                            DateTimeOfUpdate = mov.DateTimeOfUpdate, 
                                            Status= sts.Status,
-                                           Action= act.ActionDesc,
+                                           StatusId = sts.StatusId,
+                                           Action = act.ActionDesc,
                                            IsComment=mov.IsComment,
                                            IsComplete = mov.IsComplete,
-                                             UndoRemarks = mov.UndoRemarks,
+                                           UndoRemarks = mov.UndoRemarks
+                                           
                                          }).ToListAsync();
            
            
@@ -251,6 +253,7 @@ namespace swas.BAL.Repository
                         db.Status = databyprojectid[i].Status;
                         db.Action = databyprojectid[i].Action;
                         db.UndoRemarks = databyprojectid[i].UndoRemarks;
+                        db.StatusId= databyprojectid[i].StatusId;
                     }
                     else
                     {
@@ -264,6 +267,7 @@ namespace swas.BAL.Repository
                         db.TimeStampTo = DateTime.Now;
                         db.IsComplete = databyprojectid[i].IsComplete;
                         db.UndoRemarks = databyprojectid[i].UndoRemarks;
+                        db.StatusId = databyprojectid[i].StatusId;
                         int j = i;
                         j++;
                        
@@ -739,6 +743,7 @@ namespace swas.BAL.Repository
         }
 
 
+       
         public async Task<DTOChartSummarylist> CreateChartSummary(int UserId)
         {
             try
@@ -769,7 +774,7 @@ namespace swas.BAL.Repository
                             }
                             lst.ProjectStatus=lstdb;
 
-                            // 2nd Result Set - Approved Projects (Stage-wise)
+                            // 2nd Result Set - Pre Approved Projects (Stage-wise)
                             if (await reader.NextResultAsync())
                             {
                                 List<DTOChartSummary> lstdbApproved = new List<DTOChartSummary>();
@@ -781,10 +786,23 @@ namespace swas.BAL.Repository
                                     lstdbApproved.Add(db);
                                     
                                 }
-                                lst.ApprovedProjects = lstdbApproved;
+                                lst.ApprovedProjectsPre = lstdbApproved;
                             }
+                            // 3nd Result Set - Post Approved Projects (Stage-wise)
+                            if (await reader.NextResultAsync())
+                            {
+                                List<DTOChartSummary> lstdbApproved = new List<DTOChartSummary>();
+                                while (await reader.ReadAsync())
+                                {
+                                    DTOChartSummary db = new DTOChartSummary();
+                                    db.Name = Convert.ToString(reader["Status"]);
+                                    db.Total = Convert.ToInt32(reader["Total"]);
+                                    lstdbApproved.Add(db);
 
-                            // 3rd Result Set - Whitelisted Projects (Year-wise)
+                                }
+                                lst.ApprovedProjectsPost = lstdbApproved;
+                            }
+                            // 4rd Result Set - Whitelisted Projects (Year-wise)
                             if (await reader.NextResultAsync())
                             {
                                 List<DTOChartSummary> lstdbWhitelisted = new List<DTOChartSummary>();
@@ -799,19 +817,19 @@ namespace swas.BAL.Repository
                             }
 
                             // 4th Result Set - Total Projects (Processed vs Pending)
-                            if (await reader.NextResultAsync())
-                            {
-                                List<DTOChartSummary> lstdbTotalProjects = new List<DTOChartSummary>();
-                                while (await reader.ReadAsync())
-                                {
-                                    DTOChartSummary db = new DTOChartSummary();
+                            //if (await reader.NextResultAsync())
+                            //{
+                            //    List<DTOChartSummary> lstdbTotalProjects = new List<DTOChartSummary>();
+                            //    while (await reader.ReadAsync())
+                            //    {
+                            //        DTOChartSummary db = new DTOChartSummary();
 
-                                    db.Name = Convert.ToString(reader["Status"]);
-                                    db.Total = Convert.ToInt32(reader["Total"]);
-                                    lstdbTotalProjects.Add(db);
-                                }
-                                lst.TotalProjects = lstdbTotalProjects;
-                            }
+                            //        db.Name = Convert.ToString(reader["Status"]);
+                            //        db.Total = Convert.ToInt32(reader["Total"]);
+                            //        lstdbTotalProjects.Add(db);
+                            //    }
+                            //    lst.TotalProjects = lstdbTotalProjects;
+                            //}
                         }
                     }
 

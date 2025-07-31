@@ -174,7 +174,66 @@ function ProjectWiseStatus() {
             Swal.fire({ text: "" });
         }
     });
+} function calculateTotalTime(response) {
+    // Result object to hold the grouped data
+    let result = {};
+
+    // Iterate over the response and process each entry
+    response.forEach(entry => {
+        const { tounitId, tounit, timeStampfrom, timeStampTo } = entry;
+
+        // Parse timestamps into Date objects
+        const from = new Date(timeStampfrom);
+        const to = new Date(timeStampTo);
+
+        // Calculate time spent in minutes
+        const timeSpent = (to - from) / 1000 / 60; // Difference in minutes
+
+        // Create a unique key for each (fromunitId, statusId, fromunit, status) combination
+        const key = `${tounitId}_${tounit}`;
+
+        // If the group doesn't exist, initialize it
+        if (!result[key]) {
+            result[key] = 0;
+        }
+
+        // Add the time spent to the group
+        result[key] += timeSpent;
+    });
+
+    // Transform the result into a more readable array
+    const groupedResult = Object.keys(result).map(key => {
+        const [tounitId, tounit] = key.split('_');
+        return {
+            tounitId: parseInt(tounitId),
+            tounit: tounit,
+          
+            totalTimeSpent: result[key]
+        };
+    });
+
+    return groupedResult;
 }
+// Assuming totalTimeSpent is in minutes
+function convertMinutesToDaysHoursAndMinutes(minutes) {
+    // Calculate days using integer division
+    const days = Math.trunc(minutes / (60 * 24));  // Calculate days without Math.floor()
+
+    // Calculate remaining hours (after extracting days)
+    const hours = Math.trunc((minutes % (60 * 24)) / 60);  // Calculate remaining hours after calculating days
+
+    // Calculate remaining minutes (after extracting hours)
+    const remainingMinutes = minutes % 60;  // Remaining minutes after hours
+
+    // If days > 0, return in "D day(s), hh:mm" format
+    if (days > 0) {
+        return `${days} day(s), ${hours.toString().padStart(2, '0')}:${Math.round(remainingMinutes).toString().padStart(2, '0')}`;
+    }
+
+    // Otherwise, just return in "hh:mm" format
+    return `${hours.toString().padStart(2, '0')}:${Math.round(remainingMinutes).toString().padStart(2, '0')}`;
+}
+
 function GetProjHold(ProjId) {
     var listItem = "";
     var listItemc = "";
@@ -212,21 +271,53 @@ function GetProjHold(ProjId) {
                     const labelscmd = []; // label array
                     const totalscmd = []; // total array
                     const totalsForlabelcmd = []; // total array
-                    for (var j = response.length-1; j >= 0; j--) {
-                        if (response[j].isComment == false) {
+                    let responseforchart = response
+                        .filter(function (elements) {
+                            return elements.isComment == false;  // Filter out elements where isComment is false
+                        })
+                        .sort(function (a, b) {
+                            // First, sort by statusId
+                            if (a.statusId === b.statusId) {
+                                // If statusId is the same, then sort by fromunitId
+                                return a.tounitId - b.tounitId;
+                            }
+                            return a.statusId - b.statusId;  // Sort by statusId
+                        });
+                    let totalTimeSpentData = calculateTotalTime(responseforchart);
+                    console.log(totalTimeSpentData);
+                    // Using forEach to loop through the array and access each element
+                    totalTimeSpentData.forEach(function (item) {
+                        // Accessing individual properties of each item
 
-                            labels.push(response[j].status + '(' + response[j].fromunit + ')');
-                            totals.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
-                            totalsForlabel.push(DateCalculateago(response[j].timeStampfrom, response[j].timeStampTo).replace("</h6>", ""));
-                        }
-                        else {
+                        //labels.push(item.status + '(' + item.fromunit + ')');
+                        labels.push(item.tounit);
+                        totals.push(item.totalTimeSpent);
+                        totalsForlabel.push(convertMinutesToDaysHoursAndMinutes(item.totalTimeSpent))
+                       
+                    });
+                    
+                    //console.log(totalTimeSpentData)
+
+
+
+                    for (var j = response.length-1; j >= 0; j--) {
+                        //if (response[j].isComment == false) {
+
+                          //  labels.push(response[j].status + '(' + response[j].fromunit + ')');
+                           // totals.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
+                           // alert(response[j].fromunitId + '---' + response[j].statusId)
+                            //alert(calculateTotalMinutes(response[j].timeStampfrom, response[j].timeStampTo))
+                            // alert(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
+                            //totalsForlabel.push(DateCalculateago(response[j].timeStampfrom, response[j].timeStampTo).replace("</h6>", ""));
+                        //}
+                        //else {
                             if (response[j].isComment == true) {
 
                                 labelscmd.push(response[j].status + '(' + response[j].fromunit + ')');
                                 totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
                                 totalsForlabelcmd.push(DateCalculateago(response[j].timeStampfrom, response[j].timeStampTo).replace("</h6>", ""));
                             }
-                        }
+                        //}
                     }
                     for (var j = 0; j < response.length; j++) {
                         if (response[j].isComment == false) {
@@ -498,7 +589,7 @@ function bindProjHoldChart(labels, totals, totalsForlabel, colors) {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Project Hold History (in Hours.Minute)'
+                    /*text: 'Project Hold History (in Hours.Minute)'*/
                 },
                 legend: { display: false },
                 datalabels: {
@@ -541,7 +632,7 @@ function bindProjHoldCommentsChart(labels, totals, totalsForlabel, colors) {
             plugins: {
                 title: {
                     display: true,
-                    text: 'Project Hold History (in Hours.Minute)'
+                    /*text: 'Project Hold History (in Hours.Minute)'*/
                 },
                 legend: { display: false },
                 datalabels: {

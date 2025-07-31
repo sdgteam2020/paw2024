@@ -14,7 +14,8 @@ namespace swas.BAL.DTO
     public class DTOChartSummarylist
     {
         public List<DTOChartSummary>? ProjectStatus { get; set; }
-        public List<DTOChartSummary>? ApprovedProjects { get; set; }
+        public List<DTOChartSummary>? ApprovedProjectsPre { get; set; }
+        public List<DTOChartSummary>? ApprovedProjectsPost { get; set; }
         public List<DTOChartSummary>? WhitelistedProjects { get; set; }
         public List<DTOChartSummary>? TotalProjects { get; set; }
        

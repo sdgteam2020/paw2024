@@ -213,42 +213,39 @@ function DateFormateddMMyyyyhhmmss(date) {
     //`${datef2.getFullYear()}/` + monthsans + `/` + dayans ;
 }
 function DateCalculateago(fmDate, end_actual_time) {
-    ////////ago///////////
+    // Initial variables
     var ago = "";
-    var start_actual_time = fmDate;
-    /* var end_actual_time = new Date();*/
+    var start_actual_time = new Date(fmDate);  // Start time
+    var end_actual_time = new Date(end_actual_time);  // End time
 
-    start_actual_time = new Date(start_actual_time);
-    end_actual_time = new Date(end_actual_time);
-
+    // Calculate difference in seconds
     var diff = end_actual_time - start_actual_time;
-
     var diffSeconds = diff / 1000;
-    var HH = Math.floor(diffSeconds / 3600);
-    var MM = Math.floor(diffSeconds % 3600) / 60;
 
-    var formatted = ((HH < 10) ? ("0" + HH) : HH) + ":" + ((MM < 10) ? ("0" + MM.toFixed(0)) : MM.toFixed(0))
+    // Calculate hours and minutes from the difference
+    var HH = Math.floor(diffSeconds / 3600);  // Calculate hours
+    var MM = Math.floor((diffSeconds % 3600) / 60);  // Calculate minutes
 
-    var futureDate = new Date();
-    var todayDate = new Date(fmDate);
-    var milliseconds = end_actual_time.getTime() - start_actual_time.getTime();
-    var hours = Math.floor(milliseconds / (60 * 60 * 1000));
-    var formatted1 = formatted.substring(0, 2);
+    // Format hours and minutes
+    var formatted = ((HH < 10) ? ("0" + HH) : HH) + ":" + ((MM < 10) ? ("0" + MM) : MM);
+
+    // Calculate the time difference in hours
+    var hours = Math.floor(diff / (60 * 60 * 1000));  // Hours difference
+
+    // Calculate days, months, and years if necessary
     if (hours <= 24) {
-        ago = formatted + ' Min </h6>';
+        ago = formatted + ' Min';
+    } else if (hours <= 730) {  // Less than 730 hours (~30 days)
+        ago = Math.floor(hours / 24) + ' Days (' + formatted + ')';
+    } else if (hours <= 8760) {  // Less than 8760 hours (~365 days)
+        ago = Math.floor(hours / 730) + ' Months (' + formatted + ')';
+    } else {
+        ago = Math.floor(hours / 8760) + ' Years (' + formatted + ')';
     }
-    else /*if (hours <= 730)*/ {
 
-        ago = Math.floor(hours / 24) + ' Days (' + formatted + ')</h6>';;
-    }
-    //else if (hours <= 8766) {
-    //    ago = Math.floor(Math.floor(hours / 24) / 30) + ' Months</h6>';;
-    //}
-    //else {
-    //    ago = Math.floor(Math.floor(Math.floor(hours / 24) / 30) / 12) + ' Years</h6>';;
-    //}
     return ago;
 }
+
 function DateCalculateagoForChart(fmDate, end_actual_time) {
     const diffMs = new Date(end_actual_time) - new Date(fmDate);
     const totalMinutes = diffMs / 60000;

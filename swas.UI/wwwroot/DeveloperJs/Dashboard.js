@@ -1158,7 +1158,7 @@ function CreateChartSummary() {
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Years Wise Status'
+                           /* text: 'Years Wise Status'*/
                         },
                         legend: {
                             display: false
@@ -1178,8 +1178,8 @@ function CreateChartSummary() {
                 },
                 plugins: [ChartDataLabels] // Register the plugin
             });
-            // Approved Projects Chart
-            const ApprovedProjects = data.approvedProjects;
+            //Pre  Approved Projects Chart
+            const ApprovedProjects = data.approvedProjectsPre;
 
             // Map names and totals
             const labels1 = ApprovedProjects.map(x => x.name);
@@ -1198,7 +1198,48 @@ function CreateChartSummary() {
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Stage Approve Status'
+                           /* text: 'Stage Approve Status'*/
+                        },
+                        legend: {
+                            display: false
+                        },
+                        datalabels: {
+                            anchor: 'end',
+                            align: 'end',
+                            color: '#000',
+                            font: {
+                                weight: 'bold'
+                            },
+                            formatter: function (value) {
+                                return value;
+                            }
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels] // Register the plugin
+            });
+
+            //Pre  Approved Projects Chart
+            const ApprovedProjectsPost = data.approvedProjectsPost;
+
+            // Map names and totals
+            const labels11 = ApprovedProjectsPost.map(x => x.name);
+            const totals11 = ApprovedProjectsPost.map(x => x.total);
+            new Chart(document.getElementById('approvedProjectsChartPost'), {
+                type: 'bar',
+                data: {
+                    labels: labels11,
+                    datasets: [{
+                        label: 'Projects',
+                        backgroundColor: colors,
+                        data: totals11, barThickness: 50,
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            /* text: 'Stage Approve Status'*/
                         },
                         legend: {
                             display: false
@@ -1220,86 +1261,93 @@ function CreateChartSummary() {
             });
 
 
+
             // Whitelisted Projects Chart
             const WhitelistedProjects = data.whitelistedProjects;
-
+            const colorspie = [
+                "green", "red"]
             // Map names and totals
             const labels2 = WhitelistedProjects.map(x => x.name);
             const totals2 = WhitelistedProjects.map(x => x.total);
             new Chart(document.getElementById('whitelistedChart'), {
-                type: 'bar',
-                data: {
-                    labels: labels2,
-                    datasets: [{
-                        label: 'Whitelisted',
-                        backgroundColor: colors,
-                        data: totals2,barThickness: 50, 
-                    }]
-                },
-                options: {
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Years Wise Total Project'
-                        },
-                        legend: {
-                            display: false
-                        },
-                        datalabels: {
-                            anchor: 'end',
-                            align: 'end',
-                            color: '#000',
-                            font: {
-                                weight: 'bold'
+                    type: 'pie',
+                    data: {
+                        labels: labels2, // e.g. ['Processed - 72', 'Pending - 9']
+                        datasets: [{
+                            backgroundColor: colorspie,
+                            data: totals2,     // e.g. [72, 9]
+
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top'
                             },
-                            formatter: function (value) {
-                                return value;
-                            }
+                            title: {
+                                display: true,
+                                text: 'Total Projects'
+                            },
+                            datalabels: {
+                                color: '#fff',
+                                font: {
+                                    weight: 'bold',
+                                    size: 18
+                                },
+                            formatter: (value) => value
+                        }
+                    },
+                    onClick: (event, elements) => {
+                        if (elements.length > 0) {
+                            const elementIndex = elements[0].index;
+                            showPopup(elementIndex);
                         }
                     }
                 },
-                plugins: [ChartDataLabels] // Register the plugin
+                plugins: [ChartDataLabels]
             });
 
             // Total Projects Pie Chart
             const TotalProjects = data.totalProjects;
 
             // Map names and totals
-            const labels3 = TotalProjects.map(x => x.name);
-            const totals3 = TotalProjects.map(x => x.total);
-            new Chart(document.getElementById('totalProjectsChart'), {
-                type: 'pie',
-                data: {
-                    labels: labels3, // e.g. ['Processed - 72', 'Pending - 9']
-                    datasets: [{
-                        backgroundColor: colors,
-                        data: totals3,     // e.g. [72, 9]
+            //const labels3 = TotalProjects.map(x => x.name);
+            //const totals3 = TotalProjects.map(x => x.total);
+            //new Chart(document.getElementById('totalProjectsChart'), {
+            //    type: 'pie',
+            //    data: {
+            //        labels: labels3, // e.g. ['Processed - 72', 'Pending - 9']
+            //        datasets: [{
+            //            backgroundColor: colors,
+            //            data: totals3,     // e.g. [72, 9]
                            
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top'
-                        },
-                        title: {
-                            display: true,
-                            text: 'Total Projects'
-                        },
-                        datalabels: {
-                            color: '#fff',
-                            font: {
-                                weight: 'bold',
-                                size: 18
-                            },
-                            formatter: (value) => value
-                        }
-                    }
-                },
-                plugins: [ChartDataLabels] // register the plugin
-            });
+            //        }]
+            //    },
+            //    options: {
+            //        responsive: true,
+            //        maintainAspectRatio: false,
+            //        plugins: {
+            //            legend: {
+            //                position: 'top'
+            //            },
+            //            title: {
+            //                display: true,
+            //                text: 'Total Projects'
+            //            },
+            //            datalabels: {
+            //                color: '#fff',
+            //                font: {
+            //                    weight: 'bold',
+            //                    size: 18
+            //                },
+            //                formatter: (value) => value
+            //            }
+            //        }
+            //    },
+            //    plugins: [ChartDataLabels] // register the plugin
+            //});
 
         }
 
@@ -1307,3 +1355,102 @@ function CreateChartSummary() {
 
  
 }
+function showPopup(segmentIndex) {
+   
+    const popupOverlay = document.getElementById('popupOverlay');
+    const popupTitle = document.getElementById('popupTitle');
+    const projectList = document.getElementById('projectList');
+
+    let projects = [];
+    let title = '';
+    let statusActionsMappingId = 0;
+    if (segmentIndex === 0) 
+        {
+            statusActionsMappingId = 88;
+        }
+    else if (segmentIndex === 1) {
+        statusActionsMappingId = 880;
+        }
+    let userdata = {
+        "StatusId": 29,
+        "statusActionsMappingId": statusActionsMappingId,
+    };
+    $.ajax({
+        url: '/Home/GetDashboardApproved',
+        contentType: 'application/x-www-form-urlencoded',
+        data: userdata,
+        type: 'POST',
+        success: function (response) {
+            //console.log("GetDashboardApprovedData", response);
+            if (response != "null" && response != null) {
+
+                if (response == -1) {
+                    Swal.fire({ text: "" });
+                } else if (response == 0) {
+
+                  
+
+
+                } else {
+                   
+                    let datestring = "";
+
+                    if (segmentIndex === 0) {
+                        projects = response;
+                        datestring ="Whitelisted On"
+                        title = `Whitelisted Projects (${projects.length})`;
+                    } else if (segmentIndex === 1) {
+                        projects = response;
+                        title = `Due for Re-vetting (${projects.length})`;
+                        datestring = "Expired On"
+                    }
+
+                    popupTitle.textContent = title;
+
+                    // Clear existing list
+                    projectList.innerHTML = '';
+
+                    // Add projects to list
+                    projects.forEach(project => {
+                        const listItem = document.createElement('li');
+                        listItem.className = segmentIndex === 1 ? 'project-item due-revetting' : 'project-item';
+                        listItem.innerHTML = `
+                    <div class="project-name">Project Name : ${project.projName}</div>
+
+                    <div class="project-status">${datestring}: ${DateFormateddMMyyyyhhmmss(project.timeStamp)} | Sponser: ${project.stakeHolder}</div>
+                `;
+                        projectList.appendChild(listItem);
+                    });
+
+                    popupOverlay.style.display = 'block';
+                   
+                }
+            }
+          
+        },
+        error: function (result) {
+            Swal.fire({ text: "" });
+        }
+    });
+
+
+
+}
+
+function closePopup() {
+    document.getElementById('popupOverlay').style.display = 'none';
+}
+
+// Close popup when clicking outside
+document.getElementById('popupOverlay').addEventListener('click', function (event) {
+    if (event.target === this) {
+        closePopup();
+    }
+});
+
+// Close popup with Escape key
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+        closePopup();
+    }
+});
