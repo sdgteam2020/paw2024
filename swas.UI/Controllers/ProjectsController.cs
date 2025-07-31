@@ -1189,7 +1189,7 @@ namespace swas.UI.Controllers
                         movent.IsRead = false;
                         movent.IsPullBack = true;
                         movent.UndoRemarks = null;
-                        movent.Remarks = Remarks; /* as discussed with Lt Col Jasjeet sir (keep pulled back remark in Remarks column)*/
+                        movent.Remarks = Helper.LoginDetails(Logins) + "("+(Logins.Unit)+ ") 𝐑𝐞𝐦𝐚𝐫𝐤𝐬: " + Remarks; /* as discussed with Lt Col Jasjeet sir (keep pulled back remark in Remarks column)*/
                         //movent.UserDetails = Helper.LoginDetails(Logins);
                         movent.UpdatedByUserId = Logins.UserIntId;
                         movent.DateTimeOfUpdate = DateTime.Now;

@@ -507,6 +507,7 @@ function SaveFwdTo(CurrentPslmId) {
     {
         "ProjId": $("#spanFwdProjectId").html(),
         /* "StatusId": $("#ddlfwdSubStage").val(),*/
+        "PsmId": $("#spanCurrentPslmId").html(),
         "StatusActionsMappingId": $("#ddlfwdAction").val(),
         "Remarks": $("#txtRemarksfwd").val(),
         "ToUnitId": fwdunitid,
@@ -538,6 +539,16 @@ function SaveFwdTo(CurrentPslmId) {
 
                     });
                 }
+                if (response == -4) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Other User FWD the Project From This unit",
+                       
+
+                    });
+                    location.Reload();
+                } 
                 else {
 
                     $("#spanCurrentPslmId").html(response.psmId);
