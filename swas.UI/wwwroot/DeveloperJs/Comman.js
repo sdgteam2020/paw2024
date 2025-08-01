@@ -218,33 +218,38 @@ function DateCalculateago(fmDate, end_actual_time) {
     var start_actual_time = new Date(fmDate);  // Start time
     var end_actual_time = new Date(end_actual_time);  // End time
 
-    // Calculate difference in seconds
+    // Calculate difference in milliseconds
     var diff = end_actual_time - start_actual_time;
+
+    // Convert the difference to seconds, minutes, hours, days, months, and years
     var diffSeconds = diff / 1000;
+    var diffMinutes = diffSeconds / 60;
+    var diffHours = diffMinutes / 60;
+    var diffDays = diffHours / 24;
+    var diffMonths = diffDays / 30;
+    var diffYears = diffDays / 365;
 
     // Calculate hours and minutes from the difference
-    var HH = Math.floor(diffSeconds / 3600);  // Calculate hours
-    var MM = Math.floor((diffSeconds % 3600) / 60);  // Calculate minutes
+    var HH = Math.floor(diffHours);  // Total hours
+    var MM = Math.floor(diffMinutes % 60);  // Remaining minutes after calculating hours
 
     // Format hours and minutes
     var formatted = ((HH < 10) ? ("0" + HH) : HH) + ":" + ((MM < 10) ? ("0" + MM) : MM);
 
-    // Calculate the time difference in hours
-    var hours = Math.floor(diff / (60 * 60 * 1000));  // Hours difference
-
-    // Calculate days, months, and years if necessary
-    if (hours <= 24) {
+    // Calculate the time difference in days, months, or years and format the result
+    if (diffHours < 24) {
         ago = formatted + ' Min';
-    } else if (hours <= 730) {  // Less than 730 hours (~30 days)
-        ago = Math.floor(hours / 24) + ' Days (' + formatted + ')';
-    } else if (hours <= 8760) {  // Less than 8760 hours (~365 days)
-        ago = Math.floor(hours / 730) + ' Months (' + formatted + ')';
+    } else if (diffHours < 730) {  // Less than 730 hours (~30 days)
+        ago = Math.floor(diffDays) + ' Days (' + formatted + ')';
+    } else if (diffHours < 8760) {  // Less than 8760 hours (~365 days)
+        ago = Math.floor(diffMonths) + ' Months (' + formatted + ')';
     } else {
-        ago = Math.floor(hours / 8760) + ' Years (' + formatted + ')';
+        ago = Math.floor(diffYears) + ' Years (' + formatted + ')';
     }
 
     return ago;
 }
+
 
 function DateCalculateagoForChart(fmDate, end_actual_time) {
     const diffMs = new Date(end_actual_time) - new Date(fmDate);
