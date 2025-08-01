@@ -215,24 +215,48 @@ function ProjectWiseStatus() {
     return groupedResult;
 }
 // Assuming totalTimeSpent is in minutes
-function convertMinutesToDaysHoursAndMinutes(minutes) {
-    // Calculate days using integer division
-    const days = Math.trunc(minutes / (60 * 24));  // Calculate days without Math.floor()
+function convertMinutesToAgo(minutes) {
+    // Calculate total hours from minutes
+    const totalHours = minutes / 60;
 
-    // Calculate remaining hours (after extracting days)
-    const hours = Math.trunc((minutes % (60 * 24)) / 60);  // Calculate remaining hours after calculating days
+    // Calculate remaining minutes after extracting hours
+    const remainingMinutes = minutes % 60;
 
-    // Calculate remaining minutes (after extracting hours)
-    const remainingMinutes = minutes % 60;  // Remaining minutes after hours
+    let ago = "";
+    let formatted;
 
-    // If days > 0, return in "D day(s), hh:mm" format
-    if (days > 0) {
-        return `${days} day(s), ${hours.toString().padStart(2, '0')}:${Math.round(remainingMinutes).toString().padStart(2, '0')}`;
+    // Calculate years first
+    if (totalHours >= 8760) {
+        const years = Math.round(totalHours / 8760);  // 8760 hours in a year
+       // const remainingHoursInYear = totalHours % 8760;
+        formatted = `${Math.round(totalHours).toString().padStart(3, '0')}:${Math.round(remainingMinutes).toString().padStart(2, '0')}`;
+        ago = `${years} Years (${formatted})`;
+    }
+    // Calculate months if total hours are less than a year but greater than or equal to 730 hours (~30 days)
+    else if (totalHours >= 730) {
+        const months = Math.round(totalHours / 730);  // 730 hours in a month (approx)
+       // const remainingHoursInMonth = totalHours % 730;
+        formatted = `${Math.round(totalHours).toString().padStart(3, '0')}:${Math.round(remainingMinutes).toString().padStart(2, '0')}`;
+        ago = `${months} Months (${formatted})`;
+    }
+    // Calculate days if total hours are less than 730 but greater than 24 hours
+    else if (totalHours >= 24) {
+        const days = Math.round(totalHours / 24);
+        const hours = Math.round(totalHours % 24);  // Remaining hours after extracting days
+        formatted = `${hours.toString().padStart(2, '0')}:${Math.round(remainingMinutes).toString().padStart(2, '0')}`;
+        ago = `${days} Days (${formatted})`;
+    }
+    // For less than 24 hours, simply show the minutes
+    else {
+        formatted = `${Math.floor(totalHours).toString().padStart(2, '0')}:${Math.floor(remainingMinutes).toString().padStart(2, '0')}`;
+        ago = `${formatted} Min`;
     }
 
-    // Otherwise, just return in "hh:mm" format
-    return `${hours.toString().padStart(2, '0')}:${Math.round(remainingMinutes).toString().padStart(2, '0')}`;
+    return ago;
 }
+
+
+
 
 function GetProjHold(ProjId) {
     var listItem = "";
@@ -271,6 +295,7 @@ function GetProjHold(ProjId) {
                     const labelscmd = []; // label array
                     const totalscmd = []; // total array
                     const totalsForlabelcmd = []; // total array
+                    let colorscmd = [];
                     let responseforchart = response
                         .filter(function (elements) {
                             return elements.isComment == false;  // Filter out elements where isComment is false
@@ -292,7 +317,7 @@ function GetProjHold(ProjId) {
                         //labels.push(item.status + '(' + item.fromunit + ')');
                         labels.push(item.tounit);
                         totals.push(item.totalTimeSpent);
-                        totalsForlabel.push(convertMinutesToDaysHoursAndMinutes(item.totalTimeSpent))
+                        totalsForlabel.push(convertMinutesToAgo(item.totalTimeSpent))
                        
                     });
                     
@@ -312,6 +337,10 @@ function GetProjHold(ProjId) {
                         //}
                         //else {
                             if (response[j].isComment == true) {
+                                if (response[j].isComplete == false)
+                                    colorscmd.push("#FF0000")
+                                else
+                                    colorscmd.push("#008000")
 
                                 labelscmd.push(response[j].status + '(' + response[j].fromunit + ')');
                                 totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
@@ -547,7 +576,7 @@ function GetProjHold(ProjId) {
                    // const totals = ProjectStatus.map(x => x.timeStampfrom);
                     // Reset and bind chart with new data
                     bindProjHoldChart(labels, totals, totalsForlabel,colors,);
-                    bindProjHoldCommentsChart(labelscmd, totalscmd, totalsForlabelcmd, colors,);
+                    bindProjHoldCommentsChart(labelscmd, totalscmd, totalsForlabelcmd, colorscmd,);
                   
 
 
