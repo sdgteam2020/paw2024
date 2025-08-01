@@ -1,45 +1,24 @@
 {
   "Version": 1,
-<<<<<<< Updated upstream
-  "WorkspaceRootPath": "K:\\Projects\\paw2024\\",
+  "WorkspaceRootPath": "E:\\GIthubLatest\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{85F2362F-775D-4EC7-9B5F-49F635054CAE}|swas.UI\\swas.UI.csproj|k:\\projects\\paw2024\\swas.ui\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{85F2362F-775D-4EC7-9B5F-49F635054CAE}|swas.UI\\swas.UI.csproj|solutionrelative:swas.ui\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{85F2362F-775D-4EC7-9B5F-49F635054CAE}|swas.UI\\swas.UI.csproj|e:\\githublatest\\swas.ui\\wwwroot\\developerjs\\fwdproject.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{85F2362F-775D-4EC7-9B5F-49F635054CAE}|swas.UI\\swas.UI.csproj|solutionrelative:swas.ui\\wwwroot\\developerjs\\fwdproject.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4FC54CC3-EBAD-4FA5-942F-86B4AD169131}|swas.BAL\\swas.BAL.csproj|k:\\projects\\paw2024\\swas.bal\\interfaces\\iprojstakeholdermovrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4FC54CC3-EBAD-4FA5-942F-86B4AD169131}|swas.BAL\\swas.BAL.csproj|solutionrelative:swas.bal\\interfaces\\iprojstakeholdermovrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{85F2362F-775D-4EC7-9B5F-49F635054CAE}|swas.UI\\swas.UI.csproj|e:\\githublatest\\swas.ui\\controllers\\projectscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{85F2362F-775D-4EC7-9B5F-49F635054CAE}|swas.UI\\swas.UI.csproj|solutionrelative:swas.ui\\controllers\\projectscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{85F2362F-775D-4EC7-9B5F-49F635054CAE}|swas.UI\\swas.UI.csproj|k:\\projects\\paw2024\\swas.ui\\wwwroot\\developerjs\\dashboard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{85F2362F-775D-4EC7-9B5F-49F635054CAE}|swas.UI\\swas.UI.csproj|solutionrelative:swas.ui\\wwwroot\\developerjs\\dashboard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{4FC54CC3-EBAD-4FA5-942F-86B4AD169131}|swas.BAL\\swas.BAL.csproj|e:\\githublatest\\swas.bal\\repository\\genericrepositorydl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4FC54CC3-EBAD-4FA5-942F-86B4AD169131}|swas.BAL\\swas.BAL.csproj|solutionrelative:swas.bal\\repository\\genericrepositorydl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{85F2362F-775D-4EC7-9B5F-49F635054CAE}|swas.UI\\swas.UI.csproj|k:\\projects\\paw2024\\swas.ui\\wwwroot\\developerjs\\projectwisereport.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{85F2362F-775D-4EC7-9B5F-49F635054CAE}|swas.UI\\swas.UI.csproj|solutionrelative:swas.ui\\wwwroot\\developerjs\\projectwisereport.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{85F2362F-775D-4EC7-9B5F-49F635054CAE}|swas.UI\\swas.UI.csproj|k:\\projects\\paw2024\\swas.ui\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{85F2362F-775D-4EC7-9B5F-49F635054CAE}|swas.UI\\swas.UI.csproj|solutionrelative:swas.ui\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{85F2362F-775D-4EC7-9B5F-49F635054CAE}|swas.UI\\swas.UI.csproj|k:\\projects\\paw2024\\swas.ui\\views\\home\\projectwisereport.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{85F2362F-775D-4EC7-9B5F-49F635054CAE}|swas.UI\\swas.UI.csproj|solutionrelative:swas.ui\\views\\home\\projectwisereport.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{85F2362F-775D-4EC7-9B5F-49F635054CAE}|swas.UI\\swas.UI.csproj|k:\\projects\\paw2024\\swas.ui\\wwwroot\\developerjs\\comman.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{85F2362F-775D-4EC7-9B5F-49F635054CAE}|swas.UI\\swas.UI.csproj|solutionrelative:swas.ui\\wwwroot\\developerjs\\comman.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4FC54CC3-EBAD-4FA5-942F-86B4AD169131}|swas.BAL\\swas.BAL.csproj|k:\\projects\\paw2024\\swas.bal\\dto\\dtoprojecthold.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4FC54CC3-EBAD-4FA5-942F-86B4AD169131}|swas.BAL\\swas.BAL.csproj|solutionrelative:swas.bal\\dto\\dtoprojecthold.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{85F2362F-775D-4EC7-9B5F-49F635054CAE}|swas.UI\\swas.UI.csproj|e:\\githublatest\\swas.ui\\views\\projects\\projdetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{85F2362F-775D-4EC7-9B5F-49F635054CAE}|swas.UI\\swas.UI.csproj|solutionrelative:swas.ui\\views\\projects\\projdetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
-=======
-  "WorkspaceRootPath": "E:\\GIthubLatest\\",
-  "Documents": [],
->>>>>>> Stashed changes
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -47,51 +26,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-<<<<<<< Updated upstream
-          "SelectedChildIndex": 12,
-=======
-          "SelectedChildIndex": -1,
->>>>>>> Stashed changes
+          "SelectedChildIndex": 7,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ProjectWiseReport.js",
-              "DocumentMoniker": "K:\\Projects\\paw2024\\swas.UI\\wwwroot\\DeveloperJs\\ProjectWiseReport.js",
-              "RelativeDocumentMoniker": "swas.UI\\wwwroot\\DeveloperJs\\ProjectWiseReport.js",
-              "ToolTip": "K:\\Projects\\paw2024\\swas.UI\\wwwroot\\DeveloperJs\\ProjectWiseReport.js",
-              "RelativeToolTip": "swas.UI\\wwwroot\\DeveloperJs\\ProjectWiseReport.js",
-              "ViewState": "AgIAABoCAAAAAAAAAAAwwGwBAABWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-07-24T07:17:12.458Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ProjectWiseReport.cshtml",
-              "DocumentMoniker": "K:\\Projects\\paw2024\\swas.UI\\Views\\Home\\ProjectWiseReport.cshtml",
-              "RelativeDocumentMoniker": "swas.UI\\Views\\Home\\ProjectWiseReport.cshtml",
-              "ToolTip": "K:\\Projects\\paw2024\\swas.UI\\Views\\Home\\ProjectWiseReport.cshtml",
-              "RelativeToolTip": "swas.UI\\Views\\Home\\ProjectWiseReport.cshtml",
-              "ViewState": "AgIAAEIAAAAAAAAAAAAAAEsAAABFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-24T07:12:50.146Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
               "$type": "Bookmark",
-              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
               "$type": "Bookmark",
@@ -102,95 +41,62 @@
               "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
             {
-<<<<<<< Updated upstream
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "IProjStakeHolderMovRepository.cs",
-              "DocumentMoniker": "K:\\Projects\\paw2024\\swas.BAL\\Interfaces\\IProjStakeHolderMovRepository.cs",
-              "RelativeDocumentMoniker": "swas.BAL\\Interfaces\\IProjStakeHolderMovRepository.cs",
-              "ToolTip": "K:\\Projects\\paw2024\\swas.BAL\\Interfaces\\IProjStakeHolderMovRepository.cs",
-              "RelativeToolTip": "swas.BAL\\Interfaces\\IProjStakeHolderMovRepository.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAlwB0AAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-31T10:44:58.681Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "K:\\Projects\\paw2024\\swas.UI\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "swas.UI\\Views\\Home\\Index.cshtml",
-              "ToolTip": "K:\\Projects\\paw2024\\swas.UI\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "swas.UI\\Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAAHECAAAAAAAAAAAwwN0CAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-31T06:52:31.344Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Dashboard.js",
-              "DocumentMoniker": "K:\\Projects\\paw2024\\swas.UI\\wwwroot\\DeveloperJs\\Dashboard.js",
-              "RelativeDocumentMoniker": "swas.UI\\wwwroot\\DeveloperJs\\Dashboard.js",
-              "ToolTip": "K:\\Projects\\paw2024\\swas.UI\\wwwroot\\DeveloperJs\\Dashboard.js",
-              "RelativeToolTip": "swas.UI\\wwwroot\\DeveloperJs\\Dashboard.js",
-              "ViewState": "AgIAAGAEAAAAAAAAAAAAAGMFAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-07-31T05:06:00.739Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "DTOProjectHold.cs",
-              "DocumentMoniker": "K:\\Projects\\paw2024\\swas.BAL\\DTO\\DTOProjectHold.cs",
-              "RelativeDocumentMoniker": "swas.BAL\\DTO\\DTOProjectHold.cs",
-              "ToolTip": "K:\\Projects\\paw2024\\swas.BAL\\DTO\\DTOProjectHold.cs",
-              "RelativeToolTip": "swas.BAL\\DTO\\DTOProjectHold.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAowBUAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-31T04:54:52.35Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Comman.js",
-              "DocumentMoniker": "K:\\Projects\\paw2024\\swas.UI\\wwwroot\\DeveloperJs\\Comman.js",
-              "RelativeDocumentMoniker": "swas.UI\\wwwroot\\DeveloperJs\\Comman.js",
-              "ToolTip": "K:\\Projects\\paw2024\\swas.UI\\wwwroot\\DeveloperJs\\Comman.js",
-              "RelativeToolTip": "swas.UI\\wwwroot\\DeveloperJs\\Comman.js",
-              "ViewState": "AgIAANsAAAAAAAAAAAAwwPcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-07-31T04:50:07.232Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "K:\\Projects\\paw2024\\swas.UI\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "swas.UI\\Controllers\\HomeController.cs",
-              "ToolTip": "K:\\Projects\\paw2024\\swas.UI\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "swas.UI\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAAMwAAAAAAAAAAAAiwNIAAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-31T04:37:17.942Z",
-              "EditorCaption": ""
-=======
-              "$type": "Bookmark",
-              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
               "$type": "Bookmark",
               "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
             {
               "$type": "Bookmark",
               "Name": "ST:1496678418:0:{81164725-9a96-4ece-a4cb-440d8fd285e5}"
->>>>>>> Stashed changes
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GenericRepositoryDL.cs",
+              "DocumentMoniker": "E:\\GIthubLatest\\swas.BAL\\Repository\\GenericRepositoryDL.cs",
+              "RelativeDocumentMoniker": "swas.BAL\\Repository\\GenericRepositoryDL.cs",
+              "ToolTip": "E:\\GIthubLatest\\swas.BAL\\Repository\\GenericRepositoryDL.cs",
+              "RelativeToolTip": "swas.BAL\\Repository\\GenericRepositoryDL.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAMwDQAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-31T12:43:48.53Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ProjDetails.cshtml",
+              "DocumentMoniker": "E:\\GIthubLatest\\swas.UI\\Views\\Projects\\ProjDetails.cshtml",
+              "RelativeDocumentMoniker": "swas.UI\\Views\\Projects\\ProjDetails.cshtml",
+              "ToolTip": "E:\\GIthubLatest\\swas.UI\\Views\\Projects\\ProjDetails.cshtml",
+              "RelativeToolTip": "swas.UI\\Views\\Projects\\ProjDetails.cshtml",
+              "ViewState": "AgIAAOgEAAAAAAAAAAAiwPgEAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-31T12:23:11.795Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FwdProject.js",
+              "DocumentMoniker": "E:\\GIthubLatest\\swas.UI\\wwwroot\\DeveloperJs\\FwdProject.js",
+              "RelativeDocumentMoniker": "swas.UI\\wwwroot\\DeveloperJs\\FwdProject.js",
+              "ToolTip": "E:\\GIthubLatest\\swas.UI\\wwwroot\\DeveloperJs\\FwdProject.js",
+              "RelativeToolTip": "swas.UI\\wwwroot\\DeveloperJs\\FwdProject.js",
+              "ViewState": "AgIAABUCAAAAAAAAAAAcwCYCAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-07-31T12:16:29.067Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ProjectsController.cs",
+              "DocumentMoniker": "E:\\GIthubLatest\\swas.UI\\Controllers\\ProjectsController.cs",
+              "RelativeDocumentMoniker": "swas.UI\\Controllers\\ProjectsController.cs",
+              "ToolTip": "E:\\GIthubLatest\\swas.UI\\Controllers\\ProjectsController.cs",
+              "RelativeToolTip": "swas.UI\\Controllers\\ProjectsController.cs",
+              "ViewState": "AgIAAKgDAAAAAAAAAAApwLoDAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-31T12:12:10.755Z",
+              "EditorCaption": ""
             }
           ]
         }

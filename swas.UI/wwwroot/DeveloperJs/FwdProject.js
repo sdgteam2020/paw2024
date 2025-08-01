@@ -495,19 +495,18 @@ function SaveFwdTo(CurrentPslmId) {
         fwdunitid = $("#searchBox").val()
 
     }
-    //alert()
-
-
+   
+   
     //var currentDate = new Date();
     //var currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false });
     //var time = $("#TimeStampToProjfwd").val();
     //var timeData = time + ' ' + currentTime;
-
+     var PsmId = $("#spanFwdCurrentPslmId").html()
     var userdata =
     {
         "ProjId": $("#spanFwdProjectId").html(),
         /* "StatusId": $("#ddlfwdSubStage").val(),*/
-        "PsmId": $("#spanCurrentPslmId").html(),
+     
         "StatusActionsMappingId": $("#ddlfwdAction").val(),
         "Remarks": $("#txtRemarksfwd").val(),
         "ToUnitId": fwdunitid,
@@ -516,10 +515,15 @@ function SaveFwdTo(CurrentPslmId) {
         "TimeStamp": TimeStamps,
         "CcId": $("#ddlfwdCCTo").val()
     };
+
+
     $.ajax({
         url: '/Projects/FwdToProject',
         type: 'POST',
-        data: userdata,
+        data: {
+            psmove: userdata, // Assuming `userdata` is an object you're passing
+            currentid: PsmId // This ensures PsmId is part of the payload
+        },
         success: function (response) {
             //console.log(response);
             if (response != null) {
@@ -543,12 +547,14 @@ function SaveFwdTo(CurrentPslmId) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
-                        text: "Other User FWD the Project From This unit",
-                       
-
+                        text: "Another user from this unit has forwarded the project.",
+                        confirmButtonText: "OK"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.reload();
+                        }
                     });
-                    location.Reload();
-                } 
+                }
                 else {
 
                     $("#spanCurrentPslmId").html(response.psmId);
