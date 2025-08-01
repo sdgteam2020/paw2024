@@ -8,6 +8,7 @@ Date : 29-07-2025 10:35:23
 Date : 29-07-2025 10:35:28
 'System.Dynamic.DynamicObject' does not contain a definition for 'ProcessButtonColor'
 -----------------------------------------------------------------------------
+<<<<<<< Updated upstream
 Date : 2025-07-30 11:41:45
 A second operation was started on this context instance before a previous operation completed. This is usually caused by different threads concurrently using the same instance of DbContext. For more information on how to avoid threading issues with DbContext, see https://go.microsoft.com/fwlink/?linkid=2097913.
 -----------------------------------------------------------------------------
@@ -55,3 +56,73 @@ Date : 2025-07-31 11:23:30
 -----------------------------------------------------------------------------
 Date : 2025-07-31 11:23:30
 Request failed & Status Code : 200
+=======
+Date : 30-07-2025 12:44:47
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 30-07-2025 12:44:47
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 30-07-2025 13:02:54
+The method 'swas.BAL.DTO.DTOProjectMovHistorypsm.set_touserDetail' is not a property accessor (Parameter 'propertyAccessor')
+-----------------------------------------------------------------------------
+Date : 30-07-2025 13:02:54
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 30-07-2025 13:03:09
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 30-07-2025 13:03:09
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 30-07-2025 17:34:33
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 30-07-2025 17:34:33
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 31-07-2025 09:29:04
+An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+-----------------------------------------------------------------------------
+Date : 31-07-2025 09:37:31
+A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+-----------------------------------------------------------------------------
+Date : 31-07-2025 09:38:25
+A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+-----------------------------------------------------------------------------
+Date : 31-07-2025 09:44:02
+'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
+-----------------------------------------------------------------------------
+Date : 31-07-2025 09:44:02
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 31-07-2025 09:44:05
+'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
+-----------------------------------------------------------------------------
+Date : 31-07-2025 09:44:05
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 31-07-2025 12:42:43
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 31-07-2025 12:42:43
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 31-07-2025 12:42:49
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 31-07-2025 12:42:49
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 31-07-2025 14:28:26
+'System.Dynamic.DynamicObject' does not contain a definition for 'ProcessButtonColor'
+-----------------------------------------------------------------------------
+Date : 31-07-2025 15:07:05
+'System.Dynamic.DynamicObject' does not contain a definition for 'ProcessButtonColor'
+-----------------------------------------------------------------------------
+Date : 31-07-2025 15:09:03
+'System.Dynamic.DynamicObject' does not contain a definition for 'ProcessButtonColor'
+-----------------------------------------------------------------------------
+Date : 31-07-2025 15:09:09
+'System.Dynamic.DynamicObject' does not contain a definition for 'ProcessButtonColor'
+>>>>>>> Stashed changes

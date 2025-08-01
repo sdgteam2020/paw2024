@@ -811,18 +811,21 @@
                 </tr>
             </thead>
             <tbody>
-               
+           
                 @foreach (var history in ViewBag.ProjMovementHist)
                 {
+                  
                         <tr>
                             <td style="width:1% !important">
                                 @{
+                                
                                     snoa++;
                                 }
                                 @snoa
                             </td>
                             @* <td>@history.Date.ToString().Substring(0,10)</td> *@
                             <td>@history.Date</td>
+                            
                         <td>
                             @if (history.IsPulledBack == true)
                             {
@@ -844,7 +847,14 @@
                                 @history.FromUnitName
                             }
                         </td>
-                            <td>@history.ToUnitName</td>
+
+                        <td>
+
+                           
+                            @history.ToUnitName  
+                       
+                        </td>
+                           
                             <td>@history.Stages</td>
                             <td>
                             @if (history.IsComment==true)
@@ -864,7 +874,7 @@
                             <td class="wrap">
                             @if (history.IsPulledBack == true && history.UndoRemarks == null)
                             {
-                                @:Pulled Back Remarks - @history.Remarks
+                                @:𝐏𝐮𝐥𝐥𝐞𝐝 𝐁𝐚𝐜𝐤 𝐑𝐞𝐦𝐚𝐫𝐤𝐬 𝐁𝐲: - @history.Remarks
                             }
                             else
                             {
@@ -885,7 +895,7 @@
                                 }
                             </td>
                         </tr>
-
+                 
                     }
                 
             </tbody>

@@ -51,9 +51,17 @@ namespace swas.BAL.Repository
         }
         public async Task<T> AddWithReturn(T entity)
         {
-            _context.Set<T>().Add(entity);
-            await _context.SaveChangesAsync();
-            return entity;
+            try
+            {
+                _context.Set<T>().Add(entity);
+                await _context.SaveChangesAsync();
+                return entity;
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+         
         }
 
         public async Task SaveAsync()
