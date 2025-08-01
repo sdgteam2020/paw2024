@@ -522,7 +522,7 @@ function SaveFwdTo(CurrentPslmId) {
         type: 'POST',
         data: {
             psmove: userdata, // Assuming `userdata` is an object you're passing
-            currentid: PsmId // This ensures PsmId is part of the payload
+            currentpsmid: PsmId // This ensures PsmId is part of the payload
         },
         success: function (response) {
             //console.log(response);
