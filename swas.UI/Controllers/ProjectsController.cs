@@ -939,7 +939,7 @@ namespace swas.UI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> FwdToProject(tbl_ProjStakeHolderMov psmove,string currentid)
+        public async Task<IActionResult> FwdToProject(tbl_ProjStakeHolderMov psmove,string currentpsmid)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
             bool ret = false;
@@ -947,7 +947,7 @@ namespace swas.UI.Controllers
             {
                 ret = psmove.CcId.Contains(psmove.ToUnitId);
             }
-            int psmid = Convert.ToInt32(currentid);
+            int psmid = Convert.ToInt32(currentpsmid);
             var latst = _dbContext.ProjStakeHolderMov.Where(r => r.PsmId == psmid && r.ToUnitId == Logins.unitid && r.IsComplete == false && r.IsComment == false).FirstOrDefault();
 
             if(latst == null )
