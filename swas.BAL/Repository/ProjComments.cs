@@ -26,7 +26,7 @@ namespace swas.BAL
             _context = applicationDbContext;
             _dataProtector = dataProtector.CreateProtector("swas.UI.Controllers.ProjectsController"); 
         }
-        public async Task<List<DTOProComments>> GetAllStkForComment(int UnitId)
+        public async Task<List<DTOProComments>> GetAllStkForComment(int UnitId, int StatusId)
         {
             #region GetAllStkForCommentWithLinq
 
@@ -111,6 +111,7 @@ namespace swas.BAL
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@UnitId", UnitId);
+                    cmd.Parameters.AddWithValue("@StatusId", StatusId);
 
                     await conn.OpenAsync();
                     using (SqlDataReader reader = await cmd.ExecuteReaderAsync())

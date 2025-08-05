@@ -1231,13 +1231,13 @@ namespace swas.UI.Controllers
 
             return View();
         }
-        public async Task<IActionResult> GetProjCommentsByUnitId(int Id)
+        public async Task<IActionResult> GetProjCommentsByUnitId(int StatusId)
         {
             try
             {
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
-                return Json(await _projComments.GetAllStkForComment(Convert.ToInt32(Logins.unitid)));
+                return Json(await _projComments.GetAllStkForComment(Convert.ToInt32(Logins.unitid), StatusId));
             }
             catch (Exception ex)
             {

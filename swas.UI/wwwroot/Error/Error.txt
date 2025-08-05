@@ -126,3 +126,81 @@ Date : 31-07-2025 15:09:03
 Date : 31-07-2025 15:09:09
 'System.Dynamic.DynamicObject' does not contain a definition for 'ProcessButtonColor'
 >>>>>>> Stashed changes
+-----------------------------------------------------------------------------
+Date : 05-08-2025 09:45:49
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 09:50:08
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 09:52:48
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 09:54:09
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 09:57:05
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 10:01:40
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 10:04:51
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 11:03:24
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 11:11:31
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 11:12:30
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 11:30:04
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 11:38:04
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 11:39:03
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 11:39:33
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 11:40:04
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 12:00:46
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 12:01:33
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 12:01:43
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 12:02:39
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 12:04:05
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 12:04:06
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 12:04:07
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 12:04:17
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 12:04:26
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 12:04:52
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.
+-----------------------------------------------------------------------------
+Date : 05-08-2025 12:22:43
+Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId', which was not supplied.

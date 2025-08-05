@@ -2,7 +2,22 @@
 
 $(document).ready(function () {
     InboxNotificationCount()
-    GetProjCommentsByUnitId();
+  
+    GetProjCommentsByUnitId(0);
+
+    $("#btnPening").unbind().click(function () {
+        GetProjCommentsByUnitId(0);
+       
+    });
+    $("#btnAccepted").unbind().click(function () {
+        GetProjCommentsByUnitId(1);
+    });
+    $("#btnObsn").unbind().click(function () {
+        GetProjCommentsByUnitId(2);
+    });
+    $("#btnRejected").unbind().click(function () {
+        GetProjCommentsByUnitId(3);
+    });
 
     $("#btnStatusUpdate").unbind().click(function () {
 
@@ -52,14 +67,15 @@ function IsUnReadInbox(psmId) {
         }
     });
 }
-function GetProjCommentsByUnitId() {
+function GetProjCommentsByUnitId(Id) {
     var listItem = "";
 
+    $("#DetailBody").html(listItem);
     /*let boldCount = 0;*/
     $.ajax({
         url: '/Projects/GetProjCommentsByUnitId',
         type: 'POST',
-        data: { "Id": 0 },
+        data: { "StatusId": Id },
         success: function (response) {
             /*console.log("GetAllProjectByUnitId", response);*/
             if (response != "null" && response != null) {
@@ -145,157 +161,12 @@ function GetProjCommentsByUnitId() {
                         $("#ProjectCommentCount").addClass("d-none");
                     }
 
-                    $("#DetailBody").html(listItem);
-                    var table = $('#Comment').DataTable({
-                        lengthChange: true,
-                        dom: 'lBfrtip',
-                        retrieve: true,
-                        bDestroy: true,
-                        pageLength: -1, // Show all entries by default // 
-                        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]], //
-                        order: [[1, 'asc']], // Ensure Ser No is sorted in ascending order
-                        buttons: [
-                            {
-                                extend: 'excel',
-                                text: 'Excel',
-                                exportOptions: {
-                                    columns: ':visible:not(:last-child)',
-                                    format: {
-                                        body: function (data, row, column, node) {
-                                            var excelRowData = $(data).text().trim();
-                                            return column === 0 ? row + 1 : excelRowData; // Fix Ser No in export
-                                        }
-                                    }
-                                }
-                            },
-                            {
-                                extend: 'csv',
-                                exportoptions: {
-                                    columns: ':visible:not(:last-child)',
-                                    format: {
-                                        body: function (data, row, column, node) {
-                                            var csvrowdata = $(data).text().trim();
-                                            return column === 0 ? row + 1 : csvrowdata; // fix ser no in export
-                                        }
-                                    }
-                                }
-                            },
-                            {
-                                extend: 'pdfHtml5',
-                                text: 'PDF',
-                                exportOptions: {
-                                    columns: ':visible:not(:last-child)'
-                                },
-                                action: function (e, dt, node, config) {
-                                    PdfDiv();
-                                }
-                            }
-                        ],
-                        searchBuilder: {
-                            conditions: {
-                                num: {
-                                    'MultipleOf': {
-                                        conditionName: 'Multiple Of',
-                                        init: function (that, fn, preDefined = null) {
-                                            var el = $('<input>').on('input', function () { fn(that, this); });
-                                            if (preDefined !== null) {
-                                                $(el).val(preDefined[0]);
-                                            }
-                                            return el;
-                                        },
-                                        inputValue: function (el) {
-                                            return $(el[0]).val();
-                                        },
-                                        isInputValid: function (el, that) {
-                                            return $(el[0]).val().length !== 0;
-                                        },
-                                        search: function (value, comparison) {
-                                            return value % comparison === 0;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-
-                    function PdfDiv() {
-                        var table = $('#Comment').DataTable();
-                        var filteredData = table.rows({ search: 'applied' }).data().toArray();
-
-                        // Extract headers while excluding the last column (Action)
-                        var headers = [];
-                        table.columns(':visible').header().each(function (header, index) {
-                            if (index !== table.columns().count() - 1) { // Exclude "Action" column
-                                headers.push($(header).text().trim());
-                            }
-                        });
-
-                        // Extract data while excluding the last column (Action) and fixing Ser No
-                        var data = [];
-                        for (var i = 0; i < filteredData.length; i++) {
-                            var rowData = [];
-                            for (var j = 0; j < filteredData[i].length - 1; j++) { // Exclude "Action" column
-                                var cleanText = $(filteredData[i][j]).text().trim(); // Strip HTML tags
-                                rowData.push(j === 0 ? i + 1 : cleanText); // Fix Ser No (Starts at 1)
-                            }
-                            data.push(rowData);
-                        }
-
-                        var tableHTML = '<table>';
-                        tableHTML += '<thead><tr>';
-                        headers.forEach(header => {
-                            tableHTML += '<th>' + header + '</th>';
-                        });
-                        tableHTML += '</tr></thead><tbody>';
-
-                        data.forEach(row => {
-                            tableHTML += '<tr>';
-                            row.forEach(cell => {
-                                tableHTML += '<td>' + cell + '</td>';
-                            });
-                            tableHTML += '</tr>';
-                        });
-
-                        tableHTML += '</tbody></table>';
-
-                        var watermarkText = $("#IpAddress").html();
-
-                        var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
-                        popupWin.document.open();
-
-                        var tableStyles = `
-    <style type="text/css">
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th, td {
-            padding: 8px;
-            border: 1px solid #ddd;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-            color: black;
-        }
-    </style>`;
-
-                        popupWin.document.write(`
-    <html>
-    <head>${tableStyles}</head>
-    <body onload="window.print()">
-        ${tableHTML}
-        <div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK;
-        position:fixed;left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;
-        display: grid;justify-content: center;align-content: center;">
-        ${watermarkText}
-        </div>
-    </body>
-    </html>`);
-
-                        popupWin.document.close();
+                    if ($.fn.DataTable.isDataTable("#Comment")) {
+                        $("#Comment").DataTable().clear().destroy();
                     }
+                    $("#DetailBody").html(listItem);
+
+                    initializeDataTable('#Comment');
 
                     /* $('#ProjectCommentCount').html(boldCount);*/
 
