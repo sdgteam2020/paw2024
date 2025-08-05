@@ -1,0 +1,61 @@
+﻿@using swas.BAL.DTO;
+@using swas.DAL.Models
+@using swas.BAL.Helpers
+@model UnitValidate
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var WhiteListed = ViewBag.WhiteListed;
+    Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor.HttpContext.Session, "User");
+}
+<style>
+    .modal-content {
+        margin-left: -2rem !important;
+        width: 111rem !important;
+        height: auto; /* Remove fixed height to allow dynamic content */
+    }
+</style>
+<div class="modal fade bd-example-modal-xl" id="WhiteListedProjectDetail" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><span class="spnWhitelistedorDues"></span></h5>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body WhitelistedTablesss">
+                <table id="WhitelistedTable" class="table  table-striped table-bordered datatablefordownload" style="overflow: scroll;">
+                    <!-- Table header -->
+
+                    <thead style="position: sticky;top:-18px">
+                      
+                        <tr>
+
+                            <th class="text-center s-no-column" style="width:1%">S.No</th>
+                            <th class="text-nowrap text-center" style="width:10% !important">Name of Sw Appl</th>
+                            <th class="text-nowrap text-center" style="width:12% !important">Hosted On</th>
+
+                            <th class="text-nowrap text-center" style="width:4% !important">Appt</th>
+                            <th class="text-nowrap text-center" style="width:4% !important">Sponsor</th>
+                            <th class="text-nowrap text-center" style="width:2% !important">Tele No</th>
+                            <th class="text-nowrap text-center" style="width:2% !important">Dt of ACG Clearance</th>
+                            <th class="text-nowrap text-center" style="width:2% !important">Cert No</th>
+                            <th class="text-nowrap text-center" style="width:4% !important">Valid Upto</th>
+                            <th class="text-nowrap text-center" style="width:4% !important">Remarks</th>
+
+                           
+                        </tr>
+                    </thead>
+                    <tbody id="WhitelistedTableData">
+
+                     
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/developerjs/commandatatable.js"></script>
+<script src="~/developerjs/whitelistedpartialview.js"></script>

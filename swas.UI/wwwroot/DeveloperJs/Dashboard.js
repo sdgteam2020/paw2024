@@ -1375,63 +1375,76 @@ function showPopup(segmentIndex) {
         "StatusId": 29,
         "statusActionsMappingId": statusActionsMappingId,
     };
-    $.ajax({
-        url: '/Home/GetDashboardApproved',
-        contentType: 'application/x-www-form-urlencoded',
-        data: userdata,
-        type: 'POST',
-        success: function (response) {
-            //console.log("GetDashboardApprovedData", response);
-            if (response != "null" && response != null) {
 
-                if (response == -1) {
-                    Swal.fire({ text: "" });
-                } else if (response == 0) {
+    $("#WhiteListedProjectDetail").modal("show");
+    if (segmentIndex === 0) {
+     
+     title = `Whitelisted Projects`;
+     } else if (segmentIndex === 1) {
+     
+      title = `Due for Re-vetting`;
+     
+      }
+
+    $(".spnWhitelistedorDues").html(title);
+    GetwhilteListProject(statusActionsMappingId)
+    //$.ajax({
+    //    url: '/Home/GetDashboardApproved',
+    //    contentType: 'application/x-www-form-urlencoded',
+    //    data: userdata,
+    //    type: 'POST',
+    //    success: function (response) {
+    //        //console.log("GetDashboardApprovedData", response);
+    //        if (response != "null" && response != null) {
+
+    //            if (response == -1) {
+    //                Swal.fire({ text: "" });
+    //            } else if (response == 0) {
 
                   
 
 
-                } else {
+    //            } else {
                    
-                    let datestring = "";
+    //                let datestring = "";
 
-                    if (segmentIndex === 0) {
-                        projects = response;
-                        datestring ="Whitelisted On"
-                        title = `Whitelisted Projects (${projects.length})`;
-                    } else if (segmentIndex === 1) {
-                        projects = response;
-                        title = `Due for Re-vetting (${projects.length})`;
-                        datestring = "Expired On"
-                    }
+    //                if (segmentIndex === 0) {
+    //                    projects = response;
+    //                    datestring ="Whitelisted On"
+    //                    title = `Whitelisted Projects (${projects.length})`;
+    //                } else if (segmentIndex === 1) {
+    //                    projects = response;
+    //                    title = `Due for Re-vetting (${projects.length})`;
+    //                    datestring = "Expired On"
+    //                }
 
-                    popupTitle.textContent = title;
+    //                popupTitle.textContent = title;
 
-                    // Clear existing list
-                    projectList.innerHTML = '';
+    //                // Clear existing list
+    //                projectList.innerHTML = '';
 
-                    // Add projects to list
-                    projects.forEach(project => {
-                        const listItem = document.createElement('li');
-                        listItem.className = segmentIndex === 1 ? 'project-item due-revetting' : 'project-item';
-                        listItem.innerHTML = `
-                    <div class="project-name">Project Name : ${project.projName}</div>
+    //                // Add projects to list
+    //                projects.forEach(project => {
+    //                    const listItem = document.createElement('li');
+    //                    listItem.className = segmentIndex === 1 ? 'project-item due-revetting' : 'project-item';
+    //                    listItem.innerHTML = `
+    //                <div class="project-name">Project Name : ${project.projName}</div>
 
-                    <div class="project-status">${datestring}: ${DateFormateddMMyyyyhhmmss(project.timeStamp)} | Sponser: ${project.stakeHolder}</div>
-                `;
-                        projectList.appendChild(listItem);
-                    });
+    //                <div class="project-status">${datestring}: ${DateFormateddMMyyyyhhmmss(project.timeStamp)} | Sponser: ${project.stakeHolder}</div>
+    //            `;
+    //                    projectList.appendChild(listItem);
+    //                });
 
-                    popupOverlay.style.display = 'block';
+    //                popupOverlay.style.display = 'block';
                    
-                }
-            }
+    //            }
+    //        }
           
-        },
-        error: function (result) {
-            Swal.fire({ text: "" });
-        }
-    });
+    //    },
+    //    error: function (result) {
+    //        Swal.fire({ text: "" });
+    //    }
+    //});
 
 
 

@@ -500,7 +500,7 @@ s.IsDashboard,
 
                     // var data = await _projectsRepository.GetWhitelistedProjAsync();
                     // ViewBag.ProjectList = data;
-                    ViewBag.WhiteListed = await _projectsRepository.GetWhiteListedActionProj();
+                    ViewBag.WhiteListed = await _projectsRepository.GetWhiteListedActionProj(0);
                     // ViewBag.RecentAction = await _projectsRepository.GetRecentActionProj();
 
                     //ViewBag.RFPProj = await _projectsRepository.GetHoldRFPProj();
@@ -568,7 +568,7 @@ s.IsDashboard,
 
                     // var data = await _projectsRepository.GetWhitelistedProjAsync();
                     // ViewBag.ProjectList = data;
-                    ViewBag.WhiteListed = await _projectsRepository.GetWhiteListedActionProj();
+                    ViewBag.WhiteListed = await _projectsRepository.GetWhiteListedActionProj(0);
                     // ViewBag.RecentAction = await _projectsRepository.GetRecentActionProj();
                     ViewBag.HoldProj = await _projectsRepository.GetHoldActionProj();
                     //ViewBag.RFPProj = await _projectsRepository.GetHoldRFPProj();
@@ -1021,7 +1021,11 @@ s.IsDashboard,
         }
 
 
-
+        public async Task<IActionResult> GetWhiteListedActionProj(int TypeId)
+        {
+            var ret = await _projectsRepository.GetWhiteListedActionProj(TypeId);
+            return Json(ret);
+        }
 
 
         public async Task<IActionResult> ProjUnitComments()
@@ -1477,7 +1481,7 @@ s.IsDashboard,
                 var watermarkText = $" {ipAddress}\n  {currentDatetime}";
                 if (Logins.IsNotNull())
                 {
-                    ViewBag.WhiteListed = await _projectsRepository.GetWhiteListedActionProj();
+                    ViewBag.WhiteListed = await _projectsRepository.GetWhiteListedActionProj(0);
                     ViewBag.HoldProj = await _projectsRepository.GetHoldActionProj();
                     ViewBag.ipadd = watermarkText;
 
@@ -1528,7 +1532,7 @@ s.IsDashboard,
                     ty.Insert(0, new Types { Id = 0, Name = "--Select--" });
                     ViewBag.ty = ty.ToList();
                     ViewBag.ty = ty.ToList();
-                    ViewBag.WhiteListed = await _projectsRepository.GetWhiteListedActionProj();
+                    ViewBag.WhiteListed = await _projectsRepository.GetWhiteListedActionProj(0);
                     // ViewBag.RecentAction = await _projectsRepository.GetRecentActionProj();
                     ViewBag.HoldProj = await _projectsRepository.GetHoldActionProj();
                     //ViewBag.RFPProj = await _projectsRepository.GetHoldRFPProj();
