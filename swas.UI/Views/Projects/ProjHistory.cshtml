@@ -172,8 +172,15 @@
         margin-right: -225px;
     }
 
+    .modal-xl {
+       
+        left: 10%;
+    }
+
+    
 
 </style>
+
 <link href="~/css/projhistory.css" rel="stylesheet" />
 
 
@@ -328,6 +335,7 @@
                 <h5 class="modal-title">ATTACHMENTS</h5>
 
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               
             </div>
             <div class="modal-body">
                 <div id="myModalContenthistoryAttechment">
@@ -921,6 +929,10 @@
         </div>
     </div>
 </div>
+
+
+
+@await Html.PartialAsync("_ProjectPendingStatus")
 <script src="~/developerjs/mtable.js"></script>
 <script src="~/developerjs/projectstckholdercommentforprojhistory.js"></script>
 <script src="~/developerjs/projectstkholdercomments.js"></script>

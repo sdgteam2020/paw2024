@@ -6,6 +6,16 @@
 
     GetAllComments1();
 
+    $("#btnAnalytics").click(function () {
+
+        $('#ProjHoldHistory').modal('show');
+        // alert($(this).closest("tr").find(".clsspnprojId").html())
+        $(".lblProjHoldHistory").html($("#projectNameCell").html())
+        $("#cardforProjHoldHistory").removeClass("d-none");
+        GetProjHold($(".ProjectcommentprojId").html())
+    });
+
+
 });
 
 function GetAllComments2() {    

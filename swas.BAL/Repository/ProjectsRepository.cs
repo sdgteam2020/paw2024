@@ -2119,11 +2119,11 @@ namespace swas.BAL.Repository
                 return null;
             }
         }
-        public async Task<List<DToWhiteListeds>> GetWhiteListedActionProj()
+        public async Task<List<DToWhiteListeds>> GetWhiteListedActionProj(int TypeId)
         {
             try
             {
-
+                
                 var isAllow = _configuration.GetSection("AllowWhiteListedProjSync");
                 if (isAllow.Value == "1")
                 {
@@ -2139,7 +2139,7 @@ namespace swas.BAL.Repository
                     }
                 }
 
-                var results = await _dbContext.WhiteListedProjects.FromSqlRaw("EXEC GetLatestWhiteListedProjects").ToListAsync();
+                var results = await _dbContext.WhiteListedProjects.FromSqlRaw("EXEC GetLatestWhiteListedProjects @TypeId = {0}", TypeId).ToListAsync();
                 return results;
             }
             catch (Exception)

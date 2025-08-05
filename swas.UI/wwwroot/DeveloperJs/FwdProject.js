@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿var TimeStampForcheckdate = new Date();
+$(document).ready(function () {
 
     $("#searchBox").select2({
         dropdownParent: $('#ProjFwd') // or the container div of your popup
@@ -219,6 +220,8 @@
 
     });
     $(".btn-Fwd").click(function () {
+        TimeStampForcheckdate = new Date($(".TimeStampForcheckdate").html());
+       
         var projName = $(this).data('proj-name');
         var words = projName.split(" ");
         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
@@ -366,8 +369,10 @@
                 $(this).removeClass('is-invalid');
             }
         });
+       
+       
         if (allFieldsComplete) {
-
+          
             CheckFwdCondition($("#spanFwdCurrentPslmId").html());
 
         }
@@ -486,6 +491,24 @@ function SaveFwdTo(CurrentPslmId) {
         }
         TimeStamps = dateValue.replace('T', ' '); // Format datetime-local to space-separated
     }
+   
+    var fromDate = new Date(TimeStampForcheckdate);
+    var toDate = new Date(TimeStamps);
+    
+    // Compare the dates
+    if (fromDate > toDate) {
+        // If "from" date is greater than "to" date
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Date of forwarding should be greater than the received date!",
+
+        });
+        e.preventDefault(); // Prevent form submission
+    }
+
+
+
     let fwdunitid = 0;
     if ($("#ddlfwdFwdTo").val() != 'More') {
         fwdunitid = $("#ddlfwdFwdTo").val()

@@ -1,4 +1,5 @@
 ﻿using ASPNetCoreIdentityCustomFields.Data;
+using Microsoft.EntityFrameworkCore.Storage;
 using swas.BAL.DTO;
 using swas.DAL;
 using swas.DAL.Mapper;
@@ -42,7 +43,7 @@ namespace swas.BAL.Interfaces
         Task<tbl_ProjStakeHolderMov> GettXNByPsmIdAsync(int psmId);
         Task<tbl_ProjStakeHolderMov> GettXNByPsmIdwithUnitId(int psmId,int unitid);
         Task<int> GetIsCommentPsmiId(int? ProjId, int? StackHolderId);
-        Task<List<DToWhiteListeds>> GetWhiteListedActionProj();
+        Task<List<DToWhiteListeds>> GetWhiteListedActionProj(int TypeId);
 
         Task<List<DTOUnderProcessProj>> GetHoldActionProj();
         Task<List<tbl_Projects>> GetProcProjAsync();
