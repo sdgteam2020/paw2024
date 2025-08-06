@@ -1,5 +1,5 @@
 ﻿function initializeDataTable(tableSelector) {
-
+    debugger;
     return $(tableSelector).DataTable({
         lengthChange: true,
         dom: 'lBfrtip',
@@ -7,7 +7,14 @@
         destroy: true,
         pageLength: -1,
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
-        order: [[1, 'asc']],
+        order: [[0, 'asc']], // Initial sort by serial number
+        columnDefs: [
+            { orderable: false, targets: 0 } // Disable sorting on serial number column
+        ],
+        rowCallback: function (row, data, displayIndex) {
+            $(row).find('.ser-no')
+                .html(displayIndex + 1); 
+        },
         buttons: [
             {
                 extend: 'excel',

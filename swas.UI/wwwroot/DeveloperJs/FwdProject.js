@@ -548,6 +548,7 @@ function SaveFwdTo(CurrentPslmId) {
             currentpsmid: PsmId // This ensures PsmId is part of the payload
         },
         success: function (response) {
+            debugger;
             //console.log(response);
             if (response != null) {
 
@@ -566,6 +567,7 @@ function SaveFwdTo(CurrentPslmId) {
 
                     });
                 }
+              
                 if (response == -4) {
                     Swal.fire({
                         icon: "error",
@@ -577,6 +579,16 @@ function SaveFwdTo(CurrentPslmId) {
                             window.location.reload();
                         }
                     });
+                }
+
+                if (response == -5) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "You cannot WL Project Before (ACG)Remote Test",
+
+                    });
+
                 }
                 else {
 

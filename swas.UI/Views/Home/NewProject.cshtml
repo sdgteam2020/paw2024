@@ -582,11 +582,32 @@
                                     <td>@unitx.Appt</td>
                                     <td>@unitx.Fmn</td>
                                     <td class="col-width6">@unitx.ContactNo</td>
-                                    <td class="col-width6">@(unitx.Clearence != null ? unitx.Clearence.ToString("yyyy-MM-dd") : "")</td>
-                                  
-                                    <td>@unitx.CertNo</td>
-                                   
-                                    <td class="col-width6">@(unitx.ValidUpto != null ? unitx.ValidUpto.ToString("yyyy-MM-dd") : "")</td>
+                                    <td class="col-width6">@(unitx.Clearence != null ? unitx.Clearence.ToString("dd-MM-yyyy") : "")</td>
+                                    @{
+                                        DateTime? clearenceDate = unitx.Clearence;
+                                        DateTime? afterThreeYears = null;
+
+                                        if (clearenceDate.HasValue)
+                                        {
+                                            afterThreeYears = clearenceDate.Value.AddYears(3);
+                                        }
+                                    }
+
+                                    @{
+                                        DateTime? certDate = null;
+
+                                        if (DateTime.TryParse(unitx.CertNo?.ToString(), out DateTime parsedCert))
+                                        {
+                                            certDate = parsedCert;
+                                        }
+                                    }
+                                    <td>
+                                        @(certDate != null ? certDate?.ToString("dd-MM-yyyy") : "")
+                                    </td>
+
+                                    <td class="col-width6">
+                                        @(afterThreeYears.HasValue ? afterThreeYears.Value.ToString("dd-MM-yyyy") : "")
+                                    </td>
                                     <td>@unitx.Remarks</td>
                                     @if (Logins?.unitid == 1)
                                     {
@@ -681,7 +702,7 @@
                             <input type="text" id="edit_Cert" name="CertNo" class="form-control">
                         </div>
                         <div class="col-md-6">
-                            <label for="edit_ValidUpto" class="form-label">Valid Upto</label>
+                            <label for="edit_ValidUpto" class="form-label">DDGIT WL Date</label>
                             <input type="date" id="edit_ValidUpto" name="ValidUpto" class="form-control" />
                         </div>
 

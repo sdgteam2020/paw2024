@@ -784,7 +784,7 @@
 												{
 													<img src="/assets/images/icons/greenRemainder.png" id="btnRemainder" alt="Reminder Sent" title="UnRead Reminder" data-projid="@project.ProjId" data-projname="@project.ProjName" style="width:20px; height:20px;" />
 												}
-												else
+												else if(project.PullbackAction ==true)
 
 
 												{
@@ -1146,14 +1146,16 @@
 
 									</tr>
 								</thead>
-
+								@{
+									int serNo = 0;
+								}
 								<tbody class="FontSize">
 									@{
-										int serNo = 0;
+										
 										foreach (var project in Model.Remainder)
 										{
 											<tr>
-												<td>
+												<td class="sorting">
 													@{
 														serNo++;
 													}
@@ -1282,7 +1284,11 @@
 							<div class="card">
 								<div class="modal-header">
 									<h6 class="card-title">Pl select appropriate details Before Dispatch of Project to Next Stakeholder </h6>
-
+									<div class="form-group col-md-2 ProjectsFwd">
+										<button type="button" class="btn btn-danger" id="btn-ibutton" style="margin-top: 1px;" title="Process Step Wise">
+											<i class="fa fa-info-circle" aria-hidden="true"></i>
+										</button>
+									</div>
 								</div>
 								<div class="card-body">
 
@@ -1360,11 +1366,7 @@
 											<label>Date of Fwd:</label>
 											<input id="TimeStampToProjfwd" type="date" style="width: 200px;" class="  form-control requiredField" />
 										</div>
-										<div class="form-group col-md-2 ProjectsFwd mt-4">
-											<button type="button" class="btn btn-danger" id="btn-ibutton" style="margin-top: 1px;" title="Process Step Wise">
-												<i class="fa fa-info-circle" aria-hidden="true"></i>
-											</button>
-										</div>
+									
 
 
 										<div class="form-group col-md-6 Attmenthistory d-none">
@@ -1533,7 +1535,7 @@
 
 								<th class="nowrap" style="padding-right:0px; width:10px;">Ser No</th>
 
-								<th class="nowrap dt-serial-number" style="padding-right:0px;">Ser No</th>
+								@* <th class="nowrap dt-serial-number" style="padding-right:0px;">Ser No</th> *@
 
 								@* <th class="nowrap">Proj Name</th> *@
 								<th class="nowrap">Stake Holder</th>

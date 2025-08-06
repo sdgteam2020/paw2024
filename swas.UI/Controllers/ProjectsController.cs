@@ -45,6 +45,7 @@ using Microsoft.Extensions.Logging;
 using iText.Kernel.Events;
 using static swas.DAL.Models.LegacyHistory;
 using System.Threading.Tasks;
+using swas.BAL.Utility;
 
 namespace swas.UI.Controllers
 {
@@ -942,6 +943,26 @@ namespace swas.UI.Controllers
         public async Task<IActionResult> FwdToProject(tbl_ProjStakeHolderMov psmove,string currentpsmid)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+
+            if(psmove.StatusActionsMappingId == 88)
+            {
+                var projname = _dbContext.Projects.Find(psmove.ProjId);
+                var Whitelist = _dbContext.trnWhiteListed
+      .FirstOrDefault(x => x.ProjName == projname.ProjName);
+
+                if (Whitelist == null)
+                {
+                    return Json(-5); // whitelist entry not found
+                   
+                }
+                Whitelist.CertNo = Convert.ToString(DateTime.Now);
+                Whitelist.IsWhiteListed = true;
+                Whitelist.ValidUpto = DateTime.Now;
+
+                _dbContext.trnWhiteListed.UpdateRange(Whitelist);
+                _dbContext.SaveChanges();
+            }
+
             bool ret = false;
             if (psmove.CcId != null)
             {

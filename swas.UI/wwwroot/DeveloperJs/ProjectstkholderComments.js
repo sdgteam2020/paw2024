@@ -18,6 +18,9 @@ $(document).ready(function () {
     $("#btnRejected").unbind().click(function () {
         GetProjCommentsByUnitId(3);
     });
+    $("#btninfo").unbind().click(function () {
+        GetProjCommentsByUnitId(5);
+    });
 
     $("#btnStatusUpdate").unbind().click(function () {
 
@@ -94,7 +97,7 @@ function GetProjCommentsByUnitId(Id) {
 
                 else {
 
-                    var count = 1;
+                    var count = 0;
                     var commentFalseCount = 0;
                     for (var i = 0; i < response.length; i++) {
                         var date = new Date(response[i].timeStamp);
@@ -117,7 +120,8 @@ function GetProjCommentsByUnitId(Id) {
                         //listItem += "<td class='noExport d-none'><span class='noExport d-none' id='spnProjId'>" + response[i].projId + "</span><span class='noExport d-none' id='spnpsmId'>" + response[i].psmId + "</span></td>";
                         listItem += "<td class='noExport d-none'><span class='noExport d-none' id='spnProjId'>" + response[i].projId + "</span><span class='noExport d-none' id='spnpsmId'>" + response[i].psmId + "</span><span class='noExport d-none' id='DateType'>" + response[i].adminApprovalStatus + "</span></td>";
                         //listItem += "<td class='align-middle'><span id='divName'>" + count + "</span></td>";
-                        listItem += "<td class='align-middle ser-no'>" + (i + 1) + "</td>";
+                        /* listItem += "<td class='align-middle ser-no'>" + (count + 1) + "</td>";*/
+                        listItem += "<td class='align-middle ser-no'></td>";
 
                         listItem += "<td class='align-middle'>";
                         listItem += "<a  href='/Projects/ProjHistory?EncyID=" + encodeURIComponent(response[i].encyID) + "'>";

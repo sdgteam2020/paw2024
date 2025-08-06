@@ -21,7 +21,7 @@ $(document).ready(function () {
 
 
 
-function GetAllDashbaordCount() {
+function     {
     $.ajax({
         type: "POST",
         url: '/Home/GetDashboardCount',
@@ -30,7 +30,8 @@ function GetAllDashbaordCount() {
 
         },
         success: function (data) {
-             //console.log("DashboardData01", data)
+          
+
             var dtoDashboardHeaderlst = data.dtoDashboardHeaderlst;
             var dTOApprovedCountlst = data.dtoApprovedCountlst;
             var dTODashboardCountlstForAction = data.dtoDashboardCountlstForAction;
@@ -44,16 +45,27 @@ function GetAllDashbaordCount() {
                 dtoDashboardHeaderlst.sort((a, b) => a.stageId - b.stageId || a.statseq - b.statseq);
 
                 for (var i = 0; i < dtoDashboardHeaderlst.length; i++) {
+                    debugger;
                     if (stageId != dtoDashboardHeaderlst[i].stageId) {
                         if (stageId != 0) {
                             listitem += '</div>';
                         }
-                        listitem += '<div class="newprojectheading text-center"> ' + dtoDashboardHeaderlst[i].stages + ' </div>';
+
+                        var stage = "";
+                        if (dtoDashboardHeaderlst[i].stageId === 1) {
+                            stage = "(Sponsor & DDGIT)";
+                        }
+                        if (dtoDashboardHeaderlst[i].stageId === 2) {
+                            stage = "(Parllel Process)";
+                        }
+                        if (dtoDashboardHeaderlst[i].stageId === 3) {
+                            stage = "(Serial Processing)";
+                        }
+                        listitem += '<div class="newprojectheading text-center"> ' + dtoDashboardHeaderlst[i].stages + " " +stage + ' </div>';
 
                         listitem += '<div class="r-1" style="margin-top: 13px;">';
                     }
-
-
+                   
                     listitem += '<div class="cd-1  " style="background-color:white">';
 
                     tot = 0;

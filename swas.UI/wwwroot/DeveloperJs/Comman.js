@@ -212,6 +212,41 @@ function DateFormateddMMyyyyhhmmss(date) {
 
     //`${datef2.getFullYear()}/` + monthsans + `/` + dayans ;
 }
+
+
+
+function DateFormated(date) {
+
+    var todaysDate = new Date();
+    var datef1 = new Date(date);
+    //if (datef1.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
+    //    // Date equals today's date
+
+    //    return 'Today';
+    //}
+    //else {
+    var datef2 = new Date(date);
+    var months = "" + `${(datef2.getMonth() + 1)}`;
+    var days = "" + `${(datef2.getDate())}`;
+    var pad = "00"
+    var monthsans = pad.substring(0, pad.length - months.length) + months
+    var dayans = pad.substring(0, pad.length - days.length) + days
+    var year = `${datef2.getFullYear()}`;
+ 
+  
+    if (year > 1902) {
+
+        var datemmddyyyy = dayans + `-` + monthsans + `-` + year 
+        return datemmddyyyy;
+    }
+    else {
+        return '';
+    }
+    // }
+
+    //`${datef2.getFullYear()}/` + monthsans + `/` + dayans ;
+}
+
 function DateCalculateago(fmDate, end_actual_time) {
     // Initial variables
     var ago = "";
