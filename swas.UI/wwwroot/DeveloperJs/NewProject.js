@@ -1,6 +1,7 @@
 ﻿
 
 $(document).ready(function () {
+    initializeDataTable('#WhitelistedTable1');
     $("#ddlUnitId").change(function () {
         var selectedMode = $(this).val();
     });

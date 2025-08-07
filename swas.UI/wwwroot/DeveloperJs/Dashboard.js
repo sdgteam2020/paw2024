@@ -21,7 +21,7 @@ $(document).ready(function () {
 
 
 
-function     {
+function GetAllDashbaordCount(){
     $.ajax({
         type: "POST",
         url: '/Home/GetDashboardCount',

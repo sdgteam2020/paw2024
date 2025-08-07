@@ -24,9 +24,12 @@ function GetwhilteListProject(TypeId) {
                     listItem += '<td>' + item.fmn + '</td>';
                     listItem += '<td class="col-width6">' + item.contactNo + '</td>';
                     listItem += '<td class="col-width6">' + DateFormated(item.clearence) + '</td>';
-                    listItem += '<td>' + DateFormated(item.certNo )+ '</td>';  // Use item.CertNo instead of @unitx.CertNo
-                    let clearenceDate = new Date(item.clearence);
-                    let afterThreeYears = new Date(clearenceDate.setFullYear(clearenceDate.getFullYear() + 3));
+                    listItem += '<td>' + item.certNo + '</td>';  // Use item.CertNo instead of @unitx.CertNo
+                    if (item.clearence != null) {
+                        let clearenceDate = new Date(item.clearence);
+                        var afterThreeYears = new Date(clearenceDate.setFullYear(clearenceDate.getFullYear() + 3));
+                    }
+                  
                     listItem += '<td class="col-width6">' + DateFormated(afterThreeYears) + '</td>';  // Use item.ValidUpto instead of unitx.ValidUpto
                     listItem += '<td>' + item.remarks + '</td>';  // Use item.Remarks instead of @unitx.Remarks
                    

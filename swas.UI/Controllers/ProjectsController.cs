@@ -950,18 +950,37 @@ namespace swas.UI.Controllers
                 var Whitelist = _dbContext.trnWhiteListed
       .FirstOrDefault(x => x.ProjName == projname.ProjName);
 
-                if (Whitelist == null)
-                {
-                    return Json(-5); // whitelist entry not found
-                   
-                }
-                Whitelist.CertNo = Convert.ToString(DateTime.Now);
-                Whitelist.IsWhiteListed = true;
-                Whitelist.ValidUpto = DateTime.Now;
+                //if (Whitelist == null)
+                //{
+                //    return Json(-5); // whitelist entry not found
 
-                _dbContext.trnWhiteListed.UpdateRange(Whitelist);
-                _dbContext.SaveChanges();
+                //}
+                if (Whitelist != null)
+                {
+                    Whitelist.CertNo = Convert.ToString(DateTime.Now);
+                    Whitelist.IsWhiteListed = true;
+                    Whitelist.ValidUpto = DateTime.Now;
+
+                    _dbContext.trnWhiteListed.UpdateRange(Whitelist);
+                    _dbContext.SaveChanges();
+                }
+            
             }
+            else if (psmove.StatusActionsMappingId == 78)
+            {
+                var projname = _dbContext.Projects.Find(psmove.ProjId);
+                var Whitelist = _dbContext.trnWhiteListed
+      .FirstOrDefault(x => x.ProjName == projname.ProjName);
+ 
+                if (Whitelist != null)
+                {
+                    Whitelist.Clearence = DateTime.Now;
+                    _dbContext.trnWhiteListed.UpdateRange(Whitelist);
+                    _dbContext.SaveChanges();
+                }
+
+            }
+
 
             bool ret = false;
             if (psmove.CcId != null)

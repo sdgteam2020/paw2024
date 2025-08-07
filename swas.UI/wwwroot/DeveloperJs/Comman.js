@@ -216,7 +216,9 @@ function DateFormateddMMyyyyhhmmss(date) {
 
 
 function DateFormated(date) {
-
+    if (date == null) {
+        return "-";
+    }
     var todaysDate = new Date();
     var datef1 = new Date(date);
     //if (datef1.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {

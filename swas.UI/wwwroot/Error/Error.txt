@@ -207,3 +207,6 @@ Procedure or function 'GetLatestWhiteListedProjects' expects parameter '@TypeId'
 -----------------------------------------------------------------------------
 Date : 05-08-2025 16:55:08
 'System.Dynamic.DynamicObject' does not contain a definition for 'ProcessButtonColor'
+-----------------------------------------------------------------------------
+Date : 07-08-2025 10:16:30
+'System.Dynamic.DynamicObject' does not contain a definition for 'ProcessButtonColor'
