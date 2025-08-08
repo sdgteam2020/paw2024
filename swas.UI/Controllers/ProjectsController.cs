@@ -1467,10 +1467,11 @@ namespace swas.UI.Controllers
 
         public async Task<IActionResult> ProjHistory(string userid, int? dataProjId, int? dtaProjID, string? AttPath, int? psmid, string? Projpin, string? EncyID, EncryModel? encryModel, string Type)
         {
+            Thread.Sleep(500);
             try
             {
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-             
+
                 ViewBag.logins = Logins;
                 string actufilename = "";
                 string AttDocuDescs = "";
@@ -1481,7 +1482,7 @@ namespace swas.UI.Controllers
                     ViewBag.EncyID = EncyID;
                     ViewBag.Type = Type;
                 }
-               
+
                 if (userid == null && dataProjId == null && dtaProjID == null && AttPath == null && psmid == null && EncyID == null)
                 {
                     EncyID = ViewBag.EncyID;
@@ -1603,7 +1604,7 @@ namespace swas.UI.Controllers
                     prohis[0].Atthistory = atthis;
                     prohis[0].ProjectDetl.Add(projects);
 
-                    
+
                     return View(prohis);
                 }
 
@@ -2220,7 +2221,7 @@ namespace swas.UI.Controllers
                     UserRequest = UserReq,
                     DDGIT_approval = false,
                     DDGIT_Approval_dat = null,
-                    User = user.Rank + " " + user.Offr_Name,
+                    User = Helper1.LoginDetails(user),
                     IsRead = false,
                     RequestType = 1
                 };

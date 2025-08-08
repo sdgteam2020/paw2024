@@ -31,17 +31,17 @@
 
 <style>
 	.red-text {
-		color: red;
+	color: red;
 	}
 
 	body {
-		font-size: 15px;
+	font-size: 15px;
 	}
 
 	@@media (min-width: 1200px) {
-		.modal-xl {
-			--bs-modal-width: 1400px;
-		}
+	.modal-xl {
+	--bs-modal-width: 1400px;
+	}
 	}
 
 </style>
@@ -49,82 +49,82 @@
 <style>
 
 	.tabs__head {
-		list-style: none;
-		padding: 0;
-		display: flex;
+	list-style: none;
+	padding: 0;
+	display: flex;
 	}
 
-		.tabs__head li {
-			margin-right: 10px;
-		}
+	.tabs__head li {
+	margin-right: 10px;
+	}
 
-		.tabs__head a {
-			text-decoration: none;
-			padding: 10px 15px;
-			border: 1px solid #ccc;
-			background-color: #fff; /* Set the default background color */
-		}
+	.tabs__head a {
+	text-decoration: none;
+	padding: 10px 15px;
+	border: 1px solid #ccc;
+	background-color: #fff; /* Set the default background color */
+	}
 
-			.tabs__head a.active-link {
-				background-color: white; /* Set the active background color to white */
-				border-bottom: 20px solid #dee2e6; /* Adjust this as needed */
-			}
+	.tabs__head a.active-link {
+	background-color: white; /* Set the active background color to white */
+	border-bottom: 20px solid #dee2e6; /* Adjust this as needed */
+	}
 
 	.tabs__content__item {
-		display: none;
+	display: none;
 	}
 
-		.tabs__content__item.active-tab {
-			display: block;
-		}
+	.tabs__content__item.active-tab {
+	display: block;
+	}
 
 </style>
 
 <style>
 	.tabs__content__item {
-		overflow: auto; /* Add this style to enable scrolling */
-		max-height: 700px; /* Set a maximum height for the table to make the scrollbar appear when the content exceeds this height */
+	overflow: auto; /* Add this style to enable scrolling */
+	max-height: 700px; /* Set a maximum height for the table to make the scrollbar appear when the content exceeds this height */
 	}
 
 
-		.tabs__content__item::-webkit-scrollbar {
-			width: 8px;
-		}
+	.tabs__content__item::-webkit-scrollbar {
+	width: 8px;
+	}
 
-		.tabs__content__item::-webkit-scrollbar-thumb {
-			background-color: #888;
-		}
+	.tabs__content__item::-webkit-scrollbar-thumb {
+	background-color: #888;
+	}
 
 	.FontSize {
-		font-size: 15px;
+	font-size: 15px;
 	}
 
 	.btn-Fwd {
-		height: 1.5rem;
-		margin-top: -1.5rem;
-		padding-top: 0rem
+	height: 1.5rem;
+	margin-top: -1.5rem;
+	padding-top: 0rem
 	}
 
 	.btn-FwdHistory {
-		height: 1.5rem;
-		margin-top: -1.2rem;
-		padding-top: 0rem
+	height: 1.5rem;
+	margin-top: -1.2rem;
+	padding-top: 0rem
 	}
 
 	.btn-FwdHistorysent {
-		height: 1.5rem;
-		margin-top: -1.2rem;
-		padding-top: 0rem
+	height: 1.5rem;
+	margin-top: -1.2rem;
+	padding-top: 0rem
 	}
 
 	.col-width9 {
-		width: 9% !important;
+	width: 9% !important;
 	}
 
 	.s-no-column {
-		min-width: 40px;
-		max-width: 60px;
-		width: 5vw;
+	min-width: 40px;
+	max-width: 60px;
+	width: 5vw;
 	}
 
 
@@ -132,155 +132,155 @@
 	/* styles.css */
 
 	.tabs__content__item {
-		height: 100%;
-		display: flex;
-		flex-direction: column;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
 	}
 
 	.content {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
 	}
 
 	.card {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
 	}
 
 	.card-body {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		overflow-y: hidden; /* Prevent scrolling here */
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	overflow-y: hidden; /* Prevent scrolling here */
 	}
 
 	.table-wrapper {
-		flex: 1;
-		overflow-y: auto; /* Enable scrolling */
+	flex: 1;
+	overflow-y: auto; /* Enable scrolling */
 	}
 
 	table {
-		width: 100%;
-		border-collapse: collapse;
+	width: 100%;
+	border-collapse: collapse;
 	}
 
 	th,
 	td {
-		padding: 8px;
-		text-align: left;
-		border-bottom: 1px solid #ddd;
-		font-size: 15px;
+	padding: 8px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+	font-size: 15px;
 	}
 
 	th {
-		position: -webkit-sticky;
-		position: sticky;
-		top: 0;
-		background: #fff;
-		z-index: 2; /* Ensure header stays on top */
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	background: #fff;
+	z-index: 2; /* Ensure header stays on top */
 	}
 
 	tbody tr:nth-child(even) {
-		background-color: #f2f2f2;
+	background-color: #f2f2f2;
 	}
 
 	.buttonsToHide {
-		display: none !important;
+	display: none !important;
 	}
 
 	body {
-		font-size: 15px !important;
+	font-size: 15px !important;
 	}
 
 	.bold-text {
-		font-weight: bold;
+	font-weight: bold;
 	}
 
 	.custom-modal-size {
-		max-width: 85%; /* Set the modal width to 80% of the screen */
-		width: 85%; /* Ensure it scales responsively */
-		margin: auto; /* Center horizontally */
+	max-width: 85%; /* Set the modal width to 80% of the screen */
+	width: 85%; /* Ensure it scales responsively */
+	margin: auto; /* Center horizontally */
 	}
 
-		.custom-modal-size .custom-modal-content {
-			height: 65vh; /* Ensure the content adjusts dynamically */
-			overflow-y: auto; /* Add vertical scrolling for long content */
-			overflow-x: hidden; /* Prevent horizontal overflow */
-			margin-left: 248px;
-		}
+	.custom-modal-size .custom-modal-content {
+	height: 65vh; /* Ensure the content adjusts dynamically */
+	overflow-y: auto; /* Add vertical scrolling for long content */
+	overflow-x: hidden; /* Prevent horizontal overflow */
+	margin-left: 248px;
+	}
 
 	/* .swal2-title{
-		background-color: #002b5e;
-		color: white;
-		font-size: 18px;
-		padding-bottom: 26px;
-		} */
+	background-color: #002b5e;
+	color: white;
+	font-size: 18px;
+	padding-bottom: 26px;
+	} */
 	.pullback-title {
-		background-color: #002b5e;
-		color: white;
-		font-size: 18px;
-		padding-bottom: 26px;
-		/* add any other styles you need */
+	background-color: #002b5e;
+	color: white;
+	font-size: 18px;
+	padding-bottom: 26px;
+	/* add any other styles you need */
 	}
 
 	/*  .custom-swal-title {
-		background-color: #002b5e;
-		color: white;
-		font-size: 18px;
-		padding-bottom: 26px;
-		padding: 10px;
-		border-radius: 5px;
-		display: inline-block;
-		} */
+	background-color: #002b5e;
+	color: white;
+	font-size: 18px;
+	padding-bottom: 26px;
+	padding: 10px;
+	border-radius: 5px;
+	display: inline-block;
+	} */
 
 
 	.custom-modal-size {
-		max-width: 80%; /* Increase the width as required */
-		width: 75%;
-		/* height: 10%; Adjust height if necessary */
-		margin: auto;
+	max-width: 80%; /* Increase the width as required */
+	width: 75%;
+	/* height: 10%; Adjust height if necessary */
+	margin: auto;
 	}
 
-		.custom-modal-size .modal-content {
-			height: 100%; /* Ensure the content fills the modal */
-			overflow: auto; /* Add scrolling for long content */
-		}
+	.custom-modal-size .modal-content {
+	height: 100%; /* Ensure the content fills the modal */
+	overflow: auto; /* Add scrolling for long content */
+	}
 
 	.modal-dialog {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		min-height: 100vh; /* Full height */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh; /* Full height */
 	}
 
 	.tooltip-text {
-		background-color: #5a8cd6;
+	background-color: #5a8cd6;
 	}
 
 	.to-unit-name {
-		min-width: 80px;
-		max-width: 120px;
-		width: 10vw;
+	min-width: 80px;
+	max-width: 120px;
+	width: 10vw;
 	}
 
 	.projaction {
-		min-width: 80px;
-		max-width: 150px;
-		width: 10vw;
+	min-width: 80px;
+	max-width: 150px;
+	width: 10vw;
 	}
 
 	.disabled-link {
-		pointer-events: none;
-		opacity: 0.7;
-		cursor: not-allowed;
+	pointer-events: none;
+	opacity: 0.7;
+	cursor: not-allowed;
 	}
 
 	.select2-container--default .select2-selection--multiple.is-invalid,
 	.is-invalid .select2-selection--multiple {
-		border-color: #dc3545 !important; /* Bootstrap's red */
-		box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+	border-color: #dc3545 !important; /* Bootstrap's red */
+	box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
 	}
 
 </style>
@@ -559,13 +559,13 @@
 															</div>
 														}
 														<div class="mr-2">
-														@if(project.IsCc == true)
-														{
+															@if(project.IsCc == true)
+															{
 
 																<button type="button" class="btn btn-success invisible" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
 
-														
-														}
+
+															}
 														</div>
 														<div class="col-md-4">
 															<button type="button" class="btn btn-success btn-FwdHistory" data-proj-name="@project.ProjName" style="margin-top: 1px;" title="History"><i class="fa-solid fa-timeline"></i></button>
@@ -769,14 +769,14 @@
 												@if (project.IsRead == false)
 												{
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="color:#18bb6b"
-														 fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+													fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
 														<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />
 													</svg>
 												}
 												else
 												{
 													<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" style="color:#18bb6b"
-														 height="16" fill="currentColor">
+													height="16" fill="currentColor">
 														<path d="M342.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l80 80c12.5 12.5 32.8 12.5 45.3 0l160-160zm96 128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 402.7 54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l256-256z" />
 													</svg>
 												}
@@ -1118,7 +1118,7 @@
 				</div>
 			</div>
 			<!---END-DRAFT-->
-		
+
 			<!---Start-Remainder-->
 			@{
 				snosent = 0;
@@ -1151,7 +1151,7 @@
 								}
 								<tbody class="FontSize">
 									@{
-										
+
 										foreach (var project in Model.Remainder)
 										{
 											<tr>
@@ -1177,9 +1177,11 @@
 
 													</div>
 												</td>
-												
-												
-												<td>@project.SentOn</td>
+												@{
+													var sentdate = @project.SentOn != null ? DateTime.Parse(@project.SentOn) : (DateTime?)null;
+												}
+
+												<td>@(sentdate?.ToString("dd-MM-yyyy"))</td>
 												<td>@project.FromUnit</td>
 												<td>@project.ReadOn</td>
 												@{
