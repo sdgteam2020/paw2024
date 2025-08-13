@@ -876,13 +876,37 @@
 
 
                                 </td>
-                            <td style="color: @((history.Actions == "Approved") ? "green" : "inherit")">
+                            <td style="color: @((history.Actions == "Approved") ? "green" : "inherit")" >
+                                <div class="d-flex">
                                 @history.Actions
+
+                            @if (history.IsCc == true)
+                            {
+                                <div class="col-md-2">
+                                    <div class="RefLetter-container btn btn-warning p-2" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">
+                                        <div class="tooltip-container" data-tooltip="@history.CcUnits">
+                                            @if (history.IsCc == true)
+                                            {
+                                                <span class="short-text" id="IsccForRemoveRow">Cc</span>
+                                            }
+                                            else
+                                            {
+
+                                                <span class="short-text">Cc</span>
+
+                                            }
+                                            <span class="tooltip tooltip-text">@history.CcUnits</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
+                            </div>
                             </td>
                             <td class="wrap">
                             @if (history.IsPulledBack == true && history.UndoRemarks == null)
                             {
-                                @:𝐏𝐮𝐥𝐥𝐞𝐝 𝐁𝐚𝐜𝐤 𝐑𝐞𝐦𝐚𝐫𝐤𝐬 𝐁𝐲: - @history.Remarks
+                                @:𝐏𝐮𝐥𝐥𝐞𝐝 𝐁𝐚𝐜𝐤 𝐁𝐲: - @history.Remarks
                             }
                             else
                             {

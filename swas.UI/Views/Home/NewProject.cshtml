@@ -444,7 +444,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <table id="HeldTable" class="table table-striped table-bordered datatablefordownload">
+                <table id="HeldTable11" class="table table-striped table-bordered datatablefordownload">
                     <thead style="position: sticky;top: -18px">
                         <tr>
                             <th style="width:1% !important;" class=" text-center f-5 s-no-column">S.No</th>
@@ -576,7 +576,18 @@
                             {
                                 <tr>
                                     <td class="s-no-column">@count</td>
-                                    <td class="col-width16">@unitx.ProjName</td>
+                                    @* <td class="col-width16">@unitx.ProjName</td> *@
+                                    <td class="RefLetter-container">
+                                        @(string.IsNullOrEmpty(unitx.ProjName)
+                                            ? ""
+                                            : (unitx.ProjName.Length > 10
+                                            ? unitx.ProjName.Substring(0, 10) + "..."
+                                            : unitx.ProjName))
+
+                                        <div class="RefLetter">
+                                            @unitx.ProjName
+                                        </div>
+                                    </td>
                                     <td class="col-width9">@unitx.HostedOn</td>
 
                                     <td>@unitx.Appt</td>
@@ -608,7 +619,18 @@
                                     <td class="col-width6">
                                         @(afterThreeYears.HasValue ? afterThreeYears.Value.ToString("dd-MM-yyyy") : "")
                                     </td>
-                                    <td>@unitx.Remarks</td>
+                                  
+                                    <td class="RefLetter-container">
+                                        @(string.IsNullOrEmpty(unitx.Remarks)
+                                            ? ""
+                                            : (unitx.Remarks.Length > 10
+                                            ? unitx.Remarks.Substring(0, 10) + "..."
+                                            : unitx.Remarks))
+
+                                        <div class="RefLetter">
+                                            @unitx.Remarks
+                                        </div>
+                                    </td>
                                     @if (Logins?.unitid == 1)
                                     {
                                         <td>
@@ -1044,6 +1066,7 @@
 </script>
 <script>
     $(document).ready(function () {
+        initializeDataTable("#HeldTable11");
         $('#btnDummyData').on('click', function () {
             // Generate dynamic dummy data
             function randomString(length) {

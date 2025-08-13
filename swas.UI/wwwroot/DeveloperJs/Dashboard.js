@@ -510,7 +510,9 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
 
                         listItem += "<tr>";
-                        listItem += "<td class='align-middle'>" + count + "</td>";
+                        listItem += "<td class='align-middle' style='width:7% '>"
+                            + count +
+                            "</td>";
                         //listItem += "<td class='align-middle nowrap'><span id='ProjName'>" + response[i].projName + "</span></td>";
                         if (unitId == 1 || unitId == 2 || unitId == 3 || unitId == 4 || unitId == 5 || unitId == 7) {
                             listItem += "<td class='align-middle nowrap'>" +

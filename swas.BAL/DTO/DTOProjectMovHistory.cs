@@ -32,6 +32,8 @@ namespace swas.BAL.DTO
         public string? UserDetails { get; set; }
         public bool? IsPulledBack { get; set; }
         public int StatusActionsMappingId { get; set; }
+        public bool IsCc { get; set; }
+        public string CcUnits { get; set; }
     }
     public class DTOProjectMovHistorycmd
     {

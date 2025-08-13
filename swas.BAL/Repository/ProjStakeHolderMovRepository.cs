@@ -113,6 +113,7 @@ namespace swas.BAL.Repository
                                join ststus in _dbContext.mStatus on actmap.StatusId equals ststus.StatusId
                                join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
                                join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
+                              
 
                                where b.ProjId == ProjectId
                                orderby b.TimeStamp descending
@@ -136,7 +137,19 @@ namespace swas.BAL.Repository
                                    AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == b.PsmId),
                                    UserDetails = b.UserDetails,
                                    IsPulledBack = b.IsPullBack,
-                                   StatusActionsMappingId=b.StatusActionsMappingId
+                                   StatusActionsMappingId=b.StatusActionsMappingId,
+                                   IsCc = b.IsCc,
+                                   CcUnits = string.Join(", ",
+            _dbContext.ProjStakeHolderCcMov
+                .Where(cc => cc.PsmId == b.PsmId )
+                .Join(_dbContext.tbl_mUnitBranch,
+                      cc => cc.ToCcUnitId,
+                      unit => unit.unitid,
+                      (cc, unit) => unit.UnitName)
+                .ToList()
+        )
+
+                                  
 
                                }).ToListAsync();
             if (queryforstackholderself != null && queryforstackholderself.Count==2)

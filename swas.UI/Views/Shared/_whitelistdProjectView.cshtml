@@ -15,8 +15,9 @@
         height: auto; /* Remove fixed height to allow dynamic content */
     }
 </style>
+<link href="~/assets/css/tooltip.css" rel="stylesheet" />
 <div class="modal fade bd-example-modal-xl" id="WhiteListedProjectDetail" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-xl" style="max-width:95% !important;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"><span class="spnWhitelistedorDues"></span></h5>
@@ -57,5 +58,6 @@
         </div>
     </div>
 </div>
+<script src="~/developerjs/Tooltip.js"></script>
 <script src="~/developerjs/commandatatable.js"></script>
 <script src="~/developerjs/whitelistedpartialview.js"></script>
