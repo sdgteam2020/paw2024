@@ -423,3 +423,33 @@ function bindLiveProjectSearch(inputSelector, dropdownSelector, endpointUrl, onI
         }
     });
 }
+
+function trimByWords(text, wordLimit) {
+    if (!text) return "";
+    var words = text.split(" ");
+    if (words.length > wordLimit) {
+        return words.slice(0, wordLimit).join(" ") + ".....";
+    }
+    return text;
+}
+
+// 2️⃣ Break by Characters
+function trimByChars(text, charLimit) {
+    if (!text) return "";
+    if (text.length > charLimit) {
+        return text.substring(0, charLimit) + ".....";
+    }
+    return text;
+}
+// 3️⃣ Break lines after some words
+function breakLinesByWords(text, wordLimit) {
+    if (!text) return "";
+    var words = text.split(" ");
+    var result = [];
+
+    for (var i = 0; i < words.length; i += wordLimit) {
+        result.push(words.slice(i, i + wordLimit).join(" "));
+    }
+
+    return result.join("<br>");
+}

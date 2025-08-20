@@ -210,3 +210,18 @@ Date : 05-08-2025 16:55:08
 -----------------------------------------------------------------------------
 Date : 07-08-2025 10:16:30
 'System.Dynamic.DynamicObject' does not contain a definition for 'ProcessButtonColor'
+-----------------------------------------------------------------------------
+Date : 14-08-2025 14:24:34
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 14-08-2025 14:24:34
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 14-08-2025 14:24:37
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 14-08-2025 14:24:37
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 14-08-2025 14:24:38
+Request failed & Status Code : 200

@@ -759,38 +759,40 @@
 
 										<tr>
 											<td class="s-no-column">
-
-												@{
-													snosent++;
-
-
-												}
-												@snosent
-												@if (project.IsRead == false)
-												{
-													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="color:#18bb6b"
-													fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
-														<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />
-													</svg>
-												}
-												else
-												{
-													<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" style="color:#18bb6b"
-													height="16" fill="currentColor">
-														<path d="M342.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l80 80c12.5 12.5 32.8 12.5 45.3 0l160-160zm96 128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 402.7 54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l256-256z" />
-													</svg>
-												}
-												@if (project.HasRemainder == true)
-												{
-													<img src="/assets/images/icons/greenRemainder.png" id="btnRemainder" alt="Reminder Sent" title="UnRead Reminder" data-projid="@project.ProjId" data-projname="@project.ProjName" style="width:20px; height:20px;" />
-												}
-												else if(project.PullbackAction ==true)
+												<div class="d-flex">
+													@{
+														snosent++;
 
 
-												{
-													<img src="/assets/images/icons/add-reminder1.png" id="btnRemainder" alt="Reminder" title="Send Reminder" data-projid="@project.ProjId" data-projname="@project.ProjName" style="width:20px; height:20px;" />
-												}
+													}
+													@snosent
+													@if (project.IsRead == false)
+													{
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="color:#18bb6b"
+															 fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+															<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />
+														</svg>
+													}
+													else
+													{
+														<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" style="color:#18bb6b"
+															 height="16" fill="currentColor">
+															<path d="M342.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l80 80c12.5 12.5 32.8 12.5 45.3 0l160-160zm96 128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 402.7 54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l256-256z" />
+														</svg>
+													}
+													@if (project.HasRemainder == true && project.PullbackAction == true)
+													{
+														<img src="/assets/images/icons/greenRemainder.png" id="btnRemainder" alt="Reminder Sent" title="UnRead Reminder" data-projid="@project.ProjId" data-projname="@project.ProjName" style="width:20px; height:20px;" />
+													}
+													else if (project.PullbackAction == true)
 
+
+													{
+														<img src="/assets/images/icons/add-reminder1.png" id="btnRemainder" alt="Reminder" title="Send Reminder" data-projid="@project.ProjId" data-projname="@project.ProjName" style="width:20px; height:20px;" />
+													}
+
+												</div>
+											
 
 
 
@@ -1396,7 +1398,7 @@
 					<div class="col-md-12 Attmenthistory d-none">
 						<div class="card">
 							<div class="modal-header"><h5 class="card-title">Projects Move Att Details</h5></div>
-							<div class="card-body">
+							<div class="card-body" style="overflow:auto">
 								<table class="table table-striped table-bordered">
 
 

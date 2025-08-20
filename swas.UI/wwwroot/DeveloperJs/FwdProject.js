@@ -63,9 +63,11 @@ $(document).ready(function () {
     //    $("select[name='fwdoffrs']").show().focus();
     //});
     $("select[name='fwdoffrs']").change(function () {
+      
+        debugger;
         var selectedText = $(this).find("option:selected").text().trim();
 
-        if (selectedText === "More") {
+        if ($("select[name='fwdoffrs']").val() === "More") {
             $('.FwdDropdown').removeClass('col-md-6');
             $('.FwdDropdown').addClass('col-md-3');
 
@@ -73,7 +75,10 @@ $(document).ready(function () {
 
             $("#searchBox").show().focus();
 
-            mMsater(0, "searchBox", 12, 0)
+            if (selectedText === "More") {
+                mMsater(0, "searchBox", 12, 0)
+            }
+          
 
 
 
@@ -494,7 +499,7 @@ function SaveFwdTo(CurrentPslmId) {
    
     var fromDate = new Date(TimeStampForcheckdate);
     var toDate = new Date(TimeStamps);
-    
+    console.log("FromDate: ", fromDate, "Todate: ", toDate);
     // Compare the dates
     if (fromDate > toDate) {
         // If "from" date is greater than "to" date

@@ -58,6 +58,7 @@
 }
 
 function AttechHistory() {
+   
     var listItem = "";
     var userdata =
     {
@@ -93,17 +94,47 @@ function AttechHistory() {
                     for (var i = 0; i < response.length; i++) {
 
                         listItem += "<tr>";
-                        listItem += "<td class='d-none'><span id='spnattId'>" + response[i].attId + "</span><span id='spnpsmId'>" + response[i].psmId + "</span></td>";
-                        listItem += "<td class='align-middle'><span id='btnedit'><button type='button' class='cls-btnDelete btn-icon btn-round btn-danger mr-1'><i class='fas fa-trash-alt'></i></button></td>";
-                        listItem += "<td class='align-middle'><span id='comdName'>" + response[i].reamarks + "</span></td>";
-                        listItem += "<td class='align-middle'><span id='corpsName'><a class='link-success' target='_blank' href=/uploads/" + response[i].attPath + ">" + response[i].actFileName + "</a></span></td>";
+
+                        // Hidden IDs
+                        listItem += "<td class='d-none'>" +
+                            "<span id='spnattId'>" + response[i].attId + "</span>" +
+                            "<span id='spnpsmId'>" + response[i].psmId + "</span>" +
+                            "</td>";
+
+                        // Delete Button
+                        listItem += "<td class='align-middle'>" +
+                            "<span id='btnedit'>" +
+                            "<button type='button' class='cls-btnDelete btn-icon btn-round btn-danger mr-1'>" +
+                            "<i class='fas fa-trash-alt'></i>" +
+                            "</button>" +
+                            "</span>" +
+                            "</td>";
+
+                        // Remarks (trimmed to 6 words)
+                        var breakRemarks = response[i].reamarks || "";
+                        var formatedName = trimByWords(breakRemarks, 4);
+
+                        listItem += "<td class='align-middle RefLetter-container'>" +
+                            "<span id='comdName'>" + formatedName + "</span>" +
+                            "<div class='RefLetter'>" + breakRemarks + "</div>" +
+                            "</td>";
+
+                        // FileName (trimmed to 4 words, full shown inside hidden div/tooltip)
+                        listItem += "<td class='align-middle RefLetter-container'>" +
+                            "<span id='corpsName'>" +
+                            "<a class='link-success' target='_blank' href='/uploads/" + response[i].attPath + "'>" +
+                            trimByWords(response[i].actFileName, 4) +
+                            "</a>" +
+                            "</span>" +
+                            "<div class='RefLetter'>" + response[i].actFileName + "</div>" +
+                            "</td>";
+
+                        // Timestamp
                         listItem += "<td class='align-middle'><span id='divName'>" + response[i].timeStamp + "</span></td>";
 
-
-
-                        /*    listItem += "<td class='nowrap'><button type='button' class='cls-btnSend btn btn-outline-success mr-1'>Send To Verification</button></td>";*/
                         listItem += "</tr>";
                     }
+
 
                     $("#DetailBody").html(listItem);
                     $("#lblTotal").html(response.length);

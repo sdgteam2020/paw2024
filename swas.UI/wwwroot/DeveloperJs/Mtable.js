@@ -1,5 +1,5 @@
 ﻿function mMsater(sectid = '', ddl, TableId, ParentId) {
-    
+    debugger;
     var userdata =
         {
             "id": TableId,
@@ -20,7 +20,7 @@
         success: function (response) {
             if (response != "null" && response != null) {
                 if (response == 0) {
-                    listItemddl += '<option  Value = "", Disabled = true, Selected = true>--Select--</option>';
+                   listItemddl += '<option  Value = "", Disabled = true, Selected = true>--Select--</option>';
                     /* listItemddl += '<option value="">Please Select</option>';*/
                     $("#" + ddl + "").html(listItemddl);
                 }

@@ -1032,7 +1032,7 @@ namespace swas.UI.Controllers
                 if(remainders.Count > 0)
                 {
 
-                    _Remainder.UpdateReaminderRead(psmove.ProjId);
+                  await  _Remainder.UpdateReaminderRead(psmove.ProjId,0);
                    
                 }
 
@@ -1161,6 +1161,38 @@ namespace swas.UI.Controllers
                 }
                 else
                 {
+
+
+
+                    var remainders = await _dbContext.TrnRemainders
+              .Where(r => r.Projid == ProjectId && r.ReadDate == null && r.ToUserDetails == null)
+              .ToListAsync();
+
+                    if (remainders.Count > 0)
+                    {
+
+                       await _Remainder.UpdateReaminderRead(ProjectId,1);
+
+                    }
+
+
+                    //var projectMovements = await _dbContext.ProjStakeHolderMov
+                    //    .Where(x => x.ProjId == ProjectId && x.IsRead == true && x.IsComment == true)
+                    //    .ToListAsync();
+
+
+                    //foreach (var item in projectMovements)
+                    //{
+                    //    item.IsRead = false;
+                    //}
+
+
+                    //_dbContext.ProjStakeHolderMov.UpdateRange(projectMovements);
+                    await _dbContext.SaveChangesAsync();
+
+
+
+
                     int psmData = _psmRepository.GetLastRecProjectMov(ProjectId);
                     if (psmData != 0)
                     {
@@ -2479,7 +2511,7 @@ namespace swas.UI.Controllers
         {
             try
             {
-                var udpate = await _Remainder.UpdateReaminderRead(ProjectId);
+                var udpate = await _Remainder.UpdateReaminderRead(ProjectId,0);
 
                 return Json(new { success = true });
             }
