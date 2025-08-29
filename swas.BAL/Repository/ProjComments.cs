@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.JsonPatch.Internal;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using swas.BAL.DTO;
@@ -114,8 +115,17 @@ namespace swas.BAL
                     cmd.Parameters.AddWithValue("@StatusId", StatusId);
 
                     await conn.OpenAsync();
+                    DataTable dt = new DataTable();
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+
+                    var data = dt;
                     using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                     {
+
+                      
                         while (await reader.ReadAsync())
                         {
                             DTOProComments item = new DTOProComments
@@ -138,7 +148,7 @@ namespace swas.BAL
                     }
                 }
             }
-            return results.OrderByDescending(i => i.TimeStamp).ToList();
+            return results.ToList();
 
             #endregion
         }

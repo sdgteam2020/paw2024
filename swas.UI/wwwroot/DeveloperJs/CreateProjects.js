@@ -434,6 +434,7 @@ $(document).ready(function () {
             $("#ProjName").prop("disabled", false);
             $("#projectNameDropdown").show();
             // Show Re-Vetted tag
+
             $("#reVettedTag").removeClass("d-none");
         } else {
             var currentval = $("#ProjName").val();

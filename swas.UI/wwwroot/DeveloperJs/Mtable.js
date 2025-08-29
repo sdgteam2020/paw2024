@@ -18,6 +18,7 @@
         type: 'POST',
 
         success: function (response) {
+
             if (response != "null" && response != null) {
                 if (response == 0) {
                    listItemddl += '<option  Value = "", Disabled = true, Selected = true>--Select--</option>';
@@ -177,6 +178,7 @@ function mMsaterStage(sectid = '', ddl, TableId, ParentId, StakeHolderId) {
         type: 'POST',
 
         success: function (response) {
+            console.log(response);
             if (response != "null" && response != null) {
                 if (response == 0) {
                     listItemddl += '<option value="">Please Select</option>';

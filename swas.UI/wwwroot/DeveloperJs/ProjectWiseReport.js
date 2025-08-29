@@ -17,6 +17,7 @@ function ProjectWiseStatus() {
         data: userdata,
         type: 'POST',
         success: function (response) {
+          
             if (response != "null" && response != null) {
 
                 if (response == -1) {
@@ -38,6 +39,7 @@ function ProjectWiseStatus() {
                     listItem += '<th class="text-center">Ser No</th>';
                     listItem += '<th>Project Name</th>';
                     for (var i = 0; i < StatusProjectlst.length; i++) {
+                       
                         listItem += '<th>' + StatusProjectlst[i].status + '</th>';
 
                     }

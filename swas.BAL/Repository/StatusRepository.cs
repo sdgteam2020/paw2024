@@ -50,7 +50,7 @@ namespace swas.BAL.Repository
                            join Stages in _dbContext.mStages on Status.StageId equals Stages.StagesId
 
 
-                           where Status.StageId == ParentId && Status.StatusId == 20 || Status.StatusId == 21 || Status.StatusId == 38
+                           where Status.StageId == ParentId && Status.StatusId == 20 || Status.StatusId == 21 || Status.StatusId == 1039
                            && Status.IsActive == true
                            select new DTODDLComman
                            {

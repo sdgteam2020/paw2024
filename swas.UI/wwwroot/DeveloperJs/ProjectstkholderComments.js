@@ -120,8 +120,8 @@ function GetProjCommentsByUnitId(Id) {
                         //listItem += "<td class='noExport d-none'><span class='noExport d-none' id='spnProjId'>" + response[i].projId + "</span><span class='noExport d-none' id='spnpsmId'>" + response[i].psmId + "</span></td>";
                         listItem += "<td class='noExport d-none'><span class='noExport d-none' id='spnProjId'>" + response[i].projId + "</span><span class='noExport d-none' id='spnpsmId'>" + response[i].psmId + "</span><span class='noExport d-none' id='DateType'>" + response[i].adminApprovalStatus + "</span></td>";
                         //listItem += "<td class='align-middle'><span id='divName'>" + count + "</span></td>";
-                        /* listItem += "<td class='align-middle ser-no'>" + (count + 1) + "</td>";*/
-                        listItem += "<td class='align-middle ser-no'></td>";
+                         listItem += "<td class='align-middle '>" + (count + 1) + "</td>";
+                       // listItem += "<td class='align-middle ser-no'></td>";
 
                         listItem += "<td class='align-middle'>";
                         listItem += "<a  href='/Projects/ProjHistory?EncyID=" + encodeURIComponent(response[i].encyID) + "'>";
@@ -490,7 +490,7 @@ function IsUnReadComment(ProjId, PsmId) {
         },
         success: function (response) {
             //console.log(response);
-            window.location.reload();
+            /*window.location.reload();*/
         }
     })
 }

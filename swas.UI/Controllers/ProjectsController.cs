@@ -1,51 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using swas.BAL.Interfaces;
-using swas.DAL.Models;
-using swas.BAL.DTO;
-using swas.BAL.Helpers;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.Authorization;
-using Newtonsoft.Json;
-
+﻿using System.Timers;
+using ASPNetCoreIdentityCustomFields.Data;
 using iText.IO.Font;
 using iText.IO.Font.Constants;
 using iText.Kernel.Font;
-using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas;
 using iText.Kernel.Pdf.Extgstate;
-using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
-using System.Timers;
-
-using System.Web;
-using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
-using Org.BouncyCastle.Utilities;
-using Microsoft.CodeAnalysis;
-using Microsoft.Build.Evaluation;
-using swas.BAL.Repository;
-using Microsoft.EntityFrameworkCore;
-using swas.UI.Helpers;
-using System.Threading;
-using System.Security.Cryptography.Xml;
-using iText.Commons.Actions.Contexts;
-using Grpc.Core;
-using System.Linq;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
-using ASPNetCoreIdentityCustomFields.Data;
-using System.Globalization;
-using System.Configuration;
-using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using swas.BAL.DTO;
+using swas.BAL.Helpers;
+using swas.BAL.Interfaces;
 using swas.DAL;
-using Document = iText.Layout.Document;
-using System.IO;
-using Microsoft.Extensions.Logging;
-using iText.Kernel.Events;
+using swas.DAL.Models;
+using swas.UI.Helpers;
 using static swas.DAL.Models.LegacyHistory;
-using System.Threading.Tasks;
-using swas.BAL.Utility;
+using Document = iText.Layout.Document;
 
 namespace swas.UI.Controllers
 {
@@ -944,6 +921,12 @@ namespace swas.UI.Controllers
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
+
+
+            if(psmove.ToUnitId == 0)
+            {
+                return Json(-7);
+            };
             if(psmove.StatusActionsMappingId == 88)
             {
                 var projname = _dbContext.Projects.Find(psmove.ProjId);

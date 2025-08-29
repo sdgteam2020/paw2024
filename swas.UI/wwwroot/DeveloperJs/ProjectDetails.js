@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    initializeDataTable("#Remainders");
+    
     var param = sessionStorage.getItem("spntabType");
 
     if (param != null) {
@@ -624,7 +624,19 @@ function GetCCProject() {
                         listitem += '<td>' + DateFormateddMMyyyyhhmmss(response[i].readDate) + '</td>'
                     else
                         listitem += '<td></td>'
-                    listitem += '<td>' + response[i].userDetails + '</td>'
+                   // listitem += '<td>' + response[i].userDetails + '</td>'
+                    var userdetail = response[i].userDetails
+                     
+                    listitem += '<td class="RefLetter-container"><div class="noExport">' + trimByWords(userdetail, 2) + '</div>';
+                    if (userdetail != "") {
+                        listitem += '<div class="RefLetter">' + userdetail + '</div>';
+
+                    }
+
+                    listitem += '</td>';            
+
+
+
                     listitem += '<td>' + response[i].stage + '</td>'
                     listitem += '<td>' + response[i].status + '</td>'
                     listitem += '<td>' +
@@ -646,7 +658,7 @@ function GetCCProject() {
 
                 }
                 $("#cctblData").html(listitem);
-                initializeDataTable("#CCtable");
+               initializeDataTable("#CCtable");
                 $(".btn-FwdHistoryCcc").click(function () {
                     var projName = $(this).closest("tr").find("#projNamecc").html(); //$(this).data('projNamecc');
                     var words = projName.split(" ");
@@ -988,22 +1000,22 @@ function GetProjRemainderMov(ProjId) {
                         '' + item.sponsor + '' +
                         '</div></td>';
 
-                   /* listItem += "<td class='align-middle'>" + (item.sponsor || 'N/A') + "</td>";*/
-                    listItem += "<td class='align-middle'><div class='col-md-24'>" + (item.sentOn || '-') + "</div></td>";
-
                   /*  listItem += "<td class='align-middle'>" + (item.fromUnit || 'N/A') + "</td>";*/
                     listItem += '<td class="RefLetter-container align-middle">' +
                         '' + item.fromUnit + '' +
                         '<div class="RefLetter noExport">' +
                         '' + item.userDetails + '' +
                         '</div></td>';
-                    listItem += "<td class='align-middle' ><div class='col-md-24'>" + (item.readOn || '-') + "</div></td>"; 
-                  /*  listItem += "<td class='align-middle'>" + (item.toUnit || 'N/A') + "</td>";*/
+                   /* listItem += "<td class='align-middle'>" + (item.sponsor || 'N/A') + "</td>";*/
+                    listItem += "<td class='align-middle'><div class='col-md-24'>" + (item.sentOn || '-') + "</div></td>";
+
                     listItem += '<td class="RefLetter-container align-middle">' +
                         '' + item.toUnit + '' +
                         '<div class="RefLetter noExport">' +
                         '' + (item.touserDetails || 'Action Pending...')+ '' +
                         '</div></td>';
+                    listItem += "<td class='align-middle' ><div class='col-md-24'>" + (item.readOn || '-') + "</div></td>"; 
+                  /*  listItem += "<td class='align-middle'>" + (item.toUnit || 'N/A') + "</td>";*/
                   /*  listItem += "<td class='align-middle'>" + (item.remarks || '') + "</td>";*/
 
 

@@ -17,6 +17,7 @@
 @{
     int sno = 0;
 }
+<link href="e:\githublatest\swas.ui\wwwroot\css\tableresponsive.css" rel="stylesheet" />
 <style>
     .readonly-field {
         pointer-events: none;
@@ -24,50 +25,52 @@
 </style>
 <div class="card radius-10 w-100">
     <div class="card-body">
-
-        <table id="SoftwareType7" class="table table-striped table-bordered">
-            <!-- Table header -->
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Stage</th>
-                    <th>SubStage</th>
-
-                    <th>Mapping</th>
-
-                </tr>
-            </thead>
-
-            <tbody>
-                @foreach (var unit in @ViewBag.StatusData)
-                {
+        <div class="table-responsive">
+            <table id="SoftwareType7" class="table table-striped table-bordered">
+                <!-- Table header -->
+                <thead>
                     <tr>
-                        <td class="srno">
+                        <th>Id</th>
+                        <th>Stage</th>
+                        <th>SubStage</th>
 
-                            @{
-                                sno++;
-                            }
-                            @sno
-
-                        </td>
-                        <td>
-                            <span class="d-none" id="CurrentStageId">@unit.StageId</span>
-                            <span class="d-none" id="CurrentStatusId">@unit.StatusId</span>
-                            <div>@unit.Stages</div>
-                        </td>
-                        <td>@unit.Status</td>
-                        <td>
-
-                            <button type="button" data-name="@unit.Status" data-id="@unit.StatusId" class="btn btn-success btn-Mapping">Status Mapping</button>
-
-
-                        </td>
+                        <th>Mapping</th>
 
                     </tr>
-                }
-            </tbody>
+                </thead>
 
-        </table>
+                <tbody>
+                    @foreach (var unit in @ViewBag.StatusData)
+                    {
+                        <tr>
+                            <td class="srno">
+
+                                @{
+                                    sno++;
+                                }
+                                @sno
+
+                            </td>
+                            <td>
+                                <span class="d-none" id="CurrentStageId">@unit.StageId</span>
+                                <span class="d-none" id="CurrentStatusId">@unit.StatusId</span>
+                                <div>@unit.Stages</div>
+                            </td>
+                            <td>@unit.Status</td>
+                            <td>
+
+                                <button type="button" data-name="@unit.Status" data-id="@unit.StatusId" class="btn btn-success btn-Mapping">Status Mapping</button>
+
+
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+       
 
     </div>
 </div>

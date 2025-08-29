@@ -40,46 +40,48 @@ Reviewd by Hav Mani on :
 
 <div class="card radius-10 w-100">
     <div class="card-body">
+        <div class="table-responsive">
+            <table id="stagesTable" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th class="s-no-column">Stage ID</th>
 
-        <table id="stagesTable" class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th class="s-no-column">Stage ID</th>
+                        <th>Stage</th>
+                        <th>Is Active</th>
+                        <th>Edit/Delete By</th>
+                        <th>Edit/Delete Date</th>
+                        <th>Updated By User ID</th>
+                        <th>Date of Update</th>
+                        @*<th>Delete</th>*@
 
-                    <th>Stage</th>                    
-                    <th>Is Active</th>
-                    <th>Edit/Delete By</th>
-                    <th>Edit/Delete Date</th>
-                    <th>Updated By User ID</th>
-                    <th>Date of Update</th>
-                    @*<th>Delete</th>*@
-                    
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var stage in Model)
-                {
-                    if(stage.IsActive==true)
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var stage in Model)
                     {
-                        <tr>
-                            <td class="srno">@stage.StagesId</td>
-                            <td>@stage.Stages</td>
-                            <td>@stage.IsActive</td>
-                            <td>@stage.EditDeleteBy</td>
-                            <td>@stage.EditDeleteDate?.ToString("dd-MM-yyyy")</td>
-                            <td>@stage.UpdatedByUserId</td>
-                            <td>@stage.DateTimeOfUpdate?.ToString("dd-MM-yyyy")</td>
-                          @*  <td>
+                        if (stage.IsActive == true)
+                        {
+                            <tr>
+                                <td class="srno">@stage.StagesId</td>
+                                <td>@stage.Stages</td>
+                                <td>@stage.IsActive</td>
+                                <td>@stage.EditDeleteBy</td>
+                                <td>@stage.EditDeleteDate?.ToString("dd-MM-yyyy")</td>
+                                <td>@stage.UpdatedByUserId</td>
+                                <td>@stage.DateTimeOfUpdate?.ToString("dd-MM-yyyy")</td>
+                                @*  <td>
                                 <a asp-action="EditStage" asp-route-id="@stage.StagesId" class="btn btn-secondary btn-ecomm"><i class='bx bx-edit'></i></a>
                                 <a data-id="@stage.StagesId" data-url="@Url.Action("Create", "Stages")" class="btn btn-secondary btn-ecomm delete-btn"><i class='bx bx-trash'></i></a>
                             </td>*@
 
-                        </tr>
+                            </tr>
+                        }
+
                     }
-                    
-                }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+      
 
     </div>
 </div>

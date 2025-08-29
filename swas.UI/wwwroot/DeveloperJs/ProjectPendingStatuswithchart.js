@@ -14,6 +14,7 @@
         data: userdata,
         type: 'POST',
         success: function (response) {
+            debugger;
             if (response != "null" && response != null) {
 
                 if (response == -1) {
@@ -49,7 +50,7 @@
                             return a.statusId - b.statusId;  // Sort by statusId
                         });
                     let totalTimeSpentData = calculateTotalTime(responseforchart);
-                    console.log(totalTimeSpentData);
+                   
                     // Using forEach to loop through the array and access each element
                     totalTimeSpentData.forEach(function (item) {
                         // Accessing individual properties of each item
@@ -336,6 +337,7 @@ let projHoldChart;
 
 // Function to create/rebind the chart
 function bindProjHoldChart(labels, totals, totalsForlabel, colors) {
+    debugger;
     // If chart already exists, destroy it before creating new
     if (projHoldChart) {
         projHoldChart.destroy();
@@ -462,6 +464,11 @@ function calculateTotalTime(response) {
 }
 // Assuming totalTimeSpent is in minutes
 function convertMinutesToAgo(minutes) {
+    if (minutes == null || isNaN(minutes) || minutes < 0) {
+        minutes = 0;
+    }
+
+
     // Calculate total hours from minutes
     const totalHours = minutes / 60;
 
@@ -492,12 +499,15 @@ function convertMinutesToAgo(minutes) {
         formatted = `${hours.toString().padStart(2, '0')}:${Math.round(remainingMinutes).toString().padStart(2, '0')}`;
         ago = `${days} Days (${formatted})`;
     }
-    // For less than 24 hours, simply show the minutes
     else {
-        formatted = `${Math.floor(totalHours).toString().padStart(2, '0')}:${Math.floor(remainingMinutes).toString().padStart(2, '0')}`;
-        ago = `${formatted} Min`;
+        if (minutes === 0) {
+            ago = "Just now";  // ✅ Special case for current time
+        } // For less than 24 hours, simply show the minutes
+        else {
+            formatted = `${Math.floor(totalHours).toString().padStart(2, '0')}:${Math.floor(remainingMinutes).toString().padStart(2, '0')}`;
+            ago = `${formatted} Min`;
+        }
     }
-
     return ago;
 }
 

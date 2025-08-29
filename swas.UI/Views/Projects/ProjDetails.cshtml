@@ -304,34 +304,37 @@
 <script src="~/developerjs/commandatatable.js"></script>
 <body>
 	<div class="tabs" id="tabs">
-		<ul class="tabs__head">
+			<ul class="tabs__head d-flex flex-wrap align-items-center">
 
-			<li>
-				<a class="active-link" href="#" data-tab="inbox" id="tabinbox">
+	<li class="me-2 mb-1">
+		<a class="active-link d-flex align-items-center" href="#" data-tab="inbox" id="tabinbox">
+			<img src="~/assets/images/inbox.png" width="20" height="20" class="me-1" /> Inbox
+		</a>
+	</li>
 
+	<li class="me-2 mb-1">
+		<a href="#" class="d-flex align-items-center" data-tab="sent" id="tabsent">
+			<img src="~/assets/images/sentmail.png" width="20" height="20" class="me-1" /> Sent
+		</a>
+	</li>
 
-					<img src="~/assets/images/inbox.png" width="20px;" height="20px;" />&nbsp;Inbox
-				</a>
-			</li>
+	<li class="me-2 mb-1">
+		<a href="#" data-tab="completed" id="tabcompleted" class="d-flex align-items-center" style="min-width:180px;">
+			<img src="~/assets/images/completed.png" width="20" height="20" class="me-1" /> Completed (Hosted On ADN)
+		</a>
+	</li>
 
-			<li>
-				<a href="#" data-tab="sent" id="tabsent">
-					@*<span class="fa fa-edit"></span>*@
-					<img src="~/assets/images/sentmail.png" width="20px;" height="20px;" />
-					&nbsp;Sent
-				</a>
-			</li>
-			<li><a href="#" data-tab="completed" id="tabcompleted" style="width: 261px">@*<span class="fa fa-camera"></span>*@<img src="~/assets/images/completed.png" width="20px;" height="20px;" />&nbsp;Completed(Hosted On ADN)</a></li>
+	<li class="me-2 mb-1">
+		<a href="#" data-tab="Remainder" id="tabRemainder" class="d-flex align-items-center">
+			<img src="~/assets/images/bell.png" width="25" height="25" class="me-1" /> Reminder
+		</a>
+	</li>
 
-			<li>
-				<a href="#" data-tab="Remainder" id="tabRemainder">
-					@*<span class="fa fa-edit"></span>*@
-					<img src="~/assets/images/bell.png" width="25px;" height="25px;" />
-					&nbsp;Reminder
-				</a>
-			</li>
-			@* <li><a href="#" data-tab="draft" id="tabdraft"><img src="~/assets/images/draft.png" width="20px;" height="20px;" />&nbsp;Draft Projects</a></li> *@
-			<li><a href="#" data-tab="ToCc" id="tabCC"><img src="~/assets/images/draft.png" width="20px;" height="20px;" />&nbsp;Cc Projects</a></li>
+	<li class="me-2 mb-1">
+		<a href="#" data-tab="ToCc" id="tabCC" class="d-flex align-items-center">
+			<img src="~/assets/images/draft.png" width="20" height="20" class="me-1" /> Cc Projects
+		</a>
+	</li>
 			<li class="red-text" id="blinking-li">
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				Inbox -->> click on project name for Add Comments, Attach file and Fwd to Stakeholders/Units
@@ -357,7 +360,7 @@
 										<th style="width:20%">Proj Name</th>
 										<th>Sponsor</th>
 										<th style="width:9%;">From</th>
-										<th class="to-unit-name">To Unit Name</th>
+										@* <th class="to-unit-name">To Unit Name</th> *@
 										<th>Received On</th>
 										<th>Stage</th>
 										<th>SubStage</th>
@@ -511,7 +514,7 @@
 												</div>
 											</td>
 
-											<td>@project.ToUnitName</td>
+											@* <td>@project.ToUnitName</td> *@
 											@* <td>@project.TimeStamp.ToString().Substring(0,10)</td> *@
 											<td class="TimeStampForcheckdate">@project.TimeStamp</td>
 											<td>@project.Stage</td>
@@ -1138,10 +1141,10 @@
 										<th style="width:5%">Ser No</th>
 										<th style="width:20%">Proj Name</th>
 										<th>Sponsor</th>
-										<th>Sent On</th>
 										<th>from unit</th>
-										<th>Read On</th>
+										<th>Sent On</th>
 										<th>To Unit</th>
+										<th>Read On</th>
 										<th class="col-width18">Remarks</th>
 										<th>Action</th>
 
@@ -1179,14 +1182,15 @@
 
 													</div>
 												</td>
+												
+
+												<td>@project.FromUnit</td>
 												@{
 													var sentdate = @project.SentOn != null ? DateTime.Parse(@project.SentOn) : (DateTime?)null;
 												}
-
-												<td>@(sentdate?.ToString("dd-MM-yyyy"))</td>
-												<td>@project.FromUnit</td>
-												<td>@project.ReadOn</td>
+												<td>@(sentdate?.ToString("dd-MM-yyyy:hh:mm:ss"))</td>
 												<td>@project.ToUnit</td>
+												<td>@project.ReadOn</td>
 												@{
 													var remarks = string.IsNullOrWhiteSpace(project.Remarks) ? "No Remarks" : project.Remarks;
 													var remarkWords = remarks.Split(' ');
@@ -1288,7 +1292,9 @@
 
 							<div class="card">
 								<div class="modal-header">
-									<h6 class="card-title">Pl select appropriate details Before Dispatch of Project to Next Stakeholder </h6>
+									<h6 class="card-title mb-0">
+										Pl select appropriate details before dispatch of project to next stakeholder
+									</h6>
 									<div class="form-group col-md-2 ProjectsFwd">
 										<button type="button" class="btn btn-danger" id="btn-ibutton" style="margin-top: 1px;" title="Process Step Wise">
 											<i class="fa fa-info-circle" aria-hidden="true"></i>
@@ -1311,7 +1317,7 @@
 										<div class="form-group col-md-4 ProjectsFwdUnit d-none">
 											<label for="SubStage">Sent to Unit</label>
 											<select class="form-control UnitSearchBox js-example-basic-single" style="width: 100%;" tabindex="-1"
-													name="searchBox" required id="searchBox">
+													name="searchBox"  id="searchBox" required>
 												<option value="0">Select Fwd To</option>
 											</select>
 
@@ -1533,30 +1539,33 @@
 				</div>
 
 				<div class="modal-body scroll">
-					<table id="Trakingtable" class="table table-striped table-bordered">
-						<thead>
-							<tr>
+					<div class="table-responsive">
+						<table id="Trakingtable" class="table table-striped table-bordered">
+							<thead>
+								<tr>
 
 
-								<th class="nowrap" style="padding-right:0px; width:10px;">Ser No</th>
+									<th class="nowrap" style="padding-right:0px; width:10px;">Ser No</th>
 
-								@* <th class="nowrap dt-serial-number" style="padding-right:0px;">Ser No</th> *@
+									@* <th class="nowrap dt-serial-number" style="padding-right:0px;">Ser No</th> *@
 
-								@* <th class="nowrap">Proj Name</th> *@
-								<th class="nowrap">Stake Holder</th>
-								<th class="nowrap col-md-24">Sent on</th>
-								<th class="nowrap">From Unit</th>
-								<th class="nowrap col-md-24" >Read on</th>
-								<th class="nowrap">To Unit</th>
-								<th class="col-width25">Remarks</th>
+									@* <th class="nowrap">Proj Name</th> *@
+									<th class="nowrap">Stake Holder</th>
+									<th class="nowrap">From Unit</th>
+									<th class="nowrap col-md-24">Sent on</th>
+									<th class="nowrap">To Unit</th>
+									<th class="nowrap col-md-24">Read on</th>
+									<th class="col-width25">Remarks</th>
 
-							</tr>
-						</thead>
+								</tr>
+							</thead>
 
-						<tbody id="ProjRemMov">
-						</tbody>
+							<tbody id="ProjRemMov">
+							</tbody>
 
-					</table>
+						</table>
+					</div>
+				
 				</div>
 
 			</div><!-- modal-content -->

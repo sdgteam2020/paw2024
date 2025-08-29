@@ -1,5 +1,6 @@
 ﻿function initializeDataTable(tableSelector) {
-    debugger;
+  
+    const initialOrder = (tableSelector === "#Comment") ? [[1, 'asc']] : [];
     return $(tableSelector).DataTable({
         lengthChange: true,
         dom: 'lBfrtip',
@@ -7,7 +8,7 @@
         destroy: true,
         pageLength: -1,
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
-       
+        order: initialOrder,
         //columnDefs: [
         //    { orderable: false, targets: 0 } // Disable sorting on serial number column
         //],

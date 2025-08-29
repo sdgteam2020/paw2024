@@ -178,7 +178,7 @@ function DateFormateyyy_mm_dd(date) {
     //`${datef2.getFullYear()}/` + monthsans + `/` + dayans ;
 }
 function DateFormateddMMyyyyhhmmss(date) {
-
+    
     var todaysDate = new Date();
     var datef1 = new Date(date);
     //if (datef1.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
@@ -187,7 +187,7 @@ function DateFormateddMMyyyyhhmmss(date) {
     //    return 'Today';
     //}
     //else {
-    var datef2 = new Date(date);
+    var datef2 = date ? new Date(date) : new Date();
     var months = "" + `${(datef2.getMonth() + 1)}`;
     var days = "" + `${(datef2.getDate())}`;
     var pad = "00"
@@ -253,7 +253,9 @@ function DateCalculateago(fmDate, end_actual_time) {
     // Initial variables
     var ago = "";
     var start_actual_time = new Date(fmDate);  // Start time
-    var end_actual_time = new Date(end_actual_time);  // End time
+    /*  var end_actual_time = new Date(end_actual_time);  // End time*/
+    var end_actual_time = end_actual_time ? new Date(end_actual_time) : new Date();
+
 
     // Calculate difference in milliseconds
     var diff = end_actual_time - start_actual_time;

@@ -63,10 +63,10 @@ function GetAllDashbaordCount(){
                         }
                         listitem += '<div class="newprojectheading text-center"> ' + dtoDashboardHeaderlst[i].stages + " " +stage + ' </div>';
 
-                        listitem += '<div class="r-1" style="margin-top: 13px;">';
+                        listitem += '<div class="r-1 row g-3 mt-2" style="margin-top: 13px;">';
                     }
                    
-                    listitem += '<div class="cd-1  " style="background-color:white">';
+                    listitem += '<div class="cd-1 col-12 col-sm-6 col-md-4 col-lg-1  " style="background-color:white;height: 151px;">';
 
                     tot = 0;
                     peding = 0;
@@ -256,9 +256,10 @@ function GetAllDashbaordCount(){
                     }
                 });
                 $("body").on("click", ".btnGetsummay", function () {
-
+                  
                     var spnstatusId = $(this).closest("div").find("#spnstatusId").html();
-                    if (spnstatusId != 1041) {
+                    console.log(spnstatusId);
+                    if (spnstatusId != 1041 && parseInt(spnstatusId) != 44 && parseInt(spnstatusId) != 46) {
                         $('#ProjGetsummay').modal('show');
                         ($(this).closest("div").find(".statusprojsummry").html());
                         $('#ProjectSummaryTittle').html("Total Proj Movement: " + $(this).closest("div").find(".statusprojsummry").html());
@@ -1197,6 +1198,7 @@ function CreateChartSummary() {
 
             // Map names and totals
             const labels1 = ApprovedProjects.map(x => x.name);
+          
             const totals1 = ApprovedProjects.map(x => x.total);
             new Chart(document.getElementById('approvedProjectsChart'), {
                 type: 'bar',

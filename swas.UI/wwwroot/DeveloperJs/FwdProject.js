@@ -363,7 +363,12 @@ $(document).ready(function () {
         $('#Projibutton').modal('show');
     });
     $("#btnFwdNext").click(function () {
-       
+
+        if ($('#ddlfwdFwdTo').val() === 'More' && !$('#searchBox').val()) {
+            alert("Please Select Send Unit To");
+            return false;
+        }
+        
         requiredFields = $('#ProjFwd').find('.requiredField');
         var allFieldsComplete = true;
         requiredFields.each(function (index) {
@@ -523,6 +528,10 @@ function SaveFwdTo(CurrentPslmId) {
         fwdunitid = $("#searchBox").val()
 
     }
+    //if (fwdunitid == null) {
+    //    alert("Please Select Send To Unit")
+    //    return false;
+    //};
    
    
     //var currentDate = new Date();
@@ -591,6 +600,14 @@ function SaveFwdTo(CurrentPslmId) {
                         icon: "error",
                         title: "Oops...",
                         text: "You cannot WL Project Before (ACG)Remote Test",
+
+                    });
+
+                }if (response == -7) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Please Select All Feilds",
 
                     });
 
