@@ -1,12 +1,116 @@
-﻿function UploadFiles() {
-    var formData = new FormData();
-    var totalFiles = document.getElementById("pdfFileInput").files.length;
-    for (var i = 0; i < totalFiles; i++) {
-        var file = document.getElementById("pdfFileInput").files[i];
-        formData.append("uploadfile", file);
-        formData.append("Reamarks", $("#Reamarks").val());
-        formData.append("PsmId", $("#spanCurrentPslmId").html());
+﻿
+let allAttachments = []; // Array to hold all attachments and remarks
+
+function AttOnFWD() {
+    $('.uploadLoader').addClass('d-none')
+    debugger;
+    var listItem = "";
+
+    // Check for any previous rows and remove placeholder if needed
+    if ($.trim($("#DetailBody").text()) === "No Record Found") {
+        $("#DetailBody").empty(); // remove placeholder row
     }
+
+   
+
+    const input = document.getElementById("pdfFileInput");
+    const files = input?.files || [];
+    const remarksVal = $("#Remarks").val() ?? $("#Reamarks").val() ?? "";
+
+    if (!files.length) {
+        alert("Please choose at least one PDF.");
+        return;
+    }
+
+    // Build FormData (though we won’t send it yet)
+    const fd = new FormData();
+    fd.append("remarks", remarksVal); // Add remarks to FormData
+
+    // Add files to FormData and store them in the allAttachments array
+    let attachments = [];
+    for (let i = 0; i < files.length; i++) {
+        fd.append("uploadfile[]", files[i]);  // Append files to FormData
+        attachments.push({ file: files[i], remarks: remarksVal }); // Track the files and remarks
+    }
+
+    // Store the current attachments and remarks in allAttachments
+    allAttachments.push(...attachments);
+
+    // Build table rows for preview (displaying files and remarks in the table)
+    for (let i = 0; i < files.length; i++) {
+        const f = files[i];
+        const tempUrl = URL.createObjectURL(f);
+
+        listItem += "<tr>";
+        listItem += "<td class='align-middle'>" +
+            "<button type='button' class='att-btnDelete btn-icon btn-round btn-danger mr-1'>" +
+            "<i class='fas fa-trash-alt'></i>" +
+            "</button>" +
+            "</td>";
+
+        listItem += "<td class='align-middle RefLetter-container'>" +
+            "<span>" + trimByWords(remarksVal, 4) + "</span>" +
+            "<div class='RefLetter'>" + remarksVal + "</div>" +
+            "</td>";
+
+        listItem += "<td class='align-middle RefLetter-container'>" +
+            "<span>" +
+            "<a class='link-success' href='" + tempUrl + "' target='_blank'>" + trimByWords(f.name, 4) + "</a>" +
+            "</span>" +
+            "<div class='RefLetter'>" + f.name + "</div>" +
+            "</td>";
+
+        listItem += "<td class='align-middle'><span>" +
+            new Date().toLocaleString() +
+            "</span></td>";
+
+        listItem += "</tr>";
+    }
+
+    // Clear the form fields
+    $("#Reamarks").val("");
+    $("#pdfFileInput").val("");
+
+    // Bind to the table
+    $("#DetailBody").append(listItem);
+
+    // When the confirm button is clicked, send all attachments and remarks
+    $("#btnFwdConfirm").off("click").on("click", function () {
+        // Send the allAttachments array along with form data
+        SaveFwdTo($("#spanFwdCurrentPslmId").html(), fd, allAttachments);
+        
+    });
+
+}
+
+
+
+$(document).on("click", ".att-btnDelete", function () {
+    // Get the index of the row that contains the delete button
+    var rowIndex = $(this).closest("tr").index();
+
+    // Remove the attachment from the allAttachments array based on the row index
+    allAttachments.splice(rowIndex, 1);
+
+    // Remove the row from the table
+    $(this).closest("tr").remove();
+});
+
+function UploadFiles() {
+   
+
+    var formData = new FormData();
+    debugger;
+    
+        var totalFiles = document.getElementById("pdfFileInput").files.length;
+        for (var i = 0; i < totalFiles; i++) {
+            var file = document.getElementById("pdfFileInput").files[i];
+            formData.append("uploadfile", file);
+          
+            formData.append("Reamarks", $("#Reamarks").val());
+            formData.append("PsmId", $("#spanCurrentPslmId").html());
+        }
+ 
 
     $.ajax({
         type: "POST",
@@ -15,12 +119,15 @@
         contentType: false,
         processData: false,
         success: function (response) {
-            $('#uploadLoader').hide();
+
+            $('#uploadLoader').hide()
         
             if (response == 1) {
+                $('#uploadLoader').hide();
                 AttechHistory();
                 $("#Reamarks").val("");
                 $("#pdfFileInput").val("");
+             
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
@@ -58,7 +165,7 @@
 }
 
 function AttechHistory() {
-   
+    debugger;
     var listItem = "";
     var userdata =
     {
@@ -82,8 +189,12 @@ function AttechHistory() {
                 else if (response == 0) {
 
                     listItem += "<tr><td class='text-center' colspan=5>No Record Found</td></tr>";
+                   
+                       
 
-                    $("#DetailBody").html(listItem);
+                            $("#DetailBody").html(listItem);
+                     
+                    
                     $("#lblTotal").html(0);
                 }
 
@@ -134,9 +245,11 @@ function AttechHistory() {
 
                         listItem += "</tr>";
                     }
-
-
-                    $("#DetailBody").html(listItem);
+                   
+                            // If the modal is not visible, update #DetailBody
+                            $("#DetailBody").html(listItem);
+                       
+                   
                     $("#lblTotal").html(response.length);
 
 

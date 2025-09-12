@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Build.Evaluation;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -917,7 +918,7 @@ namespace swas.UI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> FwdToProject(tbl_ProjStakeHolderMov psmove,string currentpsmid)
+        public async Task<IActionResult> FwdToProject([FromForm] tbl_ProjStakeHolderMov psmove, [FromForm] string currentpsmid)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
@@ -1007,7 +1008,7 @@ namespace swas.UI.Controllers
                 {
                     psmove.IsCc = true;
                 }
-
+                _dbContext.SaveChanges();
                 var remainders = await _dbContext.TrnRemainders
                .Where(r => r.Projid == psmove.ProjId && r.ReadDate == null && r.ToUserDetails ==null && r.Tounitid == Logins.unitid)
                .ToListAsync();
@@ -1034,11 +1035,42 @@ namespace swas.UI.Controllers
                 _dbContext.ProjStakeHolderMov.UpdateRange(projectMovements);
                 await _dbContext.SaveChangesAsync();
 
-
-
+               
 
                 var Ret = await _psmRepository.AddWithReturn(psmove);
+                var latestpsmid = _projStakeHolderMovRepository.GetLastRecProjectMov(psmove.ProjId);
 
+          
+
+                var errors = new List<int>(); // List to collect errors
+
+               
+
+                // Now process the attachments (multiple files with remarks)
+                if (psmove.Attachments != null && psmove.Attachments.Count > 0)
+                {
+                    foreach (var attachment in psmove.Attachments)
+                    {
+                        var saveResult = await SaveAttachmentAsync(attachment.File, attachment.Remarks, latestpsmid, Logins);
+
+                        // Check if saveResult is a JsonResult and extract the integer value
+                        if (saveResult is JsonResult jsonResult)
+                        {
+                            var resultValue = jsonResult.Value as int?;
+                            if (resultValue != 1) // If not successful, collect the error code
+                            {
+                                errors.Add(resultValue.GetValueOrDefault());
+                            }
+                        }
+                    }
+                }
+
+                // Check if there were any errors
+                if (errors.Any())
+                {
+                    // If there are errors, return the list of errors
+                    return Json(errors);
+                }
 
                 if (Ret != null)
                 {
@@ -1062,17 +1094,73 @@ namespace swas.UI.Controllers
 
                     return Json(Ret);
                 }
+                
                 else
                 {
                     return Json(nmum.NotSave);
                 }
+             
             }
+
             else
             {
                 return Json(nmum.TounitEqualsCCUnitID);
             }
 
         }
+
+        public async Task<IActionResult> SaveAttachmentAsync(IFormFile attdata, string remarks, int psmid, Login Logins)
+        {
+            var MaxFileSizeBytes = 10 * 1024 * 1024; // 10 MB
+            if (attdata == null || attdata.Length == 0)
+                return Json(-10); // no file
+
+            if (attdata.Length > MaxFileSizeBytes)
+                return Json(-3);  // too large
+
+            var originalName = attdata.FileName?.Trim() ?? "";
+            var ext = Path.GetExtension(originalName).ToLowerInvariant();
+
+            if (ext != ".pdf")
+                return Json(-2);  // only pdf allowed
+
+            if (psmid <= 0)
+                return Json(-1);  // invalid psmid
+
+            // Build target dir and file name
+            var uploadsDir = Path.Combine(_environment.ContentRootPath, "wwwroot/Uploads/");
+            Directory.CreateDirectory(uploadsDir);
+
+            var uniqueFileName = $"Swas_{Guid.NewGuid()}{ext}";
+            var filePath = Path.Combine(uploadsDir, uniqueFileName);
+
+            // Save file
+            using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                await attdata.CopyToAsync(stream);
+            }
+
+            // Persist metadata in the database
+            var atthis = new tbl_AttHistory
+            {
+                ActionId = 0,
+                AttPath = uniqueFileName,        // saved name on disk
+                Reamarks = remarks ?? string.Empty,
+                PsmId = psmid,
+                UpdatedByUserId = Logins?.unitid,
+                IsDeleted = false,
+                IsActive = true,
+                EditDeleteBy = Logins?.unitid,
+                EditDeleteDate = DateTime.Now,
+                TimeStamp = DateTime.Now,
+                ActFileName = originalName       // original file name from user
+            };
+
+            await _attHistoryRepository.AddAttHistoryAsync(atthis);
+            _dbContext.SaveChanges();
+            return Json(1); // success
+        }
+
 
         public async Task<IActionResult> ProjectMovHistory(int ProjectId)
         {
@@ -1402,8 +1490,11 @@ namespace swas.UI.Controllers
 
 
 
+                        if(projectStkHolderMovementData.IsComplete ==false && projectStkHolderMovementData.IsComment ==true)
+                        {
 
-                        projectStkHolderMovementData.DateTimeOfUpdate = CommentDate; // To show the comment date on the dashboard btnGetsummay 
+                    projectStkHolderMovementData.DateTimeOfUpdate = CommentDate; // To show the comment date on the dashboard btnGetsummay 
+                        };
                         //projectStkHolderMovementData.TimeStamp = DateTime.Now; // no need to update the TimeStamp on ProjectComment, this will affect the MovHistory of project update by Divyanshu on 12/03/2025
                         var rets = await _projectsRepository.UpdateProjectStkMovementAsync(projectStkHolderMovementData);
 
@@ -1478,7 +1569,7 @@ namespace swas.UI.Controllers
 
 
         #region Project History
-        [HttpGet]
+        [HttpGet]   
 
         public async Task<IActionResult> ProjHistory(string userid, int? dataProjId, int? dtaProjID, string? AttPath, int? psmid, string? Projpin, string? EncyID, EncryModel? encryModel, string Type)
         {
@@ -2502,6 +2593,25 @@ namespace swas.UI.Controllers
             {
 
                 return StatusCode(500, new { success = false, message = "An error occurred while Update project remainder history." });
+            }
+        }
+
+
+        public async Task<IActionResult> FindProjectForComment(string searchQuery)
+        {
+            try
+            {
+                var user = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext?.Session, "User");
+
+                var projects = await _projComments.FindForComment(user.unitid, searchQuery);
+
+                // Return the filtered projects as JSON response
+                return Json(projects);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, message = "An error occurred while Find Project For Comment." });
+
             }
         }
 

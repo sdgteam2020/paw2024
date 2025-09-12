@@ -1,4 +1,8 @@
-﻿const modal = document.getElementById("modal");
+﻿$(document).ready(function () {
+    $("#chatboat").addClass('d-none');
+});
+
+const modal = document.getElementById("modal");
 let isModalOpen = false;
 let isSending = false;
 let welcomeShown = false; // ✅ Track if welcome was already shown

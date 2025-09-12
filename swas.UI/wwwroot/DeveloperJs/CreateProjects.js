@@ -28,7 +28,7 @@ $(document).ready(function () {
 
 
         if (attRemarks.length > maxlength) { // check string length
-            $('#uploadLoader').hide();
+            $('#uploadLoader').addClass("d-none")
             Swal.fire({
                 title: 'Error!',
                 text: 'Docu Desc cannot exceed more than 200 characters.',

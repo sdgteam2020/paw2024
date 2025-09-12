@@ -13,6 +13,8 @@ namespace swas.BAL.Interfaces
     {
         Task<List<DTOProComments>> GetAllStkForComment(int UnitId, int StatusId);
         Task<DTOProComments> GetCommentStatus(int UnitId);
+
+        Task<List<DTOProComments>> FindForComment(int? UnitId, string searchQuery);
     }
     
 }

@@ -516,10 +516,10 @@
 
 											@* <td>@project.ToUnitName</td> *@
 											@* <td>@project.TimeStamp.ToString().Substring(0,10)</td> *@
-											<td class="TimeStampForcheckdate">@project.TimeStamp</td>
-											<td>@project.Stage</td>
-											<td>@project.Status</td>
-											<td>@project.Action</td>
+											<td style="width:190px" class="TimeStampForcheckdate">@project.TimeStamp</td>
+											<td style="width:150px">@project.Stage</td>
+											<td style="width:190px">@project.Status</td>
+											<td style="width:150px">@project.Action</td>
 
 
 
@@ -737,7 +737,7 @@
 										<th style="width:20%">Proj Name</th>
 										<th>Sponsor</th>
 
-										<th class="col-width9">From</th>
+										@* <th class="col-width9">From</th> *@
 										<th class="to-unit-name">To Unit Name</th>
 										@* <th>TimeStamp</th> *@
 										<th>Sent On</th>
@@ -824,7 +824,7 @@
 													@project.Sponsor
 												</div>
 											</td>
-											<td>
+											@* <td>
 												<div class="d-flex">
 													<div class="col-md-10">
 														<div class="RefLetter-container ">
@@ -858,13 +858,41 @@
 													}
 												</div>
 
-											</td>
+											</td> *@
 
-											<td>@project.ToUnitName</td>
+											<td>
+												<div class="d-flex">
+													<div class="col-md-8">
+														@project.ToUnitName
+											</div>
+												@if (project.IsCc == true)
+												{
+
+
+													<div class="RefLetter-container btn btn-warning p-2" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">
+														<div class="tooltip-container" data-tooltip="@project.CCUnitName">
+															@if (project.IsCc == true)
+															{
+																<span class="short-text" id="IsccForRemoveRow">Cc</span>
+															}
+															else
+															{
+
+																<span class="short-text">Cc</span>
+
+															}
+															<span class="tooltip tooltip-text">@project.CCUnitName</span>
+														</div>
+													
+													</div>
+												}
+													
+												</div>
+											</td>
 											@* <td>@project.TimeStamp.ToString().Substring(0, 10)</td> *@
-											<td>@project.TimeStamp</td>
-											<td>@project.Stage</td>
-											<td>@project.Status</td>
+											<td >@project.TimeStamp</td>
+											<td >@project.Stage</td>
+											<td >@project.Status</td>
 											<td>@project.Action</td>
 
 											<td>
@@ -903,6 +931,8 @@
 																		<span class="btn btn-success ml-2" style="padding: 1px !important;font-size: 13px !important; cursor: not-allowed;">Pulled Back</span>
 																	}
 															}
+
+															
 														</div>
 													}
 													else
@@ -1291,12 +1321,12 @@
 						<div class="col-md-12">
 
 							<div class="card">
-								<div class="modal-header">
-									<h6 class="card-title mb-0">
+								<div class="modal-header" style="height:50px">
+									<h6 class="card-title mb-0" >
 										Pl select appropriate details before dispatch of project to next stakeholder
 									</h6>
 									<div class="form-group col-md-2 ProjectsFwd">
-										<button type="button" class="btn btn-danger" id="btn-ibutton" style="margin-top: 1px;" title="Process Step Wise">
+										<button type="button" class="btn btn-danger" id="btn-ibutton" style="margin-top: 13px;" title="Process Step Wise">
 											<i class="fa fa-info-circle" aria-hidden="true"></i>
 										</button>
 									</div>
@@ -1305,7 +1335,7 @@
 
 									<div class="form-row">
 										<div class="form-group col-md-6 ProjectsFwd FwdDropdown">
-											<label for="SubStage">Sent to</label>
+											<strong><label for="SubStage">1. Sent to</label></strong>
 
 											<select class="form-control requiredField" style="width: 100%;" tabindex="-1"
 													name="fwdoffrs" required id="ddlfwdFwdTo">
@@ -1315,7 +1345,7 @@
 
 										</div>
 										<div class="form-group col-md-4 ProjectsFwdUnit d-none">
-											<label for="SubStage">Sent to Unit</label>
+											<strong><label for="SubStage">1.1. Sent to Unit</label></strong>
 											<select class="form-control UnitSearchBox js-example-basic-single" style="width: 100%;" tabindex="-1"
 													name="searchBox"  id="searchBox" required>
 												<option value="0">Select Fwd To</option>
@@ -1328,7 +1358,7 @@
 										</div> *@
 
 										<div class="form-group col-md-4 ProjectsFwd d-none">
-											<label for="SubStage">CC</label>
+											<strong><label for="SubStage">2. CC</label></strong>
 
 											<select class="form-control is-invalid js-example-basic-multiple" multiple="multiple" style="width: 100%;" tabindex="-1"
 													name="fwdccoffrs" required id="ddlfwdCCTo">
@@ -1337,21 +1367,21 @@
 
 										</div>
 										<div class="form-group col-md-6 ProjectsFwd ">
-											<label for="inputEmail4">Select Stage</label>
+											<strong><label for="inputEmail4">3. Select Stage</label></strong>
 											<select class="form-control requiredField" style="width: 100%;" tabindex="-1"
 													name="fwdoffrs" required id="ddlfwdStage">
 												<option value="0">Select Stage</option>
 											</select>
 										</div>
 										<div class="form-group col-md-6 ProjectsFwd">
-											<label for="SubStage">Select Sub Stage</label>
+											<strong><label for="SubStage">4. Select Sub Stage</label></strong>
 											<select class="form-control requiredField" style="width: 100%;" tabindex="-1"
 													name="fwdoffrs" required id="ddlfwdSubStage">
 												<option value="0">Select Sub Stage</option>
 											</select>
 										</div>
 										<div class="form-group col-md-6 ProjectsFwd">
-											<label for="SubStage">Select Action</label>
+											<strong><label for="SubStage">5. Select Action</label></strong>
 											<select class="form-control requiredField" style="width: 100%;" tabindex="-1"
 													name="fwdoffrs" required id="ddlfwdAction">
 												<option value="0">Select Action</option>
@@ -1369,12 +1399,12 @@
                                             <input type="text" id="searchBox" class="form-control" style="display:none;" placeholder="Search..." />
                                         </div> *@
 										<div class="form-group col-md-6 ProjectsFwd">
-											<label for="SubStage">Remarks</label>
+											<strong><label for="SubStage">6. Remarks</label></strong>
 											<textarea class="form-control requiredField" id="txtRemarksfwd" style="width: 100%;"></textarea>
 										</div>
 
 										<div class="form-group col-md-4 ProjectsFwd">
-											<label>Date of Fwd:</label>
+											<strong><label>7. Date of Fwd:</label></strong>
 											<input id="TimeStampToProjfwd" type="date" style="width: 200px;" class="  form-control requiredField" />
 										</div>
 									
@@ -1401,7 +1431,7 @@
 						</div>
 
 					</div>
-					<div class="col-md-12 Attmenthistory d-none">
+					<div class="col-md-12 Attmenthistory ">
 						<div class="card">
 							<div class="modal-header"><h5 class="card-title">Projects Move Att Details</h5></div>
 							<div class="card-body" style="overflow:auto">
@@ -1423,7 +1453,7 @@
 								</table>
 							</div>
 						</div>
-						<div id="uploadLoader" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background-color:rgba(0,0,0,0.4); z-index:1050;">
+						<div class="uploadLoader d-none" style=" position:fixed; top:0; left:0; right:0; bottom:0; background-color:rgba(0,0,0,0.4); z-index:1050;">
 							<div class="d-flex justify-content-center align-items-center h-100">
 								<div class="text-center">
 									<div class="spinner-border text-success" role="status" style="width: 4rem; height: 4rem;">
@@ -1572,7 +1602,7 @@
 		</div><!-- modal-dialog -->
 	</div>
 
-
+	
 
 </body>
 @functions {

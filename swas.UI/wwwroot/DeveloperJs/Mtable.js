@@ -1,5 +1,5 @@
 ﻿function mMsater(sectid = '', ddl, TableId, ParentId) {
-    debugger;
+   
     var userdata =
         {
             "id": TableId,
@@ -233,8 +233,8 @@ function mMsaterStage(sectid = '', ddl, TableId, ParentId, StakeHolderId) {
 }
 
 function mMsaterFwdTo(sectid = '', ddl, TableId, ParentId, StakeHolderId, type, value) { 
-
-
+    debugger;
+  
     var userdata =
     {
         "id": TableId,
@@ -300,7 +300,7 @@ function mMsaterFwdTo(sectid = '', ddl, TableId, ParentId, StakeHolderId, type, 
 
                         $("#" + ddl + "").html(listItemddl);
                         if (sectid != '') {
-                            $("#" + ddl + "").val(sectid);
+                           /* $("#" + ddl + "").val(sectid);*/
 
                         }
                     }

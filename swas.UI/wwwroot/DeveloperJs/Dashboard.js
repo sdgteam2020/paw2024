@@ -1372,7 +1372,7 @@ function CreateChartSummary() {
  
 }
 function showPopup(segmentIndex) {
-   
+
     const popupOverlay = document.getElementById('popupOverlay');
     const popupTitle = document.getElementById('popupTitle');
     const projectList = document.getElementById('projectList');
@@ -1380,13 +1380,12 @@ function showPopup(segmentIndex) {
     let projects = [];
     let title = '';
     let statusActionsMappingId = 0;
-    if (segmentIndex === 0) 
-        {
-            statusActionsMappingId = 88;
-        }
+    if (segmentIndex === 0) {
+        statusActionsMappingId = 88;
+    }
     else if (segmentIndex === 1) {
         statusActionsMappingId = 880;
-        }
+    }
     let userdata = {
         "StatusId": 29,
         "statusActionsMappingId": statusActionsMappingId,
@@ -1394,13 +1393,13 @@ function showPopup(segmentIndex) {
 
     $("#WhiteListedProjectDetail").modal("show");
     if (segmentIndex === 0) {
-     
-     title = `Whitelisted Projects`;
-     } else if (segmentIndex === 1) {
-     
-      title = `Due for Re-vetting`;
-     
-      }
+
+        title = `Whitelisted Projects`;
+    } else if (segmentIndex === 1) {
+
+        title = `Due for Re-vetting`;
+
+    }
 
     $(".spnWhitelistedorDues").html(title);
     GetwhilteListProject(statusActionsMappingId)
@@ -1417,11 +1416,11 @@ function showPopup(segmentIndex) {
     //                Swal.fire({ text: "" });
     //            } else if (response == 0) {
 
-                  
+
 
 
     //            } else {
-                   
+
     //                let datestring = "";
 
     //                if (segmentIndex === 0) {
@@ -1452,10 +1451,10 @@ function showPopup(segmentIndex) {
     //                });
 
     //                popupOverlay.style.display = 'block';
-                   
+
     //            }
     //        }
-          
+
     //    },
     //    error: function (result) {
     //        Swal.fire({ text: "" });

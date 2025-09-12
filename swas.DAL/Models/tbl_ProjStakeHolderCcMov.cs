@@ -29,4 +29,5 @@ namespace swas.DAL.Models
 
         public string? UserDetails { get; set; }
     }
+
 }

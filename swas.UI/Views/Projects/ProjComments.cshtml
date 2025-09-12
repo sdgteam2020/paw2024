@@ -4,7 +4,10 @@
     ViewData["Title"] = "Proj Comments";
     int sno = 0;
 }
+
+<link href="~/jquery/autocomplete.css" rel="stylesheet" />
 <style>
+  
     .bold-text {
         font-weight: bold;
         font-size: medium;
@@ -34,26 +37,71 @@
         max-width: 60px;
         width: 5vw;
     }
+
+    .bold-border {
+        border-width: 2px !important; /* Make border width bold */
+    }
+    .btn-small-large {
+        padding: 0.5rem 0.7rem; /* Slightly larger padding than the default */
+        font-size: 1.1rem; /* Slightly larger font size */
+    }
+
+    .btn-3d {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+    }
+
+        .btn-3d:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1), 0 2px 5px rgba(0, 0, 0, 0.08);
+        }
+
+        .btn-3d:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.08);
+        }
 </style>
 <!----Table for Stakeholder Status Change----->
 
 <div class="card-body">
-    <div class="card radius-10 w-100">
-        <div class="card-body">
-            <div>
-                <button type="button" class="btn btn-outline-primary"  id="btnPening">Pending</button>
-                <button type="button" class="btn btn-outline-success" id="btnAccepted">Accepted</button>
-                <button type="button" class="btn btn-outline-warning" id="btnObsn">Obsn</button>
-                <button type="button" class="btn btn-outline-danger" id="btnRejected">Rejected</button>
-                <button type="button" class="btn btn-outline-info" id="btninfo">Info</button>
-               
-            </div>
-            <div class="table-responsive">
-                <table id="Comment" class="table table-striped table-bordered">
+	<div class="card radius-10 w-100">
+		<div class="card-body">
+			<div class="mb-3">
+				<!-- Button group -->
+                <div class="col-md-24 d-flex align-items-center" role="group">
+                    <button type="button" class="btn btn-danger mr-2 cmtbtn btn-3d" id="btnPending">Pending</button>
+                    <button type="button" class="btn btn-success mr-2 cmtbtn btn-3d" id="btnAccepted">Accepted</button>
+                    <button type="button" class="btn btn-warning mr-2 cmtbtn btn-3d" id="btnObsn">Obsn</button>
+                    <button type="button" class="btn btn-danger mr-2 cmtbtn btn-3d" id="btnRejected">Rejected</button>
+                    <button type="button" class="btn btn-info mr-2 text-white cmtbtn btn-3d" id="btnInfo">Info</button>
+
+                    <div class="input-group col-md-6 ml-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bold-text">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                </svg>Search Project
+                            </span>
+                        </div>
+                        <input type="text" id="CommentProject" style="width: 476px;" class="form-control" placeholder="Search project for Comment" />
+                    </div>
+                </div>
+
+				<div class="mt-2">
+					
+
+				</div>
+				<!-- Section heading -->
+				<h4 class="newprojectheading text-center py-2 mt-1">
+					ProjComments
+				</h4>
+			</div>
+
+			<table id="Comment" class="table table-striped table-bordered">
                     <!-- Table header -->
                     <thead>
                         <tr>
-                            ProjComments
+                         
                             <th class="noExport d-none"></th>
                             <th class="s-no-column ">Ser No</th>
                             <th>Project Name</th>
@@ -69,9 +117,9 @@
                     </tbody>
 
                 </table>
-            </div>
-           
-        </div>
+		
+
+	</div>
     </div>
 </div>
 
@@ -91,7 +139,7 @@
 @*<script src="~/developerjs/commanfordatatable.js"></script>*@
 <script>
     $(document).ready(function () {
-
+       
     });
 </script>
 
@@ -110,3 +158,5 @@
         }
     });
 </script>
+<script src="~/jquery/autocomplete.js"></script>
+<script src="~/jquery/autocompletemin.js"></script>

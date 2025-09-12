@@ -173,5 +173,60 @@ namespace swas.BAL
             //.FirstOrDefault();
             return null;
         }
+        public async Task<List<DTOProComments>> FindForComment(int? UnitId, string searchQuery)
+        {
+
+
+            #region GetAllStkForCommentWithProc
+
+            List<DTOProComments> results = new List<DTOProComments>();
+
+            using (SqlConnection conn = new SqlConnection(_context.Database.GetConnectionString()))
+            {
+                using (SqlCommand cmd = new SqlCommand("usp_GetAllComment", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@UnitId", UnitId);
+                    cmd.Parameters.AddWithValue("@ProjectName", searchQuery);
+
+
+                    await conn.OpenAsync();
+                    DataTable dt = new DataTable();
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+
+                    var data = dt;
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    {
+
+
+                        while (await reader.ReadAsync())
+                        {
+                            DTOProComments item = new DTOProComments
+                            {
+                                ProjId = Convert.ToInt32(reader["ProjId"]),
+                                PsmId = Convert.ToInt32(reader["PsmId"]),
+                                ProjectName = reader["ProjectName"].ToString(),
+                                Stakeholder = reader["Stakeholder"].ToString(),
+                                Status = reader["Status"].ToString(),
+                                StkStatusId = Convert.ToInt32(reader["StkStatusId"]),
+                                UnitId = Convert.ToInt32(reader["UnitId"]),
+                                TimeStamp = Convert.ToDateTime(reader["TimeStamp"]),
+                                IsComment = Convert.ToBoolean(reader["IsComment"]),
+                                AdminApprovalStatus = Convert.ToBoolean(reader["AdminApprovalStatus"])
+                            };
+
+                            item.EncyID = _dataProtector.Protect(item.ProjId.ToString());
+                            results.Add(item);
+                        }
+                    }
+                }
+            }
+            return results.ToList();
+
+            #endregion
+        }
     }
 }

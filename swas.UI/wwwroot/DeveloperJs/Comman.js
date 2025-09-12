@@ -455,3 +455,4 @@ function breakLinesByWords(text, wordLimit) {
 
     return result.join("<br>");
 }
+    

@@ -320,7 +320,7 @@ namespace swas.BAL.Repository
             }
            
 
-            return lst.OrderByDescending(i=>i.PsmId).ToList();
+            return lst.ToList();
         }
         public int GetLastRecProjectMov(int ProjectId)
         {

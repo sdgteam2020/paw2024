@@ -1,26 +1,14 @@
 ﻿var memberTable = "";
 
 $(document).ready(function () {
+  
     InboxNotificationCount()
   
     GetProjCommentsByUnitId(0);
+    $("#btnPending").addClass("border border-dark bold-border btn-small-large");
 
-    $("#btnPening").unbind().click(function () {
-        GetProjCommentsByUnitId(0);
-       
-    });
-    $("#btnAccepted").unbind().click(function () {
-        GetProjCommentsByUnitId(1);
-    });
-    $("#btnObsn").unbind().click(function () {
-        GetProjCommentsByUnitId(2);
-    });
-    $("#btnRejected").unbind().click(function () {
-        GetProjCommentsByUnitId(3);
-    });
-    $("#btninfo").unbind().click(function () {
-        GetProjCommentsByUnitId(5);
-    });
+  
+   
 
     $("#btnStatusUpdate").unbind().click(function () {
 
@@ -58,6 +46,34 @@ $(document).ready(function () {
 
 });
 
+$(".cmtbtn").unbind().click(function () {
+    $(".cmtbtn").removeClass("border border-dark bold-border btn-small-large");
+
+    // Add the 'border-dark', 'bold-border', 'btn-small-large' (custom size) classes to the clicked button
+    $(this).addClass("border border-dark bold-border btn-small-large");
+
+    // Get the corresponding unit ID based on the button ID
+    var unitId = 0;
+    switch ($(this).attr('id')) {
+        case 'btnAccepted':
+            unitId = 1;
+            break;
+        case 'btnObsn':
+            unitId = 2;
+            break;
+        case 'btnRejected':
+            unitId = 3;
+            break;
+        case 'btnInfo':
+            unitId = 5;
+            break;
+        default:
+            unitId = 0; // For btnPending
+    }
+
+    // Call the function to get project comments by the determined unit ID
+    GetProjCommentsByUnitId(unitId);
+});
 function IsUnReadInbox(psmId) {
 
     $.ajax({
@@ -70,6 +86,8 @@ function IsUnReadInbox(psmId) {
         }
     });
 }
+
+
 function GetProjCommentsByUnitId(Id) {
     var listItem = "";
 
@@ -80,7 +98,7 @@ function GetProjCommentsByUnitId(Id) {
         type: 'POST',
         data: { "StatusId": Id },
         success: function (response) {
-            /*console.log("GetAllProjectByUnitId", response);*/
+           
             if (response != "null" && response != null) {
 
                 if (response == -1) {
@@ -100,6 +118,7 @@ function GetProjCommentsByUnitId(Id) {
                     var count = 0;
                     var commentFalseCount = 0;
                     for (var i = 0; i < response.length; i++) {
+                        
                         var date = new Date(response[i].timeStamp);
                         var TimeStamp =
                             ("0" + date.getDate()).slice(-2) + '-' +
@@ -174,9 +193,35 @@ function GetProjCommentsByUnitId(Id) {
 
                     /* $('#ProjectCommentCount').html(boldCount);*/
 
-                    $("body").on("click", ".cls-btncomment", function () {
+                    $("body").off("click").on("click", ".cls-btncomment", function () {
                 /* $('.cls-btncomment').click(function () {*/
+                        
+                        var action = $(this).closest("tr").find("#status").html()
+                        let stkid = 0;
+                        switch (action) {
+                            case 'Accepted':
+                                stkid = 1;
+                                break;
+                            case 'Obsn':
+                                stkid = 2;
+                                break;
+                            case 'Rejected':
+                                stkid = 3;
+                                break;
+                            case 'Info':
+                                stkid = 5;
+                                break;
+                            default:
+                                stkid = 0; // For btnPending
+                        }
 
+                        if (stkid === 0)
+                        {
+                            $(".cmtbtn").removeClass("border border-dark bold-border btn-small-large");
+
+                            $("#btnPending").addClass("border border-dark bold-border btn-small-large");
+
+                        }
                         $("#ProjectcommentForStackHolderprojId").html($(this).closest("tr").find("#spnProjId").html());
                         $("#ProjectcommentForStackHolderPsmId").html($(this).closest("tr").find("#spnpsmId").html());
                         $("#ProjectcommentForStackHolderDate_type").html($(this).closest("tr").find("#DateType").html());
@@ -239,7 +284,8 @@ function GetProjCommentsByUnitId(Id) {
                             $('#CommentDateFwd').prop('disabled', true); // Freeze input
                         }
                         setTimeout(function () {
-                            GetProjCommentsByUnitId();
+                          
+                            GetProjCommentsByUnitId(stkid);
                         },200)
                       
                     });
@@ -273,7 +319,7 @@ function GetProjCommentsByUnitId(Id) {
 
 
 function SendMsg() {
-
+    debugger;
     var formData = new FormData();
     var totalFiles = document.getElementById("uploadfile").files.length;
     for (var i = 0; i < totalFiles; i++) {
@@ -338,7 +384,7 @@ function SendMsg() {
 
 
                     GetAllComments($("#ProjectcommentForStackHolderPsmId").html(), $("#ProjectcommentForStackHolderprojId").html());
-                    GetProjCommentsByUnitId();
+                    //GetProjCommentsByUnitId();
                     //IsUnReadComment($("#ProjectcommentForStackHolderprojId").html());
                     //GetNotification($("#ProjectcommentForStackHolderprojId").html());
                     UnReadNotification($("#ProjectcommentForStackHolderprojId").html(), 2);
@@ -609,3 +655,4 @@ function IsCommentedUnreadNotification(ProjId) {
         }
     });
 }
+

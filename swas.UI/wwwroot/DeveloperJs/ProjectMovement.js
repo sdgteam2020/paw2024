@@ -77,7 +77,7 @@
         if (allFieldsComplete) {
 
             AttechHistory();
-            SaveFwdTo($("#spanEditPslmId").html());
+            //SaveFwdTo($("#spanEditPslmId").html());
 
         }
     });
