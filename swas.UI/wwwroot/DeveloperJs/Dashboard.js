@@ -3,6 +3,7 @@ var Status = "";
 $(document).ready(function () {
     GetAllDashbaordCount();
     InboxNotificationCount();
+   
     CreateChartSummary();
     $("#IsNotduplicate").change(function () {
 
@@ -17,8 +18,6 @@ $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
 });
-
-
 
 
 function GetAllDashbaordCount(){
@@ -889,7 +888,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 function DateFormateddMMyyyyhhmmss(date) {
-
+   
     var todaysDate = new Date();
     var datef1 = new Date(date);
     //if (datef1.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {

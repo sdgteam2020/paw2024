@@ -1,4 +1,4 @@
-﻿function GetProjHold(ProjId) {
+﻿  function GetProjHold(ProjId) {
     var listItem = "";
     var listItemc = "";
 
@@ -49,7 +49,7 @@
                             }
                             return a.statusId - b.statusId;  // Sort by statusId
                         });
-                    let totalTimeSpentData = calculateTotalTime(responseforchart);
+                    var totalTimeSpentData = calculateTotalTime(responseforchart);
                    
                     // Using forEach to loop through the array and access each element
                     totalTimeSpentData.forEach(function (item) {
@@ -78,17 +78,41 @@
                         //}
                         //else {
                         if (response[j].isComment == true) {
-                            if (response[j].isComplete == false)
-                                colorscmd.push("#FF0000")
-                            else
-                                colorscmd.push("#008000")
+                            if (response[j].firstStkStatus == "Accepted"||response[j].approvedStatusId == 1) {
 
-                            labelscmd.push(response[j].status + '(' + response[j].fromunit + ')');
-                            totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
-                            totalsForlabelcmd.push(DateCalculateago(response[j].timeStampfrom, response[j].timeStampTo).replace("</h6>", ""));
+                                colorscmd.push("#008000")
+                                totalsForlabelcmd.push("Approved\n" + DateCalculateago(response[j].timeStampfrom, response[j].firstActionDate));
+                                totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].firstActionDate))
+                            }
+                            else if (response[j].firstStkStatus == "Rejected") {
+                                colorscmd.push("#f96161")
+                                totalsForlabelcmd.push(response[j].firstStkStatus + "\n" + DateCalculateago(response[j].timeStampfrom, response[j].firstActionDate));
+                                totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].firstActionDate))
+                            }
+                            else if (response[j].firstStkStatus == "Obsn") {
+                                colorscmd.push("#fbbb4b")
+                                totalsForlabelcmd.push(response[j].firstStkStatus + "\n" + DateCalculateago(response[j].timeStampfrom, response[j].firstActionDate));
+                                totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].firstActionDate))
+                            }
+                            else if (response[j].firstStkStatus == "Info") {
+                                colorscmd.push("#73a3f9")
+                                totalsForlabelcmd.push(response[j].firstStkStatus + "\n" + DateCalculateago(response[j].timeStampfrom, response[j].firstActionDate));
+                                totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].firstActionDate))
+                            }
+                            else {
+                                colorscmd.push("#FF0000")
+                                totalsForlabelcmd.push("Pending\n" + DateCalculateago(response[j].timeStampfrom, response[j].timeStampTo));
+                                totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
+
+                            }
+                                
+                            labelscmd.push(response[j].status + '(' + response[j].tounit + ')');
+                            //totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].firstActionDate))
+                         
                         }
                         //}
                     }
+                   
                     for (var j = 0; j < response.length; j++) {
                         if (response[j].isComment == false) {
                             // labels.push(response[j].status + '(' + response[j].fromunit+')');
@@ -139,14 +163,31 @@
                             count++;
                         }
                         else {
+                            
+                                var commentRecdt = DateFormateddMMyyyyhhmmss(response[j].timeStampfrom);
+                                $("#Recddt").html(commentRecdt);
+                           
 
-                            if (response[j].isComplete == false)
-                                listItemc += '<tr class="table-danger">';
-                            else
+                           /* if (response[j].isComplete == false)*/
+                            if (response[j].stkStauts === "Accepted") {
                                 listItemc += '<tr class="table-success">';
+                               
+                            }
+                            else if (response[j].stkStauts === "Info") {
+                                listItemc += '<tr class="table-primary">';
+
+                            }
+                            else if (response[j].stkStauts === "Obsn") {
+                                listItemc += '<tr class="table-warning">';
+                            }
+                            else {
+                               
+                                listItemc += '<tr class="table-danger">';
+                               
+                            }
 
                             listItemc += '<td class="align-middle text-center">' + countc + '</td>';
-                            listItemc += '<td class="align-middle">' + response[j].fromunit + '</td>';
+                            //listItemc += '<td class="align-middle">' + response[j].fromunit + '</td>';
                             if (response[j].tounit != null)
                                 listItemc += '<td class="align-middle">' + response[j].tounit + '</td>';
                             else
@@ -155,17 +196,22 @@
                                 if (response[j].isComment == false)
                                     listItemc += '<td class="align-middle">' + response[j].status + '</td>';
                                 else
-                                    listItemc += '<td class="align-middle">' + response[j].tounit + ' For Comments</td>';
+                                    listItemc += '<td class="align-middle">' + response[j].tounit + ' For Parallel Comments</td>';
                             }
 
                             else
                                 listItemc += '<td class="align-middle">--</td>';
-                            if (response[j].action != null)
-                                listItemc += '<td class="align-middle">' + response[j].action + '</td>';
-                            else
-                                listItemc += '<td class="align-middle">--</td>';
+                            if (response[j].stkStauts != null) {
+                               
+                                listItemc += '<td class="align-middle">' + response[j].stkStauts + '</td>';
+                            }
+                            else {
+                               
+                                listItemc += '<td class="align-middle">' + "Pending" + '</td>';
+                            }
+                              
 
-                            listItemc += '<td class="align-middle">' + DateFormateddMMyyyyhhmmss(response[j].timeStampfrom) + '</td>';
+                            //listItemc += '<td class="align-middle">' + DateFormateddMMyyyyhhmmss(response[j].timeStampfrom) + '</td>';
                             if (response[j].isComment == false)
                                 listItemc += '<td class="align-middle">' + DateFormateddMMyyyyhhmmss(response[j].timeStampTo) + '</td>';
                             else if (response[j].isComment == true) {
@@ -181,6 +227,23 @@
                                 listItemc += '<td class="align-middle">' + DateCalculateago(response[j].timeStampfrom, currentdate) + '</td>';
 
                             }
+                            
+                            if (response[j].approvedStatusId == 1 ) {
+                                listItemc += '<td class="align-middle">' + "(" + DateFormateddMMyyyyhhmmss(response[j].approveddate) + ")   " +
+                                    '<div style="width:25px; height:25px; border-radius:50%; background-color:#28a745; color:#fff; display:inline-flex; align-items:center; justify-content:center; font-weight:bold; font-size:18px;">' +
+                                    '✔' +
+                                    '</div>'
+                                    '</td>';
+
+                            } else if (response[j].rejectedDt !=null)
+                            {
+                                listItemc += '<td class="align-middle ">' + "(" + DateFormateddMMyyyyhhmmss(response[j].rejectedDt) + ")   " +'<img src="/assets/images/icons/Cross_red_circle.png" width="22" height="22" alt="Readed"></td>';
+                            }
+                            else {
+                                listItemc += '<td class="align-middle">--</td>';
+                            }
+                           
+
 
                             listItemc += '</tr>';
                             countc++;
@@ -412,7 +475,9 @@ function bindProjHoldCommentsChart(labels, totals, totalsForlabel, colors) {
                     innerWidth: 0,
                     font: {
                         weight: 'bold'
-                    }, formatter: function (value, context) {
+                    },
+                    textAlign: 'center',
+                    formatter: function (value, context) {
                         // Use value from holdLabels array by index
                         return totalsForlabel[context.dataIndex];
                     }
@@ -423,6 +488,7 @@ function bindProjHoldCommentsChart(labels, totals, totalsForlabel, colors) {
     });
 }
 function calculateTotalTime(response) {
+   
     // Result object to hold the grouped data
     let result = {};
 
@@ -464,6 +530,7 @@ function calculateTotalTime(response) {
 }
 // Assuming totalTimeSpent is in minutes
 function convertMinutesToAgo(minutes) {
+    debugger;
     if (minutes == null || isNaN(minutes) || minutes < 0) {
         minutes = 0;
     }
@@ -483,21 +550,25 @@ function convertMinutesToAgo(minutes) {
         const years = Math.round(totalHours / 8760);  // 8760 hours in a year
         // const remainingHoursInYear = totalHours % 8760;
         formatted = `${Math.round(totalHours).toString().padStart(3, '0')}:${Math.round(remainingMinutes).toString().padStart(2, '0')}`;
-        ago = `${years} Years (${formatted})`;
+        //ago = `${years} Years (${formatted})`;
+        ago = `${years} Years`;
     }
     // Calculate months if total hours are less than a year but greater than or equal to 730 hours (~30 days)
     else if (totalHours >= 730) {
-        const months = Math.round(totalHours / 730);  // 730 hours in a month (approx)
+        const months = Math.round(totalHours / 730);
+        const days = Math.round(totalHours / 24);// 730 hours in a month (approx)
         // const remainingHoursInMonth = totalHours % 730;
         formatted = `${Math.round(totalHours).toString().padStart(3, '0')}:${Math.round(remainingMinutes).toString().padStart(2, '0')}`;
-        ago = `${months} Months (${formatted})`;
+        //ago = `${months} Months (${formatted})`;
+        ago = `${months} Months`;
     }
     // Calculate days if total hours are less than 730 but greater than 24 hours
     else if (totalHours >= 24) {
         const days = Math.round(totalHours / 24);
         const hours = Math.round(totalHours % 24);  // Remaining hours after extracting days
         formatted = `${hours.toString().padStart(2, '0')}:${Math.round(remainingMinutes).toString().padStart(2, '0')}`;
-        ago = `${days} Days (${formatted})`;
+        //ago = `${days} Days (${formatted})`;
+        ago = `${days} Days`;
     }
     else {
         if (minutes === 0) {

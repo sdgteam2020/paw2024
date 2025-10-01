@@ -90,6 +90,7 @@
         }
     });
 }
+
 function PdfDiv(tableSelector, watermarkSelector = "#IpAddress") {
     debugger;
     const table = $(tableSelector).DataTable();
@@ -97,7 +98,8 @@ function PdfDiv(tableSelector, watermarkSelector = "#IpAddress") {
 
     let headers = [];
     table.columns(':visible').header().each(function (header, index) {
-        if (index !== table.columns().count() - 1) {
+        // Skip the columns with the 'noExport' class
+        if (!$(header).hasClass('noExport') && index !== table.columns().count() - 1) {
             headers.push($(header).text().trim());
         }
     });
@@ -106,13 +108,18 @@ function PdfDiv(tableSelector, watermarkSelector = "#IpAddress") {
     for (let i = 0; i < filteredData.length; i++) {
         let rowData = [];
         for (let j = 0; j < filteredData[i].length - 1; j++) {
+            // Skip data for columns with 'noExport' class
+            if ($(table.column(j).header()).hasClass('noExport')) {
+                continue;
+            }
+
             let cellData = filteredData[i][j];
             if (typeof cellData === 'string' && cellData.indexOf('<') >= 0) {
-                let $html = $('<div>' + cellData + '</div>'); // ✅ Wrap in DOM element
-                $html.find('.noExport').remove();              // ✅ Remove .noExport content
+                let $html = $('<div>' + cellData + '</div>');
+                $html.find('.noExport').remove();
                 let cleanText = $html.html()
-                    .replace(/<br\s*\/?>/gi, '\n')              // ✅ Keep line breaks
-                    .replace(/<\/?[^>]+(>|$)/g, "")             // ✅ Strip remaining HTML
+                    .replace(/<br\s*\/?>/gi, '\n')
+                    .replace(/<\/?[^>]+(>|$)/g, "")
                     .trim();
                 rowData.push(j === 0 ? i + 1 : cleanText);
             } else {

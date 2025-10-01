@@ -194,101 +194,99 @@ function GetProjCommentsByUnitId(Id) {
                     /* $('#ProjectCommentCount').html(boldCount);*/
 
                     $("body").off("click").on("click", ".cls-btncomment", function () {
-                /* $('.cls-btncomment').click(function () {*/
-                        
-                        var action = $(this).closest("tr").find("#status").html()
-                        let stkid = 0;
-                        switch (action) {
-                            case 'Accepted':
-                                stkid = 1;
-                                break;
-                            case 'Obsn':
-                                stkid = 2;
-                                break;
-                            case 'Rejected':
-                                stkid = 3;
-                                break;
-                            case 'Info':
-                                stkid = 5;
-                                break;
-                            default:
-                                stkid = 0; // For btnPending
-                        }
+                        // Store the correct context (`this`) of the clicked element
+                        var self = this;
 
-                        if (stkid === 0)
-                        {
-                            $(".cmtbtn").removeClass("border border-dark bold-border btn-small-large");
+                        fetchServerDate().then(function (S) {
+                            var action = $(self).closest("tr").find("#status").html();
+                            let stkid = 0;
 
-                            $("#btnPending").addClass("border border-dark bold-border btn-small-large");
+                            switch (action) {
+                                case 'Accepted':
+                                    stkid = 1;
+                                    break;
+                                case 'Obsn':
+                                    stkid = 2;
+                                    break;
+                                case 'Rejected':
+                                    stkid = 3;
+                                    break;
+                                case 'Info':
+                                    stkid = 5;
+                                    break;
+                                default:
+                                    stkid = 0; // For btnPending
+                            }
 
-                        }
-                        $("#ProjectcommentForStackHolderprojId").html($(this).closest("tr").find("#spnProjId").html());
-                        $("#ProjectcommentForStackHolderPsmId").html($(this).closest("tr").find("#spnpsmId").html());
-                        $("#ProjectcommentForStackHolderDate_type").html($(this).closest("tr").find("#DateType").html());
+                            if (stkid === 0) {
+                                $(".cmtbtn").removeClass("border border-dark bold-border btn-small-large");
+                                $("#btnPending").addClass("border border-dark bold-border btn-small-large");
+                            }
 
-                        IsReadComment($(this).closest("tr").find("#spnProjId").html(), $(this).closest("tr").find("#spnpsmId").html());
-                        // IsReadNotification($(this).closest("tr").find("#spnProjId").html(), 1);
-                     $(this).closest("tr").removeClass("bold-text")
-                    
+                            // Populate project details for the modal
+                            $("#ProjectcommentForStackHolderprojId").html($(self).closest("tr").find("#spnProjId").html());
+                            $("#ProjectcommentForStackHolderPsmId").html($(self).closest("tr").find("#spnpsmId").html());
+                            $("#ProjectcommentForStackHolderDate_type").html($(self).closest("tr").find("#DateType").html());
 
+                            // Mark comment as read
+                            IsReadComment($(self).closest("tr").find("#spnProjId").html(), $(self).closest("tr").find("#spnpsmId").html());
+                            $(self).closest("tr").removeClass("bold-text");
 
+                            reset();
+                            mMsater(0, "ddlStatus", 4, 0);
+                            $("#ProjCommentModal").modal('show');
 
+                            // Get all comments for the project
+                            GetAllComments($("#ProjectcommentForStackHolderPsmId").html(), $("#ProjectcommentForStackHolderprojId").html());
 
-                   
-                    
-                        reset()
-                        mMsater(0, "ddlStatus", 4, 0)
-                        $("#ProjCommentModal").modal('show');
-                        GetAllComments($("#ProjectcommentForStackHolderPsmId").html(), $("#ProjectcommentForStackHolderprojId").html());
+                            // Format the project name for modal heading
+                            var projName = $(self).closest("tr").find("#projectName").html();
+                            var words = projName.split(" ");
+                            var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
+                            var finalTitle = "Mov History: " + projName;
+                            $('#addComment').text(finalTitle);
 
-                        // Added from here for pop up heading with project name in comment (added by Divyanshu on 04/02/2025)
-                        //var projName = $(this).closest("tr").find("#projectName").html() + "  " + "Comments";
-                        //$('#addComment').text(projName);
-                        var projName = $(this).closest("tr").find("#projectName").html();
-                        var words = projName.split(" ");
-                        // Limit to 6 words and add "..." if needed
-                        var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
-                        //var finalTitle = "Mov History: " + shortProjName;
-                        var finalTitle = "Mov History: " + projName;
-                        $('#addComment').text(finalTitle);
+                            const dateTypeText = $(self).closest("tr").find("#DateType").text().trim().toLowerCase();
+                            const dateType = (dateTypeText === "true");
 
+                            $("#ProjectcommentForStackHolderDate_type").text(dateType);
 
-                        const dateTypeText = $(this).closest("tr").find("#DateType").text().trim().toLowerCase();
-                        const dateType = (dateTypeText === "true");
+                            // Get the current date and time in required formats
+                            var pad = "00";
+                            var datef2 = new Date();
+                            var months = "" + (datef2.getMonth() + 1);
+                            var days = "" + datef2.getDate();
+                            var monthsans = pad.substring(0, pad.length - months.length) + months;
+                            var dayans = pad.substring(0, pad.length - days.length) + days;
+                            var year = datef2.getFullYear();
+                            var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+                            var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+                            var ss = `${datef2.getSeconds()}`;
 
-                        $("#ProjectcommentForStackHolderDate_type").text(dateType);
-                        var pad = "00";
-                        var datef2 = new Date();
+                            var todayDate = `${year}-${monthsans}-${dayans}`;
+                            var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
 
+                            const formattedDateTime = new Date(S.todayDateTime).toISOString().slice(0, 16);  // Convert to YYYY-MM-DDTHH:MM
+                           
+                            // Set input fields based on the date type
+                            if (dateType) {
+                                $('#CommentDateFwd').attr('type', 'datetime-local');
+                                $('#CommentDateFwd').attr('max', formattedDateTime);
+                                $('#CommentDateFwd').prop('disabled', false); // Allow user input
+                                $('#CommentDateFwd').val(formattedDateTime);
+                            } else {
+                                $('#CommentDateFwd').attr('type', 'date');
+                                $('#CommentDateFwd').val(S.today); // Set today's date
+                                $('#CommentDateFwd').prop('disabled', true); // Freeze input
+                            }
 
-                        var months = "" + (datef2.getMonth() + 1);
-                        var days = "" + datef2.getDate();
-                        var monthsans = pad.substring(0, pad.length - months.length) + months;
-                        var dayans = pad.substring(0, pad.length - days.length) + days;
-                        var year = datef2.getFullYear();
-                        var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-                        var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-                        var ss = `${datef2.getSeconds()}`;
-
-                        // Today's date and time in the required formats
-                        var todayDate = `${year}-${monthsans}-${dayans}`;
-                        var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
-
-                        if (dateType) {
-                            $('#CommentDateFwd').attr('type', 'datetime-local');
-                            $('#CommentDateFwd').attr('max', todayDateTime);
-                            $('#CommentDateFwd').prop('disabled', false); // Allow user input
-                        } else {
-                            $('#CommentDateFwd').attr('type', 'date');
-                            $('#CommentDateFwd').val(todayDate); // Set today's date
-                            $('#CommentDateFwd').prop('disabled', true); // Freeze input
-                        }
-                        setTimeout(function () {
-                          
-                            GetProjCommentsByUnitId(stkid);
-                        },200)
-                      
+                            // Get project comments (after modal setup)
+                            setTimeout(function () {
+                                GetProjCommentsByUnitId(stkid);
+                            }, 200);
+                        });
                     });
+
 
                     $("body").on("click", ".projNameDetail", function () {
 
@@ -379,7 +377,7 @@ function SendMsg() {
                 }).then(() => {
                     debugger;
                     //  if ($("#ddlStatus").val() == 1) {
-                    FwdProjConfirm($("#ProjectcommentForStackHolderPsmId").html());
+                   // FwdProjConfirm($("#ProjectcommentForStackHolderPsmId").html());
                     // }
 
 
@@ -600,6 +598,7 @@ function reset() {
 }
 
 function FwdProjConfirm(psmid) {
+  
     $.ajax({
         url: '/Projects/FwdProjConfirm',
         type: 'POST',

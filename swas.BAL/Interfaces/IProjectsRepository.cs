@@ -31,7 +31,7 @@ namespace swas.BAL.Interfaces
         Task<List<DTOProjectsFwd>> GetActInboxAsync();
         Task<List<DTOProjectsFwd>> GetDashboardStatusDetails(int StatuId,int UnitId, bool IsDuplicate);
         Task<List<DTOProjectsFwd>> GetDashboardApproved(int StatuId,int statusActionsMappingId);
-        Task<DTOProjectWiseStatus> GetProjectWiseStatus();
+        Task<DTOProjectWiseStatus> GetProjectWiseStatus(int? id);
         Task<List<DTOProjectsFwd>> GetActSendItemsAsync();
         Task<List<DTOProjectsFwd>> GetActCcItemsAsync();
         Task<List<tbl_Projects>> GetActComplettemsAsync();

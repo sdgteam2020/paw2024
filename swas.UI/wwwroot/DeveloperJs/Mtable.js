@@ -88,6 +88,7 @@ function mMsaterfwdStage(sectid = '', ddl, TableId, ParentId, type, projecttype)
         type: 'POST',
 
         success: function (response) {
+            debugger;
             if (response != "null" && response != null) {
                 if (response == 0) {
                     listItemddl += '<option value="">Please Select</option>';
@@ -108,7 +109,14 @@ function mMsaterfwdStage(sectid = '', ddl, TableId, ParentId, type, projecttype)
                                 listItemddl += '<option value="' + response[i].id + '" selected>' + response[i].name + '</option>';
 
                             }
-                        } else {
+                        } else if (projecttype == 1)
+                        {
+                            if (response[i].id == 1) {
+                                listItemddl += '<option value="' + response[i].id + '" selected>' + response[i].name + '</option>';
+
+                            }
+                        }
+                        else {
 
                             listItemddl += '<option value="' + response[i].id + '">' + response[i].name + '</option>';
                         }

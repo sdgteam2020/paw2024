@@ -13,6 +13,7 @@
         $(".lblProjHoldHistory").html($("#projectNameCell").html())
         $("#cardforProjHoldHistory").removeClass("d-none");
         GetProjHold($(".ProjectcommentprojId").html())
+        ProjectWiseStatusByProjid($(".ProjectcommentprojId").html());
     });
 
 
@@ -30,6 +31,10 @@ function GetAllComments2() {
         success: function (data) {
             //console.log("CommentData", data);
             var projectName = data[0].projectName;
+            var adminapproval = data[0].adminApprovalStatus;
+           
+
+           
             //console.log("First Project Name:", projectName);
 
             var tableHTML = '<table class="table" style="width:100%; border: 1px solid black; border-collapse:collapse;">';
@@ -42,7 +47,7 @@ function GetAllComments2() {
             tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">Comment</th>';
             tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">Status</th>';
             tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">PDF</th>'; 
-            tableHTML += '<th class="d-none">DateType</th>'; 
+            //tableHTML += '<th class="">DateType</th>'; 
             tableHTML += '</tr>';
             tableHTML += '</thead>';
             tableHTML += '<tbody>';
@@ -70,7 +75,7 @@ function GetAllComments2() {
                         tableHTML += '<img src="/assets/images/icons/pdfimg.png" alt="PDF icon" style="width: 24px; height: 24px;">';
                         tableHTML += '</a>';
                     }
-                    tableHTML += '<td class="d-none noExport"><span class="DateType">' + data[i].adminApprovalStatus + '</span></td>';  
+                    //tableHTML += '<td class="noExport"><span class="DateType">' + data[i].adminApprovalStatus + '</span></td>';  
 
                     tableHTML += '</td>';
                     tableHTML += '</tr>';
@@ -188,50 +193,62 @@ function GetAllComments2() {
 
             if ($("#IsCommentPsmiId").html() != 0)
                 $("div.add-comment-btn").html('<button id="add-comment" class="btn btn-primary"><i class="fas fa-plus"></i> Add Comment</button>');
-
+           
             $("#add-comment").on("click", function () {
-                var projId = $(".ProjectcommentprojId").html().trim();
-                $("#ProjectcommentForStackHolderprojId").html($(".ProjectcommentprojId").html())
-                $("#ProjectcommentForStackHolderPsmId").html($("#IsCommentPsmiId").html())
-                mMsater(0, "ddlStatus", 4, 0)
-                $("#ProjCommentModal").modal('show');
-                GetAllComments($("#IsCommentPsmiId").html(), $(".ProjectcommentprojId").html());
+                $(this).attr("adminApprovalStatus", adminapproval);
+                var adminApprovalStatus = $(this).attr("adminApprovalStatus") === "true" ? true : false;
 
-                // Added from here for pop up heading with project name in comment (added by Divyanshu on 10/02/2025)
-                var words = projectName.split(" ");
-                // Limit to 6 words and add "..." if needed
-                var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projectName;
-                var finalTitle = "Mov History: " + shortProjName;
-                $('#addComment').text(finalTitle);
+               
+                fetchServerDate().then(function (S) {
 
-                var pad = "00";
-                var datef2 = new Date();
-                var months = "" + (datef2.getMonth() + 1);
-                var days = "" + datef2.getDate();
-                var monthsans = pad.substring(0, pad.length - months.length) + months;
-                var dayans = pad.substring(0, pad.length - days.length) + days;
-                var year = datef2.getFullYear();
-                var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-                var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-                var ss = `${datef2.getSeconds()}`;
+                    var projId = $(".ProjectcommentprojId").html().trim();
+                    $("#ProjectcommentForStackHolderprojId").html($(".ProjectcommentprojId").html())
+                    $("#ProjectcommentForStackHolderPsmId").html($("#IsCommentPsmiId").html())
+                    mMsater(0, "ddlStatus", 4, 0)
+                    $("#ProjCommentModal").modal('show');
+                    $(".custom-modal-size").css("margin-left", "-9rem");
 
-                // Today's date and time in the required formats
-                var todayDate = `${year}-${monthsans}-${dayans}`;
-                var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+                    GetAllComments($("#IsCommentPsmiId").html(), $(".ProjectcommentprojId").html());
 
-                fetchDdgitApproval(projId, function (isApproved) {
+                    // Added from here for pop up heading with project name in comment (added by Divyanshu on 10/02/2025)
+                    var words = projectName.split(" ");
+                    // Limit to 6 words and add "..." if needed
+                    var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projectName;
+                    var finalTitle = "Mov History: " + shortProjName;
+                    $('#addComment').text(finalTitle);
 
+                    var pad = "00";
+                    var datef2 = new Date();
+                    var months = "" + (datef2.getMonth() + 1);
+                    var days = "" + datef2.getDate();
+                    var monthsans = pad.substring(0, pad.length - months.length) + months;
+                    var dayans = pad.substring(0, pad.length - days.length) + days;
+                    var year = datef2.getFullYear();
+                    var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+                    var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+                    var ss = `${datef2.getSeconds()}`;
 
-                    if (isApproved) {
+                    // Today's date and time in the required formats
+                    var todayDate = `${year}-${monthsans}-${dayans}`;
+                    var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+
+                   
+
+                    if (adminApprovalStatus ==true) {
+
                         $('#CommentDateFwd').attr('type', 'datetime-local');
-                        $('#CommentDateFwd').attr('max', todayDateTime);
+                        $('#CommentDateFwd').attr('max', S.todayDateTime);
                         $('#CommentDateFwd').prop('disabled', false); // Allow user input
+                        $('#CommentDateFwd').val(S.todayDateTime); // Allow user input
                     } else {
+
                         $('#CommentDateFwd').attr('type', 'date');
-                        $('#CommentDateFwd').val(todayDate); // Set today's date
+                        $('#CommentDateFwd').val(S.today); // Set today's date
                         $('#CommentDateFwd').prop('disabled', true); // Freeze input
                     }
+                    
                 });
+              
 
             });
 

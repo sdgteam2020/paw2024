@@ -14,7 +14,7 @@ namespace swas.BAL.Interfaces
         Task<List<RemainderDisplayDto>> ProjectRemainderMovHistory(int? ProjectId);
 
         Task<int> GetProjectById(string? ProjName);
-        Task<int> UpdateReaminderRead(int Projid, int pullback);
+        Task<int> UpdateReaminderRead(int? Projid, int pullback);
         Task<List<RemainderDisplayDto>> GetAllAsync();
         //Task<DTOpR>
 

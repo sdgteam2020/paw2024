@@ -1,5 +1,41 @@
 ﻿$(document).ready(function () {
-    
+
+
+    $(".btn-Fwd").click(function () {
+        // Ensure we have the server date from window.SERVER or fetch it
+        //  const S = window.SERVER.today ? window.SERVER : await window.fetchServerDate();
+        let date_type_raw = $(this).data("date_type");
+        let date_type = (String(date_type_raw).toLowerCase() === "true");
+        fetchServerDate().then(function (S) {
+
+            // Get the data from the button (True or False)
+         
+            
+            // Only use `S.todayDateTime` (from server) to ensure consistency
+            // Set datetime-local or date based on the data_type
+            if (date_type) {
+             
+                $('#TimeStampToProjfwd')
+                    .attr('type', 'datetime-local')
+                    .attr('max', S.todayDateTime)  // Max set to server date (in "YYYY-MM-DDTHH:mm" format)
+                    .prop('disabled', false)  // Allow user input
+                    .val(S.todayDateTime);
+            } else {
+            
+                // Set date type, freeze input
+                $('#TimeStampToProjfwd').attr('type', 'date');
+                $('#TimeStampToProjfwd').val(S.today); // Use the server date only (YYYY-MM-DD)
+                $('#TimeStampToProjfwd').prop('disabled', true); // Disable the field
+            }
+
+            // Focus the input (optional: you can show a modal or scroll to input)
+            $('#TimeStampToProjfwd').focus();
+        })
+    });
+
+
+
+
     var param = sessionStorage.getItem("spntabType");
 
     if (param != null) {
@@ -53,98 +89,68 @@
         var date_type = $row.find("#SpnDate_type").text().trim();
         var psmId = $row.find("#SpnCurrentpsmId").text().trim();
         var actiontype = $row.find("#LatestActionType").text().trim();
-        if (parseInt(actiontype) == 2 && ((actiontype) != 1 || actiontype != "")) {
-            $("#datepickerContainer").show();
-        } else {
-            $("#datepickerContainer").hide();
-        }
-        $('#confirmationModal').modal('show');
-        var pad = "00"
-        var datef2 = new Date();
-        var months = "" + `${(datef2.getMonth() + 1)}`;
-        var days = "" + `${(datef2.getDate())}`;
-        var monthsans = pad.substring(0, pad.length - months.length) + months
-        var dayans = pad.substring(0, pad.length - days.length) + days
-        var year = `${datef2.getFullYear()}`;
-        var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-        var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-        var ss = `${datef2.getSeconds()}`;
-
-
-        var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
-
-        var claValue = parseInt(actiontype);
-
-        if (claValue == 2) {
-            $('#datepicker').attr('type', 'datetime-local');
-
-            $('#datepicker').attr('max', todayDateTime);
-            $('#datepicker').prop('disabled', false); // Allow user input
-            $('#datepicker').val(todayDateTime);
-        } else {
-            $('#datepicker').attr('type', 'date');
-
-        }
-        $('#confirmSend').off('click').on('click', function () {
-            //var pad = "00"
-            //var datef2 = new Date();
-            //var months = "" + `${(datef2.getMonth() + 1)}`;
-            //var days = "" + `${(datef2.getDate())}`;
-            //var monthsans = pad.substring(0, pad.length - months.length) + months
-            //var dayans = pad.substring(0, pad.length - days.length) + days
-            //var year = `${datef2.getFullYear()}`;
-            //var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-            //var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-            //var ss = `${datef2.getSeconds()}`;
-
-            //var today = year + `-` + monthsans + `-` + dayans;
-
-            //    var claValue = parseInt(actiontype);
-
-            //    if (claValue == 2) {
-            //        $('#datepicker').attr('type', 'datetime-local');
-            //        $('#datepicker').attr('max', todayDateTime);
-            //        $('#datepicker').prop('disabled', false); // Allow user input
-            //    } else {
-            //        $('#datepicker').attr('type', 'date');
-            //        $('#datepicker').val(todayDate); // Set today's date
-            //        $('#datepicker').prop('disabled', true); // Freeze input
-            //    }
-
-
-            var dateValue = $('#datepicker').val();
-            var currentDate = new Date();
-
-            // Add server's current time if only a date is selected
-            var FwdDateForComment = '';
-            if ($('#datepicker').attr('type') === 'date') {
-                //if (!dateValue) {
-                //    alert('Please select a date .');
-                //    return;
-                //}
-                //var currentTime = currentDate.toTimeString().split(' ')[0]; // Get current time in HH:mm:ss
-                //FwdDateForComment = dateValue + ' ' + currentTime;
-                const formattedDate = currentDate.toLocaleString("sv-SE").replace("T", " ");
-                FwdDateForComment = formattedDate;
-
-            } else if ($('#datepicker').attr('type') === 'datetime-local') {
-                if (!dateValue) {
-                    alert('Please select date and time.');
-                    return;
-                }
-                FwdDateForComment = dateValue.replace('T', ' '); // Format datetime-local to space-separated
+        fetchServerDate().then(function (S) {
+          
+            if (parseInt(actiontype) == 2 && ((actiontype) != 1 || actiontype != "")) {
+                $("#datepickerContainer").show();
+            } else {
+                $("#datepickerContainer").hide();
             }
-            $('#confirmationModal').modal('hide');
-            SentForComment(ProjId, psmId, 0, FwdDateForComment);
-            /* AddNotification(ProjId, 1, 0);*/
-            ProcessProjConfirm(ProjId);
-            IsReadInbox(psmId);
-            InboxNotificationCount();
+            $('#confirmationModal').modal('show');
+            var pad = "00"
+            var datef2 = new Date();
+            var months = "" + `${(datef2.getMonth() + 1)}`;
+            var days = "" + `${(datef2.getDate())}`;
+            var monthsans = pad.substring(0, pad.length - months.length) + months
+            var dayans = pad.substring(0, pad.length - days.length) + days
+            var year = `${datef2.getFullYear()}`;
+            var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+            var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+            var ss = `${datef2.getSeconds()}`;
+           
+            var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+
+            var claValue = parseInt(actiontype);
+
+            if (claValue == 2) {
+                $('#datepicker').attr('type', 'datetime-local');
+
+                $('#datepicker').attr('max', S.todayDateTime);
+                $('#datepicker').prop('disabled', false); // Allow user input
+                $('#datepicker').val(S.todayDateTime);
+            } else {
+                $('#datepicker').attr('type', 'date');
+
+            }
+            $('#confirmSend').off('click').on('click', function () {
+                
+
+                var dateValue = $('#datepicker').val();
+                var currentDate = new Date();
+
+                // Add server's current time if only a date is selected
+                var FwdDateForComment = '';
+                if ($('#datepicker').attr('type') === 'date') {
+
+                    const formattedDate = S.todayDateTime;
+                    FwdDateForComment = formattedDate;
+
+                } else if ($('#datepicker').attr('type') === 'datetime-local') {
+                    if (!dateValue) {
+                        alert('Please select date and time.');
+                        return;
+                    }
+                    FwdDateForComment = dateValue.replace('T', ' '); // Format datetime-local to space-separated
+                }
+                $('#confirmationModal').modal('hide');
+                SentForComment(ProjId, psmId, 0, FwdDateForComment);
+                /* AddNotification(ProjId, 1, 0);*/
+                ProcessProjConfirm(ProjId);
+                IsReadInbox(psmId);
+                InboxNotificationCount();
+            });
+
         });
-
-        //IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
-
-        //IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
     });
 
     $('#x').on('hidden.bs.modal', function () {
@@ -265,6 +271,7 @@ function ProcessProjConfirm(ProjId) {
     });
 }
 function FwdProjConfirm(psmId) {
+
     $.ajax({
         url: '/Projects/FwdProjConfirm',
         type: 'POST',

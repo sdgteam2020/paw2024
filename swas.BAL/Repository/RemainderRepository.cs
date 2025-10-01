@@ -174,7 +174,7 @@ namespace swas.BAL.Repository
             throw new NotImplementedException();
         }
 
-        public async Task<int> UpdateReaminderRead(int projectId,int pullback)
+        public async Task<int> UpdateReaminderRead(int? projectId,int pullback)
         {
 
 
@@ -226,10 +226,7 @@ namespace swas.BAL.Repository
                 else
                 {
 
-                    var latestpsmiddata = _dbContext.ProjStakeHolderMov.Find(latestpsmid);
-                    latestpsmiddata.IsRead = true;
-
-                    _dbContext.ProjStakeHolderMov.Update(latestpsmiddata);
+                   
 
                     var remainders = await _dbContext.TrnRemainders
                         .Where(r => r.Projid == projectId && r.ReadDate == null && r.Tounitid == Logins.unitid)
@@ -249,6 +246,10 @@ namespace swas.BAL.Repository
                         return 0; // No records found
                     }
 
+                    var latestpsmiddata = _dbContext.ProjStakeHolderMov.Find(latestpsmid);
+                    latestpsmiddata.IsRead = true;
+
+                    _dbContext.ProjStakeHolderMov.Update(latestpsmiddata);
                     foreach (var remainder in remainders)
                     {
                         remainder.ReadDate = DateTime.Now.ToString();  // Assuming Readdate is DateTime

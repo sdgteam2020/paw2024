@@ -77,7 +77,6 @@
 	.tabs__content__item.active-tab {
 	display: block;
 	}
-
 </style>
 
 <style>
@@ -271,7 +270,8 @@
 	width: 10vw;
 	}
 
-	.disabled-link {
+	.disabled-link 
+	{
 	pointer-events: none;
 	opacity: 0.7;
 	cursor: not-allowed;
@@ -366,7 +366,7 @@
 										<th>SubStage</th>
 										<th>Action</th>
 										<th class="projaction">Project Action</th>
-										<th>Ingest Legacy Project</th>
+										<th>Legacy Pro</th>
 									</tr>
 								</thead>
 
@@ -481,7 +481,7 @@
 											</td>
 											<td>
 												<div class="d-flex">
-													<div class="col-md-8">
+													<div class="col-md-10">
 														<div class="RefLetter-container ">
 															@project.FromUnitUserDetail
 															<div class="RefLetter">
@@ -862,7 +862,7 @@
 
 											<td>
 												<div class="d-flex">
-													<div class="col-md-8">
+													<div class="col-md-10">
 														@project.ToUnitName
 											</div>
 												@if (project.IsCc == true)
@@ -1238,7 +1238,8 @@
 												</td>
 
 												<td>
-													<a href="#" class="btn btn-sm btn-primary" id="btnRemMove" data-proj-name="@project.ProjName" data-action="@project.projid">View</a>
+
+													<a href="#"  id="btnRemMove" data-proj-name="@project.ProjName" data-action="@project.projid"><img src="/assets/images/icons/Legacyhistory.png" alt="Icon" style="height: 27px;"></a>
 												</td>
 											</tr>
 
@@ -1626,7 +1627,7 @@
 <script src="~/developerjs/projectdetails.js"></script>
 
 <script src="~/developerjs/projectstckholdercommentforprojhistory.js"></script>
-
+<script src="~/developerjs/comman.js"></script>
 <script src="~/developerjs/ProjectDetailDatatable.js"></script>
 <script src="~/developerjs/CommanDatatable.js"></script>
 
@@ -1789,38 +1790,7 @@
 		// });
 
 
-		$(".btn-Fwd").click(function () {
-			let date_type_raw = $(this).data("date_type"); // "True" or "False"
-			let date_type = (String(date_type_raw).toLowerCase() === "true");
-
-			var pad = "00";
-			var datef2 = new Date();
-
-			var months = "" + (datef2.getMonth() + 1);
-			var days = "" + datef2.getDate();
-			var monthsans = pad.substring(0, pad.length - months.length) + months;
-			var dayans = pad.substring(0, pad.length - days.length) + days;
-			var year = datef2.getFullYear();
-			var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-			var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-			var todayDate = `${year}-${monthsans}-${dayans}`;
-			var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
-
-			if (date_type) {
-				$('#TimeStampToProjfwd').attr('type', 'datetime-local');
-				$('#TimeStampToProjfwd').attr('max', todayDateTime);
-				$('#TimeStampToProjfwd').prop('disabled', false); // Allow user input
-				$('#TimeStampToProjfwd').val(todayDateTime);
-
-			} else {
-				$('#TimeStampToProjfwd').attr('type', 'date');
-				$('#TimeStampToProjfwd').val(todayDate); // Set today's date
-				$('#TimeStampToProjfwd').prop('disabled', true); // Freeze input
-			}
-
-			// Optional: show a modal or scroll to the input
-			$('#TimeStampToProjfwd').focus();
-		});
+		
 
 
 

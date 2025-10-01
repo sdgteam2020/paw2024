@@ -2,7 +2,7 @@
 
 $(document).ready(function () {
   
-    initializeDataTable('#WhitelistedTable1');
+    initializeDataTable('#WhitelistedTable');
     $("#ddlUnitId").change(function () {
         var selectedMode = $(this).val();
     });
@@ -79,18 +79,20 @@ $(document).ready(function () {
             type: 'GET',
             data: { id: id },
             success: function (data) {
+                console.log("NewpRojects",data);
                 if (data) {
                     $('#edit_Id').val(data.id);
                     $('#edit_ProjName').val(data.projName);
 
                     var hostedOnMap = {
-                        "1": "LAN",
-                        "2": "ADN",
+                        "1": "ADN",
+                        "2": "LAN",
                         "3": "Internet",
                         "4": "Standalone"
                     };
 
                     var hostedOnVal = data.mHostTypeId ? data.mHostTypeId.toString() : "";
+                  
                     $('#edit_HostedOn').val(hostedOnVal);
 
                     if ($('#edit_HostedOn').val() != hostedOnVal) {
@@ -102,6 +104,7 @@ $(document).ready(function () {
                             }
                         });
                     }
+                 
                     $('#edit_Appt').val(data.appt);
                     $('#edit_Sponser').val(data.fmn);
                     $('#edit_TelNo').val(data.contactNo);

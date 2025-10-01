@@ -1,54 +1,26 @@
 ﻿$(document).ready(function () {
 
-    var pad = "00"
-    var datef2 = new Date();
-    var months = "" + `${(datef2.getMonth() + 1)}`;
-    var days = "" + `${(datef2.getDate())}`;
-    var monthsans = pad.substring(0, pad.length - months.length) + months
-    var dayans = pad.substring(0, pad.length - days.length) + days
-    var year = `${datef2.getFullYear()}`;
-    var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-    var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-    // var mm = `${datef2.getMinutes()}`;
-    var ss = `${datef2.getSeconds()}`;
-
-    //var today = new Date().toISOString().split('T');  // Get today's date in YYYY-MM-DD format
-
-    //today = today[0] + 'T' + today[1].substring(0,5);
-    //var today = year + `-` + monthsans + `-` + dayans + `T` + hh + `:` + mm
-
-
+    
+    //var pad = "00"
+    //var datef2 = new Date();
+    //var months = "" + `${(datef2.getMonth() + 1)}`;
+    //var days = "" + `${(datef2.getDate())}`;
+    //var monthsans = pad.substring(0, pad.length - months.length) + months
+    //var dayans = pad.substring(0, pad.length - days.length) + days
+    //var year = `${datef2.getFullYear()}`;
+    //var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+    //var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+  
+    //var ss = `${datef2.getSeconds()}`;
     //var today = year + `-` + monthsans + `-` + dayans;
 
-    //if ($("#isclaneder").html() == 1) {
+   
+    fetchServerDate().then(function (S) {
 
-    //    $('input[type=date]').attr('min', today);
-    //    $('.datepicker1').datepicker({
-    //        minDate: 0
-    //    });
-    //    $("#InitiatedDate").val(today);
-    //    $('#InitiatedDate').attr('readonly', true);
-    //}
-    //else {
-    //    $('input[type=date]').attr('max', today);
-    //    $('.datepicker1').datepicker();
-
-    //}
-    //$('.datetimepicker1').datepicker();
-
-    //// Remove the max date setting for CompletionDate to allow future selection
-    //$("#InitiatedDate").change(function () {
-
-    //    $('#CompletionDate').val("");
-    //    $('#CompletionDate').attr('min', $("#InitiatedDate").val());
-    //    $('input[type=date]').attr('max', null);
-    //})
-
-
-    var today = year + `-` + monthsans + `-` + dayans;
-
-
-    function applyDateLogic() {
+        // Initial apply once date is available
+        applyDateLogic(S.today);
+    });
+    function applyDateLogic(today) {
         debugger;
         var selectedMode = $('input[name="mcalender_dates"]:checked').val();
 
@@ -79,13 +51,18 @@
     }
 
 
-    applyDateLogic();
+    fetchServerDate().then(function (S) {
+
+        // Initial apply once date is available
+        applyDateLogic(S.today);
+    });
 
     // Re-run when calendar toggle changes
-    $('input[name="mcalender_dates"]').change(function () {
+    $('input[name="mcalender_dates"]').on('change', function () {
+        fetchServerDate().then(function (S) {
 
-
-        applyDateLogic();
+            applyDateLogic(S.today);
+        });
     });
 
     $('#InitiatedDate').on('change', function () {
@@ -178,7 +155,7 @@ function DateFormateyyy_mm_dd(date) {
     //`${datef2.getFullYear()}/` + monthsans + `/` + dayans ;
 }
 function DateFormateddMMyyyyhhmmss(date) {
-    
+   
     var todaysDate = new Date();
     var datef1 = new Date(date);
     //if (datef1.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
@@ -249,17 +226,21 @@ function DateFormated(date) {
     //`${datef2.getFullYear()}/` + monthsans + `/` + dayans ;
 }
 
+
+
+
+
+
 function DateCalculateago(fmDate, end_actual_time) {
     // Initial variables
     var ago = "";
     var start_actual_time = new Date(fmDate);  // Start time
-    /*  var end_actual_time = new Date(end_actual_time);  // End time*/
-    var end_actual_time = end_actual_time ? new Date(end_actual_time) : new Date();
-
+    var end_actual_time = new Date(end_actual_time);  // End time
 
     // Calculate difference in milliseconds
     var diff = end_actual_time - start_actual_time;
 
+    
     // Convert the difference to seconds, minutes, hours, days, months, and years
     var diffSeconds = diff / 1000;
     var diffMinutes = diffSeconds / 60;
@@ -279,16 +260,15 @@ function DateCalculateago(fmDate, end_actual_time) {
     if (diffHours < 24) {
         ago = formatted + ' Min';
     } else if (diffHours < 730) {  // Less than 730 hours (~30 days)
-        ago = Math.floor(diffDays) + ' Days (' + formatted + ')';
+        ago = Math.floor(diffDays) + ' Days';
     } else if (diffHours < 8760) {  // Less than 8760 hours (~365 days)
-        ago = Math.floor(diffMonths) + ' Months (' + formatted + ')';
+        ago = Math.floor(diffMonths) + ' Months';
     } else {
-        ago = Math.floor(diffYears) + ' Years (' + formatted + ')';
+        ago = Math.floor(diffYears) + ' Years';
     }
 
     return ago;
-}
-
+} 
 
 function DateCalculateagoForChart(fmDate, end_actual_time) {
     const diffMs = new Date(end_actual_time) - new Date(fmDate);
@@ -455,4 +435,116 @@ function breakLinesByWords(text, wordLimit) {
 
     return result.join("<br>");
 }
-    
+// Common date utility
+/* /js/server-date.js*/
+//(function (w, $) {
+//    // Global store
+//    w.SERVER = { today: null, todayDateTime: null };
+
+//    // A promise you can await/then in any other file
+//    let _resolve;
+//    const _ready = new Promise(res => { _resolve = res; });
+//    w.serverDateReady = _ready;  // expose globally
+
+//    // Fetch util (reusable)
+//    w.fetchServerDate = function fetchServerDate() {
+//        // If already fetched, return resolved promise
+//        if (w.SERVER.today && w.SERVER.todayDateTime) {
+//            return Promise.resolve(w.SERVER);
+//        }
+
+//        return $.ajax({
+//            type: "GET",
+//            url: "/Projects/GetDate",
+//            dataType: "json",
+//            cache: false
+//        }).then(function (data) {
+//            // Normalize to required formats
+//            let ymd = data.dateYmd || data.serverDate || "";
+//            let dt = data.dateTimeLocal || "";
+
+//            // Convert dd-MM-yyyy -> yyyy-MM-dd if needed
+//            if (/^\d{2}-\d{2}-\d{4}$/.test(ymd)) {
+//                const [dd, mm, yyyy] = ymd.split("-");
+//                ymd = `${yyyy}-${mm}-${dd}`;
+//            }
+//            if (!/^\d{4}-\d{2}-\d{2}$/.test(ymd)) {
+//                throw new Error("Bad server date format");
+//            }
+//            // If time not provided, build one at current local time
+//            if (!dt) {
+//                const d = new Date();
+//                const pad = n => String(n).padStart(2, "0");
+//                dt = `${ymd}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+//            }
+
+//            w.SERVER.today = ymd;             // "YYYY-MM-DD"
+//            w.SERVER.todayDateTime = dt;      // "YYYY-MM-DDTHH:mm"
+//            _resolve(w.SERVER);
+//            return w.SERVER;
+//        }).catch(function (err) {
+//            console.warn("GetDate failed, using client clock:", err);
+//            const d = new Date();
+//            const pad = n => String(n).padStart(2, "0");
+//            const ymd = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+//            const dt = `${ymd}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+//            w.SERVER.today = ymd;
+//            w.SERVER.todayDateTime = dt;
+//            _resolve(w.SERVER);
+//            return w.SERVER;
+//        });
+//    };
+
+//    // Kick off fetch immediately on load
+//    $(w.fetchServerDate);
+
+//})(window, jQuery);
+function fetchServerDate() {
+    return $.ajax({
+        type: "GET",
+        url: "/Projects/GetDate",
+        dataType: "json",
+        cache: false
+    }).then(function (data) {
+        debugger;
+
+        let ymd = data.dateYmd || data.serverDate || "";
+        let dt = data.dateTimeLocal || "";
+        let dtana = data.analy || new Date();
+        let serv = data.nowUtc;
+
+        // If the server returned dd-MM-yyyy, convert it to yyyy-MM-dd
+        if (/^\d{2}-\d{2}-\d{4}$/.test(ymd)) {
+            const [dd, mm, yyyy] = ymd.split("-");
+            ymd = `${yyyy}-${mm}-${dd}`;
+        }
+
+        // If datetime is not provided, build one with current time including seconds
+        if (!dt && ymd) {
+            const d = new Date(ymd);
+            const pad = n => String(n).padStart(2, "0");
+            dt = `${ymd}T${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`; // Include seconds
+        }
+
+        // Handle timezone adjustment (ensure it's treated as UTC)
+        const serverDate = new Date(dt + "Z"); // Append 'Z' to ensure it's UTC
+        const localDate = new Date(serverDate.toLocaleString());  // Convert UTC to local time
+
+        // Format date-time for datetime-local (YYYY-MM-DDTHH:mm:ss)
+        const formattedDateTime = localDate.toISOString().slice(0, 19);  // Get YYYY-MM-DDTHH:mm:ss
+
+        // Return the formatted date and time with seconds included
+        return { today: ymd, todayDateTime: formattedDateTime, analy: dtana }; // return the formatted date and time
+
+    }).catch(function (err) {
+       
+        const d = new Date();
+        const pad = n => String(n).padStart(2, "0");
+        const ymd = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+        const dt = `${ymd}T${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`; // Include seconds
+        return { today: ymd, todayDateTime: dt, analy: dt }; // return client date as fallback
+    });
+}
+
+
+

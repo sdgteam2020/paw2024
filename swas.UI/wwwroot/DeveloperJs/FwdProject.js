@@ -147,6 +147,8 @@ $(document).ready(function () {
 
     });
     $(".btn-Fwd").click(function () {
+        debugger;
+        var Isprocess = $(this).closest("tr").find("#SpnprojectIsProcess").html() === "False" ? false : true;
 
 
         $('.FwdDropdown').addClass('col-md-6');
@@ -167,10 +169,16 @@ $(document).ready(function () {
         var projNameDetail = $(this).data('proj-name') + " " + "Move Details";
         $('.fwdtitle').text(projNameDetail);
 
-        if (words.includes("Re-Vetted")) {
+
+        if (Isprocess == false)
+        {
+            mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 1, 1)
+        }
+      else if (words.includes("Re-Vetted")) {
 
             mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 1, "Re-Vetted")
-        } else {
+        }
+        else {
             mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 1)
         }
 
@@ -224,7 +232,10 @@ $(document).ready(function () {
         $('#fwdModal').text(finalTitle);
         $('.fwdtitle').text(projNameDetail);
 
-        mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 2)
+        
+
+
+        mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 2,1)
         mMsaterStage($(this).closest("tr").find("#SpnTimeStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#SpnStageId").html(), $("#SpnStakeHolderId").html())
 
         /*mMsater($(this).closest("tr").find("#SpnTimeActionId").html(), "ddlfwdAction", 9, $(this).closest("tr").find("#SpnTimeStatusId").html())*/

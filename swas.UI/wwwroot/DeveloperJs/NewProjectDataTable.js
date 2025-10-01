@@ -42,43 +42,7 @@
     }
 });
 
-var table2 = $('#WhitelistedTable').DataTable({
-    lengthChange: false,
-    dom: 'lBfrtip',
-    buttons: [
-        { extend: "excel", className: "buttonsToHide" },
-        { extend: "pdf", className: "buttonsToHide" },
-        { extend: "print", className: "buttonsToHide" }
-    ],
-   
-    searchBuilder: {
-        conditions: {
-            num: {
-                'MultipleOf': {
-                    conditionName: 'Multiple Of',
-                    init: function (that, fn, preDefined = null) {
-                        var el = $('<input/>').on('input', function () { fn(that, this) });
 
-                        if (preDefined !== null) {
-                            $(el).val(preDefined[0]);
-                        }
-
-                        return el;
-                    },
-                    inputValue: function (el) {
-                        return $(el[0]).val();
-                    },
-                    isInputValid: function (el, that) {
-                        return $(el[0]).val().length !== 0;
-                    },
-                    search: function (value, comparison) {
-                        return value % comparison === 0;
-                    }
-                }
-            }
-        }
-    }
-});
 
 
 $(document).ready(function () {

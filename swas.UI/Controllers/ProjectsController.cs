@@ -109,7 +109,6 @@ namespace swas.UI.Controllers
 
             return View(dto);
         }
-
         public async Task<IActionResult> Details(int id)
         {
 
@@ -122,10 +121,7 @@ namespace swas.UI.Controllers
             return Json(new { success = true, project });
         }
 
-
-
         [HttpGet]
-
         public async Task<IActionResult> ProjStatDashBdView(string? id, string? status)
         {
             string EncyID = id;
@@ -651,73 +647,6 @@ namespace swas.UI.Controllers
         }
 
 
-        //[HttpPost]
-        //public async Task<IActionResult> IsReadNotificationInbox(int ProjId)
-        //{
-        //    var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-        //    if (loginUser == null)
-        //    {
-        //        return Redirect("/Identity/Account/login");
-        //    }
-
-        //    try
-        //    {
-        //        var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
-        //        if (notify != null)
-        //        {
-        //            notify.ReadDateTime = DateTime.Now;
-        //            notify.IsRead = true;
-
-        //            var updateResult = await _projectsRepository.UpdateNotificationByProjID(notify);
-        //            if (updateResult)
-        //            {
-        //                return Json(ProjId);
-        //            }
-        //        }
-
-        //        return Json(0);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-        //        return Json(0);
-        //    }
-        //}
-
-
-        //[HttpPost]
-        //public async Task<IActionResult> IsReadNotification(int ProjId)
-        //{
-        //    var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-        //    if (loginUser == null)
-        //    {
-        //        return Redirect("/Identity/Account/login");
-        //    }
-
-        //    try
-        //    {
-        //        var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
-        //        if (notify != null)
-        //        {
-        //            //notify.ReadDateTime = DateTime.Now;
-        //            //notify.IsRead = true;
-
-        //            var updateResult = await _projectsRepository.UpdateNotification(notify);
-        //            if (updateResult)
-        //            {
-        //                return Json(ProjId);
-        //            }
-        //        }
-
-        //        return Json(0);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-        //        return Json(0);
-        //    }
-        //}
-
         [HttpPost]
         public async Task<IActionResult> IsProcessProjConfirm(int ProjId)
         {
@@ -1051,7 +980,7 @@ namespace swas.UI.Controllers
                 {
                     foreach (var attachment in psmove.Attachments)
                     {
-                        var saveResult = await SaveAttachmentAsync(attachment.File, attachment.Remarks, latestpsmid, Logins);
+                        var saveResult = await SaveAttachmentAsync(attachment.File, attachment.Remarks, latestpsmid, Logins, psmove.TimeStamp);
 
                         // Check if saveResult is a JsonResult and extract the integer value
                         if (saveResult is JsonResult jsonResult)
@@ -1109,7 +1038,7 @@ namespace swas.UI.Controllers
 
         }
 
-        public async Task<IActionResult> SaveAttachmentAsync(IFormFile attdata, string remarks, int psmid, Login Logins)
+        public async Task<IActionResult> SaveAttachmentAsync(IFormFile attdata, string remarks, int psmid, Login Logins,DateTime? TimeStamp)
         {
             var MaxFileSizeBytes = 10 * 1024 * 1024; // 10 MB
             if (attdata == null || attdata.Length == 0)
@@ -1152,7 +1081,7 @@ namespace swas.UI.Controllers
                 IsActive = true,
                 EditDeleteBy = Logins?.unitid,
                 EditDeleteDate = DateTime.Now,
-                TimeStamp = DateTime.Now,
+                TimeStamp = TimeStamp,
                 ActFileName = originalName       // original file name from user
             };
 
@@ -1489,14 +1418,13 @@ namespace swas.UI.Controllers
                         await _dbContext.SaveChangesAsync();
 
 
-
-                        if(projectStkHolderMovementData.IsComplete ==false && projectStkHolderMovementData.IsComment ==true)
-                        {
-
-                    projectStkHolderMovementData.DateTimeOfUpdate = CommentDate; // To show the comment date on the dashboard btnGetsummay 
-                        };
-                        //projectStkHolderMovementData.TimeStamp = DateTime.Now; // no need to update the TimeStamp on ProjectComment, this will affect the MovHistory of project update by Divyanshu on 12/03/2025
-                        var rets = await _projectsRepository.UpdateProjectStkMovementAsync(projectStkHolderMovementData);
+                        
+                       
+                            projectStkHolderMovementData.IsComplete = true;
+                            projectStkHolderMovementData.DateTimeOfUpdate = CommentDate; // To show the comment date on the dashboard btnGetsummay 
+                      
+                            //projectStkHolderMovementData.TimeStamp = DateTime.Now; // no need to update the TimeStamp on ProjectComment, this will affect the MovHistory of project update by Divyanshu on 12/03/2025
+                            var rets = await _projectsRepository.UpdateProjectStkMovementAsync(projectStkHolderMovementData);
 
                         if (rets != null)
                         {
@@ -1653,6 +1581,7 @@ namespace swas.UI.Controllers
                     {
                         string decryptedValue = _dataProtector.Unprotect(EncyID);
                         dataProjId = int.Parse(decryptedValue);
+                        var udpate = await _Remainder.UpdateReaminderRead(dataProjId, 0);
                         ViewBag.IsCommentPsmiId = await _projectsRepository.GetIsCommentPsmiId(dataProjId, Logins.unitid);
                         //dataProjId = await _projectsRepository.GetProjIdByPsmiId(psmId, Logins.unitid);
                     }
@@ -1898,7 +1827,8 @@ namespace swas.UI.Controllers
 
         #endregion
 
-
+        
+        #region Inbox & Comment Read/Unread
         [HttpPost]
         public async Task<IActionResult> IsUnReadInbox(int PsmId)
         {
@@ -1938,7 +1868,10 @@ namespace swas.UI.Controllers
             }
 
         }
+        #endregion
 
+
+        #region Comment Read/Unread for all comments in a project
 
         [HttpPost]
         public async Task<IActionResult> IsUnReadComment(int Projid, int PsmId)
@@ -1976,8 +1909,10 @@ namespace swas.UI.Controllers
             }
         }
 
+        #endregion
 
 
+        #region GetProjectCommentCount
         [HttpGet]
         public async Task<JsonResult> GetProjectCommentCount()
         {
@@ -1996,6 +1931,10 @@ namespace swas.UI.Controllers
             }
         }
 
+        #endregion
+
+
+        #region GetProjectInboxCount
         [HttpGet]
         public async Task<JsonResult> GetProjectInboxCount()
         {
@@ -2014,15 +1953,20 @@ namespace swas.UI.Controllers
             }
         }
 
+        #endregion
 
+
+        #region ProjectMovement
         [HttpGet]
-
         public async Task<IActionResult> ProjectMovement(string? ProjName)
         {
             //var ProjectMovementDetail  = await _projStakeHolderMovRepository.ProjectMovement(ProjId);
             return View();
 
         }
+        #endregion
+
+        #region GetProjectMov
         public async Task<IActionResult> GetProjectMov(int Id)
         {
 
@@ -2036,6 +1980,7 @@ namespace swas.UI.Controllers
                 return Json(-1);
             }
         }
+        #endregion
 
         public async Task<IActionResult> ProjectMovementUpdate(tbl_ProjStakeHolderMov psmove)
         {
@@ -2179,73 +2124,7 @@ namespace swas.UI.Controllers
             }
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> IsUnReadNotification(int ProjId)
-        //{
-        //    var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-        //    if (loginUser == null)
-        //    {
-        //        return Redirect("/Identity/Account/login");
-        //    }
-
-        //    try
-        //    {
-        //        var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
-        //        if (notify != null)
-        //        {
-        //            notify.ReadDateTime = DateTime.Now;
-        //            notify.IsRead = false;
-
-        //            var updateResult = await _projectsRepository.UpdateUnReadNotification(notify);
-        //            if (updateResult)
-        //            {
-        //                return Json(ProjId);
-        //            }
-        //        }
-
-        //        return Json(0);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-        //        return Json(0);
-        //    }
-        //}
-
-
-
-        //[HttpPost]
-        //public async Task<IActionResult> IsCommentedUnreadNotification (int ProjId)
-        //{
-        //    var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-        //    if (loginUser == null)
-        //    {
-        //        return Redirect("/Identity/Account/login");
-        //    }
-
-        //    try
-        //    {
-        //        var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
-        //        if (notify != null)
-        //        {
-        //            notify.ReadDateTime = DateTime.Now;
-        //            notify.IsRead = false;
-
-        //            var updateResult = await _projectsRepository.UpdateCommentedUnReadNotification(notify);
-        //            if (updateResult)
-        //            {
-        //                return Json(ProjId);
-        //            }
-        //        }
-
-        //        return Json(0);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-        //        return Json(0);
-        //    }
-        //}
+       
 
         [HttpPost]
         public async Task<IActionResult> IsReadComment(int ProjId, int PsmId)
@@ -2294,12 +2173,6 @@ namespace swas.UI.Controllers
             HttpContext.Session.SetInt32("CalendarMode", mode);
             return Json(new { success = true, message = "Calendar mode saved in session." });
         }
-
-
-
-
-
-
 
         [HttpPost("Projects/LogDateApprovalWithRemarks")]
         public async Task<IActionResult> LogDateApproval(int ProjId, bool UserReq, int actiontype, string remarks)
@@ -2404,10 +2277,6 @@ namespace swas.UI.Controllers
             }
         }
 
-
-
-
-
         [HttpGet]
         public async Task<IActionResult> GetRevettedProjects([FromQuery] string searchQuery)
         {
@@ -2433,10 +2302,6 @@ namespace swas.UI.Controllers
             var result = await query.ToListAsync();
             return Ok(result);
         }
-
-
-
-
 
         [HttpGet]
         public async Task<IActionResult> GetProjectDetails([FromQuery] int projId)
@@ -2613,6 +2478,23 @@ namespace swas.UI.Controllers
                 return StatusCode(500, new { success = false, message = "An error occurred while Find Project For Comment." });
 
             }
+        }
+        [HttpGet]
+        public IActionResult GetDate()
+        {
+            // IST in YYYY-MM-DD
+            //var ist = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+            var nowUtc = DateTime.UtcNow;  // Get UTC time to avoid timezone issues
+            var nowIst = nowUtc.AddHours(5.5);  // Convert UTC to IST (Indian Standard Time) by adding 5.5 hours
+
+            var dateYmd = nowIst.ToString("yyyy-MM-dd");  // Date in "yyyy-MM-dd" format
+            var dateTime = nowIst.ToString("yyyy-MM-ddTHH:mm");  // Date and time in ISO format
+            var sec = nowIst.ToString("ss");
+            var analy = nowIst.ToString("dd/MM/yyyy HH:mm:ss");
+            var second = analy.Substring(17, 2); ;
+            
+            var dateTimeLocal = dateTime + ":" + second;
+            return Json(new { dateYmd, dateTimeLocal, analy, nowUtc });
         }
 
     }

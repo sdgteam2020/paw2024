@@ -339,3 +339,87 @@ Date : 12-09-2025 10:07:00
 -----------------------------------------------------------------------------
 Date : 12-09-2025 10:07:00
 Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 15-09-2025 12:16:06
+'System.Dynamic.DynamicObject' does not contain a definition for 'ProcessButtonColor'
+-----------------------------------------------------------------------------
+Date : 15-09-2025 12:22:26
+'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
+-----------------------------------------------------------------------------
+Date : 15-09-2025 12:22:26
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 15-09-2025 12:29:33
+'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
+-----------------------------------------------------------------------------
+Date : 15-09-2025 12:29:33
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 16-09-2025 14:48:36
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 16-09-2025 14:48:36
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 16-09-2025 14:48:36
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-09-2025 16:12:50
+'System.Dynamic.DynamicObject' does not contain a definition for 'Projects'
+-----------------------------------------------------------------------------
+Date : 17-09-2025 16:12:50
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 22-09-2025 15:17:06
+'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
+-----------------------------------------------------------------------------
+Date : 22-09-2025 15:17:06
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 29-09-2025 10:21:17
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 29-09-2025 10:21:17
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 29-09-2025 12:41:16
+'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
+-----------------------------------------------------------------------------
+Date : 29-09-2025 12:41:16
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 29-09-2025 13:00:28
+'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
+-----------------------------------------------------------------------------
+Date : 29-09-2025 13:00:28
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 29-09-2025 15:42:48
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 29-09-2025 15:42:48
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 29-09-2025 15:42:50
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 29-09-2025 15:42:50
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 29-09-2025 16:32:35
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 29-09-2025 16:32:35
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 29-09-2025 16:32:40
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 29-09-2025 16:32:40
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 29-09-2025 16:32:49
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 29-09-2025 16:32:49
+Request failed & Status Code : 200

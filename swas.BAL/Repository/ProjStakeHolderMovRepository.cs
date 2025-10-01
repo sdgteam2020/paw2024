@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Diagnostics;
+using swas.BAL.Utility;
 
 namespace swas.BAL.Repository
 {
@@ -197,137 +198,191 @@ namespace swas.BAL.Repository
         } 
         public async Task<List<DTOProjectHold>> ProjectHolsTimeCalculate(int ProjectId)
         {
-            List<DTOProjectHold> lst=new List<DTOProjectHold>();
-            var databyprojectid = await (from mov in _dbContext.ProjStakeHolderMov
-                                         join munit1 in _dbContext.tbl_mUnitBranch on mov.ToUnitId equals munit1.unitid
-                                         join munit2 in _dbContext.tbl_mUnitBranch on mov.FromUnitId equals munit2.unitid
-                                         join stsmap in _dbContext.TrnStatusActionsMapping on mov.StatusActionsMappingId equals stsmap.StatusActionsMappingId  
-                                         join act in _dbContext.mActions on stsmap.ActionsId equals act.ActionsId
-                                         join sts in _dbContext.mStatus on stsmap.StatusId equals sts.StatusId
-                                         where 
-                                        // mov.IsComment==false &&
-                                         mov.ProjId==ProjectId
-                                        
-                                         orderby mov.PsmId
-                                         select new DTOProjectHold
-                                         {
-                                           PsmId=mov.PsmId,
-                                           TounitId = mov.ToUnitId,
-                                           Tounit= munit1.UnitName,
-                                           FromunitId = mov.FromUnitId,
-                                           Fromunit = munit2.UnitName,
-                                           TimeStamp = mov.TimeStamp,
-                                           DateTimeOfUpdate = mov.DateTimeOfUpdate, 
-                                           Status= sts.Status,
-                                           StatusId = sts.StatusId,
-                                           Action = act.ActionDesc,
-                                           IsComment=mov.IsComment,
-                                           IsComplete = mov.IsComplete,
-                                           UndoRemarks = mov.UndoRemarks
-                                           
-                                         }).ToListAsync();
-           
-           
-            for (int i=0;i< databyprojectid.Count();i++ )
+            try
             {
-                DTOProjectHold db = new DTOProjectHold();
-                db.PsmId = databyprojectid[i].PsmId;
-                
-                if (databyprojectid[i].IsComment == false)
+                List<DTOProjectHold> lst = new List<DTOProjectHold>();
+                var databyprojectid = await (from mov in _dbContext.ProjStakeHolderMov
+                                             join munit1 in _dbContext.tbl_mUnitBranch on mov.ToUnitId equals munit1.unitid
+                                             join munit2 in _dbContext.tbl_mUnitBranch on mov.FromUnitId equals munit2.unitid
+                                             join stsmap in _dbContext.TrnStatusActionsMapping on mov.StatusActionsMappingId equals stsmap.StatusActionsMappingId
+                                             join act in _dbContext.mActions on stsmap.ActionsId equals act.ActionsId
+                                             join sts in _dbContext.mStatus on stsmap.StatusId equals sts.StatusId
+                                             let latestComment = _dbContext.StkComment
+                  .Where(c => c.PsmId == mov.PsmId)
+                  .OrderByDescending(c => c.DateTimeOfUpdate)
+                  .Select(c => new { c.StkStatusId, c.DateTimeOfUpdate })
+                  .FirstOrDefault()
+
+                                             let Firstactiondt = _dbContext.StkComment
+                                         .Where(c => c.PsmId == mov.PsmId)
+                                         .OrderBy(c => c.DateTimeOfUpdate)
+                                         .Select(c => new { c.StkStatusId, c.DateTimeOfUpdate })
+                                         .FirstOrDefault()
+                                             let hasApprovedStatus = _dbContext.StkComment
+    .Any(c => c.PsmId == mov.PsmId && c.StkStatusId == 1)
+
+
+
+                                             let ApprovedDt = _dbContext.StkComment
+                                             .FirstOrDefault(c => c.PsmId == mov.PsmId && c.StkStatusId == 1)
+                                             let Reject = _dbContext.StkComment
+                                             .FirstOrDefault(c => c.PsmId == mov.PsmId && c.StkStatusId == 3)
+                                             where
+                                             // mov.IsComment==false &&
+                                             mov.ProjId == ProjectId
+
+                                             orderby mov.PsmId
+                                             select new DTOProjectHold
+                                             {
+                                                 PsmId = mov.PsmId,
+                                                 TounitId = mov.ToUnitId,
+                                                 Tounit = munit1.UnitName,
+                                                 FromunitId = mov.FromUnitId,
+                                                 Fromunit = munit2.UnitName,
+                                                 TimeStamp = mov.TimeStamp,
+                                                 DateTimeOfUpdate = mov.DateTimeOfUpdate,
+                                                 Status = sts.Status,
+                                                 StatusId = sts.StatusId,
+                                                 Action = act.ActionDesc,
+                                                 IsComment = mov.IsComment,
+                                                 IsComplete = mov.IsComplete,
+                                                 UndoRemarks = mov.UndoRemarks,
+                                                 // resolve status text from the latest comment's status id (left-join semantics)
+                                                 StkStauts = _dbContext.StkStatus
+                    .Where(s => s.StkStatusId == latestComment.StkStatusId)
+                    .Select(s => s.Status)
+                    .FirstOrDefault(),
+                                                 FirstActionDate = Firstactiondt.DateTimeOfUpdate,
+                                                 // ✅ latest comment date (null if none exists)
+                                                 LatestCommentDate = latestComment.DateTimeOfUpdate,
+
+
+                                                 FirstStkStatus= _dbContext.StkStatus
+                    .Where(s => s.StkStatusId == Firstactiondt.StkStatusId)
+                    .Select(s => s.Status)
+                    .FirstOrDefault(),
+                                                 IsApproved = hasApprovedStatus.ToInt32(),
+                                                 Approveddate = ApprovedDt.DateTimeOfUpdate,
+                                                 RejectedDt = Reject.DateTimeOfUpdate
+
+                                             }).ToListAsync();
+
+
+                for (int i = 0; i < databyprojectid.Count(); i++)
                 {
+                    DTOProjectHold db = new DTOProjectHold();
+                    db.PsmId = databyprojectid[i].PsmId;
 
-
-                  
-                    if(i==0)
+                    if (databyprojectid[i].IsComment == false)
                     {
+
+
+
+                        if (i == 0)
+                        {
+                            db.FromunitId = databyprojectid[i].FromunitId;
+                            db.Fromunit = databyprojectid[i].Fromunit;
+                            db.TimeStampfrom = databyprojectid[i].TimeStamp;
+                            db.IsComment = databyprojectid[i].IsComment;
+
+                            db.IsComplete = databyprojectid[i].IsComplete;
+
+
+                            if (databyprojectid.Count() == 1)
+                            {
+                                db.TimeStampTo = DateTime.Now;
+                            }
+                            //else
+                            //{
+
+                            //     db.TimeStampTo = databyprojectid[i].TimeStamp;
+
+
+                            //}
+
+
+                            db.TounitId = databyprojectid[i].TounitId;
+                            db.Tounit = databyprojectid[i].Tounit;
+                            db.Status = databyprojectid[i].Status;
+                            db.Action = databyprojectid[i].Action;
+                            db.UndoRemarks = databyprojectid[i].UndoRemarks;
+                            db.StatusId = databyprojectid[i].StatusId;
+                        }
+                        else
+                        {
+                            if (lst[0].TimeStampTo == null)
+                                lst[0].TimeStampTo = databyprojectid[i].TimeStamp;
+
+                            db.FromunitId = databyprojectid[i].FromunitId;
+                            db.Fromunit = databyprojectid[i].Fromunit;
+                            db.TimeStampfrom = databyprojectid[i].TimeStamp;
+                            db.IsComment = databyprojectid[i].IsComment;
+                            db.TimeStampTo = DateTime.Now;
+                            db.IsComplete = databyprojectid[i].IsComplete;
+                            db.UndoRemarks = databyprojectid[i].UndoRemarks;
+                            db.StatusId = databyprojectid[i].StatusId;
+                            int j = i;
+                            j++;
+
+                            db.TounitId = databyprojectid[i].TounitId;
+                            db.Tounit = databyprojectid[i].Tounit;
+                            db.Status = databyprojectid[i].Status;
+                            db.Action = databyprojectid[i].Action;
+                            if (j < databyprojectid.Count())
+                            {
+                                int @psmid1 = databyprojectid[j].PsmId;
+                                db.TimeStampTo = databyprojectid[j].TimeStamp;
+
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                    
                         db.FromunitId = databyprojectid[i].FromunitId;
                         db.Fromunit = databyprojectid[i].Fromunit;
                         db.TimeStampfrom = databyprojectid[i].TimeStamp;
-                        db.IsComment = databyprojectid[i].IsComment;
-                    
-                        db.IsComplete = databyprojectid[i].IsComplete;
-                      
-                        
-                        if (databyprojectid.Count()==1)
+                        db.UndoRemarks = databyprojectid[i].UndoRemarks;
+                        if (databyprojectid[i].IsComplete == true)
                         {
+                            db.FirstActionDate = databyprojectid[i].FirstActionDate;
+                            db.TimeStampTo = databyprojectid[i].LatestCommentDate;
+                        }
+
+                        else
+                        {
+
                             db.TimeStampTo = DateTime.Now;
                         }
-                        //else
-                        //{
-                           
-                        //     db.TimeStampTo = databyprojectid[i].TimeStamp;
-                            
-
-                        //}
-                       
-
-                        db.TounitId = databyprojectid[i].TounitId;
-                        db.Tounit = databyprojectid[i].Tounit;
-                        db.Status = databyprojectid[i].Status;
-                        db.Action = databyprojectid[i].Action;
-                        db.UndoRemarks = databyprojectid[i].UndoRemarks;
-                        db.StatusId= databyprojectid[i].StatusId;
-                    }
-                    else
-                    {
-                        if (lst[0].TimeStampTo==null)
-                        lst[0].TimeStampTo = databyprojectid[i].TimeStamp;
-
-                        db.FromunitId = databyprojectid[i].FromunitId;
-                        db.Fromunit = databyprojectid[i].Fromunit;
-                        db.TimeStampfrom = databyprojectid[i].TimeStamp;
                         db.IsComment = databyprojectid[i].IsComment;
-                        db.TimeStampTo = DateTime.Now;
+                        db.FirstStkStatus = databyprojectid[i].FirstStkStatus;
                         db.IsComplete = databyprojectid[i].IsComplete;
-                        db.UndoRemarks = databyprojectid[i].UndoRemarks;
-                        db.StatusId = databyprojectid[i].StatusId;
-                        int j = i;
-                        j++;
-                       
+                        db.Approveddate = databyprojectid[i].Approveddate;
+                        db.RejectedDt = databyprojectid[i].RejectedDt;
                         db.TounitId = databyprojectid[i].TounitId;
                         db.Tounit = databyprojectid[i].Tounit;
+                        db.ApprovedStatusId = databyprojectid[i].IsApproved;
                         db.Status = databyprojectid[i].Status;
                         db.Action = databyprojectid[i].Action;
-                        if (j < databyprojectid.Count())
-                        {
-                            int @psmid1 = databyprojectid[j].PsmId;
-                            db.TimeStampTo = databyprojectid[j].TimeStamp;
-                           
-                        }
+                        db.StkStauts = databyprojectid[i].StkStauts;
                     }
-                   
+                    lst.Add(db);
                 }
-                else
-                {
-                    db.FromunitId = databyprojectid[i].FromunitId;
-                    db.Fromunit = databyprojectid[i].Fromunit;
-                    db.TimeStampfrom = databyprojectid[i].TimeStamp;
-                    db.UndoRemarks = databyprojectid[i].UndoRemarks;
-                    if (databyprojectid[i].IsComplete==true)
-                    db.TimeStampTo = databyprojectid[i].DateTimeOfUpdate;
-                    else
-                        db.TimeStampTo = DateTime.Now;
-                    db.IsComment = databyprojectid[i].IsComment;
-                    db.IsComplete = databyprojectid[i].IsComplete;
 
-                   
-                    db.TounitId = databyprojectid[i].TounitId;
-                    db.Tounit = databyprojectid[i].Tounit;
-                    db.Status = databyprojectid[i].Status;
-                    db.Action = databyprojectid[i].Action;
-                }
-                lst.Add(db);
+
+                return lst.OrderByDescending(x => x.PsmId).ToList();
+            }catch(Exception ex)
+            {
+                throw;
             }
            
-
-            return lst.ToList();
         }
-        public int GetLastRecProjectMov(int ProjectId)
+        public int GetLastRecProjectMov(int? ProjectId)
         {
             try
             {
-                //var query = _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.IsActive==true && i.IsComment==false && i.UndoRemarks==null).Max(p => p.PsmId);
-                //return query;
+              
 
                 var maxPsmIdParameter = new SqlParameter("@MaxPsmId", SqlDbType.Int)
                 {
@@ -348,7 +403,7 @@ namespace swas.BAL.Repository
         {
             try
             {
-               // var query = _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.PsmId < (_context.ProjStakeHolderMov.Max(p => p.PsmId))).Max(p => p.PsmId);
+              
                 var query =await _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.IsActive == true && i.IsComment == false && i.ToUnitId== TounitId).OrderByDescending(i=>i.PsmId).Take(1).Select(i=>i.PsmId).SingleOrDefaultAsync();
                 return query;
 

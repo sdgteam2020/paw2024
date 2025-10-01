@@ -40,34 +40,34 @@ namespace swas.BAL.DTO
     }
     public class MailBox
     {
-        public List<DTOProjectsFwd> InBox { get; set; }
-        public List<DTOProjectsFwd> SendItems { get; set; }
-        public List<tbl_Projects> CompletedItems { get; set; }
+        public List<DTOProjectsFwd>? InBox { get; set; }
+        public List<DTOProjectsFwd>? SendItems { get; set; }
+        public List<tbl_Projects>? CompletedItems { get; set; }
 
-        public List<tbl_Projects> Draft { get; set; }
-        public List<DTOProjectsFwd> CcItems { get; set; }
-        public List<RemainderDisplayDto> Remainder { get; set; }
+        public List<tbl_Projects>? Draft { get; set; }
+        public List<DTOProjectsFwd>? CcItems { get; set; }
+        public List<RemainderDisplayDto>? Remainder { get; set; }
 
     }
         
     public class DTOViews
     {
 
-        public string ProjName { get; set; }
-        public string Comment { get; set; }
-        public string Actions { get; set; }
-        public string Stages { get; set; }
-        public string StakeHolder { get; set; }
-        public string Status { get; set; }
-        public string CurrentStakeHolder { get; set; }
-        public string FromStakeHolder { get; set; }
-        public string ToStakeHolder { get; set; }
-        public string AttachDocuments { get; set; }
-        public string AddRemarks { get; set; }
+        public string? ProjName { get; set; }
+        public string? Comment { get; set; }
+        public string? Actions { get; set; }
+        public string? Stages { get; set; }
+        public string? StakeHolder { get; set; }
+        public string? Status { get; set; }
+        public string? CurrentStakeHolder { get; set; }
+        public string? FromStakeHolder { get; set; }
+        public string? ToStakeHolder { get; set; }
+        public string? AttachDocuments { get; set; }
+        public string? AddRemarks { get; set; }
         public DateTime TimeStamp { get; set; }
-        public string EditDeleteBy { get; set; }
+        public string? EditDeleteBy { get; set; }
         public DateTime EditDeleteDate { get; set; }
-        public string UpdatedByUserId { get; set; }
+        public string? UpdatedByUserId { get; set; }
         public DateTime DateTimeOfUpdate { get; set; }
         public DateTime TostackholderDt { get; set; }
 

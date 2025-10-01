@@ -43,7 +43,7 @@
     }
     .btn-small-large {
         padding: 0.5rem 0.7rem; /* Slightly larger padding than the default */
-        font-size: 1.1rem; /* Slightly larger font size */
+        font-size: 0.8rem; /* Slightly larger font size */
     }
 
     .btn-3d {
@@ -69,21 +69,23 @@
 			<div class="mb-3">
 				<!-- Button group -->
                 <div class="col-md-24 d-flex align-items-center" role="group">
-                    <button type="button" class="btn btn-danger mr-2 cmtbtn btn-3d" id="btnPending">Pending</button>
-                    <button type="button" class="btn btn-success mr-2 cmtbtn btn-3d" id="btnAccepted">Accepted</button>
-                    <button type="button" class="btn btn-warning mr-2 cmtbtn btn-3d" id="btnObsn">Obsn</button>
-                    <button type="button" class="btn btn-danger mr-2 cmtbtn btn-3d" id="btnRejected">Rejected</button>
-                    <button type="button" class="btn btn-info mr-2 text-white cmtbtn btn-3d" id="btnInfo">Info</button>
+                    <button type="button" class="btn btn-danger btn-sm mr-2 cmtbtn btn-3d" id="btnPending">Pending</button>
+                    <button type="button" class="btn btn-success btn-sm mr-2 cmtbtn btn-3d" id="btnAccepted">Accepted</button>
+                    <button type="button" class="btn btn-warning btn-sm mr-2 cmtbtn btn-3d" id="btnObsn">Obsn</button>
+                    <button type="button" class="btn btn-danger btn-sm mr-2 cmtbtn btn-3d" id="btnRejected">Rejected</button>
+                    <button type="button" class="btn btn-info btn-sm  mr-2 text-white cmtbtn btn-3d" id="btnInfo">Info</button>
 
-                    <div class="input-group col-md-6 ml-2">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text bold-text">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                </svg>Search Project
-                            </span>
+                    <div class="ml-auto">
+                        <div class="input-group col-md-6 ml-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bold-text">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                    </svg>Search Project
+                                </span>
+                            <input type="text" id="CommentProject" style="width: 476px;" class="form-control" placeholder="Search project for Comment" />
+                            </div>
                         </div>
-                        <input type="text" id="CommentProject" style="width: 476px;" class="form-control" placeholder="Search project for Comment" />
                     </div>
                 </div>
 
@@ -93,7 +95,7 @@
 				</div>
 				<!-- Section heading -->
 				<h4 class="newprojectheading text-center py-2 mt-1">
-					ProjComments
+					StakeHolder Comments
 				</h4>
 			</div>
 

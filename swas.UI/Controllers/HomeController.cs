@@ -163,10 +163,10 @@ namespace swas.UI.Controllers
             return Json(ss);
 
         }
-        public async Task<IActionResult> GetProjectWiseStatus(int Id)
+        public async Task<IActionResult> GetProjectWiseStatus(int Projid)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
-            var ss = await _projectsRepository.GetProjectWiseStatus();
+            var ss = await _projectsRepository.GetProjectWiseStatus(Projid);
 
             return Json(ss);
 

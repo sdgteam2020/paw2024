@@ -27,7 +27,9 @@ namespace swas.BAL.Repository
                          join status in _context.StkStatus on comment.StkStatusId equals status.StkStatusId into statusGroup
                          from status in statusGroup.DefaultIfEmpty() // Left Join
                          join project in _context.Projects on comment.ProjId equals project.ProjId // Assuming 'ProjId' is in the 'Stk_Comments' table
-                         //join users in _context.Users on comment.UpdatedByUserId equals users.UserIntId
+                              join legacy in _context.DateApproval on comment.ProjId equals legacy.ProjId into gj
+                              from subLegacy in gj.DefaultIfEmpty() // Left Join
+                                  //join users in _context.Users on comment.UpdatedByUserId equals users.UserIntId
                               where comment.ProjId == Data.ProjId //&& comment.StakeHolderId==Data.StakeHolderId // && comment.StakeHolderId == stakeholderId
                               orderby comment.DateTimeOfUpdate descending
                          select new DTOProComments
@@ -42,8 +44,8 @@ namespace swas.BAL.Repository
                              UnitId = comment.StakeHolderId,
                              Attpath = comment.Attpath,
                              UserDetails = comment.UserDetails!= null ? comment.UserDetails.ToString() :"____", 
-                             ProjectName = project.ProjName
-
+                             ProjectName = project.ProjName,
+                             AdminApprovalStatus = subLegacy != null && subLegacy.DDGIT_approval == true
                          }).ToListAsync();
            
 

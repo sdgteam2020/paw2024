@@ -53,108 +53,70 @@ namespace swas.BAL.Repository
             _psmRepository = psmRepository;
             _configuration = configuration;
         }
-        public async Task<DTOProjectWiseStatus> GetProjectWiseStatus()
+        public async Task<DTOProjectWiseStatus> GetProjectWiseStatus(int? Projid)
         {
-            #region GetProjectWiseStatusWithLinq
+            int projid = Projid ?? 0;  // Set projid to 0 if Projid is null
 
-            //DTOProjectWiseStatus lst = new DTOProjectWiseStatus();
-            //var status = await (from stg in _dbContext.mStages
-            //                    join sts in _dbContext.mStatus on stg.StagesId equals sts.StageId
-            //                    where sts.IsDashboard == true
-            //                    && sts.StatusId != 2 && sts.StatusId != 3 && sts.StatusId != 22 && sts.StatusId != 31
-            //                    && sts.StatusId != 37
-            //                    orderby sts.StageId, sts.Statseq
-            //                    select new StatusProject
-            //                    {
-            //                        StatusId = sts.StatusId,
-            //                        StageName = stg.Stages,
-            //                        Status = sts.Status
-            //                    }
-            //                   ).ToListAsync();
-
-            //lst.StatusProjectlst = status;
-
-            //var movent = await (from proj in _dbContext.Projects
-            //                    join mov in _dbContext.ProjStakeHolderMov on proj.ProjId equals mov.ProjId
-            //                    where proj.IsSubmited == true
-            //                    orderby proj.ProjId descending
-            //                    select new MovProject
-            //                    {
-
-            //                        ProjId = proj.ProjId,
-            //                        ProjName = proj.ProjName,
-            //                        TimeStamp = mov.TimeStamp,
-            //                        StatusId = (mov.StatusActionsMappingId == 21) ? 1 ://New Projects
-            //                                                                           // (mov.StatusActionsMappingId == 9) ? 2 ://Obsn
-            //                                                                           // (mov.StatusActionsMappingId == 113) ? 3 ://Obsn Rectified
-            //                    (mov.StatusActionsMappingId == 48) ? 20 ://Auto Committee
-            //                    (mov.StatusActionsMappingId == 53) ? 21 ://IPA Stage
-            //                                                             //(mov.StatusActionsMappingId == 60) ? 22 ://Closed
-            //                    (mov.StatusActionsMappingId == 63) ? 24 ://AHCC (Arch Vetting)
-            //                    (mov.StatusActionsMappingId == 68) ? 25 ://ACG (Lab Test)
-            //                    (mov.StatusActionsMappingId == 73) ? 26 ://AHCC (IAM Integ)
-            //                    (mov.StatusActionsMappingId == 78) ? 27 ://ACG (Remote Test)
-            //                    (mov.StatusActionsMappingId == 83) ? 28 ://MI-11 Clearance
-            //                    (mov.StatusActionsMappingId == 88) ? 29 ://Whitelisting Completed
-            //                    (mov.StatusActionsMappingId == 26 && mov.IsComplete == true) ? 6 ://ASDC Vetting
-            //                    (mov.StatusActionsMappingId == 31 && mov.IsComplete == true) ? 7 :// ACG Vetting
-            //                    (mov.StatusActionsMappingId == 37 && mov.IsComplete == true) ? 11 : 0//AHCC Vetting
-
-            //                        //  StatusId = mov.StatusActionsMappingId==1? "Yes" : "No";
-
-            //                    }).ToListAsync();
-            //lst.MovProjectlst = movent;
-
-            //return lst;
-
-            #endregion
-
-            #region GetProjectWiseStatusWithProc
-
-            DTOProjectWiseStatus result = new DTOProjectWiseStatus();
-            result.StatusProjectlst = new List<StatusProject>();
-            result.MovProjectlst = new List<MovProject>();
-
-            using (SqlConnection conn = new SqlConnection(_dbContext.Database.GetConnectionString()))
+            DTOProjectWiseStatus result = new DTOProjectWiseStatus
             {
-                await conn.OpenAsync();
+                StatusProjectlst = new List<StatusProject>(),
+                MovProjectlst = new List<MovProject>()
+            };
 
-                using (SqlCommand cmd = new SqlCommand("usp_GetProjectWiseStatus", conn))
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_dbContext.Database.GetConnectionString()))
                 {
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    await conn.OpenAsync();
 
-                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    using (SqlCommand cmd = new SqlCommand("usp_GetProjectWiseStatus", conn))
                     {
-                        while (await reader.ReadAsync())
-                        {
-                            result.StatusProjectlst.Add(new StatusProject
-                            {
-                                StatusId = reader.GetInt32(reader.GetOrdinal("StatusId")),
-                                StageName = reader.GetString(reader.GetOrdinal("StageName")),
-                                Status = reader.GetString(reader.GetOrdinal("Status"))
-                            });
-                        }
+                        cmd.CommandType = CommandType.StoredProcedure;
 
-                        if (await reader.NextResultAsync())
+                        // Pass the Projid parameter to the stored procedure
+                        cmd.Parameters.Add(new SqlParameter("@Projid", projid));
+
+                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                         {
+                            // Read the first result set (StatusProject data)
                             while (await reader.ReadAsync())
                             {
-                                result.MovProjectlst.Add(new MovProject
+                                result.StatusProjectlst.Add(new StatusProject
                                 {
-                                    ProjId = reader.GetInt32(reader.GetOrdinal("ProjId")),
-                                    ProjName = reader.GetString(reader.GetOrdinal("ProjName")),
-                                    TimeStamp = reader.GetDateTime(reader.GetOrdinal("TimeStamp")),
-                                    StatusId = reader.GetInt32(reader.GetOrdinal("StatusId"))
+                                    StatusId = reader.GetInt32(reader.GetOrdinal("StatusId")),
+                                    StageName = reader.GetString(reader.GetOrdinal("StageName")),
+                                    Status = reader.GetString(reader.GetOrdinal("Status"))
                                 });
+                            }
+
+                            // Check if there's another result set for MovProject
+                            if (await reader.NextResultAsync())
+                            {
+                                while (await reader.ReadAsync())
+                                {
+                                    result.MovProjectlst.Add(new MovProject
+                                    {
+                                        ProjId = reader.GetInt32(reader.GetOrdinal("ProjId")),
+                                        ProjName = reader.GetString(reader.GetOrdinal("ProjName")),
+                                        TimeStamp = reader.GetDateTime(reader.GetOrdinal("TimeStamp")),
+                                        StatusId = reader.GetInt32(reader.GetOrdinal("StatusId"))
+                                    });
+                                }
                             }
                         }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                // Handle the exception (e.g., log it)
+                throw new ApplicationException("Error fetching project status", ex);
+            }
 
             return result;
-            #endregion
         }
+
+
         public async Task<List<DTOProjectsFwd>> GetDashboardApproved(int StatuId, int statusActionsMappingId)
         {
             #region GetDashBoardApprovedWithLinq

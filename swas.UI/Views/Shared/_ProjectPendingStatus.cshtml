@@ -30,6 +30,7 @@
         }
     }
 </style>
+
 <div class="modal fade" id="ProjHoldHistory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
@@ -39,8 +40,19 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <div class="modal-body">
-                <div class="card d-none1" id="cardforProjHoldHistory">
+
+            <div class="card-body">
+                <div class="card radius-10 w-100">
+                    <div class="card-body">
+
+                        <table id="tblProjectWiseStatusByprojid" class="table table-striped table-bordered">
+                        </table>
+
+
+
+
+                        <div class="modal-body">
+                <div class="card d-none" id="cardforProjHoldHistory">
                     <div class="dashboard">
                         <!-- Years Wise Status -->
                         <div>
@@ -62,7 +74,7 @@
 
                     </div>
                 </div> <div class="newprojectheading text-center mt-4"> Pending Status : Serial Movement of Proj  </div>
-                <div class="table-responsive">
+              
                     <table class="table table-striped table-bordered" id="tblprojhold">
 
 
@@ -84,10 +96,10 @@
                         <tbody id="DetailBodyhold">
                         </tbody>
                     </table>
-                </div>
+               
                
 
-                <div class="newprojectheading text-center">Pending Status : Simultaneous Comments of Stakeholders  </div>
+                <div class="newprojectheading text-center">Pendency Status of Simultaneous Comments by Stakeholders Project is FWD by DDGIT on (<span id="Recddt"></span>)  </div>
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered" id="tblprojComments">
 
@@ -96,13 +108,15 @@
 
 
                                 <th class="nowrap">Ser. No</th>
-                                <th class="nowrap">From Unit</th>
+                                @* <th class="nowrap">From Unit</th> *@
                                 <th class="nowrap">To Unit</th>
                                 <th class="nowrap">Sub Stage</th>
-                                <th class="nowrap">Action</th>
-                                <th class="nowrap">Received On</th>
-                                <th class="nowrap">Accepted On</th>
+                                @* <th class="nowrap">Action</th> *@
+                                @* <th class="nowrap">Received On</th> *@
+                                <th class="nowrap">Latest Action</th>
+                                <th class="nowrap">Latest Action Dt</th>
                                 <th class="nowrap">Total Days (hh:mm)</th>
+                                 <th class="nowrap">Approved On/Reject On </th>
 
                             </tr>
                         </thead>
@@ -111,6 +125,9 @@
                     </table>
                 </div>
                
+            </div>
+            </div>
+            </div>
             </div>
 
         </div><!-- modal-content -->

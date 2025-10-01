@@ -123,49 +123,7 @@ $(document).ready(function () {
 
 var ip = '@ip';
 $(document).ready(function () {
-    var table = $('#WhitelistedTable').DataTable({
-        lengthChange: false,
-        dom: 'lBfrtip',
-        buttons: [
-            'copy',
-            'excel',
-            'csv',
-            {
-                text: 'PDF',
-                extend: 'pdfHtml5',
-                action: function (e, dt, node, config) {
-                    PdfDiv();
-                }
-            },
-        ],
-        searchBuilder: {
-            conditions: {
-                num: {
-                    'MultipleOf': {
-                        conditionName: 'Multiple Of',
-                        init: function (that, fn, preDefined = null) {
-                            var el = $('<input />').on('input', function () { fn(that, this) });
-
-                            if (preDefined !== null) {
-                                $(el).val(preDefined[0]);
-                            }
-
-                            return el;
-                        },
-                        inputValue: function (el) {
-                            return $(el[0]).val();
-                        },
-                        isInputValid: function (el, that) {
-                            return $(el[0]).val().length !== 0;
-                        },
-                        search: function (value, comparison) {
-                            return value % comparison === 0;
-                        }
-                    }
-                }
-            }
-        }
-    });
+   
     $('.dataTables_filter input').css('height', '1px');
 
     //var buttonContainer = table.buttons().container();
@@ -203,7 +161,7 @@ $(document).ready(function () {
         </style>
         `;
 
-        var table = $('#WhitelistedTable').DataTable();
+      
 
         var filteredData = table.rows({ search: 'applied' }).data().toArray();
 

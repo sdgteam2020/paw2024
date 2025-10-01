@@ -86,14 +86,29 @@ function AttOnFWD() {
 
 
 $(document).on("click", ".att-btnDelete", function () {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to Delete ",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#072697',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Delete It!'
+    }).then((result) => {
+        if (result.value) {
+
+            var rowIndex = $(this).closest("tr").index();
+
+            // Remove the attachment from the allAttachments array based on the row index
+            allAttachments.splice(rowIndex, 1);
+
+            // Remove the row from the table
+            $(this).closest("tr").remove();
+
+        }
+    });
     // Get the index of the row that contains the delete button
-    var rowIndex = $(this).closest("tr").index();
-
-    // Remove the attachment from the allAttachments array based on the row index
-    allAttachments.splice(rowIndex, 1);
-
-    // Remove the row from the table
-    $(this).closest("tr").remove();
+  
 });
 
 function UploadFiles() {

@@ -1,5 +1,13 @@
 ﻿var current = 1;
 $(document).ready(function () {
+
+
+  
+    // Select all inputs with the 'char-limit' class
+  
+
+    
+  
     //$("#1").hide();
     //$("#3").show();
     $(function () {
@@ -18,7 +26,7 @@ $(document).ready(function () {
 
 
     $("#uploadButton").click(function () {
-       
+
         var requiredFields = $('#fwduploaditems').find('.requiredField');
         var allFieldsComplete = true;
 
@@ -60,7 +68,7 @@ $(document).ready(function () {
             setTimeout(function () {
                 UploadFiles();
             }, 1000)
-          
+
         }
     });
 
@@ -213,27 +221,7 @@ $(document).ready(function () {
                 $(this).removeClass('is-invalid');
             }
         });
-        // Validate character limits
 
-        //$('.char-limit').each(function () {
-        //    var inputField = $(this);
-        //    var maxLength = inputField.data('maxlength'); // Get max length from data-maxlength attribute
-        //    var currentLength = inputField.val().length;
-        //    var errorMsg = inputField.closest('td').find('.charErrorMsg');
-
-        //    if (currentLength > maxLength) {
-
-        //        inputField.addClass('is-invalid');
-        //        errorMsg.show();  // Show error message
-        //        allFieldsComplete = false; // Mark form as invalid
-        //    } else {
-        //        inputField.removeClass('is-invalid');
-        //        errorMsg.hide();  // Hide error message if within limit
-        //    }
-        //});
-
-
-        // Validate character limits
         const required = [
             "#ProjName",
             "#InitiatedDate",
@@ -290,7 +278,6 @@ $(document).ready(function () {
                 step: function (now) {
                     // for making fielset appear animation
                     opacity = 1 - now;
-
                     current_fs.css({
                         'display': 'none',
                         'position': 'relative'
@@ -475,167 +462,176 @@ $(document).ready(function () {
         });
     });
 });
+
 function AddProject(thistag) {
+    debugger;
+    fetchServerDate().then(function (S) {
+        debugger;
+        // Alert the server time for debugging
 
-    //var initiatedDate = $("#InitiatedDate").val();
-    //var completionDate = $("#CompletionDate").val();
+        // Get the initial date and completion date values from the form
+        var initialDate = $('#InitiatedDate').val();
+        var completionDate = $('#CompletionDate').val();
 
-    //// Get current time, or any specific time you want to append
-    //var currentTime = new Date(); // Get current date and time
-    //var hours = currentTime.getHours().toString().padStart(2, '0');
-    //var minutes = currentTime.getMinutes().toString().padStart(2, '0');
-    //var seconds = currentTime.getSeconds().toString().padStart(2, '0');
+        // Create a new Date object from the server's date string
+        var currentDate = new Date(S.todayDateTime);
 
-    //var timeString = hours + ":" + minutes + ":" + seconds;
+        // Explicitly include seconds in the time string
+        var currentTime = currentDate.toLocaleTimeString('en-US', {
+            hour12: false,
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'  // Explicitly request seconds
+        });
 
-    //// Combine date with the time (assuming you want the current time appended)
-    //initiatedDate = initiatedDate + " " + timeString;
-    //completionDate = completionDate + " " + timeString;
-    var initialDate = $('#InitiatedDate').val();
-    var completionDate = $('#CompletionDate').val();
-    var currentDate = new Date();
-    var currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false });
-    var InitiatedDate = initialDate + ' ' + currentTime;
-    var CompletionDate = completionDate + ' ' + currentTime;
-    console.log("Inititated date:", initialDate + ", Complition Date: ", InitiatedDate)
-    $.ajax({
-        url: '/Projects/AddProject',
-        type: 'POST',
-        data: {
-            "ProjId": $("#ProjId").val(),
-            "ProjName": $("#ProjName").val(),
-            //  "InitiatedDate": $("#InitiatedDate").val(),
-            "InitiatedDate": InitiatedDate,
-            //  "CompletionDate": $("#CompletionDate").val(),
-            "CompletionDate": CompletionDate,
-            "IsWhitelisted": $("#IsWhitelisted").val(),
-            "InitialRemark": $("#InitialRemark").val(),
-            "StakeHolderId": $("#ddlStakeHolderId").val(),
-            "AimScope": $("#AimScope").val(),
-            "HQandITinfraReqd": $("#HQandITinfraReqd").val(),
-            "HostTypeID": $("#ddlHostTypeID").val(),
-            "ContentofSWApp": $("#ContentofSWApp").val(),
-            "ReqmtJustification": $("#ReqmtJustification").val(),
-            "UsabilityofProposedAppln": $("#UsabilityofProposedAppln").val(),
-            "Apptype": $("#ddlApptype").val(),
-            "DetlsofUserBase": $("#DetlsofUserBase").val(),
-            "EnvisagedCost": $("#EnvisagedCost").val(),
-            "NWBandWidthReqmt": $("#NWBandWidthReqmt").val(),
-            "MajTimeLines": $("#MajTimeLines").val(),
-            "TechStackProposed": $("#TechStackProposed").val(),
-            "DataSecurity_backup": $("#DataSecurity_backup").val(),
-            "TypeofSW": $("#TypeofSW").val(),
-            "BeingDevpInhouse": $("#BeingDevpInhouse").val(),
-            "EndorsmentbyHeadof": $("#EndorsmentbyHeadof").val(),
-            "CurrentPslmId": $("#CurrentPslmId").val(),
-            "ProjCode": $("#ProjCode").val(),
-            "Sponsor": $("#sponsorNameInput").val(),
+        // Combine the dates with the current time (with seconds)
+        var InitiatedDate = initialDate + ' ' + currentTime;
+        var CompletionDate = completionDate + ' ' + currentTime;
 
-            "Detlsof_OS": $("#Detlsof_OS").val(),
-            "ProposedDB_Engine": $("#ProposedDB_Engine").val(),
-            "DetlsofSw_Architecture": $("#DetlsofSw_Architecture").val(),
-            "DetlsofProposed_Architecture": $("#DetlsofProposed_Architecture").val(),
-            "DetlsPki_IAM": $("#DetlsPki_IAM").val(),
-            "Technology_dependencies": $("#Technology_dependencies").val(),
-            "Database_reqmts": $("#Database_reqmts").val(),
-            "Enhancement_upgradation": $("#Enhancement_upgradation").val(),
-            "Details_licensing": $("#Details_licensing").val(),
-            "OldPsmid": parseInt($("#spanOldPslmId").html()) || 0,
-            "Date_type": $('input[name="mcalender_dates"]:checked').val(),
-            "RequestRemarks": $("#RequestRemarks").val()
+        // Log the dates with time for debugging
+        console.log("Initiated Date with Time:", InitiatedDate);
+        console.log("Completion Date with Time:", CompletionDate);
 
-        }, //get the search string
-        success: function (result) {
+        $.ajax({
+            url: '/Projects/AddProject',
+            type: 'POST',
+            data: {
+                "ProjId": $("#ProjId").val(),
+                "ProjName": $("#ProjName").val(),
+                //  "InitiatedDate": $("#InitiatedDate").val(),
+                "InitiatedDate": InitiatedDate,
+                //  "CompletionDate": $("#CompletionDate").val(),
+                "CompletionDate": CompletionDate,
+                "IsWhitelisted": $("#IsWhitelisted").val(),
+                "InitialRemark": $("#InitialRemark").val(),
+                "StakeHolderId": $("#ddlStakeHolderId").val(),
+                "AimScope": $("#AimScope").val(),
+                "HQandITinfraReqd": $("#HQandITinfraReqd").val(),
+                "HostTypeID": $("#ddlHostTypeID").val(),
+                "ContentofSWApp": $("#ContentofSWApp").val(),
+                "ReqmtJustification": $("#ReqmtJustification").val(),
+                "UsabilityofProposedAppln": $("#UsabilityofProposedAppln").val(),
+                "Apptype": $("#ddlApptype").val(),
+                "DetlsofUserBase": $("#DetlsofUserBase").val(),
+                "EnvisagedCost": $("#EnvisagedCost").val(),
+                "NWBandWidthReqmt": $("#NWBandWidthReqmt").val(),
+                "MajTimeLines": $("#MajTimeLines").val(),
+                "TechStackProposed": $("#TechStackProposed").val(),
+                "DataSecurity_backup": $("#DataSecurity_backup").val(),
+                "TypeofSW": $("#TypeofSW").val(),
+                "BeingDevpInhouse": $("#BeingDevpInhouse").val(),
+                "EndorsmentbyHeadof": $("#EndorsmentbyHeadof").val(),
+                "CurrentPslmId": $("#CurrentPslmId").val(),
+                "ProjCode": $("#ProjCode").val(),
+                "Sponsor": $("#sponsorNameInput").val(),
 
+                "Detlsof_OS": $("#Detlsof_OS").val(),
+                "ProposedDB_Engine": $("#ProposedDB_Engine").val(),
+                "DetlsofSw_Architecture": $("#DetlsofSw_Architecture").val(),
+                "DetlsofProposed_Architecture": $("#DetlsofProposed_Architecture").val(),
+                "DetlsPki_IAM": $("#DetlsPki_IAM").val(),
+                "Technology_dependencies": $("#Technology_dependencies").val(),
+                "Database_reqmts": $("#Database_reqmts").val(),
+                "Enhancement_upgradation": $("#Enhancement_upgradation").val(),
+                "Details_licensing": $("#Details_licensing").val(),
+                "OldPsmid": parseInt($("#spanOldPslmId").html()) || 0,
+                "Date_type": $('input[name="mcalender_dates"]:checked').val(),
+                "RequestRemarks": $("#RequestRemarks").val()
 
-
-            if (result == -2) {
+            }, //get the search string
+            success: function (result) {
 
 
-                Swal.fire({
-                    title: "success!",
-                    text: "User has been Updated!",
-                    icon: "success"
-                });
 
+                if (result == -2) {
+
+
+                    Swal.fire({
+                        title: "success!",
+                        text: "User has been Updated!",
+                        icon: "success"
+                    });
+
+                }
+                else if (result == -3) {
+
+                    Swal.fire({
+                        title: "Error!",
+                        text: "Project Name Already Exists!",
+                        icon: "Error"
+                    });
+
+                }
+                else if (result == -4) {
+                    Swal.fire({
+                        title: "success!",
+                        text: "Incorrect Data!",
+                        icon: "Error"
+                    });
+
+
+                }
+                else if (result == -5) {
+                    Swal.fire({
+                        title: "Error!",
+                        text: "Incorrect Selection Click Again on Edit!",
+                        icon: "Error"
+                    });
+                }
+
+                //else if (result.indcludes("Error")) {
+                //else if (result.include("Error")) {
+                //    Swal.fire({
+                //        icon: 'error',
+                //        title: 'Oops...',
+                //        text: result,
+
+                //    })
+
+                //}
+                else if (result != null) {
+
+
+                    $("#spanProjectId").html(result.projId);
+                    $("#spanCurrentPslmId").html(result.currentPslmId);
+
+
+                    AttechHistory();
+                    current_fs = $(thistag).parent();
+                    next_fs = $(thistag).parent().next();
+
+
+                    //Add Class Active
+                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+                    //show the next fieldset
+                    next_fs.show();
+                    //hide the current fieldset with style
+                    current_fs.animate({ opacity: 0 }, {
+                        step: function (now) {
+                            // for making fielset appear animation
+                            opacity = 1 - now;
+
+                            current_fs.css({
+                                'display': 'none',
+                                'position': 'relative'
+                            });
+                            next_fs.css({ 'opacity': opacity });
+                        },
+                        duration: 600
+                    });
+
+
+
+
+
+                }
             }
-            else if (result == -3) {
-
-                Swal.fire({
-                    title: "Error!",
-                    text: "Project Name Already Exists!",
-                    icon: "Error"
-                });
-
-            }
-            else if (result == -4) {
-                Swal.fire({
-                    title: "success!",
-                    text: "Incorrect Data!",
-                    icon: "Error"
-                });
-
-
-            }
-            else if (result == -5) {
-                Swal.fire({
-                    title: "Error!",
-                    text: "Incorrect Selection Click Again on Edit!",
-                    icon: "Error"
-                });
-            }
-
-            //else if (result.indcludes("Error")) {
-            //else if (result.include("Error")) {
-            //    Swal.fire({
-            //        icon: 'error',
-            //        title: 'Oops...',
-            //        text: result,
-
-            //    })
-
-            //}
-            else if (result != null) {
-
-
-                $("#spanProjectId").html(result.projId);
-                $("#spanCurrentPslmId").html(result.currentPslmId);
-
-
-                AttechHistory();
-                current_fs = $(thistag).parent();
-                next_fs = $(thistag).parent().next();
-
-
-                //Add Class Active
-                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-
-                //show the next fieldset
-                next_fs.show();
-                //hide the current fieldset with style
-                current_fs.animate({ opacity: 0 }, {
-                    step: function (now) {
-                        // for making fielset appear animation
-                        opacity = 1 - now;
-
-                        current_fs.css({
-                            'display': 'none',
-                            'position': 'relative'
-                        });
-                        next_fs.css({ 'opacity': opacity });
-                    },
-                    duration: 600
-                });
-
-
-
-
-
-            }
-        }
-    });
+        });
+    })
 }
 function FwdProjConfirm(thisdata) {
+
     $.ajax({
         url: '/Projects/FwdProjConfirm',
         type: 'POST',
