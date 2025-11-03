@@ -1,0 +1,89 @@
+ALTER PROCEDURE [dbo].[GetLatestWhiteListedProjects]
+@TypeId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    IF (@TypeId = 0)
+        BEGIN
+            WITH     RankedWhiteListed
+            AS       (SELECT *,
+                             ROW_NUMBER() OVER (PARTITION BY ProjName ORDER BY Id DESC) AS rn
+                      FROM   dbo.trnWhiteListed)
+            SELECT   Id,
+                     mHostTypeId,
+                     ht.HostingDesc AS HostedOn,
+                     Appt,
+                     Fmn,
+                     ContactNo,
+                     Clearence,
+                     CertNo,
+                     [date],
+                     ValidUpto,
+                     Remarks,
+                     ProjName
+					 
+            FROM     RankedWhiteListed AS rw
+                     LEFT OUTER JOIN
+                     dbo.mHostType AS ht
+                     ON rw.mHostTypeId = ht.HostTypeID
+            WHERE    rn = 1 and rw.isWhiteListed = 1
+            ORDER BY Clearence DESC;
+        END
+    ELSE
+        IF (@TypeId = 88)
+            BEGIN
+                WITH     RankedWhiteListed
+                AS       (SELECT *,
+                                 ROW_NUMBER() OVER (PARTITION BY ProjName ORDER BY Id DESC) AS rn
+                          FROM   dbo.trnWhiteListed
+                          WHERE  isWhiteListed = 1)
+                SELECT   Id,
+                         mHostTypeId,
+                         ht.HostingDesc AS HostedOn,
+                         Appt,
+                         Fmn,
+                         ContactNo,
+                         Clearence,
+                         CertNo,
+                         [date],
+                         ValidUpto,
+                         Remarks,
+                         ProjName
+						  
+                FROM     RankedWhiteListed AS rw
+                         LEFT OUTER JOIN
+                         dbo.mHostType AS ht
+                         ON rw.mHostTypeId = ht.HostTypeID
+                WHERE    rn = 1 and rw.isWhiteListed = 1
+                ORDER BY Clearence DESC;
+            END
+        ELSE
+            IF (@TypeId = 880)
+                BEGIN
+                    WITH     RankedWhiteListed
+                    AS       (SELECT *,
+                                     ROW_NUMBER() OVER (PARTITION BY ProjName ORDER BY Id DESC) AS rn
+                              FROM   dbo.trnWhiteListed
+                              WHERE  Clearence < DATEADD(YEAR, -3, GETDATE()))
+                    SELECT   Id,
+                             mHostTypeId,
+                             ht.HostingDesc AS HostedOn,
+                             Appt,
+                             Fmn,
+                             ContactNo,
+                             Clearence,
+                             CertNo,
+                             [date],
+                             ValidUpto,
+                             Remarks,
+                             ProjName
+							
+                    FROM     RankedWhiteListed AS rw
+                             LEFT OUTER JOIN
+                             dbo.mHostType AS ht
+                             ON rw.mHostTypeId = ht.HostTypeID
+                    WHERE    rn = 1 and rw.isWhiteListed = 1
+                    ORDER BY Clearence DESC;
+                END
+END
+

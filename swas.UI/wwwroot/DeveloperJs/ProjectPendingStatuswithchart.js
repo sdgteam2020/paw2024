@@ -1,4 +1,5 @@
-﻿  function GetProjHold(ProjId) {
+﻿function GetProjHold(ProjId) {
+
     var listItem = "";
     var listItemc = "";
 
@@ -7,14 +8,14 @@
     var userdata = {
         "ProjId": ProjId
     };
-    var currentdate = new Date();
+    // var currentdate = new Date();
     $.ajax({
         url: '/Home/GetProjHoldStatus',
         contentType: 'application/x-www-form-urlencoded',
         data: userdata,
         type: 'POST',
         success: function (response) {
-            debugger;
+            console.log(response);
             if (response != "null" && response != null) {
 
                 if (response == -1) {
@@ -49,8 +50,8 @@
                             }
                             return a.statusId - b.statusId;  // Sort by statusId
                         });
-                    var totalTimeSpentData = calculateTotalTime(responseforchart);
-                   
+                    let totalTimeSpentData = calculateTotalTime(responseforchart);
+                    console.log(totalTimeSpentData);
                     // Using forEach to loop through the array and access each element
                     totalTimeSpentData.forEach(function (item) {
                         // Accessing individual properties of each item
@@ -78,7 +79,8 @@
                         //}
                         //else {
                         if (response[j].isComment == true) {
-                            if (response[j].firstStkStatus == "Accepted"||response[j].approvedStatusId == 1) {
+                            
+                            if (response[j].firstStkStatus == "Accepted" || response[j].approvedStatusId == 1) {
 
                                 colorscmd.push("#008000")
                                 totalsForlabelcmd.push("Approved\n" + DateCalculateago(response[j].timeStampfrom, response[j].firstActionDate));
@@ -86,13 +88,15 @@
                             }
                             else if (response[j].firstStkStatus == "Rejected") {
                                 colorscmd.push("#f96161")
-                                totalsForlabelcmd.push(response[j].firstStkStatus + "\n" + DateCalculateago(response[j].timeStampfrom, response[j].firstActionDate));
                                 totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].firstActionDate))
+                                totalsForlabelcmd.push(response[j].firstStkStatus + "\n" + DateCalculateago(response[j].timeStampfrom, response[j].firstActionDate));
+
                             }
                             else if (response[j].firstStkStatus == "Obsn") {
+                               
                                 colorscmd.push("#fbbb4b")
-                                totalsForlabelcmd.push(response[j].firstStkStatus + "\n" + DateCalculateago(response[j].timeStampfrom, response[j].firstActionDate));
                                 totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].firstActionDate))
+                                totalsForlabelcmd.push(response[j].firstStkStatus + "\n" + DateCalculateago(response[j].timeStampfrom, response[j].firstActionDate));
                             }
                             else if (response[j].firstStkStatus == "Info") {
                                 colorscmd.push("#73a3f9")
@@ -103,18 +107,22 @@
                                 colorscmd.push("#FF0000")
                                 totalsForlabelcmd.push("Pending\n" + DateCalculateago(response[j].timeStampfrom, response[j].timeStampTo));
                                 totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
-
                             }
-                                
+
                             labelscmd.push(response[j].status + '(' + response[j].tounit + ')');
-                            //totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].firstActionDate))
-                         
+                           
+                           
                         }
+                        else {
+                            $("#Recddt").html(" ");
+
+                        }
+
                         //}
                     }
-                   
                     for (var j = 0; j < response.length; j++) {
                         if (response[j].isComment == false) {
+                           
                             // labels.push(response[j].status + '(' + response[j].fromunit+')');
 
                             if (response[j].isComplete == false) {
@@ -161,17 +169,19 @@
 
                             listItem += '</tr>';
                             count++;
+                           
                         }
                         else {
+                            var commentRecdt = DateFormateddMMyyyyhhmmss(response[j].timeStampfrom);
                             
-                                var commentRecdt = DateFormateddMMyyyyhhmmss(response[j].timeStampfrom);
-                                $("#Recddt").html(commentRecdt);
+                          
+                                $("#Recddt").html(" (Project is FWD by DDGIT On " + commentRecdt + ")");
+                            
                            
-
-                           /* if (response[j].isComplete == false)*/
+                            //if (response[j].isComplete == false)
                             if (response[j].stkStauts === "Accepted") {
                                 listItemc += '<tr class="table-success">';
-                               
+
                             }
                             else if (response[j].stkStauts === "Info") {
                                 listItemc += '<tr class="table-primary">';
@@ -181,11 +191,10 @@
                                 listItemc += '<tr class="table-warning">';
                             }
                             else {
-                               
-                                listItemc += '<tr class="table-danger">';
-                               
-                            }
 
+                                listItemc += '<tr class="table-danger">';
+
+                            }
                             listItemc += '<td class="align-middle text-center">' + countc + '</td>';
                             //listItemc += '<td class="align-middle">' + response[j].fromunit + '</td>';
                             if (response[j].tounit != null)
@@ -202,15 +211,13 @@
                             else
                                 listItemc += '<td class="align-middle">--</td>';
                             if (response[j].stkStauts != null) {
-                               
+
                                 listItemc += '<td class="align-middle">' + response[j].stkStauts + '</td>';
                             }
                             else {
-                               
+
                                 listItemc += '<td class="align-middle">' + "Pending" + '</td>';
                             }
-                              
-
                             //listItemc += '<td class="align-middle">' + DateFormateddMMyyyyhhmmss(response[j].timeStampfrom) + '</td>';
                             if (response[j].isComment == false)
                                 listItemc += '<td class="align-middle">' + DateFormateddMMyyyyhhmmss(response[j].timeStampTo) + '</td>';
@@ -224,25 +231,22 @@
                                 listItemc += '<td class="align-middle">' + DateCalculateago(response[j].timeStampfrom, response[j].timeStampTo) + '</td>';
                             }
                             else {
-                                listItemc += '<td class="align-middle">' + DateCalculateago(response[j].timeStampfrom, currentdate) + '</td>';
+                                listItemc += '<td class="align-middle">' + DateCalculateago(response[j].timeStampfrom, response[j].timeStampTo) + '</td>';
 
                             }
-                            
-                            if (response[j].approvedStatusId == 1 ) {
+                            if (response[j].approvedStatusId == 1) {
                                 listItemc += '<td class="align-middle">' + "(" + DateFormateddMMyyyyhhmmss(response[j].approveddate) + ")   " +
                                     '<div style="width:25px; height:25px; border-radius:50%; background-color:#28a745; color:#fff; display:inline-flex; align-items:center; justify-content:center; font-weight:bold; font-size:18px;">' +
                                     '✔' +
                                     '</div>'
-                                    '</td>';
+                                '</td>';
 
-                            } else if (response[j].rejectedDt !=null)
-                            {
-                                listItemc += '<td class="align-middle ">' + "(" + DateFormateddMMyyyyhhmmss(response[j].rejectedDt) + ")   " +'<img src="/assets/images/icons/Cross_red_circle.png" width="22" height="22" alt="Readed"></td>';
+                            } else if (response[j].rejectedDt != null) {
+                                listItemc += '<td class="align-middle ">' + "(" + DateFormateddMMyyyyhhmmss(response[j].rejectedDt) + ")   " + '<img src="/assets/images/icons/Cross_red_circle.png" width="22" height="22" alt="Readed"></td>';
                             }
                             else {
                                 listItemc += '<td class="align-middle">--</td>';
                             }
-                           
 
 
                             listItemc += '</tr>';
@@ -262,110 +266,8 @@
                     $("#DetailBodyhold").html(listItem);
 
 
-                    var table11 = $('#tblprojComments').DataTable({
-                        lengthChange: true,
-                        retrieve: true,
-                        Destroy: true,
-
-                        searching: true,
-                        stateSave: true,
-                        "order": [[0, "asc"]],
-                        "ordering": true,
-                        "paging": true,
-                        dom: 'lBfrtip',
-                        buttons: [
-                            'copy',
-                            'excel',
-                            'csv',
-                            //{
-                            //    text: 'PDF',
-                            //    extend: 'pdfHtml5',
-                            //    action: function (e, dt, node, config) {
-                            //        PdfDiv();
-                            //    }
-                            //},
-                        ],
-                        searchBuilder: {
-                            conditions: {
-                                num: {
-                                    'MultipleOf': {
-                                        conditionName: 'Multiple Of',
-                                        init: function (that, fn, preDefined = null) {
-                                            var el = $('<input/>').on('input', function () { fn(that, this) });
-
-                                            if (preDefined !== null) {
-                                                $(el).val(preDefined[0]);
-                                            }
-
-                                            return el;
-                                        },
-                                        inputValue: function (el) {
-                                            return $(el[0]).val();
-                                        },
-                                        isInputValid: function (el, that) {
-                                            return $(el[0]).val().length !== 0;
-                                        },
-                                        search: function (value, comparison) {
-                                            return value % comparison === 0;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-                    var table = $('#tblprojhold').DataTable({
-                        lengthChange: true,
-                        retrieve: true,
-                        bDestroy: true,
-
-                        searching: true,
-                        stateSave: true,
-                        "order": [[0, "asc"]],
-                        "ordering": true,
-                        "paging": true,
-                        dom: 'lBfrtip',
-                        buttons: [
-                            'copy',
-                            'excel',
-                            'csv',
-                            //{
-                            //    text: 'PDF',
-                            //    extend: 'pdfHtml5',
-                            //    action: function (e, dt, node, config) {
-                            //        PdfDiv();
-                            //    }
-                            //},
-                        ],
-                        searchBuilder: {
-                            conditions: {
-                                num: {
-                                    'MultipleOf': {
-                                        conditionName: 'Multiple Of',
-                                        init: function (that, fn, preDefined = null) {
-                                            var el = $('<input/>').on('input', function () { fn(that, this) });
-
-                                            if (preDefined !== null) {
-                                                $(el).val(preDefined[0]);
-                                            }
-
-                                            return el;
-                                        },
-                                        inputValue: function (el) {
-                                            return $(el[0]).val();
-                                        },
-                                        isInputValid: function (el, that) {
-                                            return $(el[0]).val().length !== 0;
-                                        },
-                                        search: function (value, comparison) {
-                                            return value % comparison === 0;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-
-
+                    initializeDataTable('#tblprojComments');
+                    initializeDataTable('#tblprojhold');
 
                     const colors = [
                         "#73a3f9", "#fbbb4b", "#c3cad4", "#48d0ad", "#a88bfa",
@@ -400,7 +302,6 @@ let projHoldChart;
 
 // Function to create/rebind the chart
 function bindProjHoldChart(labels, totals, totalsForlabel, colors) {
-    debugger;
     // If chart already exists, destroy it before creating new
     if (projHoldChart) {
         projHoldChart.destroy();
@@ -476,7 +377,7 @@ function bindProjHoldCommentsChart(labels, totals, totalsForlabel, colors) {
                     font: {
                         weight: 'bold'
                     },
-                    textAlign: 'center',
+                    textAlign: "center",
                     formatter: function (value, context) {
                         // Use value from holdLabels array by index
                         return totalsForlabel[context.dataIndex];
@@ -488,7 +389,6 @@ function bindProjHoldCommentsChart(labels, totals, totalsForlabel, colors) {
     });
 }
 function calculateTotalTime(response) {
-   
     // Result object to hold the grouped data
     let result = {};
 
@@ -530,12 +430,9 @@ function calculateTotalTime(response) {
 }
 // Assuming totalTimeSpent is in minutes
 function convertMinutesToAgo(minutes) {
-    debugger;
     if (minutes == null || isNaN(minutes) || minutes < 0) {
         minutes = 0;
     }
-
-
     // Calculate total hours from minutes
     const totalHours = minutes / 60;
 
@@ -547,20 +444,32 @@ function convertMinutesToAgo(minutes) {
 
     // Calculate years first
     if (totalHours >= 8760) {
+        const days = Math.round(totalHours / 24);
+        const hours = Math.round(totalHours % 24);  // Remaining hours after extracting days
+        formatted = `${hours.toString().padStart(2, '0')}:${Math.round(remainingMinutes).toString().padStart(2, '0')}`;
+        //ago = `${days} Days (${formatted})`;
+        const daysforyear = `${days} Days`;
+
+
+
         const years = Math.round(totalHours / 8760);  // 8760 hours in a year
         // const remainingHoursInYear = totalHours % 8760;
         formatted = `${Math.round(totalHours).toString().padStart(3, '0')}:${Math.round(remainingMinutes).toString().padStart(2, '0')}`;
         //ago = `${years} Years (${formatted})`;
-        ago = `${years} Years`;
+        ago = `${years} Years (${daysforyear})`;
     }
     // Calculate months if total hours are less than a year but greater than or equal to 730 hours (~30 days)
     else if (totalHours >= 730) {
-        const months = Math.round(totalHours / 730);
-        const days = Math.round(totalHours / 24);// 730 hours in a month (approx)
-        // const remainingHoursInMonth = totalHours % 730;
-        formatted = `${Math.round(totalHours).toString().padStart(3, '0')}:${Math.round(remainingMinutes).toString().padStart(2, '0')}`;
-        //ago = `${months} Months (${formatted})`;
-        ago = `${months} Months`;
+        // const months = Math.round(totalHours / 730);  // 730 hours in a month (approx)
+        // // const remainingHoursInMonth = totalHours % 730;
+        // formatted = `${Math.round(totalHours).toString().padStart(3, '0')}:${Math.round(remainingMinutes).toString().padStart(2, '0')}`;
+        // //ago = `${months} Months (${formatted})`;
+        // ago = `${months} Months`;
+        const days = Math.round(totalHours / 24);
+        const hours = Math.round(totalHours % 24);  // Remaining hours after extracting days
+        formatted = `${hours.toString().padStart(2, '0')}:${Math.round(remainingMinutes).toString().padStart(2, '0')}`;
+        //ago = `${days} Days (${formatted})`;
+        ago = `${days} Days`;
     }
     // Calculate days if total hours are less than 730 but greater than 24 hours
     else if (totalHours >= 24) {
@@ -570,15 +479,18 @@ function convertMinutesToAgo(minutes) {
         //ago = `${days} Days (${formatted})`;
         ago = `${days} Days`;
     }
+    // For less than 24 hours, simply show the minutes
     else {
-        if (minutes === 0) {
-            ago = "Just now";  // ✅ Special case for current time
-        } // For less than 24 hours, simply show the minutes
+        if (minutes == 0) {
+            ago = "Till Now"
+        }
         else {
             formatted = `${Math.floor(totalHours).toString().padStart(2, '0')}:${Math.floor(remainingMinutes).toString().padStart(2, '0')}`;
             ago = `${formatted} Min`;
         }
     }
+
+
     return ago;
 }
 

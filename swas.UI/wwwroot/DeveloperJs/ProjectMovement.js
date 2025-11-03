@@ -77,7 +77,7 @@
         if (allFieldsComplete) {
 
             AttechHistory();
-            //SaveFwdTo($("#spanEditPslmId").html());
+            SaveFwdTo($("#spanEditPslmId").html());
 
         }
     });
@@ -340,7 +340,8 @@ function GetProjectMovement(ProjectId) {
             "Id": ProjectId
         },
         success: function (response) {
-
+            debugger;
+            var projname = response[0].projName;
             //console.log("GetProjectMov: ", response);
             if (response != "null" && response != null) {
 
@@ -373,11 +374,24 @@ function GetProjectMovement(ProjectId) {
                         listItem += "<td>" + count + "</td>";
                         listItem += "<td class=''><span id='spnDate' class='d-none'>" + response[i].dateTimeOfUpdate + "</span><span id=''>" + DateFormateddMMyyyyhhmmss(response[i].dateTimeOfUpdate) + "</span></td>";
                         listItem += "<td class='align-middle'><span id='FromUnitName'>" + response[i].fromUnitName + "</span></td>";
-                        listItem += "<td class='align-middle'><span id='FromUnitName'>" + response[i].toUnitName + "</span></td>";
+                        listItem += "<td class='align-middle'><span id='ToUnitName'>" + response[i].toUnitName + "</span></td>";
+
                         listItem += "<td class='align-middle'><span id='FromUnitName'>" + response[i].stage + "</span></td>";
-                        listItem += "<td class='align-middle'><span id='FromUnitName'>" + response[i].status + "</span></td>";
+                        if (response[i].isComment == true) {
+
+                            listItem += "<td class='align-middle'><span id='FromUnitName'>" + response[i].stautsForComment + "</span></td>";
+                        } else {
+
+                            listItem += "<td class='align-middle'><span id='FromUnitName'>" + response[i].status + "</span></td>";
+                        }
                         listItem += "<td class='align-middle'><span id='FromUnitName'>" + response[i].action + "</span></td>";
-                        listItem += "<td class='align-middle'><span id='spnremarks'>" + response[i].remarks + "</span></td>";
+                        if (response[i].isComment == true) {
+                            listItem += "<td class='align-middle'><span id='spnremarks'>" + "--For Comments--" + "</span></td>";
+                        } else {
+
+                            listItem += "<td class='align-middle'><span id='spnremarks'>" + response[i].remarks + "</span></td>";
+                        }
+
 
                         if (response[i].attCnt > 0) {
                             listItem += "<td><a href='javascript:void(0);' class='anchorDetail' data-id='" + response[i].psmIds + "'>" +
@@ -387,13 +401,28 @@ function GetProjectMovement(ProjectId) {
                             listItem += "<td></td>"; // Add an empty cell when there's no attachment
                         }
 
+                        if (response[i].isComment == true) {
 
-                        listItem += "<td class='align-middle'><span id='FromUnitName'><span class='btn btn-primary cls-btnedit'>Edit</span></td>";
+                            // ✅ 1. Correct HTML generation
+                            listItem += "<td class='align-middle'>" +
+                                "<span id='ToUnitName'>" +
+                                "<button class='btn btn-primary cls-editCmt' data-psmid='" + response[i].psmIds + "'>" +
+                                "<i class='fas fa-edit'></i> EditCmt" +
+                                "</button>" +
+                                "</span></td>";
+
+
+
+                        } else {
+
+                            listItem += "<td class='align-middle'><span id='FromUnitName'><span class='btn btn-primary cls-btnedit'>Edit</span></td>";
+                        }
 
 
                         listItem += "</tr>";
                         count++;
                     }
+
 
                     $("#ProjectMovement").html(listItem);
 
@@ -467,20 +496,53 @@ function GetProjectMovement(ProjectId) {
                     $("body").unbind().on("click", ".cls-btnedit", function () {
                         $('#ProjFwdEdit').modal('show');
 
+                        var date = $(this).closest("tr").find("#spnDate").html()
+                        var currentTime = date.slice(0, 19);
+                        //alert(currentTime);
+                      /*  TimeStamps = dateValue.replace('T', ' ');*/
                         $(".ProjectsFwd").removeClass("d-none");
                         $(".Attmenthistory").addClass("d-none");
-
+                        //alert($(this).closest("tr").find("#spnDate").html());
                         $("#spanProjectId").html($(this).closest("tr").find("#spanProjId").html());
                         $("#spanEditPslmId").html($(this).closest("tr").find("#spnpsmId").html());
                         $("#txtRemarksfwd").val($(this).closest("tr").find("#spnremarks").html());
-                        $("#TimeStampToProjfwd").val($(this).closest("tr").find("#spnDate").html());
+                        $("#TimeStampToProjfwd").val(currentTime);
                         $("#SpnFwdStakeHolderId").html($(this).closest("tr").find("#spneditstakeHolderId").html());
+                        //$("#ddlfwdFwdTo").html($(this).closest("tr").find("#ToUnitName").html());
 
                         mMsaterfwdStage($(this).closest("tr").find("#spnStageId").html(), "ddlfwdStage", 5, 0, 1)
                         mMsaterStage($(this).closest("tr").find("#spnStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#spnStageId").html(), 0)
                         /*mMsater($(this).closest("tr").find("#spnActionId").html(), "ddlfwdAction", 7, $(this).closest("tr").find("#spnStatusId").html())*/
                         mMsater($(this).closest("tr").find("#spnActionId").html(), "ddlfwdAction", 11, $(this).closest("tr").find("#spnStatusId").html())
-                        mMsaterFwdTo($(this).closest("tr").find("#spnToUnitId").html(), "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html(), $(this).closest("tr").find("#spnToUnitId").html(), 0, "");
+                        //mMsaterFwdTo($(this).closest("tr").find("#spnToUnitId").html(), "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html(), $(this).closest("tr").find("#spnToUnitId").html(), 0, "");
+                        mMsaterFwdTo($(this).closest("tr").find("#spnToUnitId").html(), "ddlfwdFwdTo", 8, 0, $(this).closest("tr").find("#spnToUnitId").html(), 0, "edit");
+                    });
+
+                 
+                    $(document).on("click", ".cls-editCmt", function (e) {
+                        e.preventDefault(); // Prevent default behavior (replaces return false)
+
+                        debugger;
+
+                        var psmid = $(this).data("psmid");
+
+
+                        mMsater(0, "ddlStatus", 4, 0);
+
+
+                        $('#EditComments').modal('show');
+                        var words = projname.split(" ");
+                        // Limit to 6 words and add "..." if needed
+                        var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projname;
+                        var finalTitle = "Edit Comments for: " + shortProjName;
+
+                        $('#Projname').text(finalTitle);
+
+
+
+                        GetAllCommentsForEdit(psmid, 0);
+
+
 
                     });
                 }
@@ -597,4 +659,192 @@ $(document).on('click', '.anchorDetail', function () {
         }
     });
 });
+
+
+
+
+function GetAllCommentsForEdit(PsmId, projId) {
+    $.ajax({
+        type: "POST",
+        url: '/Projects/GetAllCommentBypsmId_UnitId',
+        data: {
+            "PsmId": PsmId,
+            "stakeholderId": 1,
+            "ProjId": projId
+        },
+        success: function (data) {
+
+            var commentContainer = '';
+            var userDetails = '';
+            if (data != null) {
+                for (var i = 0; i < data.length; i++) {
+                    var date = new Date(data[i].date);
+                    var formattedDate =
+                        ("0" + date.getDate()).slice(-2) + '-' +
+                        ("0" + (date.getMonth() + 1)).slice(-2) + '-' +
+                        date.getFullYear() + ' ' +
+                        ("0" + date.getHours()).slice(-2) + ':' +
+                        ("0" + date.getMinutes()).slice(-2) + ':' +
+                        ("0" + date.getSeconds()).slice(-2);
+                    if (data[i].userDetails == null)
+                        userDetails = '';
+                    else
+                        userDetails = data[i].userDetails
+
+                    commentContainer += '<div class="comment-box" style="text-align: justify;">'; // Use text-align: justify for justified text
+                    commentContainer += '<div class="comment-header">';
+                    commentContainer += '<div>';
+                    commentContainer += '<span style="font-family: Arial; color: #0793f7;">' + data[i].stakeholder + ' (' + userDetails + ') </span>';
+                    commentContainer += '<div style="margin-left: 0px;" class="comment-meta">' + DateFormateddMMyyyyhhmmss(data[i].date) + '</div>';
+                    commentContainer += '</div>';
+                    commentContainer += '<div>';
+                    if (data[i].status == "Accepted" || data[i].status == "Info")
+                        commentContainer += '<span class="comment-meta badge badge-success text-white">' + data[i].status + '</span>';
+                    else if (data[i].status == "Obsn")
+                        commentContainer += '<span class="comment-meta badge badge-warning text-white">' + data[i].status + '</span>';
+                    else
+                        commentContainer += '<span class="comment-meta badge badge-danger text-white">' + data[i].status + '</span>';
+                    if (data[i].attpath !== '' && data[i].attpath !== null) {
+                        commentContainer += '<a href="/Home/WaterMark3?id=' + data[i].attpath + '" target="_blank">';
+                        commentContainer += '<img src="/assets/images/icons/pdfimg.png" alt="PDF icon" style="width: 24px; height: 24px;">';
+                        commentContainer += '</a>';
+                    }
+
+
+                    commentContainer += '</span>';
+                    commentContainer += '</div>';
+                    commentContainer += '</div>';
+                    commentContainer += '<div class="comment-content formated-text"><p>' + data[i].comments + '</p></div>';
+                    commentContainer += '<button class="btn btn-warning editComments" data-stkcommentid="' + data[i].stkCommentId + '">' +
+                        '<i class="fas fa-edit"></i> Edit' +
+                        '</button>';
+
+                    commentContainer += '</div>';
+                }
+
+                commentContainer += '</div>'; // Close the container
+                $('#ChatBoxForStackholdercomment').empty().html(commentContainer);
+
+
+
+
+            }
+
+        },
+        error: function () {
+            alert('Error fetching comments.');
+        }
+    });
+}
+
+
+
+$(document).on("click", ".editComments", function () {
+    var stkcommentid = $(this).data("stkcommentid"); // get the id from button
+
+    $.ajax({
+        url: '/Projects/GetStkCommentBystkId',
+        type: 'Get',
+        data: { PsmId: stkcommentid }, // send your id to server
+        success: function (response) {
+
+            $("#edtCmts").val(response.comments);
+
+            $("#ddlStatus").val(response.stkStatusId);
+
+            $("#CommentDateFwd").val(response.date ? response.date : '');
+            $("#StkcommentId").val(response.stkCommentId)
+            $("#StkPsmid").val(response.psmId)
+        },
+        error: function (xhr, status, error) {
+            console.error("Error:", error);
+        }
+    });
+});
+$(document).on("click", "#btnCommentUpdate", function () {
+
+    var stkcomment = {
+        comments: $("#edtCmts").val(),
+        ddlstatus: $("#ddlStatus").val(),
+        CommentDateFwd: $("#CommentDateFwd").val(),
+        stkcommentid: $("#StkcommentId").val()
+    };
+
+    $("#edtCmts, #ddlStatus, #CommentDateFwd, #StkcommentId").removeClass("is-invalid");
+
+    let isValid = true;
+
+    // Validate each field
+    if (!stkcomment.comments) {
+        $("#edtCmts").addClass("is-invalid");
+        isValid = false;
+    }
+    if (!stkcomment.ddlstatus) {
+        $("#ddlStatus").addClass("is-invalid");
+        isValid = false;
+    }
+    if (!stkcomment.CommentDateFwd) {
+        $("#CommentDateFwd").addClass("is-invalid");
+        isValid = false;
+    }
+    if (!stkcomment.stkcommentid) {
+        $("#StkcommentId").addClass("is-invalid");
+        alert("Please Click on Edit Button")
+        isValid = false;
+    }
+
+    // Stop further action if invalid
+    if (!isValid) {
+        return false;
+    }
+
+
+    $.ajax({
+        url: '/Projects/UpdateStkcomments',
+        type: 'POST',
+        data: stkcomment,
+        success: function (response) {
+
+            // Check if update was successful
+            if (response === 1) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Updated!',
+                    text: 'Comment updated successfully.',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+
+
+                $("#edtCmts").val('');
+                $("#ddlStatus").val('');
+                $("#CommentDateFwd").val('');
+                GetAllCommentsForEdit($("#StkPsmid").val());
+
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed!',
+                    text: 'Something went wrong while updating.',
+                });
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("Error:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'Server error occurred.',
+            });
+        }
+    });
+
+});
+
+$('#EditComments').on('hidden.bs.modal', function () {
+    $("#edtCmts").val('');
+    $("#ddlStatus").val('');
+    $("#CommentDateFwd").val('');
+});
+
 

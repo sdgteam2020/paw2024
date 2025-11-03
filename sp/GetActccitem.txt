@@ -1,0 +1,100 @@
+ALTER PROCEDURE [dbo].[usp_GetActCcItems]
+@UnitId INT
+AS
+BEGIN
+    SELECT   a.ProjId,
+             b.PsmId AS PsmIds,
+             a.ProjName,
+             a.StakeHolderId,
+             stackcs.UnitName AS StakeHolder,
+             s.Status,
+             s.StatusId,
+             b.FromUnitId,
+             CC.ToCcUnitId AS ToUnitId,
+             toUnit.UnitName AS ToUnitName,
+             act.Actions AS Actions,
+             0 AS TotalDays,
+             map.ActionsId AS ActionId,
+             a.Sponsor,
+             ISNULL(fromUnit.UnitName, '') AS UnitName,
+             fromUnit.UnitName AS FromUnitUserDetail,
+             fromUnit.UnitName + ' ( ' + ISNULL(b.UserDetails, '') + ')' AS FromUnitName,
+             stg.Stages AS Stages,
+             stg.StagesId AS StageId,
+             CC.IsRead,
+             a.IsProcess,
+             b.TimeStamp,
+             a.Date_type,
+             CASE WHEN adminApproval.DDGIT_approval = 1 THEN 1 ELSE 0 END AS AdminApprovalStatus,
+             CASE WHEN EXISTS (SELECT 1
+                               FROM   DateApproval AS da
+                               WHERE  da.ProjId = a.ProjId
+                                      AND (da.DDGIT_approval = 0
+                                           OR da.DDGIT_approval IS NULL)) THEN 1 ELSE 0 END AS UserRequest,
+             (SELECT   TOP 1 lh.ActionType
+              FROM     LegacyHistory AS lh
+              WHERE    lh.ProjectId = a.ProjId
+              ORDER BY lh.ActionDate DESC) AS LatestActionType,
+             (SELECT   TOP 1 da.UnitId
+              FROM     DateApproval AS da
+              WHERE    da.ProjId = a.ProjId
+                       AND (da.DDGIT_approval = 0
+                            OR da.DDGIT_approval IS NULL)
+              ORDER BY da.Request_Date DESC) AS RequestUnitId,
+             (SELECT DISTINCT ProjId
+              FROM   ProjStakeHolderMov
+              WHERE  ProjId = a.ProjId
+                     AND StatusActionsMappingId = 103) AS IsHosted,
+             b.IsCc,
+             (SELECT STRING_AGG(cctounit.unitname, ', ') AS unitname
+              FROM   [DB_PAW].[dbo].[ProjStakeHolderCcMov] AS ccmov
+                     INNER JOIN
+                     tbl_mUnitBranch AS cctounit
+                     ON ccmov.ToCcUnitId = cctounit.unitid
+              WHERE  PsmId = b.PsmId) AS CCUnitName,
+             CC.ReadDate,
+             CC.UserDetails
+    FROM     Projects AS a
+             INNER JOIN
+             ProjStakeHolderMov AS b
+             ON a.ProjId = b.ProjId
+             INNER JOIN
+             ProjStakeHolderCcMov AS CC
+             ON CC.PsmId = b.PsmId
+             LEFT OUTER JOIN
+             tbl_mUnitBranch AS stackcs
+             ON a.StakeHolderId = stackcs.unitid
+             LEFT OUTER JOIN
+             DateApproval AS adminApproval
+             ON a.ProjId = adminApproval.ProjId
+                AND adminApproval.DDGIT_approval = 1
+             INNER JOIN
+             TrnStatusActionsMapping AS map
+             ON b.StatusActionsMappingId = map.StatusActionsMappingId
+             INNER JOIN
+             mStatus AS s
+             ON map.StatusId = s.StatusId
+             INNER JOIN
+             mActions AS act
+             ON map.ActionsId = act.ActionsId
+             LEFT OUTER JOIN
+             tbl_mUnitBranch AS toUnit
+             ON CC.ToCcUnitId = toUnit.unitid
+             LEFT OUTER JOIN
+             tbl_mUnitBranch AS fromUnit
+             ON b.FromUnitId = fromUnit.unitid
+             LEFT OUTER JOIN
+             mStages AS stg
+             ON s.StageId = stg.StagesId
+    WHERE    a.IsActive = 1
+             AND a.IsDeleted = 0
+             AND b.IsActive = 1
+             AND b.IsDeleted = 0
+             AND CC.IsActive = 1
+             AND CC.IsDeleted = 0
+             AND a.IsSubmited = 1
+             AND CC.ToCcUnitId = @UnitId
+             AND b.IsComment = 0
+    ORDER BY TimeStamp DESC;
+END
+

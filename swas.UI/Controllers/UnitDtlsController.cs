@@ -134,7 +134,6 @@ namespace swas.UI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-
         public async Task<IActionResult> AddOrEdit(UnitDtl UnitData)
         {
 
@@ -204,8 +203,6 @@ namespace swas.UI.Controllers
             }
         }
 
-
-     
         private string Encode(string input)
         {
             string inputString = input.ToString();
@@ -232,12 +229,8 @@ namespace swas.UI.Controllers
         //    int.TryParse(decoded.ToString(), out decodedValue);
         //    return decodedValue;
         //}
-        [HttpGet]
-        public async Task<IActionResult> GetAllUnits()
-        {
-            var udtl = await _unitRepository.GetAllUnitAsync();
-            return View(udtl);
-        }
+
+
         public async Task<IActionResult> AddOrEditCREATEPROJ(UnitDtl UnitData)
         {
             var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
@@ -325,7 +318,7 @@ namespace swas.UI.Controllers
             if (Logins.IsNotNull())
 
             {
-                
+
                 UnitData.UpdatedBy = Logins.ActualUserName + "(" + Logins.Unit + ")";
                 UnitData.UpdatedDate = DateTime.Now;
                 int result = await _unitRepository.Save(UnitData);
@@ -451,7 +444,7 @@ namespace swas.UI.Controllers
 
             return Json(unitmap);
         }
-
+        #region  unitmapping for unitstatus ans action mapping
         public async Task<IActionResult> AddMapping(DTOUnitMapping data)
         {
             try
@@ -460,8 +453,7 @@ namespace swas.UI.Controllers
                 {
                     ActionsId = data.ActionsId,
                     StatusId = data.SubStagesId,
-                    StatusActionsMappingId = data.StatusActionsMappingId,
-                    
+                    StatusActionsMappingId = data.StatusActionsMappingId
                 };
 
                 //TrnUnitStatusMapping trnUnitStatusMapping = new TrnUnitStatusMapping
@@ -471,11 +463,13 @@ namespace swas.UI.Controllers
                 //    UnitStatusMappingId = data.UnitStatusMappingId
                 //};
 
+
                 var existingStatusActionsMapping = await _statusActionsMapping.GetByActionsAndStatusAsync(data.StatusActionsMappingId, data.ActionsId, data.SubStagesId);
                 if (existingStatusActionsMapping != null)
                 {
                     return Json(new { message = "StatusActionsMapping data is already in the table" });
                 }
+
 
                 //var existingUnitStatusMapping = await _unitStatusMapping.GetByUnitAndStatusAsync(data.UnitStatusMappingId,data.UnitId, data.SubStagesId);
                 //if (existingUnitStatusMapping != null)
@@ -492,6 +486,7 @@ namespace swas.UI.Controllers
                 //    var ret = await _unitStatusMapping.UpdateWithReturn(trnUnitStatusMapping);
                 //}
 
+                
                 if (statusActionsMapping.StatusActionsMappingId == 0)
                 {
                     var ret1 = await _statusActionsMapping.AddWithReturn(statusActionsMapping);
@@ -503,14 +498,14 @@ namespace swas.UI.Controllers
 
                 return Json(nmum.Save);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return Json(nmum.Exception);
             }
         }
 
 
-       
+        #endregion
 
         #region Delete For UnitMapping and Action Mapping
 

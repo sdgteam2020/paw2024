@@ -185,7 +185,8 @@ Desktop.ini
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
 
-
+# OS generated files #
+Icon?
 
 # Mac desktop service store files
 .DS_Store
@@ -491,8 +492,3 @@ AppPackages/
 /swas.UI/wwwroot/DownloadFile
 /swas.UI/wwwroot/Error
 /swas.UI/wwwroot/SOP
-paw_25June2025.sql
-/.vs/swas/v17/DocumentLayout.json
-/.vs/swas/v17/.suo
-/.vs/swas/v17/DocumentLayout.json
-/.vs/swas/v17/.suo

@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-
+    initializeDataTable('#SoftwareType');
     sessionStorage.setItem("spntabType", $("#spntabType").html());
 
     GetAllComments2();
@@ -7,12 +7,12 @@
     GetAllComments1();
 
     $("#btnAnalytics").click(function () {
-
+        debugger;
         $('#ProjHoldHistory').modal('show');
         // alert($(this).closest("tr").find(".clsspnprojId").html())
         $(".lblProjHoldHistory").html($("#projectNameCell").html())
         $("#cardforProjHoldHistory").removeClass("d-none");
-        GetProjHold($(".ProjectcommentprojId").html())
+        GetProjHold($(".ProjectcommentprojId").html());
         ProjectWiseStatusByProjid($(".ProjectcommentprojId").html());
     });
 
@@ -31,10 +31,7 @@ function GetAllComments2() {
         success: function (data) {
             //console.log("CommentData", data);
             var projectName = data[0].projectName;
-            var adminapproval = data[0].adminApprovalStatus;
-           
-
-           
+            var adminap = data[0].adminApprovalStatus;
             //console.log("First Project Name:", projectName);
 
             var tableHTML = '<table class="table" style="width:100%; border: 1px solid black; border-collapse:collapse;">';
@@ -47,7 +44,7 @@ function GetAllComments2() {
             tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">Comment</th>';
             tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">Status</th>';
             tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">PDF</th>'; 
-            //tableHTML += '<th class="">DateType</th>'; 
+            tableHTML += '<th class="d-none">DateType</th>'; 
             tableHTML += '</tr>';
             tableHTML += '</thead>';
             tableHTML += '<tbody>';
@@ -75,7 +72,7 @@ function GetAllComments2() {
                         tableHTML += '<img src="/assets/images/icons/pdfimg.png" alt="PDF icon" style="width: 24px; height: 24px;">';
                         tableHTML += '</a>';
                     }
-                    //tableHTML += '<td class="noExport"><span class="DateType">' + data[i].adminApprovalStatus + '</span></td>';  
+                    tableHTML += '<td class="d-none noExport"><span class="DateType">' + data[i].adminApprovalStatus + '</span></td>';  
 
                     tableHTML += '</td>';
                     tableHTML += '</tr>';
@@ -192,13 +189,13 @@ function GetAllComments2() {
 
 
             if ($("#IsCommentPsmiId").html() != 0)
-                $("div.add-comment-btn").html('<button id="add-comment" class="btn btn-primary"><i class="fas fa-plus"></i> Add Comment</button>');
-           
-            $("#add-comment").on("click", function () {
-                $(this).attr("adminApprovalStatus", adminapproval);
-                var adminApprovalStatus = $(this).attr("adminApprovalStatus") === "true" ? true : false;
+                $("div.add-comment-btn").html('<button id="add-comment" class="btn btn-primary p-1"><i class="fas fa-plus"></i> Add Comment</button>');
 
+            $("#add-comment").on("click", function () {
                
+                $(this).attr("addminaproval", adminap);
+                var approval = $(this).attr("addminaproval");
+              
                 fetchServerDate().then(function (S) {
 
                     var projId = $(".ProjectcommentprojId").html().trim();
@@ -206,8 +203,6 @@ function GetAllComments2() {
                     $("#ProjectcommentForStackHolderPsmId").html($("#IsCommentPsmiId").html())
                     mMsater(0, "ddlStatus", 4, 0)
                     $("#ProjCommentModal").modal('show');
-                    $(".custom-modal-size").css("margin-left", "-9rem");
-
                     GetAllComments($("#IsCommentPsmiId").html(), $(".ProjectcommentprojId").html());
 
                     // Added from here for pop up heading with project name in comment (added by Divyanshu on 10/02/2025)
@@ -233,24 +228,25 @@ function GetAllComments2() {
                     var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
 
                    
-
-                    if (adminApprovalStatus ==true) {
-
-                        $('#CommentDateFwd').attr('type', 'datetime-local');
-                        $('#CommentDateFwd').attr('max', S.todayDateTime);
-                        $('#CommentDateFwd').prop('disabled', false); // Allow user input
+                      
+                    if (approval === "true") {
+                          
+                            $('#CommentDateFwd').attr('type', 'datetime-local');
+                            $('#CommentDateFwd').attr('max', S.todayDateTime);
+                            $('#CommentDateFwd').prop('disabled', false); // Allow user input
                         $('#CommentDateFwd').val(S.todayDateTime); // Allow user input
-                    } else {
-
-                        $('#CommentDateFwd').attr('type', 'date');
-                        $('#CommentDateFwd').val(S.today); // Set today's date
-                        $('#CommentDateFwd').prop('disabled', true); // Freeze input
-                    }
-                    
+                        } else {
+                      
+                            $('#CommentDateFwd').attr('type', 'datetime-local');
+                            $('#CommentDateFwd').val(S.todayDateTime); // Set today's date
+                            $('#CommentDateFwd').prop('disabled', true); // Freeze input
+                        }
+                   
                 });
-              
+
 
             });
+
 
 
 
@@ -258,25 +254,6 @@ function GetAllComments2() {
         },
         error: function () {
             alert('Error fetching comments.');
-        }
-    });
-}
-function fetchDdgitApproval(projId, callback) {
-    $.ajax({
-        url: '/Projects/GetDdgitApprovalStatus', // Your API endpoint here
-        type: 'GET',
-        data: { projId: projId },
-        success: function (response) {
-
-            if (callback && typeof callback === 'function') {
-                callback(response.isApproved);
-            }
-        },
-        error: function () {
-            // On error, assume not approved or handle accordingly
-            if (callback && typeof callback === 'function') {
-                callback(false);
-            }
         }
     });
 }
@@ -352,8 +329,8 @@ $(document).ready(function () {
     var TeamDetailPostBackURL = '/Projects/AttDetails';
     $(function () {
         /*$(".anchorDetail").click(function () {*/
-        $(document).on("click", ".anchorDetail", function () {
-
+        $(".anchorDetail").on("click", function () {
+          
             var $buttonClicked = $(this);
             var id = $buttonClicked.attr('data-id');
             var options = { "backdrop": "static", keyboard: true };
@@ -364,11 +341,11 @@ $(document).ready(function () {
                 data: { "Id": id },
                 datatype: "json",
                 success: function (datadata) {
-                    
+
                     $('#myModalPagehistoryAttechment').modal('show');
                     $('#myModalContenthistoryAttechment').html(datadata);
-                   /* $('#myModal').modal(options);*/
-                    
+                    /* $('#myModal').modal(options);*/
+
 
                 },
                 error: function () {

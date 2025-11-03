@@ -35,13 +35,12 @@
 			background-color: white; /* Set the active background color to white */
 			border-bottom: 20px solid #dee2e6; /* Adjust this as needed */
 		}
-
-	.active-link {
-		background-color: #004a99;
-		color: white !important;
-		border-radius: 4px;
-		padding: 6px 12px;
-	}
+		.active-link {
+	background-color: #004a99;
+	color: white !important;
+	border-radius: 4px;
+	padding: 6px 12px;
+}
 
 	#projectNameDropdown {
 		position: absolute;
@@ -53,7 +52,7 @@
 		z-index: 1000;
 		list-style: none;
 		/*  margin-left: 766px;
-				margin-top: 45px; */
+			margin-top: 45px; */
 		padding: 0;
 	}
 
@@ -70,86 +69,87 @@
 		background-color: white; /* Set the active background color to white */
 		border-bottom: 20px solid #dee2e6; /* Adjust this as needed */
 	}
+	
 </style>
 
 <body>
-
+	
 
 	<div id="tabledateContainer">
-		<div class="text-center mb-4">
-			<h3 class="fw-bold text-warning" style="text-transform: uppercase; letter-spacing: 1px;">
-				APPROVAL FOR LEGACY PROJECTS
+		<div class="text-center mb-4 mt-5">
+			<h3 class="fw-bold text-warning" style=" letter-spacing: 1px;">
+				Approval for Legacy Projects
 			</h3>
-			<small class="text-muted fst-italic">Backdated calendar projects or ongoing legacy project intake</small>
+			@*  <small class="text-muted fst-italic">Backdated calendar projects or ongoing legacy project intake</small>  *@
+		
 
 
 
-
-			<ul class="tabs__head">
-				<li>
-					<a class="active-link mr-2" href="#" data-tab="Ingest_Request" id="tabinbox">
-						<span class="fa fa-download"></span>&nbsp;Ingest Request
-						<span id="IngestionReq" class="badge3 d-none IngestionReq" style="font-size:0.7rem;">0</span>
-					</a>
-				</li>
-				<li>
-					<a href="#" data-tab="Find_approval" id="tabsent" style="width:220px">
-						<span class="fa fa-edit"></span>&nbsp;Approval for other
-						<span id="IngestionReqforother" class="badge3 d-none IngestionReqforother" style="font-size:0.7rem;">0</span>
-					</a>
-				</li>
-			</ul>
+		<ul class="tabs__head">
+	<li>
+		<a class="active-link mr-2" href="#" data-tab="Ingest_Request" id="tabinbox">
+			<span class="fa fa-download"></span>&nbsp;Ingest Request
+					<span id="IngestionReq" class="badge3 d-none IngestionReq" style="font-size:0.7rem;">0</span>
+		</a>
+	</li>
+	<li>
+		<a href="#" data-tab="Find_approval" id="tabsent" style="width:220px">
+			<span class="fa fa-edit"></span>&nbsp;Approval for other
+					<span id="IngestionReqforother" class="badge3 d-none IngestionReqforother" style="font-size:0.7rem;">0</span>
+		</a>
+	</li>
+</ul>
 		</div>
 		<div class="tab-content" id="Ingest_Request">
-			<div class="card radius-10 w-100">
-				<div class="card-body" style="overflow-y:auto; height:700px">
-					<span id="IpAddress" style="display:none;"> @TempData["ipadd"]</span>
-					<table id="TableType1" class="table table-striped table-bordered">
-						<thead>
-							<tr>
-								<th>S/No</th>
-								<th>Project Name</th>
-								<th>User</th>
-								<th>From Unit</th>
-								<th>Request Date</th>
-								<th>Admin Approval Date</th>
-								<th>Requested Remarks</th>
-								<th>Action</th>
-							</tr>
-						</thead>
-						<tbody id="DateApproval"></tbody>
-					</table>
-				</div>
+		<div class="card radius-10 w-100">
+			<div class="card-body" style="overflow-y:auto; height:700px">
+				<span id="IpAddress" style="display:none;"> @TempData["ipadd"]</span>
+				<table id="TableType1" class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>S/No</th>
+							<th>Project Name</th>
+							<th>User</th>
+							<th>From Unit</th>
+							<th>Request Date</th>
+							<th>Admin Approval Date</th>
+							<th>Requested Remarks</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody id="DateApproval"></tbody>
+				</table>
 			</div>
 		</div>
-		<div class="modal fade" id="ProjFwdHistory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-xl" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
+	</div>
+	<div class="modal fade" id="ProjFwdHistory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
 
-						<h4 class="modal-title" id="lblHistory"></h4>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<h4 class="modal-title" id="lblHistory"> </h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+
+				<div class="modal-body ml-lg-5">
+
+					<div class="timeline" id="projectLegacyhistory">
 					</div>
+				</div>
 
-					<div class="modal-body ml-lg-5">
-
-						<div class="timeline" id="projectLegacyhistory">
-						</div>
-					</div>
-
-				</div><!-- modal-content -->
-			</div><!-- modal-dialog -->
-		</div>
+			</div><!-- modal-content -->
+		</div><!-- modal-dialog -->
+	</div>
 	</div>
 
 
 
-	<div class="tab-content" id="Find_approval" style="display: none;">
-		<!-- Approval for Other Content -->
+<div class="tab-content" id="Find_approval" style="display: none;">
+	<!-- Approval for Other Content -->
 
 
 
-		<div class="card radius-10 w-100" style="height:675px">
+	<div class="card radius-10 w-100"style="height:675px">
 
 			<div class="mb-3 position-relative">
 				<label for="Find_forApproval" class="form-label fw-bold">Search for Legacy Approval:</label>
@@ -182,8 +182,29 @@
 			</div>
 		</div>
 	</div>
-	
+	<div class="modal fade" id="ProjFwdHistory1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
+		<ul id="projectNameDropdown" class="dropdown-list " style="display:none; width:477px">
+		</ul>
+
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+
+					<h4 class="modal-title" id="lblHistory1"> </h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+
+				<div class="modal-body ml-lg-5">
+
+					<div class="timeline" id="projectLegacyhistory1">
+					</div>
+				</div>
+
+			</div><!-- modal-content -->
+		</div><!-- modal-dialog -->
+	</div>
+</div>
 </body>
 
 <script src="~/DeveloperJs/DateApproval.js"></script>
@@ -201,7 +222,7 @@
 			let formatted = "";
 			for (let i = 0; i < words.length; i++) {
 				formatted += words[i] + " ";
-				if ((i + 1) % 5 === 0) {
+				if ((i + 1) % 5 === 0) {	
 					formatted += "<br>";
 				}
 			}
@@ -211,7 +232,7 @@
 			loadDateApprovalTable();
 		});
 
-
+		
 
 		function formatDate(dateStr) {
 			let d = new Date(dateStr);

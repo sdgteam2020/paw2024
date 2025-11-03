@@ -72,6 +72,15 @@ namespace swas.BAL.DTO
         public int RemainderCount { get; set; }
         public bool HasRemainder { get; set; }
         public DateTime? ReadDate { get; set; }
+        public bool HideReminderIcon { get; set; }
+        public string? FromUnitpullbackexist { get; set; }
+
+        public DateTime? InitiatedDate { get; set; }
+        public DateTime? ApprovedDt { get; set; }
+        public string? StautsForComment { get; set; }
+        public string? ApprovedRemarks { get; set; }
+        public int? StatusactionMappingid { get; set; }
 
     }
 }
+    

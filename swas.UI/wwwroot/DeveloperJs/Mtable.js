@@ -1,5 +1,5 @@
 ﻿function mMsater(sectid = '', ddl, TableId, ParentId) {
-   
+    
     var userdata =
         {
             "id": TableId,
@@ -18,10 +18,10 @@
         type: 'POST',
 
         success: function (response) {
-
+           
             if (response != "null" && response != null) {
                 if (response == 0) {
-                   listItemddl += '<option  Value = "", Disabled = true, Selected = true>--Select--</option>';
+                    listItemddl += '<option  Value = "", Disabled = true, Selected = true>--Select--</option>';
                     /* listItemddl += '<option value="">Please Select</option>';*/
                     $("#" + ddl + "").html(listItemddl);
                 }
@@ -48,12 +48,12 @@
 
                     //    }
                     //}
-                    //else
-                    //{
-                    if (sectid != '') {
-                        $("#" + ddl + "").val(sectid);
+                    //else {
+                  
+                        if (sectid != '') {
+                            $("#" + ddl + "").val(sectid);
 
-                    }
+                        }
 
                     //}
 
@@ -88,7 +88,7 @@ function mMsaterfwdStage(sectid = '', ddl, TableId, ParentId, type, projecttype)
         type: 'POST',
 
         success: function (response) {
-            debugger;
+           
             if (response != "null" && response != null) {
                 if (response == 0) {
                     listItemddl += '<option value="">Please Select</option>';
@@ -109,14 +109,13 @@ function mMsaterfwdStage(sectid = '', ddl, TableId, ParentId, type, projecttype)
                                 listItemddl += '<option value="' + response[i].id + '" selected>' + response[i].name + '</option>';
 
                             }
-                        } else if (projecttype == 1)
-                        {
+                        }
+                      else if (projecttype === 1) {
                             if (response[i].id == 1) {
                                 listItemddl += '<option value="' + response[i].id + '" selected>' + response[i].name + '</option>';
 
                             }
-                        }
-                        else {
+                        } else {
 
                             listItemddl += '<option value="' + response[i].id + '">' + response[i].name + '</option>';
                         }
@@ -186,7 +185,7 @@ function mMsaterStage(sectid = '', ddl, TableId, ParentId, StakeHolderId) {
         type: 'POST',
 
         success: function (response) {
-            console.log(response);
+           
             if (response != "null" && response != null) {
                 if (response == 0) {
                     listItemddl += '<option value="">Please Select</option>';
@@ -241,8 +240,8 @@ function mMsaterStage(sectid = '', ddl, TableId, ParentId, StakeHolderId) {
 }
 
 function mMsaterFwdTo(sectid = '', ddl, TableId, ParentId, StakeHolderId, type, value) { 
-    debugger;
-  
+
+
     var userdata =
     {
         "id": TableId,
@@ -259,7 +258,7 @@ function mMsaterFwdTo(sectid = '', ddl, TableId, ParentId, StakeHolderId, type, 
         type: 'POST',
 
         success: function (response) {
-            debugger;
+          
             if (response != "null" && response != null) {
                 if (response == 0) {
                     listItemddl += '<option value="">Please Select</option>';
@@ -301,14 +300,14 @@ function mMsaterFwdTo(sectid = '', ddl, TableId, ParentId, StakeHolderId, type, 
                             listItemddl += '<option value="' + response[i].id + '">' + response[i].name + '</option>';
                         }
 
-                        if (TableId == 8 && ddl =="ddlfwdFwdTo") {
+                        if (TableId == 8 && ddl == "ddlfwdFwdTo" && value !="edit") {
 
                             listItemddl += '<option value="More">More</option>';
                         }
 
                         $("#" + ddl + "").html(listItemddl);
                         if (sectid != '') {
-                           /* $("#" + ddl + "").val(sectid);*/
+                            $("#" + ddl + "").val(sectid);
 
                         }
                     }

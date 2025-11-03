@@ -102,10 +102,12 @@ $(document).on('click', '.approve-btn', function () {
     let message= " ";
     if (actiontype === 3) {
        
-       message = `Do you want to Reject this date request for this project: ${projectName}? Please enter remarks:`
+        // message = `Do you want to Reject the Legacy project: ${projectName}? <br>Please enter remarks:`
+        message='Please Enter Remkars:' 
     }
     else {
-        message = `Do you want to Approve this date request for this project: ${projectName}? Please enter remarks:`;
+        //  message = `Do you want to Approve the Legacy  project: ${projectName}?<br> Please enter remarks:`;
+        message = 'Please Enter Remkars:'
 }
    
          
@@ -122,7 +124,7 @@ $(document).on('click', '.approve-btn', function () {
 
                 Swal.fire({
                     title: (actiontype === 3) ? 'Confirm Rejection' : 'Confirm Approval',
-                    text: message,
+                    html: message,
                     input: 'textarea',
                     inputPlaceholder: 'Enter your remarks here...',
                     inputAttributes: {
@@ -233,7 +235,7 @@ function GetProjectLegacyHistory(ProjId) {
                     const item = response[i];
 
                     listitem += '<div class="timeline-section">';
-                    listitem += '<div class="timeline-date">' + DateTimeFormatedd_mm_yyyy(item.actionDate) + '</div>';
+                    listitem += '<div class="timeline-date">' + DateFormateddMMyyyyhhmmss(item.actionDate) + '</div>';
 
                     // Start row for boxes
                     listitem += '<div class="row g-3">';
@@ -274,7 +276,7 @@ function GetProjectLegacyHistory(ProjId) {
                     if (item.remarks) {
                         listitem += '<div class="col-md-6">';
                         listitem += '<div class="timeline-box">';
-                        listitem += '<div class="box-title"><i class="fa fa-pencil text-info"></i> Remarks On ' + DateTimeFormatedd_mm_yyyy(item.actionDate) + '</div>';
+                        listitem += '<div class="box-title"><i class="fa fa-pencil text-info"></i> Remarks On ' + DateFormateddMMyyyyhhmmss(item.actionDate) + '</div>';
                         listitem += '<div class="box-content">';
                         listitem += '<div class="box-item">' + item.remarks + '</div>';
                         listitem += '</div>';
@@ -409,9 +411,9 @@ function loadDateApprovalTable() {
                 listItem += "</td>";
                 listItem += "<td class='align-middle'>" + item.user + "</td>";
                 listItem += "<td class='align-middle'>" + item.unitName + "</td>";
-                listItem += "<td class='align-middle'>" + formatDate(item.request_Date) + "</td>";
+                listItem += "<td class='align-middle'>" + DateFormateddMMyyyyhhmmss(item.request_Date) + "</td>";
                 //listItem += "<td class='align-middle'>" + formatDate(item.ddgiT_Approval_dat) + "</td>";
-                listItem += "<td style='Vertical-align:middle; text-align:center'>" + (item.ddgiT_Approval_dat ? formatDate(item.ddgiT_Approval_dat) : "-") + "</td>";
+                listItem += "<td style='Vertical-align:middle; text-align:center'>" + (item.ddgiT_Approval_dat ? DateFormateddMMyyyyhhmmss(item.ddgiT_Approval_dat) : "-") + "</td>";
 
                 // Fixed approval status check
                 let isApproved = item.ddgiT_approval === true || item.ddgiT_approval === "true";
@@ -770,9 +772,9 @@ function getProjectDetails(projId, remarks) {
                 listItem += "</td>";
                 listItem += "<td class='align-middle'>" + item.user + "</td>";
                 listItem += "<td class='align-middle'>" + item.unitName + "</td>";
-                listItem += "<td class='align-middle'>" + formatDate(item.request_Date) + "</td>";
+                listItem += "<td class='align-middle'>" + DateFormateddMMyyyyhhmmss(item.request_Date) + "</td>";
                 //listItem += "<td class='align-middle'>" + formatDate(item.ddgiT_Approval_dat) + "</td>";
-                listItem += "<td style='Vertical-align:middle; text-align:center'>" + (item.ddgiT_Approval_dat ? formatDate(item.ddgiT_Approval_dat) : "-") + "</td>";
+                listItem += "<td style='Vertical-align:middle; text-align:center'>" + (item.ddgiT_Approval_dat ? DateFormateddMMyyyyhhmmss(item.ddgiT_Approval_dat) : "-") + "</td>";
 
                
                 listItem += "<td class='align-middle text-start'>" + formatRemarks(item.remarks) + "</td>";

@@ -21,6 +21,6 @@ namespace swas.DAL.Models
         public DateTime? date { get; set; }
         public DateTime? ValidUpto { get; set; }
         public string? Remarks { get; set; }
-        public bool IsWhiteListed { get; set; }
+        public bool? IsWhiteListed { get; set; }
     }
 }

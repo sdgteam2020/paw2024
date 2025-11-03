@@ -319,7 +319,7 @@
                         type: 'POST',
                         data: { "id": ProjectId, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
                         success: function (response) {
-                          
+                            console.log(response);
                             if (response && response === 1) {
                                 Swal.fire({
                                     position: 'top-end',
@@ -372,7 +372,7 @@
                         type: 'POST',
                         data: { "id": ProjectId, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
                         success: function (response) {
-                          
+                            console.log(response);
                             if (response && response === 1) {
                                 Swal.fire({
                                     position: 'top-end',
@@ -435,7 +435,7 @@
                             "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
                         },
                         success: function (response) {
-                          
+                            console.log(response);
                             if (response && response === 1) {
                                 Swal.fire({
                                     icon: 'success',

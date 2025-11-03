@@ -17,18 +17,18 @@ namespace swas.BAL.DTO
         public DateTime? TimeStampfrom { get; set; }
         public DateTime? TimeStampTo { get; set; }
         public DateTime? DateTimeOfUpdate { get; set; }
+
+        public string? Status { get; set; }
+        public int StatusId { get; set; }
+        public string? Action { get; set; }
+        public string? UndoRemarks { get; set; }
+        public bool IsComment { get; set; }
+        public bool IsComplete { get; set; }
         public DateTime? LatestCommentDate { get; set; }
         public DateTime? Approveddate { get; set; }
         public DateTime? FirstActionDate { get; set; }
         public DateTime? RejectedDt { get; set; }
-
-        public string? Status { get; set; }
-        public int StatusId { get; set; }
         public int ApprovedStatusId { get; set; }
-        public string? Action { get; set; }
-        public string? UndoRemarks { get; set; }    
-        public bool IsComment { get; set; }
-        public bool IsComplete { get; set; }
         public int IsApproved { get; set; }
         public string? StkStauts { get; set; }
         public string? FirstStkStatus { get; set; }

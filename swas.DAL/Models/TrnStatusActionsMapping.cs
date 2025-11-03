@@ -12,15 +12,12 @@ namespace swas.DAL.Models
     {
         [Key]
         public int StatusActionsMappingId { get; set; }
-
+        
         [ForeignKey("tbl_mStatus")]
         public int StatusId { get; set; }
 
         [ForeignKey("tbl_mActions")]
         public int ActionsId { get; set; }
         public bool IsActive { get; set; }
-        [NotMapped]
-        public int StagesId { get; set; }
-
     }
 }

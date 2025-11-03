@@ -60,30 +60,32 @@ namespace swas.BAL.Repository
                                join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
                                join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
 
-                               where b.ProjId == ProjectId  & b.IsComment == false
+                               where b.ProjId == ProjectId 
                                orderby b.TimeStamp descending
                                select new DTOProjectsFwd
                                {
                                    PsmIds = b.PsmId,
                                    Stage = stge.Stages,
                                    StageId = stge.StagesId,
-                                   ProjId =a.ProjId,
-                                   //Status = tounit.UnitName + " " + "For Comments",
+                                   ProjId = a.ProjId,
+                                   ProjName = a.ProjName,
+                                   StautsForComment = tounit.UnitName + " " + "For Comments",
                                    Status = ststus.Status,
                                    StatusId = ststus.StatusId,
                                    Action = act.Actions,
                                    ActionId = b.StatusActionsMappingId,
                                    FromUnitName = " " + b.UserDetails + " ( " + fromunit.UnitName + ")",
                                    ToUnitName = tounit.UnitName,
-                                   ToUnitId=tounit.unitid,
+                                   ToUnitId = tounit.unitid,
                                    DateTimeOfUpdate = b.TimeStamp,
                                    Remarks = b.Remarks,
-                                   StakeHolderId=a.StakeHolderId,
+                                   StakeHolderId = a.StakeHolderId,
                                    IsComment = b.IsComment,
                                    AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == b.PsmId)
 
-							   }).ToListAsync();
-        
+                               }).ToListAsync();
+
+
 
             return query;
         }
@@ -114,7 +116,6 @@ namespace swas.BAL.Repository
                                join ststus in _dbContext.mStatus on actmap.StatusId equals ststus.StatusId
                                join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
                                join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
-                              
 
                                where b.ProjId == ProjectId
                                orderby b.TimeStamp descending
@@ -141,16 +142,14 @@ namespace swas.BAL.Repository
                                    StatusActionsMappingId=b.StatusActionsMappingId,
                                    IsCc = b.IsCc,
                                    CcUnits = string.Join(", ",
-            _dbContext.ProjStakeHolderCcMov
-                .Where(cc => cc.PsmId == b.PsmId )
-                .Join(_dbContext.tbl_mUnitBranch,
-                      cc => cc.ToCcUnitId,
-                      unit => unit.unitid,
-                      (cc, unit) => unit.UnitName)
-                .ToList()
-        )
-
-                                  
+    _dbContext.ProjStakeHolderCcMov
+        .Where(cc => cc.PsmId == b.PsmId)
+        .Join(_dbContext.tbl_mUnitBranch,
+              cc => cc.ToCcUnitId,
+              unit => unit.unitid,
+              (cc, unit) => unit.UnitName)
+        .ToList()
+)
 
                                }).ToListAsync();
             if (queryforstackholderself != null && queryforstackholderself.Count==2)
@@ -195,7 +194,7 @@ namespace swas.BAL.Repository
                                }).ToListAsync();
            lst.DTOProjectCCHistorylst = retcc;
             return lst;
-        } 
+        }
         public async Task<List<DTOProjectHold>> ProjectHolsTimeCalculate(int ProjectId)
         {
             try
@@ -257,7 +256,7 @@ namespace swas.BAL.Repository
                                                  LatestCommentDate = latestComment.DateTimeOfUpdate,
 
 
-                                                 FirstStkStatus= _dbContext.StkStatus
+                                                 FirstStkStatus = _dbContext.StkStatus
                     .Where(s => s.StkStatusId == Firstactiondt.StkStatusId)
                     .Select(s => s.Status)
                     .FirstOrDefault(),
@@ -339,12 +338,12 @@ namespace swas.BAL.Repository
                     }
                     else
                     {
-                    
+
                         db.FromunitId = databyprojectid[i].FromunitId;
                         db.Fromunit = databyprojectid[i].Fromunit;
                         db.TimeStampfrom = databyprojectid[i].TimeStamp;
                         db.UndoRemarks = databyprojectid[i].UndoRemarks;
-                        if (databyprojectid[i].IsComplete == true)
+                        if (databyprojectid[i].LatestCommentDate != null && databyprojectid[i].IsComment==true)
                         {
                             db.FirstActionDate = databyprojectid[i].FirstActionDate;
                             db.TimeStampTo = databyprojectid[i].LatestCommentDate;
@@ -372,17 +371,19 @@ namespace swas.BAL.Repository
 
 
                 return lst.OrderByDescending(x => x.PsmId).ToList();
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw;
             }
-           
+
         }
         public int GetLastRecProjectMov(int? ProjectId)
         {
             try
             {
-              
+                //var query = _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.IsActive==true && i.IsComment==false && i.UndoRemarks==null).Max(p => p.PsmId);
+                //return query;
 
                 var maxPsmIdParameter = new SqlParameter("@MaxPsmId", SqlDbType.Int)
                 {
@@ -403,7 +404,7 @@ namespace swas.BAL.Repository
         {
             try
             {
-              
+               // var query = _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.PsmId < (_context.ProjStakeHolderMov.Max(p => p.PsmId))).Max(p => p.PsmId);
                 var query =await _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.IsActive == true && i.IsComment == false && i.ToUnitId== TounitId).OrderByDescending(i=>i.PsmId).Take(1).Select(i=>i.PsmId).SingleOrDefaultAsync();
                 return query;
 

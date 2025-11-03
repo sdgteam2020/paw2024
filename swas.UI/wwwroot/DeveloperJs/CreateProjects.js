@@ -1,13 +1,5 @@
 ﻿var current = 1;
 $(document).ready(function () {
-
-
-  
-    // Select all inputs with the 'char-limit' class
-  
-
-    
-  
     //$("#1").hide();
     //$("#3").show();
     $(function () {
@@ -26,7 +18,7 @@ $(document).ready(function () {
 
 
     $("#uploadButton").click(function () {
-
+       
         var requiredFields = $('#fwduploaditems').find('.requiredField');
         var allFieldsComplete = true;
 
@@ -36,7 +28,7 @@ $(document).ready(function () {
 
 
         if (attRemarks.length > maxlength) { // check string length
-            $('#uploadLoader').addClass("d-none")
+            $('#uploadLoader').hide();
             Swal.fire({
                 title: 'Error!',
                 text: 'Docu Desc cannot exceed more than 200 characters.',
@@ -68,7 +60,7 @@ $(document).ready(function () {
             setTimeout(function () {
                 UploadFiles();
             }, 1000)
-
+          
         }
     });
 
@@ -221,7 +213,27 @@ $(document).ready(function () {
                 $(this).removeClass('is-invalid');
             }
         });
+        // Validate character limits
 
+        //$('.char-limit').each(function () {
+        //    var inputField = $(this);
+        //    var maxLength = inputField.data('maxlength'); // Get max length from data-maxlength attribute
+        //    var currentLength = inputField.val().length;
+        //    var errorMsg = inputField.closest('td').find('.charErrorMsg');
+
+        //    if (currentLength > maxLength) {
+
+        //        inputField.addClass('is-invalid');
+        //        errorMsg.show();  // Show error message
+        //        allFieldsComplete = false; // Mark form as invalid
+        //    } else {
+        //        inputField.removeClass('is-invalid');
+        //        errorMsg.hide();  // Hide error message if within limit
+        //    }
+        //});
+
+
+        // Validate character limits
         const required = [
             "#ProjName",
             "#InitiatedDate",
@@ -264,9 +276,11 @@ $(document).ready(function () {
             })
         }
         else {
+            debugger;
             current_fs = $(this).parent();
+          
             next_fs = $(this).parent().next();
-
+            $('#IngestionRemarksandToggle').addClass('d-none');
 
             //Add Class Active
             $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
@@ -278,6 +292,7 @@ $(document).ready(function () {
                 step: function (now) {
                     // for making fielset appear animation
                     opacity = 1 - now;
+
                     current_fs.css({
                         'display': 'none',
                         'position': 'relative'
@@ -421,7 +436,6 @@ $(document).ready(function () {
             $("#ProjName").prop("disabled", false);
             $("#projectNameDropdown").show();
             // Show Re-Vetted tag
-
             $("#reVettedTag").removeClass("d-none");
         } else {
             var currentval = $("#ProjName").val();
@@ -462,36 +476,34 @@ $(document).ready(function () {
         });
     });
 });
-
 function AddProject(thistag) {
-    debugger;
     fetchServerDate().then(function (S) {
-        debugger;
-        // Alert the server time for debugging
+      
+        //var initiatedDate = $("#InitiatedDate").val();
+        //var completionDate = $("#CompletionDate").val();
 
-        // Get the initial date and completion date values from the form
+        //// Get current time, or any specific time you want to append
+        //var currentTime = new Date(); // Get current date and time
+        //var hours = currentTime.getHours().toString().padStart(2, '0');
+        //var minutes = currentTime.getMinutes().toString().padStart(2, '0');
+        //var seconds = currentTime.getSeconds().toString().padStart(2, '0');
+
+        //var timeString = hours + ":" + minutes + ":" + seconds;
+
+        //// Combine date with the time (assuming you want the current time appended)
+        //initiatedDate = initiatedDate + " " + timeString;
+        //completionDate = completionDate + " " + timeString;
         var initialDate = $('#InitiatedDate').val();
         var completionDate = $('#CompletionDate').val();
-
-        // Create a new Date object from the server's date string
         var currentDate = new Date(S.todayDateTime);
+        var currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false });
 
-        // Explicitly include seconds in the time string
-        var currentTime = currentDate.toLocaleTimeString('en-US', {
-            hour12: false,
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'  // Explicitly request seconds
-        });
-
-        // Combine the dates with the current time (with seconds)
+       
+       /* var InitiatedDate = initialDate;*/
         var InitiatedDate = initialDate + ' ' + currentTime;
+        //var CompletionDate = completionDate;
         var CompletionDate = completionDate + ' ' + currentTime;
-
-        // Log the dates with time for debugging
-        console.log("Initiated Date with Time:", InitiatedDate);
-        console.log("Completion Date with Time:", CompletionDate);
-
+        console.log("Inititated date:", initialDate + ", Complition Date: ", InitiatedDate)
         $.ajax({
             url: '/Projects/AddProject',
             type: 'POST',
@@ -631,7 +643,7 @@ function AddProject(thistag) {
     })
 }
 function FwdProjConfirm(thisdata) {
-
+   
     $.ajax({
         url: '/Projects/FwdProjConfirm',
         type: 'POST',

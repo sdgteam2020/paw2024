@@ -16,8 +16,6 @@ $(document).ready(function () {
         $button.removeClass('green red yellow'); // Remove existing color classes
         $button.addClass(status); // Add the new color class
     });
-
-   
 });
 
 

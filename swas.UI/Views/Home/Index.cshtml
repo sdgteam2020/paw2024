@@ -254,7 +254,7 @@
         }
 
         .scroll {
-            max-height: 600px;
+            max-height: 800px;
             overflow-y: auto;
         }
 
@@ -456,10 +456,11 @@
         }
     </style>
 </head>
+
 <div class="container-fluid py-3">
     <div class="row g-3">
         <!-- Dashboard Count Cards -->
-        <div class="col-12">
+        <div class="col-12" style="zoom: 0.8; width:100%;max-width:100%;">
             <div class="card" id="carddashboardcount"></div>
         </div>
 
@@ -506,15 +507,16 @@
                     Total Proj Whitelisted & Due for Re-vetting
                 </div>
                 <div class="chart-box p-2">
-                    <canvas id="whitelistedChart" class="w-100" style="max-height: 400px;"></canvas>
+                    <canvas id="whitelistedChart" class="w-100" style="max-height: 379px; height:379px"></canvas>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 @* Previous popup *@
 <div class="modal fade" id="ProjGetsummay" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog  modal-xl modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content modalSize">
             <div class="modal-header">
                 <span id="spndashboardstatusId" class="d-none">0</span>
@@ -534,30 +536,31 @@
             </div>
 
             <div class="modal-body scroll">
-                <div class=".table-responsive">
-                <table id="dashboardDeatils" class="table table-striped table-bordered">                    
-                    <thead>
-                        <tr>
-                            <span id="spndashboardUnitId" class="d-none">@ViewBag.UnitId</span>
-                            <th style="width:5%;" >Ser No</th>
-                            <th class="nowrap">Proj Name</th>
-                            <th class="nowrap">Stake Holder</th>
-                            <th class="nowrap">From UnitName</th>
-                            <th class="nowrap">To UnitName</th>
-                            <th class="nowrap">Stage</th>
-                            <th class="nowrap">Sub Stage</th>
-                            <th class="nowrap">Action Taken</th>
-                            <th class="nowrap">TimeStamp</th>
-                            <th class="nowrap">Status</th>
-                        </tr>
-                    </thead>
+               
+                    <table id="dashboardDeatils" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <span id="spndashboardUnitId" class="d-none">@ViewBag.UnitId</span>
+                                <th style="width: 6%;">Ser No</th>
+                                <th class="nowrap">Proj Name</th>
+                                <th class="nowrap">Stake Holder</th>
+                                <th class="nowrap">From UnitName</th>
+                                <th class="nowrap">To UnitName</th>
+                                <th class="nowrap">Stage</th>
+                                <th class="nowrap">Sub Stage</th>
+                                <th class="nowrap">Action Taken</th>
+                                <th class="nowrap">TimeStamp</th>
+                                <th class="nowrap">Status</th>
+                            </tr>
+                        </thead>
 
-                    <tbody id="DetailBodysummary1">
-                    </tbody>
+                        <tbody id="DetailBodysummary1">
+                        </tbody>
 
-                </table>
-                </div>
-            </div>
+                    </table>
+
+                
+                 </div>
 
         </div><!-- modal-content -->
     </div><!-- modal-dialog -->
@@ -642,22 +645,21 @@
 
 
 
-<div class="modal fade" id="ProjApproved" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
-        <div class="modal-content modalSize" style="max-width:1400px">
-            <div class="modal-header" >
+<div class="modal fade" id="ProjApproved" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content modalSize" >
+            <div class="modal-header">
 
                 <h4 class="modal-title" id="ProjectApprovedTittle">Project Details</h4>
                 <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <div class="modal-body scroll .table-responsive">
+            <div class="modal-body scroll">
                 <table id="dashboardApproved" class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <span id="spndashboardUnitId" class="d-none">@ViewBag.UnitId</span>
-                            <th style ="width:7%; max-width:7%; white-space:nowrap;">
-                                Ser No</th>
+                            <th class="nowrap"style="width:3%">Ser No</th>
                             <th class="nowrap">Proj Name</th>
                             <th class="nowrap">Stake Holder</th>
                             <th class="nowrap">StartDate</th>
@@ -675,8 +677,47 @@
         </div><!-- modal-content -->
     </div><!-- modal-dialog -->
 </div>
+
+
+
+
+
+<div class="modal fade" id="IPAProjApproved" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content modalSize">
+            <div class="modal-header">
+
+                <h4 class="modal-title" id="IPAProjectApprovedTittle">Project Details</h4>
+                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body scroll">
+                <table id="IPAdashboardApproved" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <span id="spndashboardUnitId" class="d-none">@ViewBag.UnitId</span>
+                            <th class="nowrap" style="width:3%">Ser No</th>
+                            <th class="nowrap">Proj Name</th>
+                            <th class="nowrap">Stake Holder</th>
+                            <th class="nowrap">StartDate</th>
+
+                            <th class="nowrap">Status</th>
+                            <th class="nowrap noExport">Genrate Certificate</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="IPADetailBodyApproved">
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+</div>
+
 <div class="modal fade" id="modalProjectWiseStatus" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content modalSize">
             <div class="modal-header">
 
@@ -696,7 +737,7 @@
 </div>
 
 <div class="modal fade" id="BISAG-N" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content modalSize">
             <div class="modal-header">
 
@@ -706,21 +747,18 @@
                 <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <div class="modal-body scroll .table-responsive">
-
+            <div class="modal-body scroll">
                 <table id="dashboardApprovedBisagN" class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <span id="spndashboardUnitId" class="d-none">@ViewBag.UnitId</span>
-                            <th style="width:7% !important; max-width:7% !important; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-                                Ser No
-                            </th>
+                            <th class="nowrap" style ="width: 3%;">Ser No</th>
                             <th class="nowrap">Proj Name</th>
                             <th class="nowrap">Stake Holder</th>
-                            <th>StartDate</th>
+                            <th style="width: 135.938px;">StartDate</th>
                         </tr>
                     </thead>
-
+                        
                     <tbody id="DetailBodyBisagN">
                     </tbody>
 
@@ -748,7 +786,7 @@
 @await Html.PartialAsync("_whitelistdProjectView")
 
 
-
+<script src="~/developerjs/commandatatable.js"></script>
 <script src="~/developerjs/dashboard.js"></script>
 @* 
 <script>

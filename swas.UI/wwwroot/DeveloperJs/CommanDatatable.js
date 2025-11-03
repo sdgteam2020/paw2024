@@ -1,20 +1,24 @@
 ﻿function initializeDataTable(tableSelector) {
-  
-    const initialOrder = (tableSelector === "#Comment") ? [[1, 'asc']] : [];
+
+   
+
+    const Initialorder = (tableSelector === "#Comment") ? [[1, 'asc']] : [];
+   
     return $(tableSelector).DataTable({
         lengthChange: true,
         dom: 'lBfrtip',
         retrieve: true,
         destroy: true,
-        pageLength: -1,
+        pageLength: 25,
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
-        order: initialOrder,
+
+        order: Initialorder,  // Initial sort by serial number
         //columnDefs: [
         //    { orderable: false, targets: 0 } // Disable sorting on serial number column
         //],
         rowCallback: function (row, data, displayIndex) {
             $(row).find('.ser-no')
-                .html(displayIndex + 1); 
+                .html(displayIndex + 1);
         },
         buttons: [
             {
@@ -24,6 +28,7 @@
                     columns: ':visible:not(:last-child)',
                     format: {
                         body: function (data, row, column, node) {
+                            console.log(data);
                             // 🔄 CHANGED: added logic to remove `.noExport` content
                             if (typeof data === 'string' && data.indexOf('<') >= 0) {
                                 var el = $('<div>' + data + '</div>'); // ✅ ADDED
@@ -52,14 +57,20 @@
                     }
                 }
             },
+            
             {
+
                 extend: 'pdfHtml5',
                 text: 'PDF',
+              
                 exportOptions: {
                     columns: ':visible:not(:last-child)'
                 },
                 action: function (e, dt, node, config) {
+                  
+
                     PdfDiv(tableSelector); // dynamically use the table passed
+                  
                 }
             }
         ],
@@ -90,7 +101,6 @@
         }
     });
 }
-
 function PdfDiv(tableSelector, watermarkSelector = "#IpAddress") {
     debugger;
     const table = $(tableSelector).DataTable();
@@ -98,7 +108,6 @@ function PdfDiv(tableSelector, watermarkSelector = "#IpAddress") {
 
     let headers = [];
     table.columns(':visible').header().each(function (header, index) {
-        // Skip the columns with the 'noExport' class
         if (!$(header).hasClass('noExport') && index !== table.columns().count() - 1) {
             headers.push($(header).text().trim());
         }
@@ -108,18 +117,16 @@ function PdfDiv(tableSelector, watermarkSelector = "#IpAddress") {
     for (let i = 0; i < filteredData.length; i++) {
         let rowData = [];
         for (let j = 0; j < filteredData[i].length - 1; j++) {
-            // Skip data for columns with 'noExport' class
             if ($(table.column(j).header()).hasClass('noExport')) {
                 continue;
-            }
-
+            }; 
             let cellData = filteredData[i][j];
             if (typeof cellData === 'string' && cellData.indexOf('<') >= 0) {
-                let $html = $('<div>' + cellData + '</div>');
-                $html.find('.noExport').remove();
+                let $html = $('<div>' + cellData + '</div>'); // ✅ Wrap in DOM element
+                $html.find('.noExport').remove();              // ✅ Remove .noExport content
                 let cleanText = $html.html()
-                    .replace(/<br\s*\/?>/gi, '\n')
-                    .replace(/<\/?[^>]+(>|$)/g, "")
+                    .replace(/<br\s*\/?>/gi, '\n')              // ✅ Keep line breaks
+                    .replace(/<\/?[^>]+(>|$)/g, "")             // ✅ Strip remaining HTML
                     .trim();
                 rowData.push(j === 0 ? i + 1 : cleanText);
             } else {

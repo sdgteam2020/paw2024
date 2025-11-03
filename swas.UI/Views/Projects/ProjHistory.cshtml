@@ -127,8 +127,8 @@
         margin-top: 10px; /* Adjust margin as needed */
     }
     /*  #StakeholderDetails {
-                                    page-break-before: always;
-                                }*/
+                                        page-break-before: always;
+                                    }*/
     .custom-modal-sizes {
         max-width: 80%; /* Increase the width as required */
         width: 75%;
@@ -147,6 +147,7 @@
         justify-content: center;
         min-height: 100vh; /* Full height */
     }
+
     .custom-modal-size {
         max-width: 100%; /* Set the modal width to 80% of the screen */
         width: 95%; /* Ensure it scales responsively */
@@ -173,18 +174,15 @@
     }
 
     .modal-xl {
-       
         left: 10%;
     }
-
-    
 
 </style>
 
 <link href="~/css/projhistory.css" rel="stylesheet" />
 
 
-<div class="row">
+<div class="row mt-5">
     <span id="spnstageid" class="d-none">@ViewBag.stageid</span>
     <span id="spntabType" class="d-none">@ViewBag.Type</span>
     <span id="IsCommentPsmiId" class="d-none">@ViewBag.IsCommentPsmiId</span>
@@ -197,50 +195,53 @@
                     Proj Details  @*  <img src="~/assets/images/icons/pdfimg.png" onclick="PrintDiv()" alt="Pdf Download" width="35" height="25">*@
 
                 </div>
-                <table class="new-proj-table" style="width: 100%;">
-                    <tr>
-                        <td>Proj Name</td>
-                        @* <td class="long-text">
-                        @Model.FirstOrDefault()?.ProjName
-                        <span class="ProjectcommentprojId d-none">
-                        @Model.FirstOrDefault()?.ProjId
-                        </span>
-                        </td>*@
-                        <td id="projectNameCell" class="long-text">
+                <div class="table-responsive">
+                    <table class="new-proj-table" style="width: 100%;">
+                        <tr>
+                            <td>Proj Name</td>
+                            @* <td class="long-text">
                             @Model.FirstOrDefault()?.ProjName
                             <span class="ProjectcommentprojId d-none">
-                                @Model.FirstOrDefault()?.ProjId
+                            @Model.FirstOrDefault()?.ProjId
                             </span>
-                        </td>
+                            </td>*@
+                            <td id="projectNameCell" class="long-text">
+                                @Model.FirstOrDefault()?.ProjName
+                                <span class="ProjectcommentprojId d-none">
+                                    @Model.FirstOrDefault()?.ProjId
+                                </span>
+                            </td>
 
-                    </tr>
-                    <tr>
-                        <td>Aim & Scope</td>
-                        <td class="long-text">@Model[0].ProjectDetl[1].AimScope</td>
+                        </tr>
+                        <tr>
+                            <td>Aim & Scope</td>
+                            <td class="long-text">@Model[0].ProjectDetl[1].AimScope</td>
 
-                    </tr>
-                    <tr>
-                        <td>Usability of Proposed Appln</td>
-                        @*<td>@Model[0].ProjectDetl[1].UsabilityofProposedAppln</td>*@
-                        <td class="tooltip-container">
-                            <span class="short-text">@truncateText(Model[0].ProjectDetl[1].UsabilityofProposedAppln, 6)</span>
-                            <span class="tooltip tooltip-text">@Model[0].ProjectDetl[1].UsabilityofProposedAppln</span>
-                        </td>
+                        </tr>
+                        <tr>
+                            <td>Usability of Proposed Appln</td>
+                            @*<td>@Model[0].ProjectDetl[1].UsabilityofProposedAppln</td>*@
+                            <td class="tooltip-container">
+                                <span class="short-text">@truncateText(Model[0].ProjectDetl[1].UsabilityofProposedAppln, 6)</span>
+                                <span class="tooltip tooltip-text">@Model[0].ProjectDetl[1].UsabilityofProposedAppln</span>
+                            </td>
 
-                    </tr>
-                    <tr>
-                        <td>Major Timeline?</td>
-                        <td class="long-text">@Model[0].ProjectDetl[1].MajTimeLines</td>
+                        </tr>
+                        <tr>
+                            <td>Major Timeline?</td>
+                            <td class="long-text">@Model[0].ProjectDetl[1].MajTimeLines</td>
 
-                    </tr>
-                    <tr>
-                        <td>Name of Sponsor</td>
-                        <td>@Model.FirstOrDefault()?.InitiatedBy</td>
+                        </tr>
+                        <tr>
+                            <td>Name of Sponsor</td>
+                            <td>@Model.FirstOrDefault()?.InitiatedBy</td>
 
 
-                    </tr>
+                        </tr>
 
-                </table>
+                    </table>
+
+                </div>
             </div>
         </div>
 
@@ -256,36 +257,39 @@
                 <div class="projectheading">
                     Tech Details
                 </div>
-                <table class="new-proj-table" style="width: 100%;">
-                    <tr>
-                        <td>Proposed Tech Stack</td>
-                        @*  <td>@Model[0].ProjectDetl[1].TechStackProposed</td>*@
+                <div class="table-responsive">
+                    <table class="new-proj-table" style="width: 100%;">
+                        <tr>
+                            <td>Proposed Tech Stack</td>
+                            @*  <td>@Model[0].ProjectDetl[1].TechStackProposed</td>*@
 
-                        @*<td class="tooltip-container" data-tooltip="@Model[0].ProjectDetl[1].TechStackProposed">
-                        <span class="short-text">@truncateText(Model[0].ProjectDetl[1].TechStackProposed, 6)</span>
-                        <span class="tooltip tooltip-text">@Model[0].ProjectDetl[1].TechStackProposed</span>
-                        </td>*@
-                        <td class="tooltip-container">
+                            @*<td class="tooltip-container" data-tooltip="@Model[0].ProjectDetl[1].TechStackProposed">
                             <span class="short-text">@truncateText(Model[0].ProjectDetl[1].TechStackProposed, 6)</span>
                             <span class="tooltip tooltip-text">@Model[0].ProjectDetl[1].TechStackProposed</span>
-                        </td>
+                            </td>*@
+                            <td class="tooltip-container">
+                                <span class="short-text">@truncateText(Model[0].ProjectDetl[1].TechStackProposed, 6)</span>
+                                <span class="tooltip tooltip-text">@Model[0].ProjectDetl[1].TechStackProposed</span>
+                            </td>
 
-                    </tr>
-                    <tr>
-                        <td>Type of Software</td>
-                        <td>@Model[0].ProjectDetl[1].TypeofSW</td>
-                    <tr>
-                        <td>NW Bandwidth Reqmt</td>
-                        <td>@Model[0].ProjectDetl[1].NWBandWidthReqmt</td>
+                        </tr>
+                        <tr>
+                            <td>Type of Software</td>
+                            <td>@Model[0].ProjectDetl[1].TypeofSW</td>
+                        <tr>
+                            <td>NW Bandwidth Reqmt</td>
+                            <td>@Model[0].ProjectDetl[1].NWBandWidthReqmt</td>
 
-                    </tr>
-                    <tr>
-                        <td>Hosted On</td>
-                        <td>@Model[0].HostedOn</td>
+                        </tr>
+                        <tr>
+                            <td>Hosted On</td>
+                            <td>@Model[0].HostedOn</td>
 
-                    </tr>
+                        </tr>
 
-                </table>
+                    </table>
+
+                </div>
             </div>
         </div>
 
@@ -335,7 +339,7 @@
                 <h5 class="modal-title">ATTACHMENTS</h5>
 
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-               
+
             </div>
             <div class="modal-body">
                 <div id="myModalContenthistoryAttechment">
@@ -600,7 +604,7 @@
                                         @Model[0].ProjectDetl[1].DataSecurity_backup
                                     </td>
                                 </tr>
-                               
+
 
                                 <tr style="width:100%; height:100%; border: 1px solid black; border-collapse:collapse;">
                                     <td style="width:5%;text-align:center;border:1px solid black;border-collapse:collapse">19.</td>
@@ -726,9 +730,9 @@
                                     <th style="text-align: center; border: 1px solid black;">SubStage</th>
                                     <th style="text-align: center; border: 1px solid black;">Action</th>
                                     <th style="text-align: center; border: 1px solid black;">Remarks</th>
-                                    
+
                                 </tr>
-                                
+
                             </thead>
                             <tbody>
                                 @{
@@ -767,13 +771,12 @@
                                             @history.Remarks
                                         </td>
 
-                                       
+
                                     </tr>
-                                <tr>
-                                
-                                </tr>
+                                    <tr>
+                                    </tr>
                                 }
-                               
+
 
                             </tbody>
                         </table>
@@ -804,138 +807,169 @@
             <h6 style="color: white;margin-top: 8px; font-weight: bold;">Project Movement</h6>
 
         </div>
-        <div class="table-responsive">
-            <table id="SoftwareType" style=" border-collapse:collapse; border:white;" class="table table-striped table-bordered">
-                <thead>
+        <table id="SoftwareType" style=" border-collapse:collapse; border:white;" class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Ser No</th>
+                    <th>TimeStamp</th>
+                    <th>FromStakeHolder</th>
+                    <th>ToStakeHolder</th>
+                    <th>Stage</th>
+                    <th>SubStage</th>
+                    <th>Action</th>
+                    <th>Remarks</th>
+                    <th>#Att</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var history in ViewBag.ProjMovementHist)
+                {
+
                     <tr>
-                        <th>Ser No</th>
-                        <th>TimeStamp</th>
-                        <th>FromStakeHolder</th>
-                        <th>ToStakeHolder</th>
-                        <th>Stage</th>
-                        <th>SubStage</th>
-                        <th>Action</th>
-                        <th>Remarks</th>
-                        <th>#Att</th>
-                    </tr>
-                </thead>
-                <tbody>
+                        <td style="width:1% !important">
+                            @{
 
-                    @foreach (var history in ViewBag.ProjMovementHist)
-                    {
+                                snoa++;
+                            }
+                            @snoa
+                        </td>
+                        @* <td>@history.Date.ToString().Substring(0,10)</td> *@
+                        <td>@history.Date</td>
 
-                        <tr>
-                            <td style="width:1% !important">
-                                @{
+                        <td>
+                            @if (history.IsPulledBack == true)
+                            {
+                                var fromUnitName = history.FromUnitName ?? "";
+                                string insideBracket = "";
 
-                                    snoa++;
-                                }
-                                @snoa
-                            </td>
-                            @* <td>@history.Date.ToString().Substring(0,10)</td> *@
-                            <td>@history.Date</td>
+                                int start = fromUnitName.IndexOf('(');
+                                int end = fromUnitName.IndexOf(')');
 
-                            <td>
-                                @if (history.IsPulledBack == true)
+                                if (start != -1 && end != -1 && end > start)
                                 {
-                                    var fromUnitName = history.FromUnitName ?? "";
-                                    string insideBracket = "";
-
-                                    int start = fromUnitName.IndexOf('(');
-                                    int end = fromUnitName.IndexOf(')');
-
-                                    if (start != -1 && end != -1 && end > start)
-                                    {
-                                        insideBracket = fromUnitName.Substring(start + 1, end - start - 1).Trim();
-                                    }
-
-                                    @insideBracket
-                                }
-                                else
-                                {
-                                    @history.FromUnitName
-                                }
-                            </td>
-
-                            <td>
-
-
-                                @history.ToUnitName
-
-                            </td>
-
-                            <td>@history.Stages</td>
-                            <td>
-                                @if (history.IsComment == true)
-
-                                {
-                                    <spna>@history.ToUnitName for Comments</spna>
-                                }
-                                else
-                                {
-                                    @history.Status
+                                    insideBracket = fromUnitName.Substring(start + 1, end - start - 1).Trim();
                                 }
 
+                                @insideBracket
+                            }
+                            else
+                            {
+                                <div class="col-md-12">
+                                    <div class="RefLetter-container p-2" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">
+                                        <div class="tooltip-container" data-tooltip="@history.FromUnitName">
 
-                            </td>
-                            <td style="color: @((history.Actions == "Approved") ? "green" : "inherit")">
-                                <div class="d-flex">
-                                    @history.Actions
+                                            <span class="short-text noExport" id="">@truncateText(history.FromUnitName, 4)....</span>
 
-                                    @if (history.IsCc == true)
-                                    {
-                                        <div class="col-md-2">
-                                            <div class="RefLetter-container btn btn-warning p-2" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">
-                                                <div class="tooltip-container" data-tooltip="@history.CcUnits">
-                                                    @if (history.IsCc == true)
-                                                    {
-                                                        <span class="short-text" id="IsccForRemoveRow">Cc</span>
-                                                    }
-                                                    else
-                                                    {
-
-                                                        <span class="short-text">Cc</span>
-
-                                                    }
-                                                    <span class="tooltip tooltip-text">@history.CcUnits</span>
-                                                </div>
-
-                                            </div>
+                                            <span class="RefLetter">@history.FromUnitName</span>
                                         </div>
-                                    }
+
+                                    </div>
                                 </div>
-                            </td>
-                            <td class="wrap">
-                                @if (history.IsPulledBack == true && history.UndoRemarks == null)
-                                {
-                                    @:𝐏𝐮𝐥𝐥𝐞𝐝 𝐁𝐚𝐜𝐤 𝐁𝐲: - @history.Remarks
-                                }
-                                else
-                                {
-                                    @history.Remarks
-                                }
-                            </td>
+                                
+                            }
+                        </td>
 
-                            <td>
-                                @if (history.AttCnt > 0)
+                        <td>
+
+
+                            @history.ToUnitName
+
+                        </td>
+
+                        <td>@history.Stages</td>
+                        <td>
+                            @if (history.IsComment == true)
+
+                            {
+                                <spna>@history.ToUnitName for Comments</spna>
+                            }
+                            else
+                            {
+                                @history.Status
+                            }
+
+
+                        </td>
+                        <td style="color: @((history.Actions == "Approved") ? "green" : "inherit")">
+                            <div class="d-flex">
+                                @history.Actions
+                                @if (history.IsCc == true)
                                 {
-                                    <a href="javascript:void(0);" class="anchorDetail" data-id="@history.PsmId">
-                                        <img src="/assets/images/icons/attachemnts_clip.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
-                                    </a>
+                                    <div class="col-md-2">
+                                        <div class="RefLetter-container btn btn-warning p-2" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">
+                                            <div class="tooltip-container" data-tooltip="@history.CcUnits">
+                                                @if (history.IsCc == true)
+                                                {
+                                                    <span class="short-text" id="IsccForRemoveRow">Cc</span>
+                                                }
+                                                else
+                                                {
+
+                                                    <span class="short-text">Cc</span>
+
+                                                }
+                                                <span class="RefLetter">@history.CcUnits</span>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 }
-                                else
-                                {
+                            </div>
+                        </td>
+                        <td class="wrap">
+                            @if (history.IsPulledBack == true && history.UndoRemarks == null)
+                            {
+                                <div class="col-md-12">
+                                    <div class="RefLetter-container p-2" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">
+                                        <div class="tooltip-container" data-tooltip="𝐏𝐮𝐥𝐥𝐞𝐝 𝐁𝐚𝐜𝐤 𝐁𝐲: - @history.Remarks">
 
-                                }
-                            </td>
-                        </tr>
+                                            <span class="short-text noExport">𝐏𝐮𝐥𝐥𝐞𝐝 𝐁𝐚𝐜𝐤 𝐁𝐲: -@truncateText(history.Remarks, 2).... </span>
 
-                    }
+                                            <span class="RefLetter">𝐏𝐮𝐥𝐥𝐞𝐝 𝐁𝐚𝐜𝐤 𝐁𝐲: - @history.Remarks</span>
+                                        </div>
 
-                </tbody>
-            </table>
-        </div>
-     
+                                    </div>
+                                </div>
+                                
+                            }
+                            else
+                            {
+                                <div class="col-md-12">
+                                    <div class="RefLetter-container p-2" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">
+                                        <div class="tooltip-container" data-tooltip="@history.Remarks">
+                                            @if (history.Remarks != null &&@history.Remarks !="")
+                                            {
+                                                
+                                            <span class="short-text noExport" id="">@truncateText(history.Remarks, 2)....</span>
+                                            }
+
+                                            <span class="RefLetter">@history.Remarks</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
+                        </td>
+
+                        <td>
+                            @if (history.AttCnt > 0)
+                            {
+                                <a href="javascript:void(0);" class="anchorDetail" data-id="@history.PsmId">
+                                    <img src="/assets/images/icons/attachemnts_clip.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
+                                </a>
+                            }
+                            else
+                            {
+
+                            }
+                        </td>
+                    </tr>
+
+                }
+
+            </tbody>
+        </table>
 
     </div>
 

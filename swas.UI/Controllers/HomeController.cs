@@ -47,6 +47,9 @@ using static swas.DAL.Models.LegacyHistory;
 using swas.UI.Helpers;
 using iText.Kernel.XMP.Impl;
 using System.Security.Cryptography.X509Certificates;
+using iText.Kernel.Colors;
+using iText.Kernel.Pdf.Canvas.Draw;
+using iText.Layout.Element;
 
 namespace swas.UI.Controllers
 {
@@ -163,6 +166,7 @@ namespace swas.UI.Controllers
             return Json(ss);
 
         }
+        [HttpPost]
         public async Task<IActionResult> GetProjectWiseStatus(int Projid)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
@@ -187,7 +191,7 @@ namespace swas.UI.Controllers
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
 
 
-                return Json(await _stkholdmove.DashboardCount(Convert.ToInt32(Logins.unitid)));
+                    return Json(await _stkholdmove.DashboardCount(Convert.ToInt32(Logins.unitid)));
             }
             catch (Exception ex)
             {
@@ -453,6 +457,7 @@ s.IsDashboard,
             try
             {
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
+              
                 string userName = TempData["UserName"]?.ToString();
                 var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
                 var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
@@ -1821,17 +1826,16 @@ s.IsDashboard,
             {
                 var Exist = _context.trnWhiteListed
     .Any(x => x.ProjName == whitelist.ProjName
-           && x.Appt == whitelist.Appt
-           && x.Fmn == whitelist.Fmn
-           && x.mHostTypeId == whitelist.mHostTypeId);
+          );
 
                 if (Exist)
                 {
-                    return BadRequest(new { message = "Data Already WhiteListed" });
+                    return BadRequest(new { message = "Project Already WhiteListed. Please Edit Project To Escape Double Entry" });
                 }
 
 
                 whitelist.date = DateTime.Now;
+                whitelist.IsWhiteListed=true;
                 _context.trnWhiteListed.Add(whitelist);
                 await _context.SaveChangesAsync();  // Ensure the changes are saved asynchronously
 
@@ -1847,6 +1851,151 @@ s.IsDashboard,
 
           
             return Json(new { message });
+        }
+
+        [HttpGet]
+        public IActionResult Generate(string ProjectName, string ApprovedRemarks, string ApprovedDt)
+        {
+            try
+            {
+                // Validate input parameters
+                if (string.IsNullOrWhiteSpace(ProjectName) || string.IsNullOrWhiteSpace(ApprovedRemarks) || string.IsNullOrWhiteSpace(ApprovedDt))
+                {
+                    return BadRequest("All parameters (ProjectName, ApprovedRemarks, ApprovedDt) are required.");
+                }
+
+                // Parse ApprovedDt safely
+                if (!DateTime.TryParse(ApprovedDt, out DateTime approvedDate))
+                {
+                    return BadRequest("Invalid ApprovedDt format. Use a valid date string (e.g., '2025-10-27 16:10:00').");
+                }
+
+                using (var ms = new MemoryStream())
+                {
+                    // Initialize PDF document
+                    PdfWriter writer = new PdfWriter(ms);
+                    PdfDocument pdf = new PdfDocument(writer);
+                    Document document = new Document(pdf, iText.Kernel.Geom.PageSize.A4);
+
+                    // Set default font
+                    PdfFont font = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
+                    document.SetFont(font);
+
+                    // Add header
+                    //Paragraph header = new Paragraph("PAW (Portal For Application WhiteListing)")
+                    //    .SetFontSize(24)
+                    //    .SetBold()
+                    //    .SetTextAlignment(TextAlignment.CENTER)
+                    //    .SetMarginTop(20)
+                    //    .SetMarginBottom(15)
+                    //    .SetFontColor(ColorConstants.DARK_GRAY);
+                    //document.Add(header);
+
+                    // Add title with a decorative background
+                    Paragraph title = new Paragraph("IPA Certificate: Portal for Application Whitelisting (PAW)")
+                        .SetFontSize(18)
+                        .SetBold()
+                        .SetTextAlignment(TextAlignment.CENTER)
+                        .SetBackgroundColor(new DeviceRgb(240, 240, 240))
+                        .SetPadding(5)
+                        .SetMarginBottom(20);
+                    document.Add(title);
+
+                    // Add decorative line
+                    document.Add(new LineSeparator(new SolidLine(1f))
+                        .SetMarginBottom(20)
+                        .SetStrokeColor(ColorConstants.BLACK));
+
+                    // Project completion message
+                    document.Add(new Paragraph("This is to certifies that ,IPA has been granted by Steering Tech Committee.")
+                        .SetFontSize(14)
+                        .SetTextAlignment(TextAlignment.CENTER)
+                        .SetMarginBottom(25)
+                        .SetFontColor(ColorConstants.BLACK));
+
+                    // Create a table for project details with a subtle border
+                    Table table = new Table(UnitValue.CreatePercentArray(new float[] { 40, 60 }))
+                        .UseAllAvailableWidth()
+                        .SetMarginBottom(25)
+                        .SetBorder(new iText.Layout.Borders.SolidBorder(ColorConstants.LIGHT_GRAY, 0.5f))
+                        .SetPadding(8)
+                        .SetBackgroundColor(new DeviceRgb(245, 245, 245));
+
+                    // Add table cells
+                    table.AddCell(CreateCell("Project Name:", true));
+                    table.AddCell(CreateCell(ProjectName, false));
+                    table.AddCell(CreateCell("Approved Remarks (DDGIT):", true));
+                    table.AddCell(CreateCell(ApprovedRemarks, false));
+                    table.AddCell(CreateCell("Approved Date (PAW):", true));
+                    table.AddCell(CreateCell(approvedDate.ToString("dd-MM-yyyy HH:mm:ss"), false));
+                    table.AddCell(CreateCell("Date of Generation:", true));
+                    table.AddCell(CreateCell(DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), false));
+
+                    document.Add(table);
+
+                    // Add additional instructions
+                    document.Add(new Paragraph(
+                        "This Certificate is auto-generated based on electronic data and does not require an ink sign." +
+                        "It may therefore be treated as an authorized document.")
+                        .SetFontSize(10)
+                        .SetTextAlignment(TextAlignment.JUSTIFIED)
+                        .SetMarginTop(20)
+                        .SetMarginBottom(15));
+
+                    //document.Add(new Paragraph(
+                    //    "Please print out this page and attach a copy of the certificate to the final page in all assignments you submit on each module as part of your programme.")
+                    //    .SetFontSize(10)
+                    //    .SetBold()
+                    //    .SetTextAlignment(TextAlignment.JUSTIFIED)
+                    //    .SetMarginBottom(20));
+
+                    // Add footer with IP address and decorative line
+
+                    Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+                    var user = Helper.LoginDetails(Logins);
+                    var ipAddress = HttpContext.Connection.RemoteIpAddress?.MapToIPv4()?.ToString() ?? "Unknown";
+                    document.Add(new LineSeparator(new SolidLine(0.5f))
+                        .SetMarginBottom(10)
+                        .SetStrokeColor(ColorConstants.LIGHT_GRAY));
+                    document.Add(new Paragraph($"Generated by [{user}  {"IP: " + ipAddress}] on {DateTime.Now.ToString("dd MMM yyyy HH:mm:ss")}")
+                        .SetFontSize(10)
+                        .SetBold()
+                        .SetOpacity(0.5f)
+                        .SetTextAlignment(TextAlignment.CENTER)
+                        .SetFontColor(ColorConstants.BLACK)
+                        );
+
+                    // Close the document
+                    document.Close();
+
+                    // Return PDF to open in a new tab
+                    byte[] fileBytes = ms.ToArray();
+                    Response.Headers["Content-Disposition"] = "inline; filename=Certificate.pdf";
+                    Response.Headers["Content-Type"] = "application/pdf";
+                    return File(fileBytes, "application/pdf");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (use your preferred logging mechanism)
+                return StatusCode(500, $"An error occurred while generating the PDF: {ex.Message}");
+            }
+        }
+
+        // Helper method to create table cells
+        private Cell CreateCell(string text, bool isBold)
+        {
+            Paragraph p = new Paragraph(text)
+                .SetFontSize(12)
+                .SetTextAlignment(TextAlignment.LEFT);
+            if (isBold)
+            {
+                p.SetBold();
+            }
+            return new Cell()
+                .Add(p)
+                .SetBorder(iText.Layout.Borders.Border.NO_BORDER)
+                .SetPadding(6);
         }
 
 

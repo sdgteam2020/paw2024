@@ -1,4 +1,5 @@
 ﻿
+
 let allAttachments = []; // Array to hold all attachments and remarks
 
 function AttOnFWD() {
@@ -11,7 +12,7 @@ function AttOnFWD() {
         $("#DetailBody").empty(); // remove placeholder row
     }
 
-   
+
 
     const input = document.getElementById("pdfFileInput");
     const files = input?.files || [];
@@ -78,7 +79,7 @@ function AttOnFWD() {
     $("#btnFwdConfirm").off("click").on("click", function () {
         // Send the allAttachments array along with form data
         SaveFwdTo($("#spanFwdCurrentPslmId").html(), fd, allAttachments);
-        
+
     });
 
 }
@@ -86,6 +87,7 @@ function AttOnFWD() {
 
 
 $(document).on("click", ".att-btnDelete", function () {
+
     Swal.fire({
         title: 'Are you sure?',
         text: "You want to Delete ",
@@ -97,6 +99,7 @@ $(document).on("click", ".att-btnDelete", function () {
     }).then((result) => {
         if (result.value) {
 
+            // Get the index of the row that contains the delete button
             var rowIndex = $(this).closest("tr").index();
 
             // Remove the attachment from the allAttachments array based on the row index
@@ -107,25 +110,18 @@ $(document).on("click", ".att-btnDelete", function () {
 
         }
     });
-    // Get the index of the row that contains the delete button
-  
+   
 });
 
 function UploadFiles() {
-   
-
     var formData = new FormData();
-    debugger;
-    
-        var totalFiles = document.getElementById("pdfFileInput").files.length;
-        for (var i = 0; i < totalFiles; i++) {
-            var file = document.getElementById("pdfFileInput").files[i];
-            formData.append("uploadfile", file);
-          
-            formData.append("Reamarks", $("#Reamarks").val());
-            formData.append("PsmId", $("#spanCurrentPslmId").html());
-        }
- 
+    var totalFiles = document.getElementById("pdfFileInput").files.length;
+    for (var i = 0; i < totalFiles; i++) {
+        var file = document.getElementById("pdfFileInput").files[i];
+        formData.append("uploadfile", file);
+        formData.append("Reamarks", $("#Reamarks").val());
+        formData.append("PsmId", $("#spanCurrentPslmId").html());
+    }
 
     $.ajax({
         type: "POST",
@@ -134,15 +130,13 @@ function UploadFiles() {
         contentType: false,
         processData: false,
         success: function (response) {
-
-            $('#uploadLoader').hide()
+            $('.uploadLoader').addClass('d-none');
+            $('#uploadLoader').hide();
         
             if (response == 1) {
-                $('#uploadLoader').hide();
                 AttechHistory();
                 $("#Reamarks").val("");
                 $("#pdfFileInput").val("");
-             
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
@@ -180,7 +174,6 @@ function UploadFiles() {
 }
 
 function AttechHistory() {
-    debugger;
     var listItem = "";
     var userdata =
     {
@@ -204,12 +197,8 @@ function AttechHistory() {
                 else if (response == 0) {
 
                     listItem += "<tr><td class='text-center' colspan=5>No Record Found</td></tr>";
-                   
-                       
 
-                            $("#DetailBody").html(listItem);
-                     
-                    
+                    $("#DetailBody").html(listItem);
                     $("#lblTotal").html(0);
                 }
 
@@ -256,15 +245,12 @@ function AttechHistory() {
                             "</td>";
 
                         // Timestamp
-                        listItem += "<td class='align-middle'><span id='divName'>" + response[i].timeStamp + "</span></td>";
+                        listItem += "<td class='align-middle'><span id='divName'>" + DateFormateddMMyyyyhhmmss(response[i].timeStamp) + "</span></td>";
 
                         listItem += "</tr>";
                     }
-                   
-                            // If the modal is not visible, update #DetailBody
-                            $("#DetailBody").html(listItem);
-                       
-                   
+
+                    $("#DetailBody").html(listItem);
                     $("#lblTotal").html(response.length);
 
 

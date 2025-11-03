@@ -1,41 +1,5 @@
 ﻿$(document).ready(function () {
-
-
-    $(".btn-Fwd").click(function () {
-        // Ensure we have the server date from window.SERVER or fetch it
-        //  const S = window.SERVER.today ? window.SERVER : await window.fetchServerDate();
-        let date_type_raw = $(this).data("date_type");
-        let date_type = (String(date_type_raw).toLowerCase() === "true");
-        fetchServerDate().then(function (S) {
-
-            // Get the data from the button (True or False)
-         
-            
-            // Only use `S.todayDateTime` (from server) to ensure consistency
-            // Set datetime-local or date based on the data_type
-            if (date_type) {
-             
-                $('#TimeStampToProjfwd')
-                    .attr('type', 'datetime-local')
-                    .attr('max', S.todayDateTime)  // Max set to server date (in "YYYY-MM-DDTHH:mm" format)
-                    .prop('disabled', false)  // Allow user input
-                    .val(S.todayDateTime);
-            } else {
-            
-                // Set date type, freeze input
-                $('#TimeStampToProjfwd').attr('type', 'date');
-                $('#TimeStampToProjfwd').val(S.today); // Use the server date only (YYYY-MM-DD)
-                $('#TimeStampToProjfwd').prop('disabled', true); // Disable the field
-            }
-
-            // Focus the input (optional: you can show a modal or scroll to input)
-            $('#TimeStampToProjfwd').focus();
-        })
-    });
-
-
-
-
+    
     var param = sessionStorage.getItem("spntabType");
 
     if (param != null) {
@@ -90,7 +54,7 @@
         var psmId = $row.find("#SpnCurrentpsmId").text().trim();
         var actiontype = $row.find("#LatestActionType").text().trim();
         fetchServerDate().then(function (S) {
-          
+
             if (parseInt(actiontype) == 2 && ((actiontype) != 1 || actiontype != "")) {
                 $("#datepickerContainer").show();
             } else {
@@ -107,7 +71,7 @@
             var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
             var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
             var ss = `${datef2.getSeconds()}`;
-           
+
             var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
 
             var claValue = parseInt(actiontype);
@@ -123,7 +87,7 @@
 
             }
             $('#confirmSend').off('click').on('click', function () {
-                
+
 
                 var dateValue = $('#datepicker').val();
                 var currentDate = new Date();
@@ -152,6 +116,8 @@
 
         });
     });
+
+   
 
     $('#x').on('hidden.bs.modal', function () {
         $('#datepicker').datepicker('setDate', null);
@@ -270,27 +236,28 @@ function ProcessProjConfirm(ProjId) {
         }
     });
 }
-function FwdProjConfirm(psmId) {
 
-    $.ajax({
-        url: '/Projects/FwdProjConfirm',
-        type: 'POST',
-        data: { "PslmId": psmId },
-        success: function (response) {
-            //console.log(response);
-            if (response >= 1) {
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Project Successfully Submitted..!",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+//function FwdProjConfirmtounit(psmId) {
+   
+//    $.ajax({
+//        url: '/Projects/FwdProjConfirm',
+//        type: 'POST',
+//        data: { "PslmId": psmId },
+//        success: function (response) {
+//            //console.log(response);
+//            if (response >= 1) {
+//                Swal.fire({
+//                    position: "top-end",
+//                    icon: "success",
+//                    title: "Project Successfully Submitted..!",
+//                    showConfirmButton: false,
+//                    timer: 1500
+//                });
 
-            }
-        }
-    });
-}
+//            }
+//        }
+//    });
+//}
 
 function GetProjectMovHistory(ProjId) {
     var listitem = "";
@@ -308,7 +275,7 @@ function GetProjectMovHistory(ProjId) {
                 DTOProjectMovHistorypsmlst = response.dtoProjectMovHistorypsmlst;
                 DTOProjectMovHistorycmdlst = response.dtoProjectMovHistorycmdlst;
                 DTOProjectCCHistorylst = response.dtoProjectCCHistorylst;
-                listitem += '  ' + DateTimeFormatedd_mm_yyyy(new Date($.now())) + '';
+                //listitem += '  ' + DateTimeFormatedd_mm_yyyy(new Date($.now())) + '';
                 listitem += '<span>' + DTOProjectMovHistorypsmlst.length + ' Entries</span>';
                 listitem += '</div>';
                 for (var i = 0; i < DTOProjectMovHistorypsmlst.length; i++) {
@@ -490,7 +457,7 @@ function GetProjectMovHistory(ProjId) {
                         //console.log("IsPulledBack:", DTOProjectMovHistorypsmlst[i]?.IsPulledBack);
                         //console.log("UndoRemarks:", DTOProjectMovHistorypsmlst[i]?.UndoRemarks);
                         if (DTOProjectMovHistorypsmlst[i]?.isPulledBack === true && DTOProjectMovHistorypsmlst[i]?.undoRemarks == null) {
-                            listitem += '<div class="box-item">' + '<strong>Pulled Back Remarks</strong> -  ' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
+                            listitem += '<div class="box-item">' + '<strong>Pulled Back by</strong> -  ' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
                         } else {
                             listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
                         }
@@ -601,16 +568,16 @@ function GetCCProject() {
                     count++
                     listitem += '<tr>';
 
-                    listitem += '<td>' + count +'';
+                    listitem += '<td><div class="d-flex">' + count +'';
                     if (response[i].isRead == false)
                         listitem += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="color:#18bb6b" fill = "currentColor" class="bi bi-check" viewBox = "0 0 16 16" ><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" /></svg >';
                     else
                         listitem += '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" style="color:#18bb6b" height = "16" fill = "currentColor" > <path d="M342.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l80 80c12.5 12.5 32.8 12.5 45.3 0l160-160zm96 128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 402.7 54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l256-256z" /> </svg >';
 
-                    listitem += '</td>';
+                    listitem += '</div></td>';
                     listitem += '<td><span class="d-none noExport" id="SpnCurrentccProjId"> ' + response[i].projId + '</span>  <a data-proj-name="' + response[i].projName + '" data-proj-id="' + response[i].projId + '" href="/Projects/ProjHistory?EncyID=' + response[i].encyID + '&amp;Type=XR12">' +
                         '<div class="tooltip-container" data-tooltip="' + response[i].projName + '">' +
-                        '<span class="short-text">' + truncateText(response[i].projName, 6) + '</span>' +
+                        '<span class="short-text">' + truncateText(response[i].projName, 2) + '</span>' +
                         '<span class="tooltip tooltip-text noExport" id="projNamecc">"' + response[i].projName + '"</span>' +
                         '</div>' +
                         '</a> </td>';
@@ -627,21 +594,28 @@ function GetCCProject() {
                         '</div></td>';
                     /* listitem += '<td>' + response[i].toUnitName + '</td>'*/
                     listitem += '<td>' + DateFormateddMMyyyyhhmmss(response[i].timeStamp) + '</td>'
+                    var user = response[i].userDetails;
+                    // listitem += '<td>' + response[i].userDetails + '</td>'
+
+
+
+
+
+                    listitem += '<td class="RefLetter-container"><div class="noExport">' + trimByWords(user, 2) + '</div>';
+                    if (user != "") {
+                        listitem += ' <div class="RefLetter" >' + user + '</div>';
+
+
+
+                    }
+                    listitem += ' </td>';  // Use item.Remarks instead of @unitx.Remarks
+
                     if (response[i].userDetails != "")
                         listitem += '<td>' + DateFormateddMMyyyyhhmmss(response[i].readDate) + '</td>'
                     else
                         listitem += '<td></td>'
-                   // listitem += '<td>' + response[i].userDetails + '</td>'
-                    var userdetail = response[i].userDetails
-                     
-                    listitem += '<td class="RefLetter-container"><div class="noExport">' + trimByWords(userdetail, 2) + '</div>';
-                    if (userdetail != "") {
-                        listitem += '<div class="RefLetter">' + userdetail + '</div>';
-
-                    }
-
-                    listitem += '</td>';            
-
+                  
+                 
 
 
                     listitem += '<td>' + response[i].stage + '</td>'
@@ -664,8 +638,8 @@ function GetCCProject() {
                     listitem += '';
 
                 }
-                $("#cctblData").html(listitem);
-               initializeDataTable("#CCtable");
+                $("#cctblData").html(listitem); 
+                initializeDataTable("#CCtable");
                 $(".btn-FwdHistoryCcc").click(function () {
                     var projName = $(this).closest("tr").find("#projNamecc").html(); //$(this).data('projNamecc');
                     var words = projName.split(" ");
@@ -767,6 +741,7 @@ $(document).on("click", ".date-action", function (e) {
     debugger;
 
     const action = $(this).data("action");
+   
     const userReq = (action === "back"); // true for 'back', false otherwise
 
     const $row = $(this).closest("tr");
@@ -780,8 +755,8 @@ $(document).on("click", ".date-action", function (e) {
 
     Swal.fire({
         title: "Are you sure?",
-        text: action === "back"
-            ? "You want Back date to this project. Please enter remarks:"
+        html: action === "back"
+            ? `Do You want to Send the Legacy Project.<br> Please enter remarks:`
             : "You want Current date to this project. Please enter remarks:",
         input: "textarea",
         inputPlaceholder: "Enter remarks here...",
@@ -852,7 +827,7 @@ $(document).on('click', '#btnRemainder', function () {
     var projname = $(this).data('projname');
     Swal.fire({
         title: `Project:${projname}`,
-        html: `Please Enter Remarks For Reminder`,
+        html: `Please Enter Remarks for Reminder`,
         input: "textarea",
         inputPlaceholder: "Enter remarks here...",
         inputAttributes: {
@@ -1007,22 +982,24 @@ function GetProjRemainderMov(ProjId) {
                         '' + item.sponsor + '' +
                         '</div></td>';
 
-                  /*  listItem += "<td class='align-middle'>" + (item.fromUnit || 'N/A') + "</td>";*/
+                   /* listItem += "<td class='align-middle'>" + (item.sponsor || 'N/A') + "</td>";*/
+
+                    /*  listItem += "<td class='align-middle'>" + (item.fromUnit || 'N/A') + "</td>";*/
+                    listItem += "<td class='align-middle'><div class='col-md-24'>" + DateFormated(item.sentOn || '-') + "</div></td>";
                     listItem += '<td class="RefLetter-container align-middle">' +
                         '' + item.fromUnit + '' +
                         '<div class="RefLetter noExport">' +
                         '' + item.userDetails + '' +
                         '</div></td>';
-                   /* listItem += "<td class='align-middle'>" + (item.sponsor || 'N/A') + "</td>";*/
-                    listItem += "<td class='align-middle'><div class='col-md-24'>" + (item.sentOn || '-') + "</div></td>";
-
+                    /*  listItem += "<td class='align-middle'>" + (item.toUnit || 'N/A') + "</td>";*/
                     listItem += '<td class="RefLetter-container align-middle">' +
                         '' + item.toUnit + '' +
                         '<div class="RefLetter noExport">' +
-                        '' + (item.touserDetails || 'Action Pending...')+ '' +
+                        '' + (item.touserDetails || 'Action Pending...') + '' +
                         '</div></td>';
+                   
+                  
                     listItem += "<td class='align-middle' ><div class='col-md-24'>" + (item.readOn || '-') + "</div></td>"; 
-                  /*  listItem += "<td class='align-middle'>" + (item.toUnit || 'N/A') + "</td>";*/
                   /*  listItem += "<td class='align-middle'>" + (item.remarks || '') + "</td>";*/
 
 
@@ -1120,4 +1097,42 @@ $(document).ready(function () {
             $(this).find('.hover-popup').stop(true, true).fadeOut(200);
         }
     );
+});
+
+$(".btn-Fwd").click(function () {
+    // Ensure we have the server date from window.SERVER or fetch it
+    //  const S = window.SERVER.today ? window.SERVER : await window.fetchServerDate();
+    let date_type_raw = $(this).data("date_type");
+    let date_type = (String(date_type_raw).toLowerCase() === "true");
+    fetchServerDate().then(function (S) {
+
+        // Get the data from the button (True or False)
+
+
+        // Only use `S.todayDateTime` (from server) to ensure consistency
+        // Set datetime-local or date based on the data_type
+        if (date_type) {
+
+            $('#TimeStampToProjfwd')
+                .attr('type', 'datetime-local')
+                .attr('max', S.todayDateTime)  // Max set to server date (in "YYYY-MM-DDTHH:mm" format)
+                .prop('disabled', false)  // Allow user input
+                .val(S.todayDateTime);
+        } else {
+
+            // Set date type, freeze input
+            $('#TimeStampToProjfwd').attr('type', 'datetime-local');
+            $('#TimeStampToProjfwd').val(S.todayDateTime); // Use the server date only (YYYY-MM-DD)
+            $('#TimeStampToProjfwd').prop('disabled', true); // Disable the field
+        }
+
+        // Focus the input (optional: you can show a modal or scroll to input)
+        $('#TimeStampToProjfwd').focus();
+    })
+});
+
+// Optional: Go back to edit
+$(document).on("click", "#btnEditMove", function () {
+    $(".Attmenthistory").addClass("d-none");
+    $(".ProjectsFwd").removeClass("d-none");
 });

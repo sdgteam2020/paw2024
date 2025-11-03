@@ -50,7 +50,8 @@ $(document).ready(function () {
             mMsater(0, "ddlfwdAction", 7, $("#ddlfwdSubStage").val());
         });
 
-        $("#ddlfwdAction").change(function () {
+    $("#ddlfwdAction").change(function () {
+            
             mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html(), 0, "");
         });
   

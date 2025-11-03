@@ -1,14 +1,56 @@
 ﻿var memberTable = "";
 
 $(document).ready(function () {
-  
     InboxNotificationCount()
   
     GetProjCommentsByUnitId(0);
     $("#btnPending").addClass("border border-dark bold-border btn-small-large");
 
-  
-   
+    $(".cmtbtn").unbind().click(function () {
+        $(".cmtbtn").removeClass("border border-dark bold-border btn-small-large");
+
+        // Add the 'border-dark', 'bold-border', 'btn-small-large' (custom size) classes to the clicked button
+        $(this).addClass("border border-dark bold-border btn-small-large");
+
+        // Get the corresponding unit ID based on the button ID
+        var unitId = 0;
+        switch ($(this).attr('id')) {
+            case 'btnAccepted':
+                unitId = 1;
+                break;
+            case 'btnObsn':
+                unitId = 2;
+                break;
+            case 'btnRejected':
+                unitId = 3;
+                break;
+            case 'btnInfo':
+                unitId = 5;
+                break;
+            default:
+                unitId = 0; // For btnPending
+        }
+
+        // Call the function to get project comments by the determined unit ID
+        GetProjCommentsByUnitId(unitId);
+    });
+    //$("#btnPending").unbind().click(function () {
+    //    $("#btnPending").addClass('border border-red');
+    //    GetProjCommentsByUnitId(0);
+       
+    //});
+    //$("#btnAccepted").unbind().click(function () {
+    //    GetProjCommentsByUnitId(1);
+    //});
+    //$("#btnObsn").unbind().click(function () {
+    //    GetProjCommentsByUnitId(2);
+    //});
+    //$("#btnRejected").unbind().click(function () {
+    //    GetProjCommentsByUnitId(3);
+    //});
+    //$("#btnInfo").unbind().click(function () {
+    //    GetProjCommentsByUnitId(5);
+    //});
 
     $("#btnStatusUpdate").unbind().click(function () {
 
@@ -46,34 +88,6 @@ $(document).ready(function () {
 
 });
 
-$(".cmtbtn").unbind().click(function () {
-    $(".cmtbtn").removeClass("border border-dark bold-border btn-small-large");
-
-    // Add the 'border-dark', 'bold-border', 'btn-small-large' (custom size) classes to the clicked button
-    $(this).addClass("border border-dark bold-border btn-small-large");
-
-    // Get the corresponding unit ID based on the button ID
-    var unitId = 0;
-    switch ($(this).attr('id')) {
-        case 'btnAccepted':
-            unitId = 1;
-            break;
-        case 'btnObsn':
-            unitId = 2;
-            break;
-        case 'btnRejected':
-            unitId = 3;
-            break;
-        case 'btnInfo':
-            unitId = 5;
-            break;
-        default:
-            unitId = 0; // For btnPending
-    }
-
-    // Call the function to get project comments by the determined unit ID
-    GetProjCommentsByUnitId(unitId);
-});
 function IsUnReadInbox(psmId) {
 
     $.ajax({
@@ -86,8 +100,6 @@ function IsUnReadInbox(psmId) {
         }
     });
 }
-
-
 function GetProjCommentsByUnitId(Id) {
     var listItem = "";
 
@@ -98,27 +110,33 @@ function GetProjCommentsByUnitId(Id) {
         type: 'POST',
         data: { "StatusId": Id },
         success: function (response) {
-           
+            /*console.log("GetAllProjectByUnitId", response);*/
+
+
+
+
+
             if (response != "null" && response != null) {
+
+
 
                 if (response == -1) {
                     Swal.fire({
                         text: ""
                     });
                 }
-                else if (response == 0) {
+              else if (response == 0) {
                     listItem += "<tr><td class='text-center' colspan=6>No Record Found</td></tr>";
 
                     $("#DetailBody").html(listItem);
 
                 }
 
-                else {
+            else {
 
                     var count = 0;
                     var commentFalseCount = 0;
                     for (var i = 0; i < response.length; i++) {
-                        
                         var date = new Date(response[i].timeStamp);
                         var TimeStamp =
                             ("0" + date.getDate()).slice(-2) + '-' +
@@ -139,19 +157,30 @@ function GetProjCommentsByUnitId(Id) {
                         //listItem += "<td class='noExport d-none'><span class='noExport d-none' id='spnProjId'>" + response[i].projId + "</span><span class='noExport d-none' id='spnpsmId'>" + response[i].psmId + "</span></td>";
                         listItem += "<td class='noExport d-none'><span class='noExport d-none' id='spnProjId'>" + response[i].projId + "</span><span class='noExport d-none' id='spnpsmId'>" + response[i].psmId + "</span><span class='noExport d-none' id='DateType'>" + response[i].adminApprovalStatus + "</span></td>";
                         //listItem += "<td class='align-middle'><span id='divName'>" + count + "</span></td>";
-                         listItem += "<td class='align-middle '>" + (count + 1) + "</td>";
-                       // listItem += "<td class='align-middle ser-no'></td>";
+                        listItem += "<td class='align-middle sorting'>" + (count + 1) + "</td>";
+                        /*   listItem += "<td class='align-middle ser-no'></td>";*/
 
-                        listItem += "<td class='align-middle'>";
+                        listItem += "<td class='align-middle RefLetter-container'>";
                         listItem += "<a  href='/Projects/ProjHistory?EncyID=" + encodeURIComponent(response[i].encyID) + "'>";
-                        listItem += "<span id='projectName' class='projNameDetail' >" + response[i].projectName + "</span>";
+
+                         
+                        listItem += "<span id='projectName' class='projNameDetail noExport' >" + trimByWords(response[i].projectName, 2) + "</span>";
                         listItem += "</a>";
+                            listItem += ' <div class="RefLetter">' + response[i].projectName + '</div>';
+
+
+
+                        
+                       
+
+                        /*listItem += "<span id='projectName' class='projNameDetail' >" + response[i].projectName + "</span>";*/
+                  
                         listItem += "</td>";
                         listItem += "<td class='align-middle'><span id='stakeholder'>" + response[i].stakeholder + "</span></td>";
                         listItem += "<td class='align-middle'><span id='TimeStamp'>" + TimeStamp + "</span></td>";
                         if (response[i].stkStatusId == 1) {
                             listItem += "<td class='align-middle'><span id='status'>Accepted</span></td>";
-                            listItem += "<td class='align-middle'><span id='btnedit'><button style='height:30px;width:30px' type='button' class='cls-btncomment btn-icon btn-round btn-success mr-1'><i class='fas fa-comment'></i></button></td>";
+                            listItem += "<td class='align-middle '><span id='btnedit'><button type='button' style='height:30px;width:30px' class='cls-btncomment btn-icon btn-round btn-success mr-1'><i class='fas fa-comment'></i></button></td>";
 
                         }
                         else if (response[i].stkStatusId == 5) {
@@ -194,11 +223,12 @@ function GetProjCommentsByUnitId(Id) {
                     /* $('#ProjectCommentCount').html(boldCount);*/
 
                     $("body").off("click").on("click", ".cls-btncomment", function () {
+                        $(".custom-modal").addClass("custom-modal-size")
                         // Store the correct context (`this`) of the clicked element
                         var self = this;
 
-                        fetchServerDate().then(function (S) {
                             var action = $(self).closest("tr").find("#status").html();
+                        fetchServerDate().then(function (S) {
                             let stkid = 0;
 
                             switch (action) {
@@ -267,16 +297,18 @@ function GetProjCommentsByUnitId(Id) {
                             var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
 
                             const formattedDateTime = new Date(S.todayDateTime).toISOString().slice(0, 16);  // Convert to YYYY-MM-DDTHH:MM
-                           
+
                             // Set input fields based on the date type
                             if (dateType) {
+                               
                                 $('#CommentDateFwd').attr('type', 'datetime-local');
                                 $('#CommentDateFwd').attr('max', formattedDateTime);
                                 $('#CommentDateFwd').prop('disabled', false); // Allow user input
                                 $('#CommentDateFwd').val(formattedDateTime);
                             } else {
-                                $('#CommentDateFwd').attr('type', 'date');
-                                $('#CommentDateFwd').val(S.today); // Set today's date
+                               
+                                $('#CommentDateFwd').attr('type', 'datetime-local');
+                                $('#CommentDateFwd').val(S.todayDateTime); // Set today's date
                                 $('#CommentDateFwd').prop('disabled', true); // Freeze input
                             }
 
@@ -286,6 +318,7 @@ function GetProjCommentsByUnitId(Id) {
                             }, 200);
                         });
                     });
+
 
 
                     $("body").on("click", ".projNameDetail", function () {
@@ -317,7 +350,7 @@ function GetProjCommentsByUnitId(Id) {
 
 
 function SendMsg() {
-    debugger;
+
     var formData = new FormData();
     var totalFiles = document.getElementById("uploadfile").files.length;
     for (var i = 0; i < totalFiles; i++) {
@@ -361,6 +394,7 @@ function SendMsg() {
         contentType: false,
         processData: false,
         success: function (response) {
+            debugger;
             $('#uploadLoader').hide();
             if (response == 0) {
 
@@ -376,13 +410,13 @@ function SendMsg() {
                 
                 }).then(() => {
                     debugger;
-                    //  if ($("#ddlStatus").val() == 1) {
-                   // FwdProjConfirm($("#ProjectcommentForStackHolderPsmId").html());
-                    // }
+                      if ($("#ddlStatus").val() == 1) {
+                    FwdProjConfirm($("#ProjectcommentForStackHolderPsmId").html());
+                     }
 
 
                     GetAllComments($("#ProjectcommentForStackHolderPsmId").html(), $("#ProjectcommentForStackHolderprojId").html());
-                    //GetProjCommentsByUnitId();
+                   /* GetProjCommentsByUnitId();*/
                     //IsUnReadComment($("#ProjectcommentForStackHolderprojId").html());
                     //GetNotification($("#ProjectcommentForStackHolderprojId").html());
                     UnReadNotification($("#ProjectcommentForStackHolderprojId").html(), 2);
@@ -429,6 +463,7 @@ function SendMsg() {
     });
 }
 function GetAllComments(PsmId, projId) {
+    debugger;
     $.ajax({
         type: "POST",
         url: '/Projects/GetAllCommentBypsmId_UnitId',
@@ -438,7 +473,7 @@ function GetAllComments(PsmId, projId) {
             "ProjId": projId
         },
         success: function (data) {
-
+            console.log(data);
             var commentContainer = '';
             var userDetails = '';
             if (data != null) {
@@ -534,7 +569,7 @@ function IsUnReadComment(ProjId, PsmId) {
         },
         success: function (response) {
             //console.log(response);
-            /*window.location.reload();*/
+          /*  window.location.reload();*/
         }
     })
 }
@@ -598,15 +633,14 @@ function reset() {
 }
 
 function FwdProjConfirm(psmid) {
-  
+
     $.ajax({
         url: '/Projects/FwdProjConfirm',
         type: 'POST',
         data: { "PslmId": psmid },
         success: function (response) {
-            //console.log(response);
-
-
+            console.log(response);
+           
             if (response >= 1) {
 
 
@@ -625,8 +659,7 @@ function InboxNotificationCount() {
         url: '/Notification/GetInboxUnreadCount', // Replace with your actual route
         type: 'GET',
         success: function (unreadCount) {
-            debugger;
-          
+     
             $('#InboxCount').text(unreadCount);
 
 
@@ -654,4 +687,3 @@ function IsCommentedUnreadNotification(ProjId) {
         }
     });
 }
-

@@ -59,7 +59,6 @@
     <Folder Include="wwwroot\DownloadFile\" />
     <Folder Include="wwwroot\DownloadFile\" />
     <Folder Include="wwwroot\Uploads\" />
-    <Folder Include="wwwroot\Uploads\" />
   </ItemGroup>
 
   <ItemGroup>

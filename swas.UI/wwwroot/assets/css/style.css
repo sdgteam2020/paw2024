@@ -11,7 +11,7 @@ body {
 }
 
 a {
-    color: #007bff;
+    color: #007bff ;
     text-decoration: none;
 }
 
@@ -37,7 +37,7 @@ ion-icon {
     padding-bottom: 20px;
     transition: .3s all;*/
         margin-left: 260px;
-        margin-top: 65px;
+        margin-top: 80px;
         padding-bottom: 20px;
         transition: .3s all;
     }

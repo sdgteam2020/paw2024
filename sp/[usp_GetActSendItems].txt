@@ -1,0 +1,191 @@
+ALTER PROCEDURE [dbo].[usp_GetActSendItems]
+@UnitId INT
+AS
+BEGIN
+   
+SELECT 
+    a.ProjId,
+    b.PsmId AS PsmIds,
+    a.ProjName,
+    a.Sponsor,
+    a.StakeHolderId,
+    stake.UnitName AS StakeHolder,
+    stage.Stages,
+    stage.StagesId AS StageId,
+    status.Status,
+    status.StatusId,
+    b.FromUnitId,
+    fromUnits.UnitName AS FromUnitUserDetail,
+    CONCAT(fromUnits.UnitName, ' ( ', b.UserDetails, ')') AS FromUnitName,
+    b.ToUnitId,
+    toUnits.UnitName AS ToUnitName,
+    actions.Actions,
+    actions.ActionsId AS ActionId,
+    0 AS TotalDays,
+    b.TimeStamp,
+    a.IsProcess,
+    b.IsRead,
+    b.IsComplete,
+    b.IsPullBack,
+    'OUTBOX' AS RecordType,
+    CASE 
+        WHEN EXISTS (
+            SELECT TOP 1 1
+            FROM ProjStakeHolderMov AS p1
+            WHERE p1.ProjId = b.ProjId
+              AND p1.IsComment = 0
+            ORDER BY p1.PsmId DESC
+        )
+        AND (
+            SELECT TOP 1 p2.ToUnitId
+            FROM ProjStakeHolderMov AS p2
+            WHERE p2.ProjId = b.ProjId
+              AND p2.IsComment = 0
+            ORDER BY p2.PsmId DESC
+        ) != @UnitId
+        AND NOT EXISTS (
+            SELECT 1
+            FROM ProjStakeHolderMov AS p3
+            WHERE p3.ProjId = b.ProjId
+              AND p3.IsComment = 0
+              AND p3.IsComplete = 0
+              AND p3.ToUnitId = @UnitId
+        ) 
+        THEN CAST(1 AS BIT) 
+        ELSE CAST(0 AS BIT) 
+    END AS PullbackAction,
+    (SELECT DISTINCT ProjId
+     FROM ProjStakeHolderMov
+     WHERE ProjId = a.ProjId AND StatusActionsMappingId = 103) AS IsHosted,
+    '0' AS IssentCC,
+    b.IsCc,
+    (SELECT STRING_AGG(cctounit.unitname, ', ')
+     FROM [DB_PAW].[dbo].[ProjStakeHolderCcMov] AS ccmov
+     INNER JOIN tbl_mUnitBranch AS cctounit ON ccmov.ToCcUnitId = cctounit.unitid
+     WHERE PsmId = b.PsmId) AS CCUnitName,
+     
+    -- ✅ HasRemainder column
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM trnRemainder r
+            WHERE r.Projid = a.ProjId
+              AND r.IsRemainder = 1
+              AND r.FromUnitId = @UnitId
+        )
+        THEN CAST(1 AS BIT)
+        ELSE CAST(0 AS BIT)
+    END AS HasRemainder
+
+FROM Projects AS a
+INNER JOIN ProjStakeHolderMov AS b ON a.ProjId = b.ProjId
+LEFT JOIN tbl_mUnitBranch AS stake ON a.StakeHolderId = stake.unitid
+LEFT JOIN TrnStatusActionsMapping AS map ON b.StatusActionsMappingId = map.StatusActionsMappingId
+LEFT JOIN mStatus AS status ON map.StatusId = status.StatusId
+LEFT JOIN mStages AS stage ON status.StageId = stage.StagesId
+LEFT JOIN mActions AS actions ON map.ActionsId = actions.ActionsId
+LEFT JOIN tbl_mUnitBranch AS toUnits ON b.ToUnitId = toUnits.unitid
+LEFT JOIN tbl_mUnitBranch AS fromUnits ON b.FromUnitId = fromUnits.unitid
+WHERE a.IsActive = 1
+  AND a.IsDeleted = 0
+  AND b.IsActive = 1
+  AND b.IsDeleted = 0
+  AND a.IsSubmited = 1
+  AND b.IsComplete = 0
+  AND b.IsComment = 0
+  AND b.FromUnitId = @UnitId
+
+UNION ALL
+
+SELECT 
+    a.ProjId,
+    b.PsmId AS PsmIds,
+    a.ProjName,
+    a.Sponsor,
+    a.StakeHolderId,
+    stake.UnitName AS StakeHolder,
+    stage.Stages,
+    stage.StagesId AS StageId,
+    status.Status,
+    status.StatusId,
+    b.FromUnitId,
+    fromUnits.UnitName AS FromUnitUserDetail,
+    CONCAT(fromUnits.UnitName, ' ( ', b.UserDetails, ')') AS FromUnitName,
+    b.ToUnitId,
+    toUnits.UnitName AS ToUnitName,
+    actions.Actions,
+    actions.ActionsId AS ActionId,
+    0 AS TotalDays,
+    b.TimeStamp,
+    a.IsProcess,
+    b.IsRead,
+    b.IsComplete,
+    b.IsPullBack,
+    'HISTORY' AS RecordType,
+    CASE 
+        WHEN EXISTS (
+            SELECT TOP 1 1
+            FROM ProjStakeHolderMov AS p1
+            WHERE p1.ProjId = b.ProjId
+              AND p1.IsComment = 0
+            ORDER BY p1.PsmId DESC
+        )
+        AND (
+            SELECT TOP 1 p2.ToUnitId
+            FROM ProjStakeHolderMov AS p2
+            WHERE p2.ProjId = b.ProjId
+              AND p2.IsComment = 0
+            ORDER BY p2.PsmId DESC
+        ) != @UnitId
+        AND NOT EXISTS (
+            SELECT 1
+            FROM ProjStakeHolderMov AS p3
+            WHERE p3.ProjId = b.ProjId
+              AND p3.IsComment = 0
+              AND p3.IsComplete = 0
+              AND p3.ToUnitId = @UnitId
+        ) 
+        THEN CAST(1 AS BIT) 
+        ELSE CAST(0 AS BIT) 
+    END AS PullbackAction,
+    (SELECT DISTINCT ProjId
+     FROM ProjStakeHolderMov
+     WHERE ProjId = a.ProjId AND StatusActionsMappingId = 103) AS IsHosted,
+    '0' AS IssentCC,
+    b.IsCc,
+    (SELECT STRING_AGG(cctounit.unitname, ', ')
+     FROM [DB_PAW].[dbo].[ProjStakeHolderCcMov] AS ccmov
+     INNER JOIN tbl_mUnitBranch AS cctounit ON ccmov.ToCcUnitId = cctounit.unitid
+     WHERE PsmId = b.PsmId) AS CCUnitName,
+     
+    -- ✅ HasRemainder column
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM trnRemainder r
+            WHERE r.Projid = a.ProjId
+              AND r.IsRemainder = 1
+              AND r.FromUnitId = @UnitId
+        )
+        THEN CAST(1 AS BIT)
+        ELSE CAST(0 AS BIT)
+    END AS HasRemainder
+
+FROM Projects AS a
+INNER JOIN ProjStakeHolderMov AS b ON a.ProjId = b.ProjId
+LEFT JOIN tbl_mUnitBranch AS stake ON a.StakeHolderId = stake.unitid
+LEFT JOIN TrnStatusActionsMapping AS map ON b.StatusActionsMappingId = map.StatusActionsMappingId
+LEFT JOIN mStatus AS status ON map.StatusId = status.StatusId
+LEFT JOIN mStages AS stage ON status.StageId = stage.StagesId
+LEFT JOIN mActions AS actions ON map.ActionsId = actions.ActionsId
+LEFT JOIN tbl_mUnitBranch AS toUnits ON b.ToUnitId = toUnits.unitid
+LEFT JOIN tbl_mUnitBranch AS fromUnits ON b.FromUnitId = fromUnits.unitid
+WHERE a.IsActive = 1
+  AND a.IsDeleted = 0
+  AND b.IsActive = 1
+  AND b.IsDeleted = 0
+  AND a.IsSubmited = 1
+  AND b.IsComplete = 1
+  AND b.IsComment = 0
+  AND b.FromUnitId = @UnitId;
+END

@@ -1,0 +1,136 @@
+ALTER PROCEDURE [dbo].[usp_DashboardChartSummary]
+@UserId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT   YEAR(InitiatedDate) AS Year,
+             COUNT(*) AS Total
+    FROM     Projects
+    WHERE    IsSubmited = 1
+    GROUP BY YEAR(InitiatedDate)
+    ORDER BY Year;
+   
+   
+   WITH     RankedProjects
+    AS       (SELECT   mst.Status,
+                       stsact.StatusId,
+                       COUNT(DISTINCT proj.ProjId) AS Total
+              FROM     mStatus AS mst
+                       INNER JOIN
+                       TrnStatusActionsMapping AS stsact
+                       ON mst.StatusId = stsact.StatusId
+                       INNER JOIN
+                       ProjStakeHolderMov AS mov
+                       ON mov.StatusActionsMappingId = stsact.StatusActionsMappingId
+                       INNER JOIN
+                       Projects AS proj
+                       ON proj.ProjId = mov.ProjId and proj.IsProcess=1
+              WHERE    (stsact.ActionsId = 2
+                        AND stsact.StatusActionsMappingId IN (48, 53))
+						AND proj.IsSubmited = 1 and mov.IsActive=1
+                       OR (stsact.StatusActionsMappingId IN (26, 31, 37)
+                           AND mov.IsComplete = 1 and mov.IsActive=1)
+                          
+              GROUP BY mst.Status, stsact.StatusId)
+    (SELECT  sts.Status,
+             sts.StatusId,
+             isnull(rnk.Total, 0) AS Total,
+             sts.Statseq
+     FROM    mStatus AS sts
+             LEFT OUTER JOIN
+             RankedProjects AS rnk
+             ON sts.StatusId = rnk.StatusId
+     WHERE   StageId = 2
+             AND IsDashboard = 1
+     UNION ALL
+     SELECT  'Process by DDGIT' AS Status,
+             '0' AS StatusId,
+             COUNT(DISTINCT proj.ProjId) AS Total,
+             0 AS Statseq
+     FROM    ProjStakeHolderMov AS mov
+             INNER JOIN
+             Projects AS proj
+             ON proj.ProjId = mov.ProjId
+                AND proj.IsSubmited = 1
+             INNER JOIN
+             TrnStatusActionsMapping AS stsact
+             ON mov.StatusActionsMappingId = stsact.StatusActionsMappingId
+             INNER JOIN
+             mStatus AS sts
+             ON sts.StatusId = stsact.StatusId
+     WHERE   IsSubmited = 1
+             AND IsProcess = 1 and mov.IsActive=1)
+    ORDER BY Statseq;
+   
+
+
+
+   WITH   RankedProjects
+    AS     (SELECT   mst.Status,
+                     stsact.StatusId,
+                     COUNT(DISTINCT proj.ProjId) AS Total
+            FROM     mStatus AS mst
+                     INNER JOIN
+                     TrnStatusActionsMapping AS stsact
+                     ON mst.StatusId = stsact.StatusId
+                     INNER JOIN
+                     ProjStakeHolderMov AS mov
+                     ON mov.StatusActionsMappingId = stsact.StatusActionsMappingId
+                     INNER JOIN
+                     Projects AS proj 
+                     ON proj.ProjId = mov.ProjId and proj.IsProcess=1
+            WHERE    stsact.ActionsId = 2
+                     AND proj.IsSubmited = 1 and mov.IsActive=1
+            GROUP BY mst.Status, stsact.StatusId)
+    SELECT sts.Status,
+           sts.StatusId,
+           isnull(rnk.Total, 0) AS Total,
+           sts.Statseq
+    FROM   mStatus AS sts
+           LEFT OUTER JOIN
+           RankedProjects AS rnk
+           ON sts.StatusId = rnk.StatusId
+    WHERE  StageId = 3
+           AND sts.IsDashboard = 1
+           OR sts.StatusId = 21;
+
+
+		 SELECT 'Whitelisted' AS Year,
+           COUNT(DISTINCT pro.ProjName) AS Total
+    FROM   trnWhiteListed AS pro
+   
+    --WHERE  pro.isWhiteListed = 1 and Clearence > DATEADD(YEAR, -3, GETDATE())
+	WHERE  pro.isWhiteListed = 1
+          
+    UNION ALL
+
+    SELECT 'Due for Re-vetting' AS Year,
+           COUNT(DISTINCT pro.ProjName) AS Total
+    FROM   trnWhiteListed AS pro
+   
+    --WHERE  pro.isWhiteListed = 1 and Clearence <= DATEADD(YEAR, -3, GETDATE())
+	WHERE  pro.isWhiteListed = 1  and Clearence <= DATEADD(YEAR, -3, GETDATE())
+
+
+    --SELECT 'Whitelisted' AS Year,
+    --       COUNT(DISTINCT pro.ProjId) AS Total
+    --FROM   Projects AS pro
+    --       INNER JOIN
+    --       ProjStakeHolderMov AS mov
+    --       ON mov.ProjId = pro.ProjId
+    --WHERE  pro.IsProcess = 1
+    --       AND IsSubmited = 1 and mov.IsActive=1
+    --       AND mov.StatusActionsMappingId = 88
+    --UNION ALL
+    --SELECT 'Due for Re-vetting' AS Year,
+    --       COUNT(DISTINCT pro.ProjId) AS Total
+    --FROM   Projects AS pro
+    --       INNER JOIN
+    --       ProjStakeHolderMov AS mov
+    --       ON mov.ProjId = pro.ProjId
+    --WHERE  pro.IsProcess = 1
+    --       AND pro.IsSubmited = 1 and mov.IsActive=1
+    --       AND mov.StatusActionsMappingId = 78
+    --       AND mov.TimeStamp <= DATEADD(YEAR, -3, GETDATE());
+END
+

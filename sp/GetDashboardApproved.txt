@@ -1,0 +1,148 @@
+ALTER PROCEDURE [dbo].[usp_GetDashboardApproved]
+@StatusId INT, @StatusActionsMappingId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @Status AS NVARCHAR (100);
+    SELECT @Status = Status
+    FROM   mStatus
+    WHERE  StatusId = @StatusId;
+    IF @Status = 'BISAG-N'
+        BEGIN
+            SELECT p.ProjId,
+                   p.ProjName,
+                   stk.UnitName AS StakeHolder,
+                   p.InitiatedDate AS TimeStamp,
+                   'BISAG-N' AS Status
+            FROM   Projects AS p
+                   INNER JOIN
+                   tbl_mUnitBranch AS stk
+                   ON p.StakeHolderId = stk.unitid
+            WHERE  p.IsSubmited = 1
+                   AND p.BeingDevpInhouse = 'BISAG-N';
+            RETURN;
+        END
+    IF @Status = 'Re-Vetting'
+        BEGIN
+            SELECT p.ProjId,
+                   p.ProjName,
+                   stk.UnitName AS StakeHolder,
+                   p.InitiatedDate AS TimeStamp,
+                   'Re-Vetting' AS Status
+            FROM   Projects AS p
+                   INNER JOIN
+                   tbl_mUnitBranch AS stk
+                   ON p.StakeHolderId = stk.unitid
+            WHERE  p.IsSubmited = 1
+                   AND p.IsWhitelisted = 'Re-Vetted';
+            RETURN;
+        END
+    IF @StatusActionsMappingId = 1
+        SET @StatusActionsMappingId = 21;
+    IF @StatusActionsMappingId IN (26, 31, 37)
+        BEGIN
+            SELECT   a.ProjId,
+                     a.ProjName,
+                     a.StakeHolderId,
+                     stackcs.UnitName AS StakeHolder,
+                     MIN(mov1.TimeStamp) AS TimeStamp
+            FROM     Projects AS a
+                     INNER JOIN
+                     ProjStakeHolderMov AS mov
+                     ON a.ProjId = mov.ProjId
+                     LEFT OUTER JOIN
+                     tbl_mUnitBranch AS stackcs
+                     ON a.StakeHolderId = stackcs.unitid
+                     INNER JOIN
+                     ProjStakeHolderMov AS mov1
+                     ON mov1.ProjId = a.ProjId
+                     INNER JOIN
+                     Projects AS pro1
+                     ON pro1.ProjId = mov1.ProjId
+            WHERE    pro1.IsProcess = 1
+                     AND mov1.StatusActionsMappingId = @StatusActionsMappingId
+                     AND mov.StatusActionsMappingId = @StatusActionsMappingId
+                     AND mov.IsActive = 1
+                     AND mov.IsComplete = 1
+            GROUP BY a.ProjId, a.ProjName, a.StakeHolderId, stackcs.UnitName;
+            RETURN;
+        END
+    IF @StatusActionsMappingId = 21
+        BEGIN
+            SELECT   a.ProjId,
+                     a.ProjName,
+                     a.StakeHolderId,
+                     stackcs.UnitName AS StakeHolder,
+                     MIN(mov1.TimeStamp) AS TimeStamp
+            FROM     Projects AS a
+                     INNER JOIN
+                     ProjStakeHolderMov AS mov
+                     ON a.ProjId = mov.ProjId
+                     LEFT OUTER JOIN
+                     tbl_mUnitBranch AS stackcs
+                     ON a.StakeHolderId = stackcs.unitid
+                     INNER JOIN
+                     ProjStakeHolderMov AS mov1
+                     ON mov1.ProjId = a.ProjId
+                     INNER JOIN
+                     Projects AS pro1
+                     ON pro1.ProjId = mov1.ProjId
+            WHERE    pro1.IsProcess = 1
+                     AND mov1.StatusActionsMappingId = @StatusActionsMappingId
+                     AND mov.StatusActionsMappingId = @StatusActionsMappingId
+                     AND mov.IsActive = 1
+            GROUP BY a.ProjId, a.ProjName, a.StakeHolderId, stackcs.UnitName;
+            RETURN;
+        END
+    IF @StatusActionsMappingId IN (9, 15, 48, 53, 60, 63, 68, 73, 78, 83, 88)
+        BEGIN
+            SELECT   a.ProjId,
+                     a.ProjName,
+                     a.StakeHolderId,
+                     stackcs.UnitName AS StakeHolder,
+                     MIN(mov1.TimeStamp) AS TimeStamp
+            FROM     Projects AS a
+                     INNER JOIN
+                     ProjStakeHolderMov AS mov
+                     ON a.ProjId = mov.ProjId
+                     LEFT OUTER JOIN
+                     tbl_mUnitBranch AS stackcs
+                     ON a.StakeHolderId = stackcs.unitid
+                     INNER JOIN
+                     ProjStakeHolderMov AS mov1
+                     ON mov1.ProjId = a.ProjId
+                     INNER JOIN
+                     Projects AS pro1
+                     ON pro1.ProjId = mov1.ProjId
+            WHERE    pro1.IsProcess = 1
+                     AND mov1.StatusActionsMappingId = @StatusActionsMappingId
+                     AND mov.StatusActionsMappingId = @StatusActionsMappingId
+                     AND mov.IsActive = 1
+            GROUP BY a.ProjId, a.ProjName, a.StakeHolderId, stackcs.UnitName;
+            RETURN;
+        END
+    IF @StatusActionsMappingId IN (880)
+        BEGIN
+            SELECT DISTINCT pro.ProjId AS ProjId,
+                            pro.ProjName,
+                            munit.unitname AS StakeHolder,
+                            DATEADD(MONTH, 36, mov.TimeStamp) AS TimeStamp
+            FROM   Projects AS pro
+                   INNER JOIN
+                   tbl_mUnitBranch AS munit
+                   ON pro.StakeHolderId = munit.unitid
+                   INNER JOIN
+                   ProjStakeHolderMov AS mov
+                   ON mov.ProjId = pro.ProjId
+            WHERE  pro.IsProcess = 1
+                   AND pro.IsSubmited = 1
+                   AND mov.StatusActionsMappingId = 78
+                   AND mov.TimeStamp <= DATEADD(YEAR, -3, GETDATE());
+            RETURN;
+        END
+    SELECT TOP 0 0 AS ProjId,
+                 '' AS ProjName,
+                 0 AS StakeHolderId,
+                 '' AS StakeHolder,
+                 NULL AS TimeStamp;
+END

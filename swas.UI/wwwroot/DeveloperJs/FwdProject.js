@@ -37,9 +37,32 @@ $(document).ready(function () {
         $(".ProjectsCCFwd").removeClass("d-none")
 
     });
+    //$("#ddlfwdAction").change(function () { Comment by Kapoor
 
+    //    mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html(), 0, "");
+    //    mMsaterFwdTo(0, "ddlfwdCCTo", 8, 0, $("#SpnFwdStakeHolderId").html(), 0, "");
+    //});
+
+    //$("select[name='fwdoffrs']").change(function () {
+    //    var selectedText = $(this).find("option:selected").text().trim();
+
+    //    if (selectedText === "More") {
+    //        $(this).hide();
+    //        $("#loadFwdTo").show().focus();
+    //        $("#searchBox").show().focus();
+    //    } else {
+    //        $(this).show();
+    //        $("#searchBox").hide();
+    //        $("#loadFwdTo").hide();
+    //    }
+    //});
+    //$("#loadFwdTo").click(function () {
+    //    mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html(), 0, "");
+    //    $(this).hide();
+    //    $("#searchBox").hide();
+    //    $("select[name='fwdoffrs']").show().focus();
+    //});
     $("select[name='fwdoffrs']").change(function () {
-
         var selectedText = $(this).find("option:selected").text().trim();
 
         if ($("select[name='fwdoffrs']").val() === "More") {
@@ -49,11 +72,15 @@ $(document).ready(function () {
             $('.ProjectsFwdUnit').removeClass('d-none');
 
             $("#searchBox").show().focus();
-
             if (selectedText === "More") {
-                mMsater(0, "searchBox", 12, 0)
+            mMsater(0, "searchBox", 12, 0)
             }
 
+
+
+
+
+            // mMsaterFwdTo($(this).closest("tr").find("#SpnStakeHolderId").html(), 1);
         } else {
             $('.FwdDropdown').addClass('col-md-3');
             $('.FwdDropdown').addClass('col-md-6');
@@ -65,7 +92,15 @@ $(document).ready(function () {
         }
     });
 
-   
+    //$("#ddlfwdSubStage").change(function () {
+
+    //    mMsater(0, "ddlfwdAction", 9, $("#ddlfwdSubStage").val())
+    //});
+
+    //$("#ddlfwdAction").change(function () {
+
+    //    mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnStakeHolderId").html())
+    //});
     $(".btn-Undo").click(function () {
         debugger;
         var projectName = $(this).closest("tr").find("a").data("proj-name");
@@ -74,7 +109,31 @@ $(document).ready(function () {
         var words = projectName.split(" ");
         var shortProjName = words.length > 6 ? words.slice(0, 4).join(" ") + "..." : projectName;
 
-       
+        //Swal.fire({
+        //    title: `<div>
+        //            Enter Pull Back Remarks: ${shortProjName}
+        //        </div>`,
+        //    input: "text",
+        //    inputAttributes: {
+        //        autocapitalize: "off"
+        //    },
+        //    showCancelButton: true,
+        //    confirmButtonText: "OK",
+        //    cancelButtonText: "Cancel",
+        //    //position: "top",
+        //    customClass: {
+        //        popup: 'custom-swal-popup',
+        //        confirmButton: 'custom-confirm-button',
+        //        cancelButton: 'custom-cancel-button',
+        //        input: 'custom-input-field'
+        //    },
+        //    preConfirm: async (login) => {
+        //        if (login == "") {
+        //            Swal.showValidationMessage(`Please Enter Remarks for project: ${shortProjName}`);
+        //        }
+        //    },
+        //    allowOutsideClick: () => !Swal.isLoading()
+        //})
 
         Swal.fire({
             title: `Enter Pull Back Remarks: ${shortProjName}`, // your dynamic title
@@ -107,6 +166,18 @@ $(document).ready(function () {
                 PullBAckProject($(this).closest("tr").find("#SpnCurrentProjId").html(), $(this).closest("tr").find("#SpnCurrentpsmId").html(), result.value, $(this).closest("tr").find("#SpnprojectStageId").html());
                 UndoNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2, $(this).closest("tr").find("#SpnprojectToUnitId").html());
 
+                //For Notification
+
+
+                //AddNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2, $("#SpnCurrentUserStackholderID").html());
+
+
+                //IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
+
+                //IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
+
+                //$(this).closest("tr").removeClass("bold-text");
+
             }
         });
     });
@@ -122,6 +193,8 @@ $(document).ready(function () {
 
         GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentProjId").html());
 
+
+
     });
     $(".btn-FwdHistory").click(function () {
         debugger;
@@ -135,7 +208,8 @@ $(document).ready(function () {
 
         GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentProjId").html());
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
-     // IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
+
+        // IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
         if ($(this).closest("tr").find("#IsccForRemoveRow").html() == "Cc") {
             $(this).closest('tr').remove();
         }
@@ -147,45 +221,43 @@ $(document).ready(function () {
 
     });
     $(".btn-Fwd").click(function () {
-        debugger;
-        var Isprocess = $(this).closest("tr").find("#SpnprojectIsProcess").html() === "False" ? false : true;
 
+        var Isprocess = $(this).closest("tr").find("#SpnprojectIsProcess").html().trim() === "False" ? false : true;
 
+        $('.FwdDropdown').addClass('col-md-3');
         $('.FwdDropdown').addClass('col-md-6');
         $('.ProjectsFwdUnit').addClass('d-none');
+
+
         $("#searchBox").val('');
         $("#searchBox").hide();
-
-
         TimeStampForcheckdate = new Date($(".TimeStampForcheckdate").html());
-
+       
         var projName = $(this).data('proj-name');
         var words = projName.split(" ");
         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
         //var finalTitle = "Mov History: " + shortProjName;
-        var finalTitle = "Mov History: " + projName;
+        var finalTitle = "Proj Name: " + projName;
         $('#fwdModal').text(finalTitle);
 
         var projNameDetail = $(this).data('proj-name') + " " + "Move Details";
         $('.fwdtitle').text(projNameDetail);
+   
+        if (Isprocess== false) {
 
-
-        if (Isprocess == false)
-        {
             mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 1, 1)
-        }
-      else if (words.includes("Re-Vetted")) {
+        } 
+       else if (words.includes("Re-Vetted")) {
 
             mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 1, "Re-Vetted")
-        }
-        else {
+        } else {
             mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 1)
         }
-
+       
 
         mMsaterStage($(this).closest("tr").find("#SpnTimeStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#SpnStageId").html(), $("#SpnStakeHolderId").html())
         /* mMsater(0, "ddlfwdAction", 9, $("#ddlfwdSubStage").val())*/
-
+      
         mMsater($(this).closest("tr").find("#SpnTimeActionId").html(), "ddlfwdAction", 7, $(this).closest("tr").find("#SpnTimeStatusId").html())
         /*mMsater($(this).closest("tr").find("#SpnTimeActionId").html(), "ddlfwdAction", 9, $(this).closest("tr").find("#SpnTimeStatusId").html())*/
         mMsaterFwdTo($(this).closest("tr").find("#SpnTimeToUnitId").html(), "ddlfwdFwdTo", 8, 0, $(this).closest("tr").find("#SpnStakeHolderId").html(), 0, "");
@@ -208,7 +280,16 @@ $(document).ready(function () {
 
         $('#ProjFwd').modal('show');
 
-       
+        //$("#searchBox").autocomplete({
+        //    minLength: 3,
+        //    source: function (request, response) {
+        //        var value = request.term;
+        //        if (value) {
+        //            mMsaterFwdTo($(this).closest("tr").find("#SpnTimeToUnitId").html(), "ddlfwdFwdTo", 8, 0, $(this).closest("tr").find("#SpnStakeHolderId").html(), 1, value);
+
+        //        }
+        //    }
+        //});
 
         $(".Fwdtitle").html("Projects Move Details");
         $(".ProjectsFwd").removeClass("d-none");
@@ -216,10 +297,14 @@ $(document).ready(function () {
 
 
 
-       
+        // alert($(this).closest("tr").find("#SpnprojectStageId").html())
+        //GetAllComments($(this).closest("tr").find("#SpnCurrentProjId").html());
     });
 
-   
+    // Ensure autocomplete works when the modal is opened or search box is focused
+    //$("#searchBox").on("change", function () {
+    //    var value =  $(this).autocomplete("search", $(this).val());  
+    //});
 
     $(".btn-Obsn").click(function () {
 
@@ -231,9 +316,6 @@ $(document).ready(function () {
         var finalTitle = "Mov History: " + projNameDetail;
         $('#fwdModal').text(finalTitle);
         $('.fwdtitle').text(projNameDetail);
-
-        
-
 
         mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 2,1)
         mMsaterStage($(this).closest("tr").find("#SpnTimeStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#SpnStageId").html(), $("#SpnStakeHolderId").html())
@@ -267,14 +349,15 @@ $(document).ready(function () {
         var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
         var todayDate = `${year}-${monthsans}-${dayans}`;
 
+        fetchServerDate().then(function (S) {
 
 
-        $('#TimeStampToProjfwd').attr('type', 'date');
-        $('#TimeStampToProjfwd').val(todayDate); // Set today's date
-        $('#TimeStampToProjfwd').prop('disabled', true); // Freeze input
+            $('#TimeStampToProjfwd').attr('type', 'datetime-local');
+            $('#TimeStampToProjfwd').val(S.todayDateTime); // Set today's date
+            $('#TimeStampToProjfwd').prop('disabled', true); // Freeze input
 
 
-
+        });
         //GetAllComments($(this).closest("tr").find("#SpnCurrentProjId").html());
     });
 
@@ -314,18 +397,18 @@ $(document).ready(function () {
             CheckFwdCondition();
 
         }
-        $('.FwdDropdown').addClass('col-md-6');
-        $('.ProjectsFwdUnit').addClass('d-none');
+        //$('.FwdDropdown').addClass('col-md-6');
+        //$('.ProjectsFwdUnit').addClass('d-none');
 
 
-        $("#searchBox").hide()
+        //$("#searchBox").hide()
     });
     $(document).on('click', '#btnAttchMultiforpsmid', function () {
-    
-     
+
+
 
         requiredFields = $('#ProjFwd').find('.requiredFieldAttch');
-       
+
 
         var allFieldsComplete = true;
         requiredFields.each(function (index) {
@@ -351,10 +434,10 @@ $(document).ready(function () {
                     $('.uploadLoader').removeClass('d-none')
                     setTimeout(function () {
 
-                    AttOnFWD()
-                    },1000)
+                        AttOnFWD()
+                    }, 1000)
                     //setTimeout(function () {
-                       
+
                     //    UploadFiles();
                     //}, 1000)
 
@@ -364,11 +447,62 @@ $(document).ready(function () {
     });
 
     //$("#btnFwdConfirm").click(function () {
-    //    SaveFwdTo($("#spanFwdCurrentPslmId").html());
+    //    location.reload();
     //    $('#ProjFwd').modal('hide');
     //});
 });
-function CheckFwdCondition() {
+
+$("#btnFwdConfirm").on("click", function () {
+   
+    SaveFwdTo($("#spanFwdCurrentPslmId").html());
+
+});
+
+
+var projectMoveData = {
+    fwdTo: { id: "", text: "" },
+    sentToUnit: { id: "", text: "" },
+    ccList: [],
+    stage: { id: "", text: "" },
+    subStage: { id: "", text: "" },
+    action: { id: "", text: "" },
+    remarks: "",
+    fwdDate: ""
+};
+
+$(document).on("change keyup", "#ddlfwdFwdTo, #searchBox, #ddlfwdCCTo, #ddlfwdStage, #ddlfwdSubStage, #ddlfwdAction, #txtRemarksfwd, #TimeStampToProjfwd", function () {
+    projectMoveData = {
+        fwdTo: {
+            id: $("#ddlfwdFwdTo").val(),
+            text: $("#ddlfwdFwdTo option:selected").text()
+        },
+        sentToUnit: {
+            id: $("#searchBox").val(),
+            text: $("#searchBox option:selected").text()
+        },
+        ccList: $("#ddlfwdCCTo").val()
+            ? $("#ddlfwdCCTo").val().map(id => ({
+                id: id,
+                text: $("#ddlfwdCCTo option[value='" + id + "']").text()
+            }))
+            : [],
+        stage: {
+            id: $("#ddlfwdStage").val(),
+            text: $("#ddlfwdStage option:selected").text()
+        },
+        subStage: {
+            id: $("#ddlfwdSubStage").val(),
+            text: $("#ddlfwdSubStage option:selected").text()
+        },
+        action: {
+            id: $("#ddlfwdAction").val(),
+            text: $("#ddlfwdAction option:selected").text()
+        },
+        remarks: $("#txtRemarksfwd").val(),
+        fwdDate: $("#TimeStampToProjfwd").val()
+    };
+});
+function CheckFwdCondition(CurrentPslmId) {
 
     var userdata =
     {
@@ -382,6 +516,11 @@ function CheckFwdCondition() {
         data: userdata,
         success: function (response) {
             //console.log(response);
+            $('.FwdDropdown').addClass('col-md-6');
+         $('.ProjectsFwdUnit').addClass('d-none');
+
+
+            $("#searchBox").hide()
             if (response != null) {
 
                 if (response == true) {
@@ -403,18 +542,48 @@ function CheckFwdCondition() {
                     }
                 }
                 else if (response == false) {
+                    debugger;
                     $(".Fwdtitle").html("Projects Attch Details");
                     $(".ProjectsFwd").addClass("d-none");
                     $(".Attmenthistory").removeClass("d-none");
-                 
-                    var  listItem = "<tr><td class='text-center' colspan=5>No Record Found</td></tr>";
 
+                    var listItem = "<tr><td class='text-center' colspan=5>No Record Found</td></tr>";
 
+                    const rows = [
+                        { label: "Sent To", value: projectMoveData.fwdTo.text || "-", icon: "fa-user" },
+                        { label: "Sent To Unit", value: projectMoveData.sentToUnit.text || "-", icon: "fa-user" },
+
+                        { label: "CC", value: projectMoveData.ccList.map(c => c.text).join(", ") || "-", icon: "fa-users" },
+                        { label: "Stage", value: projectMoveData.stage.text || "-", icon: "fa-project-diagram" },
+                        { label: "Sub Stage", value: projectMoveData.subStage.text || "-", icon: "fa-layer-group" },
+                        { label: "Action", value: projectMoveData.action.text || "-", icon: "fa-tasks" },
+                        { label: "Remarks", value: projectMoveData.remarks || "-", icon: "fa-comment-dots" },
+                        { label: "Date of Forward", value: projectMoveData.fwdDate || "-", icon: "fa-calendar-alt" }
+                    ];
+
+                    const html = rows.map(row => `
+        <tr class="border-bottom">
+            <td class="fw-semibold text-muted" style="width: 35%;">
+                <i class="fas ${row.icon} text-primary me-2"></i>
+                ${row.label}
+            </td>
+            <td class="text-dark" style="word-break: break-word;">
+                ${row.value === "-" ? '<em class="text-muted">Not specified</em>' : row.value}
+            </td>
+        </tr>
+    `).join('');
+
+                    $("#confirmMoveTable tbody").html(html);
+
+                    // 🪄 Toggle visibility
+                    $(".ProjectsFwd").addClass("d-none");
+                    $(".Attmenthistory").removeClass("d-none");
 
                     $("#DetailBody").html(listItem);
+    
 
                     /*AttOnFWD();*/
-                    
+
                 }
             }
 
@@ -424,16 +593,11 @@ function CheckFwdCondition() {
 
 }
 
-$("#btnFwdConfirm").on("click", function () {
-    // Send the allAttachments array along with form data
-    SaveFwdTo($("#spanFwdCurrentPslmId").html(), "", "");
-
-});
 
 function SaveFwdTo(CurrentPslmId, fd, allAttachments) {
     debugger;
 
-
+    var psmdi = CurrentPslmId;
     var dateValue = $("#TimeStampToProjfwd").val();
     var currentDate = new Date();
 
@@ -480,58 +644,79 @@ function SaveFwdTo(CurrentPslmId, fd, allAttachments) {
         fwdunitid = $("#searchBox").val()
 
     }
-    //if (fwdunitid == null) {
-    //    alert("Please Select Send To Unit")
-    //    return false;
-    //};
+    var tocc = $("#ddlfwdCCTo").val();
 
+    for (let i = 0; i < tocc.length; i++) {
 
+        if (fwdunitid === tocc[i]) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "The 'To' Unit and 'CC' Unit must not be the same!",
+
+            });
+            return false;
+        }
+    }
+
+   
     //var currentDate = new Date();
     //var currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false });
     //var time = $("#TimeStampToProjfwd").val();
     //var timeData = time + ' ' + currentTime;
-    var PsmId = $("#spanFwdCurrentPslmId").html()
-    var CcIdValues = $("#ddlfwdCCTo").val(); // Get all selected values
-
-    // Initialize formData
     var formData = new FormData();
-
-    // Append userdata fields to FormData
-    var userdata = {
+    var PsmId = $("#spanFwdCurrentPslmId").html()
+    var ccidvalue = $("#ddlfwdCCTo").val();
+    var userdata =
+    {
         "ProjId": $("#spanFwdProjectId").html(),
+        /* "StatusId": $("#ddlfwdSubStage").val(),*/
+
         "StatusActionsMappingId": $("#ddlfwdAction").val(),
         "Remarks": $("#txtRemarksfwd").val(),
         "ToUnitId": fwdunitid,
-        "TimeStamp": TimeStamps,
-    };
 
-    // Append userdata fields to FormData
+        //"TimeStamp": $("#TimeStampToProjfwd").val()
+        "TimeStamp": TimeStamps,
+        
+        
+
+    };
+   
+
+    //// Append userdata fields to FormData
     for (var key in userdata) {
         formData.append(key, userdata[key]);
     }
+
+    //// Append files from fd (file input) to FormData
+    //for (let [key, value] of fd.entries()) {
+    //    if (value instanceof File) {
+    //        formData.append("uploadfile[]", value);  // Appending files to formData
+    //    }
+    //}
 
     // Append currentpsmid to formData
     var currentpsmid = $("#spanFwdCurrentPslmId").html();
     formData.append("currentpsmid", currentpsmid);
 
-    // Handle CcId if there are multiple selected values
-    if (Array.isArray(CcIdValues)) {
-        CcIdValues.forEach((value, index) => {
-            formData.append(`CcId[${index}]`, value);  // Append each CcId separately
+    if (Array.isArray(ccidvalue)) {
+        ccidvalue.forEach((value, index) => {
+            formData.append(`Ccid[${index}]`, value);
         });
     } else {
-        formData.append("CcId", CcIdValues);  // For single value scenario
+        formData.append("Ccid", ccidvalue);
     }
 
+
     // Attach remarks and files (multiple attachments) directly to the form data
-    if (allAttachments != "") {
+    if (allAttachments != null) {
         allAttachments.forEach((attachment, index) => {
             formData.append(`attachments[${index}].file`, attachment.file);  // Append file
             formData.append(`attachments[${index}].remarks`, attachment.remarks);  // Append remarks
         });
-    }
-
-  
+    };
+ 
     $.ajax({
         url: '/Projects/FwdToProject',
         type: 'POST',
@@ -540,7 +725,7 @@ function SaveFwdTo(CurrentPslmId, fd, allAttachments) {
         contentType: false,
         success: function (response) {
             debugger;
-            //console.log(response);
+     //console.log(response);
             if (response != null) {
 
                 if (response == 9) {
@@ -558,7 +743,7 @@ function SaveFwdTo(CurrentPslmId, fd, allAttachments) {
 
                     });
                 }
-
+              
                 if (response == -4) {
                     Swal.fire({
                         icon: "error",
@@ -580,19 +765,37 @@ function SaveFwdTo(CurrentPslmId, fd, allAttachments) {
 
                     });
 
-                } if (response == -7) {
+                } if (response == -6) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
-                        text: "Please Select All Feilds",
+                        text: "You cannot change the Stage before DDGIT Process ",
 
                     });
 
                 }
-                else {
+                if (response == -7) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Please select Send to Unit",
+
+                    });
+                    return false;
+
+                }
+               else {
                     $("#spanCurrentPslmId").html(response.psmId);
-                    FwdProjConfirm(CurrentPslmId);
-                   
+
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Project Successfully Submitted..!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                  //FwdProjConfirmtounit(CurrentPslmId);
+
                     $('#ProjFwd').modal('hide');
                     window.location.reload();
 
@@ -679,4 +882,3 @@ function IsReadInbox(psmId) {
         }
     });
 }
-

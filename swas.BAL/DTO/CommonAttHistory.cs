@@ -9,9 +9,9 @@ namespace swas.BAL.DTO
 {
     public class CommonAttHistory
     {
-        public tbl_AttHistoryDTO? Tbl_AttHistoryDTO { get; set; }
+        public tbl_AttHistoryDTO Tbl_AttHistoryDTO { get; set; }
 
-        public List<ProjHistory>? ProjHistories { get; set; }
+        public List<ProjHistory> ProjHistories { get; set; }
 
        
     }

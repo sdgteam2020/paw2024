@@ -1,27 +1,26 @@
 ﻿$(document).ready(function () {
-
     
-    //var pad = "00"
-    //var datef2 = new Date();
-    //var months = "" + `${(datef2.getMonth() + 1)}`;
-    //var days = "" + `${(datef2.getDate())}`;
-    //var monthsans = pad.substring(0, pad.length - months.length) + months
-    //var dayans = pad.substring(0, pad.length - days.length) + days
-    //var year = `${datef2.getFullYear()}`;
-    //var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-    //var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-  
-    //var ss = `${datef2.getSeconds()}`;
-    //var today = year + `-` + monthsans + `-` + dayans;
+    
 
-   
+    const requestStartdomainId = {
+        method: "POST",
+        redirect: "follow"
+    };
+
+    fetch("https://aman.army.mil/HitCounter/api/Application/ApplicationSessionStart/65c385d4-6b26-4133-9b03-935a47009eb3?DomainId=" + $("#spnUsername").val(), requestStartdomainId)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
+
+
+
     fetchServerDate().then(function (S) {
 
         // Initial apply once date is available
         applyDateLogic(S.today);
     });
     function applyDateLogic(today) {
-        debugger;
+   
         var selectedMode = $('input[name="mcalender_dates"]:checked').val();
 
 
@@ -42,7 +41,7 @@
             $('#InitiatedDate').attr('readonly', false);
             $("#RequestRemarks").removeAttr('disabled');
 
-          
+
             $('#CompletionDate').attr('min', $("#InitiatedDate").val());
             $('#CompletionDate').removeAttr('max');
         }
@@ -71,6 +70,8 @@
         $('#CompletionDate').attr('min', initiatedDate);
 
     });
+
+
 
     // Remove the max date setting for CompletionDate to allow future selection when InitiatedDate changes
     //$("#InitiatedDate").change(function () {
@@ -109,7 +110,7 @@
             return true; // Allow the keypress
         } else {
 
-            if (keyCode == 46 || keyCode == 44 || keyCode == 40 || keyCode == 41 || keyCode == 45 || keyCode == 58 || keyCode == 47)
+            if (keyCode == 46 || keyCode == 44 || keyCode == 40 || keyCode == 41 || keyCode == 45 || keyCode == 58 || keyCode == 47 || keyCode == 13 || keyCode==38)
                 return true; // Allow the keypress
             else {
                 alert('Only Alphabets and Numbers allowed');
@@ -155,7 +156,7 @@ function DateFormateyyy_mm_dd(date) {
     //`${datef2.getFullYear()}/` + monthsans + `/` + dayans ;
 }
 function DateFormateddMMyyyyhhmmss(date) {
-   
+
     var todaysDate = new Date();
     var datef1 = new Date(date);
     //if (datef1.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
@@ -179,7 +180,7 @@ function DateFormateddMMyyyyhhmmss(date) {
     if (ss < 10) ss = "0" + ss;
     if (year > 1902) {
 
-        var datemmddyyyy = dayans + `/` + monthsans + `/` + year + ` ` + hh + `:` + mm + `:` + ss
+        var datemmddyyyy = dayans + `-` + monthsans + `-` + year + ` ` + hh + `:` + mm + `:` + ss
         return datemmddyyyy;
     }
     else {
@@ -194,8 +195,9 @@ function DateFormateddMMyyyyhhmmss(date) {
 
 function DateFormated(date) {
     if (date == null) {
-        return "-";
+        return '-';
     }
+
     var todaysDate = new Date();
     var datef1 = new Date(date);
     //if (datef1.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
@@ -211,11 +213,23 @@ function DateFormated(date) {
     var monthsans = pad.substring(0, pad.length - months.length) + months
     var dayans = pad.substring(0, pad.length - days.length) + days
     var year = `${datef2.getFullYear()}`;
- 
+    var hh = `${datef2.getHours()}`;
+    var mm = `${datef2.getMinutes()}`;
+    var ss = `${datef2.getSeconds()}`;
+    if (hh < 10) hh = "0" + hh;
+    if (mm < 10) mm = "0" + mm;
+    if (ss < 10) ss = "0" + ss;
+
+    if (hh && mm && ss != 0) {
+        var hhmmss = ":"+ hh + `:` + mm + `:` + ss
+    }
+    else {
+        hhmmss = "";
+    }
   
     if (year > 1902) {
 
-        var datemmddyyyy = dayans + `-` + monthsans + `-` + year 
+        var datemmddyyyy = dayans + `-` + monthsans + `-` + year +  hhmmss
         return datemmddyyyy;
     }
     else {
@@ -226,21 +240,17 @@ function DateFormated(date) {
     //`${datef2.getFullYear()}/` + monthsans + `/` + dayans ;
 }
 
-
-
-
-
-
 function DateCalculateago(fmDate, end_actual_time) {
     // Initial variables
+    
+   
     var ago = "";
     var start_actual_time = new Date(fmDate);  // Start time
-    var end_actual_time = new Date(end_actual_time);  // End time
+    var end_actual_time = end_actual_time ? new Date(end_actual_time) : new Date();  // End time
 
     // Calculate difference in milliseconds
     var diff = end_actual_time - start_actual_time;
-
-    
+   
     // Convert the difference to seconds, minutes, hours, days, months, and years
     var diffSeconds = diff / 1000;
     var diffMinutes = diffSeconds / 60;
@@ -254,21 +264,29 @@ function DateCalculateago(fmDate, end_actual_time) {
     var MM = Math.floor(diffMinutes % 60);  // Remaining minutes after calculating hours
 
     // Format hours and minutes
-    var formatted = ((HH < 10) ? ("0" + HH) : HH) + ":" + ((MM < 10) ? ("0" + MM) : MM);
-
+    var formatted = (HH < 10 ? "0" + HH : HH) + ":" + (MM < 10 ? "0" + MM : MM);
+     const wholedays = Math.floor(diffDays);
+     const Remainderhours = diffHours - (wholedays *24);
+     var Rounddays = Remainderhours >=12 ? (wholedays +1): wholedays;
     // Calculate the time difference in days, months, or years and format the result
     if (diffHours < 24) {
         ago = formatted + ' Min';
     } else if (diffHours < 730) {  // Less than 730 hours (~30 days)
-        ago = Math.floor(diffDays) + ' Days';
+        //ago = Math.floor(diffDays) + ' Days (' + formatted + ')';
+       
+        ago = Math.floor(Rounddays) + ' Days';
     } else if (diffHours < 8760) {  // Less than 8760 hours (~365 days)
-        ago = Math.floor(diffMonths) + ' Months';
+       
+        //ago = Math.floor(diffMonths) + ' Months (' + formatted + ')';
+        ago = Math.floor(Rounddays) + ' Days';
     } else {
-        ago = Math.floor(diffYears) + ' Years';
+        //ago = Math.floor(diffYears) + ' Years (' + formatted + ')';
+        ago = Math.floor(diffYears) + ' Years'+" "+"("+Math.floor(Rounddays)+' Days)';
     }
 
     return ago;
-} 
+}
+
 
 function DateCalculateagoForChart(fmDate, end_actual_time) {
     const diffMs = new Date(end_actual_time) - new Date(fmDate);
@@ -406,6 +424,8 @@ function bindLiveProjectSearch(inputSelector, dropdownSelector, endpointUrl, onI
     });
 }
 
+
+
 function trimByWords(text, wordLimit) {
     if (!text) return "";
     var words = text.split(" ");
@@ -435,70 +455,9 @@ function breakLinesByWords(text, wordLimit) {
 
     return result.join("<br>");
 }
-// Common date utility
-/* /js/server-date.js*/
-//(function (w, $) {
-//    // Global store
-//    w.SERVER = { today: null, todayDateTime: null };
 
-//    // A promise you can await/then in any other file
-//    let _resolve;
-//    const _ready = new Promise(res => { _resolve = res; });
-//    w.serverDateReady = _ready;  // expose globally
 
-//    // Fetch util (reusable)
-//    w.fetchServerDate = function fetchServerDate() {
-//        // If already fetched, return resolved promise
-//        if (w.SERVER.today && w.SERVER.todayDateTime) {
-//            return Promise.resolve(w.SERVER);
-//        }
 
-//        return $.ajax({
-//            type: "GET",
-//            url: "/Projects/GetDate",
-//            dataType: "json",
-//            cache: false
-//        }).then(function (data) {
-//            // Normalize to required formats
-//            let ymd = data.dateYmd || data.serverDate || "";
-//            let dt = data.dateTimeLocal || "";
-
-//            // Convert dd-MM-yyyy -> yyyy-MM-dd if needed
-//            if (/^\d{2}-\d{2}-\d{4}$/.test(ymd)) {
-//                const [dd, mm, yyyy] = ymd.split("-");
-//                ymd = `${yyyy}-${mm}-${dd}`;
-//            }
-//            if (!/^\d{4}-\d{2}-\d{2}$/.test(ymd)) {
-//                throw new Error("Bad server date format");
-//            }
-//            // If time not provided, build one at current local time
-//            if (!dt) {
-//                const d = new Date();
-//                const pad = n => String(n).padStart(2, "0");
-//                dt = `${ymd}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-//            }
-
-//            w.SERVER.today = ymd;             // "YYYY-MM-DD"
-//            w.SERVER.todayDateTime = dt;      // "YYYY-MM-DDTHH:mm"
-//            _resolve(w.SERVER);
-//            return w.SERVER;
-//        }).catch(function (err) {
-//            console.warn("GetDate failed, using client clock:", err);
-//            const d = new Date();
-//            const pad = n => String(n).padStart(2, "0");
-//            const ymd = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-//            const dt = `${ymd}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-//            w.SERVER.today = ymd;
-//            w.SERVER.todayDateTime = dt;
-//            _resolve(w.SERVER);
-//            return w.SERVER;
-//        });
-//    };
-
-//    // Kick off fetch immediately on load
-//    $(w.fetchServerDate);
-
-//})(window, jQuery);
 function fetchServerDate() {
     return $.ajax({
         type: "GET",
@@ -506,12 +465,10 @@ function fetchServerDate() {
         dataType: "json",
         cache: false
     }).then(function (data) {
-        debugger;
-
+       
         let ymd = data.dateYmd || data.serverDate || "";
         let dt = data.dateTimeLocal || "";
         let dtana = data.analy || new Date();
-        let serv = data.nowUtc;
 
         // If the server returned dd-MM-yyyy, convert it to yyyy-MM-dd
         if (/^\d{2}-\d{2}-\d{4}$/.test(ymd)) {
@@ -519,32 +476,27 @@ function fetchServerDate() {
             ymd = `${yyyy}-${mm}-${dd}`;
         }
 
-        // If datetime is not provided, build one with current time including seconds
+        // If datetime is not provided, build one with current time
         if (!dt && ymd) {
             const d = new Date(ymd);
             const pad = n => String(n).padStart(2, "0");
-            dt = `${ymd}T${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`; // Include seconds
+            dt = `${ymd}T${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
         }
 
         // Handle timezone adjustment (ensure it's treated as UTC)
         const serverDate = new Date(dt + "Z"); // Append 'Z' to ensure it's UTC
         const localDate = new Date(serverDate.toLocaleString());  // Convert UTC to local time
 
-        // Format date-time for datetime-local (YYYY-MM-DDTHH:mm:ss)
-        const formattedDateTime = localDate.toISOString().slice(0, 19);  // Get YYYY-MM-DDTHH:mm:ss
+        // Format date-time for datetime-local (YYYY-MM-DDTHH:mm)
+        const formattedDateTime = localDate.toISOString().slice(0, 19); // YYYY-MM-DDTHH:mm
 
-        // Return the formatted date and time with seconds included
         return { today: ymd, todayDateTime: formattedDateTime, analy: dtana }; // return the formatted date and time
-
     }).catch(function (err) {
-       
+        console.error("Error fetching date, using client date:", err);
         const d = new Date();
         const pad = n => String(n).padStart(2, "0");
         const ymd = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-        const dt = `${ymd}T${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`; // Include seconds
+        const dt = `${ymd}T${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
         return { today: ymd, todayDateTime: dt, analy: dt }; // return client date as fallback
     });
 }
-
-
-

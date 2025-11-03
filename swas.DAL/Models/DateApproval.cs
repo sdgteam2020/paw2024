@@ -39,6 +39,7 @@ namespace swas.DAL.Models
 
         [NotMapped]
         public string? Remarks { get; set; }
+        
         [NotMapped]
         public string? EncyID { get; set; }
 

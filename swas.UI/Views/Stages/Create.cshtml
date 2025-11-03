@@ -33,7 +33,7 @@ Reviewd by Hav Mani on :
         width: 10vw;
     }
 </style>
-<button type="button" id="AddButon" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#StageAdd" style="margin-left: 91%;">
+<button type="button" id="AddButon" class="btn btn-primary mt-5" data-bs-toggle="modal" data-bs-target="#StageAdd" style="margin-left: 91%;">
     Add New Stage
 </button>
 @*<button id="addNewButton" class="btn btn-primary"><a href="/Actions/Create">Add New</a></button>*@
@@ -70,9 +70,9 @@ Reviewd by Hav Mani on :
                                 <td>@stage.UpdatedByUserId</td>
                                 <td>@stage.DateTimeOfUpdate?.ToString("dd-MM-yyyy")</td>
                                 @*  <td>
-                                <a asp-action="EditStage" asp-route-id="@stage.StagesId" class="btn btn-secondary btn-ecomm"><i class='bx bx-edit'></i></a>
-                                <a data-id="@stage.StagesId" data-url="@Url.Action("Create", "Stages")" class="btn btn-secondary btn-ecomm delete-btn"><i class='bx bx-trash'></i></a>
-                            </td>*@
+                        <a asp-action="EditStage" asp-route-id="@stage.StagesId" class="btn btn-secondary btn-ecomm"><i class='bx bx-edit'></i></a>
+                        <a data-id="@stage.StagesId" data-url="@Url.Action("Create", "Stages")" class="btn btn-secondary btn-ecomm delete-btn"><i class='bx bx-trash'></i></a>
+                        </td>*@
 
                             </tr>
                         }
@@ -80,9 +80,9 @@ Reviewd by Hav Mani on :
                     }
                 </tbody>
             </table>
-        </div>
-      
 
+        </div>
+     
     </div>
 </div>
 

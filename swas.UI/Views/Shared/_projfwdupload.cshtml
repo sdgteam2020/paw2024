@@ -167,12 +167,24 @@
         }
 </style>
 
-
+<link href="~/assets/css/tooltip.css" rel="stylesheet" />
 
 <div class="accordion accordion-flush" id="accordionFlushExample">
 
     <div class="accordion-item">
-        <h2 class="accordion-header" id="flush-headingOne">
+        <h2 class="accordion-header " id="flush-headingOne">
+            <button class="btn btn-secondary RefLetter-container" type="button">
+
+                <img src="/assets/images/icons/pdfimg.png" onclick="PrintDiv()" alt="Pdf Download" width="35" height="25">
+                <div class="RefLetter" style="width:155px">
+                   Generate Appx C
+                </div>
+            </button>
+
+            <button class="btn btn-secondary" id="btnAnalytics">
+                Analytics
+              
+            </button>
 
             <button class="btn btn-secondary" type="button">
                 
@@ -183,18 +195,15 @@
              
 
             </button>
-            <button class="btn btn-secondary" type="button">
-                
-                <img src="/assets/images/icons/pdfimg.png" onclick="PrintDiv()" alt="Pdf Download" width="35" height="25">
-            </button>
-            <button class="btn btn-secondary" id="btnAnalytics">Analytics</button>
+           
+          
           
 
         </h2>
     </div>
 </div>
 
-
+<script src="~/developerjs/Tooltip.js"></script>
 <script src="~/developerjs/projectwisereport.js"></script>
 
 <script>

@@ -1,5 +1,4 @@
-﻿using iText.IO.Image;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using swas.BAL;
 using swas.BAL.DTO;
 using swas.BAL.Helpers;
@@ -146,8 +145,8 @@ namespace swas.UI.Controllers
                     }
                     else
                     {
-                          var ret = await _statusRepository.GetAllByStages_takeHolder(ParentId, Convert.ToInt32(Logins.unitid), false);
-                     //   var ret = await _statusRepository.GetAll();
+                        var ret = await _statusRepository.GetAllByStages_takeHolder(ParentId, Convert.ToInt32(Logins.unitid), false);
+
 
                         return Json(ret);
 
@@ -157,8 +156,7 @@ namespace swas.UI.Controllers
                 }
                 else if (id == Mastertablenmumcs.mActions)
                 {
-                    int type = unitId;
-                    var ret = await _actionsRepository.GetActionByStatusIdlogin(ParentId, Convert.ToInt32(Logins.unitid), type);
+                    var ret = await _actionsRepository.GetActionByStatusIdlogin(ParentId, Convert.ToInt32(Logins.unitid));
                     return Json(ret);
 
                 }

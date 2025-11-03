@@ -122,7 +122,7 @@ namespace swas.Areas.Identity.Pages.Account
         [AllowAnonymous]
         public async Task OnGetAsync(string returnUrl = null)
         {
-            //IAM Code :
+            ////IAM Code :
             //Response.Redirect("https://iam2.army.mil/IAM/User", true);
 
             // Localhost code :

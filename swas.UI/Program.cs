@@ -24,7 +24,6 @@ using swas.BAL.DTO;
 using swas.DAL.Logger;
 using swas.BAL.Helpers;
 using swas.DAL.Models;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,11 +46,6 @@ var builder = WebApplication.CreateBuilder(args);
 ///Developer :- Sub Maj M Sanal Kumar 
 ///Created On :  29 Jul 23
 
-
-
-
-// Add services to the container.
-builder.Services.AddControllersWithViews();
 
 var connectionString = builder.Configuration.GetConnectionString("DB");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -111,7 +105,7 @@ builder.Services.AddAntiforgery(o => o.SuppressXFrameOptionsHeader = true);
 
 builder.Services.AddIdentity<ASPNetCoreIdentityCustomFields.Data.ApplicationUser, IdentityRole>(options =>
 {
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(60);
     options.Lockout.MaxFailedAccessAttempts = 3;
     options.User.RequireUniqueEmail = false;
     options.SignIn.RequireConfirmedAccount = true;
@@ -156,7 +150,7 @@ builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(15);
+    options.IdleTimeout = TimeSpan.FromMinutes(60);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 
@@ -182,7 +176,7 @@ builder.Services.AddHttpContextAccessor();
 // Configure logging to use the custom database logger provider
 builder.Logging.ClearProviders();
 builder.Logging.AddProvider(new DbLoggerProvider(builder.Services.BuildServiceProvider()));
-
+builder.Services.Configure<SiteSettings>(builder.Configuration.GetSection("SiteSettings"));
 var app = builder.Build();
 //app.UseMiddleware<MoveFileMiddleware>();
 

@@ -22,31 +22,32 @@ namespace swas.BAL.Repository
 
         public async Task<List<DTOProComments>> GetAllCommentBypsmId_UnitId(StkComment Data)
         {
-            var query =await (from comment in _context.StkComment
-                         join stakeholder in _context.tbl_mUnitBranch on comment.StakeHolderId equals stakeholder.unitid
-                         join status in _context.StkStatus on comment.StkStatusId equals status.StkStatusId into statusGroup
-                         from status in statusGroup.DefaultIfEmpty() // Left Join
-                         join project in _context.Projects on comment.ProjId equals project.ProjId // Assuming 'ProjId' is in the 'Stk_Comments' table
-                              join legacy in _context.DateApproval on comment.ProjId equals legacy.ProjId into gj
-                              from subLegacy in gj.DefaultIfEmpty() // Left Join
-                                  //join users in _context.Users on comment.UpdatedByUserId equals users.UserIntId
-                              where comment.ProjId == Data.ProjId //&& comment.StakeHolderId==Data.StakeHolderId // && comment.StakeHolderId == stakeholderId
-                              orderby comment.DateTimeOfUpdate descending
-                         select new DTOProComments
-                         {
-                             Stakeholder = stakeholder.UnitName,
-                             Status = status != null ? status.Status : null,
-                             Comments = comment.Comments,
-                             ProjId = Convert.ToInt32(comment.ProjId),
-                             PsmId = project.CurrentPslmId,
-                             Date = comment.DateTimeOfUpdate,
-                             StkCommentId = comment.StkCommentId,
-                             UnitId = comment.StakeHolderId,
-                             Attpath = comment.Attpath,
-                             UserDetails = comment.UserDetails!= null ? comment.UserDetails.ToString() :"____", 
-                             ProjectName = project.ProjName,
-                             AdminApprovalStatus = subLegacy != null && subLegacy.DDGIT_approval == true
-                         }).ToListAsync();
+            var query = await (from comment in _context.StkComment
+                               join stakeholder in _context.tbl_mUnitBranch on comment.StakeHolderId equals stakeholder.unitid
+                               join status in _context.StkStatus on comment.StkStatusId equals status.StkStatusId into statusGroup
+                               from status in statusGroup.DefaultIfEmpty() // Left Join
+                               join project in _context.Projects on comment.ProjId equals project.ProjId // Assuming 'ProjId' is in the 'Stk_Comments' table
+                               join legacy in _context.DateApproval on comment.ProjId equals legacy.ProjId into gj
+                               from sublegacy in gj.DefaultIfEmpty()
+                                   //join users in _context.Users on comment.UpdatedByUserId equals users.UserIntId
+                               where comment.ProjId == Data.ProjId ||comment.PsmId == Data.PsmId //&& comment.StakeHolderId==Data.StakeHolderId // && comment.StakeHolderId == stakeholderId
+                               orderby comment.DateTimeOfUpdate descending
+                               select new DTOProComments
+                               {
+                                   Stakeholder = stakeholder.UnitName,
+                                   Status = status != null ? status.Status : null,
+                                   Comments = comment.Comments,
+                                   ProjId = Convert.ToInt32(comment.ProjId),
+                                   PsmId = project.CurrentPslmId,
+                                   Date = comment.DateTimeOfUpdate,
+                                   StkCommentId = comment.StkCommentId,
+                                   UnitId = comment.StakeHolderId,
+                                   Attpath = comment.Attpath,
+                                   UserDetails = comment.UserDetails != null ? comment.UserDetails.ToString() : "____",
+                                   ProjectName = project.ProjName,
+                                   AdminApprovalStatus = sublegacy !=null && sublegacy.DDGIT_approval == true
+
+                               }).ToListAsync();
            
 
 
@@ -70,5 +71,43 @@ namespace swas.BAL.Repository
             else
                 return 0;
         }
+
+        public async Task<DTOProComments> GetCommentByPsmid(int psmid)
+        {
+            var query = await (from comment in _context.StkComment
+                               join stakeholder in _context.tbl_mUnitBranch on comment.StakeHolderId equals stakeholder.unitid
+                               join status in _context.StkStatus on comment.StkStatusId equals status.StkStatusId into statusGroup
+                               from status in statusGroup.DefaultIfEmpty() // Left Join
+                               join project in _context.Projects on comment.ProjId equals project.ProjId // Assuming 'ProjId' is in the 'Stk_Comments' table
+                               join legacy in _context.DateApproval on comment.ProjId equals legacy.ProjId into gj
+                               from subLegacy in gj.DefaultIfEmpty() // Left Join
+                                                                     //join users in _context.Users on comment.UpdatedByUserId equals users.UserIntId
+                               where comment.StkCommentId == psmid //&& comment.StakeHolderId==Data.StakeHolderId // && comment.StakeHolderId == stakeholderId
+                               orderby comment.DateTimeOfUpdate descending
+                               select new DTOProComments
+                               {
+
+                                   Stakeholder = stakeholder.UnitName,
+                                   Status = status != null ? status.Status : null,
+                                   StkStatusId = comment.StkStatusId,
+                                   Comments = comment.Comments,
+                                   ProjId = Convert.ToInt32(comment.ProjId),
+                                   PsmId = comment.PsmId,
+                                   Date = comment.DateTimeOfUpdate,
+                                   StkCommentId = comment.StkCommentId,
+                                   UnitId = comment.StakeHolderId,
+                                   Attpath = comment.Attpath,
+                                   UserDetails = comment.UserDetails != null ? comment.UserDetails.ToString() : "____",
+                                   ProjectName = project.ProjName,
+                                   AdminApprovalStatus = subLegacy != null && subLegacy.DDGIT_approval == true
+                               }).FirstOrDefaultAsync();
+
+
+
+            return query;
+
+
+        }
+
     }
 }

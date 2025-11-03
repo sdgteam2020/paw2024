@@ -31,17 +31,17 @@
 
 <style>
 	.red-text {
-	color: red;
+		color: red;
 	}
 
 	body {
-	font-size: 15px;
+		font-size: 15px;
 	}
 
 	@@media (min-width: 1200px) {
-	.modal-xl {
-	--bs-modal-width: 1400px;
-	}
+		.modal-xl {
+			--bs-modal-width: 1400px;
+		}
 	}
 
 </style>
@@ -49,81 +49,81 @@
 <style>
 
 	.tabs__head {
-	list-style: none;
-	padding: 0;
-	display: flex;
+		list-style: none;
+		padding: 0;
+		display: flex;
 	}
 
-	.tabs__head li {
-	margin-right: 10px;
-	}
+		.tabs__head li {
+			margin-right: 10px;
+		}
 
-	.tabs__head a {
-	text-decoration: none;
-	padding: 10px 15px;
-	border: 1px solid #ccc;
-	background-color: #fff; /* Set the default background color */
-	}
+		.tabs__head a {
+			text-decoration: none;
+			padding: 10px 15px;
+			border: 1px solid #ccc;
+			background-color: #fff; /* Set the default background color */
+		}
 
-	.tabs__head a.active-link {
-	background-color: white; /* Set the active background color to white */
-	border-bottom: 20px solid #dee2e6; /* Adjust this as needed */
-	}
+			.tabs__head a.active-link {
+				background-color: white; /* Set the active background color to white */
+				border-bottom: 20px solid #dee2e6; /* Adjust this as needed */
+			}
 
 	.tabs__content__item {
-	display: none;
+		display: none;
 	}
 
-	.tabs__content__item.active-tab {
-	display: block;
-	}
+		.tabs__content__item.active-tab {
+			display: block;
+		}
 </style>
 
 <style>
 	.tabs__content__item {
-	overflow: auto; /* Add this style to enable scrolling */
-	max-height: 700px; /* Set a maximum height for the table to make the scrollbar appear when the content exceeds this height */
+		overflow: auto; /* Add this style to enable scrolling */
+		max-height: 700px; /* Set a maximum height for the table to make the scrollbar appear when the content exceeds this height */
 	}
 
 
-	.tabs__content__item::-webkit-scrollbar {
-	width: 8px;
-	}
+		.tabs__content__item::-webkit-scrollbar {
+			width: 8px;
+		}
 
-	.tabs__content__item::-webkit-scrollbar-thumb {
-	background-color: #888;
-	}
+		.tabs__content__item::-webkit-scrollbar-thumb {
+			background-color: #888;
+		}
 
 	.FontSize {
-	font-size: 15px;
+		font-size: 15px;
 	}
 
 	.btn-Fwd {
-	height: 1.5rem;
-	margin-top: -1.5rem;
-	padding-top: 0rem
+		height: 1.5rem;
+		margin-top: -1.5rem;
+		padding-top: 0rem
 	}
 
 	.btn-FwdHistory {
-	height: 1.5rem;
-	margin-top: -1.2rem;
-	padding-top: 0rem
+		height: 1.5rem;
+		margin-top: -1.2rem;
+		padding-top: 0rem
 	}
 
 	.btn-FwdHistorysent {
-	height: 1.5rem;
-	margin-top: -1.2rem;
-	padding-top: 0rem
+		height: 1.5rem;
+		margin-top: -1.2rem;
+		padding-top: 0rem
 	}
 
 	.col-width9 {
-	width: 9% !important;
+		width: 9% !important;
 	}
 
 	.s-no-column {
-	min-width: 40px;
-	max-width: 60px;
-	width: 5vw;
+		min-width: 40px;
+		max-width: 60px;
+		width: 5vw;
 	}
 
 
@@ -131,156 +131,155 @@
 	/* styles.css */
 
 	.tabs__content__item {
-	height: 100%;
-	display: flex;
-	flex-direction: column;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
 	}
 
 	.content {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
+		flex: 1;
+		display: flex;
+		flex-direction: column;
 	}
 
 	.card {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
+		flex: 1;
+		display: flex;
+		flex-direction: column;
 	}
 
 	.card-body {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-	overflow-y: hidden; /* Prevent scrolling here */
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		overflow-y: hidden; /* Prevent scrolling here */
 	}
 
 	.table-wrapper {
-	flex: 1;
-	overflow-y: auto; /* Enable scrolling */
+		flex: 1;
+		overflow-y: auto; /* Enable scrolling */
 	}
 
 	table {
-	width: 100%;
-	border-collapse: collapse;
+		width: 100%;
+		border-collapse: collapse;
 	}
 
 	th,
 	td {
-	padding: 8px;
-	text-align: left;
-	border-bottom: 1px solid #ddd;
-	font-size: 15px;
+		padding: 8px;
+		text-align: left;
+		border-bottom: 1px solid #ddd;
+		font-size: 15px;
 	}
 
 	th {
-	position: -webkit-sticky;
-	position: sticky;
-	top: 0;
-	background: #fff;
-	z-index: 2; /* Ensure header stays on top */
+		position: -webkit-sticky;
+		position: sticky;
+		top: 0;
+		background: #fff;
+		z-index: 2; /* Ensure header stays on top */
 	}
 
 	tbody tr:nth-child(even) {
-	background-color: #f2f2f2;
+		background-color: #f2f2f2;
 	}
 
 	.buttonsToHide {
-	display: none !important;
+		display: none !important;
 	}
 
 	body {
-	font-size: 15px !important;
+		font-size: 15px !important;
 	}
 
 	.bold-text {
-	font-weight: bold;
+		font-weight: bold;
 	}
 
 	.custom-modal-size {
-	max-width: 85%; /* Set the modal width to 80% of the screen */
-	width: 85%; /* Ensure it scales responsively */
-	margin: auto; /* Center horizontally */
+		max-width: 85%; /* Set the modal width to 80% of the screen */
+		width: 85%; /* Ensure it scales responsively */
+		margin: auto; /* Center horizontally */
 	}
 
-	.custom-modal-size .custom-modal-content {
-	height: 65vh; /* Ensure the content adjusts dynamically */
-	overflow-y: auto; /* Add vertical scrolling for long content */
-	overflow-x: hidden; /* Prevent horizontal overflow */
-	margin-left: 248px;
-	}
+		.custom-modal-size .custom-modal-content {
+			height: 65vh; /* Ensure the content adjusts dynamically */
+			overflow-y: auto; /* Add vertical scrolling for long content */
+			overflow-x: hidden; /* Prevent horizontal overflow */
+			/* margin-left: 248px; */
+		}
 
 	/* .swal2-title{
-	background-color: #002b5e;
-	color: white;
-	font-size: 18px;
-	padding-bottom: 26px;
-	} */
+		background-color: #002b5e;
+		color: white;
+		font-size: 18px;
+		padding-bottom: 26px;
+		} */
 	.pullback-title {
-	background-color: #002b5e;
-	color: white;
-	font-size: 18px;
-	padding-bottom: 26px;
-	/* add any other styles you need */
+		background-color: #002b5e;
+		color: white;
+		font-size: 18px;
+		padding-bottom: 26px;
+		/* add any other styles you need */
 	}
 
 	/*  .custom-swal-title {
-	background-color: #002b5e;
-	color: white;
-	font-size: 18px;
-	padding-bottom: 26px;
-	padding: 10px;
-	border-radius: 5px;
-	display: inline-block;
-	} */
+		background-color: #002b5e;
+		color: white;
+		font-size: 18px;
+		padding-bottom: 26px;
+		padding: 10px;
+		border-radius: 5px;
+		display: inline-block;
+		} */
 
 
 	.custom-modal-size {
-	max-width: 80%; /* Increase the width as required */
-	width: 75%;
-	/* height: 10%; Adjust height if necessary */
-	margin: auto;
+		max-width: 80%; /* Increase the width as required */
+		width: 75%;
+		/* height: 10%; Adjust height if necessary */
+		margin: auto;
 	}
 
-	.custom-modal-size .modal-content {
-	height: 100%; /* Ensure the content fills the modal */
-	overflow: auto; /* Add scrolling for long content */
-	}
+		.custom-modal-size .modal-content {
+			height: 100%; /* Ensure the content fills the modal */
+			overflow: auto; /* Add scrolling for long content */
+		}
 
 	.modal-dialog {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	min-height: 100vh; /* Full height */
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 100vh; /* Full height */
 	}
 
 	.tooltip-text {
-	background-color: #5a8cd6;
+		background-color: #5a8cd6;
 	}
 
 	.to-unit-name {
-	min-width: 80px;
-	max-width: 120px;
-	width: 10vw;
+		min-width: 80px;
+		max-width: 120px;
+		width: 10vw;
 	}
 
 	.projaction {
-	min-width: 80px;
-	max-width: 150px;
-	width: 10vw;
+		min-width: 80px;
+		max-width: 150px;
+		width: 10vw;
 	}
 
-	.disabled-link 
-	{
-	pointer-events: none;
-	opacity: 0.7;
-	cursor: not-allowed;
+	.disabled-link {
+		pointer-events: none;
+		opacity: 0.7;
+		cursor: not-allowed;
 	}
 
 	.select2-container--default .select2-selection--multiple.is-invalid,
 	.is-invalid .select2-selection--multiple {
-	border-color: #dc3545 !important; /* Bootstrap's red */
-	box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+		border-color: #dc3545 !important; /* Bootstrap's red */
+		box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
 	}
 
 </style>
@@ -303,43 +302,37 @@
 <script src="~/content/jquery-ui.min.js"></script>
 <script src="~/developerjs/commandatatable.js"></script>
 <body>
-	<div class="tabs" id="tabs">
-			<ul class="tabs__head d-flex flex-wrap align-items-center">
-
-	<li class="me-2 mb-1">
-		<a class="active-link d-flex align-items-center" href="#" data-tab="inbox" id="tabinbox">
-			<img src="~/assets/images/inbox.png" width="20" height="20" class="me-1" /> Inbox
-		</a>
-	</li>
-
-	<li class="me-2 mb-1">
-		<a href="#" class="d-flex align-items-center" data-tab="sent" id="tabsent">
-			<img src="~/assets/images/sentmail.png" width="20" height="20" class="me-1" /> Sent
-		</a>
-	</li>
-
-	<li class="me-2 mb-1">
-		<a href="#" data-tab="completed" id="tabcompleted" class="d-flex align-items-center" style="min-width:180px;">
-			<img src="~/assets/images/completed.png" width="20" height="20" class="me-1" /> Completed (Hosted On ADN)
-		</a>
-	</li>
-
-	<li class="me-2 mb-1">
-		<a href="#" data-tab="Remainder" id="tabRemainder" class="d-flex align-items-center">
-			<img src="~/assets/images/bell.png" width="25" height="25" class="me-1" /> Reminder
-		</a>
-	</li>
-
-	<li class="me-2 mb-1">
-		<a href="#" data-tab="ToCc" id="tabCC" class="d-flex align-items-center">
-			<img src="~/assets/images/draft.png" width="20" height="20" class="me-1" /> Cc Projects
-		</a>
-	</li>
+	<div class="tabs mt-5" id="tabs">
+		<ul class="tabs__head d-flex flex-wrap align-items-center">
+			<li class="me-2 mb-1">
+				<a class="active-link d-flex align-items-center" href="#" data-tab="inbox" id="tabinbox">
+					<img src="~/assets/images/inbox.png" width="20" height="20" class="me-1" /> Inbox
+				</a>
+			</li>
+			<li class="me-2 mb-1">
+				<a href="#" class="d-flex align-items-center" data-tab="sent" id="tabsent">
+					<img src="~/assets/images/sentmail.png" width="20" height="20" class="me-1" /> Sent
+				</a>
+			</li>
+			<li class="me-2 mb-1">
+				<a href="#" data-tab="completed" id="tabcompleted" class="d-flex align-items-center" style="min-width:180px;">
+					<img src="~/assets/images/completed.png" width="20" height="20" class="me-1" /> Completed (Hosted On ADN)
+				</a>
+			</li>
+			<li class="me-2 mb-1">
+				<a href="#" data-tab="Remainder" id="tabRemainder" class="d-flex align-items-center">
+					<img src="~/assets/images/bell.png" width="25" height="25" class="me-1" /> Reminder
+				</a>
+			</li>
+			<li class="me-2 mb-1">
+				<a href="#" data-tab="ToCc" id="tabCC" class="d-flex align-items-center">
+					<img src="~/assets/images/draft.png" width="20" height="20" class="me-1" /> Cc Projects
+				</a>
+			</li>
 			<li class="red-text" id="blinking-li">
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				Inbox -->> click on project name for Add Comments, Attach file and Fwd to Stakeholders/Units
 			</li>
-
 		</ul>
 
 		@{
@@ -348,151 +341,519 @@
 
 
 		<div class="tabs__content">
-			<div class="tabs__content__item active-tab" id="inbox" style="height:100%; ">
-				<div class="content" style="height:100%;">
-					<div class="card radius-10 w-100" style="height:100%;">
-						<div class="card-body" style="height:100%; overflow-y: scroll;">
+			<div class="table-responsive">
+				<div class="tabs__content__item active-tab" id="inbox" style="height:100%;">
+					<div class="content" style="height:100%;">
+						<div class="card radius-10 w-100" style="height:100%;">
+							<div class="card-body table-responsive" style="height:100%; overflow-y: auto;">
+								<table id="Inbox" class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<th class="s-no-column">Ser No</th>
+											<th style="width:20%">Proj Name</th>
+											<th>Sponsor</th>
+											<th style="width:9%;">From</th>
+											@* <th class="to-unit-name">To Unit Name</th> *@
+											<th>Received On</th>
+											<th>Stage</th>
+											<th>SubStage</th>
+											<th>Action</th>
+											<th class="projaction">Project Action</th>
+											<th>Legacy Pro</th>
+										</tr>
+									</thead>
 
-							<table id="Inbox" class="table table-striped table-bordered">
-								<thead>
-									<tr>
-										<th class="s-no-column">Ser No</th>
-										<th style="width:20%">Proj Name</th>
-										<th>Sponsor</th>
-										<th style="width:9%;">From</th>
-										@* <th class="to-unit-name">To Unit Name</th> *@
-										<th>Received On</th>
-										<th>Stage</th>
-										<th>SubStage</th>
-										<th>Action</th>
-										<th class="projaction">Project Action</th>
-										<th>Legacy Pro</th>
-									</tr>
-								</thead>
+									<tbody>
 
-								<tbody>
-
-									@foreach (var project in Model.InBox)
-									{
-										string @classname = "";
-										if (project.IsRead == false)
+										@foreach (var project in Model.InBox)
 										{
-											classname = "bold-text";
-										}
-										else
-										{
-											classname = "";
-										}
+											string @classname = "";
+											if (project.IsRead == false)
+											{
+												classname = "bold-text";
+											}
+											else
+											{
+												classname = "";
+											}
 
 
 
-										<tr class="@classname">
+											<tr class="@classname">
 
-											<td data-order="@snoinbox">
-												@{
-													snoinbox++;
-												}
-												<span>@snoinbox</span>
-												@* Visible content *@
+												<td data-order="@snoinbox">
+													@{
+														snoinbox++;
+													}
+													<span>@snoinbox</span>
+													@* Visible content *@
 
-												@if (@project.HasRemainder1 == true&& project.IsCc ==false)
-												{
-													<div class="hover-container" style="position: relative; display:inline" id="notificationContainer @project.ProjId">
-														<div style="position: relative; display: inline-block; margin-left: 5px;" id="ReadRemainderNoti" data-projid="@project.ProjId">
-															<img src="/assets/images/icons/notification-unscreen.gif" alt="Notification" style="width:30px; height:30px;" />
+													@if (@project.HasRemainder1 == true && project.IsCc == false)
+													{
+														<div class="hover-container" style="position: relative; display:inline" id="notificationContainer @project.ProjId">
+															<div style="position: relative; display: inline-block; margin-left: 5px;" id="ReadRemainderNoti" data-projid="@project.ProjId">
+																<img src="/assets/images/icons/notification-unscreen.gif" alt="Notification" style="width:30px; height:30px;" />
 
-															@if (project.RemainderCount > 0)
+																@if (project.RemainderCount > 0)
+																{
+																	<span class="badge3" id="Remainderbedge" style="position: absolute; top: -5px; right: -5px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px;">
+																		@project.RemainderCount
+																	</span>
+																}
+															</div>
+															@if (!string.IsNullOrWhiteSpace(project.LatestRemarks))
 															{
-																<span class="badge3" id="Remainderbedge" style="position: absolute; top: -5px; right: -5px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px;">
-																	@project.RemainderCount
-																</span>
-															}
-														</div>
-														@if (!string.IsNullOrWhiteSpace(project.LatestRemarks))
-														{
-															<div class="hover-popup custom-popup-glass">
-																<h6 class="popup-title"> Remarks</h6>
-																<ul class="popup-list">
-																	@if (!string.IsNullOrWhiteSpace(project.LatestRemarks))
-																	{
-																		var remarks = System.Text.RegularExpressions.Regex
-																		.Split(project.LatestRemarks ?? "", @"(?=\([^)]+\):)")
-																		.Where(r => !string.IsNullOrWhiteSpace(r));
-																		foreach (var remark in remarks)
+																<div class="hover-popup custom-popup-glass">
+																	<h6 class="popup-title"> Remarks</h6>
+																	<ul class="popup-list">
+																		@if (!string.IsNullOrWhiteSpace(project.LatestRemarks))
 																		{
-																			<li style="margin-bottom: 5px;">
-																				<i class="fas fa-comment-dots text-primary"></i>
-																				@remark
-																			</li>
+																			var remarks = System.Text.RegularExpressions.Regex
+																			.Split(project.LatestRemarks ?? "", @"(?=\([^)]+\):)")
+																			.Where(r => !string.IsNullOrWhiteSpace(r));
+																			foreach (var remark in remarks)
+																			{
+																				<li style="margin-bottom: 5px;">
+																					<i class="fas fa-comment-dots text-primary"></i>
+																					@remark
+																				</li>
+																			}
 																		}
-																	}
-																	else
-																	{
-																		<li><i class="fas fa-info-circle"></i> No remarks available</li>
-																	}
-																</ul>
+																		else
+																		{
+																			<li><i class="fas fa-info-circle"></i> No remarks available</li>
+																		}
+																	</ul>
+																</div>
+															}
+
+
+
+														</div>
+													}
+
+
+
+
+
+
+												</td>
+
+
+												<td class="f-12">
+
+													<span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
+													<span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
+													<span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
+													<span class="d-none" id="LatestActionType">@project.LatestActionType</span>
+													@* <span class="d-none" id="SpnTimeStampId">@project.TimeStamp.ToString().Substring(0, 10)</span> *@
+													<span class="d-none" id="SpnTimeStampId">@project.TimeStamp</span>
+													<span class="d-none" id="SpnStageId">@project.StageId</span>
+													<span class="d-none" id="SpnTimeStatusId">@project.StatusId</span>
+
+													<span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
+													<span class="d-none" id="SpnTimeActionId">@project.ActionId</span>
+													<span class="d-none" id="SpnTimeToUnitId">@project.ToUnitId</span>
+													<span class="d-none" id="SpnDate_type">@project.Date_type</span>
+													<span class="d-none" id="SpnApprove">@project.AdminApprovalStatus</span>
+													<a data-proj-name="@project.ProjName" id="ProjectName" class="ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XRDC&psmid=@project.PsmIds">
+														<div class="tooltip-container" data-tooltip="@project.ProjName">
+															<span class="short-text">@truncateText(project.ProjName, 2)</span>
+															<span class="tooltip tooltip-text">@project.ProjName</span>
+														</div>
+													</a>
+												</td>
+
+
+
+												<td class="RefLetter-container">
+													<div class="tooltip-container" data-tooltip="@project.Sponsor">
+														<span class="short-text">@truncateText(project.UnitName, 2)</span>
+														<span class="tooltip tooltip-text">@project.Sponsor</span>
+													</div>
+													
+													
+													
+												</td>
+												<td>
+													<div class="d-flex">
+														<div class="col-md-8">
+															<div class="RefLetter-container ">
+
+																<div class="tooltip-container" data-tooltip="@project.FromUnitName">
+																	<span class="short-text">@truncateText(project.FromUnitUserDetail, 2)</span>
+																	<span class="tooltip tooltip-text">@project.FromUnitName</span>
+																</div>
+
+
+																
+																
+															</div>
+														</div>
+
+														@if (project.IsCc == true || project.IssentCC == true)
+														{
+															<div class="col-md-2">
+																<div class="RefLetter-container btn btn-warning p-2" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">
+																	<div class="tooltip-container" data-tooltip="@project.CCUnitName">
+																		@if (project.IsCc == true)
+																		{
+																			<span class="short-text" id="IsccForRemoveRow">Cc</span>
+																		}
+																		else
+																		{
+
+																			<span class="short-text">Cc</span>
+
+																		}
+																		<span class="tooltip tooltip-text">@project.CCUnitName</span>
+																	</div>
+
+																</div>
 															</div>
 														}
-
-
-
 													</div>
-												}
+												</td>
+
+												@* <td>@project.ToUnitName</td> *@
+												@* <td>@project.TimeStamp.ToString().Substring(0,10)</td> *@
+												<td style="width:190px" class="TimeStampForcheckdate">@project.TimeStamp</td>
+												<td style="width:150px">@project.Stage</td>
+												<td style="width:190px">@project.Status</td>
+												<td style="width:150px">@project.Action</td>
 
 
 
 
+												<td>
+													<div class="row ">
+														<div class="col-md-12 d-flex">
+															@* <div class="mr-2">
+														@if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
+														{
+														<a href="javascript:void(0);" class="processDetail mr-2" data-id="@project.EncyPsmID">
+														<img src="/assets/images/icons/process1.png" alt="Icon" style="height: 22px;">
+														</a>
+														}
+														else
+														{
+														<button type="button" class="btn btn-success btn-Fwd" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
+														}
+														</div> *@
+
+															<div class="mr-2">
+																@if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
+																{
+																	<a href="javascript:void(0);" class="processDetail mr-2" data-id="@project.EncyPsmID">
+																		<img src="/assets/images/icons/process1.png" alt="Icon" style="height: 22px;">
+																	</a>
+																}
+																else if (project.IsCc == false)
+																{
+																	<button type="button" class="btn btn-success btn-Fwd" data-Date_type="@project.AdminApprovalStatus" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
+
+																}
+
+															</div>
+
+															@if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1 && project.IsCc == false)
+															{
+																<div class="col-md-4">
+																	<button type="button" class="btn btn-success btn-Obsn" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;">Obsn</button>
+																</div>
+															}
+															<div class="mr-2">
+																@if (project.IsCc == true)
+																{
+
+																	<button type="button" class="btn btn-success invisible" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
 
 
-											</td>
-
-
-											<td class="f-12">
-
-												<span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
-												<span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
-												<span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
-												<span class="d-none" id="LatestActionType">@project.LatestActionType</span>
-												@* <span class="d-none" id="SpnTimeStampId">@project.TimeStamp.ToString().Substring(0, 10)</span> *@
-												<span class="d-none" id="SpnTimeStampId">@project.TimeStamp</span>
-												<span class="d-none" id="SpnStageId">@project.StageId</span>
-												<span class="d-none" id="SpnTimeStatusId">@project.StatusId</span>
-
-												<span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
-												<span class="d-none" id="SpnTimeActionId">@project.ActionId</span>
-												<span class="d-none" id="SpnTimeToUnitId">@project.ToUnitId</span>
-												<span class="d-none" id="SpnDate_type">@project.Date_type</span>
-												<span class="d-none" id="SpnApprove">@project.AdminApprovalStatus</span>
-												<a data-proj-name="@project.ProjName" id="ProjectName" class="ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XRDC&psmid=@project.PsmIds">
-													<div class="tooltip-container" data-tooltip="@project.ProjName">
-														<span class="short-text">@truncateText(project.ProjName, 6)</span>
-														<span class="tooltip tooltip-text">@project.ProjName</span>
-													</div>
-												</a>
-											</td>
-
-
-
-											<td class="RefLetter-container">
-												@project.UnitName
-												<div class="RefLetter">
-													@project.Sponsor
-												</div>
-											</td>
-											<td>
-												<div class="d-flex">
-													<div class="col-md-10">
-														<div class="RefLetter-container ">
-															@project.FromUnitUserDetail
-															<div class="RefLetter">
-																@project.FromUnitName
+																}
+															</div>
+															<div class="col-md-4">
+																<button type="button" class="btn btn-success btn-FwdHistory" data-proj-name="@project.ProjName" style="margin-top: 1px;" title="History"><i class="fa-solid fa-timeline"></i></button>
 															</div>
 														</div>
 													</div>
+												</td>
+												<td>
+													@*  @{
+												int currentUnitId = ViewBag.UnitId;
+												} *@
 
-													@if (project.IsCc == true || project.IssentCC == true)
+													@*  @if (project.IsProcess == true && project.AdminApprovalStatus == true)
+												{
+												<span title="Legacy Proj Granted by Admin">
+												<a href="#" class="date-action mr-2 disabled-link" data-action="current" data-ids="@project.EncyPsmID">
+												<img src="/assets/images/icons/Current_date.png" alt="Icon" style="height: 27px;">
+												</a>
+												</span>
+												}
+												else if (project.IsProcess == true && project.AdminApprovalStatus == false && project.UserRequest == true && project.RequestUnitId == currentUnitId)
+												{
+												<!-- Pending shown only to the unit that requested -->
+												<span title="Request Pending with Admin">
+												<a href="#" class="date-action mr-2 disabled-link" data-action="Pending">
+												<img src="/assets/images/icons/Pendingbtn.png" alt="Icon" style="height: 30px;">
+												</a>
+												</span>
+												}
+												else if (project.IsProcess == true && project.AdminApprovalStatus == false)
+												{
+												<!-- Other units can still request -->
+												<a href="#" class="date-action mr-2" data-action="back" data-ids="@project.EncyPsmID" title="Request for Ingestion of Proj in Back date from Admin">
+												<img src="/assets/images/icons/Back_date.png" alt="Icon" style="height: 27px;">
+												</a>
+												} *@
+													@if (project.IsCc == false)
 													{
-														<div class="col-md-2">
+														if (project.IsProcess == true && project.LatestActionType != null)
+														{
+															@if (project.IsProcess == true && project.LatestActionType == (int)ActionTypeEnum.Approved)
+															{
+																<span title="Approved Legacy Project">
+
+																	<a href="#" class="date-action mr-2 disabled-link" data-action="current" data-ids="@project.EncyPsmID">
+																		<img src="/assets/images/icons/Current_date.png" alt="Icon" style="height: 27px;">
+																	</a>
+																</span>
+															}
+															else if (project.IsProcess == true && project.LatestActionType == (int)ActionTypeEnum.RequestSent @* project.AdminApprovalStatus == false && project.UserRequest == true && project.RequestUnitId == currentUnitId *@)
+															{
+																<span title="Pending From Admin">
+																	<!-- Pending shown only to the unit that requested -->
+																	<a href="#" class="date-action mr-2 disabled-link" data-action="Pending">
+																		<img src="/assets/images/icons/Pendingbtn.png" alt="Icon" style="height: 30px;">
+																	</a>
+																</span>
+															}
+															else if (project.IsProcess == true && project.LatestActionType == (int)ActionTypeEnum.Rejected)
+															{
+																<!-- Other units can still request -->
+																<a href="#" class="date-action mr-2" data-actiontype="1" data-action="back" data-ids="@project.EncyPsmID" title="Request for Back Date from Admin">
+																	<img src="/assets/images/icons/Back_date.png" alt="Icon" style="height: 27px;">
+																</a>
+
+															}
+
+														}
+														else
+														{
+															if (project.IsProcess == true && project.LatestActionType == null)
+															{
+																<!-- Other units can still request -->
+																<a href="#" class="date-action mr-2" data-actiontype="1" data-action="back" data-ids="@project.EncyPsmID" title="Request for Back Date from Admin">
+																	<img src="/assets/images/icons/Back_date.png" alt="Icon" style="height: 27px;">
+																</a>
+															}
+														}
+													}
+													else
+													{
+														<span></span>
+													}
+
+
+												</td>
+											</tr>
+										}
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Confirmation Modal -->
+			<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<p><b>You are about to send the current project for simultaneous processing and comments of DG SIGS(SIGS-7), AHCC, ACG, ASDC. Pl Confirm!</b></p>
+							<div id="datepickerContainer" style="display: none;">
+								<p><b>Please select Date & Time :</b></p>
+								<input type="datetime-local" id="datepicker" class="form-control" placeholder="Select Date" required>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" id="confirmSend">OK</button>
+							<button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Sent Items-->
+			@{
+				snosent = 0;
+			}
+
+			<div class="table-responsive">
+				<div class="tabs__content__item" id="sent" style="height:100%;">
+					<div class="content" style="height:100%;">
+						<div class="card radius-10 w-100" style="height:100%;">
+							<div class="card-body table-responsive" style="height:100%; overflow-y: auto;">
+								<table id="Sents" class="table table-striped table-bordered">
+
+									<thead>
+										<tr>
+											<th class="s-no-column">Ser No</th>
+											<th style="width:20%">Proj Name</th>
+											<th>Sponsor</th>
+
+											@* <th class="col-width9">From</th> *@
+											<th class="to-unit-name">To Unit Name</th>
+											@* <th>TimeStamp</th> *@
+											<th>Sent On</th>
+											<th>Stage</th>
+											<th>SubStage</th>
+											<th>Action</th>
+											<th class="projaction">Project Action</th>
+
+										</tr>
+									</thead>
+
+									<tbody class="FontSize">
+										@foreach (var project in Model.SendItems.OrderByDescending(i => i.TimeStamp).ToList())
+										{
+											@* bool hasRemainder = remainderList?.Any(r => r.Projid == project.ProjId && r.IsRead == false) ?? false; *@
+											@* bool hasRemainder = remainderList?
+										.Where(r => r.Psmid == project.PsmIds)
+
+										.Any() ?? false; *@
+
+
+
+											<tr>
+												<td class="s-no-column">
+													<div class="d-flex">
+														@{
+															snosent++;
+
+
+														}
+														@snosent
+														@if (project.IsRead == false)
+														{
+															<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="color:#18bb6b"
+																 fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+																<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />
+															</svg>
+														}
+														else
+														{
+															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" style="color:#18bb6b"
+																 height="16" fill="currentColor">
+																<path d="M342.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l80 80c12.5 12.5 32.8 12.5 45.3 0l160-160zm96 128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 402.7 54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l256-256z" />
+															</svg>
+														}
+														@if (project.HasRemainder == true && project.HideReminderIcon == true)
+														{
+															<img src="/assets/images/icons/greenRemainder.png" id="btnRemainder" alt="Reminder Sent" title="UnRead Reminder" data-projid="@project.ProjId" data-projname="@project.ProjName" style="width:20px; height:20px;" />
+														}
+														else if (project.HideReminderIcon == true)
+
+
+
+														{
+															<img src="/assets/images/icons/add-reminder1.png" id="btnRemainder" alt="Reminder" title="Send Reminder" data-projid="@project.ProjId" data-projname="@project.ProjName" style="width:20px; height:20px;" />
+														}
+
+													</div>
+
+
+
+
+												</td>
+
+												<td class="f-12">
+													<span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
+													<span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
+													<span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
+													@* <span class="d-none" id="SpnTimeStampId">@project.TimeStamp.ToString().Substring(0,10)</span> *@
+													<span class="d-none" id="SpnTimeStampId">@project.TimeStamp</span>
+													<span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
+													<span class="d-none" id="SpnprojectStageId">@project.StageId</span>
+													<span class="d-none" id="SpnprojectToUnitId">@project.ToUnitId</span>
+
+													<a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XR12">
+														<div class="tooltip-container" data-tooltip="@project.ProjName">
+															<span class="short-text">@truncateText(project.ProjName, 2)</span>
+															<span class="tooltip tooltip-text">@project.ProjName</span>
+														</div>
+													</a>
+												</td>
+												<td class="f-12">
+
+													<div class="tooltip-container" data-tooltip="@project.Sponsor">
+														<span class="short-text">@truncateText(project.UnitName, 2)</span>
+														<span class="tooltip tooltip-text">@project.Sponsor</span>
+													</div>
+
+													
+													
+												</td>
+												@* <td>
+											<div class="d-flex">
+											<div class="col-md-10">
+											<div class="RefLetter-container ">
+											@project.FromUnitUserDetail
+											<div class="RefLetter">
+											@project.FromUnitName
+											</div>
+											</div>
+											</div>
+
+											@if (project.IsCc == true)
+											{
+
+
+											<div class="RefLetter-container btn btn-warning p-2" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">
+											<div class="tooltip-container" data-tooltip="@project.CCUnitName">
+											@if (project.IsCc == true)
+											{
+											<span class="short-text" id="IsccForRemoveRow">Cc</span>
+											}
+											else
+											{
+
+											<span class="short-text">Cc</span>
+
+											}
+											<span class="tooltip tooltip-text">@project.CCUnitName</span>
+											</div>
+
+											</div>
+											}
+											</div>
+
+											</td> *@
+
+												<td>
+
+
+													<div class="d-flex">
+														<div class="col-md-10">
+												
+
+													<div class="tooltip-container" data-tooltip="@project.ToUnitName">
+														<span class="short-text">@truncateText(project.ToUnitName, 2)</span>
+														<span class="tooltip tooltip-text">@project.ToUnitName</span>
+													</div>
+
+
+
+											
+															
+														</div>
+														@if (project.IsCc == true)
+														{
+
+
 															<div class="RefLetter-container btn btn-warning p-2" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">
 																<div class="tooltip-container" data-tooltip="@project.CCUnitName">
 																	@if (project.IsCc == true)
@@ -509,522 +870,146 @@
 																</div>
 
 															</div>
-														</div>
-													}
-												</div>
-											</td>
-
-											@* <td>@project.ToUnitName</td> *@
-											@* <td>@project.TimeStamp.ToString().Substring(0,10)</td> *@
-											<td style="width:190px" class="TimeStampForcheckdate">@project.TimeStamp</td>
-											<td style="width:150px">@project.Stage</td>
-											<td style="width:190px">@project.Status</td>
-											<td style="width:150px">@project.Action</td>
-
-
-
-
-											<td>
-												<div class="row ">
-													<div class="col-md-12 d-flex">
-														@* <div class="mr-2">
-                                                        @if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
-                                                        {
-                                                            <a href="javascript:void(0);" class="processDetail mr-2" data-id="@project.EncyPsmID">
-                                                                <img src="/assets/images/icons/process1.png" alt="Icon" style="height: 22px;">
-                                                            </a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <button type="button" class="btn btn-success btn-Fwd" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
-                                                        }
-                                                    </div> *@
-
-														<div class="mr-2">
-															@if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
-															{
-																<a href="javascript:void(0);" class="processDetail mr-2" data-id="@project.EncyPsmID">
-																	<img src="/assets/images/icons/process1.png" alt="Icon" style="height: 22px;">
-																</a>
-															}
-															else if (project.IsCc == false)
-															{
-																<button type="button" class="btn btn-success btn-Fwd" data-Date_type="@project.AdminApprovalStatus" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
-
-															}
-
-														</div>
-
-														@if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1 && project.IsCc == false)
-														{
-															<div class="col-md-4">
-																<button type="button" class="btn btn-success btn-Obsn" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;">Obsn</button>
-															</div>
 														}
-														<div class="mr-2">
-															@if(project.IsCc == true)
-															{
 
-																<button type="button" class="btn btn-success invisible" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
-
-
-															}
-														</div>
-														<div class="col-md-4">
-															<button type="button" class="btn btn-success btn-FwdHistory" data-proj-name="@project.ProjName" style="margin-top: 1px;" title="History"><i class="fa-solid fa-timeline"></i></button>
-														</div>
 													</div>
-												</div>
-											</td>
-											<td>
-												@*  @{
-                                                    int currentUnitId = ViewBag.UnitId;
-                                                } *@
+												</td>
+												@* <td>@project.TimeStamp.ToString().Substring(0, 10)</td> *@
+												<td>@project.TimeStamp</td>
+												<td>@project.Stage</td>
+												<td>@project.Status</td>
+												<td>@project.Action</td>
 
-												@*  @if (project.IsProcess == true && project.AdminApprovalStatus == true)
-                                                {
-                                                    <span title="Legacy Proj Granted by Admin">
-                                                    <a href="#" class="date-action mr-2 disabled-link" data-action="current" data-ids="@project.EncyPsmID">
-                                                        <img src="/assets/images/icons/Current_date.png" alt="Icon" style="height: 27px;">
-                                                    </a>
-                                                    </span>
-                                                }
-                                                else if (project.IsProcess == true && project.AdminApprovalStatus == false && project.UserRequest == true && project.RequestUnitId == currentUnitId)
-                                                {
-                                                    <!-- Pending shown only to the unit that requested -->
-                                                    <span title="Request Pending with Admin">
-                                                    <a href="#" class="date-action mr-2 disabled-link" data-action="Pending">
-                                                        <img src="/assets/images/icons/Pendingbtn.png" alt="Icon" style="height: 30px;">
-                                                    </a>
-                                                    </span>
-                                                }
-                                                else if (project.IsProcess == true && project.AdminApprovalStatus == false)
-                                                {
-                                                    <!-- Other units can still request -->
-                                                    <a href="#" class="date-action mr-2" data-action="back" data-ids="@project.EncyPsmID" title="Request for Ingestion of Proj in Back date from Admin">
-                                                        <img src="/assets/images/icons/Back_date.png" alt="Icon" style="height: 27px;">
-                                                    </a>
-                                                } *@
-												@if (project.IsCc == false)
-												{
-													if (project.IsProcess == true && project.LatestActionType != null)
-													{
-														@if (project.IsProcess == true && project.LatestActionType == (int)ActionTypeEnum.Approved)
+												<td>
+													<div class="row d-flex">
+														@if (project.IsHosted == 0)
 														{
-															<span title="Approved Legacy Project">
+															<div class="col-md-6">
 
-																<a href="#" class="date-action mr-2 disabled-link" data-action="current" data-ids="@project.EncyPsmID">
-																	<img src="/assets/images/icons/Current_date.png" alt="Icon" style="height: 27px;">
-																</a>
-															</span>
-														}
-														else if (project.IsProcess == true && project.LatestActionType == (int)ActionTypeEnum.RequestSent @* project.AdminApprovalStatus == false && project.UserRequest == true && project.RequestUnitId == currentUnitId *@)
+																@* Undo Code  *@
+																@*@if (project.PsmIds == project.undopsmId && project.IsRead == false)
 														{
-															<span title="Pending From Admin">
-																<!-- Pending shown only to the unit that requested -->
-																<a href="#" class="date-action mr-2 disabled-link" data-action="Pending">
-																	<img src="/assets/images/icons/Pendingbtn.png" alt="Icon" style="height: 30px;">
-																</a>
-															</span>
-														}
-														else if (project.IsProcess == true && project.LatestActionType == (int)ActionTypeEnum.Rejected)
+														if(project.StageId!=1)
 														{
-															<!-- Other units can still request -->
-															<a href="#" class="date-action mr-2" data-actiontype="1" data-action="back" data-ids="@project.EncyPsmID" title="Request for Back Date from Admin">
-																<img src="/assets/images/icons/Back_date.png" alt="Icon" style="height: 27px;">
-															</a>
-
+														<button type="button" class="btn btn-success btn-Undo ml-2" style="padding: 1px !important;font-size: 13px !important;">Undo </button>
 														}
 
-													}
-													else
-													{
-														if (project.IsProcess == true && project.LatestActionType == null)
-														{
-															<!-- Other units can still request -->
-															<a href="#" class="date-action mr-2" data-actiontype="1" data-action="back" data-ids="@project.EncyPsmID" title="Request for Back Date from Admin">
-																<img src="/assets/images/icons/Back_date.png" alt="Icon" style="height: 27px;">
-															</a>
-														}
-													}
-												}
-												else
-												{
-													<span></span>
-												}
+														}*@
 
 
-											</td>
-										</tr>
-									}
-								</tbody>
-
-							</table>
+																@* Pull Back  *@
 
 
-						</div>
-					</div>
-
-
-
-
-				</div>
-
-			</div>
-
-			<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
-
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body">
-							<p>
-								<b>
-									You are about to send the current project for simultaneous
-									processing and comments of DG SIGS(SIGS-7), AHCC, ACG, ASDC. Pl Confirm!
-								</b>
-							</p>
-							@*  @if (@Logins.cla == 1)
-                            {
-                                <div style="display:none">
-                                    <p>
-                                        <b>Please select Date & Time :</b>
-                                    </p>
-                                    <input type="date" id="datepicker" class="form-control" placeholder="Select Date" required>
-                                </div>
-                            }
-                            else
-                            {
-                                <p>
-                                    <b>Please select Date & Time :</b>
-                                </p>
-                                <input type="date" id="datepicker" class="form-control" placeholder="Select Date" required>
-                            } *@
-
-							<div id="datepickerContainer" style="display: none;">
-								<p><b>Please select Date & Time :</b></p>
-								<input type="datetime-local" id="datepicker" class="form-control" placeholder="Select Date" required>
-							</div>
-
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-primary" id="confirmSend">OK</button>
-							<button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-						</div>
-					</div>
-				</div>
-			</div>
-
-
-			<!--Sent Items-->
-			@{
-				snosent = 0;
-			}
-
-
-			<div class="tabs__content__item" id="sent" style="height:100%; ">
-				<div class="content" style="height:100%;">
-					<div class="card radius-10 w-100" style="height:100%;">
-						<div class="card-body" style="height:100%; overflow-y: scroll;">
-
-							<table id="Sents" class="table table-striped table-bordered">
-								<thead>
-									<tr>
-										<th class="s-no-column">Ser No</th>
-										<th style="width:20%">Proj Name</th>
-										<th>Sponsor</th>
-
-										@* <th class="col-width9">From</th> *@
-										<th class="to-unit-name">To Unit Name</th>
-										@* <th>TimeStamp</th> *@
-										<th>Sent On</th>
-										<th>Stage</th>
-										<th>SubStage</th>
-										<th>Action</th>
-										<th class="projaction">Project Action</th>
-
-									</tr>
-								</thead>
-
-								<tbody class="FontSize">
-									@foreach (var project in Model.SendItems.OrderByDescending(i => i.TimeStamp).ToList())
-									{
-										@* bool hasRemainder = remainderList?.Any(r => r.Projid == project.ProjId && r.IsRead == false) ?? false; *@
-										@* bool hasRemainder = remainderList?
-										.Where(r => r.Psmid == project.PsmIds)
-
-										.Any() ?? false; *@
-
-
-
-										<tr>
-											<td class="s-no-column">
-												<div class="d-flex">
-													@{
-														snosent++;
-
-
-													}
-													@snosent
-													@if (project.IsRead == false)
-													{
-														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="color:#18bb6b"
-															 fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
-															<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />
-														</svg>
-													}
-													else
-													{
-														<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" style="color:#18bb6b"
-															 height="16" fill="currentColor">
-															<path d="M342.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l80 80c12.5 12.5 32.8 12.5 45.3 0l160-160zm96 128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 402.7 54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l256-256z" />
-														</svg>
-													}
-													@if (project.HasRemainder == true && project.PullbackAction == true)
-													{
-														<img src="/assets/images/icons/greenRemainder.png" id="btnRemainder" alt="Reminder Sent" title="UnRead Reminder" data-projid="@project.ProjId" data-projname="@project.ProjName" style="width:20px; height:20px;" />
-													}
-													else if (project.PullbackAction == true)
-
-
-													{
-														<img src="/assets/images/icons/add-reminder1.png" id="btnRemainder" alt="Reminder" title="Send Reminder" data-projid="@project.ProjId" data-projname="@project.ProjName" style="width:20px; height:20px;" />
-													}
-
-												</div>
-											
-
-
-
-											</td>
-
-											<td class="f-12">
-												<span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
-												<span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
-												<span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
-												@* <span class="d-none" id="SpnTimeStampId">@project.TimeStamp.ToString().Substring(0,10)</span> *@
-												<span class="d-none" id="SpnTimeStampId">@project.TimeStamp</span>
-												<span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
-												<span class="d-none" id="SpnprojectStageId">@project.StageId</span>
-												<span class="d-none" id="SpnprojectToUnitId">@project.ToUnitId</span>
-
-												<a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XR12">
-													<div class="tooltip-container" data-tooltip="@project.ProjName">
-														<span class="short-text">@truncateText(project.ProjName, 6)</span>
-														<span class="tooltip tooltip-text">@project.ProjName</span>
-													</div>
-												</a>
-											</td>
-											<td class="RefLetter-container">
-												@project.UnitName
-												<div class="RefLetter">
-													@project.Sponsor
-												</div>
-											</td>
-											@* <td>
-												<div class="d-flex">
-													<div class="col-md-10">
-														<div class="RefLetter-container ">
-															@project.FromUnitUserDetail
-															<div class="RefLetter">
-																@project.FromUnitName
-															</div>
-														</div>
-													</div>
-
-													@if (project.IsCc == true)
-													{
-
-
-														<div class="RefLetter-container btn btn-warning p-2" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">
-															<div class="tooltip-container" data-tooltip="@project.CCUnitName">
-																@if (project.IsCc == true)
+																@if (project.IsPullBack == false || project.IsPullBack == null) // project.undopsmId for the specified active project, excluding comments and records with undo remarks.
 																{
-																	<span class="short-text" id="IsccForRemoveRow">Cc</span>
+																	if (project.StageId != 1 && project.PullbackAction == true) // stageId!=1 means here this project in not in initial stage..
+																	{
+
+																		<button type="button" class="btn btn-success btn-Undo ml-2" style="padding: 1px !important;font-size: 13px !important;">Pull Back </button>
+																	}
 																}
 																else
 																{
-
-																	<span class="short-text">Cc</span>
-
+																	if (project.StageId != 1 && project.IsPullBack == true)
+																		if (project.IsPullBack == true)
+																		{
+																			<span class="btn btn-success ml-2" style="padding: 1px !important;font-size: 13px !important; cursor: not-allowed;">Pulled Back</span>
+																		}
 																}
-																<span class="tooltip tooltip-text">@project.CCUnitName</span>
+
+
 															</div>
+														}
+														else
+														{
+															<div class="col-md-6">
+																<button class="btn btn-success invisible" disabled>Pull Back </button>
+															</div>
+														}
 
+
+														<div class="col-md-2">
+															<button type="button" class="btn btn-success btn-FwdHistorySent" data-proj-name="@project.ProjName" title="History" style="margin-top: 1px;"><i class="fa-solid fa-timeline"></i></button>
 														</div>
-													}
-												</div>
-
-											</td> *@
-
-											<td>
-												<div class="d-flex">
-													<div class="col-md-10">
-														@project.ToUnitName
-											</div>
-												@if (project.IsCc == true)
-												{
-
-
-													<div class="RefLetter-container btn btn-warning p-2" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">
-														<div class="tooltip-container" data-tooltip="@project.CCUnitName">
-															@if (project.IsCc == true)
-															{
-																<span class="short-text" id="IsccForRemoveRow">Cc</span>
-															}
-															else
-															{
-
-																<span class="short-text">Cc</span>
-
-															}
-															<span class="tooltip tooltip-text">@project.CCUnitName</span>
-														</div>
-													
 													</div>
-												}
-													
-												</div>
-											</td>
-											@* <td>@project.TimeStamp.ToString().Substring(0, 10)</td> *@
-											<td >@project.TimeStamp</td>
-											<td >@project.Stage</td>
-											<td >@project.Status</td>
-											<td>@project.Action</td>
 
-											<td>
-												<div class="row d-flex">
-													@if (project.IsHosted == 0)
-													{
-														<div class="col-md-6">
+												</td>
 
-															@* Undo Code  *@
-															@*@if (project.PsmIds == project.undopsmId && project.IsRead == false)
-                                                    {
-                                                    if(project.StageId!=1)
-                                                    {
-                                                    <button type="button" class="btn btn-success btn-Undo ml-2" style="padding: 1px !important;font-size: 13px !important;">Undo </button>
-                                                    }
+											</tr>
 
-                                                    }*@
+										}
+									</tbody>
 
 
-															@* Pull Back  *@
-
-
-															@if (project.IsPullBack == false || project.IsPullBack == null) // project.undopsmId for the specified active project, excluding comments and records with undo remarks.
-															{
-																if (project.StageId != 1 && project.PullbackAction == true) // stageId!=1 means here this project in not in initial stage..
-																{
-
-																	<button type="button" class="btn btn-success btn-Undo ml-2" style="padding: 1px !important;font-size: 13px !important;">Pull Back </button>
-																}
-															}
-															else
-															{
-																if (project.StageId != 1 && project.IsPullBack == true)
-																	if (project.IsPullBack == true)
-																	{
-																		<span class="btn btn-success ml-2" style="padding: 1px !important;font-size: 13px !important; cursor: not-allowed;">Pulled Back</span>
-																	}
-															}
-
-															
-														</div>
-													}
-													else
-													{
-														<div class="col-md-6">
-															<button class="btn btn-success invisible" disabled>Pull Back </button>
-														</div>
-													}
-
-
-													<div class="col-md-2">
-														<button type="button" class="btn btn-success btn-FwdHistorySent" data-proj-name="@project.ProjName" title="History" style="margin-top: 1px;"><i class="fa-solid fa-timeline"></i></button>
-													</div>
-												</div>
-
-											</td>
-
-										</tr>
-
-									}
-								</tbody>
-
-							</table>
-
-
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
 			<!--Completed Items-->
-
-
-			<div class="tabs__content__item" id="completed" style="height:100%; ">
-				<div class="content" style="height:100%;">
-					<div class="card radius-10 w-100" style="height:100%;">
-						<div class="card-body" style="height:100%; overflow-y: scroll;">
-
-							<table id="Completed" class="table table-striped table-bordered">
-								<thead>
-									<tr>
-										<th class="s-no-column">Ser No</th>
-										<th>Proj Name</th>
-										<th>Sponsor Dte</th>
-										<th>Completed By</th>
-										<th>Completed On</th>
-										<th>Status</th>
-										<th>Project Action</th>
-
-									</tr>
-								</thead>
-
-								<tbody>
-									@foreach (var project in Model.CompletedItems)
-									{
+			<div class="table-responsive">
+				<div class="tabs__content__item" id="completed" style="height:100%;">
+					<div class="content" style="height:100%;">
+						<div class="card radius-10 w-100" style="height:100%;">
+							<div class="card-body" style="height:100%; overflow-y: auto;">
+								<table id="Completed" class="table table-striped table-bordered">
+									<thead>
 										<tr>
-
-											<td>
-												@{
-													snocompleted++;
-												}
-												@snocompleted
-											</td>
-											<span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
-											<td>
-												<a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XR">
-													@project.ProjName
-												</a>
-											</td>
-											<td>@project.StakeHolder</td>
-											@* <td>@project.FwdBy</td> *@
-											<td>@project.RecdFmUser</td>
-											@* <td>@project.DateTimeOfUpdate?.ToString("dd-MM-yyyy")</td> *@
-											<td>@project.DateTimeOfUpdate</td>
-
-
-											<td>
-												@project.Status
-											</td>
-											<td>@project.Action</td>
+											<th class="s-no-column">Ser No</th>
+											<th>Proj Name</th>
+											<th>Sponsor Dte</th>
+											<th>Completed By</th>
+											<th>Completed On</th>
+											<th>Status</th>
+											<th>Project Action</th>
 
 										</tr>
+									</thead>
 
-									}
-								</tbody>
+									<tbody>
+										@foreach (var project in Model.CompletedItems)
+										{
+											<tr>
 
-							</table>
+												<td>
+													@{
+														snocompleted++;
+													}
+													@snocompleted
+												</td>
+												<span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
+												<td>
+													<a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XR">
+														@project.ProjName
+													</a>
+												</td>
+												<td>@project.StakeHolder</td>
+												@* <td>@project.FwdBy</td> *@
+												<td>@project.RecdFmUser</td>
+												@* <td>@project.DateTimeOfUpdate?.ToString("dd-MM-yyyy")</td> *@
+												<td>@project.DateTimeOfUpdate</td>
 
 
+												<td>
+													@project.Status
+												</td>
+												<td>@project.Action</td>
+
+											</tr>
+
+										}
+									</tbody>
+
+								</table>
+
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
 
 			<!-- end completed items -->
 			<!----Draft---->
@@ -1043,14 +1028,14 @@
 
 										<th>Recd From</th>
 										@*
-                                        <th>Recd On</th>
+										<th>Recd On</th>
 
-                                        <th>Fwd To</th>
-                                        <th>Fwd On</th>
+										<th>Fwd To</th>
+										<th>Fwd On</th>
 
-                                        <th>Stage</th>
-                                        <th>Status</th>
-                                        <th>Action</th> *@
+										<th>Stage</th>
+										<th>Status</th>
+										<th>Action</th> *@
 										@*   <th>Comments</th> *@
 										<th>Remarks</th>
 										@*  <th>Days in Inbox</th> *@
@@ -1078,29 +1063,29 @@
 											<td>@project.RecdFmUser</td>
 											@*     <td>@project.EditDeleteDate?.ToString("dd-MM-yyyy")</td>
 
-                                        <td>@project.FwdtoUser</td>
-                                        <td>@project.FwdtoDate?.ToString("dd-MM-yyyy")</td>
+										<td>@project.FwdtoUser</td>
+										<td>@project.FwdtoDate?.ToString("dd-MM-yyyy")</td>
 
-                                        <td>@project.Stages</td>
-                                        <td>
-                                        @project.Status
-                                        </td>
-                                        <td>
-                                        @project.Action
+										<td>@project.Stages</td>
+										<td>
+										@project.Status
+										</td>
+										<td>
+										@project.Action
 
-                                        </td> *@
+										</td> *@
 											@* <td>
-                                        @project.Comments
+										@project.Comments
 
-                                        </td> *@
+										</td> *@
 											<td>
 												@project.AdRemarks
 
 											</td>
 											@*   <td>
-                                        @project.TotalDays
+										@project.TotalDays
 
-                                        </td> *@
+										</td> *@
 											<td>
 
 												@if (project.AttCnt > 0)
@@ -1136,8 +1121,8 @@
 													</center>
 												}
 												@*  <div class="ProjDetailUndo" data-project-id="@project.EncyID" id="ProjDetailId-@project.ProjId">
-                                            <img src="/assets/images/icons/undo.png" alt="Icon" style="width: 25px; height: 20px; margin-right: 0px;">
-                                            </div>*@
+											<img src="/assets/images/icons/undo.png" alt="Icon" style="width: 25px; height: 20px; margin-right: 0px;">
+											</div>*@
 
 											</td>
 										</tr>
@@ -1153,109 +1138,110 @@
 				</div>
 			</div>
 			<!---END-DRAFT-->
-
 			<!---Start-Remainder-->
 			@{
 				snosent = 0;
 			}
+			<div class="table-responsive">
+				<div class="tabs__content__item" id="Remainder" style="height:100%;">
+					<div class="content" style="height:100%;">
+						<div class="card radius-10 w-100" style="height:100%;">
+							<div class="card-body" style="height:100%; overflow-y: auto;">
+								<table id="Remainders" class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<th style="width:5%">Ser No</th>
+											<th style="width:20%">Proj Name</th>
+											<th>Sponsor</th>
+											<th>from unit</th>
+											<th>Sent On</th>
+											<th>To Unit</th>
+											<th>Read On</th>
+											<th class="col-width18">Remarks</th>
+											<th>Action</th>
 
 
-			<div class="tabs__content__item" id="Remainder" style="height:100%; ">
-				<div class="content" style="height:100%;">
-					<div class="card radius-10 w-100" style="height:100%;">
-						<div class="card-body" style="height:100%; overflow-y: scroll;">
-
-							<table id="Remainders" class="table table-striped table-bordered">
-								<thead>
-									<tr>
-										<th style="width:5%">Ser No</th>
-										<th style="width:20%">Proj Name</th>
-										<th>Sponsor</th>
-										<th>from unit</th>
-										<th>Sent On</th>
-										<th>To Unit</th>
-										<th>Read On</th>
-										<th class="col-width18">Remarks</th>
-										<th>Action</th>
-
-
-									</tr>
-								</thead>
-								@{
-									int serNo = 0;
-								}
-								<tbody class="FontSize">
+										</tr>
+									</thead>
 									@{
-
-										foreach (var project in Model.Remainder)
-										{
-											<tr>
-												<td class="sorting">
-													@{
-														serNo++;
-													}
-													@serNo
-												</td>
-
-												<td>
-													<a data-proj-name="@project.ProjName" id="ProjectName" class="ProjName" data-proj-id="@project.projid" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XRDC">
-														<div class="tooltip-container" data-tooltip="@project.ProjName">
-															<span class="short-text">@truncateText(project.ProjName, 6)</span>
-															<span class="tooltip tooltip-text noExport">@project.ProjName</span>
-														</div>
-													</a>
-												</td>
-												<td class="RefLetter-container">@project.unitName
-													<div class="RefLetter noExport">
-
-														@project.Sponsor
-
-													</div>
-												</td>
-												
-
-												<td>@project.FromUnit</td>
-												@{
-													var sentdate = @project.SentOn != null ? DateTime.Parse(@project.SentOn) : (DateTime?)null;
-												}
-												<td>@(sentdate?.ToString("dd-MM-yyyy:hh:mm:ss"))</td>
-												<td>@project.ToUnit</td>
-												<td>@project.ReadOn</td>
-												@{
-													var remarks = string.IsNullOrWhiteSpace(project.Remarks) ? "No Remarks" : project.Remarks;
-													var remarkWords = remarks.Split(' ');
-													var shortRemarks = remarkWords.Length > 3
-													? string.Join(" ", remarkWords.Take(4)) + "..."
-													: remarks;
-												}
-												<td>
-													<div class="RefLetter-container">
-														@shortRemarks
-														<div class="RefLetter noExport">
-															@project.Remarks
-														</div>
-													</div>
-												</td>
-
-												<td>
-
-													<a href="#"  id="btnRemMove" data-proj-name="@project.ProjName" data-action="@project.projid"><img src="/assets/images/icons/Legacyhistory.png" alt="Icon" style="height: 27px;"></a>
-												</td>
-											</tr>
-
-										}
+										int serNo = 0;
 									}
+									<tbody class="FontSize">
+										@{
+
+											foreach (var project in Model.Remainder)
+											{
+												<tr>
+													<td class="sorting">
+														@{
+															serNo++;
+														}
+														@serNo
+													</td>
+
+													<td>
+														<a data-proj-name="@project.ProjName" id="ProjectName" class="ProjName" data-proj-id="@project.projid" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XRDC">
+															<div class="tooltip-container" data-tooltip="@project.ProjName">
+																<span class="short-text">@truncateText(project.ProjName, 3)</span>
+																<span class="tooltip tooltip-text noExport">@project.ProjName</span>
+															</div>
+														</a>
+													</td>
+													<td class="RefLetter-container">
 
 
-								</tbody>
+                                                        <div class="tooltip-container" data-tooltip="@project.Sponsor">
+                                                            <span class="short-text">@truncateText(project.unitName, 3)</span>
+                                                            <span class="tooltip tooltip-text noExport">@project.Sponsor</span>
+                                                        </div>
+														
+													</td>
 
-							</table>
+
+													<td>@project.FromUnit</td>
+													@{
+														var sentdate = @project.SentOn != null ? DateTime.Parse(@project.SentOn) : (DateTime?)null;
+													}
+													<td>@(sentdate?.ToString("dd-MM-yyyy:hh:mm:ss"))</td>
+													<td>@project.ToUnit</td>
+													<td>@project.ReadOn</td>
+													@{
+														var remarks = string.IsNullOrWhiteSpace(project.Remarks) ? "No Remarks" : project.Remarks;
+														var remarkWords = remarks.Split(' ');
+														var shortRemarks = remarkWords.Length > 3
+														? string.Join(" ", remarkWords.Take(4)) + "..."
+														: remarks;
+													}
+													<td>
+
+														<div class="tooltip-container" data-tooltip="@project.Remarks">
+															<span class="short-text noExport">@shortRemarks</span>
+															<span class="tooltip tooltip-text noExport">@project.Remarks</span>
+														</div>
+														
+													</td>
+
+													<td>
+
+														<a href="#" id="btnRemMove" data-proj-name="@project.ProjName" data-action="@project.projid"><img src="/assets/images/icons/Legacyhistory.png" alt="Icon" style="height: 27px;"></a>
+													</td>
+												</tr>
+
+											}
+										}
 
 
+									</tbody>
+
+								</table>
+
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
+
 
 
 
@@ -1265,42 +1251,42 @@
 			@{
 				int snoCc = 0;
 			}
+			<div class="table-responsive">
+				<div class="tabs__content__item" id="ToCc" style="height:100%;">
+					<div class="content" style="height:100%;">
+						<div class="card radius-10 w-100" style="height:100%;">
+							<div class="card-body table-responsive" style="height:100%; overflow-y: auto;">
+								<table id="CCtable" class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<th class="s-no-column">Ser No</th>
+											<th style="width:20%">Proj Name</th>
+											<th>Sponsor</th>
 
-			<div class="tabs__content__item" id="ToCc" style="height:100%; ">
-				<div class="content" style="height:100%;">
-					<div class="card radius-10 w-100" style="height:100%;">
-						<div class="card-body" style="height:100%; overflow-y: scroll;">
+											<th class="col-width9">From</th>
+											@* <th class="to-unit-name">To Unit Name</th> *@
+											@* <th>TimeStamp</th> *@
+											<th>Sent On</th>
+											<th>Read On</th>
+											<th>Read By</th>
+											<th>Stage</th>
+											<th>SubStage</th>
+											<th>Action</th>
+											<th class="projaction">Project Action</th>
 
-							<table id="CCtable" class="table table-striped table-bordered">
-								<thead>
-									<tr>
-										<th class="s-no-column">Ser No</th>
-										<th style="width:20%">Proj Name</th>
-										<th>Sponsor</th>
+										</tr>
+									</thead>
 
-										<th class="col-width9">From</th>
-										@* <th class="to-unit-name">To Unit Name</th> *@
-										@* <th>TimeStamp</th> *@
-										<th>Sent On</th>
-										<th>Read On</th>
-										<th>Read By</th>
-										<th>Stage</th>
-										<th>SubStage</th>
-										<th>Action</th>
-										<th class="projaction">Project Action</th>
+									<tbody class="FontSize" id="cctblData">
+									</tbody>
+								</table>
 
-									</tr>
-								</thead>
-
-								<tbody class="FontSize" id="cctblData">
-								</tbody>
-							</table>
-
-
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
 			<!--Completed Items-->
 
 
@@ -1308,7 +1294,7 @@
 	</div>
 	<div class="modal fade" id="ProjFwd" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog modal-xl custom-modal-size">
-			<div class="modal-content custom-modal-content">
+			<div class="modal-content custom-modal-content" style="width:60%">
 				<div class="modal-header">
 					<h5 class="modal-title" id="fwdModal">Project Fwd</h5>
 					<span class="d-none" id="spanCurrentPslmId">0</span>
@@ -1321,9 +1307,9 @@
 					<div class="row">
 						<div class="col-md-12">
 
-							<div class="card">
+							<div class="">
 								<div class="modal-header" style="height:50px">
-									<h6 class="card-title mb-0" >
+									<h6 class="card-title mb-0">
 										Pl select appropriate details before dispatch of project to next stakeholder
 									</h6>
 									<div class="form-group col-md-2 ProjectsFwd">
@@ -1331,6 +1317,7 @@
 											<i class="fa fa-info-circle" aria-hidden="true"></i>
 										</button>
 									</div>
+
 								</div>
 								<div class="card-body">
 
@@ -1348,13 +1335,13 @@
 										<div class="form-group col-md-4 ProjectsFwdUnit d-none">
 											<strong><label for="SubStage">1.1. Sent to Unit</label></strong>
 											<select class="form-control UnitSearchBox js-example-basic-single" style="width: 100%;" tabindex="-1"
-													name="searchBox"  id="searchBox" required>
+													name="searchBox" id="searchBox" required>
 												<option value="0">Select Fwd To</option>
 											</select>
 
 										</div>
 										@* <div class="form-group col-md-2 ProjectsFwd">
-											<button type="button" class="btn btn-link p-0" id="toggleCcBtn">Cc</button>
+										<button type="button" class="btn btn-link p-0" id="toggleCcBtn">Cc</button>
 
 										</div> *@
 
@@ -1390,15 +1377,15 @@
 										</div>
 
 										@*  <div class="form-group col-md-6 ProjectsFwd">
-                                            <label for="SubStage">Select Addressee(Sent to)</label>
-                                            <img id="loadFwdTo" src="/assets/images/icons/Cross_red_circle.png" style="margin-left:20px; display:none; cursor:pointer;" width="22" height="22" alt="Readed">
-                                            <select class="form-control requiredField" style="width: 100%;" tabindex="-1"
-                                                    name="fwdoffrs" required id="ddlfwdFwdTo">
-                                                <option value="0">Select Fwd To</option>
-                                            </select>
+										<label for="SubStage">Select Addressee(Sent to)</label>
+										<img id="loadFwdTo" src="/assets/images/icons/Cross_red_circle.png" style="margin-left:20px; display:none; cursor:pointer;" width="22" height="22" alt="Readed">
+										<select class="form-control requiredField" style="width: 100%;" tabindex="-1"
+										name="fwdoffrs" required id="ddlfwdFwdTo">
+										<option value="0">Select Fwd To</option>
+										</select>
 
-                                            <input type="text" id="searchBox" class="form-control" style="display:none;" placeholder="Search..." />
-                                        </div> *@
+										<input type="text" id="searchBox" class="form-control" style="display:none;" placeholder="Search..." />
+										</div> *@
 										<div class="form-group col-md-6 ProjectsFwd">
 											<strong><label for="SubStage">6. Remarks</label></strong>
 											<textarea class="form-control requiredField" id="txtRemarksfwd" style="width: 100%;"></textarea>
@@ -1408,8 +1395,28 @@
 											<strong><label>7. Date of Fwd:</label></strong>
 											<input id="TimeStampToProjfwd" type="date" style="width: 200px;" class="  form-control requiredField" />
 										</div>
-									
 
+										<div class="col-md-12 Attmenthistory d-none">
+											<div class="">
+
+												<div class="card-body p-4" style="background-color: #f8f9fa;">
+													<div class="table-responsive">
+														<table class="table table-hover align-middle" id="confirmMoveTable">
+															<tbody>
+																<!-- Data injected via JS -->
+															</tbody>
+														</table>
+													</div>
+
+													<div class="mt-4 text-end">
+														<button type="button" class="btn btn-outline-primary me-2" id="btnEditMove">
+															<i class="fas fa-edit"></i> Edit
+														</button>
+
+													</div>
+												</div>
+											</div>
+										</div>
 
 										<div class="form-group col-md-6 Attmenthistory d-none">
 											<label for="SubStage">Attach Document Description</label>
@@ -1433,7 +1440,7 @@
 
 					</div>
 					<div class="col-md-12 Attmenthistory ">
-						<div class="card">
+						<div class="">
 							<div class="modal-header"><h5 class="card-title">Projects Move Att Details</h5></div>
 							<div class="card-body" style="overflow:auto">
 								<table class="table table-striped table-bordered">
@@ -1467,7 +1474,7 @@
 					</div>
 					<div class="form-group col-md-12 mt-4 text-center">
 						@*  <input type="button" id="btnFwdNext" value="Send & Att Docu (s)" class="btn btn-primary btn-lg ProjectsFwd" /> *@
-						<input type="button" id="btnFwdNext" value="Att Docu's & Send" class="btn btn-primary btn-lg ProjectsFwd" />
+						<input type="button" id="btnFwdNext" value="Send" class="btn btn-primary btn-lg ProjectsFwd" />
 						<input type="button" id="btnFwdConfirm" value="Confirm" class="btn btn-primary btn-lg Attmenthistory d-none" />
 					</div>
 				</div>
@@ -1502,7 +1509,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 
-					<h4 class="modal-title" id="lblHistory">Project Fwd History</h4>
+					<h4 class="modal-title" id="lblHistory">Project Movement</h4>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 
@@ -1533,28 +1540,28 @@
 	</div>
 
 
-	@* 
+	@*
 
 	<div class="modal fade" id="ProjRemainderMov" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-		<div class="modal-dialog modal-xl" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
+	<div class="modal-dialog modal-xl" role="document">
+	<div class="modal-content">
+	<div class="modal-header">
 
-					<h4 class="modal-title" id="RemProjName"></h4>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-
-				<div class="modal-body ml-lg-5">
-
-					<div class="timeline" id="ProjRemMov">
-					</div>
-				</div>
-
-			</div><!-- modal-content -->
-		</div><!-- modal-dialog -->
+	<h4 class="modal-title" id="RemProjName"></h4>
+	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	</div>
 
- *@
+	<div class="modal-body ml-lg-5">
+
+	<div class="timeline" id="ProjRemMov">
+	</div>
+	</div>
+
+	</div><!-- modal-content -->
+	</div><!-- modal-dialog -->
+	</div>
+
+	*@
 
 
 
@@ -1596,14 +1603,14 @@
 
 						</table>
 					</div>
-				
+
 				</div>
 
 			</div><!-- modal-content -->
 		</div><!-- modal-dialog -->
 	</div>
 
-	
+
 
 </body>
 @functions {
@@ -1624,8 +1631,8 @@
 
 <script src="~/developerjs/mtable.js"></script>
 <script src="~/developerjs/atthistory.js"></script>
-<script src="~/developerjs/projectdetails.js"></script>
 
+<script src="~/developerjs/projectdetails.js"></script>
 <script src="~/developerjs/projectstckholdercommentforprojhistory.js"></script>
 <script src="~/developerjs/comman.js"></script>
 <script src="~/developerjs/ProjectDetailDatatable.js"></script>
@@ -1790,7 +1797,7 @@
 		// });
 
 
-		
+
 
 
 

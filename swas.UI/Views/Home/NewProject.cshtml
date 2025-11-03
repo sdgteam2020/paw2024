@@ -25,7 +25,8 @@
 
     var PdfWhiteList = ViewBag.PdfWhiteListed;
     var stage = ViewBag.RFPProj;
-    Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor.HttpContext.Session, "User");
+    
+   Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor.HttpContext.Session, "User");
 
 
 }
@@ -381,57 +382,59 @@
 
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body table-responsive">
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered datatablefordownload">
+                        <thead>
+                            <tr>
+                                <th class="text-nowrap text-center">Policy on Whitelisting of SW</th>
+                                <th class="text-nowrap text-center">Whitelisted Software/Appls Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @if (corse != null)
+                                    {
+                                        var count = 1;
+                                        foreach (var filename in corse)
+                                        {
+                                            <div class="pdf-link">
+                                                <span class="pdf-number">@count.</span>
+                                                <a asp-controller="Home" asp-action="WaterMark2" asp-route-id="@filename">@filename</a>
+                                            </div>
+                                            count++;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div>No recent actions available</div>
+                                    }
+                                </td>
+                                <td>
+                                    @if (PdfWhiteList != null)
+                                    {
+                                        var count = 1;
+                                        foreach (var filename in PdfWhiteList)
+                                        {
+                                            <div class="pdf-link">
+                                                <span class="pdf-number">@count.</span>
+                                                <a href="@Url.Action("WaterMark", "Home", new { id = filename })" target="_blank">@filename</a>
+                                            </div>
+                                            count++;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div>No recent actions available</div>
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                <table class="table table-striped table-bordered datatablefordownload">
-                    <thead>
-                        <tr>
-                            <th class="text-nowrap text-center">Policy on Whitelisting of SW</th>
-                            <th class="text-nowrap text-center">Whitelisted Software/Appls Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                @if (corse != null)
-                                {
-                                    var count = 1;
-                                    foreach (var filename in corse)
-                                    {
-                                        <div class="pdf-link">
-                                            <span class="pdf-number">@count.</span>
-                                            <a asp-controller="Home" asp-action="WaterMark2" asp-route-id="@filename">@filename</a>
-                                        </div>
-                                        count++;
-                                    }
-                                }
-                                else
-                                {
-                                    <div>No recent actions available</div>
-                                }
-                            </td>
-                            <td>
-                                @if (PdfWhiteList != null)
-                                {
-                                    var count = 1;
-                                    foreach (var filename in PdfWhiteList)
-                                    {
-                                        <div class="pdf-link">
-                                            <span class="pdf-number">@count.</span>
-                                            <a href="@Url.Action("WaterMark", "Home", new { id = filename })" target="_blank">@filename</a>
-                                        </div>
-                                        count++;
-                                    }
-                                }
-                                else
-                                {
-                                    <div>No recent actions available</div>
-                                }
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                </div>
+               </div>
         </div>
     </div>
 </div>
@@ -443,87 +446,91 @@
 
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body table-responsive">
-                <table id="HeldTable11" class="table table-striped table-bordered datatablefordownload">
-                    <thead style="position: sticky;top: -18px">
-                        <tr>
-                            <th style="width:1% !important;" class=" text-center f-5 s-no-column">S.No</th>
-                            <th style="width:9% !important;" class="text-center col-width9">Name of Sponsor</th>
-                            <th class="col-width16">Project Name</th>
-                            <th style="width:9% !important;" class="text-center col-width9">From</th>
-                            <th class="text-center col-width6">To</th>
-                            <th class="text-center">Date</th>
-                            <th class="text-center">Stage</th>
-                            <th class="text-center">SubStage</th>
-                            <th style="width:6% !important;" class="text-center col-width6">Action</th>
-                            <th style="width:9% !important;">Remark</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Holdproj != null)
-                        {
-                            int count = 1;
-
-
-                            @foreach (var unitsa in Holdproj)
+            <div class="modal-body">
+               
+                    <table id="HeldTable11" class="table table-striped table-bordered datatablefordownload">
+                        <thead style="position: sticky;top: -18px">
+                            <tr>
+                                <th style="width:1% !important;" class=" text-center f-5 s-no-column">S.No</th>
+                                <th style="width:9% !important;" class="text-center col-width9">Name of Sponsor</th>
+                                <th class="col-width16">Project Name</th>
+                                <th style="width:9% !important;" class="text-center col-width9">From</th>
+                                <th class="text-center col-width6">To</th>
+                                <th class="text-center">Date</th>
+                                <th class="text-center">Stage</th>
+                                <th class="text-center">SubStage</th>
+                                <th style="width:6% !important;" class="text-center col-width6">Action</th>
+                                <th style="width:9% !important;">Remark</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Holdproj != null)
                             {
-                                <tr>
-                                    <td class="s-no-column">@count</td>
-                                    <td class="RefLetter-container col-width9">
-                                        @unitsa.UnitName
-                                        <div class="RefLetter">
-                                            @unitsa.Sponser
-                                        </div>
-                                    </td>
+                                int count = 1;
 
-                                    @*  <td class="f-12 col-width16">
-                            <div class="tooltip-container" data-tooltip="@unitsa.ProjName">
-                            <span class="short-text"></span>
-                            <span class="tooltip tooltip-text"></span>
-                            </div>
-                            </td> *@
 
-                                    <td class="">
-                                        <div class="tooltip-container" data-tooltip="@unitsa.ProjName">
-                                            <span class="short-text">@truncateText(unitsa.ProjName, 6)</span>
-                                            <span class="tooltip tooltip-text">@unitsa.ProjName</span>
-                                        </div>
-                                    </td>
+                                @foreach (var unitsa in Holdproj)
+                                {
+                                    <tr>
+                                        <td class="s-no-column">@count</td>
+                                        <td class="RefLetter-container col-width9">
+                                            <div class="noExport"> @unitsa.UnitName</div>
 
-                                    <td class="RefLetter-container col-width9">
-                                        @unitsa.FromUnitUserDetail
-                                        <div class="RefLetter">
-                                            @unitsa.FromUnitName
-                                        </div>
-                                    </td>
-                                    <td class="col-width9">@unitsa.ToUnitName</td>
-                                    <td class="col-width10">@unitsa.DateTimeOfUpdate</td>
-                                    <td class="col-width10">@unitsa.StageName</td>
-                                    <td class="col-width10">@unitsa.StatusName</td>
-                                    <td class="col-width6">@unitsa.ActionName</td>
+                                            <div class="RefLetter">
+                                                @unitsa.Sponser
+                                            </div>
+                                        </td>
 
-                                    @* <td class="f-12">
-                            <div class="tooltip-containerRemark" data-tooltip="@unitsa.Remark">
-                            <span class="short-textRemark"></span>
-                            <span class="tooltip tooltip-text1"></span>
-                            </div>
-                            </td> *@
+                                        @*  <td class="f-12 col-width16">
+                                <div class="tooltip-container" data-tooltip="@unitsa.ProjName">
+                                <span class="short-text"></span>
+                                <span class="tooltip tooltip-text"></span>
+                                </div>
+                                </td> *@
 
-                                    <td class="col-width10">
-                                        <div class="tooltip-container" data-tooltip="@unitsa.Remark">
-                                            <span class="short-text">@truncateText(unitsa.Remark, 2)</span>
-                                            <span class="tooltip tooltip-text1">@unitsa.Remark</span>
-                                        </div>
-                                    </td>
+                                        <td class="">
+                                            <div class="RefLetter-container" data-tooltip="@unitsa.ProjName">
+                                                <span class="short-text noExport">@truncateText(unitsa.ProjName, 6)</span>
+                                                <span class="RefLetter">@unitsa.ProjName</span>
+                                            </div>
+                                        </td>
 
-                                </tr>
-                                count = count + 1;
+                                        <td class="RefLetter-container col-width9">
+                                            @unitsa.FromUnitUserDetail
+                                            <div class="RefLetter noExport">
+                                                @unitsa.FromUnitName
+                                            </div>
+                                        </td>
+                                        <td class="col-width9">@unitsa.ToUnitName</td>
+                                        <td class="col-width10">@unitsa.DateTimeOfUpdate</td>
+                                        <td class="col-width10">@unitsa.StageName</td>
+                                        <td class="col-width10">@unitsa.StatusName</td>
+                                        <td class="col-width6">@unitsa.ActionName</td>
+
+                                        @* <td class="f-12">
+                                <div class="tooltip-containerRemark" data-tooltip="@unitsa.Remark">
+                                <span class="short-textRemark"></span>
+                                <span class="tooltip tooltip-text1"></span>
+                                </div>
+                                </td> *@
+
+                                        <td class="col-width10">
+                                            <div class="RefLetter-container" data-tooltip="@unitsa.Remark">
+                                                <span class="short-text noExport">@truncateText(unitsa.Remark, 2)....</span>
+                                                <span class="RefLetter">@unitsa.Remark</span>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    count = count + 1;
+                                }
                             }
-                        }
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
 
+               
+             
             </div>
         </div>
     </div>
@@ -537,126 +544,132 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body WhitelistedTablesss">
-                <table id="WhitelistedTable" class="table  table-striped table-bordered datatablefordownload" style="overflow: scroll;">
-                    <!-- Table header -->
+               
+                    <table id="WhitelistedTable" class="table  table-striped table-bordered datatablefordownload" style="overflow: scroll;">
+                        <!-- Table header -->
 
-                    <thead style="position: sticky;top:-18px">
-                        @if(Logins?.unitid == 1)
-                        {
-                             <button class="btn btn-primary" id="AddWhite_proj">Add WhiteList</button>
-                        }
-                       
-                        <tr>
-                           
-                            <th class="text-center s-no-column" style="width:1%">S.No</th>
-                            <th class="text-nowrap text-center" style="width:10% !important">Name of Sw Appl</th>
-                            <th class="text-nowrap text-center" style="width:12% !important">Hosted On</th>
-
-                            <th class="text-nowrap text-center" style="width:4% !important">Appt</th>
-                            <th class="text-nowrap text-center" style="width:4% !important">Sponsor</th>
-                            <th class="text-nowrap text-center" style="width:2% !important">Tele No</th>
-                            <th class="text-nowrap text-center" style="width:2% !important">Dt of ACG Clearance</th>
-                            <th class="text-nowrap text-center" style="width:2% !important">Cert No</th>
-                            <th class="text-nowrap text-center" style="width:4% !important">Valid Upto</th>
-                            <th class="text-nowrap text-center" style="width:4% !important">Remarks</th>
-
-                            @if (Logins?.unitid == 1)
+                        <thead style="position: sticky;top:-18px">
+                        @if (Logins?.unitid == 1)
                             {
-                                <th class="text-nowrap text-center" style="width:4% !important">Action</th>
+                                <button class="btn btn-primary" id="AddWhite_proj">Add WhiteList</button>
                             }
-                        </tr>
-                    </thead>
-                    <tbody>
 
-                        @if (WhiteListed != null)
-                        {
-                            int count = 1;
-                            int headerid = 0;
-                            @foreach (var unitx in WhiteListed)
+                            <tr>
+
+                                <th class="text-center s-no-column" style="width:1%">S.No</th>
+                                <th class="text-nowrap text-center" style="width:6%">Name of Sw Appl</th>
+                                <th class="text-nowrap text-center" style="width:12% !important">Hosted On</th>
+
+                                <th class="text-nowrap text-center" style="width:4% !important">Appt</th>
+                                <th class="text-nowrap text-center" style="width:4% !important">Sponsor</th>
+                                <th class="text-nowrap text-center" style="width:2% !important">Tele No</th>
+                                <th class="text-nowrap text-center" style="width:2% !important">Dt of ACG Clearance</th>
+                                <th class="text-nowrap text-center" style="width:15% !important">Cert No</th>
+                                <th class="text-nowrap text-center" style="width:4% !important">Valid Upto</th>
+                                <th class="text-nowrap text-center" style="width:4% !important">Remarks</th>
+
+                                @if (Logins?.unitid == 1)
+                                {
+                                    <th class="text-nowrap text-center" style="width:4% !important">Action</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @if (WhiteListed != null)
                             {
-                                <tr>
-                                    <td class="s-no-column">@count</td>
-                                    @* <td class="col-width16">@unitx.ProjName</td> *@
-                                    <td class="RefLetter-container">
-                                        <span class="noExport">
-                                            @(string.IsNullOrEmpty(unitx.ProjName)
-                                                ? ""
-                                                : (unitx.ProjName.Length > 10
-                                                ? unitx.ProjName.Substring(0, 10) + "..."
-                                                : unitx.ProjName))
-                                        </span>
-                                       
-                                        <div class="RefLetter">
-                                            @unitx.ProjName
-                                        </div>
-                                    </td>
-                                    <td class="col-width9">@unitx.HostedOn</td>
+                                int count = 1;
+                                int headerid = 0;
+                                @foreach (var unitx in WhiteListed)
+                                {
+                                    <tr>
+                                        <td class="s-no-column">@count</td>
+                                        @* <td class="col-width16">@unitx.ProjName</td> *@
 
-                                    <td>@unitx.Appt</td>
-                                    <td>@unitx.Fmn</td>
-                                    <td class="col-width6">@unitx.ContactNo</td>
-                                    <td class="col-width6">@(unitx.Clearence != null ? unitx.Clearence.ToString("dd-MM-yyyy") : "")</td>
-                                    @{
-                                        DateTime? clearenceDate = unitx.Clearence;
-                                        DateTime? afterThreeYears = null;
 
-                                        if (clearenceDate.HasValue)
-                                        {
-                                            afterThreeYears = clearenceDate.Value.AddYears(3);
-                                        }
-                                    }
 
-                                    @{
-                                        DateTime? certDate = null;
 
-                                        if (DateTime.TryParse(unitx.CertNo?.ToString(), out DateTime parsedCert))
-                                        {
-                                            certDate = parsedCert;
-                                        }
-                                    }
-                                    <td>
-                                        @(certDate != null ? certDate?.ToString("dd-MM-yyyy") : "")
-                                    </td>
 
-                                    <td class="col-width6">
-                                        @(afterThreeYears.HasValue ? afterThreeYears.Value.ToString("dd-MM-yyyy") : "")
-                                    </td>
-                                  
-                                    <td class="RefLetter-container"><span class="noExport">
-                                            @(string.IsNullOrEmpty(unitx.Remarks)
-                                                ? ""
-                                                : (unitx.Remarks.Length > 10
-                                                ? unitx.Remarks.Substring(0, 10) + "..."
-                                                : unitx.Remarks))
 
-                                    </span>
-                                       
-                                        <div class="RefLetter">
-                                            @unitx.Remarks
-                                        </div>
-                                    </td>
-                                    @if (Logins?.unitid == 1)
-                                    {
-                                        <td>
-                                            <center>
-                                                <a class="EditWhiteListedProj" href="#" data-id="@unitx.Id">
-                                                    <div>
-                                                        <img src="/assets/images/icons/edit.png" alt="Icon" style="width: 35px; height: 30px; margin-right: 0px;">
-                                                    </div>
-                                                </a>
-                                            </center>
+
+
+
+                                    <td class="RefLetter-container" style="width:6%">
+                                        <span class="noExport">  @(string.IsNullOrEmpty(@unitx.ProjName) ? "" : (@unitx.ProjName.Length > 10) ? @unitx.ProjName.Substring(0, 10) + "...." : @unitx.ProjName)</span>
+                                          
+                                           
+                                                <div class="RefLetter">
+                                                    @unitx.ProjName
+                                                </div>
+
+                                            
                                         </td>
-                                    }
-                                </tr>
+                                        <td class="col-width9">@unitx.HostedOn</td>
 
-                                count = count + 1;
-                                @* headerid = @unitx.HeaderID; *@
+                                        <td>@unitx.Appt</td>
+                                        <td>@unitx.Fmn</td>
+                                        <td class="col-width6">@unitx.ContactNo</td>
+                                        <td class="col-width6">@(unitx.Clearence != null ? unitx.Clearence.ToString("dd-MM-yyyy") : "")</td>
+                                        @{
+                                            DateTime? clearenceDate = unitx.Clearence;
+                                            DateTime? afterThreeYears = null;
+
+                                            if (clearenceDate.HasValue)
+                                            {
+                                                afterThreeYears = clearenceDate.Value.AddYears(3);
+                                            }
+                                        }
+
+
+                                        @*  <td>
+                                @unitx.CertNo
+                                </td> *@
+                                        <td>
+
+
+                                            @unitx.CertNo
+
+                                        </td>
+
+                                        <td class="col-width6">
+                                            @(afterThreeYears.HasValue ? afterThreeYears.Value.ToString("dd-MM-yyyy") : "")
+                                        </td>
+                                        @*  <td>@unitx.Remarks</td> *@
+                                        <td class="RefLetter-container">
+                                        <span class="noExport">@(string.IsNullOrEmpty(@unitx.Remarks) ? "" : (@unitx.Remarks.Length > 10) ? @unitx.Remarks.Substring(0, 10) + "...." : @unitx.Remarks)</span>
+                                            
+                                            @if (!string.IsNullOrEmpty(@unitx.Remarks) && (@unitx.Remarks.Length > 10))
+                                            {
+                                                <div class="RefLetter">
+                                                    @unitx.Remarks
+                                                </div>
+
+                                            }
+                                        </td>
+                                        @if (Logins?.unitid == 1)
+                                        {
+                                            <td>
+                                                <center>
+                                                    <a class="EditWhiteListedProj" href="#" data-id="@unitx.Id">
+                                                        <div>
+                                                            <img src="/assets/images/icons/edit.png" alt="Icon" style="width: 35px; height: 30px; margin-right: 0px;">
+                                                        </div>
+                                                    </a>
+                                                </center>
+                                            </td>
+                                        }
+                                    </tr>
+
+                                    count = count + 1;
+                                    @* headerid = @unitx.HeaderID; *@
+                                }
                             }
-                        }
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
 
+                
+              
 
             </div>
         </div>
@@ -700,7 +713,7 @@
                         <div class="col-md-6">
                             <label for="edit_Sponser" class="form-label">Sponsor</label>
                          @*    <input type="text" id="edit_Sponser" name="Fmn" class="form-control" /> *@
-                            <select class="form-control" id="edit_Sponser" name="Fmn" >
+                            <select class="form-control" id="edit_Sponser" name="Fmn" data-mdb-select-init>
                                 <option value="">-- Select Sponsor --</option>
                                 @if (ViewBag.Units != null)
                                 {
@@ -728,7 +741,7 @@
                             <input type="text" id="edit_Cert" name="CertNo" class="form-control">
                         </div>
                         <div class="col-md-6">
-                            <label for="edit_ValidUpto" class="form-label">DDGIT WL Date</label>
+                            <label for="edit_ValidUpto" class="form-label">DDGIT WL DT</label>
                             <input type="date" id="edit_ValidUpto" name="ValidUpto" class="form-control" />
                         </div>
 
@@ -755,7 +768,7 @@
     <div class="footer-text">
         Copyright &copy; Developed by ASDC, DGIS
     </div>
-    <div style="text-align: right;margin-top: -24px !important;">
+    <div style="text-align: right;margin-top: -24px !important; margin-right:20px !important">
         <span id="dailyCounter"></span>
         <span id="monthlyCounter"></span>
         <span id="totalCounter"></span>
@@ -948,7 +961,7 @@
                             <div class="invalid-feedback" style="color:red">This field is required.</div>
                         </div>
                         <div class="col-md-4 mb-2">
-                            <label for="validUpto" class="form-label">Valid UPTO<span class="required-star">*</span></label>
+                            <label for="validUpto" class="form-label">DDGIT WL Date<span class="required-star">*</span></label>
                             <input type="date" class="form-control" id="validUpto" name="validUpto" required placeholder="Select Valid Upto Date" />
                             <div class="invalid-feedback" style="color:red">This field is required.</div>
                         </div>
@@ -971,7 +984,6 @@
 
 
 <script src="~/assets/datatable/js/select2.min.js"></script>
-
 
 <script>
     $('#AddWhite_proj').on('click', function () {
@@ -1007,6 +1019,7 @@
 <script>
     $(document).ready(function () {
         // Fetch Daily Counter
+        initializeDataTable("#HeldTable11");
 
       // Ensure select2 is applied when modal is shown
     $('#WhiteListModal').on('shown.bs.modal', function () {
@@ -1070,7 +1083,6 @@
 </script>
 <script>
     $(document).ready(function () {
-        initializeDataTable("#HeldTable11");
         $('#btnDummyData').on('click', function () {
             // Generate dynamic dummy data
             function randomString(length) {
@@ -1114,6 +1126,10 @@
             }
         });
     });
+
+
+
+
 </script>
 
 
@@ -1141,8 +1157,9 @@
     var ip = '@ip';
 </script>
 <script src="~/developerjs/Tooltip.js"></script>
-<script src="~/developerjs/NewProject.js"></script>
-<script src="~/DeveloperJs\CommanDatatable.js"></script>
+<script src="~/developerjs/newproject.js"></script>
+<script src="~/developerjs/CommanDatatable.js"></script>
+@* <script src="~/developerjs/comman.js"></script> *@
 <script src="~/developerjs/NewProjectDataTable.js"></script>
 
 @*<script src="~/developerjs/commanfordatatable.js"></script>

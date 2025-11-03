@@ -1,5 +1,4 @@
-﻿using Grpc.Core;
-using swas.BAL.DTO;
+﻿using swas.BAL.DTO;
 using swas.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -11,10 +10,8 @@ namespace swas.BAL.Interfaces
 {
     public interface IProjComments
     {
-        Task<List<DTOProComments>> GetAllStkForComment(int UnitId, int StatusId);
+        Task<List<DTOProComments>> GetAllStkForComment(int UnitId,int StatusId);
         Task<DTOProComments> GetCommentStatus(int UnitId);
-
         Task<List<DTOProComments>> FindForComment(int? UnitId, string searchQuery);
     }
-    
 }

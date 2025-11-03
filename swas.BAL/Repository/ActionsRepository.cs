@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using swas.BAL.DTO;
 using swas.BAL.Helpers;
 using swas.BAL.Interfaces;
-using swas.BAL.Utility;
 using swas.DAL;
 using swas.DAL.Models;
 using System;
@@ -103,7 +102,7 @@ namespace swas.BAL.Repository
             return ret.ToList();
         }
 
-        public async Task<List<DTODDLComman>> GetActionByStatusIdlogin (int StatusId, int UnitId, int type)
+        public async Task<List<DTODDLComman>> GetActionByStatusIdlogin (int StatusId, int UnitId)
         {
             List<DTODDLComman> lst = new List<DTODDLComman>();
             var acttoallow = (from map in _dbContext.TrnStatusActionsMapping
@@ -117,43 +116,23 @@ namespace swas.BAL.Repository
                                   UnitId= sts.UnitId
                               });
 
-            if(type == 1)
-            {
-                var ret = await _dbContext.mActions
-        .Where(act => act.IsActive == true) // if you have IsActive here
-        .OrderBy(act => act.OrderBy)
-        .Select(act => new DTODDLComman
-        {
-            Id = act.ActionsId,       // Use ActionsId as Id instead of StatusActionsMappingId
-            Name = act.ActionDesc,
-        })
-        .ToListAsync();
+
+            var ret =await (from act in _dbContext.mActions
+                       join map in _dbContext.TrnStatusActionsMapping on act.ActionsId equals map.ActionsId
+                       where map.StatusId == StatusId && map.IsActive == true
+                            orderby act.OrderBy
+                            select new DTODDLComman
+                       {
+                           Id = map.StatusActionsMappingId,
+                           Name = act.ActionDesc,
+                       }
+              ).ToListAsync();
+
+
+
 
             lst = ret;
-            }
-            else
-            {
-                var ret = await (from act in _dbContext.mActions
-                                 join map in _dbContext.TrnStatusActionsMapping on act.ActionsId equals map.ActionsId
-                                 where map.StatusId == StatusId && map.IsActive == true
-                                 orderby act.OrderBy
-                                 select new DTODDLComman
-                                 {
-                                     Id = map.StatusActionsMappingId,
-                                     Name = act.ActionDesc,
-                                 }
-               ).ToListAsync();
-                lst = ret;
-
-            }
-
-
-
-
-
-
-           
-            var ret1=  acttoallow.Where(i => i.UnitId == UnitId).ToList();
+                var ret1=  acttoallow.Where(i => i.UnitId == UnitId).ToList();
             if(ret1.Count()==0)
             {
                 foreach(var item in acttoallow)

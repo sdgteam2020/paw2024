@@ -16,7 +16,6 @@ namespace swas.BAL.Repository
     {
         private readonly ApplicationDbContext _context;
         private readonly IDataProtector _dataProtector;
-
         public DateApprovalRepository(ApplicationDbContext context, IDataProtectionProvider dataProtector)
         {
             _context = context;
@@ -79,8 +78,9 @@ namespace swas.BAL.Repository
                                 IsRead = grouped.OrderByDescending(x => x.da.Request_Date).FirstOrDefault().da.IsRead,
                                 Remarks = grouped.OrderByDescending(x => x.LH.ActionDate).FirstOrDefault().LH.Remarks,
                                 EncyID = _dataProtector.Protect(grouped.Key.ToString()),
+
                             }).OrderByDescending(x => x.Request_Date).ToList();
-           
+
 
                 return data;
             }
@@ -121,8 +121,9 @@ namespace swas.BAL.Repository
                   UnitName = grouped.OrderByDescending(x => x.da.Request_Date).FirstOrDefault().u.UnitName,
                   User = grouped.OrderByDescending(x => x.da.Request_Date).FirstOrDefault().da.User,
                   IsRead = grouped.OrderByDescending(x => x.da.Request_Date).FirstOrDefault().da.IsRead,
-                  Remarks = grouped.OrderByDescending(x => x.da.Request_Date).FirstOrDefault().LH != null ? grouped.OrderByDescending(x => x.da.Request_Date).FirstOrDefault().LH.Remarks : null,
-                  EncyID = _dataProtector.Protect(grouped.Key.ToString())
+                  EncyID = _dataProtector.Protect(grouped.Key.ToString()),
+
+                  Remarks = grouped.OrderByDescending(x => x.da.Request_Date).FirstOrDefault().LH != null ? grouped.OrderByDescending(x => x.da.Request_Date).FirstOrDefault().LH.Remarks : null
               })
               .OrderByDescending(x => x.Request_Date).ToList();
 

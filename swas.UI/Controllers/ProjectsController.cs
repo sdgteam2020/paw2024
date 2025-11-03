@@ -1,29 +1,52 @@
-﻿using System.Timers;
-using ASPNetCoreIdentityCustomFields.Data;
+﻿using Microsoft.AspNetCore.Mvc;
+using swas.BAL.Interfaces;
+using swas.DAL.Models;
+using swas.BAL.DTO;
+using swas.BAL.Helpers;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
+
 using iText.IO.Font;
 using iText.IO.Font.Constants;
 using iText.Kernel.Font;
+using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas;
 using iText.Kernel.Pdf.Extgstate;
+using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
-using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Build.Evaluation;
+using System.Timers;
+
+using System.Web;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
+using Org.BouncyCastle.Utilities;
 using Microsoft.CodeAnalysis;
+using Microsoft.Build.Evaluation;
+using swas.BAL.Repository;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using swas.BAL.DTO;
-using swas.BAL.Helpers;
-using swas.BAL.Interfaces;
-using swas.DAL;
-using swas.DAL.Models;
 using swas.UI.Helpers;
-using static swas.DAL.Models.LegacyHistory;
+using System.Threading;
+using System.Security.Cryptography.Xml;
+using iText.Commons.Actions.Contexts;
+using Grpc.Core;
+using System.Linq;
+using Microsoft.AspNetCore.Identity;
+using ASPNetCoreIdentityCustomFields.Data;
+using System.Globalization;
+using System.Configuration;
+using Microsoft.Extensions.Options;
+using swas.DAL;
 using Document = iText.Layout.Document;
+using System.IO;
+using Microsoft.Extensions.Logging;
+using iText.Kernel.Events;
+using static swas.DAL.Models.LegacyHistory;
+using System.Threading.Tasks;
+using swas.BAL.Utility;
+using Path = System.IO.Path;
 
 namespace swas.UI.Controllers
 {
@@ -109,6 +132,7 @@ namespace swas.UI.Controllers
 
             return View(dto);
         }
+
         public async Task<IActionResult> Details(int id)
         {
 
@@ -121,7 +145,10 @@ namespace swas.UI.Controllers
             return Json(new { success = true, project });
         }
 
+
+
         [HttpGet]
+
         public async Task<IActionResult> ProjStatDashBdView(string? id, string? status)
         {
             string EncyID = id;
@@ -390,7 +417,7 @@ namespace swas.UI.Controllers
                 Data.DateTimeOfUpdate = Data.InitiatedDate;
                 Data.StakeHolderId = Logins.unitid ?? 0;
                 Data.IsActive = true;
-                Data.EditDeleteDate = Data.InitiatedDate;
+                Data.EditDeleteDate = DateTime.Now;
                 Data.EditDeleteBy = 0;
                 Data.IsDeleted = false;
                 Data.IsSubmited = false;
@@ -473,12 +500,12 @@ namespace swas.UI.Controllers
                         {
                             PsmId = Data.CurrentPslmId,
                             ActionId = old.ActionId,
-                            TimeStamp = DateTime.Now,
+                            TimeStamp = old.EditDeleteDate,
                             IsDeleted = false,
                             IsActive = true,
                             EditDeleteBy = old.EditDeleteBy,
                             AttPath = old.AttPath,
-                            EditDeleteDate = old.EditDeleteDate,
+                            EditDeleteDate = DateTime.Now,
                             UpdatedByUserId = old.UpdatedByUserId,
                             ActFileName = old.ActFileName,
                             Reamarks = old.Reamarks,
@@ -568,12 +595,12 @@ namespace swas.UI.Controllers
                         //psmove.DateTimeOfUpdate = DateTime.Now;
                         psmove.IsComplete = true;
                         await _projectsRepository.UpdateTxnAsync(psmove);
-                        return Json(PslmId);
+                        return Json(4);
                     }
                     catch (Exception ex)
                     {
-                        swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                        return Json(0);
+                       var error = swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                        return Json(error);
                     }
                 }
                 else
@@ -646,6 +673,73 @@ namespace swas.UI.Controllers
 
         }
 
+
+        //[HttpPost]
+        //public async Task<IActionResult> IsReadNotificationInbox(int ProjId)
+        //{
+        //    var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+        //    if (loginUser == null)
+        //    {
+        //        return Redirect("/Identity/Account/login");
+        //    }
+
+        //    try
+        //    {
+        //        var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
+        //        if (notify != null)
+        //        {
+        //            notify.ReadDateTime = DateTime.Now;
+        //            notify.IsRead = true;
+
+        //            var updateResult = await _projectsRepository.UpdateNotificationByProjID(notify);
+        //            if (updateResult)
+        //            {
+        //                return Json(ProjId);
+        //            }
+        //        }
+
+        //        return Json(0);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+        //        return Json(0);
+        //    }
+        //}
+
+
+        //[HttpPost]
+        //public async Task<IActionResult> IsReadNotification(int ProjId)
+        //{
+        //    var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+        //    if (loginUser == null)
+        //    {
+        //        return Redirect("/Identity/Account/login");
+        //    }
+
+        //    try
+        //    {
+        //        var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
+        //        if (notify != null)
+        //        {
+        //            //notify.ReadDateTime = DateTime.Now;
+        //            //notify.IsRead = true;
+
+        //            var updateResult = await _projectsRepository.UpdateNotification(notify);
+        //            if (updateResult)
+        //            {
+        //                return Json(ProjId);
+        //            }
+        //        }
+
+        //        return Json(0);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+        //        return Json(0);
+        //    }
+        //}
 
         [HttpPost]
         public async Task<IActionResult> IsProcessProjConfirm(int ProjId)
@@ -807,7 +901,7 @@ namespace swas.UI.Controllers
                             psmove.DateTimeOfUpdate = FwdDateForComment;
                             psmove.IsActive = true;
 
-                            psmove.EditDeleteDate = FwdDateForComment;
+                            psmove.EditDeleteDate = System.DateTime.Now;
                             psmove.EditDeleteBy = Logins.unitid;
                             psmove.TimeStamp = FwdDateForComment;
                             psmove.IsComplete = false;
@@ -850,14 +944,13 @@ namespace swas.UI.Controllers
         public async Task<IActionResult> FwdToProject([FromForm] tbl_ProjStakeHolderMov psmove, [FromForm] string currentpsmid)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
-
-
-            if(psmove.ToUnitId == 0)
+           
+            
+            if (psmove.ToUnitId == 0)
             {
                 return Json(-7);
             };
-            if(psmove.StatusActionsMappingId == 88)
+            if (psmove.StatusActionsMappingId == 88)
             {
                 var projname = _dbContext.Projects.Find(psmove.ProjId);
                 var Whitelist = _dbContext.trnWhiteListed
@@ -877,14 +970,14 @@ namespace swas.UI.Controllers
                     _dbContext.trnWhiteListed.UpdateRange(Whitelist);
                     _dbContext.SaveChanges();
                 }
-            
+
             }
             else if (psmove.StatusActionsMappingId == 78)
             {
                 var projname = _dbContext.Projects.Find(psmove.ProjId);
                 var Whitelist = _dbContext.trnWhiteListed
       .FirstOrDefault(x => x.ProjName == projname.ProjName);
- 
+
                 if (Whitelist != null)
                 {
                     Whitelist.Clearence = DateTime.Now;
@@ -903,7 +996,7 @@ namespace swas.UI.Controllers
             int psmid = Convert.ToInt32(currentpsmid);
             var latst = _dbContext.ProjStakeHolderMov.Where(r => r.PsmId == psmid && r.ToUnitId == Logins.unitid && r.IsComplete == false && r.IsComment == false).FirstOrDefault();
 
-            if(latst == null )
+            if (latst == null)
             {
                 return Json(-4);
             }
@@ -911,21 +1004,39 @@ namespace swas.UI.Controllers
 
             if (!ret)
             {
-                psmove.ProjId = psmove.ProjId;
+                var legacy_approval = _dbContext.LegacyHistory.Where(x => x.ProjectId == psmove.ProjId).OrderByDescending(x => x.HistoryId).FirstOrDefault();
+           psmove.ProjId = psmove.ProjId;
                 psmove.StatusActionsMappingId = psmove.StatusActionsMappingId;
                 // psmove.ActionId = psmove.ActionId;
                 psmove.Remarks = psmove.Remarks;
                 psmove.FromUnitId = Logins.unitid ?? 0;
                 psmove.ToUnitId = psmove.ToUnitId; //  
-                                                   //psmove.TostackholderDt = DateTime.Now;  
+                int oldpsmid = Convert.ToInt32(currentpsmid);
+               var  updateiscomplete = await _projectsRepository.GettXNByPsmIdAsync(oldpsmid);
+
+                updateiscomplete.IsComplete = true;
+                await _projectsRepository.UpdateTxnAsync(updateiscomplete);
+                //psmove.TostackholderDt = DateTime.Now;  
                 psmove.UserDetails = Helper.LoginDetails(Logins);
                 psmove.UpdatedByUserId = Logins.UserIntId; // change with userid
+
+                if(legacy_approval != null && legacy_approval.ActionType == ActionTypeEnum.Approved)
+                {
                 psmove.DateTimeOfUpdate = psmove.TimeStamp;
+                psmove.EditDeleteDate = DateTime.Now;
+                psmove.TimeStamp = psmove.TimeStamp;
+
+                }
+                else
+                {
+                    psmove.DateTimeOfUpdate = DateTime.Now;
+                    psmove.EditDeleteDate = DateTime.Now;
+                    psmove.TimeStamp = DateTime.Now;
+                }
                 psmove.IsActive = true;
 
-                psmove.EditDeleteDate = psmove.TimeStamp;
                 psmove.EditDeleteBy = Logins.UserIntId;
-                psmove.TimeStamp = psmove.TimeStamp;
+                
                 psmove.IsComplete = false;
                 psmove.IsComment = false;
                 psmove.IsPullBack = false;
@@ -939,14 +1050,14 @@ namespace swas.UI.Controllers
                 }
                 _dbContext.SaveChanges();
                 var remainders = await _dbContext.TrnRemainders
-               .Where(r => r.Projid == psmove.ProjId && r.ReadDate == null && r.ToUserDetails ==null && r.Tounitid == Logins.unitid)
+               .Where(r => r.Projid == psmove.ProjId && r.ReadDate == null && r.ToUserDetails == null && r.Tounitid == Logins.unitid)
                .ToListAsync();
 
-                if(remainders.Count > 0)
+                if (remainders.Count > 0)
                 {
 
-                  await  _Remainder.UpdateReaminderRead(psmove.ProjId,0);
-                   
+                    await _Remainder.UpdateReaminderRead(psmove.ProjId, 0);
+
                 }
 
 
@@ -964,23 +1075,23 @@ namespace swas.UI.Controllers
                 _dbContext.ProjStakeHolderMov.UpdateRange(projectMovements);
                 await _dbContext.SaveChangesAsync();
 
-               
+
 
                 var Ret = await _psmRepository.AddWithReturn(psmove);
                 var latestpsmid = _projStakeHolderMovRepository.GetLastRecProjectMov(psmove.ProjId);
 
-          
+
 
                 var errors = new List<int>(); // List to collect errors
 
-               
+
 
                 // Now process the attachments (multiple files with remarks)
                 if (psmove.Attachments != null && psmove.Attachments.Count > 0)
                 {
                     foreach (var attachment in psmove.Attachments)
                     {
-                        var saveResult = await SaveAttachmentAsync(attachment.File, attachment.Remarks, latestpsmid, Logins, psmove.TimeStamp);
+                        var saveResult = await SaveAttachmentAsync(attachment.File, attachment.Remarks, latestpsmid, Logins,psmove.TimeStamp);
 
                         // Check if saveResult is a JsonResult and extract the integer value
                         if (saveResult is JsonResult jsonResult)
@@ -1023,12 +1134,12 @@ namespace swas.UI.Controllers
 
                     return Json(Ret);
                 }
-                
+
                 else
                 {
                     return Json(nmum.NotSave);
                 }
-             
+
             }
 
             else
@@ -1038,7 +1149,7 @@ namespace swas.UI.Controllers
 
         }
 
-        public async Task<IActionResult> SaveAttachmentAsync(IFormFile attdata, string remarks, int psmid, Login Logins,DateTime? TimeStamp)
+        public async Task<IActionResult> SaveAttachmentAsync(IFormFile attdata, string remarks, int psmid, Login Logins, DateTime? TimeStamp)
         {
             var MaxFileSizeBytes = 10 * 1024 * 1024; // 10 MB
             if (attdata == null || attdata.Length == 0)
@@ -1089,6 +1200,7 @@ namespace swas.UI.Controllers
             _dbContext.SaveChanges();
             return Json(1); // success
         }
+
 
 
         public async Task<IActionResult> ProjectMovHistory(int ProjectId)
@@ -1162,38 +1274,21 @@ namespace swas.UI.Controllers
                 else
                 {
 
+					var remainders = await _dbContext.TrnRemainders
+			  .Where(r => r.Projid == ProjectId && r.ReadDate == null && r.ToUserDetails == null)
+			  .ToListAsync();
+
+					if (remainders.Count > 0)
+					{
+
+					await _Remainder.UpdateReaminderRead(ProjectId,1);
+
+					}
 
 
-                    var remainders = await _dbContext.TrnRemainders
-              .Where(r => r.Projid == ProjectId && r.ReadDate == null && r.ToUserDetails == null)
-              .ToListAsync();
+					await _dbContext.SaveChangesAsync();
 
-                    if (remainders.Count > 0)
-                    {
-
-                       await _Remainder.UpdateReaminderRead(ProjectId,1);
-
-                    }
-
-
-                    //var projectMovements = await _dbContext.ProjStakeHolderMov
-                    //    .Where(x => x.ProjId == ProjectId && x.IsRead == true && x.IsComment == true)
-                    //    .ToListAsync();
-
-
-                    //foreach (var item in projectMovements)
-                    //{
-                    //    item.IsRead = false;
-                    //}
-
-
-                    //_dbContext.ProjStakeHolderMov.UpdateRange(projectMovements);
-                    await _dbContext.SaveChangesAsync();
-
-
-
-
-                    int psmData = _psmRepository.GetLastRecProjectMov(ProjectId);
+					int psmData = _psmRepository.GetLastRecProjectMov(ProjectId);
                     if (psmData != 0)
                     {
                         if (psmData == PsmId)
@@ -1243,6 +1338,7 @@ namespace swas.UI.Controllers
                                 if (rankName != null)
                                 {
                                     movent.UserDetails = rankName.RankName + " " + userdet.Offr_Name.Trim() + " / " + userdet.UserName.Trim() + "";
+                                    //movent.UserDetails = Helper.LoginDetails(Logins) + "(" + (Logins.Unit) + ")";
                                 }
                                 //movent.UserDetails = Helper.UserInfoDetails(userdet);
                             }
@@ -1309,7 +1405,7 @@ namespace swas.UI.Controllers
             {
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
-                return Json(await _projComments.GetAllStkForComment(Convert.ToInt32(Logins.unitid), StatusId));
+                return Json(await _projComments.GetAllStkForComment(Convert.ToInt32(Logins?.unitid),StatusId));
             }
             catch (Exception ex)
             {
@@ -1354,17 +1450,27 @@ namespace swas.UI.Controllers
                             return Json(nmum.PdfSizeEx);
                         }
                     }
-
+                    var approval_legacy = _dbContext.LegacyHistory.Where(x =>x.ProjectId==ProjectId).OrderByDescending(x=>x.HistoryId).FirstOrDefault();
                     cmmets.Attpath = uniqueFileName;
                     cmmets.Comments = Comments;
                     cmmets.PsmId = psmid;
                     cmmets.ProjId = ProjectId;
                     cmmets.UpdatedByUserId = Logins.UserIntId;
+                    if(approval_legacy !=null && approval_legacy.ActionType ==ActionTypeEnum.Approved)
+                    {
                     cmmets.DateTimeOfUpdate = CommentDate;
+
+                    cmmets.EditDeleteDate = DateTime.Now; 
+                    }
+                    else
+                    {
+                        cmmets.DateTimeOfUpdate = DateTime.Now;
+
+                        cmmets.EditDeleteDate = DateTime.Now; 
+                    }
                     cmmets.IsDeleted = false;
                     cmmets.IsActive = true;
                     cmmets.EditDeleteBy = Logins.unitid;
-                    cmmets.EditDeleteDate = CommentDate;
                     cmmets.StkStatusId = StkStatusId;
                     cmmets.UserDetails = Helper.LoginDetails(Logins);
                     cmmets.StakeHolderId = Logins.unitid; ;
@@ -1418,13 +1524,16 @@ namespace swas.UI.Controllers
                         await _dbContext.SaveChangesAsync();
 
 
+
+
                         
-                       
-                            projectStkHolderMovementData.IsComplete = true;
-                            projectStkHolderMovementData.DateTimeOfUpdate = CommentDate; // To show the comment date on the dashboard btnGetsummay 
-                      
-                            //projectStkHolderMovementData.TimeStamp = DateTime.Now; // no need to update the TimeStamp on ProjectComment, this will affect the MovHistory of project update by Divyanshu on 12/03/2025
-                            var rets = await _projectsRepository.UpdateProjectStkMovementAsync(projectStkHolderMovementData);
+                        projectStkHolderMovementData.DateTimeOfUpdate = CommentDate; // To show the comment date on the dashboard btnGetsummay 
+
+                        //projectStkHolderMovementData.TimeStamp = DateTime.Now; // no need to update the TimeStamp on ProjectComment, this will affect the MovHistory of project update by Divyanshu on 12/03/2025
+                        
+
+                        //projectStkHolderMovementData.TimeStamp = DateTime.Now; // no need to update the TimeStamp on ProjectComment, this will affect the MovHistory of project update by Divyanshu on 12/03/2025
+                        var rets = await _projectsRepository.UpdateProjectStkMovementAsync(projectStkHolderMovementData);
 
                         if (rets != null)
                         {
@@ -1473,9 +1582,11 @@ namespace swas.UI.Controllers
         {
             try
             {
-                Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
+                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+
                 StkComment stkComment = new StkComment();
                 stkComment.ProjId = projId;
+                stkComment.PsmId = psmId;
                 //stkComment.StakeHolderId = Logins.unitid;
                 var ret = await _stkCommentRepository.GetAllCommentBypsmId_UnitId(stkComment);
 
@@ -1497,7 +1608,7 @@ namespace swas.UI.Controllers
 
 
         #region Project History
-        [HttpGet]   
+        [HttpGet]
 
         public async Task<IActionResult> ProjHistory(string userid, int? dataProjId, int? dtaProjID, string? AttPath, int? psmid, string? Projpin, string? EncyID, EncryModel? encryModel, string Type)
         {
@@ -1505,7 +1616,7 @@ namespace swas.UI.Controllers
             try
             {
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
+             
                 ViewBag.logins = Logins;
                 string actufilename = "";
                 string AttDocuDescs = "";
@@ -1516,7 +1627,7 @@ namespace swas.UI.Controllers
                     ViewBag.EncyID = EncyID;
                     ViewBag.Type = Type;
                 }
-
+               
                 if (userid == null && dataProjId == null && dtaProjID == null && AttPath == null && psmid == null && EncyID == null)
                 {
                     EncyID = ViewBag.EncyID;
@@ -1639,7 +1750,7 @@ namespace swas.UI.Controllers
                     prohis[0].Atthistory = atthis;
                     prohis[0].ProjectDetl.Add(projects);
 
-
+                    
                     return View(prohis);
                 }
 
@@ -1827,8 +1938,7 @@ namespace swas.UI.Controllers
 
         #endregion
 
-        
-        #region Inbox & Comment Read/Unread
+
         [HttpPost]
         public async Task<IActionResult> IsUnReadInbox(int PsmId)
         {
@@ -1868,10 +1978,7 @@ namespace swas.UI.Controllers
             }
 
         }
-        #endregion
 
-
-        #region Comment Read/Unread for all comments in a project
 
         [HttpPost]
         public async Task<IActionResult> IsUnReadComment(int Projid, int PsmId)
@@ -1909,10 +2016,8 @@ namespace swas.UI.Controllers
             }
         }
 
-        #endregion
 
 
-        #region GetProjectCommentCount
         [HttpGet]
         public async Task<JsonResult> GetProjectCommentCount()
         {
@@ -1931,10 +2036,6 @@ namespace swas.UI.Controllers
             }
         }
 
-        #endregion
-
-
-        #region GetProjectInboxCount
         [HttpGet]
         public async Task<JsonResult> GetProjectInboxCount()
         {
@@ -1953,20 +2054,15 @@ namespace swas.UI.Controllers
             }
         }
 
-        #endregion
 
-
-        #region ProjectMovement
         [HttpGet]
+
         public async Task<IActionResult> ProjectMovement(string? ProjName)
         {
             //var ProjectMovementDetail  = await _projStakeHolderMovRepository.ProjectMovement(ProjId);
             return View();
 
         }
-        #endregion
-
-        #region GetProjectMov
         public async Task<IActionResult> GetProjectMov(int Id)
         {
 
@@ -1980,7 +2076,6 @@ namespace swas.UI.Controllers
                 return Json(-1);
             }
         }
-        #endregion
 
         public async Task<IActionResult> ProjectMovementUpdate(tbl_ProjStakeHolderMov psmove)
         {
@@ -2124,7 +2219,73 @@ namespace swas.UI.Controllers
             }
         }
 
-       
+        //[HttpPost]
+        //public async Task<IActionResult> IsUnReadNotification(int ProjId)
+        //{
+        //    var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+        //    if (loginUser == null)
+        //    {
+        //        return Redirect("/Identity/Account/login");
+        //    }
+
+        //    try
+        //    {
+        //        var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
+        //        if (notify != null)
+        //        {
+        //            notify.ReadDateTime = DateTime.Now;
+        //            notify.IsRead = false;
+
+        //            var updateResult = await _projectsRepository.UpdateUnReadNotification(notify);
+        //            if (updateResult)
+        //            {
+        //                return Json(ProjId);
+        //            }
+        //        }
+
+        //        return Json(0);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+        //        return Json(0);
+        //    }
+        //}
+
+
+
+        //[HttpPost]
+        //public async Task<IActionResult> IsCommentedUnreadNotification (int ProjId)
+        //{
+        //    var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+        //    if (loginUser == null)
+        //    {
+        //        return Redirect("/Identity/Account/login");
+        //    }
+
+        //    try
+        //    {
+        //        var notify = await _projectsRepository.GetNotificationByProjId(ProjId);
+        //        if (notify != null)
+        //        {
+        //            notify.ReadDateTime = DateTime.Now;
+        //            notify.IsRead = false;
+
+        //            var updateResult = await _projectsRepository.UpdateCommentedUnReadNotification(notify);
+        //            if (updateResult)
+        //            {
+        //                return Json(ProjId);
+        //            }
+        //        }
+
+        //        return Json(0);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+        //        return Json(0);
+        //    }
+        //}
 
         [HttpPost]
         public async Task<IActionResult> IsReadComment(int ProjId, int PsmId)
@@ -2174,6 +2335,12 @@ namespace swas.UI.Controllers
             return Json(new { success = true, message = "Calendar mode saved in session." });
         }
 
+
+
+
+
+
+
         [HttpPost("Projects/LogDateApprovalWithRemarks")]
         public async Task<IActionResult> LogDateApproval(int ProjId, bool UserReq, int actiontype, string remarks)
         {
@@ -2200,6 +2367,7 @@ namespace swas.UI.Controllers
                     UserRequest = UserReq,
                     DDGIT_approval = false,
                     DDGIT_Approval_dat = null,
+                   // User = user.Rank + " " + user.Offr_Name,
                     User = Helper1.LoginDetails(user),
                     IsRead = false,
                     RequestType = 1
@@ -2277,6 +2445,10 @@ namespace swas.UI.Controllers
             }
         }
 
+
+
+
+
         [HttpGet]
         public async Task<IActionResult> GetRevettedProjects([FromQuery] string searchQuery)
         {
@@ -2302,6 +2474,10 @@ namespace swas.UI.Controllers
             var result = await query.ToListAsync();
             return Ok(result);
         }
+
+
+
+
 
         [HttpGet]
         public async Task<IActionResult> GetProjectDetails([FromQuery] int projId)
@@ -2461,7 +2637,6 @@ namespace swas.UI.Controllers
             }
         }
 
-
         public async Task<IActionResult> FindProjectForComment(string searchQuery)
         {
             try
@@ -2479,22 +2654,54 @@ namespace swas.UI.Controllers
 
             }
         }
+       
         [HttpGet]
         public IActionResult GetDate()
         {
             // IST in YYYY-MM-DD
             //var ist = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
-            var nowUtc = DateTime.UtcNow;  // Get UTC time to avoid timezone issues
-            var nowIst = nowUtc.AddHours(5.5);  // Convert UTC to IST (Indian Standard Time) by adding 5.5 hours
-
-            var dateYmd = nowIst.ToString("yyyy-MM-dd");  // Date in "yyyy-MM-dd" format
-            var dateTime = nowIst.ToString("yyyy-MM-ddTHH:mm");  // Date and time in ISO format
-            var sec = nowIst.ToString("ss");
-            var analy = nowIst.ToString("dd/MM/yyyy HH:mm:ss");
-            var second = analy.Substring(17, 2); ;
+            var nowIst = DateTime.Now;
             
-            var dateTimeLocal = dateTime + ":" + second;
-            return Json(new { dateYmd, dateTimeLocal, analy, nowUtc });
+            var dateYmd = nowIst.ToString("yyyy-MM-dd");
+            var dateTimeLocal = nowIst.ToString("yyyy-MM-ddTHH:mm:ss");
+            var analy = DateTime.Now.TimeOfDay.ToString();
+            return Json(new { dateYmd, dateTimeLocal, analy});
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetStkCommentBystkId(int PsmId)
+        {
+            var psmove = await _stkCommentRepository.GetCommentByPsmid(PsmId);
+            return Json(psmove);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateStkcomments(int stkcommentid, string comments, int ddlstatus, DateTime? CommentDateFwd)
+        {
+            if (stkcommentid <= 0)
+                return BadRequest("Invalid Comment ID");
+
+            // Get the existing comment from DB
+            var commentEntity = await _dbContext.StkComment.FirstOrDefaultAsync(c => c.StkCommentId == stkcommentid);
+
+            if (commentEntity == null)
+                return NotFound("Comment not found");
+
+            // Update fields
+            commentEntity.Comments = comments;
+            commentEntity.StkStatusId = ddlstatus;
+            if (CommentDateFwd.HasValue)
+                commentEntity.DateTimeOfUpdate = CommentDateFwd.Value;
+
+            // Save changes
+            await _dbContext.SaveChangesAsync();
+
+            // Optionally return updated comment as JSON
+            return Json(1);
+        }
+        public IActionResult WhiteListProject()
+        {
+            return View();
         }
 
     }

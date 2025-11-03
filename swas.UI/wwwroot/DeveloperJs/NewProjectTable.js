@@ -2,6 +2,7 @@
 
 var ip = '@ip';
 $(document).ready(function () {
+   
     var table = $('#NewProjDetails').DataTable({
         lengthChange: false,
         dom: 'lBfrtip',
@@ -123,7 +124,7 @@ $(document).ready(function () {
 
 var ip = '@ip';
 $(document).ready(function () {
-   
+  
     $('.dataTables_filter input').css('height', '1px');
 
     //var buttonContainer = table.buttons().container();

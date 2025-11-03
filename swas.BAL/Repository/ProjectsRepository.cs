@@ -55,13 +55,66 @@ namespace swas.BAL.Repository
         }
         public async Task<DTOProjectWiseStatus> GetProjectWiseStatus(int? Projid)
         {
-            int projid = Projid ?? 0;  // Set projid to 0 if Projid is null
+            #region GetProjectWiseStatusWithLinq
 
-            DTOProjectWiseStatus result = new DTOProjectWiseStatus
-            {
-                StatusProjectlst = new List<StatusProject>(),
-                MovProjectlst = new List<MovProject>()
-            };
+            //DTOProjectWiseStatus lst = new DTOProjectWiseStatus();
+            //var status = await (from stg in _dbContext.mStages
+            //                    join sts in _dbContext.mStatus on stg.StagesId equals sts.StageId
+            //                    where sts.IsDashboard == true
+            //                    && sts.StatusId != 2 && sts.StatusId != 3 && sts.StatusId != 22 && sts.StatusId != 31
+            //                    && sts.StatusId != 37
+            //                    orderby sts.StageId, sts.Statseq
+            //                    select new StatusProject
+            //                    {
+            //                        StatusId = sts.StatusId,
+            //                        StageName = stg.Stages,
+            //                        Status = sts.Status
+            //                    }
+            //                   ).ToListAsync();
+
+            //lst.StatusProjectlst = status;
+
+            //var movent = await (from proj in _dbContext.Projects
+            //                    join mov in _dbContext.ProjStakeHolderMov on proj.ProjId equals mov.ProjId
+            //                    where proj.IsSubmited == true
+            //                    orderby proj.ProjId descending
+            //                    select new MovProject
+            //                    {
+
+            //                        ProjId = proj.ProjId,
+            //                        ProjName = proj.ProjName,
+            //                        TimeStamp = mov.TimeStamp,
+            //                        StatusId = (mov.StatusActionsMappingId == 21) ? 1 ://New Projects
+            //                                                                           // (mov.StatusActionsMappingId == 9) ? 2 ://Obsn
+            //                                                                           // (mov.StatusActionsMappingId == 113) ? 3 ://Obsn Rectified
+            //                    (mov.StatusActionsMappingId == 48) ? 20 ://Auto Committee
+            //                    (mov.StatusActionsMappingId == 53) ? 21 ://IPA Stage
+            //                                                             //(mov.StatusActionsMappingId == 60) ? 22 ://Closed
+            //                    (mov.StatusActionsMappingId == 63) ? 24 ://AHCC (Arch Vetting)
+            //                    (mov.StatusActionsMappingId == 68) ? 25 ://ACG (Lab Test)
+            //                    (mov.StatusActionsMappingId == 73) ? 26 ://AHCC (IAM Integ)
+            //                    (mov.StatusActionsMappingId == 78) ? 27 ://ACG (Remote Test)
+            //                    (mov.StatusActionsMappingId == 83) ? 28 ://MI-11 Clearance
+            //                    (mov.StatusActionsMappingId == 88) ? 29 ://Whitelisting Completed
+            //                    (mov.StatusActionsMappingId == 26 && mov.IsComplete == true) ? 6 ://ASDC Vetting
+            //                    (mov.StatusActionsMappingId == 31 && mov.IsComplete == true) ? 7 :// ACG Vetting
+            //                    (mov.StatusActionsMappingId == 37 && mov.IsComplete == true) ? 11 : 0//AHCC Vetting
+
+            //                        //  StatusId = mov.StatusActionsMappingId==1? "Yes" : "No";
+
+            //                    }).ToListAsync();
+            //lst.MovProjectlst = movent;
+
+            //return lst;
+
+            #endregion
+
+            #region GetProjectWiseStatusWithProc
+            int projid = Projid ?? 0;
+
+            DTOProjectWiseStatus result = new DTOProjectWiseStatus();
+            result.StatusProjectlst = new List<StatusProject>();
+            result.MovProjectlst = new List<MovProject>();
 
             try
             {
@@ -114,9 +167,8 @@ namespace swas.BAL.Repository
             }
 
             return result;
+            #endregion
         }
-
-
         public async Task<List<DTOProjectsFwd>> GetDashboardApproved(int StatuId, int statusActionsMappingId)
         {
             #region GetDashBoardApprovedWithLinq
@@ -277,6 +329,7 @@ namespace swas.BAL.Repository
 
 
                 var lst = new List<DTOProjectsFwd>();
+                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
                 using (var conn = _dbContext.Database.GetDbConnection())
                 {
@@ -307,8 +360,25 @@ namespace swas.BAL.Repository
                                     ProjId = reader.GetInt32(reader.GetOrdinal("ProjId")),
                                     ProjName = reader.IsDBNull(reader.GetOrdinal("ProjName")) ? null : reader.GetString(reader.GetOrdinal("ProjName")),
                                     StakeHolder = reader.IsDBNull(reader.GetOrdinal("StakeHolder")) ? null : reader.GetString(reader.GetOrdinal("StakeHolder")),
+
                                     TimeStamp = reader.IsDBNull(reader.GetOrdinal("TimeStamp")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("TimeStamp")),
+                                    StatusactionMappingid = reader.IsDBNull(reader.GetOrdinal("StatusActionsMappingId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("StatusActionsMappingId"))
+
                                 };
+                                if (item.StatusactionMappingid == 53)
+                                {
+                                    item.StakeHolderId = reader.GetInt32(reader.GetOrdinal("StakeHolderId"));
+                                    if (Logins.unitid == 1 || Logins.unitid == 2 || Logins.unitid == 3 || Logins.unitid == 4 || Logins.unitid == 5 || Logins.unitid == item.StakeHolderId)
+                                    {
+                                        item.ApprovedDt = reader.IsDBNull(reader.GetOrdinal("approveddt")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("approveddt"));
+                                        item.ApprovedRemarks = reader.IsDBNull(reader.GetOrdinal("ApprovedRemarks")) ? null : reader.GetString(reader.GetOrdinal("ApprovedRemarks"));
+                                    }
+
+                                }
+                                else
+                                {
+
+                                }
 
                                 item.EncyID = _dataProtector.Protect(item.ProjId.ToString());
 
@@ -414,7 +484,8 @@ namespace swas.BAL.Repository
                                            IsRead = b.IsRead,
                                            IsComplete = b.IsComplete,
                                            StkStatusId = Convert.ToInt32(StkStatusId),
-                                           DateTimeOfUpdate = b.DateTimeOfUpdate
+                                           DateTimeOfUpdate = b.DateTimeOfUpdate,
+                                           InitiatedDate = a.InitiatedDate
                                            //DateTimeOfUpdate = _dbContext.ProjStakeHolderMov.Where(i => i.ProjId == a.ProjId).Select(x => x.DateTimeOfUpdate).Max()
                                        }).ToListAsync();
 
@@ -487,7 +558,8 @@ namespace swas.BAL.Repository
                                                IsRead = b.IsRead,
                                                IsComplete = b.IsComplete,
                                                StkStatusId = Convert.ToInt32(StkStatusId),
-                                               DateTimeOfUpdate = b.DateTimeOfUpdate
+                                               DateTimeOfUpdate = b.DateTimeOfUpdate,
+                                                InitiatedDate = a.InitiatedDate
                                                //DateTimeOfUpdate = _dbContext.ProjStakeHolderMov.Where(i => i.ProjId == a.ProjId).Select(x => x.DateTimeOfUpdate).Max()
                                            }).ToListAsync();
 
@@ -552,7 +624,8 @@ namespace swas.BAL.Repository
                                                IsRead = b.IsRead,
                                                IsComplete = b.IsComplete,
                                                StkStatusId = Convert.ToInt32(StkStatusId),
-                                               DateTimeOfUpdate = b.DateTimeOfUpdate
+                                               DateTimeOfUpdate = b.DateTimeOfUpdate,
+                                               InitiatedDate = a.InitiatedDate
                                                //DateTimeOfUpdate = _dbContext.ProjStakeHolderMov.Where(i => i.ProjId == a.ProjId).Select(x => x.DateTimeOfUpdate).Max()
                                            }).ToListAsync();
 
@@ -678,7 +751,7 @@ namespace swas.BAL.Repository
                 psmove.DateTimeOfUpdate = project.InitiatedDate;
                 psmove.IsActive = true;
 
-                psmove.EditDeleteDate = project.InitiatedDate;
+                psmove.EditDeleteDate = DateTime.Now;
                 psmove.EditDeleteBy = Logins.unitid;
                 psmove.TimeStamp = project.InitiatedDate;
                 psmove.IsComplete = false;
@@ -694,7 +767,7 @@ namespace swas.BAL.Repository
                     await _dbContext.SaveChangesAsync();
                 }
 
-                cmt.EditDeleteDate = project.InitiatedDate;
+                cmt.EditDeleteDate = DateTime.Now;
                 cmt.IsDeleted = false;
                 cmt.IsActive = true;
                 cmt.DateTimeOfUpdate = project.InitiatedDate;
@@ -741,7 +814,7 @@ namespace swas.BAL.Repository
                     atthis.ActFileName = project.ActFileName;
                     atthis.PsmId = psmove.PsmId;
                     atthis.UpdatedByUserId = Logins.unitid;
-                    atthis.DateTimeOfUpdate = project.InitiatedDate;
+                    atthis.DateTimeOfUpdate = DateTime.Now;
                     atthis.IsDeleted = false;
                     atthis.IsActive = true;
                     atthis.EditDeleteBy = Logins.unitid;
@@ -1458,6 +1531,7 @@ namespace swas.BAL.Repository
                                 IsHosted = Convert.ToInt32(reader["IsHosted"] != DBNull.Value ? Convert.ToInt32(reader["IsHosted"]) : 0),
                                 HasRemainder = reader["HasRemainder"] != DBNull.Value && Convert.ToBoolean(reader["HasRemainder"]),
                                 IsCc = (bool)reader["IsCc"],
+                                HideReminderIcon = reader["PullbackAction"] != DBNull.Value && Convert.ToBoolean(reader["PullbackAction"]),
 
                                 CCUnitName = reader["CCUnitName"]?.ToString()
 
@@ -1863,7 +1937,7 @@ namespace swas.BAL.Repository
             {
                 // tbl_ProjStakeHolderMov psmove = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == project.CurrentPslmId);
 
-                if (project.Date_type == 1 && project.IsSubmited == true)
+                if (project.Date_type == 1 && project.IsSubmited == true && Remarks!="1")
                 {
 
                     var existpsmid = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == project.CurrentPslmId);
@@ -1951,6 +2025,7 @@ namespace swas.BAL.Repository
 
 
                 _dbContext.Entry(project).State = EntityState.Modified;
+
                 await _dbContext.SaveChangesAsync();
                 return true;
             }

@@ -174,103 +174,116 @@ namespace swas.BAL.Repository
             throw new NotImplementedException();
         }
 
-        public async Task<int> UpdateReaminderRead(int? projectId,int pullback)
+        public async Task<int> UpdateReaminderRead(int? projectId, int pullback)
         {
-
-
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            var latestpsmid = _projStakeHolderMovRepository.GetLastRecProjectMov(projectId);
             try
             {
-                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-                var latestpsmid = _projStakeHolderMovRepository.GetLastRecProjectMov(projectId);
 
 
-
-                if (pullback == 1)
+                if(pullback ==1)
                 {
-                    var latestpsmiddata = _dbContext.ProjStakeHolderMov.Find(latestpsmid);
-                    latestpsmiddata.IsRead = true;
+					var latestpsmiddata = _dbContext.ProjStakeHolderMov.Find(latestpsmid);
+					latestpsmiddata.IsRead = true;
 
-                    _dbContext.ProjStakeHolderMov.Update(latestpsmiddata);
+					_dbContext.ProjStakeHolderMov.Update(latestpsmiddata);
 
-                    var remainders = await _dbContext.TrnRemainders
-                        .Where(r => r.Projid == projectId && r.ReadDate == null)
-                        .ToListAsync();
-
-
+					var remainders = await _dbContext.TrnRemainders
+						.Where(r => r.Projid == projectId && r.ReadDate == null)
+						.ToListAsync();
 
 
-                    string domain = Logins.Unit +
-                        " " + Logins.UserName.Trim() +
-                       "(" + Logins.Rank.Trim() +
-                       " " + Logins.Offr_Name.Trim() + ")";
 
 
-                    if (remainders == null || !remainders.Any())
-                    {
-                        return 0; // No records found
-                    }
+					string domain = Logins.Unit +
+						" " + Logins.UserName.Trim() +
+					   "(" + Logins.Rank.Trim() +
+					   " " + Logins.Offr_Name.Trim() + ")";
 
-                    foreach (var remainder in remainders)
-                    {
-                        remainder.ReadDate = DateTime.Now.ToString();  // Assuming Readdate is DateTime
-                        remainder.IsRead = true;
-                        remainder.IsRemainder = false;
-                        remainder.ToUserDetails = "Pulled Back Before Read";
-                        remainder.Remarks = "PullBack By: " + domain; // Adding remarks for pullback
-                    }
 
-                    _dbContext.TrnRemainders.UpdateRange(remainders);
-                    return await _dbContext.SaveChangesAsync();
+					if (remainders == null || !remainders.Any())
+					{
+						return 0; // No records found
+					}
 
-                }
+					foreach (var remainder in remainders)
+					{
+						remainder.ReadDate = DateTime.Now.ToString();  // Assuming Readdate is DateTime
+						remainder.IsRead = true;
+						remainder.IsRemainder = false;
+						remainder.ToUserDetails = "PullBack Before Read";
+                        remainder.Remarks = "PullBack By : " + domain;
+					}
+
+					_dbContext.TrnRemainders.UpdateRange(remainders);
+					return await _dbContext.SaveChangesAsync();
+				}
                 else
                 {
+				
 
-                   
-
-                    var remainders = await _dbContext.TrnRemainders
-                        .Where(r => r.Projid == projectId && r.ReadDate == null && r.Tounitid == Logins.unitid)
-                        .ToListAsync();
-
+					var remainders = await _dbContext.TrnRemainders
+						.Where(r => r.Projid == projectId && r.ReadDate == null && r.Tounitid == Logins.unitid)
+						.ToListAsync();
 
 
 
-                    string domain = Logins.Unit +
-                        " " + Logins.UserName.Trim() +
-                       "(" + Logins.Rank.Trim() +
-                       " " + Logins.Offr_Name.Trim() + ")";
+
+					string domain = Logins.Unit +
+						" " + Logins.UserName.Trim() +
+					   "(" + Logins.Rank.Trim() +
+					   " " + Logins.Offr_Name.Trim() + ")";
 
 
-                    if (remainders == null || !remainders.Any())
-                    {
-                        return 0; // No records found
-                    }
-
+					if (remainders == null || !remainders.Any())
+					{
+						return 0; // No records found
+					}
                     var latestpsmiddata = _dbContext.ProjStakeHolderMov.Find(latestpsmid);
                     latestpsmiddata.IsRead = true;
 
                     _dbContext.ProjStakeHolderMov.Update(latestpsmiddata);
+
                     foreach (var remainder in remainders)
-                    {
-                        remainder.ReadDate = DateTime.Now.ToString();  // Assuming Readdate is DateTime
-                        remainder.IsRead = true;
-                        remainder.IsRemainder = false;
-                        remainder.ToUserDetails = domain;
-                    }
+					{
+						remainder.ReadDate = DateTime.Now.ToString();  // Assuming Readdate is DateTime
+						remainder.IsRead = true;
+						remainder.IsRemainder = false;
+						remainder.ToUserDetails = domain;
+					}
 
-                    _dbContext.TrnRemainders.UpdateRange(remainders);
-                    return await _dbContext.SaveChangesAsync();
-                }
-
-
+					_dbContext.TrnRemainders.UpdateRange(remainders);
+					return await _dbContext.SaveChangesAsync();
+				}
             }catch(Exception ex)
             {
                 throw;
             }
 
-
-
+           
         }
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

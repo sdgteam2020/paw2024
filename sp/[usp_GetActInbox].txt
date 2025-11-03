@@ -1,0 +1,236 @@
+ALTER PROCEDURE [dbo].[usp_GetActInbox]
+@UnitId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+  SELECT 
+    a.ProjId,
+    b.PsmId AS PsmIds,
+    a.ProjName,
+    a.StakeHolderId,
+    stackcs.UnitName AS StakeHolder,
+    s.Status,
+    s.StatusId,
+    b.FromUnitId,
+    b.ToUnitId,
+    toUnit.UnitName AS ToUnitName,
+    act.Actions AS Action,
+    0 AS TotalDays,
+    map.ActionsId AS ActionId,
+    a.Sponsor,
+    ISNULL(fromUnit.UnitName, '') AS UnitName,
+    fromUnit.UnitName AS FromUnitUserDetail,
+    fromUnit.UnitName + ' ( ' + ISNULL(b.UserDetails, '') + ')' AS FromUnitName,
+    stg.Stages AS Stage,
+    stg.StagesId AS StageId,
+    b.IsRead,
+    a.IsProcess,
+    b.TimeStamp,
+    a.Date_type,
+
+    -- ✅ Admin approval
+    CASE WHEN adminApproval.DDGIT_approval = 1 THEN 1 ELSE 0 END AS AdminApprovalStatus,
+
+    -- ✅ User Request
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM DateApproval AS da
+            WHERE da.ProjId = a.ProjId
+              AND (da.DDGIT_approval = 0 OR da.DDGIT_approval IS NULL)
+        ) THEN 1 ELSE 0 
+    END AS UserRequest,
+
+    -- ✅ Latest Action
+    (SELECT TOP 1 lh.ActionType
+     FROM LegacyHistory AS lh
+     WHERE lh.ProjectId = a.ProjId
+     ORDER BY lh.ActionDate DESC) AS LatestActionType,
+
+    -- ✅ Request Unit
+    (SELECT TOP 1 da.UnitId
+     FROM DateApproval AS da
+     WHERE da.ProjId = a.ProjId
+       AND (da.DDGIT_approval = 0 OR da.DDGIT_approval IS NULL)
+     ORDER BY da.Request_Date DESC) AS RequestUnitId,
+
+    -- ✅ Is Hosted
+    (SELECT DISTINCT ProjId
+     FROM ProjStakeHolderMov
+     WHERE ProjId = a.ProjId AND StatusActionsMappingId = 103) AS IsHosted,
+
+    b.IsCc AS IssentCC,
+    '0' AS IsCc,
+
+    -- ✅ CC Unit Names
+    (SELECT STRING_AGG(cctounit.unitname, ', ')
+     FROM ProjStakeHolderCcMov AS ccmov
+     INNER JOIN tbl_mUnitBranch AS cctounit ON ccmov.ToCcUnitId = cctounit.unitid
+     WHERE PsmId = b.PsmId) AS CCUnitName,
+
+    -- ✅ Latest Remarks (Top 5 with UnitName)
+   (
+    SELECT STRING_AGG(+'('+ u.unitname+')' + ': ' + r.Remarks, CHAR(10))
+    FROM (
+        SELECT TOP 1 Remarks, FromUnitId
+        FROM trnRemainder
+        WHERE ProjId = a.ProjId AND IsRemainder = 1 and Tounitid = @UnitId
+        ORDER BY SendDate DESC
+    ) AS r
+    JOIN tbl_mUnitBranch u ON r.FromUnitId = u.unitid
+) AS LatestRemarks,
+
+    -- ✅ Has Remainder by PsmId
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM trnRemainder 
+             WHERE Psmid = b.PsmId 
+        ) THEN 1 ELSE 0 
+    END AS HasRemainder1,
+
+    -- ✅ Count of unread remainders
+    (
+        SELECT COUNT(*) 
+        FROM trnRemainder 
+        WHERE ProjId = a.ProjId AND IsRead = 0  and Tounitid = @UnitId
+    ) AS RemainderCount
+
+FROM Projects AS a
+INNER JOIN ProjStakeHolderMov AS b ON a.ProjId = b.ProjId
+LEFT OUTER JOIN tbl_mUnitBranch AS stackcs ON a.StakeHolderId = stackcs.unitid
+LEFT OUTER JOIN DateApproval AS adminApproval ON a.ProjId = adminApproval.ProjId AND adminApproval.DDGIT_approval = 1
+INNER JOIN TrnStatusActionsMapping AS map ON b.StatusActionsMappingId = map.StatusActionsMappingId
+INNER JOIN mStatus AS s ON map.StatusId = s.StatusId
+INNER JOIN mActions AS act ON map.ActionsId = act.ActionsId
+LEFT OUTER JOIN tbl_mUnitBranch AS toUnit ON b.ToUnitId = toUnit.unitid
+LEFT OUTER JOIN tbl_mUnitBranch AS fromUnit ON b.FromUnitId = fromUnit.unitid
+LEFT OUTER JOIN mStages AS stg ON s.StageId = stg.StagesId
+
+WHERE a.IsActive = 1 AND a.IsDeleted = 0
+  AND b.IsActive = 1 AND b.IsDeleted = 0
+  AND a.IsSubmited = 1
+  AND b.IsComplete = 0
+  AND b.ToUnitId = @UnitId
+  AND b.IsComment = 0
+
+UNION ALL
+
+
+SELECT 
+    a.ProjId,
+    b.PsmId AS PsmIds,
+    a.ProjName,
+    a.StakeHolderId,
+    stackcs.UnitName AS StakeHolder,
+    s.Status,
+    s.StatusId,
+    b.FromUnitId,
+    b.ToUnitId,
+    toUnit.UnitName AS ToUnitName,
+    act.Actions AS Action,
+    0 AS TotalDays,
+    map.ActionsId AS ActionId,
+    a.Sponsor,
+    ISNULL(fromUnit.UnitName, '') AS UnitName,
+    fromUnit.UnitName AS FromUnitUserDetail,
+    fromUnit.UnitName + ' ( ' + ISNULL(b.UserDetails, '') + ')' AS FromUnitName,
+    stg.Stages AS Stage,
+    stg.StagesId AS StageId,
+    CC.IsRead,
+    a.IsProcess,
+    b.TimeStamp,
+    a.Date_type,
+
+    -- ✅ Admin approval
+    CASE WHEN adminApproval.DDGIT_approval = 1 THEN 1 ELSE 0 END AS AdminApprovalStatus,
+
+    -- ✅ User Request
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM DateApproval AS da
+            WHERE da.ProjId = a.ProjId
+              AND (da.DDGIT_approval = 0 OR da.DDGIT_approval IS NULL)
+        ) THEN 1 ELSE 0 
+    END AS UserRequest,
+
+    -- ✅ Latest Action
+    (SELECT TOP 1 lh.ActionType
+     FROM LegacyHistory AS lh
+     WHERE lh.ProjectId = a.ProjId
+     ORDER BY lh.ActionDate DESC) AS LatestActionType,
+
+    -- ✅ Request Unit
+    (SELECT TOP 1 da.UnitId
+     FROM DateApproval AS da
+     WHERE da.ProjId = a.ProjId
+       AND (da.DDGIT_approval = 0 OR da.DDGIT_approval IS NULL)
+     ORDER BY da.Request_Date DESC) AS RequestUnitId,
+
+    -- ✅ Is Hosted
+    (SELECT DISTINCT ProjId
+     FROM ProjStakeHolderMov
+     WHERE ProjId = a.ProjId AND StatusActionsMappingId = 103) AS IsHosted,
+
+    '0' AS IssentCC,
+    b.IsCc,
+
+    -- ✅ CC Unit Names
+    (SELECT STRING_AGG(cctounit.unitname, ', ')
+     FROM ProjStakeHolderCcMov AS ccmov
+     INNER JOIN tbl_mUnitBranch AS cctounit ON ccmov.ToCcUnitId = cctounit.unitid
+     WHERE PsmId = b.PsmId) AS CCUnitName,
+
+    -- ✅ Latest Remarks (Top 5 with UnitName)
+    (
+   SELECT STRING_AGG(+'('+ u.unitname+')' + ': ' + r.Remarks, CHAR(10))
+    FROM (
+        SELECT TOP 1 Remarks, FromUnitId
+        FROM trnRemainder
+        WHERE ProjId = a.ProjId AND IsRemainder = 1 and Tounitid = @UnitId
+        ORDER BY SendDate DESC
+    ) AS r
+    JOIN tbl_mUnitBranch u ON r.FromUnitId = u.unitid
+) AS LatestRemarks,
+
+    -- ✅ Has Remainder by PsmId
+    CASE 
+        WHEN EXISTS (
+            SELECT 1 
+            FROM trnRemainder 
+            WHERE Psmid = b.PsmId
+        ) THEN 1 ELSE 0 
+    END AS HasRemainder1,
+
+    -- ✅ Count of unread remainders
+    (
+        SELECT COUNT(*) 
+        FROM trnRemainder 
+        WHERE ProjId = a.ProjId AND IsRead = 0 and Tounitid = @UnitId
+    ) AS RemainderCount
+
+FROM Projects AS a
+INNER JOIN ProjStakeHolderMov AS b ON a.ProjId = b.ProjId
+INNER JOIN ProjStakeHolderCcMov AS CC ON CC.PsmId = b.PsmId
+LEFT OUTER JOIN tbl_mUnitBranch AS stackcs ON a.StakeHolderId = stackcs.unitid
+LEFT OUTER JOIN DateApproval AS adminApproval ON a.ProjId = adminApproval.ProjId AND adminApproval.DDGIT_approval = 1
+INNER JOIN TrnStatusActionsMapping AS map ON b.StatusActionsMappingId = map.StatusActionsMappingId
+INNER JOIN mStatus AS s ON map.StatusId = s.StatusId
+INNER JOIN mActions AS act ON map.ActionsId = act.ActionsId
+LEFT OUTER JOIN tbl_mUnitBranch AS toUnit ON CC.ToCcUnitId = toUnit.unitid
+LEFT OUTER JOIN tbl_mUnitBranch AS fromUnit ON b.FromUnitId = fromUnit.unitid
+LEFT OUTER JOIN mStages AS stg ON s.StageId = stg.StagesId
+
+WHERE a.IsActive = 1 AND a.IsDeleted = 0
+  AND b.IsActive = 1 AND b.IsDeleted = 0
+  AND CC.IsActive = 1 AND CC.IsDeleted = 0
+  AND a.IsSubmited = 1
+  AND CC.ToCcUnitId = @UnitId
+  AND b.IsComment = 0
+  AND CC.IsRead = 0
+
+ORDER BY TimeStamp DESC;
+
+END
+

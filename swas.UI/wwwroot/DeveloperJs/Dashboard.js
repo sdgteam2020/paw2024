@@ -3,7 +3,6 @@ var Status = "";
 $(document).ready(function () {
     GetAllDashbaordCount();
     InboxNotificationCount();
-   
     CreateChartSummary();
     $("#IsNotduplicate").change(function () {
 
@@ -20,7 +19,9 @@ $(document).ready(function () {
 });
 
 
-function GetAllDashbaordCount(){
+
+
+function GetAllDashbaordCount()   {
     $.ajax({
         type: "POST",
         url: '/Home/GetDashboardCount',
@@ -55,7 +56,7 @@ function GetAllDashbaordCount(){
                             stage = "(Sponsor & DDGIT)";
                         }
                         if (dtoDashboardHeaderlst[i].stageId === 2) {
-                            stage = "(Parllel Process)";
+                            stage = "(Parallel Processing)";
                         }
                         if (dtoDashboardHeaderlst[i].stageId === 3) {
                             stage = "(Serial Processing)";
@@ -65,7 +66,7 @@ function GetAllDashbaordCount(){
                         listitem += '<div class="r-1 row g-3 mt-2" style="margin-top: 13px;">';
                     }
                    
-                    listitem += '<div class="cd-1 col-12 col-sm-6 col-md-4 col-lg-1  " style="background-color:white;height: 151px;">';
+                    listitem += '<div class="cd-1 col-12 col-sm-6 col-md-4 col-lg-1 " style="background-color:white;height: 145px;">';
 
                     tot = 0;
                     peding = 0;
@@ -198,7 +199,7 @@ function GetAllDashbaordCount(){
                 //});
 
 
-                $("body").on("click", ".ApprovedProj", function () {
+                $(document).on("click", ".ApprovedProj", function () {
                     var spnstatusId = $(this).closest("div").find("#spnstatusId").html();
                     //var spnstatus = $(this).closest("div").find("#spnstatus").html();
                     var spnstatusActionsMappingId = $(this).closest("div").find("#spnstatusActionsMappingId").html();
@@ -246,7 +247,15 @@ function GetAllDashbaordCount(){
                             $('#ProjectApprovedTittleBisag').html(tittle);
                             $('#BISAG-N').modal('show');
                             getProjBisagN(spnstatusId, spnstatusActionsMappingId);
-                        } else {
+                        } else if (spnstatusId == 21) {
+                            $('#IPAProjectApprovedTittle').html(tittle);
+                            $('#IPAProjApproved').modal('show');
+
+                            getProjApproved(spnstatusId, spnstatusActionsMappingId);
+                        }
+
+
+                        else {
                             $('#ProjectApprovedTittle').html(tittle);
                             $('#ProjApproved').modal('show');
 
@@ -255,9 +264,8 @@ function GetAllDashbaordCount(){
                     }
                 });
                 $("body").on("click", ".btnGetsummay", function () {
-                  
+
                     var spnstatusId = $(this).closest("div").find("#spnstatusId").html();
-                    console.log(spnstatusId);
                     if (spnstatusId != 1041 && parseInt(spnstatusId) != 44 && parseInt(spnstatusId) != 46) {
                         $('#ProjGetsummay').modal('show');
                         ($(this).closest("div").find(".statusprojsummry").html());
@@ -466,6 +474,7 @@ $(document).ready(function () {
 //}
 
 function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
+
     var listItem = "";
     var table = new DataTable('#dashboardApproved');
     table.destroy();
@@ -484,6 +493,7 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
             //console.log("GetDashboardApprovedData", response);
             if (response != "null" && response != null) {
 
+                var hasIPA = response.some(item => item.statusactionMappingid == 53);
                 if (response == -1) {
                     Swal.fire({ text: "" });
                 } else if (response == 0) {
@@ -510,9 +520,7 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
 
                         listItem += "<tr>";
-                        listItem += "<td class='align-middle' style='width:7% '>"
-                            + count +
-                            "</td>";
+                        listItem += "<td class='align-middle' style='width:3%'>" + count + "</td>";
                         //listItem += "<td class='align-middle nowrap'><span id='ProjName'>" + response[i].projName + "</span></td>";
                         if (unitId == 1 || unitId == 2 || unitId == 3 || unitId == 4 || unitId == 5 || unitId == 7) {
                             listItem += "<td class='align-middle nowrap'>" +
@@ -528,23 +536,90 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                         //if (response[i].status != "BISAG-N") {
                         listItem += "<td ><span class='badge badge-success' id='divName'>" + Status + "</span></td>";
                         //}
+
+                        if (response[i].statusactionMappingid == 53) {
+                            if (response[i].statusactionMappingid == 53 && response[i].approvedRemarks != null && response[i].approvedDt != null) {
+                                // Show button if mapping ID is 53
+                                listItem += `
+<td class='text-center'>
+  <button class='badge badge-success generateCertificate'
+      style='visibility:${response[i].statusactionMappingid == 53 ? "visible" : "hidden"}'
+      onclick="window.open('/Home/Generate?ProjectName=${encodeURIComponent(response[i].projName)}&ApprovedRemarks=${encodeURIComponent(response[i].approvedRemarks)}&ApprovedDt=${encodeURIComponent(response[i].approvedDt)}', '_blank')">
+      PDF
+  </button>
+</td>`;
+                            } else {
+                                listItem += `<td></td>`;
+                            }
+                        }
                         listItem += "</tr>";
                         count++;
                     }
+                   
+                    if (hasIPA) {
+                        //initializeDataTable("#IPAdashboardApproved");
+                        $("#IPADetailBodyApproved").html(listItem);
+                        var table = $('#IPAdashboardApproved').DataTable({
+                            lengthChange: true,
+                            dom: 'lBfrtip',
+                            retrieve: true,
+                            destroy: true,
+                            pageLength: 25,
+                            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                            "order": [[0, "asc"]],
 
-                    $("#DetailBodyApproved").html(listItem);
+                            buttons: [
+                                'copy',
+                                'excel',
+                                'csv',
+                                //{
+                                //    text: 'PDF',
+                                //    extend: 'pdfHtml5',
+                                //    action: function (e, dt, node, config) {
+                                //        PdfDiv();
+                                //    }
+                                //},
+                            ],
+                            searchBuilder: {
+                                conditions: {
+                                    num: {
+                                        'MultipleOf': {
+                                            conditionName: 'Multiple Of',
+                                            init: function (that, fn, preDefined = null) {
+                                                var el = $('<input/>').on('input', function () { fn(that, this) });
 
+                                                if (preDefined !== null) {
+                                                    $(el).val(preDefined[0]);
+                                                }
+
+                                                return el;
+                                            },
+                                            inputValue: function (el) {
+                                                return $(el[0]).val();
+                                            },
+                                            isInputValid: function (el, that) {
+                                                return $(el[0]).val().length !== 0;
+                                            },
+                                            search: function (value, comparison) {
+                                                return value % comparison === 0;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    } else {
+
+                        $("#DetailBodyApproved").html(listItem);
                     var table = $('#dashboardApproved').DataTable({
                         lengthChange: true,
-                        retrieve: true,
-                        bDestroy: true,
-
-                        searching: true,
-                        stateSave: true,
-                        "order": [[0, "asc"]],
-                        "ordering": true,
-                        "paging": true,
                         dom: 'lBfrtip',
+                        retrieve: true,
+                        destroy: true,
+                        pageLength: 25,
+                        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                        "order": [[0, "asc"]],
+                        
                         buttons: [
                             'copy',
                             'excel',
@@ -585,6 +660,8 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                             }
                         }
                     });
+                    }
+
                     //var memberTable = $('#dashboardApproved').DataTable({
                     //    retrieve: true,
                     //    bDestroy: true,
@@ -614,8 +691,9 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
     });
 }
 function getProjGetsummay(spnstatusId, IsDuplicate) {
+   
     var listItem = "";
-
+   
     $("#spndashboardstatusId").html(spnstatusId);
     var userdata = {
         "StatusId": spnstatusId,
@@ -628,7 +706,8 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
         data: userdata,
         type: 'POST',
         success: function (response) {
-            //console.log("GetDashboardStatusDetails", response);
+            console.log("GetDashboardStatusDetails", response);
+            
             if (response != "null" && response != null) {
 
                 if (response == -1) {
@@ -654,7 +733,7 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
 
                         listItem += "<tr>";
-                        listItem += "<td class='align-middle'><span id='ProjName'>" + count + "</span></td>";
+                        listItem += "<td class='align-middle' style='width:6%;'><span id='ProjName'>" + count + "</span></td>";
                         //listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].projName + "</span></td>";
                         //listItem += "<td class='align-middle'><span id='ProjName' title='" + projName + "'>" + shortProjName + "</span></td>";
                         if (unitId == 1 || unitId == 2 || unitId == 3 || unitId == 4 || unitId == 5 || unitId == 7/*|| response[i].stakeHolder == unitId*/) {
@@ -672,8 +751,14 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stage + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].status + "</span></td>";
                         listItem += "<td class='align-middle'><span id='divName'>" + response[i].action + "</span></td>";
-                        listItem += "<td class='align-middle'><span id='divName'>" + DateFormateddMMyyyyhhmmss(response[i].dateTimeOfUpdate) + "</span></td>";
-                        //listItem += "<td class='align-middle'><span id='divName'>" + DateFormateyyy_mm_dd(response[i].dateTimeOfUpdate) + "</span></td>";
+                        if (parseInt(spnstatusId) === 1) {
+
+                            listItem += "<td class='align-middle'><span id='divName'>" + DateFormateddMMyyyyhhmmss(response[i].initiatedDate) + "</span></td>";
+                        } else {
+
+                            listItem += "<td class='align-middle'><span id='divName'>" + DateFormateddMMyyyyhhmmss(response[i].dateTimeOfUpdate) + "</span></td>";
+                        }
+                        
                        
                         if (response[i].isComplete) {
                             
@@ -888,7 +973,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 function DateFormateddMMyyyyhhmmss(date) {
-   
+
     var todaysDate = new Date();
     var datef1 = new Date(date);
     //if (datef1.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
@@ -957,7 +1042,7 @@ function getProjBisagN(spnstatusId, spnstatusActionsMappingId) {
                     $('#DetailBodyBisagN').empty();
                     for (var i = 0; i < response.length; i++) {
                         listItem += "<tr>";
-                        listItem += "<td class='align-middle'>" + count + "</td>";
+                        listItem += "<td class='align-middle' style='width:3%'>" + count + "</td>";
                         listItem += "<td class='align-middle nowrap'><span id='ProjName'>" + response[i].projName + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + DateFormateddMMyyyyhhmmss(response[i].timeStamp) + "</span></td>";
@@ -1197,7 +1282,6 @@ function CreateChartSummary() {
 
             // Map names and totals
             const labels1 = ApprovedProjects.map(x => x.name);
-          
             const totals1 = ApprovedProjects.map(x => x.total);
             new Chart(document.getElementById('approvedProjectsChart'), {
                 type: 'bar',
@@ -1371,7 +1455,7 @@ function CreateChartSummary() {
  
 }
 function showPopup(segmentIndex) {
-
+   
     const popupOverlay = document.getElementById('popupOverlay');
     const popupTitle = document.getElementById('popupTitle');
     const projectList = document.getElementById('projectList');
@@ -1379,12 +1463,13 @@ function showPopup(segmentIndex) {
     let projects = [];
     let title = '';
     let statusActionsMappingId = 0;
-    if (segmentIndex === 0) {
-        statusActionsMappingId = 88;
-    }
+    if (segmentIndex === 0) 
+        {
+            statusActionsMappingId = 88;
+        }
     else if (segmentIndex === 1) {
         statusActionsMappingId = 880;
-    }
+        }
     let userdata = {
         "StatusId": 29,
         "statusActionsMappingId": statusActionsMappingId,
@@ -1392,13 +1477,13 @@ function showPopup(segmentIndex) {
 
     $("#WhiteListedProjectDetail").modal("show");
     if (segmentIndex === 0) {
-
-        title = `Whitelisted Projects`;
-    } else if (segmentIndex === 1) {
-
-        title = `Due for Re-vetting`;
-
-    }
+     
+     title = `Whitelisted Projects`;
+     } else if (segmentIndex === 1) {
+     
+      title = `Due for Re-vetting`;
+     
+      }
 
     $(".spnWhitelistedorDues").html(title);
     GetwhilteListProject(statusActionsMappingId)
@@ -1415,11 +1500,11 @@ function showPopup(segmentIndex) {
     //                Swal.fire({ text: "" });
     //            } else if (response == 0) {
 
-
+                  
 
 
     //            } else {
-
+                   
     //                let datestring = "";
 
     //                if (segmentIndex === 0) {
@@ -1450,10 +1535,10 @@ function showPopup(segmentIndex) {
     //                });
 
     //                popupOverlay.style.display = 'block';
-
+                   
     //            }
     //        }
-
+          
     //    },
     //    error: function (result) {
     //        Swal.fire({ text: "" });

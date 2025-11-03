@@ -1,0 +1,135 @@
+ALTER PROCEDURE [dbo].[usp_DashboardCount]
+@UserId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT   ststus.StatusId,
+             stge.Stages AS Stages,
+             stge.StagesId AS StagesId,
+             ststus.Status,
+             CAST (0 AS BIT) AS IsComplete,
+             COUNT(*) AS Tot
+    FROM     ProjStakeHolderMov AS mov
+             INNER JOIN
+             Projects AS proj
+             ON mov.ProjId = proj.ProjId
+             INNER JOIN
+             TrnStatusActionsMapping AS actmap
+             ON mov.StatusActionsMappingId = actmap.StatusActionsMappingId
+             INNER JOIN
+             mStatus AS ststus
+             ON actmap.StatusId = ststus.StatusId
+             INNER JOIN
+             mStages AS stge
+             ON ststus.StageId = stge.StagesId
+    WHERE    mov.IsComplete = 0
+             AND mov.IsActive = 1
+             AND ststus.IsDashboard = 1
+             AND proj.IsSubmited = 1
+             AND mov.StatusActionsMappingId NOT IN (118, 4)
+    GROUP BY ststus.StatusId, stge.Stages, stge.StagesId, ststus.Status, mov.IsComplete, proj.ProjId
+    ORDER BY stge.StagesId ASC;
+    SELECT   ststus.StatusId,
+             stge.Stages AS Stages,
+             stge.StagesId AS StagesId,
+             ststus.Status,
+             CAST (1 AS BIT) AS IsComplete,
+             COUNT(*) AS Tot
+    FROM     ProjStakeHolderMov AS mov
+             INNER JOIN
+             Projects AS proj
+             ON mov.ProjId = proj.ProjId
+             INNER JOIN
+             TrnStatusActionsMapping AS actmap
+             ON mov.StatusActionsMappingId = actmap.StatusActionsMappingId
+             INNER JOIN
+             mStatus AS ststus
+             ON actmap.StatusId = ststus.StatusId
+             INNER JOIN
+             mStages AS stge
+             ON ststus.StageId = stge.StagesId
+    WHERE    mov.IsComplete = 1
+             AND mov.IsActive = 1
+             AND ststus.IsDashboard = 1
+             AND proj.IsSubmited = 1
+             AND mov.StatusActionsMappingId NOT IN (118, 4)
+    GROUP BY ststus.StatusId, stge.Stages, stge.StagesId, ststus.Status, mov.IsComplete, proj.ProjId
+    ORDER BY stge.StagesId ASC;
+    SELECT   ststus.StatusId,
+             stge.Stages AS Stages,
+             stge.StagesId AS StagesId,
+             ststus.Status,
+             actmap.ActionsId AS ActionId,
+             mov.IsComplete AS IsComplete,
+             COUNT(*) AS Tot
+    FROM     ProjStakeHolderMov AS mov
+             INNER JOIN
+             Projects AS proj
+             ON mov.ProjId = proj.ProjId
+             INNER JOIN
+             TrnStatusActionsMapping AS actmap
+             ON mov.StatusActionsMappingId = actmap.StatusActionsMappingId
+             INNER JOIN
+             mStatus AS ststus
+             ON actmap.StatusId = ststus.StatusId
+             INNER JOIN
+             mStages AS stge
+             ON ststus.StageId = stge.StagesId
+    WHERE    mov.StatusActionsMappingId IN (4, 118, 3, 49, 54, 64, 69, 74, 79, 84, 89)
+             AND mov.IsActive = 1
+             AND proj.IsSubmited = 1
+    GROUP BY ststus.StatusId, stge.Stages, stge.StagesId, ststus.Status, actmap.ActionsId, mov.IsComplete, proj.ProjId
+    ORDER BY stge.StagesId ASC;
+    SELECT   stge.StagesId AS StageId,
+             ststus.StatusId,
+             ststus.Status,
+             stge.Stages,
+             ststus.Icon AS Icons,
+             ststus.Statseq
+    FROM     mStatus AS ststus
+             INNER JOIN
+             mStages AS stge
+             ON ststus.StageId = stge.StagesId
+    WHERE    ststus.IsDashboard = 1
+    ORDER BY ststus.Statseq, stge.StagesId;
+    SELECT   pro.ProjId,
+             stsmap.StatusId,
+             stsmap.StatusActionsMappingId,
+             COUNT(DISTINCT pro.ProjId) AS Total
+    FROM     ProjStakeHolderMov AS mov
+             INNER JOIN
+             Projects AS pro
+             ON mov.ProjId = pro.ProjId
+             INNER JOIN
+             TrnStatusActionsMapping AS stsmap
+             ON mov.StatusActionsMappingId = stsmap.StatusActionsMappingId
+    WHERE    mov.IsActive = 1
+             AND pro.IsProcess = 1
+             AND (stsmap.StatusActionsMappingId IN (1, 9, 113, 48, 53, 60, 63, 68, 73, 78, 83, 88)
+                  OR (stsmap.StatusActionsMappingId IN (26, 31, 37)
+                      AND mov.IsComplete = 1))
+    GROUP BY pro.ProjId, stsmap.StatusId, stsmap.StatusActionsMappingId;
+    DECLARE @BISAGN_StatusId AS INT;
+    SELECT @BISAGN_StatusId = StatusId
+    FROM   mStatus
+    WHERE  Status = 'BISAG-N';
+    SELECT @BISAGN_StatusId AS StatusId,
+           'BISAG-N' AS Status,
+           1 AS StatusActionsMappingId,
+           COUNT(*) AS Total
+    FROM   Projects
+    WHERE  BeingDevpInhouse = 'BISAG-N'
+           AND IsSubmited = 1;
+    DECLARE @Revetting_StatusId AS INT;
+    SELECT @Revetting_StatusId = StatusId
+    FROM   mStatus
+    WHERE  Status = 'Re-Vetting';
+    SELECT @Revetting_StatusId AS StatusId,
+           'Re-Vetted' AS Status,
+           1 AS StatusActionsMappingId,
+           COUNT(*) AS Total
+    FROM   Projects
+    WHERE  IsWhitelisted = 'Re-Vetted'
+           AND IsSubmited = 1;
+END
+

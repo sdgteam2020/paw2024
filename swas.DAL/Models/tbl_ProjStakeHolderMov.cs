@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
 
 namespace swas.DAL.Models
 {
@@ -62,15 +60,11 @@ namespace swas.DAL.Models
         public string? CertNo { get; set; }
         [NotMapped]
         public int[]? CcId { get; set; }
-        //[NotMapped]
-        //[FromForm(Name = "uploadfile[]")]  // This matches the 'uploadfile[]' key in FormData
-        //public List<IFormFile> FileName { get; set; }
-        //[NotMapped]
-        //public string attRemarks { get; set; }
-        [NotMapped] 
+        [NotMapped]
         [FromForm(Name = "Attachments")]
         public List<AttachmentModel> Attachments { get; set; }
+
     }
 
-    
+
 }
