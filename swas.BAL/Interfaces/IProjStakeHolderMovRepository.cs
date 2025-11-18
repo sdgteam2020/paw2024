@@ -62,6 +62,7 @@ namespace swas.BAL.Interfaces
 
 
         Task<int> AddNotificationCommentAsync(Notification notifications);
+        Task<string> CheckPreviousApprovals(int statusId, int projId, int Actionsid);
 
     }
 

@@ -571,6 +571,7 @@ function CheckFwdCondition(CurrentPslmId) {
 `).join('');
 
                     $("#previewGrid").html(html);
+                    CheckforPreviousapprovals()
 
 
                     //$("#DetailBody").html(listItem);
@@ -943,3 +944,37 @@ $('#btnEditMove').on('click', function () {
     $(".Attmenthistory").addClass("d-none");
 
 })
+
+function CheckforPreviousapprovals() {
+    var userdata = {
+        "ProjId": $("#spanFwdProjectId").html(),
+        "StatusId": $("#ddlfwdSubStage").val(),
+        "Actionsid": $("#ddlfwdAction").val(),
+    };
+
+    $.ajax({
+        url: '/Projects/CheckPreviousApprovals',
+        type: 'POST',
+        data: userdata,
+        success: function (response) {
+            debugger;
+            console.log(response);
+            if (response.message.result !== "OK") {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Approval Required!',
+                    html: response.message.result,
+                    confirmButtonText: 'OK'
+                });
+            }
+            else {
+                // All good — continue your normal logic here
+                // Example:
+                // SubmitForward();
+            }
+        },
+        error: function () {
+            Swal.fire("Error", "Something went wrong!", "error");
+        }
+    });
+}

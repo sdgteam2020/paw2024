@@ -2699,7 +2699,23 @@ namespace swas.UI.Controllers
             // Optionally return updated comment as JSON
             return Json(1);
         }
-      
+        [HttpPost]
+        public IActionResult CheckPreviousApprovals(int ProjId, int StatusId, int Actionsid)
+        {
+
+            try
+            {
+                var notapproved = _projStakeHolderMovRepository.CheckPreviousApprovals(StatusId, ProjId, Actionsid);
+                return Json(new { message = notapproved });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
 
     }
 

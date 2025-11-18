@@ -1264,6 +1264,63 @@ namespace swas.BAL.Repository
 
         }
 
-      
+        public async Task<string> CheckPreviousApprovals(int statusId, int projId, int Actionsid)
+        {
+
+            var trn = await _dbContext.TrnStatusActionsMapping
+     .FirstOrDefaultAsync(x => x.ActionsId == 2 && x.StatusActionsMappingId == Actionsid);
+
+
+
+            try
+            {
+                var previousStatusIds = new List<int>
+   {
+       6, 7, 11, 20, 21, 24, 25, 26, 27, 28, 29
+   };
+
+                if (previousStatusIds.Contains(statusId) && trn != null && Actionsid == trn.StatusActionsMappingId)
+                {
+                    var requiredStatusIds = previousStatusIds
+                                            .Where(x => x < statusId)
+                                            .ToList();
+
+                    var approvedStatuses = await (from act in _dbContext.TrnStatusActionsMapping
+                                                  join mov in _dbContext.ProjStakeHolderMov
+                                                      on act.StatusActionsMappingId equals mov.StatusActionsMappingId
+                                                  where previousStatusIds.Contains(act.StatusId)
+                                                        && requiredStatusIds.Contains(act.StatusId)
+                                                        && mov.ProjId == projId
+                                                        && mov.IsActive == true
+                                                        && mov.UndoRemarks == null
+                                                        && act.ActionsId == 2
+                                                  select act.StatusId)
+                                                  .Distinct()
+                                                  .ToListAsync();
+
+                    var notApprovedStatuses = requiredStatusIds
+                                                .Except(approvedStatuses)
+                                                .ToList();
+
+                    if (notApprovedStatuses.Any())
+                    {
+                        var missingNames = await _dbContext.mStatus
+                    .Where(s => notApprovedStatuses.Contains(s.StatusId))
+                    .Select(s => s.Status)
+                    .ToListAsync();
+
+                        string missing = string.Join("<br>", missingNames);
+                        return missing;
+                    }
+                }
+
+                return "OK";
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }
