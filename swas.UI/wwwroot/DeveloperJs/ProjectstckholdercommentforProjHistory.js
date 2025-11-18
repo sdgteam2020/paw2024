@@ -7,7 +7,7 @@
     GetAllComments1();
 
     $("#btnAnalytics").click(function () {
-        debugger;
+       
         $('#ProjHoldHistory').modal('show');
         // alert($(this).closest("tr").find(".clsspnprojId").html())
         $(".lblProjHoldHistory").html($("#projectNameCell").html())

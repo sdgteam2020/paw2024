@@ -45,7 +45,7 @@ function GetAllDashbaordCount()   {
                 dtoDashboardHeaderlst.sort((a, b) => a.stageId - b.stageId || a.statseq - b.statseq);
 
                 for (var i = 0; i < dtoDashboardHeaderlst.length; i++) {
-                    debugger;
+               
                     if (stageId != dtoDashboardHeaderlst[i].stageId) {
                         if (stageId != 0) {
                             listitem += '</div>';
@@ -204,7 +204,7 @@ function GetAllDashbaordCount()   {
                     //var spnstatus = $(this).closest("div").find("#spnstatus").html();
                     var spnstatusActionsMappingId = $(this).closest("div").find("#spnstatusActionsMappingId").html();
 
-                    tittle = "Total Proj Movement: " + $(this).closest("div").find(".statusprojsummry").html();
+                    tittle = "Approved:" + $(this).closest("div").find(".statusprojsummry").html();
                     if (parseInt(spnstatusActionsMappingId) == 1) {
 
                         Status = 'Accepted';

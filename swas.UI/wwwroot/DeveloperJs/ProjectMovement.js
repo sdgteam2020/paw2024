@@ -340,7 +340,7 @@ function GetProjectMovement(ProjectId) {
             "Id": ProjectId
         },
         success: function (response) {
-            debugger;
+            
             var projname = response[0].projName;
             //console.log("GetProjectMov: ", response);
             if (response != "null" && response != null) {
@@ -522,7 +522,7 @@ function GetProjectMovement(ProjectId) {
                     $(document).on("click", ".cls-editCmt", function (e) {
                         e.preventDefault(); // Prevent default behavior (replaces return false)
 
-                        debugger;
+                      
 
                         var psmid = $(this).data("psmid");
 

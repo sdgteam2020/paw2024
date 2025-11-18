@@ -25,7 +25,7 @@
 
 
         if (selectedMode == "0") {
-            debugger;
+            
             $('input[type="date"]').attr('min', today);
             $('input[type="date"]').removeAttr('max');
             $('.datepicker1').datepicker({
@@ -316,10 +316,10 @@ function formatDateToDDMMYYYY(date) {
 
 
 function bindLiveProjectSearch(inputSelector, dropdownSelector, endpointUrl, onItemSelect) {
-    debugger;
+    
 
     $(inputSelector).on("keyup", function () {
-        debugger;
+        
         let query = $(this).val();
         //query = query.replace(/\u00A0/g, "");
         //const validpattern =/^[a-zA-Z0-9]*$/;
@@ -375,7 +375,7 @@ function bindLiveProjectSearch(inputSelector, dropdownSelector, endpointUrl, onI
     });
 
     $(document).on("click", `${dropdownSelector} li`, function () {
-        debugger;
+        
         const projId = $(this).data("id");
 
         const projName = $(this).data("name");
@@ -389,7 +389,7 @@ function bindLiveProjectSearch(inputSelector, dropdownSelector, endpointUrl, onI
             confirmButtonText: 'Submit',
             preConfirm: (remarks) => {
                 if (!remarks) {
-                    debugger;
+                    
                     Swal.ShowValidationMessage('Remarks are Required');
                 } if (remarks.length < 10) {
                     Swal.showValidationMessage('Remarks Must be Atleast 10 characters');

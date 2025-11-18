@@ -47,6 +47,7 @@ using static swas.DAL.Models.LegacyHistory;
 using System.Threading.Tasks;
 using swas.BAL.Utility;
 using Path = System.IO.Path;
+using Newtonsoft.Json.Schema;
 
 namespace swas.UI.Controllers
 {
@@ -2702,6 +2703,22 @@ namespace swas.UI.Controllers
         public IActionResult WhiteListProject()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult CheckPreviousApprovals(int ProjId,int StatusId, int Actionsid)
+        {
+           
+                try
+                {
+               var notapproved= _projStakeHolderMovRepository.CheckPreviousApprovals(StatusId, ProjId, Actionsid);
+                return Json(new { message = notapproved });
+            }
+                catch (Exception ex)
+                {
+                throw ex;
+                }
+            
         }
 
     }

@@ -8,8 +8,8 @@ function AttOnFWD() {
     var listItem = "";
 
     // Check for any previous rows and remove placeholder if needed
-    if ($.trim($("#DetailBody").text()) === "No Record Found") {
-        $("#DetailBody").empty(); // remove placeholder row
+    if ($.trim($("#AttBody").text()) === "No Record Found") {
+        $("#AttBody").empty(); // remove placeholder row
     }
 
 
@@ -73,7 +73,7 @@ function AttOnFWD() {
     $("#pdfFileInput").val("");
 
     // Bind to the table
-    $("#DetailBody").append(listItem);
+    $("#AttBody").append(listItem);
 
     // When the confirm button is clicked, send all attachments and remarks
     $("#btnFwdConfirm").off("click").on("click", function () {

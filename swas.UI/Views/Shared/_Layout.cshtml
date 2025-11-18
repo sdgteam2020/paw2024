@@ -1839,75 +1839,18 @@
 
                     @if (Logins != null && Logins.Role == "Dte" && Logins.unitid == 1)
                     {
-                       
 
-                        <li class="dropdown">
-                            <div class="icon-container" style="margin-top: 10px; margin-left: 13px;">
 
-                                <ion-icon name="ellipse-outline"></ion-icon>
-                                <span class="icon-name">User Setting</span>
+                        <li class="menu-items">
+                            <a href="#">User Setting</a>
+                            <div class="submenu">
+                                <a href="/Actions/Index">View Actions</a>
+                                <a href="/UnitDtls/AddOrEdit">View Units</a>
+                                <a href="/Stages/Create">View Stage</a>
+                                <a href="/ActionException/Index">View Action Exceptions</a>
+                                <a href="/Identity/Account/Register" target="_new">Register New User</a>
+                                <a href="/Account/GetsAllUsers">View Users</a>
                             </div>
-                            <ul class="dropdown-menu" style="background-color:white;">
-                                <li class="selected">
-                                    <a href="/Actions/Index">
-                                        <div class="icon-container">
-
-                                            <ion-icon name="ellipse-outline"></ion-icon>
-                                            <span class="icon-name">View Actions</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="selected">
-                                    <a href="/UnitDtls/AddOrEdit">
-                                        <div class="icon-container">
-
-                                            <ion-icon name="ellipse-outline"></ion-icon>
-                                            <span class="icon-name">View Units</span>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li class="selected">
-                                    <a href="/Stages/Create">
-                                        <div class="icon-container">
-                                            @* <img src="/assets/images/icons/stakeholder.png" alt="Icon">*@
-
-                                            <ion-icon name="ellipse-outline"></ion-icon>
-                                            <span class="icon-name">View Stage</span>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li class="selected">
-                                    <a href="/ActionException/Index">
-                                        <div class="icon-container">
-
-                                            <ion-icon name="ellipse-outline"></ion-icon>
-                                            <span class="icon-name">View Action Exceptions</span>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li class="selected">
-                                    <a href="/Identity/Account/Register" target="_new">
-                                        <div class="icon-container">
-
-                                            <ion-icon name="ellipse-outline"></ion-icon>
-                                            <span class="icon-name">Register New User</span>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li class="selected">
-                                    <a href="/Account/GetsAllUsers">
-                                        <div class="icon-container">
-
-                                            <ion-icon name="ellipse-outline"></ion-icon>
-                                            <span class="icon-name">View Users</span>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
 
                         <li>
@@ -1935,81 +1878,17 @@
                         </li>
 
                     }
-                    <li class="dropdown">
-                        <div class="icon-container" style="margin-top: 10px; margin-left: 13px;">
 
-                            <ion-icon name="ellipse-outline"></ion-icon>
-                            <span class="icon-name">Policy Corner</span>
+                    <li class="menu-items">
+                        <a href="#"><i class="fas fa-cogs"></i> Policy Corner</a>
+                        <div class="submenu">
+                            <a href="#" id="showWhiteListproj">Whitelisted Appl</a>
+                            <a href="#">Minutes of Mtgs</a>
+                            <a href="/Home/SOPDownload" target="\'_blank\'">SOP on Whitelisting</a>
+                            <a href="javascript:void(0);" id="openFlowModal">Help File</a>
                         </div>
-                        <ul class="dropdown-menu" style="margin-left:50px; width:200px; background-color:white;">
-
-                            <li class="selected">
-                                <a href="#" id="showWhiteListproj" class="d-block">
-                                    <div class="icon-container">
-                                        <ion-icon name="ellipse-outline"></ion-icon>
-                                        <span class="icon-name">Whitelisted Appl</span>
-                                    </div>
-                                </a>
-                            </li>
-
-                            <li class="selected">
-                                <a>
-                                    <div class="icon-container">
-
-                                        <ion-icon name="ellipse-outline"></ion-icon>
-                                        <span class="icon-name">Minutes of Mtgs</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="selected">
-                                <a href="/Home/SOPDownload" target="\'_blank\'">
-                                    <div class="icon-container">
-
-                                        <ion-icon name="ellipse-outline"></ion-icon>
-                                        <span class="icon-name">SOP on Whitelisting</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="selected" id="btn-Flow">
-                                <a href="javascript:void(0);" id="openFlowModal">
-                                    <div class="icon-container">
-                                        <ion-icon name="ellipse-outline"></ion-icon>
-                                        <span class="icon-name">Help File</span>
-                                    </div>
-                                </a>
-                            </li>
-
-                            @* <li class="dropdown">
-                                <div class="icon-container" style="margin-top: 10px; margin-left: 13px;">
-
-                                    <ion-icon name="ellipse-outline"></ion-icon>
-                                    <span class="icon-name">Downloads</span>
-                                </div>
-                                <ul class="dropdown-menu">
-                                    <li class="selected">
-                                        <a href="/Home/SOPDownload" target="\'_blank\'">
-                                            <div class="icon-container">
-
-                                                <ion-icon name="ellipse-outline"></ion-icon>
-                                                <span class="icon-name">SOP on Whitelisting</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="selected" id="btn-ibutton">
-                                        <a href="/assets/images/flow.png" target="\'_blank\'" rel="\'noopener" noreferrer\'="">
-                                            <div class="icon-container" >
-
-                                                <ion-icon name="ellipse-outline"></ion-icon>
-                                                <span class="icon-name">Help File</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    </ul>
-                            </li> *@
-
-
-                        </ul>
                     </li>
+
                 </ul>
 
                 <!--end navigation-->

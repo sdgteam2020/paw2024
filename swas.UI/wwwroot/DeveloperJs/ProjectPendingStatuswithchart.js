@@ -36,6 +36,7 @@
                     const totalsForlabel = []; // total array
                     const labelscmd = []; // label array
                     const totalscmd = []; // total array
+                    var cmtunit = [1, 3, 4, 5];
                     const totalsForlabelcmd = []; // total array
                     let colorscmd = [];
                     let responseforchart = response
@@ -68,56 +69,59 @@
 
 
                     for (var j = response.length - 1; j >= 0; j--) {
-                        //if (response[j].isComment == false) {
+                            //if (response[j].isComment == false) {
 
-                        //  labels.push(response[j].status + '(' + response[j].fromunit + ')');
-                        // totals.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
-                        // alert(response[j].fromunitId + '---' + response[j].statusId)
-                        //alert(calculateTotalMinutes(response[j].timeStampfrom, response[j].timeStampTo))
-                        // alert(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
-                        //totalsForlabel.push(DateCalculateago(response[j].timeStampfrom, response[j].timeStampTo).replace("</h6>", ""));
+                            //  labels.push(response[j].status + '(' + response[j].fromunit + ')');
+                            // totals.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
+                            // alert(response[j].fromunitId + '---' + response[j].statusId)
+                            //alert(calculateTotalMinutes(response[j].timeStampfrom, response[j].timeStampTo))
+                            // alert(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
+                            //totalsForlabel.push(DateCalculateago(response[j].timeStampfrom, response[j].timeStampTo).replace("</h6>", ""));
                         //}
                         //else {
-                        if (response[j].isComment == true) {
-                            
-                            if (response[j].firstStkStatus == "Accepted" || response[j].approvedStatusId == 1) {
+                        if (cmtunit.includes(response[j].tounitId)) {
 
-                                colorscmd.push("#008000")
-                                totalsForlabelcmd.push("Approved\n" + DateCalculateago(response[j].timeStampfrom, response[j].firstActionDate));
-                                totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].firstActionDate))
-                            }
-                            else if (response[j].firstStkStatus == "Rejected") {
-                                colorscmd.push("#f96161")
-                                totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].firstActionDate))
-                                totalsForlabelcmd.push(response[j].firstStkStatus + "\n" + DateCalculateago(response[j].timeStampfrom, response[j].firstActionDate));
 
-                            }
-                            else if (response[j].firstStkStatus == "Obsn") {
-                               
-                                colorscmd.push("#fbbb4b")
-                                totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].firstActionDate))
-                                totalsForlabelcmd.push(response[j].firstStkStatus + "\n" + DateCalculateago(response[j].timeStampfrom, response[j].firstActionDate));
-                            }
-                            else if (response[j].firstStkStatus == "Info") {
-                                colorscmd.push("#73a3f9")
-                                totalsForlabelcmd.push(response[j].firstStkStatus + "\n" + DateCalculateago(response[j].timeStampfrom, response[j].firstActionDate));
-                                totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].firstActionDate))
+                            if (response[j].isComment == true) {
+
+                                if (response[j].firstStkStatus == "Accepted" || response[j].approvedStatusId == 1) {
+
+                                    colorscmd.push("#008000")
+                                    totalsForlabelcmd.push("Approved\n" + DateCalculateago(response[j].timeStampfrom, response[j].firstActionDate));
+                                    totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].firstActionDate))
+                                }
+                                else if (response[j].firstStkStatus == "Rejected") {
+                                    colorscmd.push("#f96161")
+                                    totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].firstActionDate))
+                                    totalsForlabelcmd.push(response[j].firstStkStatus + "\n" + DateCalculateago(response[j].timeStampfrom, response[j].firstActionDate));
+
+                                }
+                                else if (response[j].firstStkStatus == "Obsn") {
+
+                                    colorscmd.push("#fbbb4b")
+                                    totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].firstActionDate))
+                                    totalsForlabelcmd.push(response[j].firstStkStatus + "\n" + DateCalculateago(response[j].timeStampfrom, response[j].firstActionDate));
+                                }
+                                else if (response[j].firstStkStatus == "Info") {
+                                    colorscmd.push("#73a3f9")
+                                    totalsForlabelcmd.push(response[j].firstStkStatus + "\n" + DateCalculateago(response[j].timeStampfrom, response[j].firstActionDate));
+                                    totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].firstActionDate))
+                                }
+                                else {
+                                    colorscmd.push("#FF0000")
+                                    totalsForlabelcmd.push("Pending\n" + DateCalculateago(response[j].timeStampfrom, response[j].timeStampTo));
+                                    totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
+                                }
+
+                                labelscmd.push(response[j].status + '(' + response[j].tounit + ')');
+
+
                             }
                             else {
-                                colorscmd.push("#FF0000")
-                                totalsForlabelcmd.push("Pending\n" + DateCalculateago(response[j].timeStampfrom, response[j].timeStampTo));
-                                totalscmd.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
+                                $("#Recddt").html(" ");
+
                             }
-
-                            labelscmd.push(response[j].status + '(' + response[j].tounit + ')');
-                           
-                           
                         }
-                        else {
-                            $("#Recddt").html(" ");
-
-                        }
-
                         //}
                     }
                     for (var j = 0; j < response.length; j++) {

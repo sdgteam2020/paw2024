@@ -341,10 +341,10 @@ ion-icon {
             padding: 8px 15px 8px 45px
         }
 
-    .sidebar-wrapper .metismenu .mm-active > a,
-    .sidebar-wrapper .metismenu a:active,
-    .sidebar-wrapper .metismenu a:focus,
-    .sidebar-wrapper .metismenu a:hover {
+    .sidebar-wrapper .metismenu a:hover:not(.submenu a),
+    .sidebar-wrapper .metismenu a:focus:not(.submenu a),
+    .sidebar-wrapper .metismenu a:active:not(.submenu a),
+    .sidebar-wrapper .metismenu .mm-active > a:not(.submenu a) {
         /*color: #923eb9;*/
         color: white;
         text-decoration: none;
@@ -2635,4 +2635,56 @@ ul.categories-list li {
 .FlowImg{
     width:100%;
 
+}
+
+/* ===== DROPDOWN (RIGHT SIDE) ===== */
+.submenu {
+    position: absolute;
+    left: 100%; /* Right of the sidebar item */
+    top: 0;
+    background: white;
+    min-width: 220px;
+    border-radius: 8px;
+    box-shadow: 8px 8px 25px rgba(0,0,0,0.2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-15px);
+    transition: all 0.3s ease;
+    z-index: 9999; /* Very high */
+    overflow: visible !important;
+}
+
+/* This makes it appear on hover */
+.menu-items:hover > .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(10px);
+}
+
+.submenu a {
+    display: block;
+    padding: 14px 20px;
+    color: #2c3e50;
+    text-decoration: none;
+    border-bottom: 1px solid #eee;
+    transition: background 0.2s;
+}
+
+    .submenu a:hover {
+        background: #1abc9c;
+        color: white;
+    }
+
+    .submenu a:last-child {
+        border-bottom: none;
+    }
+
+/* Arrow pointing left */
+.submenu::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: -8px;
+    border: 8px solid transparent;
+    border-right-color: white;
 }
