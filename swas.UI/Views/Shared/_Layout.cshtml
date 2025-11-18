@@ -1819,7 +1819,7 @@
                 </div>
                 </a>
                 </li> *@
-                    @if (Logins != null  && Logins?.unitid == 4)
+                    @if (Logins != null && Logins?.UserName == "gso1semg_asdc_ihqa" && Logins?.unitid == 4)
                     {
                         <li>
                             <a href="/Home/DateApproval">
@@ -1841,8 +1841,9 @@
                     {
 
 
+
                         <li class="menu-items">
-                            <a href="#">User Setting</a>
+                            <a href="#"> User Setting</a>
                             <div class="submenu">
                                 <a href="/Actions/Index">View Actions</a>
                                 <a href="/UnitDtls/AddOrEdit">View Units</a>
@@ -1863,7 +1864,7 @@
 
                     }
                 
-                    @if (Logins != null  && Logins?.unitid == 4)
+                    @if (Logins != null && Logins?.UserName == "gso1semg_asdc_ihqa"  && Logins?.unitid == 4)
                     {
 
                         <li>
@@ -1878,17 +1879,16 @@
                         </li>
 
                     }
-
                     <li class="menu-items">
-                        <a href="#"><i class="fas fa-cogs"></i> Policy Corner</a>
+                        <a href="#">Policy Corner</a>
                         <div class="submenu">
-                            <a href="#" id="showWhiteListproj">Whitelisted Appl</a>
+                            <a href="#" id="WLProjList">Whitelisted Appl</a>
                             <a href="#">Minutes of Mtgs</a>
                             <a href="/Home/SOPDownload" target="\'_blank\'">SOP on Whitelisting</a>
-                            <a href="javascript:void(0);" id="openFlowModal">Help File</a>
+                            <a href="javascript:void(0);" id="FlowPng" >Help File</a>
                         </div>
                     </li>
-
+                  
                 </ul>
 
                 <!--end navigation-->
@@ -1952,7 +1952,7 @@
 
         }
 
-        @Html.Partial("_whitelistdProjectView");
+
         <!--end top header-->
         <!-- unit level users menu start  -->
         @if (Logins != null && Logins?.Role == "Unit")
@@ -2378,7 +2378,7 @@
         </div>
     </div>
 
-
+    @await Html.PartialAsync("_whitelistdProjectView")
     <!-- Floating Chat Toggle -->
   @*   <div class="asdc-body">
 
@@ -2435,15 +2435,42 @@
         </div>
  *@
     </div>
+
+    <div class="modal fade right" id="iProjibutton" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h4 class="modal-title" id="lblHistory">Project Fwd History</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <img src="~/assets/images/flow.png" class="FlowImg" />
+                </div>
+
+            </div><!-- modal-content -->
+        </div><!-- modal-dialog -->
+    </div>
 </body>
 </html>
     <!-- JavaScript code -->
 
    
     <script>
-            $('#openFlowModal').on('click', function () {
-        $('#Projibutton').modal('show');
-    });
+        $("#FlowPng").on('click', function () {
+
+        $('#iProjibutton').modal('show');
+        });
+
+    $("#WLProjList").on('click', function () {
+       
+        var title = "WhtieListed Projects";
+        $(".spnWhitelistedorDues").html(title);
+
+        $("#WhiteListedProjectDetail").modal("show");
+        GetwhilteListProject(0);
+    })
 
         function checksize() {
             
@@ -2574,7 +2601,7 @@
             const $menu = $(this).children('.dropdown-menu');
             hideTimeout = setTimeout(function () {
                 $menu.stop(true, true).slideUp(200);
-            }, 200); // You can adjust this delay as needed
+            }, 200   ); // You can adjust this delay as needed
         }
     );
 </script>
@@ -2615,16 +2642,6 @@
         var regex = /[^a-zA-Z0-9 ]/g;
         input.value = input.value.replace(regex, "");
     }
-
-        $('#showWhiteListproj').on('click', function (e) {
-        e.preventDefault();
-        //window.location.href = "/Projects/WhiteListAppl";
-         var title = "WhtieListed Projects";
-    $(".spnWhitelistedorDues").html(title);
-         $("#WhiteListedProjectDetail").modal("show");
-        GetwhilteListProject(0);
-    });
-
 </script>
 
 

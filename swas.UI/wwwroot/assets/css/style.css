@@ -340,7 +340,6 @@ ion-icon {
         .sidebar-wrapper .metismenu ul ul ul a {
             padding: 8px 15px 8px 45px
         }
-
     .sidebar-wrapper .metismenu a:hover:not(.submenu a),
     .sidebar-wrapper .metismenu a:focus:not(.submenu a),
     .sidebar-wrapper .metismenu a:active:not(.submenu a),
@@ -351,6 +350,7 @@ ion-icon {
         background-color: rgb(146 62 185 / 10%);
         background-color: #044c92;
     }
+
 
 .menu-label {
     padding: 20px 15px 5px 5px;
@@ -2637,6 +2637,7 @@ ul.categories-list li {
 
 }
 
+
 /* ===== DROPDOWN (RIGHT SIDE) ===== */
 .submenu {
     position: absolute;
@@ -2671,7 +2672,7 @@ ul.categories-list li {
 }
 
     .submenu a:hover {
-        background: #1abc9c;
+        background-color: #044c92;
         color: white;
     }
 

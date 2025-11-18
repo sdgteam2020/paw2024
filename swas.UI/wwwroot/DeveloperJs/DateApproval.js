@@ -70,7 +70,7 @@
 //});
 
 $(document).ready(function () {
-   
+    debugger;
     $('.tabs__head a').click(function (e) {
         e.preventDefault();
 
@@ -91,7 +91,7 @@ $(document).ready(function () {
 
 
 $(document).on('click', '.approve-btn', function () {
-    
+    debugger;
     let id = Number($(this).data('id')) || 0;
     let projid = $(this).data('ids')
 
@@ -196,7 +196,7 @@ $(document).on('click', '.approve-btn', function () {
 
 
 $(document).on('click', '.LegacyHistory', function () {
-    
+    debugger;
     $('#ProjFwdHistory').modal('show');
     
     var ProjId = parseInt($(this).data("ids"));
@@ -633,11 +633,11 @@ $(document).ready(function () {
 
 
 //function bindLiveProjectSearch(inputSelector, dropdownSelector, onItemSelect) {
-
+//    debugger;
  
 //    $(inputSelector).on("keyup", function () {
         
- 
+//        debugger;
 //        let query = $(this).val();
 //        const validpattern = /^[a-zA-Z0-9]*$/;
 
@@ -719,7 +719,7 @@ function getProjectDetails(projId, remarks) {
         },
         success: function (response) {
 
-            
+            debugger;
             if (response.success === false) {
                 Swal.fire({
                     title: 'Error',

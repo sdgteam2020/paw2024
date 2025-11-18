@@ -102,7 +102,7 @@ $(document).ready(function () {
     //    mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnStakeHolderId").html())
     //});
     $(".btn-Undo").click(function () {
-        
+        debugger;
         var projectName = $(this).closest("tr").find("a").data("proj-name");
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
 
@@ -187,7 +187,7 @@ $(document).ready(function () {
         var words = projName.split(" ");
         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
         //var finalTitle = "Mov History: " + shortProjName;
-        var finalTitle = "Mov History: " + projName;
+        var finalTitle = "Proj Name: " + projName;
         $('#lblHistory').text(finalTitle);
         $('#ProjFwdHistory').modal('show');
 
@@ -197,12 +197,12 @@ $(document).ready(function () {
 
     });
     $(".btn-FwdHistory").click(function () {
-        
+        debugger;
         var projName = $(this).data('proj-name');
         var words = projName.split(" ");
         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
         //var finalTitle = "Mov History: " + shortProjName;
-        var finalTitle = "Mov History: " + projName;
+        var finalTitle = "Proj Name: " + projName;
         $('#lblHistory').text(finalTitle);
         $('#ProjFwdHistory').modal('show');
 
@@ -260,7 +260,7 @@ $(document).ready(function () {
       
         mMsater($(this).closest("tr").find("#SpnTimeActionId").html(), "ddlfwdAction", 7, $(this).closest("tr").find("#SpnTimeStatusId").html())
         /*mMsater($(this).closest("tr").find("#SpnTimeActionId").html(), "ddlfwdAction", 9, $(this).closest("tr").find("#SpnTimeStatusId").html())*/
-        mMsaterFwdTo($(this).closest("tr").find("#SpnTimeToUnitId").html(), "ddlfwdFwdTo", 8, 0, $(this).closest("tr").find("#SpnStakeHolderId").html(), 0, "");
+        mMsaterFwdTo($(this).closest("tr").find("#SpnTimeFromUnitId").html(), "ddlfwdFwdTo", 8, 0, $(this).closest("tr").find("#SpnStakeHolderId").html(), 0, "");
         mMsaterFwdTo(0, "ddlfwdCCTo", 8, 0, $(this).closest("tr").find("#SpnStakeHolderId").html(), 0, "");
 
 
@@ -269,6 +269,9 @@ $(document).ready(function () {
         $("#SpnFwdStakeHolderId").html($(this).closest("tr").find("#SpnStakeHolderId").html())
         $("#spanLegacyApproval").html($(this).closest("tr").find("#SpnApprove").html())
 
+        var listItem = "<tr><td class='text-center' colspan=5>No Record Found</td></tr>";
+
+        $("#AttBody").html(listItem);
 
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
         // IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
@@ -280,8 +283,6 @@ $(document).ready(function () {
         $(this).closest("tr").removeClass("bold-text")
 
         $('#ProjFwd').modal('show');
-        var listItem = "<tr><td class='text-center' colspan=5>No Record Found</td></tr>";
-        $("#AttBody").html(listItem);
 
         //$("#searchBox").autocomplete({
         //    minLength: 3,
@@ -295,10 +296,10 @@ $(document).ready(function () {
         //});
 
         $(".Fwdtitle").html("Projects Move Details");
-        
-
-        $(".Attmenthistory").addClass("d-none");
         $(".ProjectsFwd").removeClass("d-none");
+        $(".Attmenthistory").addClass("d-none");
+
+
 
         // alert($(this).closest("tr").find("#SpnprojectStageId").html())
         //GetAllComments($(this).closest("tr").find("#SpnCurrentProjId").html());
@@ -316,7 +317,7 @@ $(document).ready(function () {
         var words = projName.split(" ");
         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
         //var finalTitle = "Mov History: " + shortProjName;
-        var finalTitle = "Mov History: " + projNameDetail;
+        var finalTitle = "Proj Name: " + projNameDetail;
         $('#fwdModal').text(finalTitle);
         $('.fwdtitle').text(projNameDetail);
 
@@ -382,16 +383,15 @@ $(document).ready(function () {
             alert("Please Select Send Unit To");
             return false;
         }
-
         var remarkslength = $("#Reamarks").val().length;       // length of text
-        var attCount = $("#pdfFileInput")[0].files.length; 
+        var attCount = $("#pdfFileInput")[0].files.length;
 
         if (remarkslength != 0 && attCount != 0) {
             Swal.fire({
-               
+
                 text: "Please Click On Upload File Button",
                 icon: "warning",
-               
+
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
                 confirmButtonText: "OK"
@@ -412,8 +412,8 @@ $(document).ready(function () {
 
 
         if (allFieldsComplete) {
-          
-            CheckFwdCondition($("#spanFwdCurrentPslmId").html());
+
+            CheckFwdCondition();
 
         }
         //$('.FwdDropdown').addClass('col-md-6');
@@ -476,66 +476,6 @@ $("#btnFwdConfirm").on("click", function () {
     SaveFwdTo($("#spanFwdCurrentPslmId").html());
 
 });
-
-
-var projectMoveData = {
-    fwdTo: { id: "", text: "" },
-    sentToUnit: { id: "", text: "" },
-    ccList: [],
-    stage: { id: "", text: "" },
-    subStage: { id: "", text: "" },
-    action: { id: "", text: "" },
-    remarks: "",
-    fwdDate: "",
-    PDF: {
-        remarks: "",
-        attachment: ""
-    },
-};
-
-$(document).on("change keyup", "#ddlfwdFwdTo, #searchBox, #ddlfwdCCTo, #ddlfwdStage, #ddlfwdSubStage, #ddlfwdAction, #txtRemarksfwd, #TimeStampToProjfwd,#pdfFileInput, #Reamarks", function () {
-
-    const pdfFiles = $("#pdfFileInput")[0].files;
-    const pdfList = pdfFiles.length > 0 ? Array.from(pdfFiles).map(f => f.name) : [];
-
-    projectMoveData = {
-        fwdTo: {
-            id: $("#ddlfwdFwdTo").val(),
-            text: $("#ddlfwdFwdTo option:selected").text()
-        },
-        sentToUnit: {
-            id: $("#searchBox").val(),
-            text: $("#searchBox option:selected").text()
-        },
-        ccList: $("#ddlfwdCCTo").val()
-            ? $("#ddlfwdCCTo").val().map(id => ({
-                id: id,
-                text: $("#ddlfwdCCTo option[value='" + id + "']").text()
-            }))
-            : [],
-        stage: {
-            id: $("#ddlfwdStage").val(),
-            text: $("#ddlfwdStage option:selected").text()
-        },
-        subStage: {
-            id: $("#ddlfwdSubStage").val(),
-            text: $("#ddlfwdSubStage option:selected").text()
-        },
-        action: {
-            id: $("#ddlfwdAction").val(),
-            text: $("#ddlfwdAction option:selected").text()
-        },
-        remarks: $("#txtRemarksfwd").val(),
-        fwdDate: $("#TimeStampToProjfwd").val(),
-        //PDF: {
-        //    remarks: $("#Reamarks").val(),
-        //    attachments: pdfList.map(file => ({
-        //        name: file.name,
-        //        url: URL.createObjectURL(file) // enables preview link
-        //    }))
-        //},
-    };
-});
 function CheckFwdCondition(CurrentPslmId) {
 
     var userdata =
@@ -549,8 +489,7 @@ function CheckFwdCondition(CurrentPslmId) {
         type: 'POST',
         data: userdata,
         success: function (response) {
-            debugger;
-            console.log(response);
+            //console.log(response);
             $('.FwdDropdown').addClass('col-md-6');
          $('.ProjectsFwdUnit').addClass('d-none');
 
@@ -558,15 +497,7 @@ function CheckFwdCondition(CurrentPslmId) {
             $("#searchBox").hide()
             if (response != null) {
 
-                if (response == -6) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Previous stage are not Completed!",
-
-                    });
-                }
-              else if (response == -5) {
+                if (response == true) {
                     if ($("#ddlfwdSubStage").val() != 1) {
                         Swal.fire({
                             icon: "error",
@@ -584,14 +515,13 @@ function CheckFwdCondition(CurrentPslmId) {
                         });
                     }
                 }
-                else if (response == 1) {
-                    
+                else if (response == false) {
                     $(".Fwdtitle").html("Projects Attch Details");
                     $(".ProjectsFwd").addClass("d-none");
                     $(".Attmenthistory").removeClass("d-none");
-                   var legapproval = $("#spanLegacyApproval").html();
-                   
-                  
+                    var legapproval = $("#spanLegacyApproval").html();
+
+
                     //var listItem = "<tr><td class='text-center' colspan=5>No Record Found</td></tr>";
                     const rows = [
                         {
@@ -606,10 +536,10 @@ function CheckFwdCondition(CurrentPslmId) {
                         { label: "Sub Stage", value: projectMoveData.subStage.text || "-", icon: "fa-layer-group" },
                         { label: "Action", value: projectMoveData.action.text || "-", icon: "fa-tasks" },
                         { label: "Remarks", value: projectMoveData.remarks || "-", icon: "fa-comment-dots" }
-                      
+
 
                     ];
-                  
+
                     if (legapproval === "True") {
                         rows.push({
                             label: "Date Of FWD",
@@ -623,31 +553,28 @@ function CheckFwdCondition(CurrentPslmId) {
                     //    <div class="icon-circle d-flex align-items-center justify-content-center">
                     //        <i class="fas ${row.icon} fa-lg"></i>
                     //    </div>
-                     //</div >
+                    //</div >
                     // ---------- Render HTML ----------
                     const html = rows.map(row => `
-    <div class="col-md-6 col-lg-4 mb-3">
-      <div class="glass-card h-100 p-3">
-            <div class="d-flex align-items-start">
+  <div class="col-md-6 col-lg-4 mb-3">
+    <div class="glass-card h-100 p-3">
+          <div class="d-flex align-items-start">
 
-         
-          <div class="flex-grow-1">
-            <div class="label mb-1">${row.label}</div>
-            <div class="value">${row.value === "-" ? '<span class="placeholder">Not specified</span>' : row.value}</div>
-          </div>
+       
+        <div class="flex-grow-1">
+          <div class="label mb-1">${row.label}</div>
+          <div class="value">${row.value === "-" ? '<span class="placeholder">Not specified</span>' : row.value}</div>
         </div>
       </div>
     </div>
-  `).join('');
+  </div>
+`).join('');
 
                     $("#previewGrid").html(html);
-                    // 🪄 Toggle visibility
-                    $(".ProjectsFwd").addClass("d-none");
-                    $(".Attmenthistory").removeClass("d-none");
 
-                    //$("#AttBody").html(listItem);
-    
-                    CheckforPreviousapprovals()
+
+                    //$("#DetailBody").html(listItem);
+
                     /*AttOnFWD();*/
 
                 }
@@ -658,42 +585,10 @@ function CheckFwdCondition(CurrentPslmId) {
 
 
 }
-function CheckforPreviousapprovals() {
-    var userdata = {
-        "ProjId": $("#spanFwdProjectId").html(),
-        "StatusId": $("#ddlfwdSubStage").val(),
-        "Actionsid": $("#ddlfwdAction").val(),
-    };
 
-    $.ajax({
-        url: '/Projects/CheckPreviousApprovals',
-        type: 'POST',
-        data: userdata,
-        success: function (response) {
-            debugger;
-            console.log(response);
-            if (response.message.result !== "OK") {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Approval Required!',
-                    html: response.message.result,
-                    confirmButtonText: 'OK'
-                });
-            }
-            else {
-                // All good — continue your normal logic here
-                // Example:
-                // SubmitForward();
-            }
-        },
-        error: function () {
-            Swal.fire("Error", "Something went wrong!", "error");
-        }
-    });
-}
 
 function SaveFwdTo(CurrentPslmId, fd, allAttachments) {
-    
+    debugger;
 
     var psmdi = CurrentPslmId;
     var dateValue = $("#TimeStampToProjfwd").val();
@@ -822,7 +717,7 @@ function SaveFwdTo(CurrentPslmId, fd, allAttachments) {
         processData: false, // Don't process data as a query string
         contentType: false,
         success: function (response) {
-            
+            debugger;
      //console.log(response);
             if (response != null) {
 
@@ -980,3 +875,71 @@ function IsReadInbox(psmId) {
         }
     });
 }
+
+
+
+var projectMoveData = {
+    fwdTo: { id: "", text: "" },
+    sentToUnit: { id: "", text: "" },
+    ccList: [],
+    stage: { id: "", text: "" },
+    subStage: { id: "", text: "" },
+    action: { id: "", text: "" },
+    remarks: "",
+    fwdDate: "",
+    PDF: {
+        remarks: "",
+        attachment: ""
+    },
+};
+
+$(document).on("change keyup", "#ddlfwdFwdTo, #searchBox, #ddlfwdCCTo, #ddlfwdStage, #ddlfwdSubStage, #ddlfwdAction, #txtRemarksfwd, #TimeStampToProjfwd,#pdfFileInput, #Reamarks", function () {
+
+    const pdfFiles = $("#pdfFileInput")[0].files;
+    const pdfList = pdfFiles.length > 0 ? Array.from(pdfFiles).map(f => f.name) : [];
+
+    projectMoveData = {
+        fwdTo: {
+            id: $("#ddlfwdFwdTo").val(),
+            text: $("#ddlfwdFwdTo option:selected").text()
+        },
+        sentToUnit: {
+            id: $("#searchBox").val(),
+            text: $("#searchBox option:selected").text()
+        },
+        ccList: $("#ddlfwdCCTo").val()
+            ? $("#ddlfwdCCTo").val().map(id => ({
+                id: id,
+                text: $("#ddlfwdCCTo option[value='" + id + "']").text()
+            }))
+            : [],
+        stage: {
+            id: $("#ddlfwdStage").val(),
+            text: $("#ddlfwdStage option:selected").text()
+        },
+        subStage: {
+            id: $("#ddlfwdSubStage").val(),
+            text: $("#ddlfwdSubStage option:selected").text()
+        },
+        action: {
+            id: $("#ddlfwdAction").val(),
+            text: $("#ddlfwdAction option:selected").text()
+        },
+        remarks: $("#txtRemarksfwd").val(),
+        fwdDate: $("#TimeStampToProjfwd").val(),
+        //PDF: {
+        //    remarks: $("#Reamarks").val(),
+        //    attachments: pdfList.map(file => ({
+        //        name: file.name,
+        //        url: URL.createObjectURL(file) // enables preview link
+        //    }))
+        //},
+    };
+});
+
+
+$('#btnEditMove').on('click', function () {
+    $(".ProjectsFwd").removeClass("d-none");
+    $(".Attmenthistory").addClass("d-none");
+
+})

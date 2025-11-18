@@ -102,7 +102,7 @@
     });
 }
 function PdfDiv(tableSelector, watermarkSelector = "#IpAddress") {
-    
+    debugger;
     const table = $(tableSelector).DataTable();
     const filteredData = table.rows({ search: 'applied' }).data().toArray();
 

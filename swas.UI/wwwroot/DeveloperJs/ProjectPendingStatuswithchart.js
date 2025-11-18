@@ -36,9 +36,9 @@
                     const totalsForlabel = []; // total array
                     const labelscmd = []; // label array
                     const totalscmd = []; // total array
-                    var cmtunit = [1, 3, 4, 5];
                     const totalsForlabelcmd = []; // total array
                     let colorscmd = [];
+                    var cmtunit = [1, 3, 4, 5];
                     let responseforchart = response
                         .filter(function (elements) {
                             return elements.isComment == false;  // Filter out elements where isComment is false
@@ -69,19 +69,17 @@
 
 
                     for (var j = response.length - 1; j >= 0; j--) {
-                            //if (response[j].isComment == false) {
+                        //if (response[j].isComment == false) {
 
-                            //  labels.push(response[j].status + '(' + response[j].fromunit + ')');
-                            // totals.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
-                            // alert(response[j].fromunitId + '---' + response[j].statusId)
-                            //alert(calculateTotalMinutes(response[j].timeStampfrom, response[j].timeStampTo))
-                            // alert(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
-                            //totalsForlabel.push(DateCalculateago(response[j].timeStampfrom, response[j].timeStampTo).replace("</h6>", ""));
+                        //  labels.push(response[j].status + '(' + response[j].fromunit + ')');
+                        // totals.push(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
+                        // alert(response[j].fromunitId + '---' + response[j].statusId)
+                        //alert(calculateTotalMinutes(response[j].timeStampfrom, response[j].timeStampTo))
+                        // alert(DateCalculateagoForChart(response[j].timeStampfrom, response[j].timeStampTo))
+                        //totalsForlabel.push(DateCalculateago(response[j].timeStampfrom, response[j].timeStampTo).replace("</h6>", ""));
                         //}
                         //else {
                         if (cmtunit.includes(response[j].tounitId)) {
-
-
                             if (response[j].isComment == true) {
 
                                 if (response[j].firstStkStatus == "Accepted" || response[j].approvedStatusId == 1) {
@@ -122,6 +120,8 @@
 
                             }
                         }
+                      
+
                         //}
                     }
                     for (var j = 0; j < response.length; j++) {
@@ -349,6 +349,7 @@ function bindProjHoldChart(labels, totals, totalsForlabel, colors) {
 }
 let projHoldChartcomment;
 function bindProjHoldCommentsChart(labels, totals, totalsForlabel, colors) {
+    debugger;
     // If chart already exists, destroy it before creating new
     if (projHoldChartcomment) {
         projHoldChartcomment.destroy();

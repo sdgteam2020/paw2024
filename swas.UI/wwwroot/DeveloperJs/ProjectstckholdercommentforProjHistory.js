@@ -7,7 +7,7 @@
     GetAllComments1();
 
     $("#btnAnalytics").click(function () {
-       
+        debugger;
         $('#ProjHoldHistory').modal('show');
         // alert($(this).closest("tr").find(".clsspnprojId").html())
         $(".lblProjHoldHistory").html($("#projectNameCell").html())
@@ -209,23 +209,23 @@ function GetAllComments2() {
                     var words = projectName.split(" ");
                     // Limit to 6 words and add "..." if needed
                     var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projectName;
-                    var finalTitle = "Mov History: " + shortProjName;
+                    var finalTitle = "Project Name: " + shortProjName;
                     $('#addComment').text(finalTitle);
 
-                    var pad = "00";
-                    var datef2 = new Date();
-                    var months = "" + (datef2.getMonth() + 1);
-                    var days = "" + datef2.getDate();
-                    var monthsans = pad.substring(0, pad.length - months.length) + months;
-                    var dayans = pad.substring(0, pad.length - days.length) + days;
-                    var year = datef2.getFullYear();
-                    var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-                    var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-                    var ss = `${datef2.getSeconds()}`;
+                    //var pad = "00";
+                    //var datef2 = new Date();
+                    //var months = "" + (datef2.getMonth() + 1);
+                    //var days = "" + datef2.getDate();
+                    //var monthsans = pad.substring(0, pad.length - months.length) + months;
+                    //var dayans = pad.substring(0, pad.length - days.length) + days;
+                    //var year = datef2.getFullYear();
+                    //var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+                    //var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+                    //var ss = `${datef2.getSeconds()}`;
 
-                    // Today's date and time in the required formats
-                    var todayDate = `${year}-${monthsans}-${dayans}`;
-                    var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+                    //// Today's date and time in the required formats
+                    //var todayDate = `${year}-${monthsans}-${dayans}`;
+                    //var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
 
                    
                       

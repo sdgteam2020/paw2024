@@ -25,7 +25,7 @@ html {
 .bar_content {
     display: block; /* Important to give the content a width */
 
-    width: 100%;
+    width: 120%;
     transform: translateX(100%); /* Animation start out of the screen */
     /* Add the animation */
     animation: move 30s linear infinite /* infinite make reapeat the animation indefinitely */;

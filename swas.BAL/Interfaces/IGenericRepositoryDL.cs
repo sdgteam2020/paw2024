@@ -17,6 +17,5 @@ namespace swas.BAL.Interfaces
         Task<T> Delete(int id);
         Task Update(T entity);
         Task<T> UpdateWithReturn(T entity);
-        //Task<int> CheckFwdCondition(int ProjId, int StatusId);
     }
 }

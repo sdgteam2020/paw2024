@@ -45,7 +45,7 @@ function GetAllDashbaordCount()   {
                 dtoDashboardHeaderlst.sort((a, b) => a.stageId - b.stageId || a.statseq - b.statseq);
 
                 for (var i = 0; i < dtoDashboardHeaderlst.length; i++) {
-               
+                  
                     if (stageId != dtoDashboardHeaderlst[i].stageId) {
                         if (stageId != 0) {
                             listitem += '</div>';
@@ -204,7 +204,8 @@ function GetAllDashbaordCount()   {
                     //var spnstatus = $(this).closest("div").find("#spnstatus").html();
                     var spnstatusActionsMappingId = $(this).closest("div").find("#spnstatusActionsMappingId").html();
 
-                    tittle = "Approved:" + $(this).closest("div").find(".statusprojsummry").html();
+                    tittle = "Approved: " + $(this).closest("div").find(".statusprojsummry").html();
+                    tittleIPA = "Approved by: " + $(this).closest("div").find(".statusprojsummry").html() + " (Parallel Processing)";
                     if (parseInt(spnstatusActionsMappingId) == 1) {
 
                         Status = 'Accepted';
@@ -251,6 +252,12 @@ function GetAllDashbaordCount()   {
                             $('#IPAProjectApprovedTittle').html(tittle);
                             $('#IPAProjApproved').modal('show');
 
+                            getProjApproved(spnstatusId, spnstatusActionsMappingId);
+                        } else if (spnstatusActionsMappingId == 26 || spnstatusActionsMappingId == 31 || spnstatusActionsMappingId == 37)
+                        {
+                          
+                            $('#ProjectApprovedTittle').html(tittleIPA);
+                            $('#ProjApproved').modal('show');
                             getProjApproved(spnstatusId, spnstatusActionsMappingId);
                         }
 
@@ -538,10 +545,9 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                         //}
 
                         if (response[i].statusactionMappingid == 53) {
-                            if (response[i].statusactionMappingid == 53 && response[i].approvedRemarks != null && response[i].approvedDt != null) {
-                                // Show button if mapping ID is 53
+                            if (response[i].approvedDt != null && response[i].approvedRemarks != null) {
                                 listItem += `
-<td class='text-center'>
+<td class='text-center noExport'>
   <button class='badge badge-success generateCertificate'
       style='visibility:${response[i].statusactionMappingid == 53 ? "visible" : "hidden"}'
       onclick="window.open('/Home/Generate?ProjectName=${encodeURIComponent(response[i].projName)}&ApprovedRemarks=${encodeURIComponent(response[i].approvedRemarks)}&ApprovedDt=${encodeURIComponent(response[i].approvedDt)}', '_blank')">
@@ -551,11 +557,13 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                             } else {
                                 listItem += `<td></td>`;
                             }
+                            // Show button if mapping ID is 53
+                       
                         }
                         listItem += "</tr>";
                         count++;
                     }
-                   
+
                     if (hasIPA) {
                         //initializeDataTable("#IPAdashboardApproved");
                         $("#IPADetailBodyApproved").html(listItem);

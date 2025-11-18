@@ -31,7 +31,7 @@
 /* Card and card-body styling */
 .card {
     width: 100%;
-    /*height: 80vh;*/ /* Increased card height */
+    height: 80vh; /* Increased card height */
     overflow: hidden;
 }
 
@@ -331,8 +331,7 @@
 }
 
 .bold-text {
-    /*font-weight: bold;*/
-    font-weight: 900;
+    font-weight: bold;
 }
 
 .disabled-link {
@@ -381,30 +380,14 @@
 }
 
 .card {
-    /*height: 800px !important;*/
+    height: 800px !important;
 }
 
 .card-body {
     height: 100% !important;
     overflow-y: auto;
 }
-@keyframes blink {
-    0% {
-        opacity: 1;
-    }
 
-    50% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-#btn-ibutton {
-    animation: blink 1.5s linear infinite;
-}
 
 body {
     font-family: 'Inter', sans-serif;
@@ -414,6 +397,7 @@ body {
 .gradient-header {
     background: linear-gradient(90deg, #007bff 0%, #6610f2 100%);
 }
+
 .glass-card {
     background: rgba(255,255,255,0.85);
     backdrop-filter: blur(12px);
@@ -424,7 +408,7 @@ body {
     overflow: hidden;
 }
 
-   /* .glass-card:hover {
+/* .glass-card:hover {
         transform: translateY(-6px);
         box-shadow: 0 20px 30px rgba(0,0,0,.12);
     }*/
@@ -471,3 +455,18 @@ body {
     .pdf-link i {
         font-size: 1.1rem;
     }
+
+    @keyframes blink{
+        0%{
+            opacity:1;
+        }
+        50%{
+            opacity:0;
+        }
+        100%{
+            opacity:1;
+        }
+    }
+#btn-ibutton{
+    animation : blink 1.5s linear infinite;
+}

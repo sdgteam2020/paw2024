@@ -18,7 +18,7 @@ function ProjectWiseStatus() {
         data: userdata,
         type: 'POST',
         success: function (response) {
-           
+            debugger;
             if (response != "null" && response != null) {
 
                 if (response == -1) {
@@ -31,8 +31,9 @@ function ProjectWiseStatus() {
                 } else {
                     var count = 1;
 
-
+                
                     var StatusProjectlst = response.statusProjectlst;
+                  
                     var MovProjectlst = response.movProjectlst;
                     listItem += '<thead>';
                     listItem += '<tr>';
@@ -61,9 +62,9 @@ function ProjectWiseStatus() {
                             listItem += '<td class="align-middle text-center">' + count + '</td>';
                             //listItem += '<td class="clsspnprojId d-none">' + MovProjectlst[j].projId + '</td>';
                             //listItem += '<td class="align-middle text-center">' + count + '</td>';
-                            listItem += '<td class="btn-clsprojName">' + MovProjectlst[j].projName + '</td>';
+                            listItem += '<td class="RefLetter-container btn-clsprojName"><div class="tooltip-container noExport">' + trimByWords(MovProjectlst[j].projName, 5) + '</div><div class="RefLetter projnameforlabel">' + MovProjectlst[j].projName +'</div></td>';
 
-                           
+                          
                                 //var isstatus = MovProjectlst.filter(function (element) { return element.statusId == StatusProjectlst[i].statusId && element.projId == MovProjectlst[j].projId; });
 
                                 //if (isstatus.length != 0) {
@@ -115,10 +116,10 @@ function ProjectWiseStatus() {
                     $("#tblProjectWiseStatus").html(listItem);
 
                     $(document).unbind().on("click", ".btn-clsprojName", function () {
-                      
+                        
                         $('#ProjHoldHistory').modal('show');
                         // alert($(this).closest("tr").find(".clsspnprojId").html())
-                        $(".lblProjHoldHistory").html($(this).html())
+                        $(".lblProjHoldHistory").html($(this).closest("tr").find(".projnameforlabel").html())
                         $("#cardforProjHoldHistory").removeClass("d-none");
                         GetProjHold($(this).closest("tr").find(".clsspnprojId").html())
                         ProjectWiseStatusByProjid($(this).closest("tr").find(".clsspnprojId").html())
@@ -152,7 +153,7 @@ function ProjectWiseStatusByProjid(projid) {
         data: userdata,  // Pass the data (Projid) to the controller
         type: 'POST', // Make a POST request
         success: function (response) {
-          
+            debugger;
             if (response != "null" && response != null) {
 
                 if (response == -1) {

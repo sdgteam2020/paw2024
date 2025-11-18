@@ -25,7 +25,6 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Diagnostics;
 using swas.BAL.Utility;
-using static swas.BAL.Utility.EnumHelper;
 
 namespace swas.BAL.Repository
 {
@@ -60,7 +59,6 @@ namespace swas.BAL.Repository
                                join ststus in _dbContext.mStatus on actmap.StatusId equals ststus.StatusId
                                join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
                                join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
-                               
 
                                where b.ProjId == ProjectId 
                                orderby b.TimeStamp descending
@@ -202,37 +200,37 @@ namespace swas.BAL.Repository
             try
             {
                 List<DTOProjectHold> lst = new List<DTOProjectHold>();
-                var databyprojectid = await (from mov in _dbContext.ProjStakeHolderMov
-                                             join munit1 in _dbContext.tbl_mUnitBranch on mov.ToUnitId equals munit1.unitid
-                                             join munit2 in _dbContext.tbl_mUnitBranch on mov.FromUnitId equals munit2.unitid
-                                             join stsmap in _dbContext.TrnStatusActionsMapping on mov.StatusActionsMappingId equals stsmap.StatusActionsMappingId
-                                             join act in _dbContext.mActions on stsmap.ActionsId equals act.ActionsId
-                                             join sts in _dbContext.mStatus on stsmap.StatusId equals sts.StatusId
-                                             let latestComment = _dbContext.StkComment
-                  .Where(c => c.PsmId == mov.PsmId)
-                  .OrderByDescending(c => c.DateTimeOfUpdate)
-                  .Select(c => new { c.StkStatusId, c.DateTimeOfUpdate })
-                  .FirstOrDefault()
+				var databyprojectid = await (from mov in _dbContext.ProjStakeHolderMov
+											 join munit1 in _dbContext.tbl_mUnitBranch on mov.ToUnitId equals munit1.unitid
+											 join munit2 in _dbContext.tbl_mUnitBranch on mov.FromUnitId equals munit2.unitid
+											 join stsmap in _dbContext.TrnStatusActionsMapping on mov.StatusActionsMappingId equals stsmap.StatusActionsMappingId
+											 join act in _dbContext.mActions on stsmap.ActionsId equals act.ActionsId
+											 join sts in _dbContext.mStatus on stsmap.StatusId equals sts.StatusId
+											 let latestComment = _dbContext.StkComment
+				  .Where(c => c.PsmId == mov.PsmId)
+				  .OrderByDescending(c => c.DateTimeOfUpdate)
+				  .Select(c => new { c.StkStatusId, c.DateTimeOfUpdate })
+				  .FirstOrDefault()
 
-                                             let Firstactiondt = _dbContext.StkComment
-                                         .Where(c => c.PsmId == mov.PsmId)
-                                         .OrderBy(c => c.DateTimeOfUpdate)
-                                         .Select(c => new { c.StkStatusId, c.DateTimeOfUpdate })
-                                         .FirstOrDefault()
-                                             let hasApprovedStatus = _dbContext.StkComment
-    .Any(c => c.PsmId == mov.PsmId && c.StkStatusId == 1)
+											 let Firstactiondt = _dbContext.StkComment
+										 .Where(c => c.PsmId == mov.PsmId)
+										 .OrderBy(c => c.DateTimeOfUpdate)
+										 .Select(c => new { c.StkStatusId, c.DateTimeOfUpdate })
+										 .FirstOrDefault()
+											 let hasApprovedStatus = _dbContext.StkComment
+	.Any(c => c.PsmId == mov.PsmId && c.StkStatusId == 1)
 
 
 
-                                             let ApprovedDt = _dbContext.StkComment
-                                             .FirstOrDefault(c => c.PsmId == mov.PsmId && c.StkStatusId == 1)
-                                             let Reject = _dbContext.StkComment
-                                             .FirstOrDefault(c => c.PsmId == mov.PsmId && c.StkStatusId == 3)
-                                             where
-                                             // mov.IsComment==false &&
-                                             mov.ProjId == ProjectId
+											 let ApprovedDt = _dbContext.StkComment
+											 .FirstOrDefault(c => c.PsmId == mov.PsmId && c.StkStatusId == 1)
+											 let Reject = _dbContext.StkComment
+											 .FirstOrDefault(c => c.PsmId == mov.PsmId && c.StkStatusId == 3)
+											 where
+											 // mov.IsComment==false &&
+											 mov.ProjId == ProjectId
 
-                                             orderby mov.PsmId
+											 orderby mov.PsmId
                                              select new DTOProjectHold
                                              {
                                                  PsmId = mov.PsmId,
@@ -345,11 +343,10 @@ namespace swas.BAL.Repository
                         db.Fromunit = databyprojectid[i].Fromunit;
                         db.TimeStampfrom = databyprojectid[i].TimeStamp;
                         db.UndoRemarks = databyprojectid[i].UndoRemarks;
-                        if (databyprojectid[i].LatestCommentDate != null && databyprojectid[i].IsComment == true)
+                        if (databyprojectid[i].LatestCommentDate != null && databyprojectid[i].IsComment==true)
                         {
                             db.FirstActionDate = databyprojectid[i].FirstActionDate;
                             db.TimeStampTo = databyprojectid[i].LatestCommentDate;
-
                         }
 
                         else
@@ -918,80 +915,50 @@ namespace swas.BAL.Repository
             }
         }
 
-        public async Task<int> CheckFwdCondition(int ProjId, int StatusId)
+        public async Task<bool> CheckFwdCondition(int ProjId, int StatusId)
         {
-            var previousStatusIds = new List<int>
-    {
-        6, 7, 11, 20, 21, 24, 25, 26, 27, 28, 29
-    };
-
-            TrnStatusActionsMapping ret = null;
-
-            // 🟡 Step 1: Check if current status is already approved
             if (StatusId != 1)
             {
-                ret = await (from act in _dbContext.TrnStatusActionsMapping
-                             join mov in _dbContext.ProjStakeHolderMov
-                                on act.StatusActionsMappingId equals mov.StatusActionsMappingId
-                             where act.ActionsId == 2
-                                   && act.StatusId == StatusId
-                                   && mov.ProjId == ProjId
-                                   && mov.IsActive == true
-                                   && mov.UndoRemarks == null
-                             select act).FirstOrDefaultAsync();
+                //select act.StatusActionsMappingId,sts.StatusId,sts.Status from TrnStatusActionsMapping act
+                //inner join mStatus sts on act.StatusId=sts.StatusId
+                //inner join ProjStakeHolderMov mov on mov.StatusActionsMappingId=act.StatusActionsMappingId
+                //where act.ActionsId=2 and act.StatusId=20 and mov.ProjId=1
+                var ret = await (from act in _dbContext.TrnStatusActionsMapping
+                                 join sts in _dbContext.mStatus on act.StatusId equals sts.StatusId
+                                 join mov in _dbContext.ProjStakeHolderMov on act.StatusActionsMappingId equals mov.StatusActionsMappingId
+                                 where act.ActionsId == 2 && act.StatusId == StatusId && mov.ProjId == ProjId
+                                 && mov.IsActive == true && mov.UndoRemarks == null
+                                 select new TrnStatusActionsMapping
+                                 {
+                                     StatusActionsMappingId = act.StatusActionsMappingId
+                                 }).FirstOrDefaultAsync();
+                if (ret != null)
+                {
+                    return true;
+                }
+                return false;
             }
             else
             {
-                ret = await (from act in _dbContext.TrnStatusActionsMapping
-                             join mov in _dbContext.ProjStakeHolderMov
-                                on act.StatusActionsMappingId equals mov.StatusActionsMappingId
-                             where act.ActionsId == 1
-                                   && mov.ProjId == ProjId
-                                   && mov.ToUnitId == 1
-                                   && mov.IsComment == true
-                                   && mov.IsActive == true
-                                   && mov.UndoRemarks == null
-                             select act).FirstOrDefaultAsync();
+                var ret = await (from act in _dbContext.TrnStatusActionsMapping
+                                 join sts in _dbContext.mStatus on act.StatusId equals sts.StatusId
+                                 join mov in _dbContext.ProjStakeHolderMov on act.StatusActionsMappingId equals mov.StatusActionsMappingId
+                                 where act.ActionsId == 1 && mov.ProjId == ProjId && mov.ToUnitId == 1 && mov.IsComment == true
+                                 && mov.IsActive == true && mov.UndoRemarks==null
+                                 select new TrnStatusActionsMapping
+                                 {
+                                     StatusActionsMappingId = act.StatusActionsMappingId
+                                 }).FirstOrDefaultAsync();
+                if (ret != null)
+                {
+                    return true;
+                }
+                return false;
             }
-
-            // 🛑 If current status already approved → block
-            if (ret != null)
-                return (int)EnumHelper.Response.Alreadyapproved;
-
-            // 🟢 Step 2: Check if previous statuses must be approved
-            //if (previousStatusIds.Contains(StatusId))
-            //{
-            //    // Get only previous status < current
-            //    var requiredStatusIds = previousStatusIds
-            //                            .Where(x => x < StatusId)
-            //                            .ToList();
-
-            //    // Get already approved statuses from DB
-            //    var approvedStatuses = await (from act in _dbContext.TrnStatusActionsMapping
-            //                                  join mov in _dbContext.ProjStakeHolderMov
-            //                                      on act.StatusActionsMappingId equals mov.StatusActionsMappingId
-            //                                  where act.StatusId < StatusId
-            //                                        && mov.ProjId == ProjId
-            //                                        && mov.IsActive == true
-            //                                        && act.ActionsId == 2
-            //                                  select act.StatusId)
-            //                                  .Distinct()
-            //                                  .ToListAsync();
-
-            //    // Find NOT approved required statuses
-            //    var notApprovedStatuses = requiredStatusIds
-            //                                .Except(approvedStatuses)
-            //                                .ToList();
-
-            //    // 🛑 If ANY previous status is missing approval → return NOT Allowed
-            //    if (notApprovedStatuses.Any())
-            //        return (int)EnumHelper.Response.Prviousnotapproved;
-            //}
-
-            // 🟣 Everything OK → allow forward
-            return (int)EnumHelper.Response.Success;
         }
 
+
+        
 
         //public async Task<int> IsReadInbox(int psmId)
         //{
@@ -1297,64 +1264,6 @@ namespace swas.BAL.Repository
 
         }
 
-        public async Task<string> CheckPreviousApprovals(int statusId, int projId, int Actionsid)
-        {
-
-            var trn = await _dbContext.TrnStatusActionsMapping
-     .FirstOrDefaultAsync(x => x.ActionsId == 2 && x.StatusActionsMappingId == Actionsid);
-
-
-
-            try
-            {
-                var previousStatusIds = new List<int>
-        {
-            6, 7, 11, 20, 21, 24, 25, 26, 27, 28, 29
-        };
-
-                if (previousStatusIds.Contains(statusId) && trn != null &&Actionsid == trn.StatusActionsMappingId )
-                {
-                    var requiredStatusIds = previousStatusIds
-                                            .Where(x => x < statusId)
-                                            .ToList();
-
-                    var approvedStatuses = await (from act in _dbContext.TrnStatusActionsMapping
-                                                  join mov in _dbContext.ProjStakeHolderMov
-                                                      on act.StatusActionsMappingId equals mov.StatusActionsMappingId
-                                                  where previousStatusIds.Contains(act.StatusId)
-                                                        && requiredStatusIds.Contains(act.StatusId)
-                                                        && mov.ProjId == projId
-                                                        && mov.IsActive == true
-                                                        && mov.UndoRemarks == null
-                                                        && act.ActionsId == 2
-                                                  select act.StatusId)
-                                                  .Distinct()
-                                                  .ToListAsync();
-
-                    var notApprovedStatuses = requiredStatusIds
-                                                .Except(approvedStatuses)
-                                                .ToList();
-
-                    if (notApprovedStatuses.Any())
-                    {
-                        var missingNames = await _dbContext.mStatus
-                    .Where(s => notApprovedStatuses.Contains(s.StatusId))
-                    .Select(s => s.Status)
-                    .ToListAsync();
-
-                        string missing = string.Join("<br>", missingNames);
-                        return missing;
-                    }
-                }
-
-                return "OK";
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-
+      
     }
 }

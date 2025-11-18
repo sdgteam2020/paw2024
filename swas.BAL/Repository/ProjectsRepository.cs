@@ -329,9 +329,9 @@ namespace swas.BAL.Repository
 
 
                 var lst = new List<DTOProjectsFwd>();
-                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+				Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
-                using (var conn = _dbContext.Database.GetDbConnection())
+				using (var conn = _dbContext.Database.GetDbConnection())
                 {
                     await conn.OpenAsync();
 
@@ -358,9 +358,9 @@ namespace swas.BAL.Repository
                                 var item = new DTOProjectsFwd
                                 {
                                     ProjId = reader.GetInt32(reader.GetOrdinal("ProjId")),
+									
                                     ProjName = reader.IsDBNull(reader.GetOrdinal("ProjName")) ? null : reader.GetString(reader.GetOrdinal("ProjName")),
                                     StakeHolder = reader.IsDBNull(reader.GetOrdinal("StakeHolder")) ? null : reader.GetString(reader.GetOrdinal("StakeHolder")),
-
                                     TimeStamp = reader.IsDBNull(reader.GetOrdinal("TimeStamp")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("TimeStamp")),
                                     StatusactionMappingid = reader.IsDBNull(reader.GetOrdinal("StatusActionsMappingId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("StatusActionsMappingId"))
 
@@ -368,12 +368,9 @@ namespace swas.BAL.Repository
                                 if (item.StatusactionMappingid == 53)
                                 {
                                     item.StakeHolderId = reader.GetInt32(reader.GetOrdinal("StakeHolderId"));
-                                    if (Logins.unitid == 1 || Logins.unitid == 2 || Logins.unitid == 3 || Logins.unitid == 4 || Logins.unitid == 5 || Logins.unitid == item.StakeHolderId)
-                                    {
-                                        item.ApprovedDt = reader.IsDBNull(reader.GetOrdinal("approveddt")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("approveddt"));
-                                        item.ApprovedRemarks = reader.IsDBNull(reader.GetOrdinal("ApprovedRemarks")) ? null : reader.GetString(reader.GetOrdinal("ApprovedRemarks"));
-                                    }
-
+                                    if (Logins.unitid ==1 || Logins.unitid==2 || Logins.unitid==3||Logins.unitid==4||Logins.unitid==5 ||Logins.unitid ==item.StakeHolderId)
+                                    item.ApprovedDt = reader.IsDBNull(reader.GetOrdinal("approveddt")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("approveddt"));
+                                    item.ApprovedRemarks = reader.IsDBNull(reader.GetOrdinal("ApprovedRemarks")) ? null : reader.GetString(reader.GetOrdinal("ApprovedRemarks"));
                                 }
                                 else
                                 {

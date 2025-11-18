@@ -47,7 +47,7 @@
 
 
     $(".processDetail").click(function () {
-        
+        debugger;
         var $row = $(this).closest('tr');
         var ProjId = $row.find("#SpnCurrentProjId").text().trim();
         var date_type = $row.find("#SpnDate_type").text().trim();
@@ -576,21 +576,21 @@ function GetCCProject() {
 
                     listitem += '</div></td>';
                     listitem += '<td><span class="d-none noExport" id="SpnCurrentccProjId"> ' + response[i].projId + '</span>  <a data-proj-name="' + response[i].projName + '" data-proj-id="' + response[i].projId + '" href="/Projects/ProjHistory?EncyID=' + response[i].encyID + '&amp;Type=XR12">' +
-                        '<div class="tooltip-container" data-tooltip="' + response[i].projName + '">' +
-                        '<span class="short-text">' + truncateText(response[i].projName, 2) + '</span>' +
-                        '<span class="tooltip tooltip-text noExport" id="projNamecc">"' + response[i].projName + '"</span>' +
+                        '<div class="RefLetter-container" data-tooltip="' + response[i].projName + '">' +
+                        '<span class="">' + trimByWords(response[i].projName, 2) + '</span>' +
+                        '<span class="RefLetter noExport" id="projNamecc">' + breakLinesByWords(response[i].projName,4) + '</span>' +
                         '</div>' +
                         '</a> </td>';
 
                     listitem += '<td class="RefLetter-container">' +
                         '' + response[i].unitName + '' +
                         '<div class="RefLetter noExport">' +
-                        '' + response[i].sponsor + '' +
+                        '' + breakLinesByWords(response[i].sponsor,3) + '' +
                         '</div></td>';
                     listitem += '<td class="RefLetter-container">' +
                         '' + response[i].fromUnitUserDetail + '' +
                         '<div class="RefLetter noExport">' +
-                        '' + response[i].fromUnitName + '' +
+                        '' + breakLinesByWords(response[i].fromUnitName,4) + '' +
                         '</div></td>';
                     /* listitem += '<td>' + response[i].toUnitName + '</td>'*/
                     listitem += '<td>' + DateFormateddMMyyyyhhmmss(response[i].timeStamp) + '</td>'
@@ -603,7 +603,7 @@ function GetCCProject() {
 
                     listitem += '<td class="RefLetter-container"><div class="noExport">' + trimByWords(user, 2) + '</div>';
                     if (user != "") {
-                        listitem += ' <div class="RefLetter" >' + user + '</div>';
+                        listitem += ' <div class="RefLetter" >' + breakLinesByWords(user,4) + '</div>';
 
 
 
@@ -738,7 +738,7 @@ function truncateText(text, maxWords) {
 
 $(document).on("click", ".date-action", function (e) {
     e.preventDefault();
-    
+    debugger;
 
     const action = $(this).data("action");
    
@@ -780,9 +780,9 @@ $(document).on("click", ".date-action", function (e) {
             return remarks;
         }
     }).then((result) => {
-        
+        debugger;
         if (result.isConfirmed && result.value) {
-            
+            debugger;
             var remarks = result.value;
 
             $.ajax({
@@ -807,7 +807,7 @@ $(document).on("click", ".date-action", function (e) {
                     });
                 },
                 error: function (xhr, status, error) {
-                    
+                    debugger;
                     Swal.fire("Error!", "Something went wrong: " + error, "error");
                 }
             });
@@ -869,7 +869,7 @@ function SendRemainder(projid, remarks) {
             Remarks: remarks // if you want to send remarks to backend
         },
         success: function (response) {
-            
+            debugger;
             console.log(response);
             if (response > 0) {
                 Swal.fire("Success", "Reminder sent successfully", "success");
@@ -891,7 +891,7 @@ function SendRemainder(projid, remarks) {
 
 
 //$("#tabRemainder").on("click", function () {
-
+//    debugger;
 
 //    $.ajax({
 //        url: "/Projects/GetRemainderList",
@@ -901,7 +901,7 @@ function SendRemainder(projid, remarks) {
 //            console.log(response); // Fix typo here
 //        },
 //        error: function (xhr, status, error) {
-         
+//            debugger;
 //            Swal.fire("Error!", "Something went wrong: " + error, "error");
 //        }
 //    });
@@ -910,7 +910,7 @@ function SendRemainder(projid, remarks) {
 
 
 $(document).on('click', '#btnRemMove', function () {
-    
+    debugger;
 
 
     var ProjId = parseInt($(this).data("action"));
@@ -948,7 +948,7 @@ $(document).on('click', '#btnRemMove', function () {
 
 //}
 function GetProjRemainderMov(ProjId) {
-    
+    debugger;
     $('#ProjRemainderMov').modal('show');
 
     $.ajax({
@@ -957,7 +957,7 @@ function GetProjRemainderMov(ProjId) {
         data: { ProjectId: ProjId },
         success: function (response) {
             console.log(response); // Debugging
-            
+            debugger;
 
             const data = response.data || []; // Expecting array
             const length = data.length;
@@ -1044,7 +1044,7 @@ function GetProjRemainderMov(ProjId) {
 $(document).on("click", "#ReadRemainderNoti", function (e) {
     e.preventDefault();
    
-    
+    debugger;
 
     var $this = $(this);
     var projId = parseInt($this.data("projid"));
@@ -1103,7 +1103,6 @@ $(".btn-Fwd").click(function () {
     // Ensure we have the server date from window.SERVER or fetch it
     //  const S = window.SERVER.today ? window.SERVER : await window.fetchServerDate();
     let date_type_raw = $(this).data("date_type");
-   
     let date_type = (String(date_type_raw).toLowerCase() === "true");
     fetchServerDate().then(function (S) {
 
@@ -1130,10 +1129,4 @@ $(".btn-Fwd").click(function () {
         // Focus the input (optional: you can show a modal or scroll to input)
         $('#TimeStampToProjfwd').focus();
     })
-});
-
-// Optional: Go back to edit
-$(document).on("click", "#btnEditMove", function () {
-    $(".Attmenthistory").addClass("d-none");
-    $(".ProjectsFwd").removeClass("d-none");
 });

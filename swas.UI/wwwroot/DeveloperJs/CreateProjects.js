@@ -200,7 +200,7 @@ $(document).ready(function () {
         }
     });
     $("#btnbasic").click(function () {
-        
+        debugger;
 
 
         requiredFields = $('#tablebasic').find('.requiredField');
@@ -276,7 +276,7 @@ $(document).ready(function () {
             })
         }
         else {
-            
+            debugger;
             current_fs = $(this).parent();
           
             next_fs = $(this).parent().next();
@@ -335,7 +335,7 @@ $(document).ready(function () {
 
 
     $("#ProjName").on("keyup", function () {
-        
+        debugger;
         var query = $(this).val();
         if ($("#IsWhitelisted").val() === "Re-Vetted") {
             filterProjectNames(query);
