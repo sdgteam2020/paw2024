@@ -1,12 +1,10 @@
-﻿
-/*@import url("https://fonts.googleapis.com/css?family=Gelasio&display=swap");*/
+﻿/*@import url("https://fonts.googleapis.com/css?family=Gelasio&display=swap");*/
 
 * {
     box-sizing: border-box;
 }
 
-body,
-html {
+body, html {
     overflow-x: hidden;
 }
 
@@ -22,24 +20,74 @@ html {
     font-size: 18px;
 }
 
+/* Default animation for desktop */
 .bar_content {
-    display: block; /* Important to give the content a width */
-
+    display: inline-block;
+    white-space: nowrap;
     width: 120%;
-    transform: translateX(100%); /* Animation start out of the screen */
-    /* Add the animation */
-    animation: move 30s linear infinite /* infinite make reapeat the animation indefinitely */;
+    transform: translateX(100%);
+    animation: move 30s linear infinite;
 }
 
-/* Create the animation */
 @keyframes move {
     to {
         transform: translateX(-90%);
     }
 }
 
-.bar_space
-{
-   display:inline-block;
-   width:300px;
+/* Space between two messages */
+.bar_space {
+    display: inline-block;
+    width: 300px;
 }
+
+/* ----------------------------------
+   RESPONSIVE FOR ANDROID/MOBILE
+---------------------------------- */
+@media (max-width: 600px) {
+    .bar {
+        padding: 15px 0;
+        font-size: 14px; /* smaller text */
+    }
+
+    .bar_content {
+        width: 200%; /* extra width for mobile */
+        animation: moveMobile 25s linear infinite;
+    }
+
+    /* Faster & smoother for mobile */
+    @keyframes moveMobile {
+        from {
+            transform: translateX(100%);
+        }
+
+        to {
+            transform: translateX(-150%);
+        }
+    }
+
+    .bar_space {
+        width: 150px; /* smaller spacing for mobile */
+    }
+}
+
+/* Ultra-small devices (older Android phones) */
+@media (max-width: 400px) {
+    .bar {
+        font-size: 12px;
+    }
+
+    .bar_space {
+        width: 100px;
+    }
+
+    .bar_content {
+        width: 250%;
+        animation-duration: 20s;
+    }
+}
+
+
+/*
+*******************************************/
+/*Make Heading Responsive*/

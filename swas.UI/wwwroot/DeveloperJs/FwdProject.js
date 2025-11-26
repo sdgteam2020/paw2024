@@ -101,39 +101,15 @@ $(document).ready(function () {
 
     //    mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnStakeHolderId").html())
     //});
-    $(".btn-Undo").click(function () {
-        debugger;
+    /* $(".btn-Undo").click(function () {*/
+    $(document).on('click', '.btn-Undo',function () {
+      
         var projectName = $(this).closest("tr").find("a").data("proj-name");
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
 
         var words = projectName.split(" ");
         var shortProjName = words.length > 6 ? words.slice(0, 4).join(" ") + "..." : projectName;
 
-        //Swal.fire({
-        //    title: `<div>
-        //            Enter Pull Back Remarks: ${shortProjName}
-        //        </div>`,
-        //    input: "text",
-        //    inputAttributes: {
-        //        autocapitalize: "off"
-        //    },
-        //    showCancelButton: true,
-        //    confirmButtonText: "OK",
-        //    cancelButtonText: "Cancel",
-        //    //position: "top",
-        //    customClass: {
-        //        popup: 'custom-swal-popup',
-        //        confirmButton: 'custom-confirm-button',
-        //        cancelButton: 'custom-cancel-button',
-        //        input: 'custom-input-field'
-        //    },
-        //    preConfirm: async (login) => {
-        //        if (login == "") {
-        //            Swal.showValidationMessage(`Please Enter Remarks for project: ${shortProjName}`);
-        //        }
-        //    },
-        //    allowOutsideClick: () => !Swal.isLoading()
-        //})
 
         Swal.fire({
             title: `Enter Pull Back Remarks: ${shortProjName}`, // your dynamic title

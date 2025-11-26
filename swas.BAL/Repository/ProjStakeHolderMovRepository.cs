@@ -1264,63 +1264,81 @@ namespace swas.BAL.Repository
 
         }
 
-        public async Task<string> CheckPreviousApprovals(int statusId, int projId, int Actionsid)
+        public async Task<string> CheckPreviousApprovals(int statusId, int projId, int actionsId)
         {
-
+            // Fetch mapping to validate action
             var trn = await _dbContext.TrnStatusActionsMapping
-     .FirstOrDefaultAsync(x => x.ActionsId == 2 && x.StatusActionsMappingId == Actionsid);
-
-
+                .FirstOrDefaultAsync(x => x.ActionsId == 2 && x.StatusActionsMappingId == actionsId);
 
             try
             {
                 var previousStatusIds = new List<int>
-   {
-       6, 7, 11, 20, 21, 24, 25, 26, 27, 28, 29
-   };
+        {
+            6, 7, 11, 20, 21, 24, 25, 26, 27, 28, 29
+        };
 
-                if (previousStatusIds.Contains(statusId) && trn != null && Actionsid == trn.StatusActionsMappingId)
+               
+                // Validation
+                if (trn == null || !previousStatusIds.Contains(statusId) || actionsId != trn.StatusActionsMappingId)
+                    return "OK";
+
+                // Determine required (previous) statuses
+                var requiredStatusIds = previousStatusIds
+                                        .Where(x => x < statusId)
+                                        .ToList();
+
+                // Fetch approved statuses (Action 2)
+                var approvedStatuses = await (from act in _dbContext.TrnStatusActionsMapping
+                                              join mov in _dbContext.ProjStakeHolderMov
+                                                  on act.StatusActionsMappingId equals mov.StatusActionsMappingId
+                                              where previousStatusIds.Contains(act.StatusId)
+                                                    && requiredStatusIds.Contains(act.StatusId)
+                                                    && mov.ProjId == projId
+                                                    && mov.IsActive
+                                                    && act.ActionsId == 2
+                                              select act.StatusId)
+                                              .Distinct()
+                                              .ToListAsync();
+
+                // Fetch comment-completed statuses (Action 1 + comment + complete)
+                var commentStatuses = await (from act in _dbContext.TrnStatusActionsMapping
+                                             join mov in _dbContext.ProjStakeHolderMov
+                                                 on act.StatusActionsMappingId equals mov.StatusActionsMappingId
+                                             where previousStatusIds.Contains(act.StatusId)
+                                                   && mov.ProjId == projId
+                                                   && mov.IsActive
+                                                   && mov.IsComment
+                                                   && mov.IsComplete
+                                                   && act.ActionsId == 1
+                                             select act.StatusId)
+                                             .Distinct()
+                                             .ToListAsync();
+
+                // Find missing approvals
+                var notApprovedStatuses = requiredStatusIds
+                                          .Except(approvedStatuses)
+                                          .Except(commentStatuses)
+                                          .ToList();
+
+                if (notApprovedStatuses.Any())
                 {
-                    var requiredStatusIds = previousStatusIds
-                                            .Where(x => x < statusId)
-                                            .ToList();
+                    var missingNames = await _dbContext.mStatus
+                        .Where(s => notApprovedStatuses.Contains(s.StatusId))
+                        .Select(s => s.Status)
+                        .ToListAsync();
 
-                    var approvedStatuses = await (from act in _dbContext.TrnStatusActionsMapping
-                                                  join mov in _dbContext.ProjStakeHolderMov
-                                                      on act.StatusActionsMappingId equals mov.StatusActionsMappingId
-                                                  where previousStatusIds.Contains(act.StatusId)
-                                                        && requiredStatusIds.Contains(act.StatusId)
-                                                        && mov.ProjId == projId
-                                                        && mov.IsActive == true
-                                                        && mov.UndoRemarks == null
-                                                        && act.ActionsId == 2
-                                                  select act.StatusId)
-                                                  .Distinct()
-                                                  .ToListAsync();
-
-                    var notApprovedStatuses = requiredStatusIds
-                                                .Except(approvedStatuses)
-                                                .ToList();
-
-                    if (notApprovedStatuses.Any())
-                    {
-                        var missingNames = await _dbContext.mStatus
-                    .Where(s => notApprovedStatuses.Contains(s.StatusId))
-                    .Select(s => s.Status)
-                    .ToListAsync();
-
-                        string missing = string.Join("<br>", missingNames);
-                        return missing;
-                    }
+                    return string.Join("<br>", missingNames);
                 }
 
                 return "OK";
             }
             catch (Exception ex)
             {
-                throw ex;
+                // Proper exception handling to preserve stack trace
+                throw;
             }
         }
+
 
     }
 }

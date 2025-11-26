@@ -129,7 +129,10 @@
         GetCCProject();
     });
 });
-
+$("#tabParked").click(function () {
+ 
+    GetParkedProject();
+});
 
 
 function GetForCommentStakeHolder(ProjId, psmId) {
@@ -1129,4 +1132,159 @@ $(".btn-Fwd").click(function () {
         // Focus the input (optional: you can show a modal or scroll to input)
         $('#TimeStampToProjfwd').focus();
     })
+});
+function GetParkedProject() {
+    $.ajax({
+        url: '/Projects/GetActParkedProject',
+        type: 'GET',
+        success: function (response) {
+            // Clear table body
+            $("#parkedtblData").html("");
+
+            if (response != null && response.length > 0) {
+                let listitem = "";
+                let count = 0;
+
+                response.forEach(function (project) {
+                    count++;
+
+                    listitem += '<tr>';
+                    listitem += `<td><div class="d-flex">${count}</div></td>`;
+
+                    // Project Name & IDs
+                    listitem += `
+                        <td>
+                            <span class="d-none noExport" id="SpnCurrentParkedProjId">${project.projId}</span>
+                            <span id="spnCurrentPsmid" class="d-none noExport">${project.psmIds}</span>
+                            <a data-proj-name="${project.projName}" data-proj-id="${project.projId}" href="/Projects/ProjHistory?EncyID=${project.encyID}&amp;Type=XR12">
+                                <div class="RefLetter-container" data-tooltip="${project.projName}">
+                                    <span>${trimByWords(project.projName, 2)}</span>
+                                    <span class="RefLetter noExport" id="projNamecc">${breakLinesByWords(project.projName, 4)}</span>
+                                </div>
+                            </a>
+                        </td>`;
+
+                    // Sponsor
+                    listitem += `
+                        <td class="RefLetter-container">
+                            ${project.unitName}
+                            <div class="RefLetter noExport">${breakLinesByWords(project.sponsor, 3)}</div>
+                        </td>`;
+
+                    // From Unit
+                    listitem += `
+                        <td class="RefLetter-container">
+                            ${project.fromUnitUserDetail}
+                            <div class="RefLetter noExport">${breakLinesByWords(project.fromUnitName, 4)}</div>
+                        </td>`;
+
+                    // Received On
+                    listitem += `<td>${DateFormateddMMyyyyhhmmss(project.timeStamp)}</td>`;
+
+                    // Stage & SubStage
+                    listitem += `<td>${project.stage}</td>`;
+                    listitem += `<td>${project.subStage ?? project.status ?? ""}</td>`;
+
+                    // Parked Status
+                    listitem += `
+                        <td>
+                            <div class="btn btn-warning p-2" style="margin-top: 1px;">
+                                <span>Parked</span>
+                            </div>
+                        </td>`;
+
+                    // Actions: History + Unpark
+                    listitem += `
+                        <td>
+                            <div class="row d-flex align-items-center">
+                                <div class="col-auto p-0 me-1">
+                                    <button type="button" class="btn btn-success btn-FwdHistoryCcc" data-proj-name="${project.projName}" title="History" style="margin-top: 1px;">
+                                        <i class="fa-solid fa-timeline"></i>
+                                    </button>
+                                </div>
+                                <div class="col-auto p-0">
+                                    <button class="btn btn-danger btn_unparked" style="margin-top: 1px;">Send to Inbox</button>
+                                </div>
+                            </div>
+                        </td>`;
+
+                    listitem += '</tr>';
+                });
+
+                $("#parkedtblData").html(listitem);
+            }
+
+            // Initialize DataTable safely
+            if ($.fn.DataTable.isDataTable("#parkedtable")) {
+                $("#parkedtable").DataTable().destroy();
+            }
+
+            $("#parkedtable").DataTable({
+                language: {
+                    emptyTable: "No Record Found"
+                },
+                destroy: true,
+                autoWidth: false
+            });
+
+            // History button click event
+            $(".btn-FwdHistoryCcc").off('click').on('click', function () {
+                var projName = $(this).closest("tr").find("#projNamecc").html();
+                $('#lblHistory').text(`Mov History: ${projName}`);
+                $('#ProjFwdHistory').modal('show');
+
+                GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentParkedProjId").html());
+            });
+
+            // Unpark button click event
+            $(".btn_unparked").off('click').on('click', function () {
+                var psmid = $(this).closest("tr").find("#spnCurrentPsmid").text();
+                Unparkedbypsmid(psmid);
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error("Error fetching parked projects:", status, error);
+            // Display empty table message
+            if ($.fn.DataTable.isDataTable("#parkedtable")) {
+                $("#parkedtable").DataTable().destroy();
+            }
+            $("#parkedtblData").html("");
+            $("#parkedtable").DataTable({
+                language: {
+                    emptyTable: "Error loading data. Please try again later."
+                },
+                destroy: true
+            });
+        }
+    });
+}
+
+function Unparkedbypsmid(psmid) {
+
+    $.ajax({
+        url: '/Projects/ParkedProject',
+        type: 'POST',
+        data: { psmid: psmid },
+        success: function (response) {
+
+            if (response && response != null) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: response.message,
+                    showConfirmButton: false,
+                    timer: 1000   // Increased time
+                });
+            }
+            setTimeout(function () {
+                window.location.reload();
+            }, 1000);
+        }
+    });
+}
+$(".parkedProj").on('click', function () {
+  
+    var psmid = $(this).closest("tr").find("#SpnCurrentpsmId").text();
+  
+    Unparkedbypsmid(psmid);
 });

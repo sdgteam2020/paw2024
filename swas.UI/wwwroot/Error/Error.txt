@@ -1,143 +1,3 @@
-Date : 05-03-2025 12:13:54
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 07-03-2025 10:13:40
-Object reference not set to an instance of an object.
------------------------------------------------------------------------------
-Date : 07-03-2025 10:13:40
-Object reference not set to an instance of an object.
------------------------------------------------------------------------------
-Date : 07-03-2025 10:13:40
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 10-03-2025 11:09:02
-Could not find a part of the path 'C:\inetpub\wwwroot\swas_pub\wwwroot\Download\372.pdf'.
------------------------------------------------------------------------------
-Date : 10-03-2025 11:10:16
-Could not find a part of the path 'C:\inetpub\wwwroot\swas_pub\wwwroot\Download\212.pdf'.
------------------------------------------------------------------------------
-Date : 10-03-2025 11:24:11
-The payload was invalid. For more information go to http://aka.ms/dataprotectionwarning
------------------------------------------------------------------------------
-Date : 10-03-2025 11:24:11
-Object reference not set to an instance of an object.
------------------------------------------------------------------------------
-Date : 10-03-2025 11:24:11
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 10-03-2025 11:24:17
-The payload was invalid. For more information go to http://aka.ms/dataprotectionwarning
------------------------------------------------------------------------------
-Date : 10-03-2025 11:24:17
-Object reference not set to an instance of an object.
------------------------------------------------------------------------------
-Date : 10-03-2025 11:24:17
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 11-03-2025 10:43:41
-Could not find a part of the path 'C:\inetpub\wwwroot\swas_pub\wwwroot\Download\569.pdf'.
------------------------------------------------------------------------------
-Date : 11-03-2025 10:44:54
-Could not find a part of the path 'C:\inetpub\wwwroot\swas_pub\wwwroot\Download\558.pdf'.
------------------------------------------------------------------------------
-Date : 11-03-2025 11:34:00
-Object reference not set to an instance of an object.
------------------------------------------------------------------------------
-Date : 11-03-2025 11:34:00
-Object reference not set to an instance of an object.
------------------------------------------------------------------------------
-Date : 11-03-2025 11:34:01
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 11-03-2025 11:34:02
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 12-03-2025 14:18:52
-Could not find a part of the path 'C:\inetpub\wwwroot\swas_pub\wwwroot\Download\229.pdf'.
------------------------------------------------------------------------------
-Date : 12-03-2025 14:19:05
-Could not find a part of the path 'C:\inetpub\wwwroot\swas_pub\wwwroot\Download\211.pdf'.
------------------------------------------------------------------------------
-Date : 16-05-2025 11:40:04
-Object reference not set to an instance of an object.
------------------------------------------------------------------------------
-Date : 16-05-2025 11:40:04
-Object reference not set to an instance of an object.
------------------------------------------------------------------------------
-Date : 16-05-2025 11:40:04
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 27-02-2024 16:17:08
-An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
------------------------------------------------------------------------------
-Date : 27-02-2024 16:17:14
-An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
------------------------------------------------------------------------------
-Date : 27-02-2024 16:17:24
-An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
------------------------------------------------------------------------------
-Date : 28-02-2024 02:30:40
-Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
------------------------------------------------------------------------------
-Date : 28-02-2024 02:30:40
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 02:31:15
-Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
------------------------------------------------------------------------------
-Date : 28-02-2024 02:31:15
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 02:31:25
-Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
------------------------------------------------------------------------------
-Date : 28-02-2024 02:31:25
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 02:31:29
-Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
------------------------------------------------------------------------------
-Date : 28-02-2024 02:31:29
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 02:33:43
-Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
------------------------------------------------------------------------------
-Date : 28-02-2024 02:33:48
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 02:35:56
-Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
------------------------------------------------------------------------------
-Date : 28-02-2024 02:35:56
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 02:36:17
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 02:41:12
-Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
------------------------------------------------------------------------------
-Date : 28-02-2024 02:41:12
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 02:43:59
-Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
------------------------------------------------------------------------------
-Date : 28-02-2024 00:35:48
-The ConnectionString property has not been initialized.
------------------------------------------------------------------------------
-Date : 28-02-2024 00:35:48
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 00:36:54
-The ConnectionString property has not been initialized.
------------------------------------------------------------------------------
-Date : 28-02-2024 00:36:54
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 00:40:47
-The ConnectionString property has not been initialized.
 -----------------------------------------------------------------------------
 Date : 28-02-2024 00:40:47
 Request failed & Status Code : 200
@@ -898,4 +758,144 @@ The statement has been terminated.
 -----------------------------------------------------------------------------
 Date : 18-11-2025 11:10:44
 String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'Remarks'. Truncated value: 'Lt Col manish / ddgit_ihqa(DDGIT) 𝐑𝐞𝐦𝐚𝐫𝐤𝐬: '.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 21-11-2025 11:55:58
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 21-11-2025 11:55:58
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 21-11-2025 15:55:00
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 21-11-2025 15:55:00
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 21-11-2025 17:05:18
+'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
+-----------------------------------------------------------------------------
+Date : 21-11-2025 17:05:18
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 21-11-2025 17:05:27
+'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
+-----------------------------------------------------------------------------
+Date : 21-11-2025 17:05:27
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 24-11-2025 10:46:38
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 24-11-2025 11:23:09
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 24-11-2025 11:25:49
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 24-11-2025 11:36:57
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 24-11-2025 11:41:09
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 24-11-2025 11:46:26
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 24-11-2025 11:48:59
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 24-11-2025 12:27:48
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 24-11-2025 12:34:57
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 24-11-2025 12:59:54
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 24-11-2025 14:17:24
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 24-11-2025 14:17:47
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 24-11-2025 14:21:41
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 24-11-2025 14:36:49
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 24-11-2025 14:40:35
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 24-11-2025 14:45:34
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 24-11-2025 14:47:10
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 24-11-2025 14:54:38
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 24-11-2025 15:47:32
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 25-11-2025 15:29:53
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 25-11-2025 15:39:24
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 25-11-2025 15:42:11
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 25-11-2025 15:48:28
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 25-11-2025 15:49:47
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 25-11-2025 15:50:04
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 25-11-2025 16:06:53
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 26-11-2025 09:30:51
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 26-11-2025 09:39:00
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 26-11-2025 09:42:03
+String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
 The statement has been terminated.

@@ -54,6 +54,7 @@ namespace swas.DAL.Models
 
         public bool IsComplete { get; set; }
         public bool IsComment { get; set; }
+        public bool IsParked { get; set; }
         public bool IsCc { get; set; }
 
         public string? UserDetails { get; set; }

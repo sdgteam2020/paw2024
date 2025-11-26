@@ -259,6 +259,12 @@ namespace swas.UI.Controllers
             return Json(await _projectsRepository.GetActCcItemsAsync());
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetActParkedProject()
+        {
+            return Json(await _projectsRepository.GetActParkedItemsAsync());
+        }
+
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> GetAllStatus()
         {
@@ -2714,7 +2720,39 @@ namespace swas.UI.Controllers
             }
 
         }
+        [HttpPost]
+        public IActionResult ParkedProject(int psmid)
+        {
+            try
+            {
+                var unpack = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == psmid);
 
+                if (unpack == null)
+                    return Json(new { message = "Project not found!" });
+
+                string parkmsg;
+
+                if (!unpack.IsParked)
+                {
+                    unpack.IsParked = true;
+                    parkmsg = "Project Successfully Parked";
+                }
+                else
+                {
+                    unpack.IsParked = false;
+                    parkmsg = "Project Successfully Unparked";
+                }
+
+                _dbContext.ProjStakeHolderMov.Update(unpack);
+                _dbContext.SaveChanges();
+
+                return Json(new { message = parkmsg });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { message = "Error: " + ex.Message });
+            }
+        }
 
 
     }

@@ -83,7 +83,8 @@ namespace swas.BAL.Interfaces
         //Task<List<tbl_ProjStakeHolderMov>> GetProjStkHolderMovmentByProjId(int? ProjId);
 
         Task<List<AddNewProject>> GetMyProjects();
-        
+        Task<List<DTOProjectsFwd>> GetActParkedItemsAsync();
+
         //Task<int> GetProjIdByPsmiId(int? Psmid, int? StackHolderId);
     }
 

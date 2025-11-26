@@ -50,6 +50,8 @@ using System.Security.Cryptography.X509Certificates;
 using iText.Kernel.Colors;
 using iText.Kernel.Pdf.Canvas.Draw;
 using iText.Layout.Element;
+using iText.IO.Image;
+using iText.Layout.Borders;
 
 namespace swas.UI.Controllers
 {
@@ -87,9 +89,10 @@ namespace swas.UI.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IDateApprovalRepository _repo;
         private readonly ILegacyHistoryRepository _legacyHistoryRepository;
+        private readonly IWatermarkRepository _watermarkRepo;
         //private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager;
 
-        public HomeController(IProjectsRepository projectsRepository, ICommentRepository commentRepository, SignInManager<ApplicationUser> signInManager, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IDdlRepository dlRepository, ApplicationDbContext context, IUnitRepository unitRepository, IProjStakeHolderMovRepository stkholdmove, IChartService chartService, IWebHostEnvironment _webHostEnvironment, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, IDataProtectionProvider dataProtector, IActionsRepository actionsRepository, IAttHistoryRepository attHistoryRepository, ILogger<HomeController> logger, IDateApprovalRepository repo, ILegacyHistoryRepository legacyHistoryRepository)
+        public HomeController(IWatermarkRepository watermarkRepo,IProjectsRepository projectsRepository, ICommentRepository commentRepository, SignInManager<ApplicationUser> signInManager, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IDdlRepository dlRepository, ApplicationDbContext context, IUnitRepository unitRepository, IProjStakeHolderMovRepository stkholdmove, IChartService chartService, IWebHostEnvironment _webHostEnvironment, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, IDataProtectionProvider dataProtector, IActionsRepository actionsRepository, IAttHistoryRepository attHistoryRepository, ILogger<HomeController> logger, IDateApprovalRepository repo, ILegacyHistoryRepository legacyHistoryRepository)
         {
             //  _logger = logger; _repositoryUser = repositoryUser;
             _projectsRepository = projectsRepository;
@@ -111,6 +114,7 @@ namespace swas.UI.Controllers
             _logger = logger;
             _repo = repo;
             _legacyHistoryRepository = legacyHistoryRepository;
+            _watermarkRepo = watermarkRepo;
         }
 
 
@@ -1029,8 +1033,20 @@ s.IsDashboard,
         public async Task<IActionResult> GetWhiteListedActionProj(int TypeId)
         {
             var ret = await _projectsRepository.GetWhiteListedActionProj(TypeId);
-            return Json(ret);
+
+            var units = await _unitRepository.GetAllUnitAsync();
+            var typeo = _context.mHostType
+                        .Select(x => new { x.HostTypeID, x.HostingDesc })
+                        .ToList();
+
+            return Json(new
+            {
+                Projects = ret,
+                Units = units,
+                HostTypes = typeo
+            });
         }
+
 
 
         public async Task<IActionResult> ProjUnitComments()
@@ -1872,100 +1888,129 @@ s.IsDashboard,
 
                 using (var ms = new MemoryStream())
                 {
-                    // Initialize PDF document
                     PdfWriter writer = new PdfWriter(ms);
                     PdfDocument pdf = new PdfDocument(writer);
                     Document document = new Document(pdf, iText.Kernel.Geom.PageSize.A4);
+                    document.SetMargins(40, 35, 40, 35);
 
-                    // Set default font
+                    // PREPARE WATERMARK FIRST
+                    string ip = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+                    string watermark = $"{ip}   {DateTime.Now:dd-MM-yyyy HH:mm:ss}";
+                    //_watermarkRepo.AddWatermark(pdf, watermark);
+
+                    // Default font
                     PdfFont font = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
                     document.SetFont(font);
 
-                    // Add header
-                    //Paragraph header = new Paragraph("PAW (Portal For Application WhiteListing)")
-                    //    .SetFontSize(24)
-                    //    .SetBold()
-                    //    .SetTextAlignment(TextAlignment.CENTER)
-                    //    .SetMarginTop(20)
-                    //    .SetMarginBottom(15)
-                    //    .SetFontColor(ColorConstants.DARK_GRAY);
-                    //document.Add(header);
+                    // PREMIUM HEADER BAR
+                    Table header = new Table(new float[] { 85, 15 }).UseAllAvailableWidth();
 
-                    // Add title with a decorative background
-                    Paragraph title = new Paragraph("IPA Certificate: Portal for Application Whitelisting (PAW)")
-                        .SetFontSize(18)
-                        .SetBold()
-                        .SetTextAlignment(TextAlignment.CENTER)
-                        .SetBackgroundColor(new DeviceRgb(240, 240, 240))
-                        .SetPadding(5)
-                        .SetMarginBottom(20);
-                    document.Add(title);
+                    DeviceRgb headerColor = new DeviceRgb(230, 230, 230);
 
-                    // Add decorative line
-                    document.Add(new LineSeparator(new SolidLine(1f))
-                        .SetMarginBottom(20)
-                        .SetStrokeColor(ColorConstants.BLACK));
+                    ImageData img = ImageDataFactory.Create("wwwroot/assets/images/Certificate.png");
+                    header.AddCell(new Cell()
+                        .Add(new Image(img).SetWidth(70).SetHeight(80))
+                        .SetBorder(Border.NO_BORDER)
+                        .SetVerticalAlignment(VerticalAlignment.MIDDLE)
+                        .SetBackgroundColor(headerColor));
 
-                    // Project completion message
-                    document.Add(new Paragraph("This is to certifies that ,IPA has been granted by Steering Tech Committee.")
+
+                    Paragraph heading = new Paragraph("IPA Certificate")
+     .SetFontSize(24)                     // Bigger font for main heading
+     .SetBold()
+     .SetFontColor(ColorConstants.BLACK)
+     .SetTextAlignment(TextAlignment.CENTER)
+     .SetMarginBottom(4);                 // Space before subtitle
+
+                    // Subtitle: Project Name
+                    Paragraph subtitle = new Paragraph(ProjectName)
+                        .SetFontSize(18)                     // Slightly smaller for subtitle
+                        .SetFontColor(ColorConstants.DARK_GRAY)
+                        .SetTextAlignment(TextAlignment.LEFT);                        // Optional styling
+
+                    // Add to the header cell
+                    header.AddCell(
+                        new Cell()
+                            .Add(heading)
+                            .Add(subtitle)
+                            .SetBorder(Border.NO_BORDER)
+                            .SetBackgroundColor(headerColor)
+                            .SetVerticalAlignment(VerticalAlignment.MIDDLE)
+                            .SetTextAlignment(TextAlignment.CENTER)
+                            .SetPaddingTop(8)
+                            .SetPaddingBottom(8)
+                    );
+
+                    document.Add(header);
+
+                    // Soft separator
+                    document.Add(new Paragraph("\n"));
+                    document.Add(new LineSeparator(new SolidLine(1f)).SetStrokeColor(ColorConstants.DARK_GRAY));
+                    document.Add(new Paragraph("\n"));
+
+                    // Intro text
+                    document.Add(new Paragraph("It is Certified that IPA has been granted by Steering Tech Committee for ibid project. Details are as under:")
                         .SetFontSize(14)
-                        .SetTextAlignment(TextAlignment.CENTER)
-                        .SetMarginBottom(25)
-                        .SetFontColor(ColorConstants.BLACK));
-
-                    // Create a table for project details with a subtle border
-                    Table table = new Table(UnitValue.CreatePercentArray(new float[] { 40, 60 }))
-                        .UseAllAvailableWidth()
-                        .SetMarginBottom(25)
-                        .SetBorder(new iText.Layout.Borders.SolidBorder(ColorConstants.LIGHT_GRAY, 0.5f))
-                        .SetPadding(8)
-                        .SetBackgroundColor(new DeviceRgb(245, 245, 245));
-
-                    // Add table cells
-                    table.AddCell(CreateCell("Project Name:", true));
-                    table.AddCell(CreateCell(ProjectName, false));
-                    table.AddCell(CreateCell("Approved Remarks (DDGIT):", true));
-                    table.AddCell(CreateCell(ApprovedRemarks, false));
-                    table.AddCell(CreateCell("Approved Date (PAW):", true));
-                    table.AddCell(CreateCell(approvedDate.ToString("dd-MM-yyyy HH:mm:ss"), false));
-                    table.AddCell(CreateCell("Date of Generation:", true));
-                    table.AddCell(CreateCell(DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), false));
-
-                    document.Add(table);
-
-                    // Add additional instructions
-                    document.Add(new Paragraph(
-                        "This Certificate is auto-generated based on electronic data and does not require an ink sign." +
-                        "It may therefore be treated as an authorized document.")
-                        .SetFontSize(10)
-                        .SetTextAlignment(TextAlignment.JUSTIFIED)
-                        .SetMarginTop(20)
-                        .SetMarginBottom(15));
-
-                    //document.Add(new Paragraph(
-                    //    "Please print out this page and attach a copy of the certificate to the final page in all assignments you submit on each module as part of your programme.")
-                    //    .SetFontSize(10)
-                    //    .SetBold()
-                    //    .SetTextAlignment(TextAlignment.JUSTIFIED)
-                    //    .SetMarginBottom(20));
-
-                    // Add footer with IP address and decorative line
-
-                    Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-                    var user = Helper.LoginDetails(Logins);
-                    var ipAddress = HttpContext.Connection.RemoteIpAddress?.MapToIPv4()?.ToString() ?? "Unknown";
-                    document.Add(new LineSeparator(new SolidLine(0.5f))
-                        .SetMarginBottom(10)
-                        .SetStrokeColor(ColorConstants.LIGHT_GRAY));
-                    document.Add(new Paragraph($"Generated by [{user}  {"IP: " + ipAddress}] on {DateTime.Now.ToString("dd MMM yyyy HH:mm:ss")}")
-                        .SetFontSize(10)
+                        .SetTextAlignment(TextAlignment.LEFT)
                         .SetBold()
-                        .SetOpacity(0.5f)
-                        .SetTextAlignment(TextAlignment.CENTER)
-                        .SetFontColor(ColorConstants.BLACK)
-                        );
+                        .SetMarginBottom(20));
 
-                    // Close the document
+                    // TABLE SECTION — PREMIUM LOOK
+                    DeviceRgb bg = new DeviceRgb(245, 245, 245);
+
+                    // Use 3 columns because each row contains: Label | Colon | Value
+                    Table table = new Table(new float[] { 40, 5, 55 })
+                        .UseAllAvailableWidth()
+                        .SetPadding(10)
+                        .SetBackgroundColor(bg)
+                        .SetBorder(new SolidBorder(ColorConstants.LIGHT_GRAY, 1.0f))
+                        .SetMarginBottom(30);
+
+                    // Project Name
+
+
+                    table.AddCell(CreateCell("Project Name", true).SetWidth(160));
+                    table.AddCell(CreateCell(":", true));
+                    table.AddCell(CreateCell(ProjectName, true));
+
+                    // Approved Date
+                    table.AddCell(CreateCell("Approved Date (PAW)", true).SetWidth(160));
+                    table.AddCell(CreateCell(":", true));
+                    table.AddCell(CreateCell(approvedDate.ToString("dd-MM-yyyy HH:mm:ss"), true));
+
+                    // Remarks
+                    table.AddCell(CreateCell("Approved Remarks (DDGIT)", true).SetWidth(160));
+                    table.AddCell(CreateCell(":", true));
+                    table.AddCell(CreateCell(ApprovedRemarks, true));
+
+                    // Date of Generation
+                    table.AddCell(CreateCell("Date of Cert Generation", true).SetWidth(160));
+                    table.AddCell(CreateCell(":", true));
+                    table.AddCell(CreateCell(DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), true));
+
+                    // Add to document
+                    document.Add(table);
+                    // Note
+                    document.Add(new Paragraph("This certificate is auto-generated based on electronic data and does not require an ink signature.")
+                        .SetFontSize(10)
+                        .SetTextAlignment(TextAlignment.CENTER)
+                        .SetOpacity(0.7f)
+                        .SetMarginBottom(20));
+
+                    // Footer Line
+                    document.Add(new LineSeparator(new SolidLine(0.5f)).SetStrokeColor(ColorConstants.GRAY));
+
+                    Login login = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+                    var user = Helper.LoginDetails(login);
+
+                    document.Add(new Paragraph($"Generated by [{user}]  |  IP: {ip}")
+                        .SetFontSize(10)
+                        .SetTextAlignment(TextAlignment.CENTER)
+                        .SetOpacity(0.6f)
+                    );
+
+                  
+                    _watermarkRepo.AddWatermark(pdf, watermark);
                     document.Close();
 
                     // Return PDF to open in a new tab
@@ -1990,12 +2035,12 @@ s.IsDashboard,
                 .SetTextAlignment(TextAlignment.LEFT);
             if (isBold)
             {
-                p.SetBold();
+                p.SetBold() ;
             }
             return new Cell()
                 .Add(p)
                 .SetBorder(iText.Layout.Borders.Border.NO_BORDER)
-                .SetPadding(6);
+                .SetPadding(6) ; 
         }
 
 

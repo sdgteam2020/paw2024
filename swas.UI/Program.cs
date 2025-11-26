@@ -95,7 +95,7 @@ builder.Services.AddScoped<IActionExceptionRepository, ActionExceptionRepository
 builder.Services.AddScoped<IDateApprovalRepository, DateApprovalRepository>();
 builder.Services.AddScoped<IRemainder, RemainderRepository>();
 builder.Services.AddScoped<ILegacyHistoryRepository, LegacyHistoryRepository>();
-
+builder.Services.AddScoped<IWatermarkRepository, WatermarkRepository>();
 
 
 
