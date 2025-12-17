@@ -20,172 +20,177 @@
 @*<link href="~/assets/css/tooltip.css" rel="stylesheet" />*@
 <style>
     .d-flex {
-        position: relative;
-        z-index: 1; /* Ensure this is lower than the tooltip */
+    position: relative;
+    z-index: 1; /* Ensure this is lower than the tooltip */
     }
 
     .tooltip-container {
-        position: relative;
-        display: inline-block;
+    position: relative;
+    display: inline-block;
     }
 
-        .tooltip-container .tooltip-text {
-            visibility: hidden;
-            width: auto;
-            height: auto;
-            background-color: #044c92;
-            color: #fff;
-            text-align: left;
-            padding: 10px;
-            right: -25%;
-            /* right: 100%; */
-            opacity: 0;
-            transition: opacity 0.3s;
-            word-wrap: break-word;
-            box-sizing: border-box;
-        }
+    .tooltip-container .tooltip-text {
+    visibility: hidden;
+    width: auto;
+    height: auto;
+    background-color: #044c92;
+    color: #fff;
+    text-align: left;
+    padding: 10px;
+    right: -25%;
+    /* right: 100%; */
+    opacity: 0;
+    transition: opacity 0.3s;
+    word-wrap: break-word;
+    box-sizing: border-box;
+    }
 
-        .tooltip-container:hover .tooltip-text {
-            visibility: visible;
-            opacity: 1;
-        }
+    .tooltip-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+    }
 
 </style>
 <style id="table_style" type="text/css">
     body {
-        font-family: Arial;
-        font-size: 10pt;
+    font-family: Arial;
+    font-size: 10pt;
     }
 
 </style>
 <style>
 
     .heading-line {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     }
 
     .line {
-        flex-grow: 1;
-        height: 1px;
-        background-color: #333; /* You can change this to your preferred color */
-        margin: 0 10px;
+    flex-grow: 1;
+    height: 1px;
+    background-color: #333; /* You can change this to your preferred color */
+    margin: 0 10px;
     }
 
 
 
     #checklist th, #checklist td {
-        margin-top: 30px;
-        font-size: 20px;
-        padding: 5px;
-        border: 1px solid #000000;
-        font-weight: bold;
-        text-decoration: underline;
+    margin-top: 30px;
+    font-size: 20px;
+    padding: 5px;
+    border: 1px solid #000000;
+    font-weight: bold;
+    text-decoration: underline;
     }
 
     #htmlTopdf td {
-        width: 10%;
-        text-align: center;
-        border: 1px solid black;
-        border-collapse: collapse;
+    width: 10%;
+    text-align: center;
+    border: 1px solid black;
+    border-collapse: collapse;
     }
 
     #htmlTopdf tr {
-        width: 100%;
-        border: 1px solid black;
-        border-collapse: collapse;
+    width: 100%;
+    border: 1px solid black;
+    border-collapse: collapse;
     }
 
     #htmlTopdf th {
-        width: 10%;
-        text-align: center;
-        border: 1px solid black;
-        border-collapse: collapse;
+    width: 10%;
+    text-align: center;
+    border: 1px solid black;
+    border-collapse: collapse;
     }
 
     .long-text {
-        max-width: 300px;
-        overflow: auto;
-        text-overflow: inherit;
-        white-space: nowrap;
-        display: block;
+    max-width: 300px;
+    overflow: auto;
+    text-overflow: inherit;
+    white-space: nowrap;
+    display: block;
     }
 
 </style>
 
 <style>
     table {
-        border-collapse: collapse;
-        margin-bottom: 20px;
+    border-collapse: collapse;
+    margin-bottom: 20px;
     }
 
     .new-proj-table {
-        width: 100%;
-        height: auto;
-        border-collapse: collapse;
-        margin-top: 10px; /* Adjust margin as needed */
+    width: 100%;
+    height: auto;
+    border-collapse: collapse;
+    margin-top: 10px; /* Adjust margin as needed */
     }
     /*  #StakeholderDetails {
-                                        page-break-before: always;
-                                    }*/
+    page-break-before: always;
+    }*/
     .custom-modal-sizes {
-        max-width: 80%; /* Increase the width as required */
-        width: 75%;
-        /* height: 10%; Adjust height if necessary */
-        margin: auto;
+    max-width: 80%; /* Increase the width as required */
+    width: 75%;
+    /* height: 10%; Adjust height if necessary */
+    margin: auto;
     }
 
-        .custom-modal-sizes .modal-content-new {
-            height: 100%; /* Ensure the content fills the modal */
-            overflow: auto; /* Add scrolling for long content */
-        }
+    .custom-modal-sizes .modal-content-new {
+    height: 100%; /* Ensure the content fills the modal */
+    overflow: auto; /* Add scrolling for long content */
+    }
 
     .modal-lg {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh; /* Full height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Full height */
     }
 
     .custom-modal-size {
-        max-width: 100%; /* Set the modal width to 80% of the screen */
-        width: 95%; /* Ensure it scales responsively */
-        margin: auto; /* Center horizontally */
+    max-width: 100%; /* Set the modal width to 80% of the screen */
+    width: 95%; /* Ensure it scales responsively */
+    margin: auto; /* Center horizontally */
     }
 
     .modal-dialog {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh; /* Vertically center the modal */
-        margin: 0; /* Remove default margins for better centering */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Vertically center the modal */
+    margin: 0; /* Remove default margins for better centering */
     }
 
     .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     }
 
     .modal-content-new {
-        margin-left: 277px;
-        margin-right: -225px;
+    margin-left: 277px;
+    margin-right: -225px;
     }
 
     .modal-xl {
-        left: 10%;
+    left: 10%;
     }
 
 </style>
 
 <link href="~/css/projhistory.css" rel="stylesheet" />
 
-
+@{
+    int projIdFromViewBag = Convert.ToInt32(ViewBag.Projid);
+}
 <div class="row mt-5">
     <span id="spnstageid" class="d-none">@ViewBag.stageid</span>
     <span id="spntabType" class="d-none">@ViewBag.Type</span>
+    <span id="IsProcess" class="d-none">@ViewBag.Isprocess</span>
+
     <span id="IsCommentPsmiId" class="d-none">@ViewBag.IsCommentPsmiId</span>
+    @* <span id="latestPsmid" class="d-none">@ViewBag.LatestPsmid</span> *@
     <!--Proj Details-->
     <div class="col-12 col-lg-12 col-xl-4 d-flex">
 
@@ -196,9 +201,14 @@
 
                 </div>
                 <div class="table-responsive">
-                    <table class="new-proj-table" style="width: 100%;">
+                    <table class="" style="width: 100%;">
                         <tr>
-                            <td>Proj Name</td>
+                            <td class="new-proj-table">Application ID</td>
+                            <td class="long-text">@Model[0].ProjectDetl[1].ProjId</td>
+
+                        </tr>
+                        <tr>
+                            <td class="new-proj-table">Proj Name</td>
                             @* <td class="long-text">
                             @Model.FirstOrDefault()?.ProjName
                             <span class="ProjectcommentprojId d-none">
@@ -206,7 +216,7 @@
                             </span>
                             </td>*@
                             <td id="projectNameCell" class="long-text">
-                                @Model.FirstOrDefault()?.ProjName
+                                <span id="spnprojname">@Model.FirstOrDefault()?.ProjName</span>
                                 <span class="ProjectcommentprojId d-none">
                                     @Model.FirstOrDefault()?.ProjId
                                 </span>
@@ -214,12 +224,12 @@
 
                         </tr>
                         <tr>
-                            <td>Aim & Scope</td>
+                            <td class="new-proj-table">Aim & Scope</td>
                             <td class="long-text">@Model[0].ProjectDetl[1].AimScope</td>
 
                         </tr>
                         <tr>
-                            <td>Usability of Proposed Appln</td>
+                            <td class="new-proj-table">Usability of Proposed Appln</td>
                             @*<td>@Model[0].ProjectDetl[1].UsabilityofProposedAppln</td>*@
                             <td class="tooltip-container">
                                 <span class="short-text">@truncateText(Model[0].ProjectDetl[1].UsabilityofProposedAppln, 6)</span>
@@ -228,12 +238,13 @@
 
                         </tr>
                         <tr>
-                            <td>Complition By</td>
+                            <td class="new-proj-table">Complition By</td>
+
                             <td class="long-text">@Model[0].ProjectDetl[1].MajTimeLines</td>
 
                         </tr>
                         <tr>
-                            <td>Name of Sponsor</td>
+                            <td class="new-proj-table"> Name of Sponsor</td>
                             <td>@Model.FirstOrDefault()?.InitiatedBy</td>
 
 
@@ -258,9 +269,9 @@
                     Tech Details
                 </div>
                 <div class="table-responsive">
-                    <table class="new-proj-table" style="width: 100%;">
+                    <table class="" style="width: 100%;">
                         <tr>
-                            <td>Proposed Tech Stack</td>
+                            <td class="new-proj-table">Proposed Tech Stack</td>
                             @*  <td>@Model[0].ProjectDetl[1].TechStackProposed</td>*@
 
                             @*<td class="tooltip-container" data-tooltip="@Model[0].ProjectDetl[1].TechStackProposed">
@@ -274,18 +285,18 @@
 
                         </tr>
                         <tr>
-                            <td>Type of Software</td>
+                            <td class="new-proj-table">Type of Software</td>
                             <td>@Model[0].ProjectDetl[1].TypeofSW</td>
-                        <tr>
-                            <td>NW Bandwidth Reqmt</td>
-                            <td>@Model[0].ProjectDetl[1].NWBandWidthReqmt</td>
+                            <tr>
+                                <td class="new-proj-table">NW Bandwidth Reqmt</td>
+                                <td>@Model[0].ProjectDetl[1].NWBandWidthReqmt</td>
 
-                        </tr>
-                        <tr>
-                            <td>Hosted On</td>
-                            <td>@Model[0].HostedOn</td>
+                            </tr>
+                            <tr>
+                                <td class="new-proj-table">Hosted On</td>
+                                <td>@Model[0].HostedOn</td>
 
-                        </tr>
+                            </tr>
 
                     </table>
 
@@ -305,20 +316,20 @@
                 <div class="projectheading">
                     Other Details
                 </div>
-                <table class="new-proj-table" style="text-align:center; width: 100%;">
+                <table style="width: 100%;">
                     <tr>
-                        <td>Envisaged Cost (Rs)</td>
+                        <td class="new-proj-table">Envisaged Cost (Rs)</td>
                         <td>@Model[0].ProjectDetl[1].EnvisagedCost</td>
 
                     </tr>
 
                     <tr>
-                        <td>Deployment Type</td>
+                        <td class="new-proj-table">Deployment Type</td>
                         <td>@Model[0].AppDesc</td>
 
                     </tr>
                     <tr>
-                        <td>Being Devp In House?</td>
+                        <td class="new-proj-table">Being Devp In House?</td>
                         <td>@Model[0].ProjectDetl[1].BeingDevpInhouse</td>
 
                     </tr>
@@ -360,8 +371,18 @@
         Projmove pmove = new Projmove();
         pmove.DataProjId = Model[0].ProjId;
         pmove.Atthistory = Model[0].Atthistory;
+        pmove.tounitid = ViewBag.lasttounit;
+
+
     }
-    @Html.Partial("_projfwdupload", pmove)
+    @Html.Partial("_projfwdupload", pmove,
+                    new ViewDataDictionary(ViewData)
+    {
+        ["DataProjId"] = pmove.DataProjId,
+        ["Tounitid"] = ViewBag.lasttounit
+
+    }
+                    )
 </div>
 
 
@@ -828,11 +849,19 @@
 
                     <tr>
                         <td style="width:1% !important">
+
+
                             @{
 
                                 snoa++;
                             }
                             @snoa
+                            <span class="d-none" id="SpnStatusid">@history.StatusId</span>
+                            <span class="d-none" id="SpnActionsid">@history.ActionsId</span>
+                            <span class="d-none" id="SpnStagesid">@history.StageId</span>
+                            <span class="d-none" id="SpnFromUnitid">@history.FromUnitId</span>
+                            <span class="d-none" id="spnStakeholderid">@history.StakeHolderId</span>
+                            <span class="d-none" id="spnLatestActiontype">@history.LatestActionType</span>
                         </td>
                         @* <td>@history.Date.ToString().Substring(0,10)</td> *@
                         <td>@history.Date</td>
@@ -866,7 +895,7 @@
 
                                     </div>
                                 </div>
-                                
+
                             }
                         </td>
 
@@ -893,7 +922,7 @@
                         </td>
                         <td style="color: @((history.Actions == "Approved") ? "green" : "inherit")">
                             <div class="d-flex">
-                                @history.Actions
+                                <span >@history.Actions</span>
                                 @if (history.IsCc == true)
                                 {
                                     <div class="col-md-2">
@@ -922,29 +951,44 @@
                             {
                                 <div class="col-md-12">
                                     <div class="RefLetter-container p-2" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">
-                                        <div class="tooltip-container" data-tooltip="𝐏𝐮𝐥𝐥𝐞𝐝 𝐁𝐚𝐜𝐤 𝐁𝐲: - @history.Remarks">
+                                        <div class="tooltip-container d-flex" data-tooltip="𝐏𝐮𝐥𝐥𝐞𝐝 𝐁𝐚𝐜𝐤 𝐁𝐲: - @history.Remarks">
 
                                             <span class="short-text noExport">𝐏𝐮𝐥𝐥𝐞𝐝 𝐁𝐚𝐜𝐤 𝐁𝐲: -@truncateText(history.Remarks, 2).... </span>
 
-                                            <span class="RefLetter">𝐏𝐮𝐥𝐥𝐞𝐝 𝐁𝐚𝐜𝐤 𝐁𝐲: - @history.Remarks</span>
+                                            <span class="RefLetter copieditem">𝐏𝐮𝐥𝐥𝐞𝐝 𝐁𝐚𝐜𝐤 𝐁𝐲: - @history.Remarks</span>
+                                            <span class="btncopy" style="margin-left:auto">
+                                                <i class="fa-solid fa-copy " style="font-size:large; cursor:pointer;"></i>
+                                            </span>
                                         </div>
 
                                     </div>
                                 </div>
-                                
+
                             }
                             else
                             {
                                 <div class="col-md-12">
                                     <div class="RefLetter-container p-2" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">
-                                        <div class="tooltip-container" data-tooltip="@history.Remarks">
+                                        <div class="tooltip-container d-flex" data-tooltip="@history.Remarks">
+                                            @if (history.IsComment == false)
+                                            {
                                             @if (history.Remarks != null &&@history.Remarks !="")
                                             {
-                                                
-                                            <span class="short-text noExport" id="">@truncateText(history.Remarks, 2)....</span>
+
+                                                <span class="short-text noExport" id="">
+                                                    @(history.Remarks.Length>15 ? history.Remarks.Substring(0,15)+"...":history.Remarks)
+                                                    
+                                                    </span>
                                             }
 
-                                            <span class="RefLetter">@history.Remarks</span>
+                                            <span class="RefLetter copieditem">@history.Remarks</span>
+
+                                                <span class="btncopy" style="margin-left:auto;">
+                                                    <i class="fa-solid fa-copy" style="font-size:large; cursor:pointer;"></i>
+                                                </span>
+                                            }
+                                           
+                                           
                                         </div>
 
                                     </div>
@@ -998,6 +1042,7 @@
 <script src="~/developerjs/mtable.js"></script>
 <script src="~/developerjs/projectstckholdercommentforprojhistory.js"></script>
 <script src="~/developerjs/projectstkholdercomments.js"></script>
+<script src="~/developerjs/FwdProject.js"> </script>
 
 @functions {
     public string truncateText(string text, int maxWords)
@@ -1015,7 +1060,12 @@
 
 <script>
 
-
+         $(".btncopy").on('click', function () {
+       
+        let text = $(this).siblings(".copieditem").text().trim();
+        navigator.clipboard.writeText(text);
+        alert("Text Copied!");
+    });
 
     function PrintDiv() {
         var projectName = document.getElementById('projectNameCell').innerText.trim(); // Get the project name from the table cell
@@ -1041,3 +1091,4 @@
 <script>
     var loginData = @Html.Raw(Json.Serialize(ViewBag.logins));
 </script>
+

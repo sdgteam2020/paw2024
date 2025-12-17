@@ -394,7 +394,7 @@ body {
     background: #f0f2f5;
 }
 
-.gradient-header {
+/*.gradient-header {
     background: linear-gradient(90deg, #007bff 0%, #6610f2 100%);
 }
 
@@ -406,27 +406,27 @@ body {
     border-radius: 1rem;
     transition: transform .25s ease, box-shadow .25s ease;
     overflow: hidden;
-}
+}*/
 
 /* .glass-card:hover {
         transform: translateY(-6px);
         box-shadow: 0 20px 30px rgba(0,0,0,.12);
     }*/
 
-.icon-circle {
+/*.icon-circle {
     width: 52px;
     height: 52px;
     background: linear-gradient(135deg, #007bff, #6610f2);
     color: #fff;
     border-radius: 50%;
     transition: transform .2s ease;
-}
+}*/
 
 /*.glass-card:hover .icon-circle {
     transform: scale(1.12);
 }*/
 
-.label {
+/*.label {
     font-weight: 600;
     color: #555;
     font-size: .875rem;
@@ -443,7 +443,7 @@ body {
 .placeholder {
     color: #a0a0a0;
     font-style: italic;
-}
+}*/
 
 .pdf-link {
     color: #dc3545;

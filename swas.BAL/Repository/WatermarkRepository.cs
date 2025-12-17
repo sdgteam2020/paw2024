@@ -36,7 +36,7 @@ namespace swas.BAL.Repository
                     PdfPage page = pdf.GetPage(pageNum);
                     Rectangle rect = page.GetPageSizeWithRotation();
 
-                    PdfCanvas pdfCanvas = new PdfCanvas(page.NewContentStreamAfter(), page.GetResources(), pdf);
+                    PdfCanvas pdfCanvas = new PdfCanvas(page.NewContentStreamBefore(), page.GetResources(), pdf);
                     pdfCanvas.SaveState();
                     pdfCanvas.SetExtGState(new iText.Kernel.Pdf.Extgstate.PdfExtGState().SetFillOpacity(opacity));
 

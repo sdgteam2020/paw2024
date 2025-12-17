@@ -169,11 +169,11 @@
         }
     });
 
-    $("#btnFwdConfirm").click(function () {
+    //$("#btnFwdConfirm").click(function () {
 
-        $('#ProjFwdEdit').modal('hide');
-        GetProjectMovement($("#spanProjectId").html());
-    });
+    //    $('#ProjFwdEdit').modal('hide');
+    //    GetProjectMovement($("#spanProjectId").html());
+    //});
 });
 
 

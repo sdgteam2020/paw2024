@@ -736,6 +736,11 @@ namespace swas.UI.Controllers
         {
             await signInManager.SignOutAsync();
             await HttpContext.SignOutAsync();
+            HttpContext.Session.Clear();
+            foreach (var cookie in Request.Cookies.Keys)      // clear all cookies
+            {
+                Response.Cookies.Delete(cookie);
+            }
             Login Db = new Login();
             SessionHelper.ClaerObjectAsJson(HttpContext.Session, "User");
 
@@ -939,6 +944,7 @@ namespace swas.UI.Controllers
 
         public async Task<IActionResult> UpdateUserEdit(InputModel input)
         {
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
             input.UserName = input.UserName.Trim();
             input.OfficerName = input.OfficerName.Trim();
             input.appointment = input.appointment.Trim();
@@ -1008,11 +1014,16 @@ namespace swas.UI.Controllers
                     await _context.SaveChangesAsync();
 
 
-                    if (result.Succeeded)
+                    if (result.Succeeded && Logins.unitid ==1)
                     {
 
                         TempData["SuccessMessage"] = "User successfully updated!";
                         return RedirectToAction("GetsAllUsers", "Account");
+                    }
+                    else if(result.Succeeded && Logins.unitid != 1)
+                    {
+                        TempData["SuccessMessage"] = "User successfully updated!";
+                        return RedirectToAction("Index", "Home");
                     }
                     else
                     {

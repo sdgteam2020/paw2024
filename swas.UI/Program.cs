@@ -24,6 +24,7 @@ using swas.BAL.DTO;
 using swas.DAL.Logger;
 using swas.BAL.Helpers;
 using swas.DAL.Models;
+using swas.UI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -96,7 +97,8 @@ builder.Services.AddScoped<IDateApprovalRepository, DateApprovalRepository>();
 builder.Services.AddScoped<IRemainder, RemainderRepository>();
 builder.Services.AddScoped<ILegacyHistoryRepository, LegacyHistoryRepository>();
 builder.Services.AddScoped<IWatermarkRepository, WatermarkRepository>();
-
+builder.Services.AddScoped<ICertificateService, CertificateService>();
+builder.Services.AddScoped<PdfCertificateBuilder>();
 
 
 

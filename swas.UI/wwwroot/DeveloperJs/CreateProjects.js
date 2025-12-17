@@ -510,6 +510,8 @@ function AddProject(thistag) {
             data: {
                 "ProjId": $("#ProjId").val(),
                 "ProjName": $("#ProjName").val(),
+                "MobileNo": $("#MobileNo").val(),
+                "ArmyNo": $("#ArmyNo").val(),
                 //  "InitiatedDate": $("#InitiatedDate").val(),
                 "InitiatedDate": InitiatedDate,
                 //  "CompletionDate": $("#CompletionDate").val(),
@@ -553,7 +555,7 @@ function AddProject(thistag) {
             }, //get the search string
             success: function (result) {
 
-
+                console.log(result);
 
                 if (result == -2) {
 
@@ -603,11 +605,12 @@ function AddProject(thistag) {
                 //}
                 else if (result != null) {
 
-
-                    $("#spanProjectId").html(result.projId);
+                    var projid = result.projId;
+        $("#spanProjectId").html(projid);
                     $("#spanCurrentPslmId").html(result.currentPslmId);
-
-
+                    var creatid = "Application ID :" + projid
+                    $("#projectId").html(creatid)
+                  
                     AttechHistory();
                     current_fs = $(thistag).parent();
                     next_fs = $(thistag).parent().next();

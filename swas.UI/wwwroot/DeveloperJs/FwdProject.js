@@ -196,95 +196,105 @@ $(document).ready(function () {
         }, 500)
 
     });
-    $(".btn-Fwd").click(function () {
+    //$(".btn-Fwd").click(function () {
 
-        var Isprocess = $(this).closest("tr").find("#SpnprojectIsProcess").html().trim() === "False" ? false : true;
+    //    let date_type_raw = $(this).data("date_type");
+    //    let date_type = (String(date_type_raw).toLowerCase() === "true");
+    //    fetchServerDate().then(function (S) {
 
-        $('.FwdDropdown').addClass('col-md-3');
-        $('.FwdDropdown').addClass('col-md-6');
-        $('.ProjectsFwdUnit').addClass('d-none');
+    //        // Get the data from the button (True or False)
 
 
-        $("#searchBox").val('');
-        $("#searchBox").hide();
-        TimeStampForcheckdate = new Date($(".TimeStampForcheckdate").html());
+    //        // Only use `S.todayDateTime` (from server) to ensure consistency
+    //        // Set datetime-local or date based on the data_type
+    //        if (date_type) {
+
+    //            $('#TimeStampToProjfwd')
+    //                .attr('type', 'datetime-local')
+    //                .attr('max', S.todayDateTime)  // Max set to server date (in "YYYY-MM-DDTHH:mm" format)
+    //                .prop('disabled', false)  // Allow user input
+    //                .val(S.todayDateTime);
+    //        } else {
+
+    //            // Set date type, freeze input
+    //            $('#TimeStampToProjfwd').attr('type', 'datetime-local');
+    //            $('#TimeStampToProjfwd').val(S.todayDateTime); // Use the server date only (YYYY-MM-DD)
+    //            $('#TimeStampToProjfwd').prop('disabled', true); // Disable the field
+    //        }
+
+    //        // Focus the input (optional: you can show a modal or scroll to input)
+    //        $('#TimeStampToProjfwd').focus();
+    //    })
+    //    var Isprocess = $(this).closest("tr").find("#SpnprojectIsProcess").html().trim() === "False" ? false : true;
+
+    //    $('.FwdDropdown').addClass('col-md-3');
+    //    $('.FwdDropdown').addClass('col-md-6');
+    //    $('.ProjectsFwdUnit').addClass('d-none');
+
+
+    //    $("#searchBox").val('');
+    //    $("#searchBox").hide();
+    //    TimeStampForcheckdate = new Date($(".TimeStampForcheckdate").html());
        
-        var projName = $(this).data('proj-name');
-        var words = projName.split(" ");
-        var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
-        //var finalTitle = "Mov History: " + shortProjName;
-        var finalTitle = "Proj Name: " + projName;
-        $('#fwdModal').text(finalTitle);
+    //    var projName = $(this).data('proj-name');
+    //    var words = projName.split(" ");
+    //    var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
+    //    //var finalTitle = "Mov History: " + shortProjName;
+    //    var finalTitle = "Proj Name: " + projName;
+    //    $('#fwdModal').text(finalTitle);
 
-        var projNameDetail = $(this).data('proj-name') + " " + "Move Details";
-        $('.fwdtitle').text(projNameDetail);
+    //    var projNameDetail = $(this).data('proj-name') + " " + "Move Details";
+    //    $('.fwdtitle').text(projNameDetail);
    
-        if (Isprocess== false) {
+    //    if (Isprocess== false) {
 
-            mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 1, 1)
-        } 
-       else if (words.includes("Re-Vetted")) {
+    //        mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 1, 1)
+    //    } 
+    //   else if (words.includes("Re-Vetted")) {
 
-            mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 1, "Re-Vetted")
-        } else {
-            mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 1)
-        }
+    //        mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 1, "Re-Vetted")
+    //    } else {
+    //        mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 1)
+    //    }
        
 
-        mMsaterStage($(this).closest("tr").find("#SpnTimeStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#SpnStageId").html(), $("#SpnStakeHolderId").html())
-        /* mMsater(0, "ddlfwdAction", 9, $("#ddlfwdSubStage").val())*/
+    //    mMsaterStage($(this).closest("tr").find("#SpnTimeStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#SpnStageId").html(), $("#SpnStakeHolderId").html())
+    //    /* mMsater(0, "ddlfwdAction", 9, $("#ddlfwdSubStage").val())*/
       
-        mMsater($(this).closest("tr").find("#SpnTimeActionId").html(), "ddlfwdAction", 7, $(this).closest("tr").find("#SpnTimeStatusId").html())
-        /*mMsater($(this).closest("tr").find("#SpnTimeActionId").html(), "ddlfwdAction", 9, $(this).closest("tr").find("#SpnTimeStatusId").html())*/
-        mMsaterFwdTo($(this).closest("tr").find("#SpnTimeFromUnitId").html(), "ddlfwdFwdTo", 8, 0, $(this).closest("tr").find("#SpnStakeHolderId").html(), 0, "");
-        mMsaterFwdTo(0, "ddlfwdCCTo", 8, 0, $(this).closest("tr").find("#SpnStakeHolderId").html(), 0, "");
+    //    mMsater($(this).closest("tr").find("#SpnTimeActionId").html(), "ddlfwdAction", 7, $(this).closest("tr").find("#SpnTimeStatusId").html())
+    //    /*mMsater($(this).closest("tr").find("#SpnTimeActionId").html(), "ddlfwdAction", 9, $(this).closest("tr").find("#SpnTimeStatusId").html())*/
+    //    mMsaterFwdTo($(this).closest("tr").find("#SpnTimeFromUnitId").html(), "ddlfwdFwdTo", 8, 0, $(this).closest("tr").find("#SpnStakeHolderId").html(), 0, "");
+    //    mMsaterFwdTo(0, "ddlfwdCCTo", 8, 0, $(this).closest("tr").find("#SpnStakeHolderId").html(), 0, "");
 
 
-        $("#spanFwdCurrentPslmId").html($(this).closest("tr").find("#SpnCurrentpsmId").html())
-        $("#spanFwdProjectId").html($(this).closest("tr").find("#SpnCurrentProjId").html())
-        $("#SpnFwdStakeHolderId").html($(this).closest("tr").find("#SpnStakeHolderId").html())
-        $("#spanLegacyApproval").html($(this).closest("tr").find("#SpnApprove").html())
+    //    $("#spanFwdCurrentPslmId").html($(this).closest("tr").find("#SpnCurrentpsmId").html())
+    //    $("#spanFwdProjectId").html($(this).closest("tr").find("#SpnCurrentProjId").html())
+    //    $("#SpnFwdStakeHolderId").html($(this).closest("tr").find("#SpnStakeHolderId").html())
+    //    $("#spanLegacyApproval").html($(this).closest("tr").find("#SpnApprove").html())
 
-        var listItem = "<tr><td class='text-center' colspan=5>No Record Found</td></tr>";
+    //    var listItem = "<tr><td class='text-center' colspan=5>No Record Found</td></tr>";
 
-        $("#AttBody").html(listItem);
+    //    $("#AttBody").html(listItem);
 
-        IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
-        // IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
-        setTimeout(function () {
+    //    IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
+    //    // IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
+    //    setTimeout(function () {
 
-            InboxNotificationCount();
-        }, 200)
+    //        InboxNotificationCount();
+    //    }, 200)
 
-        $(this).closest("tr").removeClass("bold-text")
+    //    $(this).closest("tr").removeClass("bold-text")
 
-        $('#ProjFwd').modal('show');
+    //    $('#ProjFwd').modal('show');
 
-        //$("#searchBox").autocomplete({
-        //    minLength: 3,
-        //    source: function (request, response) {
-        //        var value = request.term;
-        //        if (value) {
-        //            mMsaterFwdTo($(this).closest("tr").find("#SpnTimeToUnitId").html(), "ddlfwdFwdTo", 8, 0, $(this).closest("tr").find("#SpnStakeHolderId").html(), 1, value);
-
-        //        }
-        //    }
-        //});
-
-        $(".Fwdtitle").html("Projects Move Details");
-        $(".ProjectsFwd").removeClass("d-none");
-        $(".Attmenthistory").addClass("d-none");
+    //    $(".Fwdtitle").html("Projects Move Details");
+    //    $(".ProjectsFwd").removeClass("d-none");
+    //    $(".Attmenthistory").addClass("d-none");
 
 
-
-        // alert($(this).closest("tr").find("#SpnprojectStageId").html())
-        //GetAllComments($(this).closest("tr").find("#SpnCurrentProjId").html());
-    });
-
-    // Ensure autocomplete works when the modal is opened or search box is focused
-    //$("#searchBox").on("change", function () {
-    //    var value =  $(this).autocomplete("search", $(this).val());  
     //});
+
+   
 
     $(".btn-Obsn").click(function () {
 
@@ -359,6 +369,7 @@ $(document).ready(function () {
             alert("Please Select Send Unit To");
             return false;
         }
+       
         var remarkslength = $("#Reamarks").val().length;       // length of text
         var attCount = $("#pdfFileInput")[0].files.length;
 
@@ -374,6 +385,8 @@ $(document).ready(function () {
             })
             return false;
         }
+
+      
 
         requiredFields = $('#ProjFwd').find('.requiredField');
         var allFieldsComplete = true;
@@ -398,9 +411,8 @@ $(document).ready(function () {
 
         //$("#searchBox").hide()
     });
-    $(document).on('click', '#btnAttchMultiforpsmid', function () {
-
-
+    $('#btnAttchMultiforpsmid').on('click', function () {
+        debugger;
 
         requiredFields = $('#ProjFwd').find('.requiredFieldAttch');
 
@@ -447,13 +459,32 @@ $(document).ready(function () {
     //});
 });
 
-$("#btnFwdConfirm").on("click", function () {
+$("#btnFwdConfirm").off().on("click",async function () {
+    debugger;
+    const urlParams = new URLSearchParams(window.location.search);
+    var psmid;
+    let allAttachments = [];
+    
+    if (urlParams.get('Type') == 'XRDC') {
+     
+        psmid = urlParams.get('psmid');
+       
+    }
+    else {
+        
+      
+        psmid = $("#spanFwdCurrentPslmId").html()
+       
+    }
+    const generatedPdf = await getGeneratedPdfFromPreview();
    
-    SaveFwdTo($("#spanFwdCurrentPslmId").html());
+    SaveFwdTo(psmid, generatedPdf, allAttachments);
 
 });
 function CheckFwdCondition(CurrentPslmId) {
 
+
+   
     var userdata =
     {
         "ProjId": $("#spanFwdProjectId").html(),
@@ -492,9 +523,65 @@ function CheckFwdCondition(CurrentPslmId) {
                     }
                 }
                 else if (response == false) {
+                    debugger;
+                    let substage = $("#ddlfwdSubStage").val();
+                    let ddlaction = $("#ddlfwdAction option:selected").text();
+                    let ddlRemarks = $("#txtRemarksfwd").val();
+                    let Projid = parseInt($("#fwdprojid").text());
+
+                 
                     $(".Fwdtitle").html("Projects Attch Details");
                     $(".ProjectsFwd").addClass("d-none");
+                  
+                    if (ddlaction === "Approved / Completed" && $('#ddlfwdStage').val()==3) {
+                        $(".previewcertificateAttment").removeClass("d-none");
+
+                        $.ajax({
+                            url: "/Certificate/GenerateCertificate",
+                            type: "GET",
+                            data: {
+                                substage: substage,
+                                ddlaction: ddlaction,
+                                ddlRemarks: ddlRemarks,
+                                Projid: Projid
+                            },
+                            success: function (response) {
+
+                                // Base64 → Blob
+                                const byteCharacters = atob(response);
+                                const byteNumbers = new Array(byteCharacters.length);
+
+                                for (let i = 0; i < byteCharacters.length; i++) {
+                                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                                }
+
+                                const pdfBytes = new Uint8Array(byteNumbers);
+                                const blob = new Blob([pdfBytes], { type: "application/pdf" });
+
+                                // Blob URL
+                                const blobUrl = URL.createObjectURL(blob);
+
+                                // Put iframe inside div
+                                $("#Certificatepreview").html(`
+        <iframe id="pdfFrame"
+                src="${blobUrl}"
+                width="100%"
+                height="600px"
+                style="border:none;">
+        </iframe>
+    `);
+
+
+                            }
+                        });
+                    }
+                    else {
+                        $(".previewcertificateAttment").addClass("d-none");
+                    }
+                    
                     $(".Attmenthistory").removeClass("d-none");
+                   
+
                     var legapproval = $("#spanLegacyApproval").html();
 
 
@@ -516,6 +603,7 @@ function CheckFwdCondition(CurrentPslmId) {
 
                     ];
 
+                   
                     if (legapproval === "True") {
                         rows.push({
                             label: "Date Of FWD",
@@ -546,6 +634,8 @@ function CheckFwdCondition(CurrentPslmId) {
   </div>
 `).join('');
 
+                   
+
                     $("#previewGrid").html(html);
                     CheckforPreviousapprovals()
 
@@ -564,14 +654,13 @@ function CheckFwdCondition(CurrentPslmId) {
 }
 
 
-function SaveFwdTo(CurrentPslmId, fd, allAttachments) {
+function SaveFwdTo(CurrentPslmId, generatedPdf, allAttachments) {
     debugger;
-
     var psmdi = CurrentPslmId;
     var dateValue = $("#TimeStampToProjfwd").val();
     var currentDate = new Date();
-
-    // Add server's current time if only a date is selected
+    var get_substage = $('#ddlfwdSubStage option:selected').text();
+ 
     var TimeStamps = '';
     if ($('#TimeStampToProjfwd').attr('type') === 'date') {
         if (!dateValue) {
@@ -667,7 +756,7 @@ function SaveFwdTo(CurrentPslmId, fd, allAttachments) {
     //}
 
     // Append currentpsmid to formData
-    var currentpsmid = $("#spanFwdCurrentPslmId").html();
+    var currentpsmid = CurrentPslmId;
     formData.append("currentpsmid", currentpsmid);
 
     if (Array.isArray(ccidvalue)) {
@@ -678,7 +767,17 @@ function SaveFwdTo(CurrentPslmId, fd, allAttachments) {
         formData.append("Ccid", ccidvalue);
     }
 
+    if (generatedPdf) {
+       
+     
 
+      
+            allAttachments.unshift({
+                file: generatedPdf,
+                remarks: get_substage
+            });
+      
+    }
     // Attach remarks and files (multiple attachments) directly to the form data
     if (allAttachments != null) {
         allAttachments.forEach((attachment, index) => {
@@ -870,8 +969,8 @@ var projectMoveData = {
     },
 };
 
-$(document).on("change keyup", "#ddlfwdFwdTo, #searchBox, #ddlfwdCCTo, #ddlfwdStage, #ddlfwdSubStage, #ddlfwdAction, #txtRemarksfwd, #TimeStampToProjfwd,#pdfFileInput, #Reamarks", function () {
-
+$("body").on("change keyup", "#ddlfwdFwdTo, #searchBox, #ddlfwdCCTo, #ddlfwdStage, #ddlfwdSubStage, #ddlfwdAction, #txtRemarksfwd, #TimeStampToProjfwd,#pdfFileInput, #Reamarks", function () {
+    
     const pdfFiles = $("#pdfFileInput")[0].files;
     const pdfList = pdfFiles.length > 0 ? Array.from(pdfFiles).map(f => f.name) : [];
 
@@ -953,4 +1052,145 @@ function CheckforPreviousapprovals() {
             Swal.fire("Error", "Something went wrong!", "error");
         }
     });
+}
+
+$(".btn-FwdFromMOv").click(function () {
+   
+    openForwardModal(this, true);
+});
+
+$(".btn-Fwd").click(function () {
+    openForwardModal(this, false);
+});
+
+function openForwardModal(btn, isFromMov) {
+    debugger;
+    let $btn = $(btn);
+
+    // -----------------------------
+    // 1. GET IsProcess VALUE
+    // -----------------------------
+    let Isprocess = isFromMov
+        ? $("#IsProcess").html().trim().toLowerCase() === "false"
+        : $btn.closest("tr").find("#SpnprojectIsProcess").html().trim().toLowerCase() === "false";
+
+    // -----------------------------
+    // 2. DATE HANDLING
+    // -----------------------------
+    let date_type_raw = isFromMov
+        ? $('#spnLatestActiontype').html()
+        : $btn.data('date_type');
+
+    let date_type = (String(date_type_raw).toLowerCase() === "approved" || String(date_type_raw).toLowerCase() === "true");
+
+    fetchServerDate().then(function (S) {
+
+        if (date_type) {
+            $('#TimeStampToProjfwd')
+                .attr('type', 'datetime-local')
+                .attr('max', S.todayDateTime)
+                .prop('disabled', false)
+                .val(S.todayDateTime);
+        } else {
+            $('#TimeStampToProjfwd')
+                .attr('type', 'datetime-local')
+                .prop('disabled', true)
+                .val(S.todayDateTime);
+        }
+
+        $('#TimeStampToProjfwd').focus();
+    });
+
+    // -----------------------------
+    // 3. BASIC UI RESET
+    // -----------------------------
+    $('.FwdDropdown').addClass('col-md-3 col-md-6');
+    $('.ProjectsFwdUnit').addClass('d-none');
+
+    $("#searchBox").val('').hide();
+    TimeStampForcheckdate = new Date($(".TimeStampForcheckdate").html());
+
+    // -----------------------------
+    // 4. PROJECT NAME
+    // -----------------------------
+    let projid = isFromMov ?"": $btn.closest("tr").find("#SpnCurrentProjId").html()
+    $('#fwdprojid').text(projid);
+    let projName = isFromMov ? $('#spnprojname').text() : $btn.data('proj-name');
+    let words = projName.split(" ");
+
+    $('#fwdModal').text("Proj Name: " + projName);
+    $('.fwdtitle').text(projName + " Move Details");
+
+    // -----------------------------
+    // 5. STAGE LOGIC
+    // -----------------------------
+ 
+
+    let stageId = isFromMov
+        ? $("#SpnStagesid").html()
+        : $btn.closest("tr").find("#SpnStageId").html();
+   
+    if (Isprocess) {
+      
+        mMsaterfwdStage(stageId, "ddlfwdStage", 5, 0, 1, 1);
+    }
+    else if (words.includes("Re-Vetted")) {
+        mMsaterfwdStage(stageId, "ddlfwdStage", 5, 0, 1, "Re-Vetted");
+    }
+    else {
+        mMsaterfwdStage(stageId, "ddlfwdStage", 5, 0, 1);
+    }
+
+    // -----------------------------
+    // 6. SUBSTAGE, ACTION, FWD TO
+    // -----------------------------    
+    let statusId = isFromMov
+        ? $("#SpnStatusid").html()
+        : $btn.closest("tr").find("#SpnTimeStatusId").html();
+
+    let stakeholderId = isFromMov
+        ? $('#spnStakeholderid').html()
+        : $btn.closest("tr").find("#SpnStakeHolderId").html();
+
+    mMsaterStage(statusId, "ddlfwdSubStage", 6, stageId, stakeholderId);
+
+    let actionId = isFromMov
+        ? $("#SpnActionsid").html()
+        : $btn.closest("tr").find("#SpnTimeActionId").html();
+
+    mMsater(actionId, "ddlfwdAction", 7, statusId);
+
+    let fromUnitId = isFromMov
+        ? $("#SpnFromUnitid").html()
+        : $btn.closest("tr").find("#SpnTimeFromUnitId").html();
+
+    mMsaterFwdTo(fromUnitId, "ddlfwdFwdTo", 8, 0, stakeholderId, 0, "");
+    mMsaterFwdTo(0, "ddlfwdCCTo", 8, 0, stakeholderId, 0, "");
+
+
+    var btntype = isFromMov == false ? true : false;
+    var projid = isFromMov == true ? $('.ProjectcommentprojId').text() : $btn.closest("tr").find("#SpnCurrentpsmId").html()
+   
+    $("#spanFwdCurrentPslmId").html(projid)
+    if (btntype ==true) {
+
+        $("#spanFwdProjectId").html($btn.closest("tr").find("#SpnCurrentProjId").html())
+        $("#SpnFwdStakeHolderId").html($btn.closest("tr").find("#SpnStakeHolderId").html())
+        $("#spanLegacyApproval").html($btn.closest("tr").find("#SpnApprove").html())
+
+    }
+
+ 
+    // -----------------------------
+    // 7. TABLE EMPTY ROW
+    // -----------------------------
+    $("#AttBody").html("<tr><td class='text-center' colspan=5>No Record Found</td></tr>");
+
+    // -----------------------------
+    // 8. SHOW MODAL
+    // -----------------------------
+    $('#ProjFwd').modal('show');
+    $(".Fwdtitle").html("Projects Move Details");
+    $(".ProjectsFwd").removeClass("d-none");
+    $(".Attmenthistory").addClass("d-none");
 }

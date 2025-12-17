@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static swas.DAL.Models.LegacyHistory;
 
 namespace swas.BAL.DTO
 {
@@ -34,6 +35,11 @@ namespace swas.BAL.DTO
         public int StatusActionsMappingId { get; set; }
         public bool IsCc { get; set; }
         public string CcUnits { get; set; }
+        public int StageId { get; set; }
+        public int ActionsId { get; set; }
+        public int FromUnitId { get; set; }
+        public int StakeHolderId { get; set; }
+        public ActionTypeEnum? LatestActionType { get; set; }
     }
     public class DTOProjectMovHistorycmd
     {

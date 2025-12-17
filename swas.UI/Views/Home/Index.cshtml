@@ -833,3 +833,19 @@
         });
     });
 </script> *@
+
+
+<script>
+    @if (TempData.ContainsKey("SuccessMessage"))
+    {
+        <text>
+                Swal.fire({
+                    title: 'Success',
+                text: '@TempData["SuccessMessage"]',
+                icon: 'success',
+                confirmButtonText: 'OK'
+                });
+        </text>
+        TempData.Remove("SuccessMessage");
+    }
+</script>

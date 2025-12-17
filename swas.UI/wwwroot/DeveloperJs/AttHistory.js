@@ -1,5 +1,17 @@
 ﻿
+async function getGeneratedPdfFromPreview() {
+    const iframe = document.getElementById("pdfFrame");
+    if (!iframe || !iframe.src.startsWith("blob:")) {
+        return null;
+    }
 
+    const response = await fetch(iframe.src);
+    const blob = await response.blob();
+
+    return new File([blob], "GeneratedCertificate.pdf", {
+        type: "application/pdf"
+    });
+}
 let allAttachments = []; // Array to hold all attachments and remarks
 
 function AttOnFWD() {
@@ -76,12 +88,28 @@ function AttOnFWD() {
     $("#AttBody").append(listItem);
 
     // When the confirm button is clicked, send all attachments and remarks
-    $("#btnFwdConfirm").off("click").on("click", function () {
-        // Send the allAttachments array along with form data
-        SaveFwdTo($("#spanFwdCurrentPslmId").html(), fd, allAttachments);
 
+    $("#btnFwdConfirm").off().on("click", async function () {
+        debugger;
+
+        const urlParams = new URLSearchParams(window.location.search);
+        let psmid;
+
+        if (urlParams.get('Type') === 'XRDC') {
+            psmid = urlParams.get('psmid');
+        } else {
+            psmid = $("#spanFwdCurrentPslmId").html();
+        }
+
+        // 🔹 GET GENERATED PDF FROM IFRAME
+        const generatedPdf = await getGeneratedPdfFromPreview();
+
+        // 🔹 PASS allAttachments ALSO
+        SaveFwdTo(psmid, generatedPdf, allAttachments);
     });
 
+
+        
 }
 
 

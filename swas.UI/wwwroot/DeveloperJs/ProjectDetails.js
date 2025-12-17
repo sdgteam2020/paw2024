@@ -1102,37 +1102,6 @@ $(document).ready(function () {
     );
 });
 
-$(".btn-Fwd").click(function () {
-    // Ensure we have the server date from window.SERVER or fetch it
-    //  const S = window.SERVER.today ? window.SERVER : await window.fetchServerDate();
-    let date_type_raw = $(this).data("date_type");
-    let date_type = (String(date_type_raw).toLowerCase() === "true");
-    fetchServerDate().then(function (S) {
-
-        // Get the data from the button (True or False)
-
-
-        // Only use `S.todayDateTime` (from server) to ensure consistency
-        // Set datetime-local or date based on the data_type
-        if (date_type) {
-
-            $('#TimeStampToProjfwd')
-                .attr('type', 'datetime-local')
-                .attr('max', S.todayDateTime)  // Max set to server date (in "YYYY-MM-DDTHH:mm" format)
-                .prop('disabled', false)  // Allow user input
-                .val(S.todayDateTime);
-        } else {
-
-            // Set date type, freeze input
-            $('#TimeStampToProjfwd').attr('type', 'datetime-local');
-            $('#TimeStampToProjfwd').val(S.todayDateTime); // Use the server date only (YYYY-MM-DD)
-            $('#TimeStampToProjfwd').prop('disabled', true); // Disable the field
-        }
-
-        // Focus the input (optional: you can show a modal or scroll to input)
-        $('#TimeStampToProjfwd').focus();
-    })
-});
 function GetParkedProject() {
     $.ajax({
         url: '/Projects/GetActParkedProject',

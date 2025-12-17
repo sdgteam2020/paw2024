@@ -207,6 +207,7 @@ namespace swas.Areas.Identity.Pages.Account
                                         Db.Unit = unitdetl.UnitName;        
                                         Db.unitid = userdet.unitid;
                                         Db.UserIntId = userdet.unitid;
+                                        Db.Rank_id = Convert.ToInt32(userdet.Rank);
                                         //Db.Rank=userdet.Rank;
                                         Db.Rank=userRank;
                                         Db.IcNo = userdet.Icno;

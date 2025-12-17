@@ -25,6 +25,8 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Diagnostics;
 using swas.BAL.Utility;
+using static Grpc.Core.ChannelOption;
+using static swas.DAL.Models.LegacyHistory;
 
 namespace swas.BAL.Repository
 {
@@ -117,6 +119,11 @@ namespace swas.BAL.Repository
                                join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
                                join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
 
+                               let legacy = _dbContext.LegacyHistory
+         .Where(l => l.ProjectId == a.ProjId)
+         .OrderByDescending(l => l.HistoryId)
+         .FirstOrDefault()
+
                                where b.ProjId == ProjectId
                                orderby b.TimeStamp descending
                                //orderby b.PsmId descending
@@ -124,11 +131,16 @@ namespace swas.BAL.Repository
                                {
                                    PsmId = b.PsmId,
                                    Stages = stge.Stages,
+                                   LatestActionType = legacy != null ? legacy.ActionType : default(ActionTypeEnum),
+                                   StageId = stge.StagesId,
+                                   ActionsId= act.ActionsId,
                                    //Status = tounit.UnitName + " " + "For Comments",
                                    Status = ststus.Status,
                                    StatusId= ststus.StatusId,
                                    Actions = act.Actions,
                                    FromUnitName = " " + b.UserDetails + " ( " + fromunit.UnitName + ")",
+                                   FromUnitId=b.FromUnitId,
+                                   StakeHolderId=a.StakeHolderId,
                                    ToUnitName = tounit.UnitName,
                                    FromUser = "", 
                                    ToUser = "",

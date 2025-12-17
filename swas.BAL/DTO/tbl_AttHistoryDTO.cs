@@ -45,9 +45,12 @@ namespace swas.BAL.DTO
 		[Required(ErrorMessage = "Please select file")]
 		public IFormFile File { get; set; }
 
-	
 
-	}
+        [NotMapped]
+        public int tounitid { get; set; }
+
+
+    }
 
 
 }
