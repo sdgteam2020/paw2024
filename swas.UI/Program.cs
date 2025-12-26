@@ -102,6 +102,7 @@ builder.Services.AddScoped<PdfCertificateBuilder>();
 
 
 
+
 builder.Services.AddAntiforgery(o => o.SuppressXFrameOptionsHeader = true);
 
 

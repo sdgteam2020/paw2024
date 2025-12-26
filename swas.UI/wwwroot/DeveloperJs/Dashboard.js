@@ -1,6 +1,11 @@
 ﻿var tittle = "";
 var Status = "";
+
+
+
 $(document).ready(function () {
+   
+    Getbarchart()
     GetAllDashbaordCount();
     InboxNotificationCount();
     CreateChartSummary();
@@ -15,13 +20,13 @@ $(document).ready(function () {
     });
 
     $('[data-toggle="tooltip"]').tooltip();
-
-});
-
+})
 
 
 
-function GetAllDashbaordCount()   {
+
+function GetAllDashbaordCount() {
+   
     $.ajax({
         type: "POST",
         url: '/Home/GetDashboardCount',
@@ -205,9 +210,9 @@ function GetAllDashbaordCount()   {
                     var spnstatusActionsMappingId = $(this).closest("div").find("#spnstatusActionsMappingId").html();
 
                     tittle = "Approved: " + $(this).closest("div").find(".statusprojsummry").html();
-                    tittleIPA = "Approved by: " + $(this).closest("div").find(".statusprojsummry").html() + " (Parallel Processing)";
+                    tittleIPA = "Approved by:  "+ $(this).closest("div").find(".statusprojsummry").html()+" (Parallel Processing)";"}][\'[']//"
                     if (parseInt(spnstatusActionsMappingId) == 1) {
-
+                       
                         Status = 'Accepted';
                     }
                     else if (parseInt(spnstatusActionsMappingId) == 9) {
@@ -293,106 +298,109 @@ function GetAllDashbaordCount()   {
     });
 }
 
-$(document).ready(function () {
-    // Fetching data for the first chart
-    $.ajax({
-        url: '/Home/indexToBarChartS',
-        method: 'GET',
-        dataType: 'json',
-        success: function (data) {
-            if (data.error) {
-                console.error('Error fetching data:', data.error);
-                return;
-            }
 
-            var monthNames = [...new Set(data.map(item => item.MonthNameYr))];
-            var unitNames = [...new Set(data.map(item => item.unitname))];
+    function Getbarchart() {
+        // Fetching data for the first chart
+        $.ajax({
+            url: '/Home/indexToBarChartS',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                if (data.error) {
+                    console.error('Error fetching data:', data.error);
+                    return;
+                }
 
-            var datasets = unitNames.map(unitName => {
-                var totalInData = [];
-                var totalOutData = [];
+                var monthNames = [...new Set(data.map(item => item.MonthNameYr))];
+                var unitNames = [...new Set(data.map(item => item.unitname))];
 
-                monthNames.forEach(month => {
-                    var monthData = data.find(item => item.MonthNameYr === month && item.unitname === unitName);
-                    if (monthData) {
-                        totalInData.push(monthData.TotalIn);
-                        totalOutData.push(monthData.TotalOut);
-                    } else {
-                        totalInData.push(0);
-                        totalOutData.push(0);
-                    }
-                });
+                var datasets = unitNames.map(unitName => {
+                    var totalInData = [];
+                    var totalOutData = [];
 
-                var totalInColor = getRandomColor();
-                var totalOutColor = getRandomColor();
+                    monthNames.forEach(month => {
+                        var monthData = data.find(item => item.MonthNameYr === month && item.unitname === unitName);
+                        if (monthData) {
+                            totalInData.push(monthData.TotalIn);
+                            totalOutData.push(monthData.TotalOut);
+                        } else {
+                            totalInData.push(0);
+                            totalOutData.push(0);
+                        }
+                    });
 
-                return [{
-                    label: unitName + ' Proj In',
-                    data: totalInData,
-                    backgroundColor: totalInColor,
-                    stack: unitName,
-                }, {
-                    label: unitName + ' Proj Out',
-                    data: totalOutData,
-                    backgroundColor: totalOutColor,
-                    stack: unitName,
-                }];
+                    var totalInColor = getRandomColor();
+                    var totalOutColor = getRandomColor();
 
-            }).flat();
+                    return [{
+                        label: unitName + ' Proj In',
+                        data: totalInData,
+                        backgroundColor: totalInColor,
+                        stack: unitName,
+                    }, {
+                        label: unitName + ' Proj Out',
+                        data: totalOutData,
+                        backgroundColor: totalOutColor,
+                        stack: unitName,
+                    }];
 
-            var ctx = document.getElementById('myChart').getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: monthNames,
-                    datasets: datasets
-                },
-                options: {
-                    scales: {
-                        x: {
-                            stacked: true,
-                            title: {
-                                display: true,
-                                text: 'Month Name'
-                            }
-                        },
-                        y: {
-                            stacked: true,
-                            title: {
-                                display: true,
-                                text: 'Total In/Total Out'
+                }).flat();
+
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: monthNames,
+                        datasets: datasets
+                    },
+                    options: {
+                        scales: {
+                            x: {
+                                stacked: true,
+                                title: {
+                                    display: true,
+                                    text: 'Month Name'
+                                }
+                            },
+                            y: {
+                                stacked: true,
+                                title: {
+                                    display: true,
+                                    text: 'Total In/Total Out'
+                                }
                             }
                         }
                     }
-                }
-            });
+                });
 
-            // Set the title for the first chart
-            $('#chartTitle').text('Bar Chart Title');
-        }
-    });
-
-    // Fetching data for the second chart
-    $.ajax({
-        url: '/Home/indexToPieChart',
-        method: 'GET',
-        dataType: 'json',
-        success: function (data) {
-            if (data.error) {
-                console.error('Error fetching data:', data.error);
-                return;
+                // Set the title for the first chart
+                $('#chartTitle').text('Bar Chart Title');
             }
+        });
 
-            updatePieChart(data);
+        // Fetching data for the second chart
+        $.ajax({
+            url: '/Home/indexToPieChart',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                if (data.error) {
+                    console.error('Error fetching data:', data.error);
+                    return;
+                }
 
-            // Set the title for the second chart
-            $('#chart1Title').text('Pie Chart Title');
-        },
-        error: function (error) {
-            console.error('Error fetching data:', error);
-        }
-    });
-});
+                updatePieChart(data);
+
+                // Set the title for the second chart
+                $('#chart1Title').text('Pie Chart Title');
+            },
+            error: function (error) {
+                console.error('Error fetching data:', error);
+            }
+        });
+    }
+   
+
 
 
 //function getProjGetsummay(spnstatusId) {
@@ -1574,4 +1582,3 @@ document.addEventListener('keydown', function (event) {
         closePopup();
     }
 });
-

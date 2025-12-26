@@ -229,7 +229,7 @@ function mMsaterStage(sectid = '', ddl, TableId, ParentId, StakeHolderId) {
                 //Swal.fire({
                 //    text: "No data found Offrs"
                 //});
-            }   
+            }
         },
         error: function (result) {
             Swal.fire({
@@ -241,7 +241,7 @@ function mMsaterStage(sectid = '', ddl, TableId, ParentId, StakeHolderId) {
 
 function mMsaterFwdTo(sectid = '', ddl, TableId, ParentId, StakeHolderId, type, value) { 
 
-   
+
     var userdata =
     {
         "id": TableId,

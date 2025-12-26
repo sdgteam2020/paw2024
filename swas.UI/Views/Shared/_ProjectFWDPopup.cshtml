@@ -1,7 +1,7 @@
 ﻿
 <style>
 
-	.gradient-header {
+/* 	.gradient-header {
 		background: linear-gradient(90deg, #007bff 0%, #6610f2 100%);
 	}
 	.glass-card {
@@ -75,12 +75,72 @@
 
 	#btn-ibutton {
 		animation: blink 1.5s linear infinite;
+	} */
+
+	
+.gradient-header {
+	background: linear-gradient(90deg, #4361ee 0%, #3f37c9 100%); /* Softer blue-purple */
+	border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.glass-card {
+	background: rgba(255, 255, 255, 0.75);
+	backdrop-filter: blur(16px);
+	-webkit-backdrop-filter: blur(16px);
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	border-radius: 1.25rem;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+	transition: all 0.3s ease;
+	overflow: hidden;
+}
+
+	.glass-card:hover {
+		transform: translateY(-8px);
+		box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+		border-color: rgba(67, 97, 238, 0.3);
 	}
+
+.icon-circle {
+	width: 48px;
+	height: 48px;
+	background: linear-gradient(135deg, #4361ee, #3f37c9);
+	color: #fff;
+	border-radius: 50%;
+	font-size: 1.25rem;
+	transition: transform 0.3s ease;
+}
+
+.glass-card:hover .icon-circle {
+	transform: scale(1.15) rotate(8deg);
+}
+
+.label {
+	font-weight: 700;
+	color: #4c4c4c;
+	font-size: 0.875rem;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.value {
+	font-weight: 500;
+	color: #1e293b;
+	font-size: 1.05rem;
+	line-height: 1.5;
+	word-break: break-word;
+}
+
+.placeholder {
+	color: #94a3b8;
+	font-style: normal;
+	font-weight: 400;
+}
+
 </style>
 
 <div class="modal fade" id="ProjFwd" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 	<div class="modal-dialog modal-xl custom-modal-size">
-		<div class="modal-content custom-modal-content" style="width:60%">
+		<div class="modal-content custom-modal-content" style="width:80%">
 			<div class="modal-header">
 				<h5 class="modal-title" id="fwdModal">Project Fwd</h5>
 				<span class="d-none" id="fwdprojid"></span>
@@ -95,22 +155,44 @@
 						<span class="d-none" id="spanFwdProjectId">0</span>
 						<span class="d-none" id="SpnFwdStakeHolderId">0</span>
 						<div class="">
-							<div class="col-md-12 Attmenthistory d-none mb-2">
-								<div class="shadow-sm border-0 rounded-4 overflow-hidden">
-									<div class="card-header gradient-header text-white text-center py-3">
-										<h6 class="mb-0 fw-bold"><i class="fas fa-eye me-2"></i>Preview Summary</h6>
+							<div class="row d-flex mb-2">
+
+								<!-- Preview Summary -->
+								<div class="col-md-6 Attmenthistory adjustsizeofdive d-none">
+									<div class="shadow-sm border-0 rounded-4 overflow-hidden">
+										<div class="card-header gradient-header text-white text-center py-3">
+											<h6 class="mb-0 fw-bold">
+												<i class="fas fa-eye me-2"></i>Preview Summary
+											</h6>
+										</div>
+
+										<div class="card-body p-4" style="background-color:#f8f9fa;">
+											<div id="previewGrid" class="row g-4"></div>
+
+											<div class="mt-4 text-end">
+												<button type="button" class="btn btn-outline-primary me-2" id="btnEditMove">
+													<i class="fas fa-edit me-1"></i>Edit
+												</button>
+											</div>
+										</div>
 									</div>
+								</div>	
 
-									<div class="card-body p-4" style="background-color:#f8f9fa;">
-										<div id="previewGrid" class="row g-4"></div>
+								<!-- Preview Certificate -->
+								<div class="col-md-6 previewcertificateAttment d-none">
+									<div class="shadow-sm border-0 rounded-4 overflow-hidden">
+										<div class="card-header gradient-header text-white text-center py-3">
+											<h6 class="mb-0 fw-bold">
+												<i class="fas fa-eye me-2"></i>Preview Certificate
+											</h6>
+										</div>
 
-										<div class="mt-4 text-end">
-											<button type="button" class="btn btn-outline-primary me-2" id="btnEditMove">
-												<i class="fas fa-edit me-1"></i>Edit
-											</button>
+										<div class="card-body p-4" style="background-color:#f8f9fa;">
+											<div id="Certificatepreview" class="row g-4"></div>
 										</div>
 									</div>
 								</div>
+
 							</div>
 
 							
@@ -181,6 +263,8 @@
 											<option value="0">Select Action</option>
 										</select>
 									</div>
+									
+								
 
 									@*  <div class="form-group col-md-6 ProjectsFwd">
 										<label for="SubStage">Select Addressee(Sent to)</label>
@@ -258,19 +342,7 @@
 						</div>
 					</div>
 
-					<div class="col-md-12 previewcertificateAttment d-none">
-						<div class="shadow-sm border-0 rounded-4 overflow-hidden">
-							<div class="card-header gradient-header text-white text-center py-3">
-								<h6 class="mb-0 fw-bold"><i class="fas fa-eye me-2"></i>Preview Certificate</h6>
-							</div>
-
-							<div class="card-body p-4" style="background-color:#f8f9fa;">
-								<div id="Certificatepreview" class="row g-4"></div>
-
-
-							</div>
-						</div>
-					</div>
+					
 					<div class="uploadLoader d-none" style=" position:fixed; top:0; left:0; right:0; bottom:0; background-color:rgba(0,0,0,0.4); z-index:1050;">
 						<div class="d-flex justify-content-center align-items-center h-100">
 							<div class="text-center">
@@ -285,7 +357,9 @@
 				<div class="form-group col-md-12 mt-4 text-center">
 					@*  <input type="button" id="btnFwdNext" value="Send & Att Docu (s)" class="btn btn-primary btn-lg ProjectsFwd" /> *@
 					<input type="button" id="btnFwdNext" value="Send" class="btn btn-primary btn-lg ProjectsFwd" />
-					<input type="button" id="btnFwdConfirm" value="Confirm" class="btn btn-primary btn-lg Attmenthistory d-none" />
+					<input type="button" id="btnlogsign" value="LogSign" class="btn btn-primary btn-lg   btnFwdConfirm  btnhideenonfwd" />
+					<input type="button" id="btnconfirm" value="Confirm" class="btn btn-primary btn-lg Attmenthistory d-none btnFwdConfirm" />
+					<input type="button" id="btnDigitalsign" value="Digital Sign" class="btn btn-primary btn-lg   btnhideenonfwd" />
 				</div>
 			</div>
 		</div>
@@ -311,6 +385,7 @@
 		</div><!-- modal-content -->
 	</div><!-- modal-dialog -->
 </div>
+
 
 <script src="~/DeveloperJs/FwdProject.js"></script>
 <script src="~/DeveloperJs/AttHistory.js"></script>

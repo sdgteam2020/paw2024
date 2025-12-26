@@ -945,6 +945,7 @@ namespace swas.UI.Controllers
         public async Task<IActionResult> UpdateUserEdit(InputModel input)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
+
             input.UserName = input.UserName.Trim();
             input.OfficerName = input.OfficerName.Trim();
             input.appointment = input.appointment.Trim();
@@ -1014,13 +1015,13 @@ namespace swas.UI.Controllers
                     await _context.SaveChangesAsync();
 
 
-                    if (result.Succeeded && Logins.unitid ==1)
+                    if (result.Succeeded && Logins.unitid == 1)
                     {
 
                         TempData["SuccessMessage"] = "User successfully updated!";
                         return RedirectToAction("GetsAllUsers", "Account");
                     }
-                    else if(result.Succeeded && Logins.unitid != 1)
+                    else if (result.Succeeded && Logins.unitid != 1)
                     {
                         TempData["SuccessMessage"] = "User successfully updated!";
                         return RedirectToAction("Index", "Home");

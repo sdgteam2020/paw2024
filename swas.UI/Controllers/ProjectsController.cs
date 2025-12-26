@@ -259,12 +259,6 @@ namespace swas.UI.Controllers
             return Json(await _projectsRepository.GetActCcItemsAsync());
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetActParkedProject()
-        {
-            return Json(await _projectsRepository.GetActParkedItemsAsync());
-        }
-
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> GetAllStatus()
         {
@@ -769,7 +763,7 @@ namespace swas.UI.Controllers
                         // var project = await _projectsRepository.GetProjectByIdAsync(projid);
                         proj = await _projectsRepository.GetProjectByIdAsync(ProjId);
                         //proj.DateTimeOfUpdate = DateTime.Now;
-                        proj.IsProcess = true;
+                        //proj.IsProcess = true;
 
                         await _projectsRepository.UpdateProjectAsync(proj, "1");
                         return Json(ProjId);
@@ -941,17 +935,16 @@ namespace swas.UI.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CheckFwdCondition(int ProjId, int StatusId)
-        {
 
-            var Ret = await _psmRepository.CheckFwdCondition(ProjId, StatusId);
+        public async Task<IActionResult> CheckFwdCondition(int ProjId, int StatusId,string Actionsname)
+        {
+            var Ret = await _psmRepository.CheckFwdCondition(ProjId, StatusId, Actionsname);
             return Json(Ret);
         }
 
         [HttpPost]
         public async Task<IActionResult> FwdToProject([FromForm] tbl_ProjStakeHolderMov psmove, [FromForm] string currentpsmid)
-            {
+        {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
            
             
@@ -995,7 +988,7 @@ namespace swas.UI.Controllers
                 }
 
             }
-     
+
 
             bool ret = false;
             if (psmove.CcId != null)
@@ -1003,7 +996,8 @@ namespace swas.UI.Controllers
                 ret = psmove.CcId.Contains(psmove.ToUnitId);
             }
             int psmid = Convert.ToInt32(currentpsmid);
-   var getprojidbypsmid = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == psmid).ProjId;         
+            var getprojidbypsmid = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == psmid).ProjId;
+
             var latst = _dbContext.ProjStakeHolderMov.Where(r => r.PsmId == psmid && r.ToUnitId == Logins.unitid && r.IsComplete == false && r.IsComment == false).FirstOrDefault();
 
             if (latst == null)
@@ -1015,7 +1009,7 @@ namespace swas.UI.Controllers
             if (!ret)
             {
                 var legacy_approval = _dbContext.LegacyHistory.Where(x => x.ProjectId == getprojidbypsmid).OrderByDescending(x => x.HistoryId).FirstOrDefault();
-           psmove.ProjId = getprojidbypsmid;
+           psmove.ProjId = getprojidbypsmid; 
                 psmove.StatusActionsMappingId = psmove.StatusActionsMappingId;
                 // psmove.ActionId = psmove.ActionId;
                 psmove.Remarks = psmove.Remarks;
@@ -1277,8 +1271,12 @@ namespace swas.UI.Controllers
             {
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
                 var movent = new tbl_ProjStakeHolderMov();
-                var stakeholder = _dbContext.Projects.Find(ProjectId).StakeHolderId;
-               
+                //if (StageId == 1)
+                //{
+                //    return Json(nmum.NotSave);
+                //}
+                //else
+                //{
 
 					var remainders = await _dbContext.TrnRemainders
 			  .Where(r => r.Projid == ProjectId && r.ReadDate == null && r.ToUserDetails == null)
@@ -1386,7 +1384,7 @@ namespace swas.UI.Controllers
                         return Json(nmum.Update);
                     }
                     return Json(nmum.NotSave);
-                
+                //}
             }
             catch (Exception ex)
             {
@@ -1698,12 +1696,7 @@ namespace swas.UI.Controllers
                     {
                         string decryptedValue = _dataProtector.Unprotect(EncyID);
                         dataProjId = int.Parse(decryptedValue);
-                        ViewBag.Projid = dataProjId;
                         var udpate = await _Remainder.UpdateReaminderRead(dataProjId, 0);
-                        bool isprocess = _dbContext.Projects.FirstOrDefault(x=>x.ProjId == dataProjId).IsProcess;
-                        ViewBag.Isprocess = isprocess;
-                        var latestpsmid =  _projStakeHolderMovRepository.GetLastRecProjectMov(dataProjId);
-                        ViewBag.lasttounit = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == latestpsmid)?.ToUnitId;
                         ViewBag.IsCommentPsmiId = await _projectsRepository.GetIsCommentPsmiId(dataProjId, Logins.unitid);
                         //dataProjId = await _projectsRepository.GetProjIdByPsmiId(psmId, Logins.unitid);
                     }
@@ -1732,6 +1725,12 @@ namespace swas.UI.Controllers
                 var ProjMovementHist = await _projStakeHolderMovRepository.ProjectMovHistory(dataProjId);
                 ViewBag.ProjMovementHist = ProjMovementHist.DTOProjectMovHistorypsmlst;
                 ViewBag.ProjMovementHistcomd = ProjMovementHist.DTOProjectMovHistorycmdlst;
+                ViewBag.Projid = dataProjId;
+
+                bool isprocess = _dbContext.Projects.FirstOrDefault(x => x.ProjId == dataProjId).IsProcess;
+                ViewBag.Isprocess = isprocess;
+                var latestpsmid = _projStakeHolderMovRepository.GetLastRecProjectMov(dataProjId);
+                ViewBag.lasttounit = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == latestpsmid)?.ToUnitId;
 
                 ViewBag.PsmId = psmid ?? 0;
                 ViewBag.PjIR = Projpin;
@@ -2710,24 +2709,42 @@ namespace swas.UI.Controllers
             // Optionally return updated comment as JSON
             return Json(1);
         }
-        [HttpPost]
-        public IActionResult CheckPreviousApprovals(int ProjId, int StatusId, int Actionsid)
-        {
 
-            try
-            {
-                var notapproved = _projStakeHolderMovRepository.CheckPreviousApprovals(StatusId, ProjId, Actionsid);
-                return Json(new { message = notapproved });
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
 
-        }
+
+		[HttpPost]
+		public IActionResult CheckPreviousApprovals(int ProjId, int StatusId, int Actionsid)
+		{
+
+			try
+			{
+				var notapproved = _projStakeHolderMovRepository.CheckPreviousApprovals(StatusId, ProjId, Actionsid);
+				return Json(new { message = notapproved });
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+
+		}
         
-      
-        [HttpPost]
+        
+        [HttpGet]
+		public async Task<IActionResult> GetActParkedProject()
+		{
+
+			try
+			{
+				var List = await _projectsRepository.GetActParkedItemsAsync();
+				return Json(List);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+
+		}
+		[HttpPost]
         public IActionResult ParkedProject(int psmid)
         {
             try
@@ -2761,53 +2778,6 @@ namespace swas.UI.Controllers
             }
         }
 
-        //[HttpPost]
-        ////[ValidateAntiForgeryToken]
-        ////[Authorize(Roles = "Admin")] // Only admins should update roles!
-        //public async Task<IActionResult> UpdateUserProfile([FromBody] UpdateUserDto model)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return Json(new { success = false, message = "Invalid data." });
-
-        //    var user = await _userManager.FindByIdAsync(model.UserId);
-        //    if (user == null)
-        //        return Json(new { success = false, message = "User not found." });
-
-        //    // Update Username
-        //    if (!string.Equals(user.UserName, model.UserName, StringComparison.OrdinalIgnoreCase))
-        //    {
-        //        var setUserNameResult = await _userManager.SetUserNameAsync(user, model.UserName);
-        //        if (!setUserNameResult.Succeeded)
-        //        {
-        //            return Json(new { success = false, message = string.Join(", ", setUserNameResult.Errors.Select(e => e.Description)) });
-        //        }
-
-        //        // Also update Email if your app uses Username == Email
-        //        if (user.Email != model.UserName)
-        //        {
-        //            var setEmailResult = await _userManager.SetEmailAsync(user, model.UserName);
-        //            if (!setEmailResult.Succeeded)
-        //            {
-        //                return Json(new { success = false, message = "Failed to update email." });
-        //            }
-        //        }
-        //    }
-
-        //    // Update Role
-        //    var currentRoles = await _userManager.GetRolesAsync(user);
-        //    if (!currentRoles.Contains(model.RoleName))
-        //    {
-        //        await _userManager.RemoveFromRolesAsync(user, currentRoles);
-        //        var addRoleResult = await _userManager.AddToRoleAsync(user, model.RoleName);
-
-        //        if (!addRoleResult.Succeeded)
-        //        {
-        //            return Json(new { success = false, message = "Failed to assign role: " + string.Join(", ", addRoleResult.Errors.Select(e => e.Description)) });
-        //        }
-        //    }
-
-        //    return Json(new { success = true, message = "User updated successfully!" });
-        //}
 
 
     }

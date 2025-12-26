@@ -1,4 +1,276 @@
 -----------------------------------------------------------------------------
+Date : 28-02-2024 02:33:43
+Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 28-02-2024 02:33:48
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 28-02-2024 02:35:56
+Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 28-02-2024 02:35:56
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 28-02-2024 02:36:17
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 28-02-2024 02:41:12
+Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 28-02-2024 02:41:12
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 28-02-2024 02:43:59
+Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 28-02-2024 00:35:48
+The ConnectionString property has not been initialized.
+-----------------------------------------------------------------------------
+Date : 28-02-2024 00:35:48
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 28-02-2024 00:36:54
+The ConnectionString property has not been initialized.
+-----------------------------------------------------------------------------
+Date : 28-02-2024 00:36:54
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 28-02-2024 00:40:47
+The ConnectionString property has not been initialized.
+-----------------------------------------------------------------------------
+Date : 28-02-2024 00:40:47
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 28-02-2024 00:41:41
+The ConnectionString property has not been initialized.
+-----------------------------------------------------------------------------
+Date : 28-02-2024 00:41:41
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 28-02-2024 00:42:32
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 28-02-2024 00:42:38
+The ConnectionString property has not been initialized.
+-----------------------------------------------------------------------------
+Date : 28-02-2024 00:42:38
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 28-02-2024 00:42:52
+The ConnectionString property has not been initialized.
+-----------------------------------------------------------------------------
+Date : 28-02-2024 00:42:52
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 28-02-2024 01:43:21
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 27-02-2024 22:15:37
+Could not find stored procedure '
+WhiteListedProjects'.
+-----------------------------------------------------------------------------
+Date : 27-02-2024 22:15:54
+Could not find stored procedure 'usp_GetActInbox'.
+-----------------------------------------------------------------------------
+Date : 27-02-2024 22:15:54
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 27-02-2024 22:16:01
+Could not find stored procedure 'usp_GetActInbox'.
+-----------------------------------------------------------------------------
+Date : 27-02-2024 22:16:01
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 28-02-2024 02:57:53
+Input string was not in a correct format.
+-----------------------------------------------------------------------------
+Date : 28-02-2024 02:57:54
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 28-02-2024 02:59:23
+Input string was not in a correct format.
+-----------------------------------------------------------------------------
+Date : 28-02-2024 02:59:23
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 28-02-2024 03:00:08
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 28-02-2024 01:18:08
+A transport-level error has occurred when receiving results from the server. (provider: Session Provider, error: 19 - Physical connection is not usable)
+-----------------------------------------------------------------------------
+Date : 28-02-2024 05:04:18
+String or binary data would be truncated in table 'test.dbo.trnWhiteListed', column 'Fmn'. Truncated value: 'HQ CC (GS BRANCH) clkorh_asdc_ihqa (Hav Birhade As'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 28-02-2024 05:07:15
+String or binary data would be truncated in table 'test.dbo.trnWhiteListed', column 'Fmn'. Truncated value: 'HQ CC (GS BRANCH) clkorh_asdc_ihqa (Hav Birhade As'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 28-02-2024 05:07:28
+String or binary data would be truncated in table 'test.dbo.trnWhiteListed', column 'Fmn'. Truncated value: 'HQ CC (GS BRANCH) clkorh_asdc_ihqa (Hav Birhade As'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 28-02-2024 05:08:26
+String or binary data would be truncated in table 'test.dbo.trnWhiteListed', column 'Fmn'. Truncated value: 'HQ CC (GS BRANCH) clkorh_asdc_ihqa (Hav Birhade As'.
+The statement has been terminated.
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:01:09
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:01:09
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:04:23
+Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:04:23
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:38:02
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:38:02
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:38:05
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:38:05
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:40:51
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:40:51
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:40:55
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:40:55
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:41:00
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:41:00
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:41:13
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:41:13
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:42:00
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:42:00
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:43:35
+Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:43:35
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:43:38
+Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:43:38
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:43:39
+Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:43:39
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:43:39
+Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:43:39
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:44:03
+Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:44:03
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:45:46
+Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:45:58
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:46:37
+Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:47:00
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:47:41
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:47:59
+Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:47:59
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:51:55
+Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:51:55
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:53:42
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:55:10
+Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 17-06-2025 11:55:10
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 17-06-2025 12:13:29
+Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+-----------------------------------------------------------------------------
+Date : 20-06-2025 17:15:50
+Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+-----------------------------------------------------------------------------
+Date : 20-06-2025 17:15:50
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 20-06-2025 17:16:26
+Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+-----------------------------------------------------------------------------
+Date : 20-06-2025 17:16:26
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 20-06-2025 17:19:03
+Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+-----------------------------------------------------------------------------
+Date : 20-06-2025 17:19:03
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 20-06-2025 17:23:18
+Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+-----------------------------------------------------------------------------
+Date : 20-06-2025 17:23:18
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 28-02-2024 04:42:40
+Add Project:-Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 28-02-2024 04:33:55
+Sequence contains more than one element.
+-----------------------------------------------------------------------------
+Date : 28-02-2024 11:00:01
+Sequence contains more than one element.
+-----------------------------------------------------------------------------
 Date : 28-02-2024 07:58:04
 Add Project:-Object reference not set to an instance of an object.
 -----------------------------------------------------------------------------
@@ -503,398 +775,126 @@ Date : 10-11-25 17:07:48
 Date : 10-11-25 17:07:48
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 18-11-2025 10:55:53
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'Remarks'. Truncated value: 'Lt Col manish / ddgit_ihqa(DDGIT) 𝐑𝐞𝐦𝐚𝐫𝐤𝐬: '.
-The statement has been terminated.
+Date : 09-12-25 02:26:47
+Invalid column name 'IsParked'.
+Statement(s) could not be prepared.
 -----------------------------------------------------------------------------
-Date : 18-11-2025 10:59:44
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'Remarks'. Truncated value: 'Lt Col manish / ddgit_ihqa(DDGIT) 𝐑𝐞𝐦𝐚𝐫𝐤𝐬: '.
-The statement has been terminated.
+Date : 09-12-25 02:26:48
+Invalid column name 'IsParked'.
+Statement(s) could not be prepared.
 -----------------------------------------------------------------------------
-Date : 18-11-2025 10:59:52
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'Remarks'. Truncated value: 'Lt Col manish / ddgit_ihqa(DDGIT) 𝐑𝐞𝐦𝐚𝐫𝐤𝐬: '.
-The statement has been terminated.
+Date : 09-12-25 02:26:48
+Invalid column name 'ArmyNo'.
+Invalid column name 'MobileNo'.
+Statement(s) could not be prepared.
 -----------------------------------------------------------------------------
-Date : 18-11-2025 11:00:17
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'Remarks'. Truncated value: 'Lt Col manish / ddgit_ihqa(DDGIT) 𝐑𝐞𝐦𝐚𝐫𝐤𝐬: '.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 18-11-2025 11:09:56
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'Remarks'. Truncated value: 'Lt Col manish / ddgit_ihqa(DDGIT) 𝐑𝐞𝐦𝐚𝐫𝐤𝐬: '.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 18-11-2025 11:10:44
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'Remarks'. Truncated value: 'Lt Col manish / ddgit_ihqa(DDGIT) 𝐑𝐞𝐦𝐚𝐫𝐤𝐬: '.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 21-11-2025 11:55:58
-'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
------------------------------------------------------------------------------
-Date : 21-11-2025 11:55:58
+Date : 09-12-25 02:26:48
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 21-11-2025 15:55:00
-'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+Date : 09-12-25 02:27:26
+Invalid column name 'IsParked'.
+Statement(s) could not be prepared.
 -----------------------------------------------------------------------------
-Date : 21-11-2025 15:55:00
+Date : 09-12-25 02:27:26
+Invalid column name 'IsParked'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 09-12-25 02:27:27
+Invalid column name 'ArmyNo'.
+Invalid column name 'MobileNo'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 09-12-25 02:27:27
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 21-11-2025 17:05:18
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
+Date : 09-12-25 02:27:35
+Invalid column name 'IsParked'.
+Statement(s) could not be prepared.
 -----------------------------------------------------------------------------
-Date : 21-11-2025 17:05:18
+Date : 09-12-25 02:27:36
+Invalid column name 'ArmyNo'.
+Invalid column name 'MobileNo'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 09-12-25 02:27:36
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 21-11-2025 17:05:27
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
+Date : 09-12-25 02:28:02
+Invalid column name 'IsParked'.
+Statement(s) could not be prepared.
 -----------------------------------------------------------------------------
-Date : 21-11-2025 17:05:27
+Date : 09-12-25 02:28:02
+Invalid column name 'IsParked'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 09-12-25 02:28:03
+Invalid column name 'ArmyNo'.
+Invalid column name 'MobileNo'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 09-12-25 02:28:03
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 24-11-2025 10:46:38
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
+Date : 09-12-25 02:32:09
+Invalid column name 'IsParked'.
+Statement(s) could not be prepared.
 -----------------------------------------------------------------------------
-Date : 24-11-2025 11:23:09
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
+Date : 09-12-25 02:32:09
+Invalid column name 'IsParked'.
+Statement(s) could not be prepared.
 -----------------------------------------------------------------------------
-Date : 24-11-2025 11:25:49
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
+Date : 09-12-25 02:32:10
+Invalid column name 'ArmyNo'.
+Invalid column name 'MobileNo'.
+Statement(s) could not be prepared.
 -----------------------------------------------------------------------------
-Date : 24-11-2025 11:36:57
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 24-11-2025 11:41:09
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 24-11-2025 11:46:26
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 24-11-2025 11:48:59
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 24-11-2025 12:27:48
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 24-11-2025 12:34:57
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 24-11-2025 12:59:54
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 24-11-2025 14:17:24
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 24-11-2025 14:17:47
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 24-11-2025 14:21:41
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 24-11-2025 14:36:49
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 24-11-2025 14:40:35
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 24-11-2025 14:45:34
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 24-11-2025 14:47:10
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 24-11-2025 14:54:38
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 24-11-2025 15:47:32
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 25-11-2025 15:29:53
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 25-11-2025 15:39:24
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 25-11-2025 15:42:11
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 25-11-2025 15:48:28
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 25-11-2025 15:49:47
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 25-11-2025 15:50:04
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 25-11-2025 16:06:53
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 26-11-2025 09:30:51
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 26-11-2025 09:39:00
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 26-11-2025 09:42:03
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 26-11-2025 09:47:26
-String or binary data would be truncated in table 'DB_PAW.dbo.trnWhiteListed', column 'ProjName'. Truncated value: 'lkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf sadlkfj sadlkfjasd fasdfj slkfsdj fsadlf slkjf s'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 26-11-2025 15:20:02
-'System.Dynamic.DynamicObject' does not contain a definition for 'LatestPsmid'
------------------------------------------------------------------------------
-Date : 26-11-2025 15:20:18
-'System.Dynamic.DynamicObject' does not contain a definition for 'LatestPsmid'
------------------------------------------------------------------------------
-Date : 26-11-2025 15:23:03
-'System.Dynamic.DynamicObject' does not contain a definition for 'LatestPsmid'
------------------------------------------------------------------------------
-Date : 26-11-2025 17:38:23
-'System.Dynamic.DynamicObject' does not contain a definition for 'Projid'
------------------------------------------------------------------------------
-Date : 26-11-2025 17:51:46
-'System.Dynamic.DynamicObject' does not contain a definition for 'Projid'
------------------------------------------------------------------------------
-Date : 26-11-2025 17:53:12
-'System.Dynamic.DynamicObject' does not contain a definition for 'Projid'
------------------------------------------------------------------------------
-Date : 27-11-2025 11:35:08
-Object reference not set to an instance of an object.
------------------------------------------------------------------------------
-Date : 27-11-2025 11:35:09
-Object reference not set to an instance of an object.
------------------------------------------------------------------------------
-Date : 27-11-2025 11:35:09
+Date : 09-12-25 02:32:10
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 27-11-2025 14:22:31
-An exception was thrown while attempting to evaluate a LINQ query parameter expression. See the inner exception for more information. To show additional information call 'DbContextOptionsBuilder.EnableSensitiveDataLogging'.
+Date : 09-12-25 02:43:50
+Invalid column name 'IsParked'.
+Statement(s) could not be prepared.
 -----------------------------------------------------------------------------
-Date : 27-11-2025 14:22:35
-Object reference not set to an instance of an object.
+Date : 09-12-25 02:43:50
+Invalid column name 'IsParked'.
+Statement(s) could not be prepared.
 -----------------------------------------------------------------------------
-Date : 27-11-2025 14:22:36
+Date : 09-12-25 02:43:51
+Invalid column name 'ArmyNo'.
+Invalid column name 'MobileNo'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 09-12-25 02:43:51
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 27-11-2025 16:32:01
-The LINQ expression 'DbSet<tbl_Projects>()
-    .Join(
-        inner: DbSet<tbl_ProjStakeHolderMov>(), 
-        outerKeySelector: a => a.ProjId, 
-        innerKeySelector: b => b.ProjId, 
-        resultSelector: (a, b) => new { 
-            a = a, 
-            b = b
-         })
-    .Join(
-        inner: DbSet<UnitDtl>(), 
-        outerKeySelector: <>h__TransparentIdentifier0 => <>h__TransparentIdentifier0.a.StakeHolderId, 
-        innerKeySelector: stackc => stackc.unitid, 
-        resultSelector: (<>h__TransparentIdentifier0, stackc) => new { 
-            <>h__TransparentIdentifier0 = <>h__TransparentIdentifier0, 
-            stackc = stackc
-         })
-    .Join(
-        inner: DbSet<UnitDtl>(), 
-        outerKeySelector: <>h__TransparentIdentifier1 => <>h__TransparentIdentifier1.<>h__TransparentIdentifier0.b.ToUnitId, 
-        innerKeySelector: tounit => tounit.unitid, 
-        resultSelector: (<>h__TransparentIdentifier1, tounit) => new { 
-            <>h__TransparentIdentifier1 = <>h__TransparentIdentifier1, 
-            tounit = tounit
-         })
-    .Join(
-        inner: DbSet<UnitDtl>(), 
-        outerKeySelector: <>h__TransparentIdentifier2 => <>h__TransparentIdentifier2.<>h__TransparentIdentifier1.<>h__TransparentIdentifier0.b.FromUnitId, 
-        innerKeySelector: fromunit => fromunit.unitid, 
-        resultSelector: (<>h__TransparentIdentifier2, fromunit) => new { 
-            <>h__TransparentIdentifier2 = <>h__TransparentIdentifier2, 
-            fromunit = fromunit
-         })
-    .Join(
-        inner: DbSet<TrnStatusActionsMapping>(), 
-        outerKeySelector: <>h__TransparentIdentifier3 => <>h__TransparentIdentifier3.<>h__TransparentIdentifier2.<>h__TransparentIdentifier1.<>h__TransparentIdentifier0.b.StatusActionsMappingId, 
-        innerKeySelector: actmap => actmap.StatusActionsMappingId, 
-        resultSelector: (<>h__TransparentIdentifier3, actmap) => new { 
-            <>h__TransparentIdentifier3 = <>h__TransparentIdentifier3, 
-            actmap = actmap
-         })
-    .Join(
-        inner: DbSet<tbl_mStatus>(), 
-        outerKeySelector: <>h__TransparentIdentifier4 => <>h__TransparentIdentifier4.actmap.StatusId, 
-        innerKeySelector: ststus => ststus.StatusId, 
-        resultSelector: (<>h__TransparentIdentifier4, ststus) => new { 
-            <>h__TransparentIdentifier4 = <>h__TransparentIdentifier4, 
-            ststus = ststus
-         })
-    .Join(
-        inner: DbSet<tbl_mStages>(), 
-        outerKeySelector: <>h__TransparentIdentifier5 => <>h__TransparentIdentifier5.ststus.StageId, 
-        innerKeySelector: stge => stge.StagesId, 
-        resultSelector: (<>h__TransparentIdentifier5, stge) => new { 
-            <>h__TransparentIdentifier5 = <>h__TransparentIdentifier5, 
-            stge = stge
-         })
-    .Join(
-        inner: DbSet<tbl_mActions>(), 
-        outerKeySelector: <>h__TransparentIdentifier6 => <>h__TransparentIdentifier6.<>h__TransparentIdentifier5.<>h__TransparentIdentifier4.actmap.ActionsId, 
-        innerKeySelector: act => act.ActionsId, 
-        resultSelector: (<>h__TransparentIdentifier6, act) => new { 
-            <>h__TransparentIdentifier6 = <>h__TransparentIdentifier6, 
-            act = act
-         })
-    .GroupJoin(
-        inner: DbSet<LegacyHistory>(), 
-        outerKeySelector: <>h__TransparentIdentifier7 => <>h__TransparentIdentifier7.<>h__TransparentIdentifier6.<>h__TransparentIdentifier5.<>h__TransparentIdentifier4.<>h__TransparentIdentifier3.<>h__TransparentIdentifier2.<>h__TransparentIdentifier1.<>h__TransparentIdentifier0.a.ProjId, 
-        innerKeySelector: legacy => legacy.ProjectId, 
-        resultSelector: (<>h__TransparentIdentifier7, g) => new { 
-            <>h__TransparentIdentifier7 = <>h__TransparentIdentifier7, 
-            g = g
-         })' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+Date : 09-12-25 07:13:31
+Invalid column name 'IsParked'.
+Statement(s) could not be prepared.
 -----------------------------------------------------------------------------
-Date : 27-11-2025 16:32:01
+Date : 09-12-25 07:13:32
+Invalid column name 'IsParked'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 09-12-25 07:13:32
+Invalid column name 'ArmyNo'.
+Invalid column name 'MobileNo'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 09-12-25 07:13:32
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
-Date : 27-11-2025 16:33:22
-The LINQ expression 'DbSet<tbl_Projects>()
-    .Join(
-        inner: DbSet<tbl_ProjStakeHolderMov>(), 
-        outerKeySelector: a => a.ProjId, 
-        innerKeySelector: b => b.ProjId, 
-        resultSelector: (a, b) => new { 
-            a = a, 
-            b = b
-         })
-    .Join(
-        inner: DbSet<UnitDtl>(), 
-        outerKeySelector: <>h__TransparentIdentifier0 => <>h__TransparentIdentifier0.a.StakeHolderId, 
-        innerKeySelector: stackc => stackc.unitid, 
-        resultSelector: (<>h__TransparentIdentifier0, stackc) => new { 
-            <>h__TransparentIdentifier0 = <>h__TransparentIdentifier0, 
-            stackc = stackc
-         })
-    .Join(
-        inner: DbSet<UnitDtl>(), 
-        outerKeySelector: <>h__TransparentIdentifier1 => <>h__TransparentIdentifier1.<>h__TransparentIdentifier0.b.ToUnitId, 
-        innerKeySelector: tounit => tounit.unitid, 
-        resultSelector: (<>h__TransparentIdentifier1, tounit) => new { 
-            <>h__TransparentIdentifier1 = <>h__TransparentIdentifier1, 
-            tounit = tounit
-         })
-    .Join(
-        inner: DbSet<UnitDtl>(), 
-        outerKeySelector: <>h__TransparentIdentifier2 => <>h__TransparentIdentifier2.<>h__TransparentIdentifier1.<>h__TransparentIdentifier0.b.FromUnitId, 
-        innerKeySelector: fromunit => fromunit.unitid, 
-        resultSelector: (<>h__TransparentIdentifier2, fromunit) => new { 
-            <>h__TransparentIdentifier2 = <>h__TransparentIdentifier2, 
-            fromunit = fromunit
-         })
-    .Join(
-        inner: DbSet<TrnStatusActionsMapping>(), 
-        outerKeySelector: <>h__TransparentIdentifier3 => <>h__TransparentIdentifier3.<>h__TransparentIdentifier2.<>h__TransparentIdentifier1.<>h__TransparentIdentifier0.b.StatusActionsMappingId, 
-        innerKeySelector: actmap => actmap.StatusActionsMappingId, 
-        resultSelector: (<>h__TransparentIdentifier3, actmap) => new { 
-            <>h__TransparentIdentifier3 = <>h__TransparentIdentifier3, 
-            actmap = actmap
-         })
-    .Join(
-        inner: DbSet<tbl_mStatus>(), 
-        outerKeySelector: <>h__TransparentIdentifier4 => <>h__TransparentIdentifier4.actmap.StatusId, 
-        innerKeySelector: ststus => ststus.StatusId, 
-        resultSelector: (<>h__TransparentIdentifier4, ststus) => new { 
-            <>h__TransparentIdentifier4 = <>h__TransparentIdentifier4, 
-            ststus = ststus
-         })
-    .Join(
-        inner: DbSet<tbl_mStages>(), 
-        outerKeySelector: <>h__TransparentIdentifier5 => <>h__TransparentIdentifier5.ststus.StageId, 
-        innerKeySelector: stge => stge.StagesId, 
-        resultSelector: (<>h__TransparentIdentifier5, stge) => new { 
-            <>h__TransparentIdentifier5 = <>h__TransparentIdentifier5, 
-            stge = stge
-         })
-    .Join(
-        inner: DbSet<tbl_mActions>(), 
-        outerKeySelector: <>h__TransparentIdentifier6 => <>h__TransparentIdentifier6.<>h__TransparentIdentifier5.<>h__TransparentIdentifier4.actmap.ActionsId, 
-        innerKeySelector: act => act.ActionsId, 
-        resultSelector: (<>h__TransparentIdentifier6, act) => new { 
-            <>h__TransparentIdentifier6 = <>h__TransparentIdentifier6, 
-            act = act
-         })
-    .GroupJoin(
-        inner: DbSet<LegacyHistory>(), 
-        outerKeySelector: <>h__TransparentIdentifier7 => <>h__TransparentIdentifier7.<>h__TransparentIdentifier6.<>h__TransparentIdentifier5.<>h__TransparentIdentifier4.<>h__TransparentIdentifier3.<>h__TransparentIdentifier2.<>h__TransparentIdentifier1.<>h__TransparentIdentifier0.a.ProjId, 
-        innerKeySelector: legacy => legacy.ProjectId, 
-        resultSelector: (<>h__TransparentIdentifier7, g) => new { 
-            <>h__TransparentIdentifier7 = <>h__TransparentIdentifier7, 
-            g = g
-         })' could not be translated. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+Date : 09-12-25 07:14:05
+Invalid column name 'IsParked'.
+Statement(s) could not be prepared.
 -----------------------------------------------------------------------------
-Date : 27-11-2025 16:33:22
-Request failed & Status Code : 200
+Date : 09-12-25 07:14:06
+Invalid column name 'IsParked'.
+Statement(s) could not be prepared.
 -----------------------------------------------------------------------------
-Date : 27-11-2025 16:39:34
-Request failed & Status Code : 200
+Date : 09-12-25 07:14:07
+Invalid column name 'ArmyNo'.
+Invalid column name 'MobileNo'.
+Statement(s) could not be prepared.
 -----------------------------------------------------------------------------
-Date : 27-11-2025 16:39:36
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 08-12-2025 14:27:18
-Incorrect syntax near ')'.
------------------------------------------------------------------------------
-Date : 09-12-2025 10:08:32
-Invalid column name 'Rank_id'.
------------------------------------------------------------------------------
-Date : 09-12-2025 11:20:59
-Incorrect syntax near ')'.
------------------------------------------------------------------------------
-Date : 15-12-2025 16:11:21
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
------------------------------------------------------------------------------
-Date : 15-12-2025 16:11:21
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 15-12-2025 16:11:28
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
------------------------------------------------------------------------------
-Date : 15-12-2025 16:11:28
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-12-2025 12:57:18
-An exception was thrown while attempting to evaluate a LINQ query parameter expression. See the inner exception for more information. To show additional information call 'DbContextOptionsBuilder.EnableSensitiveDataLogging'.
------------------------------------------------------------------------------
-Date : 17-12-2025 12:57:21
-Object reference not set to an instance of an object.
------------------------------------------------------------------------------
-Date : 17-12-2025 12:57:21
+Date : 09-12-25 07:14:07
 Request failed & Status Code : 200

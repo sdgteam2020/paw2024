@@ -784,11 +784,9 @@
 </div>
 
 
-@await Html.PartialAsync("_whitelistdProjectView")
+@* @await Html.PartialAsync("_whitelistdProjectView") *@
 
 
-<script src="~/developerjs/commandatatable.js"></script>
-<script src="~/developerjs/dashboard.js"></script>
 @* 
 <script>
     // Script to dynamically adjust modal height based on content
@@ -834,17 +832,19 @@
     });
 </script> *@
 
+<script src="~/developerjs/commandatatable.js"></script>
+<script src="~/DeveloperJs/Dashboard.js"></script>
 
 <script>
     @if (TempData.ContainsKey("SuccessMessage"))
     {
         <text>
-                Swal.fire({
-                    title: 'Success',
+            Swal.fire({
+                title: 'Success',
                 text: '@TempData["SuccessMessage"]',
                 icon: 'success',
                 confirmButtonText: 'OK'
-                });
+            });
         </text>
         TempData.Remove("SuccessMessage");
     }

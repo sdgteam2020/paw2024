@@ -1634,121 +1634,6 @@ namespace swas.BAL.Repository
         }
 
 
-        public async Task<List<DTOProjectsFwd>> GetActParkedItemsAsync()
-        {
-
-            #region GetActSendItemsWithProc
-            try
-            {
-                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-                if (Logins == null) return null;
-
-                var lst = new List<DTOProjectsFwd>();
-                int unitId = Logins.unitid ?? 0;
-
-
-                using (SqlConnection conn = new SqlConnection(_dbContext.Database.GetConnectionString()))
-                {
-                    using (SqlCommand cmd = new SqlCommand("GetParkedProjects", conn))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@UnitId", unitId);
-
-
-                        await conn.OpenAsync();
-                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                        DataTable dt = new DataTable();
-                        adapter.Fill(dt);
-                        var data = dt;
-
-
-                        using (var reader = await cmd.ExecuteReaderAsync())
-                        {
-                            while (await reader.ReadAsync())
-                            {
-                                var dto = new DTOProjectsFwd
-                                {
-                                    ProjId = reader.GetInt32(reader.GetOrdinal("ProjId")),
-                                    PsmIds = reader.GetInt32(reader.GetOrdinal("PsmIds")), // column name fix
-                                    ProjName = reader["ProjName"]?.ToString(),
-                                    Sponsor = reader["Sponsor"]?.ToString(),
-                                    StakeHolderId = reader["StakeHolderId"] != DBNull.Value ? Convert.ToInt32(reader["StakeHolderId"]) : 0,
-                                    StakeHolder = reader["StakeHolder"]?.ToString(),
-                                    Stage = reader["Stages"]?.ToString(),
-                                    StageId = reader["StageId"] != DBNull.Value ? Convert.ToInt32(reader["StageId"]) : 0,
-                                    Status = reader["Status"]?.ToString(),
-                                    StatusId = reader["StatusId"] != DBNull.Value ? Convert.ToInt32(reader["StatusId"]) : 0,
-                                    FromUnitId = reader["FromUnitId"] != DBNull.Value ? Convert.ToInt32(reader["FromUnitId"]) : 0,
-                                    FromUnitUserDetail = reader["FromUnitUserDetail"]?.ToString(),
-                                    FromUnitName = reader["FromUnitName"]?.ToString(),
-                                    ToUnitId = reader["ToUnitId"] != DBNull.Value ? Convert.ToInt32(reader["ToUnitId"]) : 0,
-                                    ToUnitName = reader["ToUnitName"]?.ToString(),
-                                    Action = reader["Actions"]?.ToString(),
-                                    ActionId = reader["ActionId"] != DBNull.Value ? Convert.ToInt32(reader["ActionId"]) : 0,
-                                    TotalDays = 0,
-                                    TimeStamp = reader["TimeStamp"] != DBNull.Value ? Convert.ToDateTime(reader["TimeStamp"]) : DateTime.MinValue,
-                                    IsProcess = reader["IsProcess"] != DBNull.Value && Convert.ToBoolean(reader["IsProcess"]),
-                                    IsRead = reader["IsRead"] != DBNull.Value && Convert.ToBoolean(reader["IsRead"]),
-                                    UnitName = reader["StakeHolder"]?.ToString(),
-                                    EncyID = _dataProtector.Protect(reader["ProjId"].ToString()),
-                                    EncyPsmID = _dataProtector.Protect(reader["PsmIds"].ToString()),
-                                    IsHosted = reader["IsHosted"] != DBNull.Value ? Convert.ToInt32(reader["IsHosted"]) : 0,
-                                    IsCc = reader["IsCc"] != DBNull.Value && Convert.ToBoolean(reader["IsCc"]),
-                                    CCUnitName = reader["CCUnitName"]?.ToString(),
-                                    ReadDate = reader["ReadDate"] != DBNull.Value ? Convert.ToDateTime(reader["ReadDate"]) : DateTime.MinValue,
-                                    UserDetails = reader["UserDetails"]?.ToString()
-
-                                    //ProjId = reader.GetInt32(reader.GetOrdinal("ProjId")),
-                                    //PsmIds = reader.GetInt32(reader.GetOrdinal("PsmId")), // column name fix
-                                    //ProjName = reader["ProjName"]?.ToString(),
-                                    //Sponsor = reader["Sponsor"]?.ToString(),
-                                    //StakeHolderId = reader["StakeHolderId"] != DBNull.Value ? Convert.ToInt32(reader["StakeHolderId"]) : 0,
-                                    //StakeHolder = reader["StakeHolder"]?.ToString(),
-                                    //Stage = reader["Stages"]?.ToString(),
-                                    //StageId = reader["StageId"] != DBNull.Value ? Convert.ToInt32(reader["StageId"]) : 0,
-                                    //Status = reader["Status"]?.ToString(),
-                                    //StatusId = reader["StatusId"] != DBNull.Value ? Convert.ToInt32(reader["StatusId"]) : 0,
-                                    //FromUnitId = reader["FromUnitId"] != DBNull.Value ? Convert.ToInt32(reader["FromUnitId"]) : 0,
-
-                                    //FromUnitName = reader["FromUnitName"]?.ToString(),
-                                    //ToUnitId = reader["ToUnitId"] != DBNull.Value ? Convert.ToInt32(reader["ToUnitId"]) : 0,
-                                    //ToUnitName = reader["ToUnitName"]?.ToString(),
-
-
-
-                                    //TimeStamp = reader["TimeStamp"] != DBNull.Value ? Convert.ToDateTime(reader["TimeStamp"]) : DateTime.MinValue,
-
-                                    //IsRead = reader["IsRead"] != DBNull.Value && Convert.ToBoolean(reader["IsRead"]),
-                                    //UnitName = reader["StakeHolder"]?.ToString(),
-                                    //EncyID = _dataProtector.Protect(reader["ProjId"].ToString()),
-                                    //EncyPsmID = _dataProtector.Protect(reader["PsmId"].ToString()),
-
-                                    //IsCc = reader["IsCc"] != DBNull.Value && Convert.ToBoolean(reader["IsCc"]),
-
-                                    //ReadDate = reader["ReadDate"] != DBNull.Value ? Convert.ToDateTime(reader["ReadDate"]) : DateTime.MinValue,
-                                    //UserDetails = reader["UserDetails"]?.ToString()
-                                };
-
-            lst.Add(dto);
-                            }
-                        }
-                    }
-
-                }
-
-
-                return lst;
-            }
-            catch (Exception ex)
-            {
-                // Log the exception or handle it as needed
-                throw;
-            }
-            #endregion
-
-        }
-
-
         public async Task<List<tbl_Projects>> GetAllProjectsAsync()
         {
             return await _dbContext.Projects.ToListAsync();
@@ -2874,24 +2759,138 @@ namespace swas.BAL.Repository
         }
 
 
-        //public async Task<int> GetProjIdByPsmiId(int? Psmid, int? StackHolderId)
-        //{
-        //    var ret = await _dbContext.ProjStakeHolderMov.Where(i => i.PsmId == Psmid).FirstOrDefaultAsync();
-        //    if (ret != null)
-        //        return ret.ProjId;
-        //    else
-        //        return 0;
-        //}
 
-        //public async Task<List<tbl_ProjStakeHolderMov>> GetProjStkHolderMovmentByProjId(int? ProjId)
-        //{
-        //    var ret = await _dbContext.ProjStakeHolderMov.Where(i => i.ProjId == ProjId && i.IsComment == true).ToListAsync();
-        //    if (ret != null)
-        //        return ret;
-        //    else
-        //        return new List<tbl_ProjStakeHolderMov>();
-        //}
+		public async Task<List<DTOProjectsFwd>> GetActParkedItemsAsync()
+		{
 
-    }
+			#region GetActSendItemsWithProc
+			try
+			{
+				Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+				if (Logins == null) return null;
+
+				var lst = new List<DTOProjectsFwd>();
+				int unitId = Logins.unitid ?? 0;
+
+
+				using (SqlConnection conn = new SqlConnection(_dbContext.Database.GetConnectionString()))
+				{
+					using (SqlCommand cmd = new SqlCommand("GetParkedProjects", conn))
+					{
+						cmd.CommandType = CommandType.StoredProcedure;
+						cmd.Parameters.AddWithValue("@UnitId", unitId);
+
+
+						await conn.OpenAsync();
+						SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+						DataTable dt = new DataTable();
+						adapter.Fill(dt);
+						var data = dt;
+
+
+						using (var reader = await cmd.ExecuteReaderAsync())
+						{
+							while (await reader.ReadAsync())
+							{
+								var dto = new DTOProjectsFwd
+								{
+									ProjId = reader.GetInt32(reader.GetOrdinal("ProjId")),
+									PsmIds = reader.GetInt32(reader.GetOrdinal("PsmIds")), // column name fix
+									ProjName = reader["ProjName"]?.ToString(),
+									Sponsor = reader["Sponsor"]?.ToString(),
+									StakeHolderId = reader["StakeHolderId"] != DBNull.Value ? Convert.ToInt32(reader["StakeHolderId"]) : 0,
+									StakeHolder = reader["StakeHolder"]?.ToString(),
+									Stage = reader["Stages"]?.ToString(),
+									StageId = reader["StageId"] != DBNull.Value ? Convert.ToInt32(reader["StageId"]) : 0,
+									Status = reader["Status"]?.ToString(),
+									StatusId = reader["StatusId"] != DBNull.Value ? Convert.ToInt32(reader["StatusId"]) : 0,
+									FromUnitId = reader["FromUnitId"] != DBNull.Value ? Convert.ToInt32(reader["FromUnitId"]) : 0,
+									FromUnitUserDetail = reader["FromUnitUserDetail"]?.ToString(),
+									FromUnitName = reader["FromUnitName"]?.ToString(),
+									ToUnitId = reader["ToUnitId"] != DBNull.Value ? Convert.ToInt32(reader["ToUnitId"]) : 0,
+									ToUnitName = reader["ToUnitName"]?.ToString(),
+									Action = reader["Actions"]?.ToString(),
+									ActionId = reader["ActionId"] != DBNull.Value ? Convert.ToInt32(reader["ActionId"]) : 0,
+									TotalDays = 0,
+									TimeStamp = reader["TimeStamp"] != DBNull.Value ? Convert.ToDateTime(reader["TimeStamp"]) : DateTime.MinValue,
+									IsProcess = reader["IsProcess"] != DBNull.Value && Convert.ToBoolean(reader["IsProcess"]),
+									IsRead = reader["IsRead"] != DBNull.Value && Convert.ToBoolean(reader["IsRead"]),
+									UnitName = reader["StakeHolder"]?.ToString(),
+									EncyID = _dataProtector.Protect(reader["ProjId"].ToString()),
+									EncyPsmID = _dataProtector.Protect(reader["PsmIds"].ToString()),
+									IsHosted = reader["IsHosted"] != DBNull.Value ? Convert.ToInt32(reader["IsHosted"]) : 0,
+									IsCc = reader["IsCc"] != DBNull.Value && Convert.ToBoolean(reader["IsCc"]),
+									CCUnitName = reader["CCUnitName"]?.ToString(),
+									ReadDate = reader["ReadDate"] != DBNull.Value ? Convert.ToDateTime(reader["ReadDate"]) : DateTime.MinValue,
+									UserDetails = reader["UserDetails"]?.ToString()
+
+									//ProjId = reader.GetInt32(reader.GetOrdinal("ProjId")),
+									//PsmIds = reader.GetInt32(reader.GetOrdinal("PsmId")), // column name fix
+									//ProjName = reader["ProjName"]?.ToString(),
+									//Sponsor = reader["Sponsor"]?.ToString(),
+									//StakeHolderId = reader["StakeHolderId"] != DBNull.Value ? Convert.ToInt32(reader["StakeHolderId"]) : 0,
+									//StakeHolder = reader["StakeHolder"]?.ToString(),
+									//Stage = reader["Stages"]?.ToString(),
+									//StageId = reader["StageId"] != DBNull.Value ? Convert.ToInt32(reader["StageId"]) : 0,
+									//Status = reader["Status"]?.ToString(),
+									//StatusId = reader["StatusId"] != DBNull.Value ? Convert.ToInt32(reader["StatusId"]) : 0,
+									//FromUnitId = reader["FromUnitId"] != DBNull.Value ? Convert.ToInt32(reader["FromUnitId"]) : 0,
+
+									//FromUnitName = reader["FromUnitName"]?.ToString(),
+									//ToUnitId = reader["ToUnitId"] != DBNull.Value ? Convert.ToInt32(reader["ToUnitId"]) : 0,
+									//ToUnitName = reader["ToUnitName"]?.ToString(),
+
+
+
+									//TimeStamp = reader["TimeStamp"] != DBNull.Value ? Convert.ToDateTime(reader["TimeStamp"]) : DateTime.MinValue,
+
+									//IsRead = reader["IsRead"] != DBNull.Value && Convert.ToBoolean(reader["IsRead"]),
+									//UnitName = reader["StakeHolder"]?.ToString(),
+									//EncyID = _dataProtector.Protect(reader["ProjId"].ToString()),
+									//EncyPsmID = _dataProtector.Protect(reader["PsmId"].ToString()),
+
+									//IsCc = reader["IsCc"] != DBNull.Value && Convert.ToBoolean(reader["IsCc"]),
+
+									//ReadDate = reader["ReadDate"] != DBNull.Value ? Convert.ToDateTime(reader["ReadDate"]) : DateTime.MinValue,
+									//UserDetails = reader["UserDetails"]?.ToString()
+								};
+
+								lst.Add(dto);
+							}
+						}
+					}
+
+				}
+
+
+				return lst;
+			}
+			catch (Exception ex)
+			{
+				// Log the exception or handle it as needed
+				throw;
+			}
+			#endregion
+
+		}
+		//public async Task<int> GetProjIdByPsmiId(int? Psmid, int? StackHolderId)
+		//{
+		//    var ret = await _dbContext.ProjStakeHolderMov.Where(i => i.PsmId == Psmid).FirstOrDefaultAsync();
+		//    if (ret != null)
+		//        return ret.ProjId;
+		//    else
+		//        return 0;
+		//}
+
+		//public async Task<List<tbl_ProjStakeHolderMov>> GetProjStkHolderMovmentByProjId(int? ProjId)
+		//{
+		//    var ret = await _dbContext.ProjStakeHolderMov.Where(i => i.ProjId == ProjId && i.IsComment == true).ToListAsync();
+		//    if (ret != null)
+		//        return ret;
+		//    else
+		//        return new List<tbl_ProjStakeHolderMov>();
+		//}
+
+	}
 
 }

@@ -92,7 +92,7 @@ namespace swas.UI.Controllers
         private readonly IWatermarkRepository _watermarkRepo;
         //private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager;
 
-        public HomeController(IWatermarkRepository watermarkRepo,IProjectsRepository projectsRepository, ICommentRepository commentRepository, SignInManager<ApplicationUser> signInManager, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IDdlRepository dlRepository, ApplicationDbContext context, IUnitRepository unitRepository, IProjStakeHolderMovRepository stkholdmove, IChartService chartService, IWebHostEnvironment _webHostEnvironment, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, IDataProtectionProvider dataProtector, IActionsRepository actionsRepository, IAttHistoryRepository attHistoryRepository, ILogger<HomeController> logger, IDateApprovalRepository repo, ILegacyHistoryRepository legacyHistoryRepository)
+        public HomeController(IWatermarkRepository watermark,IProjectsRepository projectsRepository, ICommentRepository commentRepository, SignInManager<ApplicationUser> signInManager, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IDdlRepository dlRepository, ApplicationDbContext context, IUnitRepository unitRepository, IProjStakeHolderMovRepository stkholdmove, IChartService chartService, IWebHostEnvironment _webHostEnvironment, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, IDataProtectionProvider dataProtector, IActionsRepository actionsRepository, IAttHistoryRepository attHistoryRepository, ILogger<HomeController> logger, IDateApprovalRepository repo, ILegacyHistoryRepository legacyHistoryRepository)
         {
             //  _logger = logger; _repositoryUser = repositoryUser;
             _projectsRepository = projectsRepository;
@@ -114,7 +114,7 @@ namespace swas.UI.Controllers
             _logger = logger;
             _repo = repo;
             _legacyHistoryRepository = legacyHistoryRepository;
-            _watermarkRepo = watermarkRepo;
+			_watermarkRepo = watermark;
         }
 
 
@@ -1033,20 +1033,8 @@ s.IsDashboard,
         public async Task<IActionResult> GetWhiteListedActionProj(int TypeId)
         {
             var ret = await _projectsRepository.GetWhiteListedActionProj(TypeId);
-
-            var units = await _unitRepository.GetAllUnitAsync();
-            var typeo = _context.mHostType
-                        .Select(x => new { x.HostTypeID, x.HostingDesc })
-                        .ToList();
-
-            return Json(new
-            {
-                Projects = ret,
-                Units = units,
-                HostTypes = typeo
-            });
+            return Json(ret);
         }
-
 
 
         public async Task<IActionResult> ProjUnitComments()
@@ -1869,6 +1857,7 @@ s.IsDashboard,
             return Json(new { message });
         }
 
+
         [HttpGet]
         public IActionResult Generate(string ProjectName, string ApprovedRemarks, string ApprovedDt)
         {
@@ -1907,7 +1896,7 @@ s.IsDashboard,
 
                     DeviceRgb headerColor = new DeviceRgb(230, 230, 230);
 
-                    ImageData img = ImageDataFactory.Create("wwwroot/assets/images/Certificate.png");
+                    ImageData img = ImageDataFactory.Create("wwwroot/assets/images/IPACertificate.png");
                     header.AddCell(new Cell()
                         .Add(new Image(img).SetWidth(70).SetHeight(80))
                         .SetBorder(Border.NO_BORDER)
@@ -2009,7 +1998,7 @@ s.IsDashboard,
                         .SetOpacity(0.6f)
                     );
 
-                  
+
                     _watermarkRepo.AddWatermark(pdf, watermark);
                     document.Close();
 
@@ -2035,12 +2024,12 @@ s.IsDashboard,
                 .SetTextAlignment(TextAlignment.LEFT);
             if (isBold)
             {
-                p.SetBold() ;
+                p.SetBold();
             }
             return new Cell()
                 .Add(p)
                 .SetBorder(iText.Layout.Borders.Border.NO_BORDER)
-                .SetPadding(6) ; 
+                .SetPadding(6);
         }
 
 

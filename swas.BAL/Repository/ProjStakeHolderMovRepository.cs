@@ -28,6 +28,7 @@ using swas.BAL.Utility;
 using static Grpc.Core.ChannelOption;
 using static swas.DAL.Models.LegacyHistory;
 
+
 namespace swas.BAL.Repository
 {
 
@@ -123,7 +124,6 @@ namespace swas.BAL.Repository
          .Where(l => l.ProjectId == a.ProjId)
          .OrderByDescending(l => l.HistoryId)
          .FirstOrDefault()
-
                                where b.ProjId == ProjectId
                                orderby b.TimeStamp descending
                                //orderby b.PsmId descending
@@ -131,16 +131,11 @@ namespace swas.BAL.Repository
                                {
                                    PsmId = b.PsmId,
                                    Stages = stge.Stages,
-                                   LatestActionType = legacy != null ? legacy.ActionType : default(ActionTypeEnum),
-                                   StageId = stge.StagesId,
-                                   ActionsId= act.ActionsId,
                                    //Status = tounit.UnitName + " " + "For Comments",
                                    Status = ststus.Status,
                                    StatusId= ststus.StatusId,
                                    Actions = act.Actions,
                                    FromUnitName = " " + b.UserDetails + " ( " + fromunit.UnitName + ")",
-                                   FromUnitId=b.FromUnitId,
-                                   StakeHolderId=a.StakeHolderId,
                                    ToUnitName = tounit.UnitName,
                                    FromUser = "", 
                                    ToUser = "",
@@ -150,6 +145,11 @@ namespace swas.BAL.Repository
                                    IsComment = b.IsComment,
                                    AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == b.PsmId),
                                    UserDetails = b.UserDetails,
+                                   LatestActionType = legacy != null ? legacy.ActionType : default(ActionTypeEnum),
+                                   StageId = stge.StagesId,
+                                   ActionsId = act.ActionsId,
+                                   FromUnitId = b.FromUnitId,
+                                   StakeHolderId = a.StakeHolderId,
                                    IsPulledBack = b.IsPullBack,
                                    StatusActionsMappingId=b.StatusActionsMappingId,
                                    IsCc = b.IsCc,
@@ -927,46 +927,52 @@ namespace swas.BAL.Repository
             }
         }
 
-        public async Task<bool> CheckFwdCondition(int ProjId, int StatusId)
+        public async Task<bool> CheckFwdCondition(int ProjId, int StatusId, string Actionsname)
         {
-            if (StatusId != 1)
+            
+            if (Actionsname != "Info")
             {
-                //select act.StatusActionsMappingId,sts.StatusId,sts.Status from TrnStatusActionsMapping act
-                //inner join mStatus sts on act.StatusId=sts.StatusId
-                //inner join ProjStakeHolderMov mov on mov.StatusActionsMappingId=act.StatusActionsMappingId
-                //where act.ActionsId=2 and act.StatusId=20 and mov.ProjId=1
-                var ret = await (from act in _dbContext.TrnStatusActionsMapping
-                                 join sts in _dbContext.mStatus on act.StatusId equals sts.StatusId
-                                 join mov in _dbContext.ProjStakeHolderMov on act.StatusActionsMappingId equals mov.StatusActionsMappingId
-                                 where act.ActionsId == 2 && act.StatusId == StatusId && mov.ProjId == ProjId
-                                 && mov.IsActive == true && mov.UndoRemarks == null
-                                 select new TrnStatusActionsMapping
-                                 {
-                                     StatusActionsMappingId = act.StatusActionsMappingId
-                                 }).FirstOrDefaultAsync();
-                if (ret != null)
+                if (StatusId != 1)
                 {
-                    return true;
+                    //select act.StatusActionsMappingId,sts.StatusId,sts.Status from TrnStatusActionsMapping act
+                    //inner join mStatus sts on act.StatusId=sts.StatusId
+                    //inner join ProjStakeHolderMov mov on mov.StatusActionsMappingId=act.StatusActionsMappingId
+                    //where act.ActionsId=2 and act.StatusId=20 and mov.ProjId=1
+                    var ret = await (from act in _dbContext.TrnStatusActionsMapping
+                                     join sts in _dbContext.mStatus on act.StatusId equals sts.StatusId
+                                     join mov in _dbContext.ProjStakeHolderMov on act.StatusActionsMappingId equals mov.StatusActionsMappingId
+                                     where act.ActionsId == 2 && act.StatusId == StatusId && mov.ProjId == ProjId
+                                     && mov.IsActive == true && mov.UndoRemarks == null
+                                     select new TrnStatusActionsMapping
+                                     {
+                                         StatusActionsMappingId = act.StatusActionsMappingId
+                                     }).FirstOrDefaultAsync();
+                    if (ret != null)
+                    {
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-            else
-            {
-                var ret = await (from act in _dbContext.TrnStatusActionsMapping
-                                 join sts in _dbContext.mStatus on act.StatusId equals sts.StatusId
-                                 join mov in _dbContext.ProjStakeHolderMov on act.StatusActionsMappingId equals mov.StatusActionsMappingId
-                                 where act.ActionsId == 1 && mov.ProjId == ProjId && mov.ToUnitId == 1 && mov.IsComment == true
-                                 && mov.IsActive == true && mov.UndoRemarks==null
-                                 select new TrnStatusActionsMapping
-                                 {
-                                     StatusActionsMappingId = act.StatusActionsMappingId
-                                 }).FirstOrDefaultAsync();
-                if (ret != null)
+                else
                 {
-                    return true;
+                    var ret = await (from act in _dbContext.TrnStatusActionsMapping
+                                     join sts in _dbContext.mStatus on act.StatusId equals sts.StatusId
+                                     join mov in _dbContext.ProjStakeHolderMov on act.StatusActionsMappingId equals mov.StatusActionsMappingId
+                                     where act.ActionsId == 1 && mov.ProjId == ProjId && mov.ToUnitId == 1 && mov.IsComment == true
+                                     && mov.IsActive == true && mov.UndoRemarks == null
+                                     select new TrnStatusActionsMapping
+                                     {
+                                         StatusActionsMappingId = act.StatusActionsMappingId
+                                     }).FirstOrDefaultAsync();
+                    if (ret != null)
+                    {
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
             }
+            return false;
+          
         }
 
 
@@ -1276,81 +1282,81 @@ namespace swas.BAL.Repository
 
         }
 
-        public async Task<string> CheckPreviousApprovals(int statusId, int projId, int actionsId)
-        {
-            // Fetch mapping to validate action
-            var trn = await _dbContext.TrnStatusActionsMapping
-                .FirstOrDefaultAsync(x => x.ActionsId == 2 && x.StatusActionsMappingId == actionsId);
+		public async Task<string> CheckPreviousApprovals(int statusId, int projId, int actionsId)
+		{
+			// Fetch mapping to validate action
+			var trn = await _dbContext.TrnStatusActionsMapping
+				.FirstOrDefaultAsync(x => x.ActionsId == 2 && x.StatusActionsMappingId == actionsId);
 
-            try
-            {
-                var previousStatusIds = new List<int>
-        {
-            6, 7, 11, 20, 21, 24, 25, 26, 27, 28, 29
-        };
-
-               
-                // Validation
-                if (trn == null || !previousStatusIds.Contains(statusId) || actionsId != trn.StatusActionsMappingId)
-                    return "OK";
-
-                // Determine required (previous) statuses
-                var requiredStatusIds = previousStatusIds
-                                        .Where(x => x < statusId)
-                                        .ToList();
-
-                // Fetch approved statuses (Action 2)
-                var approvedStatuses = await (from act in _dbContext.TrnStatusActionsMapping
-                                              join mov in _dbContext.ProjStakeHolderMov
-                                                  on act.StatusActionsMappingId equals mov.StatusActionsMappingId
-                                              where previousStatusIds.Contains(act.StatusId)
-                                                    && requiredStatusIds.Contains(act.StatusId)
-                                                    && mov.ProjId == projId
-                                                    && mov.IsActive
-                                                    && act.ActionsId == 2
-                                              select act.StatusId)
-                                              .Distinct()
-                                              .ToListAsync();
-
-                // Fetch comment-completed statuses (Action 1 + comment + complete)
-                var commentStatuses = await (from act in _dbContext.TrnStatusActionsMapping
-                                             join mov in _dbContext.ProjStakeHolderMov
-                                                 on act.StatusActionsMappingId equals mov.StatusActionsMappingId
-                                             where previousStatusIds.Contains(act.StatusId)
-                                                   && mov.ProjId == projId
-                                                   && mov.IsActive
-                                                   && mov.IsComment
-                                                   && mov.IsComplete
-                                                   && act.ActionsId == 1
-                                             select act.StatusId)
-                                             .Distinct()
-                                             .ToListAsync();
-
-                // Find missing approvals
-                var notApprovedStatuses = requiredStatusIds
-                                          .Except(approvedStatuses)
-                                          .Except(commentStatuses)
-                                          .ToList();
-
-                if (notApprovedStatuses.Any())
-                {
-                    var missingNames = await _dbContext.mStatus
-                        .Where(s => notApprovedStatuses.Contains(s.StatusId))
-                        .Select(s => s.Status)
-                        .ToListAsync();
-
-                    return string.Join("<br>", missingNames);
-                }
-
-                return "OK";
-            }
-            catch (Exception ex)
-            {
-                // Proper exception handling to preserve stack trace
-                throw;
-            }
-        }
+			try
+			{
+				var previousStatusIds = new List<int>
+ {
+	 6, 7, 11, 20, 21, 24, 25, 26, 27, 28, 29
+ };
 
 
-    }
+				// Validation
+				if (trn == null || !previousStatusIds.Contains(statusId) || actionsId != trn.StatusActionsMappingId)
+					return "OK";
+
+				// Determine required (previous) statuses
+				var requiredStatusIds = previousStatusIds
+										.Where(x => x < statusId)
+										.ToList();
+
+				// Fetch approved statuses (Action 2)
+				var approvedStatuses = await (from act in _dbContext.TrnStatusActionsMapping
+											  join mov in _dbContext.ProjStakeHolderMov
+												  on act.StatusActionsMappingId equals mov.StatusActionsMappingId
+											  where previousStatusIds.Contains(act.StatusId)
+													&& requiredStatusIds.Contains(act.StatusId)
+													&& mov.ProjId == projId
+													&& mov.IsActive
+													&& act.ActionsId == 2
+											  select act.StatusId)
+											  .Distinct()
+											  .ToListAsync();
+
+				// Fetch comment-completed statuses (Action 1 + comment + complete)
+				var commentStatuses = await (from act in _dbContext.TrnStatusActionsMapping
+											 join mov in _dbContext.ProjStakeHolderMov
+												 on act.StatusActionsMappingId equals mov.StatusActionsMappingId
+											 where previousStatusIds.Contains(act.StatusId)
+												   && mov.ProjId == projId
+												   && mov.IsActive
+												   && mov.IsComment
+												   && mov.IsComplete
+												   && act.ActionsId == 1
+											 select act.StatusId)
+											 .Distinct()
+											 .ToListAsync();
+
+				// Find missing approvals
+				var notApprovedStatuses = requiredStatusIds
+										  .Except(approvedStatuses)
+										  .Except(commentStatuses)
+										  .ToList();
+
+				if (notApprovedStatuses.Any())
+				{
+					var missingNames = await _dbContext.mStatus
+						.Where(s => notApprovedStatuses.Contains(s.StatusId))
+						.Select(s => s.Status)
+						.ToListAsync();
+
+					return string.Join("<br>", missingNames);
+				}
+
+				return "OK";
+			}
+			catch (Exception ex)
+			{
+				// Proper exception handling to preserve stack trace
+				throw;
+			}
+		}
+
+
+	}
 }

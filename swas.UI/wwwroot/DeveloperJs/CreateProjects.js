@@ -213,27 +213,7 @@ $(document).ready(function () {
                 $(this).removeClass('is-invalid');
             }
         });
-        // Validate character limits
-
-        //$('.char-limit').each(function () {
-        //    var inputField = $(this);
-        //    var maxLength = inputField.data('maxlength'); // Get max length from data-maxlength attribute
-        //    var currentLength = inputField.val().length;
-        //    var errorMsg = inputField.closest('td').find('.charErrorMsg');
-
-        //    if (currentLength > maxLength) {
-
-        //        inputField.addClass('is-invalid');
-        //        errorMsg.show();  // Show error message
-        //        allFieldsComplete = false; // Mark form as invalid
-        //    } else {
-        //        inputField.removeClass('is-invalid');
-        //        errorMsg.hide();  // Hide error message if within limit
-        //    }
-        //});
-
-
-        // Validate character limits
+       
         const required = [
             "#ProjName",
             "#InitiatedDate",
@@ -510,13 +490,13 @@ function AddProject(thistag) {
             data: {
                 "ProjId": $("#ProjId").val(),
                 "ProjName": $("#ProjName").val(),
-                "MobileNo": $("#MobileNo").val(),
-                "ArmyNo": $("#ArmyNo").val(),
                 //  "InitiatedDate": $("#InitiatedDate").val(),
                 "InitiatedDate": InitiatedDate,
                 //  "CompletionDate": $("#CompletionDate").val(),
                 "CompletionDate": CompletionDate,
                 "IsWhitelisted": $("#IsWhitelisted").val(),
+                "MobileNo": $("#MobileNo").val(),
+                "ArmyNo": $("#ArmyNo").val(),
                 "InitialRemark": $("#InitialRemark").val(),
                 "StakeHolderId": $("#ddlStakeHolderId").val(),
                 "AimScope": $("#AimScope").val(),
@@ -555,7 +535,7 @@ function AddProject(thistag) {
             }, //get the search string
             success: function (result) {
 
-                console.log(result);
+
 
                 if (result == -2) {
 
@@ -606,11 +586,14 @@ function AddProject(thistag) {
                 else if (result != null) {
 
                     var projid = result.projId;
-        $("#spanProjectId").html(projid);
+                    $("#spanProjectId").html(projid);
                     $("#spanCurrentPslmId").html(result.currentPslmId);
                     var creatid = "Application ID :" + projid
                     $("#projectId").html(creatid)
-                  
+
+
+
+
                     AttechHistory();
                     current_fs = $(thistag).parent();
                     next_fs = $(thistag).parent().next();

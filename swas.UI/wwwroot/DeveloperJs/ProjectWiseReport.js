@@ -141,6 +141,7 @@ function ProjectWiseStatus() {
 
 
 function ProjectWiseStatusByProjid(projid) {
+    debugger;   
     var listItem = "";
 
     var userdata = {
@@ -185,6 +186,7 @@ function ProjectWiseStatusByProjid(projid) {
 
                     // Loop through MovProjectlst and generate rows
                     for (var j = 0; j < MovProjectlst.length; j++) {
+                        
                         if (ProjId != MovProjectlst[j].projId) {
                             ProjId = MovProjectlst[j].projId;
                             listItem += '<tr>';
@@ -216,9 +218,9 @@ function ProjectWiseStatusByProjid(projid) {
                     }
 
                     listItem += '</tbody>';
-
+                    
                     // Append the dynamically generated table to the DOM
-                    $("#tblProjectWiseStatusByprojid").html(listItem);
+                   $(".tblProjectWiseStatusByprojid").html(listItem);
                 }
             }
         },

@@ -112,14 +112,7 @@ namespace swas.DAL.Models
 		[Display(Name = "Being devp in house or through Outsourced")]
 		public string? BeingDevpInhouse { get; set; }
 
-
-        [Display(Name = "Army Number")]
-        public string? ArmyNo { get; set; }
-
-
-        [Display(Name = "Mobile Number")]
-        public string? MobileNo { get; set; }
-
+       
         [Display(Name = "Endorsement by Head of Dept")]
 		public string? EndorsmentbyHeadof { get; set; }
         public string? ProjCode { get; set; }
@@ -256,6 +249,14 @@ namespace swas.DAL.Models
 
         [Display(Name = "Date Type")]
         public int Date_type { get; set; }
+        [Display(Name = "Army Number")]
+        [MaxLength(5)]
+        public string? ArmyNo { get; set; }
+
+
+        [Display(Name = "Mobile Number")]
+        [MaxLength(11)]
+        public string? MobileNo { get; set; }
 
 
     }

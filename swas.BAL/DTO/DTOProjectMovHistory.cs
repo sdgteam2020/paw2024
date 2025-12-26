@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static swas.DAL.Models.LegacyHistory;
-
 namespace swas.BAL.DTO
 {
     public class DTOProjectMovHistory

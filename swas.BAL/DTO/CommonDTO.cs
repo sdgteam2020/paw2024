@@ -86,7 +86,6 @@ namespace swas.BAL.DTO
         public string? Appontment { get; set; }
         public string? ActualUserName { get; set; }
         public int? unitid { get; set; }
-        public int? Rank_id { get; set; }
         public int? totmsgin { get; set; }
         public int? tocommentin { get; set; }
         public int? typeid { get; set; }
@@ -96,6 +95,7 @@ namespace swas.BAL.DTO
         public string? Rank { get; set; }
         public string? IpAddress { get; set; }
         public int cla { get; set; }
+        public int? Rank_id { get; set; }
     }
     public class DefaultValueID
     {
@@ -112,7 +112,6 @@ namespace swas.BAL.DTO
     {
 
         public int ProjId { get; set; }
-        public int tounitid { get; set; }
         public int? PsmId { get; set; }
         public string? ProjName { get; set; }
         public string? Stages { get; set; }
@@ -142,6 +141,7 @@ namespace swas.BAL.DTO
 
         public string? HostedOn { get; set; }
 
+
         public List<tbl_AttHistory> Atthistory { get; set; }
 
         public List<tbl_Projects> ProjectDetl { get; set; }
@@ -159,6 +159,7 @@ namespace swas.BAL.DTO
 
         public string? ActFileName { get; set; }
         public string? ActionName { get; set; }
+        public int tounitid { get; set; }
 
 
     }
@@ -406,9 +407,6 @@ namespace swas.BAL.DTO
         //[RegularExpression(@"^\d{0,5}$", ErrorMessage = "Tele_Army should be a maximum of 10-digit number.")]
         [Display(Name = "Tele No (Army)")]
         public string? Tele_Army { get; set; }
-
-
-    
 
     }
 

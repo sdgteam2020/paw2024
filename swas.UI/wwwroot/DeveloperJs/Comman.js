@@ -25,7 +25,7 @@
 
 
         if (selectedMode == "0") {
-            debugger;
+           
             $('input[type="date"]').attr('min', today);
             $('input[type="date"]').removeAttr('max');
             $('.datepicker1').datepicker({

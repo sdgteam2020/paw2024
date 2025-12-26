@@ -57,9 +57,9 @@
             color: #044c92; /* Replace with your desired text color for the footer */
         }
 
-        .wrapper .page-content {
+       .wrapper .page-content {
             margin-top: 0px !important;
-        }
+        } 
     </style>
     <style>
 
@@ -1631,7 +1631,7 @@
             </div>
         </div>
        @*  <span id="isclaneder">@Logins.cla</span>
- *@
+        *@
         <form id="frmEditUser" method="post" action="/Account/AllUsersEdit">
             <input type="hidden" name="UserName" id="hfUserName" />
             <input type="hidden" name="RankId" id="hfRankId" />
@@ -1640,6 +1640,7 @@
         </form>
         <div class="text-capitalize d-none divRank_id">@Logins.Rank_id</div>
         <div class="text-capitalize d-none divRole_name">@Logins.Role</div>
+
         @if (Logins != null && Logins.Role == "Dte")
         {
 
@@ -1904,7 +1905,6 @@
                 <div class="sidebar-footer">
                 </div>
             </aside>
-           
 
             <!--end sidebar -->
             <!--start top header-->
@@ -1920,12 +1920,11 @@
                     </div>
 
                     <!-- Centered heading -->
-                    <div class="flex-grow-1 text-center">
+                    <div class="flex-grow-1 text-center nowrap">
                         <h1 class="h2 h4-sm h3-md text-white mb-0" id="mainheading">
                             Portal for Application Whitelisting (PAW)
                         </h1>
                     </div>
-                    <!--  Edit Profile button-->
                     <a href="/Account/AllUsersEdit?UserName=@Logins.UserName&RankId=@Logins.Rank_id&RoleName=@Logins.Role"
                        class="mr-2"
                        style="color:white">
@@ -1933,14 +1932,10 @@
                     </a>
                     <!-- Right side user info -->
                     <div class="top-navbar-right ms-auto d-flex align-items-center flex-column flex-md-row text-center text-md-start">
-                       
-                      
-
                         <!-- User info -->
-                        <div class="text-white me-md-3">
+                        <div class="text-white me-md-3" style="font-size:small">
                             <div> Welcome : <span id="spnUsername"> @Logins.UserName.ToLower()</span></div>
                             <div class="text-capitalize divoffr_name">@Logins.Rank @Logins.Offr_Name</div>
-                          
 
                             <!-- Hidden values -->
                             <span class="d-none" id="IpAddress">@Logins.IpAddress</span>
@@ -2146,20 +2141,14 @@
                     <div class="mobile-menu-button">
                         <ion-icon name="menu-sharp"></ion-icon>
                     </div>
-                    <div class="flex-grow-1 text-center">
-                        <h1 class="h2 h4-sm h3-md text-white mb-0" id="mainheading">
+                   <div class="flex-grow-1 text-center">
+                        <h1 class="h2 h4-sm h3-md text-white mb-0 nowrap" id="mainheading">
                             Portal for Application Whitelisting (PAW)
                         </h1>
                     </div>
-
-                   @*  <!--  Edit Profile button-->
-                    <div class="btn-updateprofile mr-2" style="color:white ">
-                        <i class="fa-solid fa-user-pen"></i>
-
-                    </div> *@
                     <a href="/Account/AllUsersEdit?UserName=@Logins.UserName&RankId=@Logins.Rank_id&RoleName=@Logins.Role"
                        class="mr-2"
-                       style="color:white;">
+                       style="color:white">
                         <i class="fa-solid fa-user-pen" style="font-size:x-large"></i>
                     </a>
 
@@ -2167,12 +2156,12 @@
 
                         <ul class="navbar-nav align-items-center">
 
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown" style="font-size:small">
                                 <span class="d-none" id="IpAddress">@Logins.IpAddress</span>
                                 <span class="d-none" id="SpnCurrentUserStackholderID">@Logins.unitid</span>
                                 <div class="text-white mr-2">
                                     Welcome : <span id="spnUsername"> @Logins.UserName.ToLower()</span>
-                                    <div class="text-white mr-2 text-capitalize divoffr_name">@Logins.Rank @Logins.Offr_Name</div>
+                                    <div class="text-white mr-2 text-capitalize">@Logins.Rank @Logins.Offr_Name</div>
                                     <span class="spnOffr_Name d-none">@Logins.Offr_Name</span>
                                     <span class="spnuserid d-none">@Logins.Iamuserid</span>
                             </li>
@@ -2269,6 +2258,7 @@
             }
 
             <!-- start page content-->
+            
             <div class="page-content">
 
                 @RenderBody()
@@ -2504,7 +2494,7 @@
 
         function checksize() {
             
-            if ($(window).width() < 1000) {
+            if ($(window).width() < 1000) {mmittee
               
                 $("#menusharp1").removeClass('d-none');
                 $("#menusharp").addClass('d-none');
@@ -2678,7 +2668,6 @@
 <script src="~/developerjs/whitelistedpartialview.js"></script>
 <script src="~/DeveloperJs/ProjectstkholderComments.js"></script>
 <script src="~/developerjs/ProjectstckholdercommentforProjHistory.js"></script>
-<script src="~/developerjs/UpdateUserProfile.js"></script>
 @* <script src="~/static/chatbot.js"></script> *@
 
 @RenderSection("scripts", required: false)

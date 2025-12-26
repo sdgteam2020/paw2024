@@ -37,7 +37,7 @@ ion-icon {
     padding-bottom: 20px;
     transition: .3s all;*/
         margin-left: 260px;
-        margin-top: 80px;
+        margin-top: 120px;
         padding-bottom: 20px;
         transition: .3s all;
     }
@@ -46,7 +46,7 @@ ion-icon {
     .wrapper .page-content {
         padding-left: 0.5rem;
         padding-right: 10px;
-        padding-top: 5px;
+        /*padding-top: 5px;*/
     }
 
     .wrapper .overlay {

@@ -29,7 +29,7 @@ namespace swas.BAL.Interfaces
         Task<DTOChartSummarylist> CreateChartSummary(int UserId);
        
 
-        Task<bool> CheckFwdCondition(int ProjId, int StatusId); 
+        Task<bool> CheckFwdCondition(int ProjId, int StatusId,string Actionsname); 
 
         
         //Task<int> IsReadInbox(int psmId);
@@ -62,9 +62,10 @@ namespace swas.BAL.Interfaces
 
 
         Task<int> AddNotificationCommentAsync(Notification notifications);
-        Task<string> CheckPreviousApprovals(int statusId, int projId, int Actionsid);
+        Task<string> CheckPreviousApprovals(int statusId, int projId, int actionsId);
 
-    }
+
+	}
 
 
 }

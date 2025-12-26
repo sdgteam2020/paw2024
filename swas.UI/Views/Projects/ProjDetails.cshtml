@@ -334,7 +334,10 @@
 					<img src="~/assets/images/draft.png" width="20" height="20" class="me-1" /> Parked
 				</a>
 			</li>
-			
+			<li class="red-text" id="blinking-li">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				Inbox -->> click on project name for Add Comments, Attach file and Fwd to Stakeholders/Units
+			</li>
 		</ul>
 
 		@{
@@ -361,7 +364,7 @@
 											<th>SubStage</th>
 											<th>Action</th>
 											<th class="projaction">Project Action</th>
-											<th>Legacy Pro</th>
+											<th>Actions </th>
 										</tr>
 									</thead>
 
@@ -378,6 +381,8 @@
 											{
 												classname = "";
 											}
+
+
 
 											<tr class="@classname">
 
@@ -446,9 +451,11 @@
 													<span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
 													<span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
 													<span class="d-none" id="LatestActionType">@project.LatestActionType</span>
+													@* <span class="d-none" id="SpnTimeStampId">@project.TimeStamp.ToString().Substring(0, 10)</span> *@
 													<span class="d-none" id="SpnTimeStampId">@project.TimeStamp</span>
 													<span class="d-none" id="SpnStageId">@project.StageId</span>
 													<span class="d-none" id="SpnTimeStatusId">@project.StatusId</span>
+
 													<span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
 													<span class="d-none" id="SpnTimeActionId">@project.ActionId</span>
 													<span class="d-none" id="SpnTimeToUnitId">@project.ToUnitId</span>
@@ -458,10 +465,9 @@
 													<a data-proj-name="@project.ProjName" id="ProjectName" class="ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XRDC&psmid=@project.PsmIds">
 														<div class="tooltip-container" data-tooltip="@project.ProjName">
 															<span class="short-text">
-																@(project.ProjName?.Length > 18
-																													? project.ProjName.Substring(0, 14)+"...."
-																													: project.ProjName)
-															</span> <span class="tooltip tooltip-text">@project.ProjName</span>
+																@(project.ProjName.Length>17 ? project.ProjName.Substring(0,17)+"...":project.ProjName)
+																</span>
+															<span class="tooltip tooltip-text">@project.ProjName</span>
 														</div>
 													</a>
 												</td>
@@ -552,7 +558,7 @@
 																}
 																else if (project.IsCc == false)
 																{
-																	<button type="button" class="btn btn-success btn-Fwd" data-Date_type="@project.AdminApprovalStatus" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
+																	<button type="button" class="btn btn-success btn-Fwd" data-Date_type="@project.AdminApprovalStatus" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Send</button>
 
 																}
 
@@ -580,6 +586,7 @@
 													</div>
 												</td>
 												<td>
+
 													<div class="row d-flex align-items-center">
 														<div class="col-auto p-0 me-1">
 															@if (project.IsCc == false)
@@ -607,7 +614,7 @@
 																	else if (project.IsProcess == true && project.LatestActionType == (int)ActionTypeEnum.Rejected)
 																	{
 																		<!-- Other units can still request -->
-																		<a href="#" class="date-action mr-2" data-actiontype="1" data-action="back" data-ids="@project.EncyPsmID" title="Request to admin to ingest Legacy Project">
+																		<a href="#" class="date-action mr-2" data-actiontype="1" data-action="back" data-ids="@project.EncyPsmID" title="Send request to Admin to ingest legacy Project">
 																			<img src="/assets/images/icons/Back_date.png" alt="Icon" style="height: 27px;">
 																		</a>
 
@@ -619,7 +626,7 @@
 																	if (project.IsProcess == true && project.LatestActionType == null)
 																	{
 																		<!-- Other units can still request -->
-																		<a href="#" class="date-action mr-2" data-actiontype="1" data-action="back" data-ids="@project.EncyPsmID" title="Request to admin to ingest Legacy project">
+																		<a href="#" class="date-action mr-2" data-actiontype="1" data-action="back" data-ids="@project.EncyPsmID" title="Send request to Admin to ingest legacy Project">
 																			<img src="/assets/images/icons/Back_date.png" alt="Icon" style="height: 27px;">
 																		</a>
 																	}
@@ -636,7 +643,9 @@
 															<button class="btn btn-success" title="Click here to Park the project in parked tab">Park</button>
 														</div>
 													</div>
-													
+
+
+
 												</td>
 											</tr>
 										}
@@ -764,7 +773,9 @@
 
 													<a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XR12">
 														<div class="tooltip-container" data-tooltip="@project.ProjName">
-															<span class="short-text">@truncateText(project.ProjName, 2)</span>
+															<span class="short-text">
+																@(project.ProjName.Length > 17 ? project.ProjName.Substring(0, 17) + "..." : project.ProjName)
+															</span>
 															<span class="tooltip tooltip-text">@project.ProjName</span>
 														</div>
 													</a>
@@ -884,7 +895,7 @@
 
 																@if (project.IsPullBack == false || project.IsPullBack == null) // project.undopsmId for the specified active project, excluding comments and records with undo remarks.
 																{
-																	if (project.PullbackAction == true) // stageId!=1 means here this project in not in initial stage..
+																	if ( project.PullbackAction == true) // stageId!=1 means here this project in not in initial stage..
 																	{
 
 																		<button type="button" class="btn btn-success btn-Undo ml-2" style="padding: 1px !important;font-size: 13px !important;">Pull Back </button>
@@ -892,7 +903,7 @@
 																}
 																else
 																{
-																	if ( project.IsPullBack == true)
+																	if (project.StageId != 1 && project.IsPullBack == true)
 																		if (project.IsPullBack == true)
 																		{
 																			<span class="btn btn-success ml-2" style="padding: 1px !important;font-size: 13px !important; cursor: not-allowed;">Pulled Back</span>
@@ -1164,7 +1175,9 @@
 													<td>
 														<a data-proj-name="@project.ProjName" id="ProjectName" class="ProjName" data-proj-id="@project.projid" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XRDC">
 															<div class="tooltip-container" data-tooltip="@project.ProjName">
-																<span class="short-text">@truncateText(project.ProjName, 3)</span>
+																<span class="short-text">
+																	@(project.ProjName.Length > 17 ? project.ProjName.Substring(0, 17) + "..." : project.ProjName)
+																</span>
 																<span class="tooltip tooltip-text noExport">@project.ProjName</span>
 															</div>
 														</a>
@@ -1270,8 +1283,6 @@
 			</div>
 
 			<!--Completed Items-->
-
-
 			@* <------Parked Items---------------> *@
 			@{
 				int snoparked = 0;
@@ -1289,9 +1300,9 @@
 											<th>Sponsor</th>
 
 											<th class="col-width9">From</th>
-										
+
 											<th>Received on</th>
-											
+
 											<th>Stage</th>
 											<th>SubStage</th>
 											<th>Action</th>
@@ -1313,7 +1324,7 @@
 
 		</div>
 	</div>
-	
+@Html.Partial("_ProjectFWDPopup")
 	<div class="modal fade" id="ProjFwdHistory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-xl" role="document">
 			<div class="modal-content">
@@ -1334,10 +1345,24 @@
 	</div>
 
 
-	@Html.Partial("_ProjectFWDPopup")
 
 
-	@* @Html.Partial("_ProjectFWDPopup") *@
+	<div class="modal fade right" id="Projibutton" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+
+					<h4 class="modal-title" id="lblHistory">Project Fwd History</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+
+				<div class="modal-body">
+					<img src="~/assets/images/flow.png" class="FlowImg" />
+				</div>
+
+			</div><!-- modal-content -->
+		</div><!-- modal-dialog -->
+	</div>
 
 
 	<div class="modal fade" id="myModalPagehistoryAttechment" tabindex="-1" role="dialog" aria-hidden="true">
@@ -1555,4 +1580,177 @@
 
 	containerTabss.addEventListener("click", handleTabClick);
 </script>
+
+@section Scripts {
+	@* <script>
+        var pad = "00"
+        var datef2 = new Date();
+        var months = "" + `${(datef2.getMonth() + 1)}`;
+        var days = "" + `${(datef2.getDate())}`;
+        var monthsans = pad.substring(0, pad.length - months.length) + months
+        var dayans = pad.substring(0, pad.length - days.length) + days
+        var year = `${datef2.getFullYear()}`;
+        var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+        var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+        var ss = `${datef2.getSeconds()}`;
+
+        var today = year + `-` + monthsans + `-` + dayans;
+        $(document).ready(function () {
+            var claValue = @Logins.cla;
+
+            if (claValue == 2) {
+                 $('#datepicker').attr('type', 'datetime-local');
+            } else {
+                $('#datepicker').attr('type', 'date');
+            }
+        });
+    </script> *@
+
+	<script>
+		// var pad = "00";
+		// var datef2 = new Date();
+
+
+		// var months = "" + (datef2.getMonth() + 1);
+		// var days = "" + datef2.getDate();
+		// var monthsans = pad.substring(0, pad.length - months.length) + months;
+		// var dayans = pad.substring(0, pad.length - days.length) + days;
+		// var year = datef2.getFullYear();
+		// var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+		// var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+		// var ss = `${datef2.getSeconds()}`;
+
+		// // Today's date and time in the required formats
+		// var todayDate = `${year}-${monthsans}-${dayans}`;
+		// var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+
+		// $(document).ready(function () {
+		//     var claValue = @Logins.cla;
+
+		//     if (claValue == 2) {
+		//         $('#TimeStampToProjfwd').attr('type', 'datetime-local');
+		//         $('#TimeStampToProjfwd').attr('max', todayDateTime);
+		//         $('#TimeStampToProjfwd').prop('disabled', false); // Allow user input
+		//     } else {
+		//         $('#TimeStampToProjfwd').attr('type', 'date');
+		//         $('#TimeStampToProjfwd').val(todayDate); // Set today's date
+		//         $('#TimeStampToProjfwd').prop('disabled', true); // Freeze input
+		//     }
+
+		// });
+
+
+
+
+
+
+	</script>
+
+	@* <script>
+        // TimeStampToProjfwd
+        var pad = "00";
+        var datef2 = new Date();
+
+        // Formatting the current date and time
+        var months = "" + (datef2.getMonth() + 1);
+        var days = "" + datef2.getDate();
+        var monthsans = pad.substring(0, pad.length - months.length) + months;
+        var dayans = pad.substring(0, pad.length - days.length) + days;
+        var year = datef2.getFullYear();
+        var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+        var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+        var ss = `${datef2.getSeconds()}`;
+
+        // Today's date and time in the required formats
+        var todayDate = `${year}-${monthsans}-${dayans}`;
+        var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+
+        $(document).ready(function () {
+            var claValue = @Logins.cla; // Get the value of Logins.cla
+
+            if (claValue == 2) {
+                // Set type to datetime-local and max to today with current time
+                $('#TimeStampToProjfwd').attr('type', 'datetime-local');
+                $('#TimeStampToProjfwd').attr('max', todayDateTime);
+            } else {
+                $('#TimeStampToProjfwd').attr('type', 'date');
+            }
+        });
+
+    </script> *@
+	<script>
+		// var pad = "00";
+		// var datef2 = new Date();
+
+		// const formattedDate = datef2.toLocaleString("sv-SE").replace("T", " ");
+
+		// // Formatting the current date and time
+		// var months = "" + (datef2.getMonth() + 1);
+		// var days = "" + datef2.getDate();
+		// var monthsans = pad.substring(0, pad.length - months.length) + months;
+		// var dayans = pad.substring(0, pad.length - days.length) + days;
+		// var year = datef2.getFullYear();
+		// var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+		// var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+		// var ss = `${datef2.getSeconds()}`;
+
+		// // Today's date and time in the required formats
+		// var todayDate = `${year}-${monthsans}-${dayans}`;
+		// var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+
+		// $(document).ready(function () {
+		//     var claValue = @Logins.cla; // Get the value of Logins.cla
+
+		//     if (claValue == 2) {
+		//         // Set type to datetime-local and max to today with current time
+		//         $('#datepicker').attr('type', 'datetime-local');
+		//         $('#datepicker').attr('max', todayDateTime);
+		//     } else {
+		//         $('#datepicker').attr('type', 'date');
+		//     }
+		// });
+	</script>
+
+}
+
+
+@* <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const datePicker = document.getElementById('datepicker');
+        const today = new Date().toISOString().slice(0, 16);
+        datePicker.max = today;
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const datePicker = document.getElementById('TimeStampToProjfwd');
+        if (datePicker) {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
+            datePicker.max = formattedDate;
+        }
+    });
+</script>
+ *@
+@*
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var projects = @Html.Raw(Json.Serialize(Model.InBox));
+
+        projects.forEach(function (project) {
+            var row = document.getElementById("project-row-" + project.ProjId);
+            if (project.IsRead) {
+                row.classList.remove("bold-text");
+            } else {
+                row.classList.add("bold-text");
+            }
+        });
+    });
+</script>*@
 

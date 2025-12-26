@@ -1,5 +1,50 @@
 ﻿
+
+async function getGeneratedPdfLogSignFromPreview() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: "/Certificate/SignCertificate",
+            type: "POST",
+            xhrFields: {
+                responseType: 'blob'
+            },
+            success: function (pdfBlob) {
+                // Show PDF in iframe
+                const blobUrl = URL.createObjectURL(pdfBlob);
+                $("#Certificatepreview").html(`
+                    <iframe id="pdfFrame"
+                            src="${blobUrl}"
+                            width="100%"
+                            height="600px"
+                            style="border:none;">
+                    </iframe>
+                `);
+
+                $('#btnDigitalsign').prop('disabled', true);
+
+                // Convert blob to File and resolve
+                const file = new File([pdfBlob], "GeneratedCertificate.pdf", {
+                    type: "application/pdf"
+                });
+                resolve(file);
+            },
+            error: function () {
+                alert("Signing failed");
+                reject("Signing failed");
+            }
+        });
+    });
+}
+
+
+
+
+
 async function getGeneratedPdfFromPreview() {
+    debugger;
+
+
+
     const iframe = document.getElementById("pdfFrame");
     if (!iframe || !iframe.src.startsWith("blob:")) {
         return null;
@@ -7,6 +52,9 @@ async function getGeneratedPdfFromPreview() {
 
     const response = await fetch(iframe.src);
     const blob = await response.blob();
+
+
+
 
     return new File([blob], "GeneratedCertificate.pdf", {
         type: "application/pdf"
@@ -88,7 +136,6 @@ function AttOnFWD() {
     $("#AttBody").append(listItem);
 
     // When the confirm button is clicked, send all attachments and remarks
-
     $("#btnFwdConfirm").off().on("click", async function () {
         debugger;
 
@@ -109,7 +156,6 @@ function AttOnFWD() {
     });
 
 
-        
 }
 
 

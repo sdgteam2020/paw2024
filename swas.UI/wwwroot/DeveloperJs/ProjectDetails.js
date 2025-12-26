@@ -129,10 +129,7 @@
         GetCCProject();
     });
 });
-$("#tabParked").click(function () {
- 
-    GetParkedProject();
-});
+
 
 
 function GetForCommentStakeHolder(ProjId, psmId) {
@@ -566,7 +563,8 @@ function GetCCProject() {
 
         success: function (response) {
             if (response != null) {
-                let count =0;
+                let count = 0;
+             
                 for (let i = 0; i < response.length; i++) {
                     count++
                     listitem += '<tr>';
@@ -580,8 +578,8 @@ function GetCCProject() {
                     listitem += '</div></td>';
                     listitem += '<td><span class="d-none noExport" id="SpnCurrentccProjId"> ' + response[i].projId + '</span>  <a data-proj-name="' + response[i].projName + '" data-proj-id="' + response[i].projId + '" href="/Projects/ProjHistory?EncyID=' + response[i].encyID + '&amp;Type=XR12">' +
                         '<div class="RefLetter-container" data-tooltip="' + response[i].projName + '">' +
-                        '<span class="">' + trimByWords(response[i].projName, 2) + '</span>' +
-                        '<span class="RefLetter noExport" id="projNamecc">' + breakLinesByWords(response[i].projName,4) + '</span>' +
+                        '<span class="">' + trimByChars(response[i].projName, 20) + '</span>' +
+                        '<span class="RefLetter noExport" >' + breakLinesByWords(response[i].projName,4) + '</span>' +
                         '</div>' +
                         '</a> </td>';
 
@@ -1102,18 +1100,29 @@ $(document).ready(function () {
     );
 });
 
+
+
+
+$("#tabParked").click(function () {
+
+    GetParkedProject();
+});
+
+
 function GetParkedProject() {
+    debugger;
     $.ajax({
         url: '/Projects/GetActParkedProject',
         type: 'GET',
         success: function (response) {
+            debugger;
             // Clear table body
             $("#parkedtblData").html("");
 
             if (response != null && response.length > 0) {
                 let listitem = "";
                 let count = 0;
-
+                var prjname = response[0].projName;
                 response.forEach(function (project) {
                     count++;
 
@@ -1127,8 +1136,9 @@ function GetParkedProject() {
                             <span id="spnCurrentPsmid" class="d-none noExport">${project.psmIds}</span>
                             <a data-proj-name="${project.projName}" data-proj-id="${project.projId}" href="/Projects/ProjHistory?EncyID=${project.encyID}&amp;Type=XR12">
                                 <div class="RefLetter-container" data-tooltip="${project.projName}">
-                                    <span>${trimByWords(project.projName, 2)}</span>
-                                    <span class="RefLetter noExport" id="projNamecc">${breakLinesByWords(project.projName, 4)}</span>
+                                    <span>${trimByChars(project.projName, 20)}</span>
+                                    <span class="RefLetter noExport" >${breakLinesByWords(project.projName, 4)}</span>
+                                    <span class="noExport d-none"  id="projNamecc">${project.projName}</span>
                                 </div>
                             </a>
                         </td>`;
@@ -1208,7 +1218,21 @@ function GetParkedProject() {
             // Unpark button click event
             $(".btn_unparked").off('click').on('click', function () {
                 var psmid = $(this).closest("tr").find("#spnCurrentPsmid").text();
-                Unparkedbypsmid(psmid);
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "Do you want to send this project to Inbox.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Unparkedbypsmid(psmid);
+                    }
+
+                });
+                           
             });
         },
         error: function (xhr, status, error) {
@@ -1227,6 +1251,9 @@ function GetParkedProject() {
         }
     });
 }
+
+
+
 
 function Unparkedbypsmid(psmid) {
 
@@ -1252,8 +1279,22 @@ function Unparkedbypsmid(psmid) {
     });
 }
 $(".parkedProj").on('click', function () {
-  
+
     var psmid = $(this).closest("tr").find("#SpnCurrentpsmId").text();
-  
-    Unparkedbypsmid(psmid);
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to Park this project.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Unparkedbypsmid(psmid);
+        }
+
+    });
+
+   // 
 });

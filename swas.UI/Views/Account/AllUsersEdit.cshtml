@@ -21,7 +21,6 @@
     var typesList = ViewBag.Type;
     var Rank = (List<mRank>)ViewData["rank"];
     Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor.HttpContext.Session, "User");
-  
     bool isRestricted = Logins.unitid != 1;
 }
 
@@ -29,7 +28,7 @@
     <div class="card radius-10" style="margin-right: 20%;margin-left: 5%;">
         <div class="card-body" style="width:75%; margin-left: 13%;">
             <div class="card-d  btn-primary card-header " style="color:white ; background-color:#044c92">
-                <h3 class="text-center card-show font-weight-light my-4"><u>UPDATE USER REGISTRATION</u></h3>
+                <h3 class="text-center card-show font-weight-light my-4"><u>NEW USER EDIT REGISTRATION</u></h3>
             </div>
 
             <form method="post" action="@Url.Action("UpdateUserEdit", "Account")">
@@ -42,7 +41,7 @@
                                     <label asp-for="UserName" class="label control-label" style="margin: 5px;">Regn Id (UserName)</label>
                                 </td>
                                 <td style="width:65%">
-                                    <input asp-for="UserName" class="form-control" readonly onkeyup="ValInDataEdit(this)" maxlength="20" aria-required="true" placeholder="Regn Id Reqd for Login & More Users Regn for this unit" />
+                                    <input asp-for="UserName" class="form-control" onkeyup="ValInDataEdit(this)" maxlength="20" aria-required="true" placeholder="Regn Id Reqd for Login & More Users Regn for this unit" />
                                     <input hidden asp-for="Id" />
                                     <span asp-validation-for="UserName" class="text-danger"></span>
                                 </td>
@@ -242,7 +241,7 @@
         </div>
     </div>
 </div>
-<script src="~/developerjs/updateuserprofile.js"></script>
+
 <script>
     function ValInDataEdit(input) {
         var regex = /[^a-zA-Z0-9 ]/g;
