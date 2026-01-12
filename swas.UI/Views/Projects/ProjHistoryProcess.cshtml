@@ -588,9 +588,11 @@
         const selectedFileList = document.getElementById("selected-file-list");
         const remarksInput = document.getElementById("remarksInput");
         const uploadedFiles = [];
+    $("#pdfInput").on("change", function (e) {
+           handleFileUpload(e);
+       });
 
-        pdfInput.addEventListener("change", handleFileUpload);
-
+    })
         function handleFileUpload(event) {
 
             const files = event.target.files;

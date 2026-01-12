@@ -7,10 +7,10 @@
         redirect: "follow"
     };
 
-    fetch("https://aman.army.mil/HitCounter/api/Application/ApplicationSessionStart/65c385d4-6b26-4133-9b03-935a47009eb3?DomainId=" + $("#spnUsername").val(), requestStartdomainId)
-        .then((response) => response.text())
-        .then((result) => console.log(result))
-        .catch((error) => console.error(error));
+    //fetch("https://aman.army.mil/HitCounter/api/Application/ApplicationSessionStart/65c385d4-6b26-4133-9b03-935a47009eb3?DomainId=" + $("#spnUsername").val(), requestStartdomainId)
+    //    .then((response) => response.text())
+    //    .then((result) => console.log(result))
+    //    .catch((error) => console.error(error));
 
 
 

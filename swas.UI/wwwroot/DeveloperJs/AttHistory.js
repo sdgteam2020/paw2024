@@ -1,5 +1,4 @@
-﻿
-
+﻿let allAttachments = []; // Array to hold all attachments and remarks
 async function getGeneratedPdfLogSignFromPreview() {
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -60,7 +59,7 @@ async function getGeneratedPdfFromPreview() {
         type: "application/pdf"
     });
 }
-let allAttachments = []; // Array to hold all attachments and remarks
+
 
 function AttOnFWD() {
     $('.uploadLoader').addClass('d-none')
@@ -178,8 +177,9 @@ function sendPDFToServer(pdfpath, thumbprint) {
             CustomText: "Digital Signature"
         }]),
         success: function (response) {
+          
             $('.uploadLoader').addClass('d-none')
-            if (response) {
+            if (response.Message != '') {
                 Swal.fire({
                     title: "Application Approved",
                     text: "Application has been digitally signed successfully.",
@@ -190,7 +190,7 @@ function sendPDFToServer(pdfpath, thumbprint) {
                         confirmButton: 'swal-confirm-green'
                     },
                     buttonsStyling: false
-                }).then(async () => {  // <-- async here
+                }).then(async () => {  // <-- async here 
 
                     if (response.Message == "Token Expired !") {
                         Swal.fire({

@@ -82,6 +82,8 @@ namespace swas.BAL.DTO
         public int? StatusactionMappingid { get; set; }
 
         public bool isSponsor { get; set; }
+        public string AttachmentPath { get; set; }
+        public bool HasAttachment { get; set; }
 
     }
 }

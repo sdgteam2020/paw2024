@@ -220,7 +220,7 @@
                 var inputField = $(this);
                 var maxLength = inputField.data('maxlength');  // Get the max length from data-maxlength attribute
                 var errorMsg = inputField.closest('div').find('.charErrorMsg');
-                console.log("error",errorMsg)
+                // console.log("error",errorMsg)
                 // Listen for input event on the input field
                 inputField.on('input', function () {
                     var currentLength = inputField.val().length;

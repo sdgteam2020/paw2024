@@ -30,8 +30,8 @@ function GetAllComments2() {
         },
         success: function (data) {
             //console.log("CommentData", data);
-            var projectName = data[0].projectName;
-            var adminap = data[0].adminApprovalStatus;
+            var projectName = data?.[0]?.projectName || "";
+            var adminap = data?.[0]?.adminApprovalStatus||"";
             //console.log("First Project Name:", projectName);
 
             var tableHTML = '<table class="table" style="width:100%; border: 1px solid black; border-collapse:collapse;">';
@@ -369,7 +369,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const remarksInput = document.getElementById("remarksInput");
     const uploadedFiles = [];
 
-    pdfInput.addEventListener("change", handleFileUpload);
+   
+    $("#pdfInput").on("change", function (e) {
+        handleFileUpload(e);
+    });
+
 
     function handleFileUpload(event) {
 
@@ -444,8 +448,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function updateSelectedFileList() {
         const selectedFileList = document.getElementById("selectedFileList");
-        selectedFileList.innerHTML = "";
-
+       
+        if (selectedFileList) {
+            selectedFileList.innerHTML = "";
+        }
         for (const uploadedFile of uploadedFiles) {
             const listItem = document.createElement("li");
             const remarks = uploadedFile.remarks !== "" ? uploadedFile.remarks : "No Remarks";
@@ -474,12 +480,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-    remarksInput.addEventListener("input", function () {
-        const remarks = remarksInput.value;
+    $("#remarksInput").on("input", function () {
+
+        if (uploadedFiles.length === 0) return; // safety
+
+        const remarks = $(this).val();
         const lastFileIndex = uploadedFiles.length - 1;
+
         uploadedFiles[lastFileIndex].remarks = remarks;
+
         updateSelectedFileList();
     });
+
     updateSelectedFileList();
 });
 

@@ -358,7 +358,7 @@ namespace swas.BAL.Repository
                         {
                             da.Fill(dt);
                         }
-                        using (var reader = await cmd.ExecuteReaderAsync())
+                        using ( var reader = await cmd.ExecuteReaderAsync())
                         {   
                             while (await reader.ReadAsync())
                             {
@@ -367,18 +367,28 @@ namespace swas.BAL.Repository
                                 var item = new DTOProjectsFwd
                                 {
                                     ProjId = reader.GetInt32(reader.GetOrdinal("ProjId")),
+                                  
                                     PsmIds = reader.GetInt32(reader.GetOrdinal("PsmId")),
                                     ProjName = reader.IsDBNull(reader.GetOrdinal("ProjName")) ? null : reader.GetString(reader.GetOrdinal("ProjName")),
                                     StakeHolder = reader.IsDBNull(reader.GetOrdinal("StakeHolder")) ? null : reader.GetString(reader.GetOrdinal("StakeHolder")),
                                     TimeStamp = reader.IsDBNull(reader.GetOrdinal("TimeStamp")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("TimeStamp")),
                                     StatusactionMappingid = reader.IsDBNull(reader.GetOrdinal("StatusActionsMappingId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("StatusActionsMappingId")),
                                    
-                                    isSponsor = Logins.unitid == stakeHolderId
                                 };
+                                bool isAllowedUnit =
+               Logins.unitid == 1 ||
+               Logins.unitid == 2 ||
+               Logins.unitid == 3 ||
+               Logins.unitid == 4 ||
+               Logins.unitid == 5 ||
+               Logins.unitid == stakeHolderId;
+
+                                item.isSponsor = isAllowedUnit;
+                                item.HasAttachment = reader.GetInt32(reader.GetOrdinal("HasAttachment")) == 1;
                                 if (item.StatusactionMappingid == 53)
                                 {
                                     item.StakeHolderId = reader.GetInt32(reader.GetOrdinal("StakeHolderId"));
-                                    if (Logins.unitid ==1 || Logins.unitid==2 || Logins.unitid==3||Logins.unitid==4||Logins.unitid==5 ||Logins.unitid ==item.StakeHolderId)
+                                    if (isAllowedUnit)
                                     item.ApprovedDt = reader.IsDBNull(reader.GetOrdinal("approveddt")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("approveddt"));
                                     item.ApprovedRemarks = reader.IsDBNull(reader.GetOrdinal("ApprovedRemarks")) ? null : reader.GetString(reader.GetOrdinal("ApprovedRemarks"));
                                 }

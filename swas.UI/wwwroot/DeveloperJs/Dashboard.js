@@ -519,8 +519,9 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
         data: userdata,
         type: 'POST',
         success: function (response) {
+            debugger;
             if (response != "null" && response != null) {
-                console.log(response);
+              
                 var hasIPA = response.some(item =>
                     [53, 63, 68, 73, 78, 83, 88].includes(item.statusactionMappingid)
                 );
@@ -545,7 +546,7 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                     $('#dashboardApproved').dataTable().fnClearTable();
                     $('#dashboardApproved').dataTable().fnDestroy();
                     for (var i = 0; i < response.length; i++) {
-
+                      
                         var projName = response[i].projName;
                         var words = projName.split(" ");
                         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
@@ -585,7 +586,7 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
 
                         } else if ([63, 68, 73, 78, 83, 88].includes(response[i].statusactionMappingid)) {
 
-                            if (response[i].isSponsor == true) {
+                            if (response[i].hasAttachment ==true && response[i].isSponsor ==true ) {
                                 listItem += `
 <td>
     <a href="javascript:void(0);" 
@@ -600,7 +601,11 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                             else {
                                 listItem += `<td></td>`;
                             }
-                            }
+
+                        }
+                       
+                      
+
                         
 
                       

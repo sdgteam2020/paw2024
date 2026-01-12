@@ -220,95 +220,6 @@ $(document).ready(function () {
         }, 500)
 
     });
-    //$(".btn-Fwd").click(function () {
-
-    //    var Isprocess = $(this).closest("tr").find("#SpnprojectIsProcess").html().trim() === "False" ? false : true;
-
-    //    $('.FwdDropdown').addClass('col-md-3');
-    //    $('.FwdDropdown').addClass('col-md-6');
-    //    $('.ProjectsFwdUnit').addClass('d-none');
-
-
-    //    $("#searchBox").val('');
-    //    $("#searchBox").hide();
-    //    TimeStampForcheckdate = new Date($(".TimeStampForcheckdate").html());
-       
-    //    var projName = $(this).data('proj-name');
-    //    var words = projName.split(" ");
-    //    var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
-    //    //var finalTitle = "Mov History: " + shortProjName;
-    //    var finalTitle = "Proj Name: " + projName;
-    //    $('#fwdModal').text(finalTitle);
-
-    //    var projNameDetail = $(this).data('proj-name') + " " + "Move Details";
-    //    $('.fwdtitle').text(projNameDetail);
-   
-    //    if (Isprocess== false) {
-
-    //        mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 1, 1)
-    //    } 
-    //   else if (words.includes("Re-Vetted")) {
-
-    //        mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 1, "Re-Vetted")
-    //    } else {
-    //        mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 1)
-    //    }
-       
-
-    //    mMsaterStage($(this).closest("tr").find("#SpnTimeStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#SpnStageId").html(), $("#SpnStakeHolderId").html())
-    //    /* mMsater(0, "ddlfwdAction", 9, $("#ddlfwdSubStage").val())*/
-      
-    //    mMsater($(this).closest("tr").find("#SpnTimeActionId").html(), "ddlfwdAction", 7, $(this).closest("tr").find("#SpnTimeStatusId").html())
-    //    /*mMsater($(this).closest("tr").find("#SpnTimeActionId").html(), "ddlfwdAction", 9, $(this).closest("tr").find("#SpnTimeStatusId").html())*/
-    //    mMsaterFwdTo($(this).closest("tr").find("#SpnTimeFromUnitId").html(), "ddlfwdFwdTo", 8, 0, $(this).closest("tr").find("#SpnStakeHolderId").html(), 0, "");
-    //    mMsaterFwdTo(0, "ddlfwdCCTo", 8, 0, $(this).closest("tr").find("#SpnStakeHolderId").html(), 0, "");
-
-
-    //    $("#spanFwdCurrentPslmId").html($(this).closest("tr").find("#SpnCurrentpsmId").html())
-    //    $("#spanFwdProjectId").html($(this).closest("tr").find("#SpnCurrentProjId").html())
-    //    $("#SpnFwdStakeHolderId").html($(this).closest("tr").find("#SpnStakeHolderId").html())
-    //    $("#spanLegacyApproval").html($(this).closest("tr").find("#SpnApprove").html())
-
-    //    var listItem = "<tr><td class='text-center' colspan=5>No Record Found</td></tr>";
-
-    //    $("#AttBody").html(listItem);
-
-    //    IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
-    //    // IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
-    //    setTimeout(function () {
-
-    //        InboxNotificationCount();
-    //    }, 200)
-
-    //    $(this).closest("tr").removeClass("bold-text")
-
-    //    $('#ProjFwd').modal('show');
-
-    //    //$("#searchBox").autocomplete({
-    //    //    minLength: 3,
-    //    //    source: function (request, response) {
-    //    //        var value = request.term;
-    //    //        if (value) {
-    //    //            mMsaterFwdTo($(this).closest("tr").find("#SpnTimeToUnitId").html(), "ddlfwdFwdTo", 8, 0, $(this).closest("tr").find("#SpnStakeHolderId").html(), 1, value);
-
-    //    //        }
-    //    //    }
-    //    //});
-
-    //    $(".Fwdtitle").html("Projects Move Details");
-    //    $(".ProjectsFwd").removeClass("d-none");
-    //    $(".Attmenthistory").addClass("d-none");
-
-
-
-    //    // alert($(this).closest("tr").find("#SpnprojectStageId").html())
-    //    //GetAllComments($(this).closest("tr").find("#SpnCurrentProjId").html());
-    //});
-
-    // Ensure autocomplete works when the modal is opened or search box is focused
-    //$("#searchBox").on("change", function () {
-    //    var value =  $(this).autocomplete("search", $(this).val());  
-    //});
 
     $(".btn-Obsn").click(function () {
 
@@ -501,7 +412,7 @@ $(document).ready(function () {
 $(".btnFwdConfirm").off().on("click", async function () {
     const urlParams = new URLSearchParams(window.location.search);
     let psmid;
-    let allAttachments = [];
+
 
     if (urlParams.get('Type') === 'XRDC') {
         psmid = urlParams.get('psmid');
@@ -565,7 +476,7 @@ function CheckFwdCondition(CurrentPslmId) {
                     }
                 }
                 else if (response == false) {
-                    debugger;
+           
                     let substage = $("#ddlfwdSubStage").val();
                     let ddlaction = $("#ddlfwdAction option:selected").text();
                     let ddlRemarks = $("#txtRemarksfwd").val();
@@ -575,6 +486,7 @@ function CheckFwdCondition(CurrentPslmId) {
                     $(".ProjectsFwd").addClass("d-none");
                     $(".Attmenthistory").removeClass("d-none");
                     if (ddlaction === "Approved / Completed" && $('#ddlfwdStage').val() == 3) {
+                     
                         $('.uploadLoader').remove('d-none')
 
                         // Show only required buttons
@@ -595,21 +507,22 @@ function CheckFwdCondition(CurrentPslmId) {
                                 Projid: Projid
                             },
                             success: function (response) {
-                                $('.uploadLoader').addClass('d-none')
-                                // Base64 → Blob
-                                const byteCharacters = atob(response);
-                                const byteNumbers = new Array(byteCharacters.length);
+                                    $('.uploadLoader').addClass('d-none')
+                                if (response != null) {
+                                    // Base64 → Blob
+                                    const byteCharacters = atob(response);
+                                    const byteNumbers = new Array(byteCharacters.length);
 
-                                for (let i = 0; i < byteCharacters.length; i++) {
-                                    byteNumbers[i] = byteCharacters.charCodeAt(i);
-                                }
+                                    for (let i = 0; i < byteCharacters.length; i++) {
+                                        byteNumbers[i] = byteCharacters.charCodeAt(i);
+                                    }
 
-                                const pdfBytes = new Uint8Array(byteNumbers);
-                                generatedPdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
+                                    const pdfBytes = new Uint8Array(byteNumbers);
+                                    generatedPdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
 
-                                const blobUrl = URL.createObjectURL(generatedPdfBlob);
-                                // Put iframe inside div
-                                $("#Certificatepreview").html(`
+                                    const blobUrl = URL.createObjectURL(generatedPdfBlob);
+                                    // Put iframe inside div
+                                    $("#Certificatepreview").html(`
         <iframe id="pdfFrame"
                 src="${blobUrl}"
                 width="100%"
@@ -619,11 +532,22 @@ function CheckFwdCondition(CurrentPslmId) {
     `);
 
 
-                            }
+                                }
+                                else {
+                                    Swal.fire({
+                                        icon: "error",
+                                        title: "Oops...",
+                                        text: "Certificate not Genrated",
+
+                                    });
+                                }
+                                }
+                              
                         });
                     }
                     else {
                         $(".previewcertificateAttment").addClass("d-none");
+                        $('.uploadLoader').addClass('d-none')
                         adjustPreviewLayout();
                     }
 

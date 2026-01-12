@@ -696,15 +696,19 @@
 <script>
 
 
-    document.addEventListener("DOMContentLoaded", function () {
-        const pdfInput = document.getElementById("pdfInput");
-        const pdfList = document.getElementById("pdfList");
-        const selectedFileList = document.getElementById("selected-file-list");
-        const remarksInput = document.getElementById("remarksInput");
-        const uploadedFiles = [];
+	document.addEventListener("DOMContentLoaded", function () {
+		const pdfInput = document.getElementById("pdfInput");
+		const pdfList = document.getElementById("pdfList");
+		const selectedFileList = document.getElementById("selected-file-list");
+		const remarksInput = document.getElementById("remarksInput");
+		const uploadedFiles = [];
 
-        pdfInput.addEventListener("change", handleFileUpload);
 
+		$("#pdfInput").on("change", function (e) {
+		handleFileUpload(e);
+	    });
+
+	})
         function handleFileUpload(event) {
 
             const files = event.target.files;

@@ -15,7 +15,7 @@
         data: userdata,
         type: 'POST',
         success: function (response) {
-            console.log(response);
+           // console.log(response);
             if (response != "null" && response != null) {
 
                 if (response == -1) {
@@ -52,7 +52,7 @@
                             return a.statusId - b.statusId;  // Sort by statusId
                         });
                     let totalTimeSpentData = calculateTotalTime(responseforchart);
-                    console.log(totalTimeSpentData);
+                    //console.log(totalTimeSpentData);
                     // Using forEach to loop through the array and access each element
                     totalTimeSpentData.forEach(function (item) {
                         // Accessing individual properties of each item

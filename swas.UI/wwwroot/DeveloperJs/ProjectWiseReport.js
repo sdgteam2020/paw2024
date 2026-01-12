@@ -154,7 +154,7 @@ function ProjectWiseStatusByProjid(projid) {
         data: userdata,  // Pass the data (Projid) to the controller
         type: 'POST', // Make a POST request
         success: function (response) {
-            debugger;
+      
             if (response != "null" && response != null) {
 
                 if (response == -1) {
