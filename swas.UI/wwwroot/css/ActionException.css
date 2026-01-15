@@ -1,0 +1,27 @@
+﻿
+.underline-h5 {
+    padding: 0.5rem;
+    width: 100%;
+    margin: -16px auto; /* Center the box */
+    text-align: center;
+    border-color: #03c1fc;
+    /*box-shadow: 2px 6px 5px -3px #062b50;*/
+    background-color: #0cafff;
+    color: white;
+    font-family: Arial;
+    font-size: 15px;
+    margin-bottom: 0.5rem;
+    height: -1px;
+}
+
+.s-no-column {
+    min-width: 40px;
+    max-width: 60px;
+    width: 5vw;
+}
+
+
+/* Apply 100% width to select elements */
+.select-full-width {
+    width: 100%;
+}

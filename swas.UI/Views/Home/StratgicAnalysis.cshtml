@@ -1,59 +1,44 @@
 ﻿<html>
 
 <head>
-
-<style>
-
-    #myChart1 {
-        max-width: 100% !important; /* Set the maximum width of the canvas */
-            max-height: 100% !important; /* Set the maximum height of the canvas */
-
-        width: auto;
-        height: auto;
-    }
-
-        .aj {
-            text-align: center;
-            height: 2rem;
-            background-color: #044c92;
-            padding-top: 0px;
-        }
-</style>
+    <link href="~/css/StratgicAnalysis.css" rel="stylesheet" />
 </head>
 <div class="card radius-10 w-100">
     <div class="card-body">
-        <div class="">
-            <h5 class="card-title aj" style="text-align:center;color:white;text-shadow:2px 2px black">Statistic Analysis</h5>
+        <div>
+            <h5 class="card-title aj stat-title">Statistic Analysis</h5>
         </div>
+
         <hr />
-      
+
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6">
-
                 <div class="card radius-12">
                     <div class="card-body">
-                        <h6 class="mb-0">Application Type wise Analysis : (Last Six Months) </h6>
+                        <h6 class="mb-0">Application Type wise Analysis : (Last Six Months)</h6>
                         <div class="d-flex align-items-center mb-3">
-                            <canvas id="myChart" style="width: 752px; height: 376px;"></canvas>
+                            <canvas id="myChart" class="stats-canvas"></canvas>
                         </div>
                     </div>
-
                 </div>
             </div>
+
             <!-- Right Sidebar (Pie Chart) -->
             <div class="col-lg-6 col-md-6 col-sm-6">
                 <div class="card radius-12">
                     <div class="card-body">
                         <h6 class="mb-0">Current Status Analysis</h6>
                         <div class="d-flex align-items-center mb-3">
-                            <canvas id="myChart1" style=" width:752px; height: 376px;width: 752px; height: 376px;"></canvas>
+                            <canvas id="myChart1" class="stats-canvas"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
+
 
 </html>
 

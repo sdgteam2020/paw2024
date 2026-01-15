@@ -1,0 +1,34 @@
+﻿
+
+.select2-container {
+    z-index: 9999; /* Adjust the z-index value as needed */
+}
+
+
+
+
+
+
+.readonly-field {
+    pointer-events: none;
+}
+
+
+/* ===== Unit Mapping modals: moved from inline styles ===== */
+
+/* common full width for selects in this modal */
+.um-w-100 {
+    width: 100%;
+}
+
+/* save button positioning + colors */
+.um-save-btn {
+    margin-left: 20rem;
+    background-color: #2d5eff;
+    color: #fff;
+}
+
+/* UnitAdd modal max width */
+.um-modal-800 {
+    max-width: 800px;
+}

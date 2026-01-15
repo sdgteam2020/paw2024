@@ -1,0 +1,30 @@
+﻿
+
+#myChart1 {
+    max-width: 100% !important; /* Set the maximum width of the canvas */
+    max-height: 100% !important; /* Set the maximum height of the canvas */
+
+    width: auto;
+    height: auto;
+}
+
+.aj {
+    text-align: center;
+    height: 2rem;
+    background-color: #044c92;
+    padding-top: 0px;
+}
+
+/* Statistic Analysis title styling (moved from inline) */
+.stat-title {
+    text-align: center;
+    color: #fff;
+    text-shadow: 2px 2px #000;
+}
+
+/* Canvas sizing (moved from inline) */
+.stats-canvas {
+    width: 752px;
+    height: 376px;
+}
+

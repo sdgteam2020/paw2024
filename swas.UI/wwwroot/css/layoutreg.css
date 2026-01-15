@@ -1,0 +1,143 @@
+﻿/* =========================
+   CSP SAFE: PAW PUBLIC LAYOUT
+   ========================= */
+
+/* Old inline .header/.footer colors (kept same as your intent) */
+.header {
+    background-color: #044c92;
+    color: #044c92;
+}
+
+.footer {
+    background-color: #044c92;
+    color: #044c92;
+}
+
+/* Was: .wrapper .page-content { margin-top: 0 !important; } */
+.paw-pagecontent-mt-0 {
+    margin-top: 0 !important;
+}
+
+/* Loader styles (moved from inline <style>) */
+.loader-container {
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+    z-index: 12;
+    text-align: center;
+}
+
+.loader {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    vertical-align: middle;
+    background-color: rgba(255, 255, 255, 0.75);
+    position: fixed;
+    display: table;
+    width: 100%;
+    top: 0;
+    height: 100%;
+    min-height: 100%;
+    z-index: 99999;
+    left: 0;
+}
+
+/* Keep your loader image width(60px) while the html img has height=100 earlier.
+   If you want exact same, comment width and use height in markup; but CSP wants no inline.
+*/
+.paw-loader-img {
+    width: 60px;
+    height: auto;
+}
+
+/* Was inline: <h4 style="margin-top:-20px"> */
+.paw-loading-title {
+    margin-top: -20px;
+}
+
+/* Top header styles (moved from inline <style>) */
+.top-header1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 65px;
+    padding: 0 1.5rem;
+    background-clip: border-box;
+    z-index: 5;
+    transition: 0.3s all;
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 50%);
+    background: #044c92;
+}
+
+    .top-header1 .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+.headertext {
+    margin: 0;
+}
+
+.top-navbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.user-setting {
+    margin-right: 1rem;
+}
+
+.user-img,
+.dgislogo {
+    height: 40px;
+}
+
+.headertext1 {
+    font-size: 35px;
+    font-weight: 600;
+    margin-top: 9px;
+    font-family: "Roboto", sans-serif;
+    color: white;
+    text-shadow: 2px 2px 4px black;
+    margin-left: 55px;
+}
+
+/* Footer styles (moved from inline <style> and inline style attribute) */
+.footer1 {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0.7rem;
+    color: white;
+    background-color: #fff;
+    border-top: 1px solid #e9ecef;
+    text-align: center;
+    transition: .3s all;
+    background: #044c92;
+}
+
+/* Was inline: footer style="position:fixed;margin-bottom:0" */
+.paw-footer-fixed {
+    position: fixed;
+    margin-bottom: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+/* Was inline: header style="color:blue" */
+.paw-header-text-blue {
+    color: blue;
+}
+
+/* Was inline: switcher-body style="visibility:hidden" */
+.paw-switcher-hidden {
+    visibility: hidden;
+}

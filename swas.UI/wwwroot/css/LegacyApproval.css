@@ -1,0 +1,165 @@
+﻿.bold-text {
+    font-weight: bold;
+}
+
+.tabs__head li {
+    margin-right: 10px;
+}
+
+.tabs__head a {
+    text-decoration: none;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    background-color: #fff; /* Set the default background color */
+}
+
+    .tabs__head a.active-link {
+        background-color: white; /* Set the active background color to white */
+        border-bottom: 20px solid #dee2e6; /* Adjust this as needed */
+    }
+
+.active-link {
+    background-color: #004a99;
+    color: white !important;
+    border-radius: 4px;
+    padding: 6px 12px;
+}
+
+#projectNameDropdown {
+    position: absolute;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    width: 250px;
+    z-index: 1000;
+    list-style: none;
+    /*  margin-left: 766px;
+			margin-top: 45px; */
+    padding: 0;
+}
+
+    #projectNameDropdown li {
+        padding: 8px;
+        cursor: pointer;
+    }
+
+        #projectNameDropdown li:hover {
+            background-color: #f1f1f1;
+        }
+
+.tabs__head a.active-link {
+    background-color: white; /* Set the active background color to white */
+    border-bottom: 20px solid #dee2e6; /* Adjust this as needed */
+}
+
+
+/* ===== Date Approval page: moved from inline styles ===== */
+
+.da-title {
+    letter-spacing: 1px;
+}
+
+/* small badge font */
+.da-badge-sm {
+    font-size: 0.7rem;
+}
+
+/* tab link fixed width */
+.da-tab-w220 {
+    width: 220px;
+}
+
+/* table wrapper scroll + height */
+.da-scroll-700 {
+    overflow-y: auto;
+    height: 700px;
+}
+
+/* hidden ip spans (was display:none) */
+.da-hidden {
+    display: none;
+}
+
+/* Find_approval tab hidden default */
+.da-tab-hidden {
+    display: none;
+}
+
+/* card fixed height */
+.da-card-h675 {
+    height: 675px;
+}
+
+/* search input width */
+.da-search-w300 {
+    width: 300px;
+}
+
+/* dropdown menu sizing/position */
+.da-dropdown-menu {
+    display: none;
+    width: 650px;
+    margin-left: 210px;
+}
+
+/* projectNameDropdown list in modal */
+.da-dropdown-list {
+    display: none;
+    width: 477px;
+}
+
+/* column widths for TableType2 */
+.da-w-200 {
+    width: 200px;
+}
+
+.da-w-150 {
+    width: 150px;
+}
+
+.da-w-100 {
+    width: 100px;
+}
+
+.da-w-120 {
+    width: 120px;
+}
+
+/* Find_approval table wrapper card-body height */
+.da-scroll-700-alt {
+    overflow-y: auto;
+    height: 700px;
+}
+
+/* card-body for first tab (you used 700px there too) */
+.da-scroll-700-main {
+    overflow-y: auto;
+    height: 700px;
+}
+
+/* Find_approval card had inline height only on card itself */
+/* ===== loadDateApprovalTable inline style replacements ===== */
+
+/* td vertical-align + center */
+.da-td-mid-center {
+    vertical-align: middle;
+    text-align: center;
+}
+
+/* legacy history icon height */
+.da-ico-27 {
+    height: 27px;
+}
+.da-td-mid-center {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.da-ico-27 {
+    height: 27px;
+}
+/* Make tab icons smaller without shrinking text */
+.tabs__head li a .fa {
+    font-size: 22px;
+}

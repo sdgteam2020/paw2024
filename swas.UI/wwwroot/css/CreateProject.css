@@ -1,0 +1,191 @@
+﻿
+#btn-Initiation  {
+    color: white !important;
+}
+
+#btn-complition  {
+    color: white !important;
+}
+
+
+.swal-container {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.swal2-popup {
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+    padding: 20px;
+    max-width: 90vw;
+    width: 600px;
+}
+
+.swal2-title {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.swal2-html-container {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.5; /* Spacing between lines */
+    text-align: left; /* Align text to the left */
+    margin-bottom: 20px; /* Space below content */
+}
+
+.swal2-confirm {
+    background-color: #007bff; /* Blue button */
+    color: #fff; /* White text */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Font size */
+    padding: 10px 20px; /* Padding */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Smooth color transition */
+}
+
+    .swal2-confirm:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+
+    .swal2-confirm:focus {
+        outline: none; /* Remove default outline */
+    }
+
+
+.swal2-title {
+    text-align: center; /* Center-align the title text */
+}
+
+.swal2-html-container {
+    text-align: center; /* Center-align the content text */
+}
+
+
+.disabled-button {
+    background-color: lightgray !important;
+    cursor: not-allowed !important;
+    opacity: 0.6;
+}
+
+.enabled-button {
+    background-color: #004b93 !important; /* Adjust color as needed */
+    cursor: pointer !important;
+    opacity: 1;
+}
+
+
+#projectNameDropdown {
+    position: absolute;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    width: 250px;
+    z-index: 1000;
+    list-style: none;
+    /*  margin-left: 766px;
+            margin-top: 45px; */
+    padding: 0;
+}
+
+    #projectNameDropdown li {
+        padding: 8px;
+        cursor: pointer;
+    }
+
+        #projectNameDropdown li:hover {
+            background-color: #f1f1f1;
+        }
+
+.text-deep-blue {
+    color: #044c92 !important;
+}
+
+
+/* ===== inline style removals ===== */
+
+.paw-ingestion-mt {
+    margin-top: 10px;
+}
+
+/* overlay */
+.paw-uploadLoader {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 1050;
+}
+
+.paw-spinner-4rem {
+    width: 4rem;
+    height: 4rem;
+}
+
+/* formerly <font style="color:red"> */
+.paw-red-font {
+    color: red;
+}
+
+/* project name group */
+.paw-projname-inputgroup {
+    width: 250px;
+}
+
+.paw-projname-editor {
+    margin-bottom: 0 !important;
+    width: 100px;
+    margin-right: 0;
+}
+
+.paw-projectNameDropdown {
+    display: none;
+    width: 477px;
+}
+
+.paw-charErrorMsg {
+    color: red;
+    display: none;
+}
+
+/* buttons with margin-top */
+#btn-Initiation {
+    margin-top: -8px;
+}
+
+.paw-btn-completion {
+    margin-top: -8px;
+}
+
+.paw-btn-sponsor {
+    margin-top: -10px;
+}
+
+/* widths */
+.paw-w-100 {
+    width: 100% !important;
+}
+
+.paw-w-92 {
+    width: 92% !important;
+}
+
+.paw-w-12rem {
+    width: 12rem !important;
+}
+
+/* edit icon */
+.edit-icon {
+    width: 35px;
+    height: 30px;
+    margin-right: 0;
+}
+
+/* helper */
+.paw-display-none {
+    display: none;
+}

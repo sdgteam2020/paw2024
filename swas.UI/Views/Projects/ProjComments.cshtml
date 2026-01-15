@@ -6,61 +6,7 @@
 }
 <link href="~/assets/css/tooltip.css" rel="stylesheet" />
 <link href="~/jquery/autocomplete.css" rel="stylesheet" />
-<style>
-    .bold-text {
-        font-weight: bold;
-        font-size: medium;
-    }
-
-    .custom-modal-size {
-        max-width: 100%; /* Set the modal width to 80% of the screen */
-        width: 95%;
-        /* height: 10%; Adjust height if necessary */
-        margin: auto;
-    }
-
-        .custom-modal-size .modal-content {
-            height: 100%; /* Ensure the content fills the modal */
-            overflow: auto; /* Add scrolling for long content */
-        }
-
-    .modal-dialog {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh; /* Full height */
-    }
-
-    .s-no-column {
-        min-width: 40px;
-        max-width: 60px;
-        width: 5vw;
-    }
-
-    .bold-border {
-        border-width: 2px !important; /* Make border width bold */
-    }
-
-    .btn-small-large {
-        padding: 0.5rem 0.7rem; /* Slightly larger padding than the default */
-        font-size: 0.8rem; /* Slightly larger font size */
-    }
-
-    .btn-3d {
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-        transition: all 0.3s ease;
-    }
-
-        .btn-3d:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1), 0 2px 5px rgba(0, 0, 0, 0.08);
-        }
-
-        .btn-3d:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.08);
-        }
-</style>
+<link href="~/css/projcomments.css" rel="stylesheet" />
 <!----Table for Stakeholder Status Change----->
 <div class="card-body mt-5">
     <div class="card radius-10 w-100">
@@ -81,7 +27,7 @@
                                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
                                     </svg>Search Project
                                 </span>
-                            <input type="text" id="CommentProject" style="width: 476px;" class="form-control" placeholder="Search project for Comment" />
+                            <input type="text" id="CommentProject" class="form-control" placeholder="Search project for Comment" />
                             </div>
                         </div>
                     </div>
@@ -123,12 +69,7 @@
     </div>
 </div>
 
-<script>
-    // JavaScript to reset the date when the modal closes
-    $('#ProjCommentModal').on('hidden.bs.modal', function (e) {
-        $('#CommentDateFwd').val('');
-    });
-</script>
+
 
 <script src="~/developerjs/mtable.js"></script>
 <script src="~/developerjs/projectstkholdercomments.js"></script>
@@ -137,24 +78,3 @@
 <script src="~/developerjs/Tooltip.js"></script>
 @*<script src="~/developerjs/commanfordatatable.js"></script>*@
 <script src="~/jquery/autocomplete.js"></script>
-<script>
-    $(document).ready(function () {
-
-    });
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const datePicker = document.getElementById('CommentDateFwd');
-        if (datePicker) {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
-            datePicker.max = formattedDate;
-        }
-    });
-</script>

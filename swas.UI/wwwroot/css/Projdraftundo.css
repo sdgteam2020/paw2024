@@ -1,0 +1,225 @@
+﻿/* General container styling */
+.container-fluid {
+    /* Add any global container styling here if needed */
+}
+
+/* Edit Form Container */
+#editFormContainer {
+    display: block;
+}
+
+/* Card styling */
+.card {
+    padding-top: 4rem;
+    padding-bottom: 0;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+/* Heading */
+.newprojectheading {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Progress bar styles */
+#progressbar {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    #progressbar li {
+        text-align: center;
+        width: 25%;
+        position: relative;
+    }
+
+        #progressbar li.active {
+            color: #00bcd4;
+        }
+
+        #progressbar li strong {
+            display: block;
+        }
+
+/* Form card styling */
+.form-card {
+    margin-top: 2rem;
+}
+
+/* Steps information */
+.steps {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Table styling for input fields */
+.new-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+    .new-table td {
+        padding: 10px;
+        vertical-align: middle;
+    }
+
+        /* Label styling */
+        .new-table td label {
+            display: inline-block;
+            font-weight: normal;
+        }
+
+/* Error message styling */
+.error-message {
+    display: none;
+    color: red;
+}
+
+/* Action button styles */
+.action-button {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    color: white;
+    background-color: #00bcd4;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.action-button-previous {
+    background-color: #f44336;
+}
+
+.action-button:hover {
+    background-color: #0097a7;
+}
+
+/* Specific styling for the steps navigation */
+.fs-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#finaluploaded {
+    background-color: #4caf50;
+}
+
+/* Final step display */
+.purple-text {
+    color: #9c27b0;
+    font-size: 20px;
+}
+
+    /* Center alignment for buttons in the last step */
+    .purple-text.center {
+        text-align: center;
+    }
+
+        .purple-text.center input {
+            margin: 10px 0;
+        }
+
+/* Text area input */
+.form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Custom input field styles */
+input[type="text"], input[type="date"], input[type="number"], textarea, select {
+    font-size: 16px;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* Dropdown styling */
+select.form-control {
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* Input fields for hidden fields */
+.hidden-date {
+    display: none;
+}
+
+/* Error message for validation */
+.text-danger {
+    color: red;
+}
+
+/* Adjustments for margin and padding */
+.mt-3 {
+    margin-top: 1rem;
+}
+
+.mb-2 {
+    margin-bottom: 1rem;
+}
+
+.p-0 {
+    padding: 0;
+}
+
+/* Responsive table adjustments */
+@media (max-width: 768px) {
+    .new-table td {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+        .new-table td label {
+            display: block;
+        }
+}
+
+/* Progress bar color changes */
+#progressbar li.active {
+    color: #00bcd4;
+    border-color: #00bcd4;
+}
+
+.required {
+    color: red;
+}
+
+.hidden-date {
+    display: none;
+}
+
+.validation-error {
+    display: none;
+}
+
+
+/* Reset all styles for the div and its descendants */
+.strong-div, .strong-div * {
+    all: initial;
+}
+
+/* Apply custom styles to the div */
+.strong-div {
+    border: 2px solid black;
+    padding: 10px;
+    background-color: lightgray;
+}
+

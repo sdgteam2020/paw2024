@@ -1,0 +1,200 @@
+﻿
+
+.btn-primary {
+    background-color: #F44336;
+    border: none;
+    color: #000;
+    padding: 5px 16px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s;
+    margin-left: 98%;
+    margin-top: -39px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    background-color: darkred; /* Darker red color on hover */
+}
+
+.underline-h5 {
+    padding: 0.5rem;
+    width: 100%;
+    margin: 0 auto; /* Center the box */
+    text-align: center;
+    border-color: #03c1fc;
+    /*box-shadow: 2px 6px 5px -3px #062b50;*/
+    background-color: #0cafff;
+    color: white;
+    font-family: Arial;
+    font-size: 15px;
+    margin-bottom: 0.5rem;
+    height: -1px;
+}
+
+.btn-outline-secondary {
+    background-color: #F44336;
+    border: none;
+    color: #000;
+    padding: 5px 16px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s;
+    margin-left: 98%;
+    margin-top: -39px;
+}
+
+    .btn-outline-secondary:hover {
+        transform: translateY(-3px);
+        background-color: darkred; /* Darker red color on hover */
+    }
+
+.projectheading {
+    background-color: #3498db;
+    color: #ffffff;
+    padding: 10px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+/* Card and Layout Styling */
+.card {
+    border-radius: 10px;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Table Styling */
+.new-proj-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-header {
+    text-align: center;
+    border: 1px solid black;
+    padding: 8px;
+}
+
+.table-cell {
+    text-align: left;
+    border: 1px solid black;
+    padding: 8px;
+}
+
+/* PDF Icon Styling */
+.pdf-download-icon {
+    width: 35px;
+    height: 25px;
+}
+
+/* Center Text Alignment for the Table */
+.center-align {
+    text-align: center;
+}
+
+/* Text Wrapping */
+.long-text {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* Styling for Project Headings */
+.projectheading {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Table Column and Row Styling */
+.new-proj-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+/* Card and Layout Styling */
+.card-body {
+    padding: 1rem;
+}
+
+.table-bordered {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+    .table-bordered th,
+    .table-bordered td {
+        text-align: center;
+        padding: 8px;
+        border: 1px solid black;
+    }
+
+/* Project Heading */
+.projectheading {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Checklist Heading Styling */
+.checklist {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Movement Section Styling */
+.movment {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Text Wrapping */
+.long-text {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+/* Card and Layout Styling */
+.card-body {
+    padding: 1rem;
+}
+
+/* Table Styling */
+.table-striped {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+.table-bordered th,
+.table-bordered td {
+    text-align: center;
+    padding: 8px;
+    border: 1px solid black;
+}
+
+/* Attachment Icon Styling */
+.attachment-icon {
+    width: 31px;
+    height: 29px;
+    margin-right: 0px;
+}
+
+/* General Styling for Table Cells */
+.table th,
+.table td {
+    text-align: center;
+    padding: 8px;
+}
+
+/* Optional Styling for the Checkboxes and Other Customizations */
+.checkbox-custom {
+    margin: 5px;
+    padding: 10px;
+}
+
+

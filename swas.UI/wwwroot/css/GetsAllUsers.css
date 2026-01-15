@@ -1,0 +1,96 @@
+﻿
+.container-fluid {
+    padding: 20px;
+}
+
+.card {
+    max-width: 95%;
+    margin: 0 auto;
+}
+
+.table {
+    margin: 0 auto;
+    width: 100%;
+}
+
+.flag-toggle-btn .flag-status {
+    padding: 8px 12px;
+    display: inline-block;
+    text-align: center;
+    background: linear-gradient(to right, green 50%, red 50%);
+    color: white;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.icon-image {
+    width: 30px;
+    height: 30px;
+}
+
+.d-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ===== Existing Users page: moved from inline styles ===== */
+
+/* Card header background */
+.users-card-header {
+    background-color: #044c92;
+}
+
+/* Hidden button (replaces style="display:none") */
+.users-hidden {
+    display: none;
+}
+
+/* S/No column width */
+.users-col-sno {
+    width: 33px;
+}
+
+/* Flag toggle spans */
+.flag-pill {
+    border: none;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.flag-pill-on {
+    background: linear-gradient(to right, green 50%, red 50%);
+}
+
+.flag-pill-off {
+    background: linear-gradient(to right, red 50%, green 50%);
+}
+/* ===== Flag toggle button styles ===== */
+
+.flag-pill {
+    border: none;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+/* ON state */
+.flag-on {
+    background: linear-gradient(to right, green 50%, red 50%);
+}
+
+/* OFF state */
+.flag-off {
+    background: linear-gradient(to right, red 50%, green 50%);
+}

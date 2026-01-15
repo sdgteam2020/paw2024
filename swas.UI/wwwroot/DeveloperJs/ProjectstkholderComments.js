@@ -689,3 +689,21 @@ function IsCommentedUnreadNotification(ProjId) {
 }
 
 
+document.addEventListener('DOMContentLoaded', function () {
+    const datePicker = document.getElementById('CommentDateFwd');
+    if (datePicker) {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
+        datePicker.max = formattedDate;
+    }
+});
+
+// JavaScript to reset the date when the modal closes
+$('#ProjCommentModal').on('hidden.bs.modal', function (e) {
+    $('#CommentDateFwd').val('');
+});

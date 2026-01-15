@@ -1,0 +1,370 @@
+﻿/* =========================
+   CSP SAFE: extracted styles
+   ========================= */
+
+.required-star {
+    color: red;
+    vertical-align: super;
+    font-size: 0.8em;
+    margin-left: 2px;
+}
+
+.wrapper {
+    padding: 0rem;
+}
+
+.page-content {
+    margin-top: 5rem;
+}
+
+label {
+    display: inline-flex;
+}
+
+input[type="search"] {
+    margin-left: 6px;
+    padding: 3px;
+    margin-bottom: 9px;
+}
+
+.form-control.form-control-sm {
+    display: unset;
+}
+
+#EditWhiteListedProjectModal {
+    padding-right: 190px;
+}
+
+.select2-container--open {
+    overflow: visible !important;
+}
+
+.modal-open .select2-container--open {
+    z-index: 999999 !important;
+}
+
+/* headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: Arial, sans-serif !important;
+    font-size: 24px !important;
+}
+
+/* responsive */
+img, video {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+.table-responsive {
+    overflow-x: auto !important;
+}
+
+div.dataTables_wrapper div.dataTables_filter {
+    text-align: right;
+    margin-top: -3rem !important;
+}
+
+/* logos */
+.dgislogo,
+.dgislogo1 {
+    width: 90px;
+    height: 60px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: -7px;
+}
+
+/* modal sizing overrides */
+.modal-content {
+    margin-left: -20rem !important;
+    width: 111rem !important;
+    height: auto;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.bold-underline {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 6vh;
+    margin: 0;
+}
+
+.login-header {
+    background-color: #044c92;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4px;
+    color: white;
+    width: 29rem;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.headertext {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.pdf-link {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.headline {
+    margin-top: 1rem !important;
+    color: #044c92;
+    font-weight: 600;
+}
+
+.images {
+    margin-top: -1rem;
+    height: 12rem !important;
+    width: 12rem;
+}
+
+.font-d {
+    padding: 6px !important;
+    background-color: #044c92;
+    color: white;
+    font-weight: 900;
+}
+
+.card {
+    cursor: pointer;
+}
+
+.card1 {
+    box-shadow: 1px 1px 6px 1px gray !important;
+}
+
+    .card1:hover {
+        transform: scale(1.1);
+    }
+
+.modal-header {
+    color: white;
+    background-color: #022649;
+}
+
+.modal-title {
+    margin-left: 39rem !important;
+}
+
+.card-r {
+    margin-left: 0.9rem !important;
+}
+
+.main-card {
+    background-image: url('/assets/images/test.jpg');
+}
+
+.col-sponsor {
+    width: 20%;
+}
+
+.col-project {
+    width: 30%;
+}
+
+.card-box {
+    width: 47rem !important;
+}
+
+.col-width6 {
+    width: 7% !important;
+}
+
+.col-width9 {
+    width: 12% !important;
+}
+
+.s-no-column {
+    width: 1%;
+}
+
+.col-width10 {
+    width: 10% !important;
+}
+
+.col-width16 {
+    width: 15% !important;
+}
+
+.dt-buttons {
+    margin-bottom: 10px !important;
+}
+
+.buttonsToHide {
+    display: none !important;
+}
+
+.WhitelistedTablesss {
+    margin-top: 23px;
+}
+
+#ProcessId, #PolicyWhiteList, #whitelistCard, #WhiteListedProject {
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+/* ---------- moved inline styles ---------- */
+
+/* header style="background-color:#333;color:#fff" */
+.paw-top-headers {
+    background-color: #333;
+    color: #fff;
+}
+
+/* removed style="text-align:center" */
+.paw-headertext-center {
+    text-align: center;
+}
+
+/* wrapper style="display:none" */
+.paw-wrapper-hidden {
+    display: none;
+}
+
+/* modal inline styles removed */
+.paw-sticky-thead {
+    position: sticky;
+    top: -18px;
+}
+
+.paw-table-scroll {
+    overflow: scroll;
+}
+
+/* widths formerly inline on th/td */
+.paw-w-1 {
+    width: 1% !important;
+}
+
+.paw-w-2 {
+    width: 2% !important;
+}
+
+.paw-w-4 {
+    width: 4% !important;
+}
+
+.paw-w-6 {
+    width: 6% !important;
+}
+
+.paw-w-9 {
+    width: 9% !important;
+}
+
+.paw-w-12 {
+    width: 12% !important;
+}
+
+.paw-w-15 {
+    width: 15% !important;
+}
+
+/* edit icon was inline */
+.paw-edit-icon {
+    width: 35px;
+    height: 30px;
+    margin-right: 0;
+}
+
+/* footer style="background-color:#333;color:#fff;position:fixed;bottom:0;width:100%" */
+.paw-footers {
+    background-color: #333;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* footer right div inline */
+.paw-footer-right {
+    text-align: right;
+    margin-top: -24px !important;
+    margin-right: 20px !important;
+}
+
+/* logo1 inline width:130px */
+.paw-logo1 {
+    width: 130px;
+}
+
+/* login block inline margin-top:1rem */
+.paw-login-mt {
+    margin-top: 1rem;
+}
+
+/* login card inline margin-left/width */
+.paw-login-card {
+    margin-left: 7.5rem;
+    width: 29rem;
+}
+
+/* card title inline */
+.paw-card-title {
+    text-align: center;
+    color: black;
+}
+
+/* invalid feedback inline red */
+.paw-invalid-red {
+    color: red;
+}
+
+/* ---------- process button class mapping (CSP-safe) ---------- */
+.paw-process-btn { /* base */
+}
+
+.paw-process-btn-primary {
+    background: #0d6efd !important;
+}
+
+.paw-process-btn-success {
+    background: #198754 !important;
+}
+
+.paw-process-btn-danger {
+    background: #dc3545 !important;
+}
+
+.paw-process-btn-warning {
+    background: #ffc107 !important;
+    color: #000 !important;
+}

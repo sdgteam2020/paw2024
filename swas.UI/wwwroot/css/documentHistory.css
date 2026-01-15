@@ -1,0 +1,68 @@
+﻿
+.form-card {
+    display: block; /* Initially show the form */
+}
+
+.additional-details {
+    display: none; /* Hide the additional details initially */
+}
+
+.underline-h5 {
+    padding: 0.5rem;
+    width: 100%;
+    margin: 0 auto; /* Center the box */
+    text-align: center;
+    border-color: #03c1fc;
+    /*box-shadow: 2px 6px 5px -3px #062b50;*/
+    background-color: #0cafff;
+    color: white;
+    font-family: Arial;
+    font-size: 19px;
+    margin-bottom: 0.5rem;
+    height: -1px;
+}
+
+.vertical-table {
+    margin-top: 50px;
+}
+
+.custom-checkbox {
+    margin-bottom: 10px;
+}
+
+.download-button {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.modal-content {
+    height: 100%;
+    width: 100%;
+}
+
+#previewFrame {
+    height: 485px;
+    width: 785px;
+}
+
+/* Custom H5 Styling */
+.custom-h5 {
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    position: relative;
+    height: 33px;
+}
+
+/* Custom Scroll Behavior */
+.custom-scroll {
+    overscroll-behavior-y: auto;
+}
+
+/* PDF Preview Button Styling */
+.btn-preview {
+    align-self: center;
+    background-color: darkblue;
+    color: white;
+    margin-left: 50%;
+}
+

@@ -1,0 +1,54 @@
+﻿.d-flex1 {
+    box-shadow: 18px 10px 39px black;
+    display: flex !important;
+    padding: 10px -7px;
+    padding-left: 33px;
+    padding-bottom: 21px;
+    padding-top: -16px;
+    margin-top: 17rem !important;
+    width: 50% !important;
+}
+.d-flex1 {
+    box-shadow: 18px 10px 39px black;
+    display: flex !important;
+    padding: 10px -7px;
+    padding-left: 33px;
+    padding-bottom: 21px;
+    padding-top: -16px;
+    margin-top: 6rem;
+    width: 50% !important;
+}
+
+.bg-primary {
+    background-color: #923eb9 !important;
+    margin-top: -200px !important;
+    margin-right: 274px !important;
+}
+/* ✅ moved from inline styles in cshtml */
+.login-title {
+    text-align: center;
+    font-size: 33px;
+    color: white;
+}
+
+.login-card-heading {
+    text-align: center;
+    font-size: 28px;
+}
+
+.login-footer-fixed {
+    position: fixed;
+    margin-bottom: 0px;
+    margin-left: -280px;
+}
+/* Center the login heading */
+.loginheading {
+    font-size: 28px;
+}
+
+/* Footer with fixed position */
+.fixed-footer {
+    position: fixed;
+    margin-bottom: 0px;
+    margin-left: -280px;
+}

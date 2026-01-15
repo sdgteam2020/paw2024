@@ -62,37 +62,4 @@
     }
 </style>
 <img src="~/assets/images/flow.png" class="FlowImg" />
-@* 
-<div class="container" id="container" style="margin-top:5px"  >
-    @{
-        List<ActionsSeq> resultList = ViewBag.AnimatedView as List<ActionsSeq>;
-
-        if (resultList != null)
-        {
-            for (int i = 0; i < resultList.Count; i++)
-            {
-                var item = resultList[i];
-
-                <div class="box" id="box@(i + 1)">
-                
-                    <div style="align-items:center">
-
-                        @item.ActionDesc
-                    --->Resp : @item.UnitName
-                    </div>
-                </div>
-
-                @if (i < resultList.Count - 1)
-                {
-                    <div class="link-line"></div>
-                }
-            }
-        }
-    }
-</div>
-
-<script src="~/DeveloperJs/Actions.js"></script>
-
-
- *@
 

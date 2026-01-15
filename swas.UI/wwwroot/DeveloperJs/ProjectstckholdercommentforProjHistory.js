@@ -18,8 +18,7 @@
 
 
 });
-
-function GetAllComments2() {    
+function GetAllComments2() {
     $.ajax({
         type: "POST",
         url: '/Projects/GetAllCommentBypsmId_UnitId',
@@ -29,22 +28,19 @@ function GetAllComments2() {
             "ProjId": $(".ProjectcommentprojId").html()
         },
         success: function (data) {
-            //console.log("CommentData", data);
             var projectName = data?.[0]?.projectName || "";
-            var adminap = data?.[0]?.adminApprovalStatus||"";
-            //console.log("First Project Name:", projectName);
+            var adminap = data?.[0]?.adminApprovalStatus || "";
 
-            var tableHTML = '<table class="table" style="width:100%; border: 1px solid black; border-collapse:collapse;">';
+            var tableHTML = '<table class="table custom-table">';
             tableHTML += '<thead>';
             tableHTML += '<tr>';
-            //tableHTML += '<th style="display: none;">Project Name</th>';
-            tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">Ser No</th>';
-            tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">Stakeholder</th>';
-            tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">Datetime</th>';
-            tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">Comment</th>';
-            tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">Status</th>';
-            tableHTML += '<th style="background-color: #044c92; color: white; border: 1px solid black;">PDF</th>'; 
-            tableHTML += '<th class="d-none">DateType</th>'; 
+            tableHTML += '<th class="table-header">Ser No</th>';
+            tableHTML += '<th class="table-header">Stakeholder</th>';
+            tableHTML += '<th class="table-header">Datetime</th>';
+            tableHTML += '<th class="table-header">Comment</th>';
+            tableHTML += '<th class="table-header">Status</th>';
+            tableHTML += '<th class="table-header">PDF</th>';
+            tableHTML += '<th class="d-none">DateType</th>';
             tableHTML += '</tr>';
             tableHTML += '</thead>';
             tableHTML += '<tbody>';
@@ -52,28 +48,23 @@ function GetAllComments2() {
             if (data != null) {
                 for (var i = 0; i < data.length; i++) {
                     tableHTML += '<tr>';
-                    //tableHTML += '<td style="display: none;" class="project-name">' + data[i].projectName + '</td>';
-                    tableHTML += '<td style="border: 1px solid black;width:1% !important">' + (i + 1) + '</td>';
-                    tableHTML += '<td style="border: 1px solid black;">' + data[i].stakeholder + ' (' + data[i].userDetails + ')</td>'; 
-                    tableHTML += '<td style="border: 1px solid black;">' + DateFormateddMMyyyyhhmmss(data[i].date) + '</td>';
-                    tableHTML += '<td style="border: 1px solid black;">' + data[i].comments + '</td>';
-                    if (data[i].status == "Accepted")
-                        tableHTML += '<td style="border: 1px solid black;"><span class="badge badge-success text-white">' + data[i].status + '</span></td>';
-                    else if (data[i].status == "Obsn")
-                        tableHTML += '<td style="border: 1px solid black;"><span class="badge badge-warning text-white">' + data[i].status + '</span></td>';
-                    else if (data[i].status == "Info")
-                        tableHTML += '<td style="border: 1px solid black;"><span class="badge badge-success text-white">' + data[i].status + '</span></td>';
-                    else
-                        tableHTML += '<td style="border: 1px solid black;"><span class="badge badge-danger text-white">' + data[i].status + '</span></td>';
+                    tableHTML += '<td class="table-cell">' + (i + 1) + '</td>';
+                    tableHTML += '<td class="table-cell">' + data[i].stakeholder + ' (' + data[i].userDetails + ')</td>';
+                    tableHTML += '<td class="table-cell">' + DateFormateddMMyyyyhhmmss(data[i].date) + '</td>';
+                    tableHTML += '<td class="table-cell">' + data[i].comments + '</td>';
 
-                    tableHTML += '<td style="border: 1px solid black;">';
+                    var statusClass = data[i].status === "Accepted" ? "badge-success" :
+                        (data[i].status === "Obsn" ? "badge-warning" :
+                            (data[i].status === "Info" ? "badge-info" : "badge-danger"));
+                    tableHTML += '<td class="table-cell"><span class="badge ' + statusClass + '">' + data[i].status + '</span></td>';
+
+                    tableHTML += '<td class="table-cell">';
                     if (data[i].state !== null && data[i].attpath !== null && data[i].attpath !== '') {
                         tableHTML += '<a href="/Home/WaterMark3?id=' + data[i].attpath + '" target="_blank">';
-                        tableHTML += '<img src="/assets/images/icons/pdfimg.png" alt="PDF icon" style="width: 24px; height: 24px;">';
+                        tableHTML += '<img src="/assets/images/icons/pdfimg.png" alt="PDF icon" class="pdf-icon">';
                         tableHTML += '</a>';
                     }
-                    tableHTML += '<td class="d-none noExport"><span class="DateType">' + data[i].adminApprovalStatus + '</span></td>';  
-
+                    tableHTML += '<td class="d-none noExport"><span class="DateType">' + data[i].adminApprovalStatus + '</span></td>';
                     tableHTML += '</td>';
                     tableHTML += '</tr>';
                 }
@@ -83,24 +74,6 @@ function GetAllComments2() {
             tableHTML += '</table>';
 
             $('#ChatBox').empty().html(tableHTML);
-
-            //$('#ChatBox .table').DataTable({
-            //    "paging": true,    // Enable paging
-            //    "ordering": true,  // Enable ordering
-            //    "info": true,       // Enable info
-            //    "dom": '<"row"<"col-sm-12 col-md-6 add-comment-btn"><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
-
-            //});
-
-            //$('#ChatBox .table').DataTable({
-            //    paging: true,
-            //    ordering: true,
-            //    info: true,
-            //    dom: '<"row"<"col-sm-12 col-md-6 add-comment-btn"><"col-sm-12 col-md-6"Bf>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
-            //    buttons: [
-            //        'copy', 'excel', 'csv', 'pdf'
-            //    ]
-            //});
 
             var table = $('#ChatBox .table').DataTable({
                 paging: true,
@@ -135,7 +108,7 @@ function GetAllComments2() {
 
                 var tableStyles = `
             <style type="text/css">
-                table {
+                table.custom-table {
                     width: 100%;
                     border-collapse: collapse;
                     margin-bottom: 20px;
@@ -181,82 +154,17 @@ function GetAllComments2() {
 
                 popupWin.document.write('<html><head>'
                     + tableStyles + '</head><body onload="window.print()">'
-                    + tableHTML + `<div style="transform: rotate(-45deg); z-index:10000; opacity: 0.3; color: #8e9191; position: fixed; left: 6%; top: 39%; font-size: 80px; font-weight: 500; display: grid; justify-content: center; align-content: center;">`
-                    + watermarkText + '</div></body></html>');
+                    + tableHTML + `<div class="watermark">${watermarkText}</div></body></html>`);
 
                 popupWin.document.close();
             }
-
-
-            if ($("#IsCommentPsmiId").html() != 0)
-                $("div.add-comment-btn").html('<button id="add-comment" class="btn btn-primary p-1"><i class="fas fa-plus"></i> Add Comment</button>');
-
-            $("#add-comment").on("click", function () {
-               
-                $(this).attr("addminaproval", adminap);
-                var approval = $(this).attr("addminaproval");
-              
-                fetchServerDate().then(function (S) {
-
-                    var projId = $(".ProjectcommentprojId").html().trim();
-                    $("#ProjectcommentForStackHolderprojId").html($(".ProjectcommentprojId").html())
-                    $("#ProjectcommentForStackHolderPsmId").html($("#IsCommentPsmiId").html())
-                    mMsater(0, "ddlStatus", 4, 0)
-                    $("#ProjCommentModal").modal('show');
-                    GetAllComments($("#IsCommentPsmiId").html(), $(".ProjectcommentprojId").html());
-
-                    // Added from here for pop up heading with project name in comment (added by Divyanshu on 10/02/2025)
-                    var words = projectName.split(" ");
-                    // Limit to 6 words and add "..." if needed
-                    var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projectName;
-                    var finalTitle = "Project Name: " + shortProjName;
-                    $('#addComment').text(finalTitle);
-
-                    //var pad = "00";
-                    //var datef2 = new Date();
-                    //var months = "" + (datef2.getMonth() + 1);
-                    //var days = "" + datef2.getDate();
-                    //var monthsans = pad.substring(0, pad.length - months.length) + months;
-                    //var dayans = pad.substring(0, pad.length - days.length) + days;
-                    //var year = datef2.getFullYear();
-                    //var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-                    //var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-                    //var ss = `${datef2.getSeconds()}`;
-
-                    //// Today's date and time in the required formats
-                    //var todayDate = `${year}-${monthsans}-${dayans}`;
-                    //var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
-
-                   
-                      
-                    if (approval === "true") {
-                          
-                            $('#CommentDateFwd').attr('type', 'datetime-local');
-                            $('#CommentDateFwd').attr('max', S.todayDateTime);
-                            $('#CommentDateFwd').prop('disabled', false); // Allow user input
-                        $('#CommentDateFwd').val(S.todayDateTime); // Allow user input
-                        } else {
-                      
-                            $('#CommentDateFwd').attr('type', 'datetime-local');
-                            $('#CommentDateFwd').val(S.todayDateTime); // Set today's date
-                            $('#CommentDateFwd').prop('disabled', true); // Freeze input
-                        }
-                   
-                });
-
-
-            });
-
-
-
-
-
         },
         error: function () {
             alert('Error fetching comments.');
         }
     });
 }
+
 
 function GetAllComments1() {
 
@@ -495,97 +403,44 @@ document.addEventListener("DOMContentLoaded", function () {
     updateSelectedFileList();
 });
 
-//function PrintDiv() {
-//    var divToPrint = document.getElementById('widget-content');
-//    var popupWin = window.open('', '_blank', 'width=800,height=800,location=Center,Center=20px');
-//    popupWin.document.open();
-//    var tableStyle = getComputedStyle(document.getElementById('htmlTopdf'));
-//    popupWin.document.write('<style type="text/css">');
-//    popupWin.document.write(tableStyle.cssText);
-//    popupWin.document.write('</style>');
-//    popupWin.document.write('<html><body onload="window.print()">' +
-//        '<div id="print-container">' +
-//        divToPrint.innerHTML +
-//        '</div>' +
-//        '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">' +
-//        '@(TempData["ipadd"])' + " " +
-//        '</html>');
-
-//    popupWin.document.close();
-//}
-
-//function GetAllComments() {
-//    $.ajax({
-//        type: "POST",
-//        url: '/Projects/GetAllCommentBypsmId_UnitId',
-//        data: {
-//            "PsmId": $("#ProjectcommentPsmId").html(),
-//            "stakeholderId": 1,
-//            "ProjId": $("#ProjectcommentprojId").html()
-//        },
-//        success: function (data) {
-
-//            var commentContainer = '';
-//            var userDetails = '';
-//            if (data != null) {
-//                for (var i = 0; i < data.length; i++) {
-//                    var date = new Date(data[i].date);
-//                    var formattedDate =
-//                        ("0" + date.getDate()).slice(-2) + '-' +
-//                        ("0" + (date.getMonth() + 1)).slice(-2) + '-' +
-//                        date.getFullYear() + ' ' +
-//                        ("0" + date.getHours()).slice(-2) + ':' +
-//                        ("0" + date.getMinutes()).slice(-2) + ':' +
-//                        ("0" + date.getSeconds()).slice(-2);
-//                    if (data[i].userDetails == null)
-//                        userDetails = '';
-//                    else
-//                        userDetails = data[i].userDetails
-
-//                    commentContainer += '<div class="comment-box" style="text-align: justify;">'; // Use text-align: justify for justified text
-//                    commentContainer += '<div class="comment-header">';
-//                    commentContainer += '<div>';
-//                    commentContainer += '<span style="font-family: Arial; color: #0793f7;">' + data[i].stakeholder + ' (' + userDetails + ') </span>';
-//                    commentContainer += '<div style="margin-left: 0px;" class="comment-meta">' + DateFormateddMMyyyyhhmmss(data[i].date) + '</div>';
-//                    commentContainer += '</div>';
-//                    commentContainer += '<div>';
-//                    if (data[i].status == "Accepted")
-//                        commentContainer += '<span class="comment-meta badge badge-success text-white">' + data[i].status + '</span>';
-//                    else if (data[i].status == "Obsn")
-//                        commentContainer += '<span class="comment-meta badge badge-warning text-white">' + data[i].status + '</span>';
-//                    else
-//                        commentContainer += '<span class="comment-meta badge badge-danger text-white">' + data[i].status + '</span>';
-//                    if (data[i].attpath !== '' && data[i].attpath !== null) {
-//                        commentContainer += '<a href="/Home/WaterMark3?id=' + data[i].attpath + '" target="_blank">';
-//                        commentContainer += '<img src="/assets/images/icons/pdfimg.png" alt="PDF icon" style="width: 24px; height: 24px;">';
-//                        commentContainer += '</a>';
-//                    }
-
-
-//                    commentContainer += '</span>';
-//                    commentContainer += '</div>';
-//                    commentContainer += '</div>';
-//                    commentContainer += '<div class="comment-content formated-text"><p>' + data[i].comments + '</p></div>';
-//                    commentContainer += '</div>';
-//                }
-
-
-
-//                commentContainer += '</div>'; // Close the container
-//                $('#ChatBox').empty().html(commentContainer);
-
-
-
-
-//            }
-
-//        },
-//        error: function () {
-//            alert('Error fetching comments.');
-//        }
-//    });
-//}
 $(".btn-FwdFromMOv").on('click', function () {
   
     openForwardModal(this, true);
 });
+
+
+ 
+    $('.btncopy').on('click', function () {
+        
+        let text = $(this).siblings('.copyitem').text().trim();
+        navigator.clipboard.writeText(text);
+        alert("Text Copied");
+    })
+
+
+    function PrintDiv() {
+        var projectName = document.getElementById('projectNameCell').innerText.trim(); // Get the project name from the table cell
+        var divToPrint = document.getElementById('widget-content');
+        var popupWin = window.open('', '_blank', 'width=800,height=800,location=Center,Center=20px');
+        popupWin.document.open();
+        var tableStyle = getComputedStyle(document.getElementById('htmlTopdf'));
+        popupWin.document.write('<style type="text/css">');
+        popupWin.document.write(tableStyle.cssText);
+        popupWin.document.write('</style>');
+        popupWin.document.write('<html><head><title>' + projectName + '</title></head><body onload="window.print()">' +
+            '<div id="print-container">' +
+            divToPrint.innerHTML +
+            '</div>' +
+            '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">' +
+            '@(TempData["ipadd"])' + " " +
+            '</div>' +
+            '</body></html>');
+
+        popupWin.document.close();
+    }
+
+    var loginData = @Html.Raw(Json.Serialize(ViewBag.logins));
+    var projectid = $(".ProjectcommentprojId").html();
+    ProjectWiseStatusByProjid(projectid);
+
+

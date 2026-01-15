@@ -93,11 +93,11 @@ $(document).ready(function () {
 
             if (currentLength > maxLength) {
                 inputField.addClass('is-invalid');
-                errorMsg.show();  // Show error message
+                errorMsg.removeClass('d-none');  // Show error message
                 allFieldsComplete = false; // Mark form as invalid
             } else {
                 inputField.removeClass('is-invalid');
-                errorMsg.hide();  // Hide error message if within limit
+                errorMsg.addClass('d-none');  // Hide error message if within limit
             }
         });
 
@@ -237,11 +237,11 @@ $(document).ready(function () {
 
             if (currentLength > maxLength) {
                 inputField.addClass('is-invalid');
-                errorMsg.show();  // Show error message
+                errorMsg.removeClass('d-none');  // Show error message
                 allFieldsComplete = false; // Mark form as invalid
             } else {
                 inputField.removeClass('is-invalid');
-                errorMsg.hide();  // Hide error message if within limit
+                errorMsg.addClass('d-none');  // Hide error message if within limit
             }
         });
 
@@ -814,3 +814,91 @@ function DeleteProject(ProjectId) {
     });
 }
 
+
+      
+        document.addEventListener('DOMContentLoaded', function () {
+            var notificationDiv = document.getElementById('notificationData');
+            var notificationTitle = notificationDiv.getAttribute('data-title');
+            var notificationHtml = notificationDiv.getAttribute('data-html');
+
+            notificationTitle = notificationTitle.replace(/'/g, "\\'");
+            notificationHtml = notificationHtml.replace(/'/g, "\\'").replace(/\n/g, '\\n').replace(/\r/g, '');
+
+            console.log("Title:", notificationTitle);
+            console.log("HTML:", notificationHtml);
+
+            Swal.fire({
+                title: notificationTitle,
+                html: notificationHtml,
+                icon: 'info',
+                confirmButtonText: 'OK',
+                width: '861px',
+                padding: '20px',
+                background: '#f9f9f9',
+                customClass: {
+                    container: 'swal-container'
+                }
+            });
+        });
+ 
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('btn-Initiation').addEventListener('click', function () {
+                Swal.fire({
+                    title: 'Initiation Date Details',
+                    text: 'Date of Initiation of Project for Whitelisting (To DDGIT)',
+                    icon: 'info',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        title: 'swal2-title', /* Apply center-aligned title styles */
+                        htmlContainer: 'swal2-html-container' /* Apply center-aligned content styles */
+                    }
+                });
+            });
+            document.getElementById('btn-complition').addEventListener('click', function () {
+                Swal.fire({
+                    title: 'Completion Date  Details',
+                    text: 'The Completion date is likely to be assumed',
+                    icon: 'info',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        title: 'swal2-title', /* Apply center-aligned title styles */
+                        htmlContainer: 'swal2-html-container' /* Apply center-aligned content styles */
+                    }
+                });
+            });
+            document.getElementById('btn-Sponsor').addEventListener('click', function () {
+                Swal.fire({
+                    title: 'Sponsor Details',
+                    text: 'Contact Admin to Update Name',
+                    icon: 'info',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        title: 'swal2-title', /* Apply center-aligned title styles */
+                        htmlContainer: 'swal2-html-container' /* Apply center-aligned content styles */
+                    }
+                });
+            });
+        });
+  
+ 
+        $(document).ready(function () {
+            // Select all inputs with the 'char-limit' class
+            $('.char-limit').each(function () {
+                var inputField = $(this);
+                var maxLength = inputField.data('maxlength');  // Get the max length from data-maxlength attribute
+                var errorMsg = inputField.closest('div').find('.charErrorMsg');
+                // console.log("error",errorMsg)
+                // Listen for input event on the input field
+                inputField.on('input', function () {
+                    var currentLength = inputField.val().length;
+
+                    // Show error message if the current length exceeds the max length
+                    if (currentLength > maxLength) {
+                        errorMsg.removeClass('d-none');  // Display error message
+                    } else {
+                        errorMsg.addClass('d-none');  // Hide error message if within limit
+                    }
+                });
+            });
+        });
+ 

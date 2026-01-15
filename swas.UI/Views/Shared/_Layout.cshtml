@@ -2,24 +2,19 @@
 @using swas.BAL.DTO
 @using swas.BAL.Helpers
 @using Microsoft.AspNetCore.Authorization
-
 @using Microsoft.Extensions.Options
-@inject IOptions<SiteSettings> SiteSettings
 
+@inject IOptions<SiteSettings> SiteSettings
 @inject IHttpContextAccessor HttpContextAccessor
 
 @{
-
     TempData["Tabshift"] = 0;
     Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor.HttpContext.Session, "User");
-
 }
-@{
 
+@{
     bool isAdmin = User.Identity.IsAuthenticated && User.IsInRole("Dte");
 }
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,14 +23,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <title>@ViewData["Title"] - PAW</title>
-<!-- loader-->
-<script>
 
 
 
-</script>
 <link href="~/css/all.min.css" rel="stylesheet" />
-@* <link href="~/static/chatbot.css" rel="stylesheet" /> *@
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
@@ -43,178 +34,15 @@
 
 <head>
 
-    <style>
-
-      
-
-        .header {
-            background-color: blue; /* Replace with your desired header color */
-            color: blue; /* Replace with your desired text color for the header */
-        }
-
-        .footer {
-            background-color: #044c92; /* Replace with your desired footer color */
-            color: #044c92; /* Replace with your desired text color for the footer */
-        }
-
-       .wrapper .page-content {
-            margin-top: 0px !important;
-        } 
-    </style>
-    <style>
-
-        .loader-container {
-            position: relative;
-            display: table-cell;
-            vertical-align: middle;
-            z-index: 12;
-            text-align: center;
-        }
-
-            .loader-container img {
-                width: 60px;
-            }
-
-        .loader {
-            vertical-align: top;
-        }
-
-
-        .loader {
-            overflow-x: hidden;
-            overflow-y: hidden;
-            vertical-align: middle;
-            background-color: rgba(255, 255, 255, 0.75);
-            position: fixed;
-            display: table;
-            width: 100%;
-            top: 0;
-            height: 100%;
-            min-height: 100%;
-            z-index: 99999;
-            left: 0;
-        }
-
-        .loader-container {
-            position: relative;
-            display: table-cell;
-            vertical-align: middle;
-            z-index: 12;
-            text-align: center;
-        }
-
-            .loader-container img {
-                width: 60px;
-            }
-
-        .loader {
-            vertical-align: top;
-        }
-
-
-        .sidebar .nav-link {
-            position: relative;
-            display: inline-block;
-        }
-
-        .badge3 {
-            position: absolute;
-            top: -5px;
-            right: -33px;
-            background-color: red;
-            color: white;
-            border-radius: 50%;
-            padding: 5px 10px;
-            font-size: 12px;
-            line-height: 1;
-            text-align: center;
-            min-width: 20px;
-        }
-
-        .badge5 {
-            position: absolute;
-            top: 0px;
-            right: 18px;
-            background-color: red;
-            color: white;
-            border-radius: 50%;
-            padding: 5px 10px;
-            font-size: 12px;
-            line-height: 1;
-            text-align: center;
-            min-width: 20px;
-        }
-
-        .srno {
-            width: 33.625px;
-        }
-
-        body {
-            font-weight: bold;
-        }
-
-        .new-badge-icon {
-            color: red; /* Badge color */
-            font-size: 10px; /* Adjust size as needed */
-        }
-
-        .custom-modal-size {
-            max-width: 100%; /* Set the modal width to 80% of the screen */
-            width: 95%; /* Ensure it scales responsively */
-            margin: auto; /* Center horizontally */
-            
-        }
-
-            .custom-modal-size .modal-content {
-             
-                overflow-y: auto; /* Add vertical scrolling for long content */
-                overflow-x: hidden; /* Prevent horizontal overflow */
-                /* margin-left: 248px; */
-            }
-
-        .modal-dialog {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh; /* Vertically center the modal */
-            margin: 0; /* Remove default margins for better centering */
-        }
-
-    </style>
-    <style>
-
-
-        .new-badge {
-            display: inline-block;
-            animation: bounce 1s infinite;
-        }
-
-        /* .btn-add-comment{
-            margin-left: 535px;
-        } */
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-title {
-            flex-grow: 1;
-            text-align: center; /* This centers the heading within the available space */
-        }
-    </style>
-
     <link rel="stylesheet" href="~/" asp-append-version="true" />
 
-
     <!-- CSS Files -->
-
-
     <link href="~/css/select2.min.css" rel="stylesheet" />
+    <link href="~/css/layout.css" rel="stylesheet" />
 
     <link href="~/assets/css/icons.css" rel="stylesheet">
     <link href="~/assets/css/font-awesome.min.css" rel="stylesheet">
+
     <!--data Table-->
     <link rel="stylesheet" href="~/assets/dataTable/css/bootstrap.css">
     <link rel="stylesheet" href="~/assets/dataTable/css/dataTables.bootstrap4.min.css">
@@ -235,21 +63,18 @@
     <link href="~/assets/css/style.css" rel="stylesheet">
     <link href="~/css/main.css" rel="stylesheet" />
 
-
     <script language="JavaScript" type="text/javascript" src="~/assets/js/jquery.min.js"></script>
-
     <script language="JavaScript" type="text/javascript" src="~/assets/js/bootstrap.bundle.min.js"></script>
 
     <!--plugins-->
-
     <link href="~/assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
     <script language="JavaScript" type="text/javascript" src="~/assets/plugins/chartjs/chart.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="~/assets/plugins/metismenu/js/metisMenu.min.js"></script>
 
     <!-- Main JS-->
     <script language="JavaScript" type="text/javascript" src="~/assets/js/main.js"></script>
-    <!-- dataTable-->
 
+    <!-- dataTable-->
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/jquery.dataTables.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/dataTables.bootstrap4.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/dataTables.buttons.min.js"></script>
@@ -267,814 +92,25 @@
     <script src="~/assets/dataTable/js/datatables.datetime.min.js"></script>
     <script src="~/assets/dataTable/js/datatables.searchbuilder.min.js"></script>
     <script src="~/assets/dataTable/js/fnmultifilter.js"></script>
+
     <link href="~/css/sweetalert2.min.css" rel="stylesheet">
     <script src="~/assets/datatable/js/select2.min.js"></script>
     <script src="~/font-awesome/js/all.min.js"></script>
     <script src="~/font-awesome/js/fontawesome.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="~/js/sweetalert2.all.min.js"></script>
 
-
     <script src="~/DeveloperJs/ddlSanal.js"></script>
     <script src="~/DeveloperJs/Comman.js?v1"></script>
     <script src="~/developerjs/notification.js"></script>
 
-
-
-
-
 </head>
 
-<script>
-    $(document).ready(function () {
-
-        var table = $('#Software').DataTable({
-            lengthChange: true,
-            dom: 'lBfrtip',
-            buttons: [
-                'copy',
-                'excel',
-                'csv',
-                {
-                    text: 'PDF',
-                    extend: 'pdfHtml5',
-                    action: function (e, dt, node, config) {
-                        PdfDiv();
-                    }
-                },
-            ],
-            searchBuilder: {
-                conditions: {
-                    num: {
-                        'MultipleOf': {
-                            conditionName: 'Multiple Of',
-                            init: function (that, fn, preDefined = null) {
-                                var el = $('<input/>').on('input', function () { fn(that, this) });
-
-                                if (preDefined !== null) {
-                                    $(el).val(preDefined[0]);
-                                }
-
-                                return el;
-                            },
-                            inputValue: function (el) {
-                                return $(el[0]).val();
-                            },
-                            isInputValid: function (el, that) {
-                                return $(el[0]).val().length !== 0;
-                            },
-                            search: function (value, comparison) {
-                                return value % comparison === 0;
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        //var buttonContainer = table.buttons().container();
-
-        //var searchBuilderContainer = table.searchBuilder.container();
-        //buttonContainer.insertBefore(table.table().container());
-        //searchBuilderContainer.insertBefore(table.table().container());
-
-        function PdfDiv() {
-            var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
-            popupWin.document.open();
-
-            var tableStyles = `
-                                                                        <style type="text/css">
-                                                                            table {
-                                                                                      width: 100%;
-                                                                                      border-collapse: collapse;
-                                                                                      margin-bottom: 20px;
-                                                                                  }
-
-                                                                                  .table > thead {
-                                                                                      vertical-align: bottom;
-                                                                                      background-color: red;
-                                                                                  }
-
-                                                                                  th, td {
-                                                                                      padding: 8px;
-                                                                                      border: 1px solid #ddd;
-                                                                                      text-align: center;
-                                                                                  }
-
-                                                                                  th {
-                                                                                      background-color: #f2f2f2;
-                                                                                      color: black;
-                                                                                  }
-                                                                              </style>
-                                                                                  `;
-
-            var table = $('#Software').DataTable();
-
-            var filteredData = table.rows({ search: 'applied' }).data().toArray();
-
-            var tableHTML = '<table>';
-
-            tableHTML += '<thead>';
-            tableHTML += '<tr>';
-            table.columns().header().each(function (header) {
-                tableHTML += '<th>' + header.innerHTML + '</th>';
-            });
-            tableHTML += '</tr>';
-            tableHTML += '</thead>';
-
-            tableHTML += '<tbody>';
-            for (var i = 0; i < filteredData.length; i++) {
-                tableHTML += '<tr>';
-                for (var j = 0; j < filteredData[i].length; j++) {
-                    tableHTML += '<td>' + filteredData[i][j] + '</td>';
-                }
-                tableHTML += '</tr>';
-            }
-            tableHTML += '</tbody>';
-
-            tableHTML += '</table>';
-
-            var watermarkText = '@(TempData["ipadd"])';
-
-              popupWin.document.write(`
-    <html>
-    <head>
-        ${tableStyles}
-    </head>
-    <body onload="window.print()">
-        ${tableHTML}
-
-        <div style="
-            transform: rotate(-45deg);
-            z-index:10000;
-            opacity:0.3;
-            position:fixed;
-            left:6%;
-            top:39%;
-            color:#8e9191;
-            font-size:80px;
-            font-weight:500;
-            display:grid;
-            justify-content:center;
-            align-content:center;
-        ">
-            ${watermarkText}
-        </div>
-    </body>
-    </html>
-    `);
-
-
-            popupWin.document.close();
-        }
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
-        var table = $('#SoftwareType1').DataTable({
-            lengthChange: true,
-            dom: 'lBfrtip',
-            buttons: [
-                'copy',
-                'excel',
-                'csv',
-                {
-                    text: 'PDF',
-                    extend: 'pdfHtml5',
-                    action: function (e, dt, node, config) {
-                        PdfDiv();
-                    }
-                },
-            ],
-            searchBuilder: {
-                conditions: {
-                    num: {
-                        'MultipleOf': {
-                            conditionName: 'Multiple Of',
-                            init: function (that, fn, preDefined = null) {
-                                var el = $('<input/>').on('input', function () { fn(that, this) });
-
-                                if (preDefined !== null) {
-                                    $(el).val(preDefined[0]);
-                                }
-
-                                return el;
-                            },
-                            inputValue: function (el) {
-                                return $(el[0]).val();
-                            },
-                            isInputValid: function (el, that) {
-                                return $(el[0]).val().length !== 0;
-                            },
-                            search: function (value, comparison) {
-                                return value % comparison === 0;
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        //var buttonContainer = table.buttons().container();
-        //var searchBuilderContainer = table.searchBuilder.container();
-        //buttonContainer.insertBefore(table.table().container());
-        //searchBuilderContainer.insertBefore(table.table().container());
-
-        function PdfDiv() {
-            var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
-            popupWin.document.open();
-
-            var tableStyles = `
-                                                                               <style type="text/css">
-                                                                                    table {
-                                                                                        width: 100%;
-                                                                                        border-collapse: collapse;
-                                                                                        margin-bottom: 20px;
-                                                                                    }
-
-                                                                                    .table > thead {
-                                                                                        vertical-align: bottom;
-                                                                                        background-color: red;
-                                                                                    }
-
-                                                                                    th, td {
-                                                                                        padding: 8px;
-                                                                                        border: 1px solid #ddd;
-                                                                                        text-align: center;
-                                                                                    }
-
-                                                                                    th {
-                                                                                        background-color: #f2f2f2;
-                                                                                        color: black;
-                                                                                    }
-                                                                                </style>
-                                                                            `;
-
-            var table = $('#SoftwareType1').DataTable();
-
-            var filteredData = table.rows({ search: 'applied' }).data().toArray();
-
-            var tableHTML = '<table>';
-
-            tableHTML += '<thead>';
-            tableHTML += '<tr>';
-            table.columns().header().each(function (header) {
-                tableHTML += '<th>' + header.innerHTML + '</th>';
-            });
-            tableHTML += '</tr>';
-            tableHTML += '</thead>';
-
-            tableHTML += '<tbody>';
-            for (var i = 0; i < filteredData.length; i++) {
-                tableHTML += '<tr>';
-                for (var j = 0; j < filteredData[i].length; j++) {
-                    tableHTML += '<td>' + filteredData[i][j] + '</td>';
-                }
-                tableHTML += '</tr>';
-            }
-            tableHTML += '</tbody>';
-
-            tableHTML += '</table>';
-
-            var watermarkText = '';
-
-            popupWin.document.write('<html><head>'
-                + tableStyles + '</head><body onload="window.print()">'
-                + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
-                + watermarkText + '</div></body></html>');
-
-            popupWin.document.close();
-        }
-    });
-</script>
-
-
-<script>
-    $(document).ready(function () {
-        var table = $('#mapunit').DataTable({
-            lengthChange: true,
-            dom: 'lBfrtip',
-            buttons: [
-                'copy',
-                'excel',
-                'csv',
-                {
-                    text: 'PDF',
-                    extend: 'pdfHtml5',
-                    action: function (e, dt, node, config) {
-                        PdfDiv();
-                    }
-                },
-            ],
-            searchBuilder: {
-                conditions: {
-                    num: {
-                        'MultipleOf': {
-                            conditionName: 'Multiple Of',
-                            init: function (that, fn, preDefined = null) {
-                                var el = $('<input/>').on('input', function () { fn(that, this) });
-
-                                if (preDefined !== null) {
-                                    $(el).val(preDefined[0]);
-                                }
-
-                                return el;
-                            },
-                            inputValue: function (el) {
-                                return $(el[0]).val();
-                            },
-                            isInputValid: function (el, that) {
-                                return $(el[0]).val().length !== 0;
-                            },
-                            search: function (value, comparison) {
-                                return value % comparison === 0;
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        //var buttonContainer = table.buttons().container();
-        //var searchBuilderContainer = table.searchBuilder.container();
-        //buttonContainer.insertBefore(table.table().container());
-        //searchBuilderContainer.insertBefore(table.table().container());
-
-        function PdfDiv() {
-            var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
-            popupWin.document.open();
-
-            var tableStyles = `
-                                                                                       <style type="text/css">
-                                                                                            table {
-                                                                                                width: 100%;
-                                                                                                border-collapse: collapse;
-                                                                                                margin-bottom: 20px;
-                                                                                            }
-
-                                                                                            .table > thead {
-                                                                                                vertical-align: bottom;
-                                                                                                background-color: red;
-                                                                                            }
-
-                                                                                            th, td {
-                                                                                                padding: 8px;
-                                                                                                border: 1px solid #ddd;
-                                                                                                text-align: center;
-                                                                                            }
-
-                                                                                            th {
-                                                                                                background-color: #f2f2f2;
-                                                                                                color: black;
-                                                                                            }
-                                                                                        </style>
-                                                                                    `;
-
-            var table = $('#mapunit').DataTable();
-
-            var filteredData = table.rows({ search: 'applied' }).data().toArray();
-
-            var tableHTML = '<table>';
-
-            tableHTML += '<thead>';
-            tableHTML += '<tr>';
-            table.columns().header().each(function (header) {
-                tableHTML += '<th>' + header.innerHTML + '</th>';
-            });
-            tableHTML += '</tr>';
-            tableHTML += '</thead>';
-
-            tableHTML += '<tbody>';
-            for (var i = 0; i < filteredData.length; i++) {
-                tableHTML += '<tr>';
-                for (var j = 0; j < filteredData[i].length; j++) {
-                    tableHTML += '<td>' + filteredData[i][j] + '</td>';
-                }
-                tableHTML += '</tr>';
-            }
-            tableHTML += '</tbody>';
-
-            tableHTML += '</table>';
-
-            var watermarkText = '@(TempData["ipadd"])';
-
-            popupWin.document.write('<html><head>'
-                + tableStyles + '</head><body onload="window.print()">'
-                + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
-                + watermarkText + '</div></body></html>');
-
-            popupWin.document.close();
-        }
-    });
-</script>
-
-<script>
-    // $(document).ready(function () {
-    //     var table = $('#SoftwareType').DataTable({
-    //         lengthChange: true,
-    //         dom: 'lBfrtip',
-    //         buttons: [
-    //             'copy',
-    //             'excel',
-    //             'csv',
-    //             {
-    //                 text: 'PDF',
-    //                 extend: 'pdfHtml5',
-    //                 action: function (e, dt, node, config) {
-    //                     PdfDiv();
-    //                 }
-    //             },
-    //         ],
-    //         searchBuilder: {
-    //             conditions: {
-    //                 num: {
-    //                     'MultipleOf': {
-    //                         conditionName: 'Multiple Of',
-    //                         init: function (that, fn, preDefined = null) {
-    //                             var el = $('<input/>').on('input', function () { fn(that, this) });
-
-    //                             if (preDefined !== null) {
-    //                                 $(el).val(preDefined[0]);
-    //                             }
-
-    //                             return el;
-    //                         },
-    //                         inputValue: function (el) {
-    //                             return $(el[0]).val();
-    //                         },
-    //                         isInputValid: function (el, that) {
-    //                             return $(el[0]).val().length !== 0;
-    //                         },
-    //                         search: function (value, comparison) {
-    //                             return value % comparison === 0;
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     });
-
-    //     //var buttonContainer = table.buttons().container();
-    //     //var searchBuilderContainer = table.searchBuilder.container();
-    //     //buttonContainer.insertBefore(table.table().container());
-    //     //searchBuilderContainer.insertBefore(table.table().container());
-
-    //     function PdfDiv() {
-    //         var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
-    //         popupWin.document.open();
-
-    //         var tableStyles = `
-    //                                                                      <style type="text/css">
-    //                                                                          table {
-    //                                                                              width: 100%;
-    //                                                                              border-collapse: collapse;
-    //                                                                              margin-bottom: 20px;
-    //                                                                          }
-
-    //                                                                          .table > thead {
-    //                                                                              vertical-align: bottom;
-    //                                                                              background-color: red;
-    //                                                                          }
-
-    //                                                                          th, td {
-    //                                                                              padding: 8px;
-    //                                                                              border: 1px solid #ddd;
-    //                                                                              text-align: center;
-    //                                                                          }
-
-    //                                                                          th {
-    //                                                                              background-color: #f2f2f2;
-    //                                                                              color: black;
-    //                                                                          }
-    //                                                                      </style>
-    //                                                                  `;
-
-    //         //var table = $('#SoftwareType').DataTable();
-
-    //         var filteredData = table.rows({ search: 'applied' }).data().toArray();
-
-    //         var tableHTML = '<table>';
-
-    //         tableHTML += '<thead>';
-    //         tableHTML += '<tr>';
-    //         table.columns().header().each(function (header) {
-    //             tableHTML += '<th>' + header.innerHTML + '</th>';
-    //         });
-    //         tableHTML += '</tr>';
-    //         tableHTML += '</thead>';
-
-    //         tableHTML += '<tbody>';
-    //         for (var i = 0; i < filteredData.length; i++) {
-    //             tableHTML += '<tr>';
-    //             for (var j = 0; j < filteredData[i].length; j++) {
-    //                 tableHTML += '<td>' + filteredData[i][j] + '</td>';
-    //             }
-    //             tableHTML += '</tr>';
-    //         }
-    //         tableHTML += '</tbody>';
-
-    //         tableHTML += '</table>';
-
-    //         var watermarkText = '@(TempData["ipadd"])';
-
-    //         popupWin.document.write('<html><head>'
-    //             + tableStyles + '</head><body onload="window.print()">'
-    //             + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
-    //             + watermarkText + '</div></body></html>');
-
-    //         popupWin.document.close();
-    //     }
-    // });
-   
-</script>
-
-<script>
-    $(document).ready(function () {
-        var table = $('#Inbox1').DataTable({
-            lengthChange: true,
-            dom: 'lBfrtip',
-            buttons: [
-                'copy',
-                'excel',
-                'csv',
-                {
-                    text: 'PDF',
-                    extend: 'pdfHtml5',
-                    action: function (e, dt, node, config) {
-                        PdfDiv();
-                    }
-                },
-            ],
-            searchBuilder: {
-                conditions: {
-                    num: {
-                        'MultipleOf': {
-                            conditionName: 'Multiple Of',
-                            init: function (that, fn, preDefined = null) {
-                                var el = $('<input/>').on('input', function () { fn(that, this) });
-
-                                if (preDefined !== null) {
-                                    $(el).val(preDefined[0]);
-                                }
-
-                                return el;
-                            },
-                            inputValue: function (el) {
-                                return $(el[0]).val();
-                            },
-                            isInputValid: function (el, that) {
-                                return $(el[0]).val().length !== 0;
-                            },
-                            search: function (value, comparison) {
-                                return value % comparison === 0;
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        //var buttonContainer = table.buttons().container();
-        //var searchBuilderContainer = table.searchBuilder.container();
-        //buttonContainer.insertBefore(table.table().container());
-        //searchBuilderContainer.insertBefore(table.table().container());
-
-        function PdfDiv() {
-            var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
-            popupWin.document.open();
-
-            var tableStyles = `
-                                                                                 <style type="text/css">
-                                                                                     table {
-                                                                                         width: 100%;
-                                                                                         border-collapse: collapse;
-                                                                                         margin-bottom: 20px;
-                                                                                     }
-
-                                                                                     .table > thead {
-                                                                                         vertical-align: bottom;
-                                                                                         background-color: red;
-                                                                                     }
-
-                                                                                     th, td {
-                                                                                         padding: 8px;
-                                                                                         border: 1px solid #ddd;
-                                                                                         text-align: center;
-                                                                                     }
-
-                                                                                     th {
-                                                                                         background-color: #f2f2f2;
-                                                                                         color: black;
-                                                                                     }
-                                                                                 </style>
-                                                                             `;
-
-            var table = $('#Inbox1').DataTable();
-
-            var filteredData = table.rows({ search: 'applied' }).data().toArray();
-
-            var tableHTML = '<table>';
-
-            tableHTML += '<thead>';
-            tableHTML += '<tr>';
-            table.columns().header().each(function (header) {
-                tableHTML += '<th>' + header.innerHTML + '</th>';
-            });
-            tableHTML += '</tr>';
-            tableHTML += '</thead>';
-
-            tableHTML += '<tbody>';
-            for (var i = 0; i < filteredData.length; i++) {
-                tableHTML += '<tr>';
-                for (var j = 0; j < filteredData[i].length; j++) {
-                    tableHTML += '<td>' + filteredData[i][j] + '</td>';
-                }
-                tableHTML += '</tr>';
-            }
-            tableHTML += '</tbody>';
-
-            tableHTML += '</table>';
-
-            var watermarkText = '@(TempData["ipadd"])';
-
-            popupWin.document.write('<html><head>'
-                + tableStyles + '</head><body onload="window.print()">'
-                + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
-                + watermarkText + '</div></body></html>');
-
-            popupWin.document.close();
-        }
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
-        var table = $('#SoftwareType3').DataTable({
-            lengthChange: true,
-            dom: 'lBfrtip',
-            buttons: [
-                'copy',
-                'excel',
-                'csv',
-                {
-                    text: 'PDF',
-                    extend: 'pdfHtml5',
-                    action: function (e, dt, node, config) {
-                        PdfDiv();
-                    }
-                },
-            ],
-            searchBuilder: {
-                conditions: {
-                    num: {
-                        'MultipleOf': {
-                            conditionName: 'Multiple Of',
-                            init: function (that, fn, preDefined = null) {
-                                var el = $('<input/>').on('input', function () { fn(that, this) });
-
-                                if (preDefined !== null) {
-                                    $(el).val(preDefined[0]);
-                                }
-
-                                return el;
-                            },
-                            inputValue: function (el) {
-                                return $(el[0]).val();
-                            },
-                            isInputValid: function (el, that) {
-                                return $(el[0]).val().length !== 0;
-                            },
-                            search: function (value, comparison) {
-                                return value % comparison === 0;
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        //var buttonContainer = table.buttons().container();
-        //var searchBuilderContainer = table.searchBuilder.container();
-        //buttonContainer.insertBefore(table.table().container());
-        //searchBuilderContainer.insertBefore(table.table().container());
-
-        function PdfDiv() {
-            var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
-            popupWin.document.open();
-
-            var tableStyles = `
-                                                                    <style type="text/css">
-                                                                        table {
-                                                                            width: 100%;
-                                                                            border-collapse: collapse;
-                                                                            margin-bottom: 20px;
-                                                                        }
-
-                                                                        .table > thead {
-                                                                            vertical-align: bottom;
-                                                                            background-color: red;
-                                                                        }
-
-                                                                        th, td {
-                                                                            padding: 8px;
-                                                                            border: 1px solid #ddd;
-                                                                            text-align: center;
-                                                                        }
-
-                                                                        th {
-                                                                            background-color: #f2f2f2;
-                                                                            color: black;
-                                                                        }
-                                                                    </style>
-                                                                `;
-
-            var table = $('#SoftwareType3').DataTable();
-
-            var filteredData = table.rows({ search: 'applied' }).data().toArray();
-
-            var tableHTML = '<table>';
-
-            tableHTML += '<thead>';
-            tableHTML += '<tr>';
-            table.columns().header().each(function (header) {
-                tableHTML += '<th>' + header.innerHTML + '</th>';
-            });
-            tableHTML += '</tr>';
-            tableHTML += '</thead>';
-
-            tableHTML += '<tbody>';
-            for (var i = 0; i < filteredData.length; i++) {
-                tableHTML += '<tr>';
-                for (var j = 0; j < filteredData[i].length; j++) {
-                    tableHTML += '<td>' + filteredData[i][j] + '</td>';
-                }
-                tableHTML += '</tr>';
-            }
-            tableHTML += '</tbody>';
-
-            tableHTML += '</table>';
-
-            var watermarkText = '@(TempData["ipadd"])';
-
-            popupWin.document.write('<html><head>'
-                + tableStyles + '</head><body onload="window.print()">'
-                + tableHTML + '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">'
-                + watermarkText + '</div></body></html>');
-
-            popupWin.document.close();
-        }
-    });
-</script>
-
-
-
-
-<script>
-    $(document).ready(function () {
-         initializeDataTable('#IndexTable')
-
-     
-    });
-</script>
-
-
-<script>
-    $(document).ready(function () {
-             initializeDataTable('#SoftwareType5')
-
-    
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
-        var table = $('#SentProjDetails').DataTable({
-
-
-        });
-
-        var buttonContainer = table.buttons().container();
-
-        buttonContainer.insertBefore(table.table().container());
-
-
-
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
-
-            initializeDataTable('#Soft')
-      
-    });
-</script>
-
 <body class="sidebar-collapsed sidebar-hover">
+
     <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-scrollable">
-            <div class="modal-content" style="width:65%">
-                <div class="modal-header" style="background-color:#044c92; color:white">
+            <div class="modal-content paw-edituser-modal-content">
+                <div class="modal-header paw-modal-header-blue">
                     <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -1089,32 +125,29 @@
         <div id="loading1" class="loader d-none">
             <div class="loader-container">
                 @*<img src="/images/loads.gif" width="600px" height="200px">*@
-                <img src="/assets/images/loadsss.gif" height="100">
+                <img src="/assets/images/loadsss.gif">
                 <div>
-                    <h4 style="margin-top: -20px;">Loading...</h4>
+                    <h4 class="paw-loading-title">Loading...</h4>
                     <span>Please wait... This may take few seconds...</span>
                 </div>
             </div>
         </div>
-       @*  <span id="isclaneder">@Logins.cla</span>
-        *@
+
         <form id="frmEditUser" method="post" title="Edit User" action="/Account/AllUsersEdit">
             <input type="hidden" name="UserName" id="hfUserName" />
             <input type="hidden" name="RankId" id="hfRankId" />
             <input type="hidden" name="RoleName" id="hfRoleName" />
             @Html.AntiForgeryToken()
         </form>
+
         <div class="text-capitalize d-none divRank_id">@Logins.Rank_id</div>
         <div class="text-capitalize d-none divRole_name">@Logins.Role</div>
 
         @if (Logins != null && Logins.Role == "Dte")
         {
-
-
-           
             <!--start sidebar -->
             <aside class="sidebar-wrapper" data-simplebar="true">
-                <div class="sidebar-header" style="background-color:#044c92 !important">
+                <div class="sidebar-header paw-sidebar-header-blue">
                     <div>
                         <img src="~/assets/images/icons/armylogo.png" class="logo-icon" alt="logo icon">
                     </div>
@@ -1123,33 +156,27 @@
                     </div>
                     <div class="toggle-icon ms-auto">
                         <ion-icon name="menu-sharp" id="menusharp"></ion-icon>
-                        <img src="~/assets/images/menu-sharp.256x172.png" style="width: 16px;" />
+                        <img src="~/assets/images/menu-sharp.256x172.png" class="paw-menu-icon" />
                     </div>
-
                 </div>
+
                 <!--navigation-->
-
-
-                <ul class="metismenu sidebar-menu" style="font-weight: bold;" id="menu">
+                <ul class="metismenu sidebar-menu paw-sidebar-bold" id="menu">
 
                     <li>
                         <div class="parent-icon">
                             <ion-icon name="home-sharp" id="iconname"></ion-icon>
                         </div>
                         <a href="/Home/Index">
-                            <div class="menu-title" style="margin-left: 0px !important;">
+                            <div class="menu-title paw-menu-title-left0">
                                 Dashboard :  @Logins.Unit
                             </div>
-
                         </a>
                     </li>
-
-                
 
                     <li>
                         <a href="/Projects/Create">
                             <div class="icon-container">
-
                                 <ion-icon name="ellipse-outline"></ion-icon>
                                 <span class="icon-name">Add New Project</span>
                             </div>
@@ -1158,10 +185,8 @@
 
                     <li>
                         <a href="/Projects/ProjDetails">
-                            <div class="inbox-container" style="margin-left : 46px !important">
-
-                                <div class="icon-container" style="margin-left:-43px;">
-
+                            <div class="inbox-container paw-inbox-ml-46">
+                                <div class="icon-container paw-inbox-ml--43">
                                     <ion-icon name="ellipse-outline"></ion-icon>
                                     <span class="icon-name">Inbox</span>
                                     <span id="InboxCount" class="badge3 d-none InboxCount">0</span>
@@ -1170,54 +195,38 @@
                         </a>
                     </li>
 
-
                     <li>
                         <a href="/Projects/ProjComments" @*onclick="createNotification(event)"*@>
                             <div class="icon-container">
-
                                 <ion-icon name="ellipse-outline"></ion-icon>
-                                @* <span class="icon-name">Proj Comments</span> *@
                                 <span class="icon-name">Stakeholder Comments</span>
-                                @*  <span class="inbox-alertsub1"></span>*@
                                 <span id="ProjectCommentCount" class="badge5 d-none ProjectCommentCount">0</span>
                             </div>
                         </a>
                     </li>
 
-
-
-
                     <li>
                         <a href="/Search/GetProjLogview">
                             <div class="icon-container">
-
                                 <ion-icon name="ellipse-outline"></ion-icon>
-                                @* <span class="icon-name">Proj Log</span> *@
                                 <span class="icon-name">Track Project</span>
                             </div>
-
                         </a>
                     </li>
+
                     <li>
                         <a href="/Home/ProjectWiseReport">
                             <div class="icon-container">
-
                                 <ion-icon name="ellipse-outline"></ion-icon>
-                                @* <span class="icon-name">Project Wise Status</span> *@
                                 <span class="icon-name">Analysis</span>
                             </div>
-
                         </a>
                     </li>
-                   
 
                     <li>
                         <a href="/Chat/Index">
-                            <div class="inbox-container" style="margin-left : 46px !important">
-
-                            
-
-                                <div class="icon-container" style="margin-left: -43px;">
+                            <div class="inbox-container paw-inbox-ml-46">
+                                <div class="icon-container paw-inbox-ml--43">
                                     <ion-icon name="ellipse-outline"></ion-icon>
                                     <span class="icon-name mr-3">Chat</span>
                                     <span id="InterUserMsgCount" class="badge3 d-none InterUserMsgCount mt-1">
@@ -1225,35 +234,25 @@
                                         <span class="new-text">new</span>
                                     </span>
                                 </div>
-
                             </div>
                         </a>
                     </li>
 
-               
                     @if (Logins != null && Logins?.UserName == "gso1semg_asdc_ihqa" && Logins?.unitid == 4)
                     {
                         <li>
                             <a href="/Home/DateApproval">
                                 <div class="icon-container">
-
                                     <ion-icon name="ellipse-outline"></ion-icon>
-
                                     <span class="icon-name">Approve Legacy Project</span>
                                     <span id="ProjectlegacyCount" class="badge5 d-none ProjectlegacyCount">0</span>
                                 </div>
-
                             </a>
                         </li>
-                        
                     }
-
 
                     @if (Logins != null && Logins.Role == "Dte" && Logins.unitid == 1)
                     {
-
-
-
                         <li class="menu-items">
                             <a href="#"> User Setting</a>
                             <div class="submenu">
@@ -1265,120 +264,96 @@
                                 <a href="/Account/GetsAllUsers">View Users</a>
                             </div>
                         </li>
-
-                        <li>
-
-                        </li>
-
-                        <li>
-
-                        </li>
-
+                        <li></li>
+                        <li></li>
                     }
-                
-                    @if (Logins != null && Logins?.UserName == "gso1semg_asdc_ihqa"  && Logins?.unitid == 4)
-                    {
 
+                    @if (Logins != null && Logins?.UserName == "gso1semg_asdc_ihqa" && Logins?.unitid == 4)
+                    {
                         <li>
                             <a href="/Projects/ProjectMovement">
                                 <div class="icon-container">
-
                                     <ion-icon name="ellipse-outline"></ion-icon>
                                     <span class="icon-name">Edit Project Movement</span>
                                 </div>
-
                             </a>
                         </li>
-
                     }
+
                     <li class="menu-items">
                         <a href="#">Policy Corner</a>
                         <div class="submenu">
                             <a href="#" id="WLProjList">Whitelisted Appl</a>
                             <a href="#">Minutes of Mtgs</a>
                             <a href="/Home/SOPDownload" target="\'_blank\'">SOP on Whitelisting</a>
-                            <a href="javascript:void(0);" id="FlowPng" >Help File</a>
+                            <a href="javascript:void(0);" id="FlowPng">Help File</a>
                         </div>
                     </li>
-                  
+
                 </ul>
 
-                <!--end navigation-->
-
-                <div class="sidebar-footer">
-                </div>
+                <div class="sidebar-footer"></div>
             </aside>
 
-            <!--end sidebar -->
             <!--start top header-->
-            <header class="top-header py-2 mb-5" style=" color:#044c92">
+            <header class="top-header py-2 mb-5 paw-topheader-text-blue paw-topheader-noinline">
                 <div class="toggle-icon ms-auto d-none" id="menusharp1">
-                    <ion-icon name="menu-sharp" ></ion-icon>
-                    <img src="~/assets/images/menu-sharp.256x172.png" style="width: 16px;" />
+                    <ion-icon name="menu-sharp"></ion-icon>
+                    <img src="~/assets/images/menu-sharp.256x172.png" class="paw-menu-icon" />
                 </div>
+
                 <nav class="navbar navbar-expand-lg navbar-dark px-3">
-                    <!-- Mobile menu button -->
                     <div class="mobile-menu-button d-lg-none me-2">
                         <ion-icon name="menu-sharp" size="large"></ion-icon>
                     </div>
 
-                    <!-- Centered heading -->
                     <div class="flex-grow-1 text-center nowrap">
                         <h1 class="h2 h4-sm h3-md text-white mb-0" id="mainheading">
                             Portal for Application Whitelisting (PAW)
                         </h1>
                     </div>
+
                     <a href="javascript:void(0);"
-                       class="mr-2 edit-user-btn"
+                       class="mr-2 edit-user-btn paw-edituser-link-white"
                        data-username="@Logins.UserName"
                        data-rankid="@Logins.Rank_id"
-                       data-rolename="@Logins.Role"
-                       style="color:white">
-                        <i class="fa-solid fa-user-pen" style="font-size:x-large" title="Edit user"></i>
+                       data-rolename="@Logins.Role">
+                        <i class="fa-solid fa-user-pen paw-userpen-icon" title="Edit user"></i>
+
                     </a>
 
-                    <!-- Right side user info -->
                     <div class="top-navbar-right ms-auto d-flex align-items-center flex-column flex-md-row text-center text-md-start">
-                        <!-- User info -->
-                        <div class="text-white me-md-3" style="font-size:small">
+                        <div class="text-white me-md-3 paw-font-small">
                             <div> Welcome : <span id="spnUsername"> @Logins.UserName.ToLower()</span></div>
                             <div class="text-capitalize divoffr_name">@Logins.Rank @Logins.Offr_Name</div>
 
-                            <!-- Hidden values -->
                             <span class="d-none" id="IpAddress">@Logins.IpAddress</span>
                             <span class="d-none" id="SpnCurrentUserStackholderID">@Logins.unitid</span>
                             <span class="spnOffr_Name d-none">@Logins.Offr_Name</span>
                         </div>
 
-                        <!-- Logout button -->
                         <div class="user-setting ms-md-3 mt-2 mt-md-0">
                             <a href="/Account/Logout">
-                                <img src="~/assets/images/icons/logout.png" class="user-img" alt="Logout" style="height:35px;">
+                                <img src="~/assets/images/icons/logout.png" class="user-img paw-logout-img" alt="Logout">
                             </a>
                         </div>
                     </div>
                 </nav>
-                <div class="bar bg-white" style="margin-top:62px"></div>
-                <div class="bar  py-1 px-3" style="margin-top:70px">
+
+                <div class="bar bg-white paw-bar-mt-62"></div>
+                <div class="bar py-1 px-3 paw-bar-mt-70">
                     <span class="bar_content">
                         @SiteSettings.Value.BannerMessage
-                    
-                    <span class="bar_space"></span>
+                        <span class="bar_space"></span>
                         @SiteSettings.Value.BannerMessage2
                     </span>
                 </div>
             </header>
-
-
         }
 
-
-        <!--end top header-->
         <!-- unit level users menu start  -->
         @if (Logins != null && Logins?.Role == "Unit")
         {
-
-            <!--start sidebar -->
             <aside class="sidebar-wrapper" data-simplebar="true">
                 <div class="sidebar-header">
                     <div>
@@ -1389,67 +364,51 @@
                     </div>
                     <div class="toggle-icon ms-auto" id="menusharp">
                         <ion-icon name="menu-sharp"></ion-icon>
-                        <img src="~/assets/images/menu-sharp.256x172.png" style="width: 16px;" />
+                        <img src="~/assets/images/menu-sharp.256x172.png" class="paw-menu-icon" />
                     </div>
-                 
-
                 </div>
-                <!--navigation-->
-
 
                 <ul class="metismenu sidebar-menu" id="menu">
-
 
                     <li>
                         <div class="parent-icon">
                             <ion-icon name="home-sharp"></ion-icon>
                         </div>
                         <a href="/Home/Index">
-                            <div class="menu-title" style="margin-left: 0px !important;">
+                            <div class="menu-title paw-menu-title-left0">
                                 Dashboard : @Logins.Unit
                             </div>
-
                         </a>
-
-
-
                     </li>
 
                     @if (isAdmin)
                     {
-
                         <li>
                             <a href="/Home/StkHDashbard">
-                                <div class="icon-container" style="margin-right:-10px ;letter-spacing: -0.5px !important">
+                                <div class="icon-container paw-admin-iconcontainer">
                                     <img src="/assets/images/icons/admin.jpg" alt="Icon">
                                     <ion-icon name="ellipse-outline"></ion-icon>
                                     <span class="icon-name">Stakeholder DashBoard</span>
                                 </div>
                             </a>
                         </li>
-
-
                     }
+
                     @if (Logins?.Iamuserid != null)
                     {
-
                         <li>
                             <a href="/Projects/Create">
                                 <div class="icon-container">
-
                                     <ion-icon name="ellipse-outlinProj Commentse"></ion-icon>
                                     <span class="icon-name">Add New Project</span>
                                 </div>
                             </a>
                         </li>
 
-
                         <li>
                             <a href="/Projects/ProjDetails">
-                                <div class="inbox-container" style="margin-left : 46px !important">
-
-                                    <div class="icon-container" style="margin-left:-43px;">
-
+                                <div class="inbox-container paw-inbox-ml-46">
+                                    <div class="icon-container paw-inbox-ml--43">
                                         <ion-icon name="ellipse-outline"></ion-icon>
                                         <span class="icon-name">Inbox</span>
                                         <span id="InboxCount" class="badge3 d-none InboxCount">0</span>
@@ -1458,15 +417,11 @@
                             </a>
                         </li>
 
-
                         <li>
                             <a href="/Projects/ProjComments" @*onclick="createNotification(event)"*@>
                                 <div class="icon-container">
-
                                     <ion-icon name="ellipse-outline"></ion-icon>
-                                    @* <span class="icon-name">Proj Comments</span> *@
                                     <span class="icon-name">Stakeholder Comments</span>
-                                    @*  <span class="inbox-alertsub1"></span>*@
                                     <span id="ProjectCommentCount" class="badge5 d-none ProjectCommentCount">0</span>
                                 </div>
                             </a>
@@ -1475,49 +430,38 @@
                         <li>
                             <a href="/Actions/ActionSeqView">
                                 <div class="icon-container">
-
                                     <ion-icon name="ellipse-outline"></ion-icon>
                                     <span class="icon-name"> How to Move Proj</span>
-
-
                                 </div>
                             </a>
                         </li>
-
                     }
                     else
                     {
-
                         <li>
                             <a href="/Identity/Account/Register" target="_new">
                                 <div class="icon-container">
-
                                     <ion-icon name="ellipse-outline"></ion-icon>
                                     <span class="icon-name">Register New User</span>
                                 </div>
                             </a>
                         </li>
                     }
+
                     <li>
                         <a href="/Home/ProjectWiseReport">
                             <div class="icon-container">
-
                                 <ion-icon name="ellipse-outline"></ion-icon>
-                                @* <span class="icon-name">Project Wise Status</span> *@
                                 <span class="icon-name">Analysis</span>
                             </div>
-
                         </a>
                     </li>
 
-              
-
                     <li>
                         <a href="/Chat/Index">
-                            <div class="inbox-container" style="margin-left : 46px !important">
-                                <div class="icon-container" style="margin-left: -43px;">
+                            <div class="inbox-container paw-inbox-ml-46">
+                                <div class="icon-container paw-inbox-ml--43">
                                     <ion-icon name="ellipse-outline"></ion-icon>
-                                    @* <span class="icon-name mr-3">Inter-User Msg</span> *@
                                     <span class="icon-name mr-3">Chat</span>
                                     <span id="InterUserMsgCount" class="badge3 d-none InterUserMsgCount mt-1">
                                         <ion-icon name="ellipse" class="new-badge-icon"></ion-icon>
@@ -1527,47 +471,41 @@
                             </div>
                         </a>
                     </li>
-
                 </ul>
 
-                <!--end navigation-->
-
-                <div class="sidebar-footer">
-                </div>
-
+                <div class="sidebar-footer"></div>
             </aside>
 
-            <!--end sidebar -->
-            <!--start top header-->
             <header class="top-header mb-5">
                 <div class="toggle-icon ms-auto d-none" id="menusharp1">
                     <ion-icon name="menu-sharp"></ion-icon>
-                    <img src="~/assets/images/menu-sharp.256x172.png" style="width: 16px;" />
+                    <img src="~/assets/images/menu-sharp.256x172.png" class="paw-menu-icon" />
                 </div>
+
                 <nav class="navbar navbar-expand gap-3">
                     <div class="mobile-menu-button">
                         <ion-icon name="menu-sharp"></ion-icon>
                     </div>
-                   <div class="flex-grow-1 text-center">
+
+                    <div class="flex-grow-1 text-center">
                         <h1 class="h2 h4-sm h3-md text-white mb-0 nowrap" id="mainheading">
                             Portal for Application Whitelisting (PAW)
                         </h1>
                     </div>
+
                     <a href="javascript:void(0);"
-                       class="mr-2 edit-user-btn"
+                       class="mr-2 edit-user-btn paw-edituser-link-white"
                        data-username="@Logins.UserName"
                        data-rankid="@Logins.Rank_id"
-                       data-rolename="@Logins.Role"
-                       style="color:white">
-                        <i class="fa-solid fa-user-pen" style="font-size:x-large" title="Edit user"></i>
+                       data-rolename="@Logins.Role">
+                        <i class="fa-solid fa-user-pen paw-userpen-icon" title="Edit user"></i>
+
+
                     </a>
 
-
                     <div class="top-navbar-right ms-auto">
-
                         <ul class="navbar-nav align-items-center">
-
-                            <li class="nav-item dropdown" style="font-size:small">
+                            <li class="nav-item dropdown paw-font-small">
                                 <span class="d-none" id="IpAddress">@Logins.IpAddress</span>
                                 <span class="d-none" id="SpnCurrentUserStackholderID">@Logins.unitid</span>
                                 <div class="text-white mr-2">
@@ -1575,40 +513,38 @@
                                     <div class="text-white mr-2 text-capitalize">@Logins.Rank @Logins.Offr_Name</div>
                                     <span class="spnOffr_Name d-none">@Logins.Offr_Name</span>
                                     <span class="spnuserid d-none">@Logins.Iamuserid</span>
+                                </div>
                             </li>
-
                         </ul>
                     </div>
-                    <div class="user-setting" style="margin-right:100px;">
+
+                    <div class="user-setting paw-user-setting-mr-100">
                         <a href="/Account/Logout">
                             <img src="~/assets/images/icons/logout.png" class="user-img" alt="">
                         </a>
                     </div>
                 </nav>
-                <div class="bar bg-white" style="margin-top:62px"></div>
-                <div class="bar  py-1 px-3" style="margin-top:70px">
+
+                <div class="bar bg-white paw-bar-mt-62"></div>
+                <div class="bar py-1 px-3 paw-bar-mt-70">
                     <span class="bar_content">
                         @SiteSettings.Value.BannerMessage
-                    
-                    <span class="bar_space"></span>
+                        <span class="bar_space"></span>
                         @SiteSettings.Value.BannerMessage2
                     </span>
                 </div>
-
             </header>
-
         }
-
-
 
         <div class="page-content-wrapper">
             @if (Logins != null)
             {
-                <div class="switcher-body" style="visibility: hidden;">
+                <div class="switcher-body paw-switcher-hidden">
                     <button class="btn btn-primary btn-switcher shadow-sm" type="button" data-bs-toggle="offcanvas"
                             data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
                         <ion-icon name="color-palette-sharp" class="me-0"></ion-icon>
                     </button>
+
                     <div class="offcanvas offcanvas-end shadow border-start-0 p-2" data-bs-scroll="true" data-bs-backdrop="false"
                          tabindex="-1" id="offcanvasScrolling">
                         <div class="offcanvas-header border-bottom">
@@ -1631,35 +567,21 @@
                                        checked>
                                 <label class="form-check-label" for="SemiDark">Semi Dark</label>
                             </div>
+
                             <hr />
                             <h6 class="mb-0">Header Colors</h6>
                             <hr />
+
                             <div class="header-colors-indigators">
                                 <div class="row row-cols-auto g-3">
-                                    <div class="col">
-                                        <div class="indigator headercolor1" id="headercolor1"></div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="indigator headercolor2" id="headercolor2"></div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="indigator headercolor3" id="headercolor3"></div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="indigator headercolor4" id="headercolor4"></div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="indigator headercolor5" id="headercolor5"></div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="indigator headercolor6" id="headercolor6"></div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="indigator headercolor7" id="headercolor7"></div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="indigator headercolor8" id="headercolor8"></div>
-                                    </div>
+                                    <div class="col"><div class="indigator headercolor1" id="headercolor1"></div></div>
+                                    <div class="col"><div class="indigator headercolor2" id="headercolor2"></div></div>
+                                    <div class="col"><div class="indigator headercolor3" id="headercolor3"></div></div>
+                                    <div class="col"><div class="indigator headercolor4" id="headercolor4"></div></div>
+                                    <div class="col"><div class="indigator headercolor5" id="headercolor5"></div></div>
+                                    <div class="col"><div class="indigator headercolor6" id="headercolor6"></div></div>
+                                    <div class="col"><div class="indigator headercolor7" id="headercolor7"></div></div>
+                                    <div class="col"><div class="indigator headercolor8" id="headercolor8"></div></div>
                                 </div>
                             </div>
 
@@ -1667,52 +589,38 @@
                     </div>
                 </div>
             }
-          
 
-            <!-- start page content-->
-            
             <div class="page-content">
-
                 @RenderBody()
             </div>
-
         </div>
-        @*</main>
-        </div>*@
-        <!--start footer-->
+
         @if (Logins != null)
         {
-
-            <footer class="footer" style="position: fixed;margin-bottom: 0px;">
+            <footer class="footer paw-footer-fixed">
                 <div class="footer-text">
                     Copyright &copy; Developed by ASDC, DGIS
                 </div>
-                <div style="text-align: right;margin-top: -24px !important;margin-right:20px !important;">
+                <div class="paw-footer-right-info">
                     <span id="dailyCounter"></span>
                     <span id="monthlyCounter"></span>
-                    <span id="totalCounter" style="margin-right: 32px !important"></span>
+                    <span id="totalCounter" class="paw-totalCounter"></span>
                 </div>
             </footer>
-            
         }
-        <!--end footer-->
-        <!--Start Back To Top Button-->
+
         <a href="javaScript:;" class="back-to-top">
             <ion-icon name="arrow-up-outline"></ion-icon>
-        </a> 
-        <!--End Back To Top Button-->
-        <!--start switcher-->
-        <!--end switcher-->
-        <!--start overlay-->
-        <div class="overlay nav-toggle-icon"></div>
-        <!--end overlay-->
+        </a>
 
+        <div class="overlay nav-toggle-icon"></div>
     </div>
 
     <button id="btnid" class="hidden">@Logins?.unitid</button>
+
     <div class="modal fade" id="ProjCommentModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-xl custom-modal">
-            <div class="modal-content"style="margin-left:0px">
+            <div class="modal-content paw-modal-content-ml-0">
                 <div class="modal-header">
                     <h5 class="modal-title btn-add-comment" id="addComment">Project Name:</h5>
                     <span class="d-none" id="ProjectcommentForStackHolderprojId"></span>
@@ -1720,66 +628,53 @@
                     <span class="d-none" id="ProjectcommentForStackHolderDate_type"></span>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="card radius-12">
                                 <div class="text-with-icon underline-h7">
-                                    <span style="font-size: 20px;">&#128172;</span>
-                                    <h7 class="text-center mb-4 underline-h7" style="text-align:left; font-size:16px; font-weight:bold; text-decoration-color:revert; color:antiquewhite">
+                                    <span class="paw-chat-emoji">&#128172;</span>
+                                    <h7 class="text-center mb-4 underline-h7 paw-addcomment-title">
                                         Add Comments for Project
                                     </h7>
                                 </div>
 
-
                                 <div class="container mt-1">
                                     <div class="row justify-content-center">
                                         <div class="col-md-10 form-container">
-
-
-
-                                            <div class="" id="projectcommentforstackholder">
+                                            <div id="projectcommentforstackholder">
                                                 <div class="row">
-                                                    <div id="">
-                                                        <!-- First Part: Comments -->
-                                                        <div class="">
+                                                    <div>
+                                                        <div>
                                                             <label id="Comm"><b>Comment</b> <span class="required-indicator">*</span></label>
-                                                            <textarea id="Comments" style="width: 100%; height: 240px;" class="form-control requiredField" rows="4"></textarea>
+                                                            <textarea id="Comments" class="form-control requiredField paw-comments-textarea" rows="4"></textarea>
                                                             <div class="invalid-feedback">Please provide the Comments</div>
-
                                                         </div>
+
                                                         <div class="mb-3">
-
-
-
-                                                            <label class="control-label"><b>Status</b> <span class="text-danger"><font style="color:red;"><b>*</b></font></span></label>
+                                                            <label class="control-label"><b>Status</b> <span class="text-danger"><font class="paw-red-font"><b>*</b></font></span></label>
                                                             <select class="form-control requiredField" id="ddlStatus">
                                                                 <option value="">Select a Status</option>
-
-
                                                             </select>
 
-                                                            <div class="invalid-feedback">
-                                                                Select Status Required
-                                                            </div>
-
+                                                            <div class="invalid-feedback">Select Status Required</div>
                                                             <div class="invalid-feedback">Please select a Status.</div>
                                                         </div>
                                                     </div>
 
                                                     <div class="mb-3">
                                                         <label class="control-label"><b>Date of Post:</b></label>
-                                                        <input id="CommentDateFwd" type="date" class="datePicker  form-control requiredField" />
+                                                        <input id="CommentDateFwd" type="date" class="datePicker form-control requiredField" />
                                                     </div>
 
                                                     <div class="mb-3">
                                                         <label for="pdfFile"><b>Upload PDF</b></label>
                                                         <input type="file" id="uploadfile" name="uploadfile" accept=".pdf" class="form-control" />
-                                                        @* <div class="invalid-feedback">Please upload a PDF file.</div> *@
                                                     </div>
-                                                    <div class=" text-left">
-                                                        <button type="button" class="btn btn-primary" id="btnStatusUpdate">Send</button>
 
+                                                    <div class="text-left">
+                                                        <button type="button" class="btn btn-primary" id="btnStatusUpdate">Send</button>
                                                     </div>
 
                                                 </div>
@@ -1787,9 +682,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                @*  </form> *@
+
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             @Html.Partial("_ProjectComments");
                         </div>
@@ -1798,10 +694,10 @@
             </div>
         </div>
 
-        <div id="uploadLoader" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background-color:rgba(0,0,0,0.4); z-index:1050;">
+        <div id="uploadLoader" class="paw-uploadLoader">
             <div class="d-flex justify-content-center align-items-center h-100">
                 <div class="text-center">
-                    <div class="spinner-border text-success" role="status" style="width: 4rem; height: 4rem;">
+                    <div class="spinner-border text-success paw-spinner-4rem" role="status">
                         <span class="visually-hidden">Uploading...</span>
                     </div>
                     <div class="mt-3 text-white">Uploading, please wait...</div>
@@ -1809,70 +705,13 @@
             </div>
         </div>
     </div>
-   
+
     @await Html.PartialAsync("_whitelistdProjectView")
-    <!-- Floating Chat Toggle -->
-  @*   <div class="asdc-body">
-
-        <!-- Floating Chat Toggle -->
-        <button id="asdcChatToggle"
-                class="asdc-chat-toggle"
-                type="button"
-                aria-label="Open chat"
-                aria-controls="asdcChat"
-                aria-expanded="false">
-            <img src="~/static/download7.png" alt="" srcset="" class="asdc-chat-icon" />
-          
-            <span class="tooltip-bubble"><strong> Your AI Companion!</strong> Ask to know more about this site</span>
-
-            <!-- <svg xmlns="http://www.w3.org/2000/svg" height="26" width="32" viewBox="0 0 640 512" aria-hidden="true" focusable="false">
-              <path fill="#ffffff"
-                d="M320 0c17.7 0 32 14.3 32 32l0 64 120 0c39.8 0 72 32.2 72 72l0 272c0 39.8-32.2 72-72 72l-304 0c-39.8 0-72-32.2-72-72l0-272c0-39.8 32.2-72 72-72l120 0 0-64c0-17.7 14.3-32 32-32zM208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16l32 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-32 0zM264 256a40 40 0 1 0 -80 0 40 40 0 1 0 80 0zm152 40a40 40 0 1 0 0-80 40 40 0 1 0 0 80zM48 224l16 0 0 192-16 0c-26.5 0-48-21.5-48-48l0-96c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48l0 96c0 26.5-21.5 48-48 48l-16 0 0-192 16 0z" />
-            </svg> -->
-        </button>
- *@
-        <!-- chat dialog -->
-      @*   <div id="asdcchat"
-             class="asdc-chat"
-             role="dialog"
-             aria-modal="true"
-             aria-labelledby="asdcchattitle"
-             hidden>
-            <div class="asdc-chat-header">
-                <div class="asdc-chat-header-left">
-
-                  
-                    <img src="~/static/favicon.png" alt="asdc" class="asdc-chat-logo" />
-                    <div class="asdc-chat-title-wrap">
-                        <h3 id="asdcchattitle" class="asdc-chat-title">dgis assistant(paw)</h3>
-                        <small class="asdc-chat-subtitle">
-                            developed by asdc, dgis
-                        </small>
-                    </div>
-                </div>
-                <div class="asdc-chat-header-actions">
-                    <button id="asdcfullscreen" class="asdc-chat-btn" type="button" aria-label="toggle full screen">⛶</button>
-                    <button id="asdcclose" class="asdc-chat-close" type="button" aria-label="close chat">×</button>
-                </div>
-            </div>
-
-            <div id="asdcloading" class="asdc-loading" hidden>⏳ generating response...</div>
-
-            <div id="asdcchatbox" class="asdc-chat-box" aria-live="polite" aria-busy="false"></div>
-
-            <div class="asdc-chat-composer">
-                <input id="asdcquery" type="text" class="asdc-input" placeholder="type your question…" autocomplete="off">
-                <button id="asdcsend" class="asdc-send" type="button">send</button>
-            </div>
-        </div>
-    </div>
- *@
 
     <div class="modal fade right" id="iProjibutton" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-
                     <h4 class="modal-title" id="lblHistory">Project Fwd History</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -1881,238 +720,16 @@
                     <img src="~/assets/images/flow.png" class="FlowImg" />
                 </div>
 
-            </div><!-- modal-content -->
-        </div><!-- modal-dialog -->
+            </div>
+        </div>
     </div>
 
-  
 </body>
 </html>
-    <!-- JavaScript code -->
-
-   
-    <script>
-          $(document).ready(function () {
-          
-        $('.edit-user-btn').on('click', function () {
-          
-            var username = $(this).data('username');
-            var rankid = $(this).data('rankid');
-            var rolename = $(this).data('rolename');
-
-            $.ajax({
-                url: '/Account/GetUserEditPartial',
-                type: 'GET',
-                data: { UserName: username, RankId: rankid, RoleName: rolename },
-                success: function (result) {
-                    $('#editUserModalBody').html(result);
-                    $('#editUserModal').modal('show');
-
-                    // Initialize select2 inside modal
-                    $('.dropdownsearch').select2({ dropdownParent: $('#editUserModal') });
-                },
-                error: function () {
-                    alert('Error loading form.');
-                }
-            });
-        });
-    });
-
-
-        $("#FlowPng").on('click', function () {
-
-        $('#iProjibutton').modal('show');
-        });
-
-    $("#WLProjList").on('click', function () {
-       
-        var title = "WhtieListed Projects";
-        $(".spnWhitelistedorDues").html(title);
-
-        $("#WhiteListedProjectDetail").modal("show");
-        GetwhilteListProject(0);
-    })
-
-        function checksize() {
-            
-            if ($(window).width() < 1000) {mmittee
-              
-                $("#menusharp1").removeClass('d-none');
-                $("#menusharp").addClass('d-none');
-            }
-            else {
-               
-                $("#menusharp").removeClass('d-none');
-                $("#menusharp1").addClass('d-none');
-            }
-            if ($(window).width() < 765) {
-
-               
-                $("#mainheading").css('margin-top','7rem');
-            }
-            else {
-
-
-                $("#mainheading").css('margin-top', '');
-            }
-
-        }
-    checksize();
-    $(window).on('resize', checksize);
-
-
-
-
-
-
-    $(document).ready(function () {
-            // Fetch Daily Counter
-            $.get('/Home/getCountertoday', function (data) {
-                // Update the DOM with fetched data
-                $('#dailyCounter').text('Visitors Today: ' + data.today);
-                $('#monthlyCounter').text('Monthly: ' + data.currentMonth);
-                $('#totalCounter').text('Total Visitors: ' + data.total);// Make sure 'today' matches the property name in HitCounterDaily
-            });
-
-       
-        });
-</script>
-
-<script>
-
-    function createNotification(event) {
-        event.preventDefault();
-
-
-        var stakeHolderId = document.getElementById('btnid').innerText;
-
-
-        fetch(`/Home/GetNotification?stakeHolderId=${stakeHolderId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-
-        })
-            .then(response => {
-                if (response.ok) {
-
-                    console.log('Notification data retrieved successfully');
-
-
-                    window.location.href = event.target.href;
-                } else {
-
-                    console.error('Failed to retrieve notification data');
-                }
-            })
-            .catch(error => {
-
-                console.error('Error:', error);
-            });
-    }
-</script>
-
-<script>
-
-    $(document).ready(function () {
-        $("#loading").hide();
-        $(document).ajaxStart(function () {
-            $("#loading").show();
-        }).ajaxStop(function () {
-            $("#loading").hide();
-        }).ajaxError(function () {
-            $("#loading").hide();
-        });
-
-    });
-
-
-
-</script>
-
-<script>
-
-    document.getElementById('menusharp').onclick = function () {
-        document.body.classList.toggle('sidebar-collapsed');
-    };
-
-    document.querySelector('.sidebar-wrapper').onmouseenter = function () {
-        document.body.classList.add('sidebar-hover');
-    };
-
-    document.querySelector('.sidebar-wrapper').onmouseleave = function () {
-        document.body.classList.remove('sidebar-hover');
-    };
-
-</script>
-
-<script>
-  
-        let hideTimeout;
-
-    $('.dropdown').hover(
-        function () {
-            // On hover in: clear any pending hide and show dropdown
-            clearTimeout(hideTimeout);
-            $(this).children('.dropdown-menu').stop(true, true).slideDown(200);
-        },
-        function () {
-            // On hover out: delay hide to prevent flicker
-            const $menu = $(this).children('.dropdown-menu');
-            hideTimeout = setTimeout(function () {
-                $menu.stop(true, true).slideUp(200);
-            }, 200   ); // You can adjust this delay as needed
-        }
-    );
-</script>
-
-<script>
-    $(document).ready(function () {
-
-        var currentPageUrl = window.location.pathname;
-
-
-        $(".dropdown-menu li").removeClass("selected");
-
-
-        $(".dropdown-menu li a[href='" + currentPageUrl + "']").parent().addClass("selected");
-
-
-        $(".dropdown-menu.selected").addClass("visible");
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        var claValue = @Logins?.cla; // Get the value of Logins.cla
-
-        if (claValue == 2) {
-            $('#fromDate').attr('type', 'date').removeAttr('max').removeAttr('min');
-            $('#toDate').attr('type', 'date').removeAttr('max').removeAttr('min');
-        } else {
-            $('#fromDate').attr('type', 'date').removeAttr('max').removeAttr('min');
-            $('#toDate').attr('type', 'date').removeAttr('max').removeAttr('min');
-        }
-    });
-
-</script>
-
-<script>
-    function ValInData(input) {
-
-        var regex = /[^a-zA-Z0-9 ]/g;
-        input.value = input.value.replace(regex, "");
-    }
-</script>
-
 
 <script src="~/developerjs/whitelistedpartialview.js"></script>
 <script src="~/DeveloperJs/ProjectstkholderComments.js"></script>
+<script src="~/DeveloperJs/layout.js"></script>
 <script src="~/developerjs/ProjectstckholdercommentforProjHistory.js"></script>
-@* <script src="~/static/chatbot.js"></script> *@
 
 @RenderSection("scripts", required: false)
-
-
-
-

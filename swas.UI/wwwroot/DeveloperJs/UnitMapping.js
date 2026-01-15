@@ -345,3 +345,101 @@ $(document).ready(function () {
         });
     });
 });
+
+
+
+                    
+    document.addEventListener('DOMContentLoaded', function () {
+        var selectElement = document.getElementById('ddlSubStage');
+        var hiddenInput = document.getElementById('hiddenFwdoffrs');
+
+        // Set the hidden input value to the selected value of the select element
+        hiddenInput.value = selectElement.value;
+
+        // Add an event listener to update the hidden input whenever the select value changes (if needed)
+        selectElement.addEventListener('change', function () {
+            hiddenInput.value = selectElement.value;
+        });
+    });
+
+
+
+    if (TempData.ContainsKey("SuccessMessage"))
+    {
+        <text>
+            Swal.fire({
+                title: 'Success',
+                text: '@TempData["SuccessMessage"]',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        </text>
+    }
+
+
+    if (TempData.ContainsKey("FailureMessage"))
+    {
+        <text>
+
+
+            Swal.fire({
+                title: 'Duplicate Entry Detected....!',
+                text: '@TempData["FailureMessage"]',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+
+        </text>
+    }
+
+
+    $(document).ready(function () {
+
+        $("#AddButon").click(function () {
+
+            $('#UnitAdd').modal('show');
+
+        });
+
+    });
+
+
+
+    function filterUnitMapping(unitId) {
+        // Get all rows in the mapunit table
+        const rows = document.querySelectorAll('#mapunit tbody tr');
+
+        // Loop through each row and show/hide based on the unitId
+        rows.forEach(row => {
+            const mappingUnitId = row.querySelector('#spanMappingUnitId').textContent.trim();
+            if (parseInt(mappingUnitId) === unitId) {
+                row.style.display = ''; // Show the row
+            } else {
+                row.style.display = 'none'; // Hide the row
+            }
+        });
+
+        // Show the modal
+        $('#unitMapping').modal('show');
+    }
+
+
+
+
+    function filterUnitMapping(unitId) {
+        // Get all rows in the mapunit table
+        const rows = document.querySelectorAll('#mapunit tbody tr');
+
+        // Loop through each row and hide those that don't match the unitId
+        rows.forEach(row => {
+            const mappingUnitId = row.querySelector('#spanMappingUnitId').textContent.trim();
+            if (parseInt(mappingUnitId) === unitId) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        // Show the modal
+        $('#unitMapping').modal('show');
+    }

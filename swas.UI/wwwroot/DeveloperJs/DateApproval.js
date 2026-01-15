@@ -374,52 +374,45 @@ function loadDateApprovalTable() {
     $.ajax({
         url: '/Home/GetDateApprovalList',
         method: 'GET',
-        
-        success: function (response) {
-            
 
+        success: function (response) {
 
             let listItem = '';
-            let count = 0; // 👈 Move outside the loop
+            let count = 0;
             const badge = document.getElementById("IngestionReq");
+
             for (let i = 0; i < response.length; i++) {
 
-
-
-
                 let item = response[i];
+
                 if (response[i].isRead == false) {
                     count++;
-
                     listItem += "<tr class='bold-text'>";
-                    /* boldCount++;*/
                 } else {
                     listItem += "<tr>";
                 }
+
                 var projName = item.projName;
                 var words = projName.split(" ");
                 var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
 
-
-
                 listItem += "<td class='align-middle '>" + (i + 1) + "</td>";
-                /* listItem += "<td id='dateApprovalProjName' class='align-middle'>" + shortProjName + "</td>";*/
+
                 listItem += "<td class='align-middle'>";
                 listItem += "<a  href='/Projects/ProjHistory?EncyID=" + encodeURIComponent(item.encyID) + "'>";
                 listItem += "<span id='projectName' class='projNameDetail' >" + shortProjName + "</span>";
                 listItem += "</a>";
                 listItem += "</td>";
+
                 listItem += "<td class='align-middle'>" + item.user + "</td>";
                 listItem += "<td class='align-middle'>" + item.unitName + "</td>";
                 listItem += "<td class='align-middle'>" + DateFormateddMMyyyyhhmmss(item.request_Date) + "</td>";
-                //listItem += "<td class='align-middle'>" + formatDate(item.ddgiT_Approval_dat) + "</td>";
-                listItem += "<td style='Vertical-align:middle; text-align:center'>" + (item.ddgiT_Approval_dat ? DateFormateddMMyyyyhhmmss(item.ddgiT_Approval_dat) : "-") + "</td>";
 
-                // Fixed approval status check
+                // ✅ removed inline style
+                listItem += "<td class='da-td-mid-center'>" + (item.ddgiT_Approval_dat ? DateFormateddMMyyyyhhmmss(item.ddgiT_Approval_dat) : "-") + "</td>";
+
                 let isApproved = item.ddgiT_approval === true || item.ddgiT_approval === "true";
                 listItem += "<td class='align-middle text-start'>" + formatRemarks(item.remarks) + "</td>";
-
-
 
                 if (isApproved) {
                     listItem += `<td class='align-middle d-flex'>
@@ -427,43 +420,39 @@ function loadDateApprovalTable() {
 					data-bold="${item.isRead}"
 					data-id="${item.id}"
 					data-project-name="${item.projName}"
-					data-actiontype="4"  disabled>Approved</button> <!-- 2 for Unapprove -->
+					data-actiontype="4"  disabled>Approved</button>
 
-						<button class='btn btn-warning btn-sm ml-2  approve-btn'
+				<button class='btn btn-warning btn-sm ml-2 approve-btn'
 					data-id="${item.id}"
 					data-project-name="${item.projName}"
-							data-actiontype="3"  title="Request Reject">Reject</button>
+					data-actiontype="3"  title="Request Reject">Reject</button>
 
 				<a href="#" class="ml-2 LegacyHistory" data-action="LegacyHistory" data-ids="${item.projId}" title="History of the Legacy">
-					<img src="/assets/images/icons/Legacyhistory.png" alt="Icon" style="height: 27px;">
+					<img src="/assets/images/icons/Legacyhistory.png" alt="Icon" class="da-ico-27">
 				</a>
 			</td>`;
                 } else {
                     listItem += `<td class='align-middle d-flex'>
-				<button class='btn btn-danger  btn-sm approve-btn'
+				<button class='btn btn-danger btn-sm approve-btn'
 					data-bold="${item.isRead}"
 					data-id="${item.id}"
 					data-project-name="${item.projName}"
-					data-actiontype="2">Approve</button> <!-- 1 for Approve -->
+					data-actiontype="2">Approve</button>
 
-						<button class='btn btn-warning btn-sm ml-2  approve-btn'
+				<button class='btn btn-warning btn-sm ml-2 approve-btn'
 					data-id="${item.id}"
 					data-project-name="${item.projName}"
-					data-actiontype="3" title="Request Reject" >Reject</button>
+					data-actiontype="3" title="Request Reject">Reject</button>
 
-			 <!-- 3 for Reject -->
-
-				<a href="#" class="ml-2  LegacyHistory" data-action="LegacyHistory"  data-ids="${item.projId}" title="History of the Legacy">
-					<img src="/assets/images/icons/Legacyhistory.png" alt="Icon" style="height: 27px;">
+				<a href="#" class="ml-2 LegacyHistory" data-action="LegacyHistory" data-ids="${item.projId}" title="History of the Legacy">
+					<img src="/assets/images/icons/Legacyhistory.png" alt="Icon" class="da-ico-27">
 				</a>
 			</td>`;
                 }
 
-
-
-
                 listItem += "</tr>";
             }
+
             if (badge) {
                 if (count > 0) {
                     badge.textContent = count;
@@ -473,92 +462,17 @@ function loadDateApprovalTable() {
                     badge.classList.add("d-none");
                 }
             }
+
             fetchProjectCommentsUnreadCount();
             $('#DateApproval').html(listItem);
             initializeDataTable('#TableType1');
-
-            // $("#DetailBody").html(listItem);
-            // var table = $('#TableType1').DataTable({
-            // 	lengthChange: true,
-            // 	dom: 'lBfrtip',
-            // 	retrieve: true,
-            // 	bDestroy: true,
-            // 	pageLength: -1,
-            // 	lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
-            // 	buttons: [
-            // 		{
-            // 			extend: 'excel',
-            // 			text: 'Excel',
-            // 			exportOptions: {
-            // 				columns: ':visible:not(:last-child)',
-            // 				format: {
-            // 					// body: function (data, row, column, node) {
-            // 					//     var excelRowData = $(data).text().trim();
-            // 					//     return column === 0 ? row + 1 : excelRowData;
-            // 					// }
-            // 							body: function (data, row, column, node) {
-            // 							var text = typeof data === 'string' && data.indexOf('<') >= 0 ? $(data).text().trim() : data;
-            // 							return column === 0 ? row + 1 : text;
-            // 							}
-
-            // 				}
-            // 			}
-            // 		},
-            // 		{
-            // 			extend: 'csv',
-            // 			exportoptions: {
-            // 				columns: ':visible:not(:last-child)',
-            // 				format: {
-            // 					body: function (data, row, column, node) {
-            // 						var csvrowdata = $(data).text().trim();
-            // 						return column === 0 ? row + 1 : csvrowdata; // fix ser no in export
-            // 					}
-            // 				}
-            // 			}
-            // 		},
-            // 		{
-            // 			extend: 'pdfHtml5',
-            // 			text: 'PDF',
-            // 			exportOptions: {
-            // 				columns: ':visible:not(:last-child)'
-            // 			},
-            // 			action: function (e, dt, node, config) {
-            // 				PdfDiv();
-            // 			}
-            // 		}
-            // 	],
-            // 	searchBuilder: {
-            // 		conditions: {
-            // 			num: {
-            // 				'MultipleOf': {
-            // 					conditionName: 'Multiple Of',
-            // 					init: function (that, fn, preDefined = null) {
-            // 						var el = $('<input>').on('input', function () { fn(that, this); });
-            // 						if (preDefined !== null) {
-            // 							$(el).val(preDefined[0]);
-            // 						}
-            // 						return el;
-            // 					},
-            // 					inputValue: function (el) {
-            // 						return $(el[0]).val();
-            // 					},
-            // 					isInputValid: function (el, that) {
-            // 						return $(el[0]).val().length !== 0;
-            // 					},
-            // 					search: function (value, comparison) {
-            // 						return value % comparison === 0;
-            // 					}
-            // 				}
-            // 			}
-            // 		}
-            // 	}
-            // });
         },
         error: function () {
             console.error('Error fetching data');
         }
     });
 }
+
 
 
 
@@ -707,7 +621,6 @@ $(document).ready(function () {
 
 
 
-
 function getProjectDetails(projId, remarks) {
     $.ajax({
         url: '/Home/GetDateApprovalList',
@@ -723,64 +636,50 @@ function getProjectDetails(projId, remarks) {
             if (response.success === false) {
                 Swal.fire({
                     title: 'Error',
-                    text: response.message,  // Show the message from the server (like "Record already exists")
+                    text: response.message,
                     icon: 'error',
                     confirmButtonText: 'OK'
                 });
-                return;  // Stop further execution if error
+                return;
             }
-          
-           
 
             let listItem = '';
-            let count = 0; // 👈 Move outside the loop
+            let count = 0;
             const badge = document.getElementById("IngestionReqforother");
+
             for (let i = 0; i < response.length; i++) {
 
-                
-
-
                 let item = response[i];
+
                 if (response[i].isRead == false) {
-
-                    
                     count++;
-                
-
-
-
-
-
-
                     listItem += "<tr class='bold-text'>";
-                    /* boldCount++;*/
                 } else {
                     listItem += "<tr>";
                 }
+
                 var projName = item.projName;
                 var words = projName.split(" ");
                 var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
 
-
-
                 listItem += "<td class='align-middle'>" + (i + 1) + "</td>";
-                /*listItem += "<td id='dateApprovalProjName' class='align-middle'>" + shortProjName + "</td>";*/
+
                 listItem += "<td class='align-middle'>";
                 listItem += "<a  href='/Projects/ProjHistory?EncyID=" + encodeURIComponent(item.encyID) + "'>";
                 listItem += "<span id='projectName' class='projNameDetail' >" + shortProjName + "</span>";
                 listItem += "</a>";
                 listItem += "</td>";
+
                 listItem += "<td class='align-middle'>" + item.user + "</td>";
                 listItem += "<td class='align-middle'>" + item.unitName + "</td>";
                 listItem += "<td class='align-middle'>" + DateFormateddMMyyyyhhmmss(item.request_Date) + "</td>";
-                //listItem += "<td class='align-middle'>" + formatDate(item.ddgiT_Approval_dat) + "</td>";
-                listItem += "<td style='Vertical-align:middle; text-align:center'>" + (item.ddgiT_Approval_dat ? DateFormateddMMyyyyhhmmss(item.ddgiT_Approval_dat) : "-") + "</td>";
 
-               
+                // ✅ removed inline style
+                listItem += "<td class='da-td-mid-center'>" + (item.ddgiT_Approval_dat ? DateFormateddMMyyyyhhmmss(item.ddgiT_Approval_dat) : "-") + "</td>";
+
                 listItem += "<td class='align-middle text-start'>" + formatRemarks(item.remarks) + "</td>";
-                // Fixed approval status check
-                let isApproved = item.ddgiT_approval === true || item.ddgiT_approval === "true";
 
+                let isApproved = item.ddgiT_approval === true || item.ddgiT_approval === "true";
 
                 if (isApproved) {
                     listItem += `<td class='align-middle d-flex'>
@@ -788,40 +687,35 @@ function getProjectDetails(projId, remarks) {
 					data-bold="${item.isRead}"
 					data-id="${item.id}"
 					data-project-name="${item.projName}"
-					data-actiontype="4"  disabled>Approved</button> <!-- 2 for Unapprove -->
+					data-actiontype="4" disabled>Approved</button>
 
-						<button class='btn btn-warning btn-sm ml-2  approve-btn'
+				<button class='btn btn-warning btn-sm ml-2 approve-btn'
 					data-id="${item.id}"
 					data-project-name="${item.projName}"
-							data-actiontype="3"  title="Request Reject">Reject</button>
+					data-actiontype="3" title="Request Reject">Reject</button>
 
 				<a href="#" class="ml-2 LegacyHistory" data-action="LegacyHistory" data-ids="${item.projId}" title="History of the Legacy">
-					<img src="/assets/images/icons/Legacyhistory.png" alt="Icon" style="height: 27px;">
+					<img src="/assets/images/icons/Legacyhistory.png" alt="Icon" class="da-ico-27">
 				</a>
 			</td>`;
                 } else {
                     listItem += `<td class='align-middle d-flex'>
-				<button class='btn btn-danger  btn-sm approve-btn'
+				<button class='btn btn-danger btn-sm approve-btn'
 					data-bold="${item.isRead}"
 					data-id="${item.id}"
 					data-project-name="${item.projName}"
-					data-actiontype="2">Approve</button> <!-- 1 for Approve -->
+					data-actiontype="2">Approve</button>
 
-						<button class='btn btn-warning btn-sm ml-2  approve-btn'
+				<button class='btn btn-warning btn-sm ml-2 approve-btn'
 					data-id="${item.id}"
 					data-project-name="${item.projName}"
-					data-actiontype="3" title="Request Reject" >Reject</button>
+					data-actiontype="3" title="Request Reject">Reject</button>
 
-			 <!-- 3 for Reject -->
-
-				<a href="#" class="ml-2  LegacyHistory" data-action="LegacyHistory"  data-ids="${item.projId}" title="History of the Legacy">
-					<img src="/assets/images/icons/Legacyhistory.png" alt="Icon" style="height: 27px;">
+				<a href="#" class="ml-2 LegacyHistory" data-action="LegacyHistory" data-ids="${item.projId}" title="History of the Legacy">
+					<img src="/assets/images/icons/Legacyhistory.png" alt="Icon" class="da-ico-27">
 				</a>
 			</td>`;
                 }
-
-
-
 
                 listItem += "</tr>";
             }
@@ -845,3 +739,31 @@ function getProjectDetails(projId, remarks) {
         }
     });
 }
+
+
+    function formatRemarks(remarks) {
+			if (!remarks) return "<span class='text-muted'>-</span>";
+
+    let words = remarks.split(" ");
+    let formatted = "";
+    for (let i = 0; i < words.length; i++) {
+        formatted += words[i] + " ";
+    if ((i + 1) % 5 === 0) {
+        formatted += "<br>";
+				}
+			}
+    return formatted.trim();
+		}
+    $(document).ready(function () {
+        loadDateApprovalTable();
+		});
+
+
+
+    function formatDate(dateStr) {
+        let d = new Date(dateStr);
+    return d.toLocaleDateString() + " " + d.toLocaleTimeString();
+		}
+
+
+

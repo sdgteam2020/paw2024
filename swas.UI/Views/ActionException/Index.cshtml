@@ -6,29 +6,7 @@
     ViewBag.Title = "Actions List";
 }
 
-<style>
-     .underline-h5 {
-        padding: 0.5rem;
-        width: 100%;
-        margin: -16px auto; /* Center the box */
-        text-align: center;
-        border-color: #03c1fc;
-        /*box-shadow: 2px 6px 5px -3px #062b50;*/
-        background-color: #0cafff;
-        color: white;
-        font-family: Arial;
-        font-size: 15px;
-        margin-bottom: 0.5rem;
-        height: -1px;
-    }
-
-    .s-no-column {
-        min-width: 40px;
-        max-width: 60px;
-        width: 5vw;
-    }
-
-</style>
+<link href="~/css/ActionException.css"/>
 <script src="~/js/sweetalert2.all.min.js"></script>
 
 <button type="button" class="btn btn-success btn-Mapping add-Exception mt-5">Add Actions Exceptions</button>
@@ -42,7 +20,6 @@
                 <thead>
                     <tr>
                         <th class="s-no-column">Ser No</th>
-
                         <th>Unit Name</th>
                         <th>Stage</th>
                         <th>Sub Stage</th>
@@ -54,7 +31,6 @@
                 <tbody>
                     @foreach (var models in Model)
                     {
-
                         <tr>
                             <td class="srno">@(Model.IndexOf(models) + 1)</td>
                             <td class="f-12">
@@ -71,27 +47,17 @@
                             <td id="SubStageName">@models.SubStage</td>
                             <td id="ActionName">@models.Action</td>
                             <td>
-
-                                <a class="btn btn-secondary btn-edit"><i class='bx bx-edit' style="color:white;"></i></a>
+                                <a class="btn btn-secondary btn-edit"><i class='bx bx-edit'></i></a>
                             </td>
-
                         </tr>
-
                     }
-
-
-
                 </tbody>
-
             </table>
 
         </div>
-      
+
     </div>
 </div>
-
-
-
 
 <div class="modal fade" id="unitMapping" tabindex="-1" role="dialog" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -99,64 +65,50 @@
             <div class="modal-header">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 <span class="d-none" id="spnUnitStatusMappingId">0</span>
-                
             </div>
 
-           
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
                             <div class="modal-header">
-                                <h6 class="card-title">Action Exception </h6>
-
+                                <h6 class="card-title">Action Exception</h6>
                             </div>
                             <div class="card-body">
 
                                 <div class="form-row">
                                     <div class="form-group col-md-6 ProjectsFwd ">
                                         <label for="Stage">Stage</label>
-                                        <select class="form-control requiredField" style="width: 100%;" tabindex="-1"
-                                                name="fwdoffrs" required id="ddlfwdStage">
+                                        <select class="form-control requiredField select-full-width" tabindex="-1" name="fwdoffrs" required id="ddlfwdStage">
                                             <option value="0">Select Stage</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-6 ProjectsFwd">
                                         <label for="SubStage">Sub Stage</label>
-                                        <select class="form-control requiredField" style="width: 100%;" tabindex="-1"
-                                                name="fwdoffrs" required id="ddlfwdSubStage">
+                                        <select class="form-control requiredField select-full-width" tabindex="-1" name="fwdoffrs" required id="ddlfwdSubStage">
                                             <option value="0">Select Sub Stage</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-6 ProjectsFwd">
                                         <label for="Action">Action</label>
-                                        <select class="form-control requiredField" style="width: 100%;" tabindex="-1"
-                                                name="fwdoffrs" required id="ddlfwdAction">
+                                        <select class="form-control requiredField select-full-width" tabindex="-1" name="fwdoffrs" required id="ddlfwdAction">
                                             <option value="0">Select Action</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-6 ProjectsFwd">
                                         <label for="FwdTo">Fwd To</label>
-                                        <select class="form-control requiredField" style="width: 100%;" tabindex="-1"
-                                                name="fwdoffrs" required id="ddlfwdFwdTo">
+                                        <select class="form-control requiredField select-full-width" tabindex="-1" name="fwdoffrs" required id="ddlfwdFwdTo">
                                             <option value="0">Select Fwd To</option>
                                         </select>
                                     </div>
-                                    
+
                                     <input type="button" id="btnSaveException" value="Save" class="btn btn-primary btnSaveException save" />
                                     <input type="button" id="btnUpdateException" value="Update" class="btn btn-primary btnUpdateException update d-none" />
-
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
-
-
             </div>
         </div>
     </div>

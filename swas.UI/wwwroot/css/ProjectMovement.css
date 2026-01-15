@@ -1,0 +1,176 @@
+﻿
+.search-container {
+    padding: 0px;
+    border-radius: 1px solid skyblue;
+    border-radius: 15px;
+    background-color: #f0f0f0;
+    margin-top: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    background-color: #f7f7f7;
+}
+
+#txtProjectName {
+    width: 525px;
+}
+
+.custom-modal-size {
+    max-width: 85%; /* Set the modal width to 80% of the screen */
+    width: 85%; /* Ensure it scales responsively */
+    /* Center horizontally */
+}
+
+    .custom-modal-size .modal-content {
+        overflow-y: auto; /* Add vertical scrolling for long content */
+        overflow-x: hidden; /* Prevent horizontal overflow */
+        margin-left: 248px;
+    }
+
+.modal-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Vertically center the modal */
+    /*  margin: 0; */ /* Remove default margins for better centering */
+}
+
+
+
+
+/* Custom modal styling */
+.custom-modal .custom-modal-dialog {
+    max-width: 80%; /* Adjust the modal width */
+    margin: auto; /* Center align the modal */
+}
+
+.custom-modal-content {
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    overflow: hidden; /* Prevent content overflow */
+}
+
+/* Header styling */
+.custom-modal-header {
+    background-color: #0044cc; /* Blue background color */
+    color: white; /* White text */
+    border-bottom: 1px solid #ddd; /* Divider line */
+    padding: 10px 15px;
+}
+
+    .custom-modal-header .custom-btn-close {
+        color: white; /* Close button color */
+        background-color: red;
+        border: none;
+        font-size: 20px;
+        line-height: 1;
+    }
+
+/* Body styling */
+.custom-modal-body {
+    padding: 15px;
+    background-color: #f9f9f9; /* Light background color */
+}
+
+    /* Table styling */
+    .custom-modal-body table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .custom-modal-body th,
+    .custom-modal-body td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .custom-modal-body th {
+        background-color: #0044cc;
+        color: white;
+    }
+
+.modal-lg {
+    max-width: 80%;
+    width: 75%;
+}
+
+
+
+/* ===== ProjectMovement page: moved from inline styles ===== */
+
+/* main table wrapper */
+.pm-overflow-scroll {
+    overflow: scroll;
+}
+
+/* movement table header cells */
+.pm-th-center {
+    text-align: center;
+    border: 1px solid black;
+}
+
+.pm-th-w23 {
+    width: 23.4375px;
+}
+
+/* form controls width 100% */
+.pm-w-100 {
+    width: 100%;
+}
+
+/* textarea fixed size */
+.pm-textarea-240 {
+    width: 100%;
+    height: 240px;
+}
+
+/* attachments list wrapper */
+.pm-overflow-auto {
+    overflow: auto;
+}
+
+/* overlay loader (used twice in your markup) */
+.pm-upload-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 1050;
+}
+
+/* loader spinner size */
+.pm-spinner-lg {
+    width: 4rem;
+    height: 4rem;
+}
+
+/* EditComments modal content margin-left (your inline has typo, we keep intent) */
+.pm-modal-ml0 {
+    margin-left: 0px;
+}
+
+/* emoji size */
+.pm-emoji {
+    font-size: 20px;
+}
+
+/* h7 title style */
+.pm-h7-title {
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration-color: revert;
+    color: antiquewhite;
+}
+
+/* red star (you used <font style="color:red">) */
+.pm-required-star {
+    color: red;
+    font-weight: bold;
+}

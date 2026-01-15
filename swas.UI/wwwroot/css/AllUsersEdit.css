@@ -1,0 +1,55 @@
+﻿/* ===== Update Profile page: moved from inline styles ===== */
+
+/* Outer card spacing */
+.up-card-wrap {
+    margin-right: 20%;
+    margin-left: 5%;
+}
+
+/* Inner card width + offset */
+.up-card-inner {
+    width: 75%;
+    margin-left: 13%;
+}
+
+/* Header colors */
+.up-header {
+    color: white;
+    background-color: #044c92;
+}
+
+/* Label margin */
+.up-label-m5 {
+    margin: 5px;
+}
+
+/* Table column width */
+.up-td-w65 {
+    width: 65%;
+}
+
+/* Center rows (was inline style on <tr>) */
+.up-row-center {
+    text-align: center;
+}
+
+/* Temp message color */
+.up-msg-red {
+    color: red;
+}
+
+/* Update/Back buttons */
+.up-btn-blue {
+    background-color: blue;
+    color: white;
+}
+
+/* Back anchor inside button */
+.up-btn-link-white {
+    color: white;
+}
+
+/* Inline spacing between buttons */
+.up-ml-20 {
+    margin-left: 20px;
+}

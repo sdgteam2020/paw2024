@@ -1,0 +1,463 @@
+﻿
+/* Add 3D effect styles for the buttons */
+.table-button {
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Example shadow effect */
+    transition: transform 0.3s;
+}
+
+.table-but {
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Example shadow effect */
+    transition: transform 0.3s;
+}
+
+.table-button:hover {
+    transform: translateY(-3px);
+    background-color: blue; /* Example hover effect for 3D appearance */
+}
+
+.required-indicator {
+    color: red;
+    font-size: 18px;
+}
+
+
+
+.modal-content {
+    height: 800px !important;
+    width: 1000px !important;
+}
+
+.underline-h5 {
+    padding: 0.5rem;
+    width: 100%;
+    margin: 0 auto; /* Center the box */
+    text-align: center;
+    border-color: #03c1fc;
+    /*box-shadow: 2px 6px 5px -3px #062b50;*/
+    background-color: #0cafff;
+    color: white;
+    font-family: Arial;
+    font-size: 15px;
+    margin-bottom: 0.5rem;
+    height: -1px;
+}
+
+
+.underline-h7 {
+    background: #0793f7;
+    margin-bottom: 0px;
+    text-align: left;
+    color: white;
+    font-size: 14px;
+    height: 35px;
+    padding-top: 4px;
+    font-weight: 100;
+}
+
+.row {
+    display: flex; /* Make the row a flex container */
+    align-items: stretch; /* Align child elements to have equal height */
+}
+
+.col-lg-6 {
+    flex: 1; /* Distribute the available space equally between the two columns */
+    margin-right: 10px; /* Add some space between the columns (adjust as needed) */
+}
+
+
+.cancel-button {
+    background-color: #F44336; /* Red color */
+    border: none;
+    color: #000; /* Black text color */
+    padding: 5px 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Shadow effect */
+    transition: transform 0.3s;
+}
+
+    .cancel-button:hover {
+        transform: translateY(-3px);
+        background-color: darkred; /* Darker red color on hover */
+    }
+
+
+.projecthead {
+    background: #044c92;
+    margin-bottom: 0px;
+    text-align: center;
+    margin-top: -14px;
+    margin-left: -15px;
+    width: 104%;
+    color: white;
+    height: 35px;
+    padding-top: 4px;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    font-weight: bold;
+}
+
+.blog-comment-container {
+    width: 60%;
+    margin: 20px auto;
+}
+
+.comment-box {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-top: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.comment-meta {
+    font-size: 14px;
+    color: #777777;
+}
+
+.comment-content {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.pdf-link img {
+    width: 24px;
+    height: 24px;
+}
+
+
+.new-proj-table {
+    width: 100%;
+}
+
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-scrollbar {
+    -webkit-overflow-scrolling: auto;
+    padding-right: 15px;
+}
+
+.projecthead {
+    background-color: #3498db;
+    color: #ffffff;
+    padding: 10px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+
+.blog-comment-container {
+    width: 60%;
+    margin: 20px auto;
+}
+
+.comment-box {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-top: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.comment-meta {
+    font-size: 14px;
+    color: #777777;
+    font-weight: bold;
+}
+
+.comment-content {
+    font-size: 16px;
+    line-height: 1.6;
+    font-weight: bold;
+}
+
+.pdf-link img {
+    width: 24px;
+    height: 24px;
+}
+
+.attachment-icon {
+    width: 4px;
+    height: 4px;
+    margin-right: 0px;
+    /* Add any additional styling you need for the attachment icon */
+}
+
+/* Header Styles */
+.text-center {
+    text-align: center;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+.underline-h5 {
+    text-decoration: underline;
+}
+
+.underline-h7 {
+    text-decoration: underline;
+}
+
+/* Cancel Button */
+.cancel-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 15px;
+}
+
+/* Card Styles */
+.card {
+    border-radius: 15px;
+}
+
+.radius-14 {
+    border-radius: 14px;
+}
+
+.radius-12 {
+    border-radius: 12px;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.required-indicator {
+    color: red;
+}
+
+/* Chat Box Styles */
+.chat-messages {
+    overflow-y: auto;
+}
+
+/* Custom Icon Sizes */
+.text-with-icon span {
+    font-size: 20px;
+}
+
+.text-with-icon h7 {
+    font-weight: bold;
+    font-size: 16px;
+    color: antiquewhite;
+}
+
+/* Validation and Form Styling */
+.invalid-feedback {
+    color: red;
+}
+/* Table and Card Styling */
+.card-body {
+    padding: 1.5rem;
+}
+
+.radius-10 {
+    border-radius: 10px;
+}
+
+.table-striped {
+    border: 1px solid #ddd;
+}
+
+.table-bordered {
+    border: 1px solid #ddd;
+}
+
+.table-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+/* Comment Icon Styling */
+.comment-icon {
+    height: 31px;
+}
+
+/* Align Table Cells */
+.d-flex {
+    display: flex;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+/* Add any other necessary styles for spacing, borders, etc. */
+/* General layout styles */
+.container {
+    padding: 20px;
+}
+
+/* Card styles */
+.card-body {
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.projectheading {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.new-proj-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+    .new-proj-table td {
+        padding: 8px;
+        border: 1px solid #ccc;
+    }
+
+    .new-proj-table th {
+        padding: 8px;
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+    }
+
+/* Text area with long-text class for overflow handling */
+.long-text {
+    white-space: normal;
+    word-wrap: break-word;
+    max-width: 100%;
+}
+
+/* For button styling */
+.project-details-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+    .project-details-btn:hover {
+        background-color: #0056b3;
+    }
+
+/* Other details heading */
+h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+/* General styles for comment container */
+.comment-container {
+    background-color: #f0f0f0;
+}
+
+/* Styles for comment boxes */
+.comment-box {
+    text-align: justify;
+    background-color: #ffffff;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Styles for comment header */
+.comment-header {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: #0793f7;
+}
+
+/* Meta information in comment */
+.comment-meta {
+    margin-left: 10px;
+    font-size: 0.9em;
+    color: #777;
+}
+
+/* Styles for PDF link */
+.pdf-link {
+    margin-left: 15px;
+}
+
+/* PDF icon styling */
+.pdf-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Styles for content inside the comment box */
+.comment-content {
+    font-size: 1em;
+    line-height: 1.6;
+    margin-top: 10px;
+    color: #333;
+}
+
+/* Hide AddStatusDetails section initially */
+#AddStatusDetails {
+    display: none;
+}
+
+/* Style for the cancel button */
+#CancelUpdate {
+    background-color: #f44336;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+    #CancelUpdate:hover {
+        background-color: #e53935;
+    }
+
+/* Style for table button */
+.table-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+    .table-button:hover {
+        background-color: #0056b3;
+    }

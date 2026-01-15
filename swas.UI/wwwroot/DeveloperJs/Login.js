@@ -25,3 +25,25 @@
     //    }
     //});
 });
+// CSP-safe password toggle (replaces onclick="myFunction()")
+(function () {
+    "use strict";
+
+    function togglePassword() {
+        var input = document.getElementById("myInput");
+        if (!input) return;
+        input.type = (input.type === "password") ? "text" : "password";
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // checkbox inside #show_hide_password
+        var container = document.getElementById("show_hide_password");
+        if (!container) return;
+
+        var cb = container.querySelector('input[type="checkbox"]');
+        if (!cb) return;
+
+        cb.addEventListener("change", togglePassword);
+    });
+
+})();

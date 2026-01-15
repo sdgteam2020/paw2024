@@ -1,0 +1,635 @@
+﻿
+#litabs {
+    white-space: nowrap;
+    display: inline-block;
+    width: 200px;
+}
+
+.slice {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    transform-origin: 0 0;
+    background-color: #044c92;
+    transform: rotate(calc(var(--percentage, 0) * 3.6deg));
+}
+
+.aj {
+    text-align: center;
+    height: 2rem;
+    background-color: #044c92;
+    padding-top: 0px;
+    font-size: larger;
+}
+
+
+.card-body {
+    margin-top: -10px !important;
+    margin-bottom: 0px !important;
+    word-wrap: normal !important;
+    margin-left: -4px !important;
+    word-spacing: normal !important;
+    padding: 0.78rem !important;
+}
+
+.col-lg-4 {
+    -ms-flex: 0 0 33.333333% !important;
+    flex: 3 0 33.333333% !important;
+    max-width: 33.333333% !important;
+    padding: -1px !important;
+    margin-bottom: -12px !important;
+}
+
+.row {
+    margin-bottom: -4px !important;
+}
+
+#myChart1 {
+    width: 100%; /* Make the element take up the full width of its parent container */
+    height: auto; /* Allow the height to adjust proportionally to the width */
+
+    max-width: 752px !important; /* Set a maximum width for the element */
+    max-height: 388px !important; /* Set a maximum height for the element */
+}
+
+#myChart {
+    width: 100%; /* Make the element take up the full width of its parent container */
+    height: auto; /* Allow the height to adjust proportionally to the width */
+
+    max-width: 752px !important; /* Set a maximum width for the element */
+    max-height: 388px !important; /* Set a maximum height for the element */
+}
+
+.js-is-visible {
+    opacity: 1;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%; /* Adjust the width as needed */
+    max-width: 80%; /* Optional: Set a maximum width if desired */
+    height: auto; /* Set a fixed height, or adjust as needed */
+    background-color: #0000; /* Set the background color */
+    z-index: 999;
+    border-radius: 5px; /* Optional: Add rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Optional: Add a shadow */
+    overflow: auto; /* Add scrollbars if the content exceeds the height */
+}
+
+.popup-content {
+    padding: 20px;
+    /* Other styling for your content */
+}
+
+#popupOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+#popupContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    max-width: 80%;
+    max-height: 40%;
+    overflow-y: auto;
+}
+
+.tabs {
+    /* Styles for your tabs content */
+}
+
+
+.tabs__head li a {
+    width: 180px !important;
+    padding-right: 1px;
+}
+
+.closeButton {
+    background-color: #f44336;
+    border: none;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 10%;
+}
+
+    .closeButton:hover {
+        background-color: #d32f2f;
+    }
+
+
+.blue-button {
+    /* Add your styles for the black button here */
+    background-color: #044C92; /* Example background color */
+    border: 1px solid #000;
+    color: #fff;
+    /* Add other styles as needed */
+}
+
+.green-button {
+    /* Styles for the green button */
+    background-color: #4CAF50; /* Example green color */
+    /* Add other styles as needed */
+}
+
+.yellow-button {
+    /* Styles for the yellow button */
+    background-color: #FFC107; /* Example yellow color */
+    /* Add other styles as needed */
+}
+
+.red-button {
+    /* Styles for the red button */
+    background-color: #F44336; /* Example red color */
+    /* Add other styles as needed */
+}
+
+/* Add 3D effect styles for the buttons */
+.table-button {
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Example shadow effect */
+    transition: transform 0.3s;
+}
+
+    .table-button:hover {
+        transform: translateY(-3px);
+        background-color: blue; /* Example hover effect for 3D appearance */
+    }
+
+.r-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    font-size: 22px;
+}
+
+
+
+.cd-1 {
+    min-width: 150px;
+    height: 136px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -4px -4px 3px rgba(0, 0, 0, 0.1);
+    margin: 23px;
+    padding-top: 5px;
+    font-size: 12px;
+    text-overflow: inherit;
+    font-weight: bolder;
+    text-align: center;
+    border: 2px solid #044c92;
+    background-color: white;
+    transition: all 0.3s ease;
+    border-radius: 30px;
+    box-shadow: inset 0 0 10px;
+}
+
+    .cd-1:hover {
+        transform: translateY(-5px);
+        box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.2);
+    }
+
+.card-title {
+    font-size: 20px !important;
+    align-items: baseline;
+    font-family: auto;
+}
+
+.t-1 {
+    flex: 4
+}
+
+.text {
+    overflow: scroll;
+    padding: 10px;
+}
+
+.modalSize {
+    width: 110rem !important;
+    margin-left: -12rem !important;
+}
+
+.scroll {
+    max-height: 800px;
+    overflow-y: auto;
+}
+
+
+.badge {
+    display: inline-block;
+    padding: 0.25em 0.4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.375rem;
+}
+
+.badge-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.badge-warning {
+    background-color: #ffc107;
+    color: black;
+}
+
+.badge-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.cursorpointer {
+    cursor: pointer;
+}
+
+.tooltip-inner {
+    background-color: white !important;
+    color: black !important;
+    border: 1px solid #ccc;
+}
+
+.tooltip-arrow {
+    border-top-color: white !important;
+}
+
+.tooltip-inner {
+    background-color: #2d5eff !important;
+    color: white !important;
+}
+
+.tooltip.bs-tooltip-top .arrow::before {
+    border-top-color: #2d5eff !important;
+}
+
+h5[data-toggle="tooltip"] + .tooltip-inner {
+    color: #5a8cd6 !important;
+}
+
+.modal-lg {
+    max-width: 95% !important; /* Customize as needed */
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.chart-box {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+
+canvas {
+    max-width: 100%;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f5f5f5;
+}
+
+.chart-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#whitelistedChart {
+    cursor: pointer;
+    max-height: 400px;
+}
+
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.popup-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    max-width: 500px;
+    max-height: 70vh;
+    overflow-y: auto;
+    width: 90%;
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+}
+
+.popup-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.close-btn {
+    background: #ff4757;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .close-btn:hover {
+        background: #ff3742;
+    }
+
+.project-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.project-item {
+    background: #89bf88;
+    margin: 8px 0;
+    padding: 12px;
+    border-radius: 5px;
+    border-left: 4px solid green;
+}
+
+    .project-item.due-revetting {
+        border-left-color: red;
+        background-color: rgba(255, 99, 71, 0.8);
+        color: white;
+    }
+
+.project-name {
+    font-weight: bold;
+    color: #333;
+}
+
+.project-status {
+    font-size: 12px;
+    color: #fff;
+    margin-top: 4px;
+}
+
+.instruction {
+    text-align: center;
+    color: #fff;
+    margin-top: 15px;
+    font-style: italic;
+}
+
+
+/* moved from inline styles */
+
+.paw-dashboard-zoom {
+    zoom: 0.8;
+    width: 100%;
+    max-width: 100%;
+}
+
+.paw-canvas-400 {
+    max-height: 400px;
+}
+
+.paw-canvas-whitelisted {
+    max-height: 379px;
+    height: 379px;
+}
+
+.paw-modal-label-md {
+    font-size: 1rem;
+}
+
+.paw-w-6 {
+    width: 6%;
+}
+
+.paw-w-3 {
+    width: 3%;
+}
+
+.paw-approved-date {
+    width: 135.938px;
+}
+
+
+/* ===== Dashboard dynamic HTML (replaces inline styles in GetAllDashbaordCount) ===== */
+
+.dash-stage-row {
+    margin-top: 13px;
+}
+
+.dash-card {
+    background-color: #fff;
+    height: 145px;
+}
+
+.dash-icon-img {
+    height: 25px;
+}
+
+.dash-h5-mt25 {
+    margin-top: 25px;
+}
+
+.dash-h5-mt8 {
+    margin-top: 8px;
+}
+
+.dash-h5-mt8-pad10 {
+    margin-top: 8px;
+    padding-top: 10px;
+}
+
+.dash-status-pad7 {
+    padding-top: 7px;
+}
+
+.dash-badge-lg {
+    font-size: 18px;
+}
+
+.dash-badge-md {
+    font-size: 14px;
+}
+
+/* ===== removed inline styles from getProjApproved() HTML ===== */
+
+.dp-w-3 {
+    width: 3% !important;
+}
+
+/* Instead of inline style visibility:visible/hidden */
+.dp-vis-visible {
+    visibility: visible;
+}
+
+.dp-vis-hidden {
+    visibility: hidden;
+}
+
+/* Attachment icon style */
+.dp-attach-icon {
+    width: 31px;
+    height: 29px;
+    margin-right: 0px;
+}
+/* ===== Dashboard page inline-style replacements ===== */
+
+/* Dashboard count container (was zoom + width/max-width inline) */
+.db-zoom-80 {
+    zoom: 0.8;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Canvas height limits */
+.db-canvas-h400 {
+    max-height: 400px;
+}
+
+.db-canvas-h379 {
+    max-height: 379px;
+    height: 379px;
+}
+
+/* Modal title sizes */
+.db-modal-title-lg {
+    font-size: 1.5rem;
+}
+
+.db-label-md {
+    font-size: 1rem;
+}
+
+/* Table column widths */
+.db-col-w6 {
+    width: 6%;
+}
+
+.db-col-w3 {
+    width: 3%;
+}
+
+.db-col-w3imp {
+    width: 3% !important;
+}
+
+.db-col-w135 {
+    width: 135.938px;
+}
+
+.db-col-w3pct {
+    width: 3%;
+}
+/* optional helper */
+
+/* If you want consistent width on serno header where you used 3% */
+.db-sno-3 {
+    width: 3%;
+}
+/* ===== Dashboard cards (GetAllDashbaordCount) ===== */
+
+/* was: style="margin-top: 13px" */
+.db-stage-row {
+    margin-top: 13px;
+}
+
+/* was: background-color:white;height:145px */
+.db-card-box {
+    background-color: white;
+    height: 145px;
+}
+
+/* icons height 25px */
+.db-icon-25 {
+    height: 25px;
+}
+
+/* h5 margin-top 25px */
+.db-h5-mt25 {
+    margin-top: 25px;
+}
+
+/* h5 margin-top 8px */
+.db-h5-mt8 {
+    margin-top: 8px;
+}
+
+/* h5 margin-top 8px + padding-top 10px */
+.db-h5-mt8-pt10 {
+    margin-top: 8px;
+    padding-top: 10px;
+}
+
+/* status text padding-top 7px */
+.db-status-pt7 {
+    padding-top: 7px;
+}
+
+/* badge font sizes */
+.db-badge-18 {
+    font-size: 18px;
+}
+
+.db-badge-14 {
+    font-size: 14px;
+}

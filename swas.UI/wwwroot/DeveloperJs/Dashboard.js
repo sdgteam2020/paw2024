@@ -24,18 +24,12 @@ $(document).ready(function () {
 
 
 
-
 function GetAllDashbaordCount() {
-   
     $.ajax({
         type: "POST",
         url: '/Home/GetDashboardCount',
-        data: {
-            "Id": 0,
-
-        },
+        data: { "Id": 0 },
         success: function (data) {
-          
 
             var dtoDashboardHeaderlst = data.dtoDashboardHeaderlst;
             var dTOApprovedCountlst = data.dtoApprovedCountlst;
@@ -46,208 +40,162 @@ function GetAllDashbaordCount() {
             var tot = 0;
             var peding = 0;
             var sent = 0;
+
             if (data != null) {
                 dtoDashboardHeaderlst.sort((a, b) => a.stageId - b.stageId || a.statseq - b.statseq);
 
                 for (var i = 0; i < dtoDashboardHeaderlst.length; i++) {
-                  
+
                     if (stageId != dtoDashboardHeaderlst[i].stageId) {
                         if (stageId != 0) {
                             listitem += '</div>';
                         }
 
                         var stage = "";
-                        if (dtoDashboardHeaderlst[i].stageId === 1) {
-                            stage = "(Sponsor & DDGIT)";
-                        }
-                        if (dtoDashboardHeaderlst[i].stageId === 2) {
-                            stage = "(Parallel Processing)";
-                        }
-                        if (dtoDashboardHeaderlst[i].stageId === 3) {
-                            stage = "(Serial Processing)";
-                        }
-                        listitem += '<div class="newprojectheading text-center"> ' + dtoDashboardHeaderlst[i].stages + " " +stage + ' </div>';
+                        if (dtoDashboardHeaderlst[i].stageId === 1) stage = "(Sponsor & DDGIT)";
+                        if (dtoDashboardHeaderlst[i].stageId === 2) stage = "(Parallel Processing)";
+                        if (dtoDashboardHeaderlst[i].stageId === 3) stage = "(Serial Processing)";
 
-                        listitem += '<div class="r-1 row g-3 mt-2" style="margin-top: 13px;">';
+                        listitem += '<div class="newprojectheading text-center"> ' + dtoDashboardHeaderlst[i].stages + " " + stage + ' </div>';
+
+                        // ✅ removed inline style
+                        listitem += '<div class="r-1 row g-3 mt-2 db-stage-row">';
                     }
-                   
-                    listitem += '<div class="cd-1 col-12 col-sm-6 col-md-4 col-lg-1 " style="background-color:white;height: 145px;">';
+
+                    // ✅ removed inline style
+                    listitem += '<div class="cd-1 col-12 col-sm-6 col-md-4 col-lg-1 db-card-box">';
 
                     tot = 0;
                     peding = 0;
                     sent = 0;
-                    var icons = "";
-                    var DTODashboardCount = data.dtoDashboardCountlst.filter(function (element) { return element.stagesId == dtoDashboardHeaderlst[i].stageId && element.statusId == dtoDashboardHeaderlst[i].statusId; });
+
+                    var DTODashboardCount = data.dtoDashboardCountlst.filter(function (element) {
+                        return element.stagesId == dtoDashboardHeaderlst[i].stageId && element.statusId == dtoDashboardHeaderlst[i].statusId;
+                    });
+
                     if (parseInt(dtoDashboardHeaderlst[i].statusId) == 2 || parseInt(dtoDashboardHeaderlst[i].statusId) == 3
                         || parseInt(dtoDashboardHeaderlst[i].statusId) == 22 || parseInt(dtoDashboardHeaderlst[i].statusId) == 31
                         || parseInt(dtoDashboardHeaderlst[i].statusId) == 37) {
 
                         if (parseInt(dtoDashboardHeaderlst[i].statusId) == 2)
-                            var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 10 });
+                            var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 10; });
                         else if (parseInt(dtoDashboardHeaderlst[i].statusId) == 3)
-                            var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 11 });
+                            var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 11; });
                         else if (parseInt(dtoDashboardHeaderlst[i].statusId) == 22)
-                            var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 3 && e.stagesId == 2 });
+                            var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 3 && e.stagesId == 2; });
                         else if (parseInt(dtoDashboardHeaderlst[i].statusId) == 31)
-                            var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 3 && e.stagesId == 3 });
+                            var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 3 && e.stagesId == 3; });
                         else if (parseInt(dtoDashboardHeaderlst[i].statusId) == 37)
-                            var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 3 && e.stagesId == 1 });
+                            var ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 3 && e.stagesId == 1; });
 
                         for (var j = 0; j < ForAction.length; j++) {
-
                             tot += ForAction[j].tot;
 
-                            if (ForAction[j].isComplete == false) {
-                                peding += ForAction[j].tot;
-                            }
-                            if (ForAction[j].isComplete == true) {
-                                sent += ForAction[j].tot;
-                            }
+                            if (ForAction[j].isComplete == false) peding += ForAction[j].tot;
+                            if (ForAction[j].isComplete == true) sent += ForAction[j].tot;
                         }
 
-                    }
-                    else {
+                    } else {
                         for (var j = 0; j < DTODashboardCount.length; j++) {
-
-
                             tot += DTODashboardCount[j].tot;
 
-                            if (DTODashboardCount[j].isComplete == false) {
-                                peding += DTODashboardCount[j].tot;
-                            }
-                            if (DTODashboardCount[j].isComplete == true) {
-                                sent += DTODashboardCount[j].tot;
-                            }
-
+                            if (DTODashboardCount[j].isComplete == false) peding += DTODashboardCount[j].tot;
+                            if (DTODashboardCount[j].isComplete == true) sent += DTODashboardCount[j].tot;
                         }
                     }
 
                     listitem += '<div class="icon-container ApprovedProj cursorpointer"><span class="d-none" id="spnstatusId">' + dtoDashboardHeaderlst[i].statusId + '</span>';
-                    //listitem += '<div class="icon-container ApprovedProj cursorpointer"><span class="d-none" id="spnstatus">' + dtoDashboardHeaderlst[i].status + '</span>';
-                    /* listitem += '<img src="/assets/images/icons/' + dtoDashboardHeaderlst[i].icons +'" alt="Icon" style="height:25px">';*/
+
+                    // ✅ removed inline style from img + h5
                     if (dtoDashboardHeaderlst[i].statusId == 2 || dtoDashboardHeaderlst[i].statusId == 3 || dtoDashboardHeaderlst[i].statusId == 22 || dtoDashboardHeaderlst[i].statusId == 31 || dtoDashboardHeaderlst[i].statusId == 37) {
                         if (dtoDashboardHeaderlst[i].statusId == 3)
-                            listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" style="height:25px" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">';
-                        else listitem += '<img src="/assets/images/icons/rejec.png" alt="Icon" style="height:25px">';
-                        listitem += '<h5 style="margin-top: 25px;" > </h5>';
+                            listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" class="db-icon-25" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">';
+                        else
+                            listitem += '<img src="/assets/images/icons/rejec.png" alt="Icon" class="db-icon-25">';
+
+                        listitem += '<h5 class="db-h5-mt25"> </h5>';
+
                     } else {
-                        listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" style="height:25px" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">';
+                        listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" class="db-icon-25" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">';
+
                         var approvedcount = dTOApprovedCountlst.filter(function (element) { return element.statusId == dtoDashboardHeaderlst[i].statusId; });
+
                         if (approvedcount.length > 0)
-                            /* listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span><h5 style="margin-top: 8px;" >' + approvedcount[0].total + ' </h5>';*/
                             if (dtoDashboardHeaderlst[i].status.includes("BISAG-N")) {
                                 listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span>' +
-                                    '<h5 style="margin-top: 8px; padding-top: 10px;" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">' + approvedcount[0].total + ' </h5>';
+                                    '<h5 class="db-h5-mt8-pt10" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">' + approvedcount[0].total + ' </h5>';
                             }
-
                             else if (dtoDashboardHeaderlst[i].status.includes("Re-Vetting")) {
                                 listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span>' +
-                                    '<h5 style="margin-top: 8px; padding-top: 10px;" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">' + approvedcount[0].total + ' </h5>';
+                                    '<h5 class="db-h5-mt8-pt10" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">' + approvedcount[0].total + ' </h5>';
                             }
                             else {
                                 listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span>' +
-                                    '<h5 style="margin-top: 8px;" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">' + approvedcount[0].total + ' </h5>';    
+                                    '<h5 class="db-h5-mt8" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">' + approvedcount[0].total + ' </h5>';
                             }
-
                         else
-                            listitem += '<span class="d-none" id="spnstatusActionsMappingId">0</span><h5 style="margin-top: 8px;" >0 </h5>';
+                            listitem += '<span class="d-none" id="spnstatusActionsMappingId">0</span><h5 class="db-h5-mt8">0 </h5>';
                     }
+
                     listitem += '<div class="t-1 statusprojsummry d-none">' + dtoDashboardHeaderlst[i].status + '</div> ';
                     listitem += '</div>';
                     listitem += '<div class="cursorpointer btnGetsummay "><span class="d-none" id="spnstatusId">' + dtoDashboardHeaderlst[i].statusId + '</span>';
-                    //listitem += '<div class="cursorpointer btnGetsummay "><span class="d-none" id="spnstatus">' + dtoDashboardHeaderlst[i].status + '</span>';
                     listitem += '<div class="">';
 
+                    // ✅ removed inline padding-top
                     if (dtoDashboardHeaderlst[i].status.includes("BISAG-N") || dtoDashboardHeaderlst[i].status.includes("Re-Vetting")) {
-                        listitem += '<div class="t-1 statusprojsummry" style="padding-top: 7px;" >' + dtoDashboardHeaderlst[i].status + '</div> ';
+                        listitem += '<div class="t-1 statusprojsummry db-status-pt7">' + dtoDashboardHeaderlst[i].status + '</div> ';
                     }
                     else {
                         listitem += '<div class="t-1 statusprojsummry">' + dtoDashboardHeaderlst[i].status + '</div> ';
                     }
 
+                    // ✅ removed inline font-size
                     if (dtoDashboardHeaderlst[i].status.includes("BISAG-N") || dtoDashboardHeaderlst[i].status.includes("Re-Vetting")) {
 
-                        listitem += '<span class="badge badge-light text-black d-none" style="font-size:18px" data-toggle="tooltip" data-placement="top" ><span class="badge bg-danger">' + peding + '</span> / <span class="badge bg-success">' + sent + '</span></span>';
+                        listitem += '<span class="badge badge-light text-black d-none db-badge-18" data-toggle="tooltip" data-placement="top"><span class="badge bg-danger">' + peding + '</span> / <span class="badge bg-success">' + sent + '</span></span>';
 
                         listitem += ' </div>';
-                        listitem += '';
                         listitem += ' <div class="mb-2">';
-                        listitem += '<span class="badge badge-primary mr-2 d-none" style="font-size:14px" data-toggle="tooltip" data-placement="top" title="Total No of transaction at this stage">' + tot + '</span>';
+                        listitem += '<span class="badge badge-primary mr-2 d-none db-badge-14" data-toggle="tooltip" data-placement="top" title="Total No of transaction at this stage">' + tot + '</span>';
 
                     }
                     else {
-                        listitem += '<span class="badge badge-light text-black" style="font-size:18px" data-toggle="tooltip" data-placement="top" ><span class="badge bg-danger">' + peding + '</span> / <span class="badge bg-success">' + sent + '</span></span>';
-
+                        listitem += '<span class="badge badge-light text-black db-badge-18" data-toggle="tooltip" data-placement="top"><span class="badge bg-danger">' + peding + '</span> / <span class="badge bg-success">' + sent + '</span></span>';
 
                         listitem += ' </div>';
-                        listitem += '';
                         listitem += ' <div class="mb-2">';
-                        listitem += '<span class="badge badge-primary mr-2" style="font-size:14px" data-toggle="tooltip" data-placement="top" title="Total No of transaction at this stage">' + tot + '</span>';
+                        listitem += '<span class="badge badge-primary mr-2 db-badge-14" data-toggle="tooltip" data-placement="top" title="Total No of transaction at this stage">' + tot + '</span>';
                     }
 
                     listitem += ' </div>';
                     listitem += ' </div>';
-
                     listitem += ' </div>';
-
-                    listitem += '';
 
                     stageId = dtoDashboardHeaderlst[i].stageId;
                 }
 
-
-
                 $("#carddashboardcount").html(listitem);
-                //$("body").on("click", ".ProjectWiseStatus", function () {
-                //    $('#modalProjectWiseStatus').modal('show');
-                //    ProjectWiseStatus()
-                //});
-
 
                 $(document).on("click", ".ApprovedProj", function () {
                     var spnstatusId = $(this).closest("div").find("#spnstatusId").html();
-                    //var spnstatus = $(this).closest("div").find("#spnstatus").html();
                     var spnstatusActionsMappingId = $(this).closest("div").find("#spnstatusActionsMappingId").html();
-                 
 
                     tittle = "Approved: " + $(this).closest("div").find(".statusprojsummry").html();
-                    tittleIPA = "Approved by:  "+ $(this).closest("div").find(".statusprojsummry").html()+" (Parallel Processing)";"}][\'[']//"
-                    if (parseInt(spnstatusActionsMappingId) == 1) {
-                       
-                        Status = 'Accepted';
-                    }
-                    else if (parseInt(spnstatusActionsMappingId) == 9) {
-                        Status = 'obsn Raised';
-                    }
-                    else if (parseInt(spnstatusActionsMappingId) == 113) {
-                        Status = 'Rectified';
-                    }
-                    else if (parseInt(spnstatusActionsMappingId) == 48 || parseInt(spnstatusActionsMappingId) == 53) {
-                        Status = 'Approved';
-                    }
+                    tittleIPA = "Approved by:  " + $(this).closest("div").find(".statusprojsummry").html() + " (Parallel Processing)";
 
-                    else if (parseInt(spnstatusActionsMappingId) == 60) {
-                        tittle = "Closed Project";
-                        Status = 'Closed';
-                    }
+                    if (parseInt(spnstatusActionsMappingId) == 1) Status = 'Accepted';
+                    else if (parseInt(spnstatusActionsMappingId) == 9) Status = 'obsn Raised';
+                    else if (parseInt(spnstatusActionsMappingId) == 113) Status = 'Rectified';
+                    else if (parseInt(spnstatusActionsMappingId) == 48 || parseInt(spnstatusActionsMappingId) == 53) Status = 'Approved';
+                    else if (parseInt(spnstatusActionsMappingId) == 60) { tittle = "Closed Project"; Status = 'Closed'; }
                     else if (parseInt(spnstatusActionsMappingId) == 68 || parseInt(spnstatusActionsMappingId) == 73 || parseInt(spnstatusActionsMappingId) == 63
-                        || parseInt(spnstatusActionsMappingId) == 78 || parseInt(spnstatusActionsMappingId) == 83 || parseInt(spnstatusActionsMappingId) == 88) {
-                        Status = 'Completed';
-                    }
-
-                    else if (parseInt(spnstatusActionsMappingId) == 26 || parseInt(spnstatusActionsMappingId) == 31 || parseInt(spnstatusActionsMappingId) == 37) {
-                        Status = 'Approved';
-                    }
+                        || parseInt(spnstatusActionsMappingId) == 78 || parseInt(spnstatusActionsMappingId) == 83 || parseInt(spnstatusActionsMappingId) == 88) Status = 'Completed';
+                    else if (parseInt(spnstatusActionsMappingId) == 26 || parseInt(spnstatusActionsMappingId) == 31 || parseInt(spnstatusActionsMappingId) == 37) Status = 'Approved';
 
                     if (parseInt(spnstatusActionsMappingId) == 0) {
-                        Swal.fire({
-                            icon: "error",
-                            title: "Oops...",
-                            text: "Data Not Found!",
-
-                        });
+                        Swal.fire({ icon: "error", title: "Oops...", text: "Data Not Found!" });
                     } else {
-                        
                         $('#CertName').html("Cert&Att");
                         if (spnstatusId == 2 || spnstatusId == 3 || spnstatusId == 22) {
 
@@ -260,9 +208,8 @@ function GetAllDashbaordCount() {
                             $('#IPAProjApproved').modal('show');
 
                             getProjApproved(spnstatusId, spnstatusActionsMappingId);
-                        } else if (spnstatusActionsMappingId == 26 || spnstatusActionsMappingId == 31 || spnstatusActionsMappingId == 37)
-                        {
-                          
+                        } else if (spnstatusActionsMappingId == 26 || spnstatusActionsMappingId == 31 || spnstatusActionsMappingId == 37) {
+
                             $('#ProjectApprovedTittle').html(tittleIPA);
                             $('#ProjApproved').modal('show');
                             getProjApproved(spnstatusId, spnstatusActionsMappingId);
@@ -283,34 +230,274 @@ function GetAllDashbaordCount() {
                                 $('#ProjApproved').modal('show');
                             }
 
-                           
-                          
+
+
                             getProjApproved(spnstatusId, spnstatusActionsMappingId);
                         }
                     }
                 });
-                $("body").on("click", ".btnGetsummay", function () {
 
+                $("body").on("click", ".btnGetsummay", function () {
                     var spnstatusId = $(this).closest("div").find("#spnstatusId").html();
                     if (spnstatusId != 1041 && parseInt(spnstatusId) != 44 && parseInt(spnstatusId) != 46) {
                         $('#ProjGetsummay').modal('show');
-                        ($(this).closest("div").find(".statusprojsummry").html());
                         $('#ProjectSummaryTittle').html("Total Proj Movement: " + $(this).closest("div").find(".statusprojsummry").html());
                         $('#IsNotduplicate').prop('checked', false);
-
                         getProjGetsummay(spnstatusId, true);
                     }
-
-
-                })
+                });
             }
-
         },
         error: function () {
             alert('Error fetching comments.');
         }
     });
 }
+
+//function GetAllDashbaordCount() {
+  
+//    $.ajax({
+//        type: "POST",
+//        url: '/Home/GetDashboardCount',
+//        data: { "Id": 0 },
+//        success: function (data) {
+
+//            var dtoDashboardHeaderlst = data.dtoDashboardHeaderlst;
+//            var dTOApprovedCountlst = data.dtoApprovedCountlst;
+//            var dTODashboardCountlstForAction = data.dtoDashboardCountlstForAction;
+
+//            var listitem = '';
+//            var stageId = 0;
+//            var tot = 0;
+//            var peding = 0;
+//            var sent = 0;
+
+//            if (data != null) {
+//                dtoDashboardHeaderlst.sort((a, b) => a.stageId - b.stageId || a.statseq - b.statseq);
+
+//                for (var i = 0; i < dtoDashboardHeaderlst.length; i++) {
+
+//                    if (stageId != dtoDashboardHeaderlst[i].stageId) {
+//                        if (stageId != 0) {
+//                            listitem += '</div>';
+//                        }
+
+//                        var stage = "";
+//                        if (dtoDashboardHeaderlst[i].stageId === 1) stage = "(Sponsor & DDGIT)";
+//                        if (dtoDashboardHeaderlst[i].stageId === 2) stage = "(Parallel Processing)";
+//                        if (dtoDashboardHeaderlst[i].stageId === 3) stage = "(Serial Processing)";
+
+//                        listitem += '<div class="newprojectheading text-center"> ' + dtoDashboardHeaderlst[i].stages + " " + stage + ' </div>';
+//                        listitem += '<div class="r-1 row g-3 mt-2 dash-stage-row">';
+//                    }
+
+//                    // ✅ removed inline style
+//                    listitem += '<div class="cd-1 col-12 col-sm-6 col-md-4 col-lg-1 dash-card">';
+
+//                    tot = 0;
+//                    peding = 0;
+//                    sent = 0;
+
+//                    var DTODashboardCount = data.dtoDashboardCountlst.filter(function (element) {
+//                        return element.stagesId == dtoDashboardHeaderlst[i].stageId && element.statusId == dtoDashboardHeaderlst[i].statusId;
+//                    });
+
+//                    if (parseInt(dtoDashboardHeaderlst[i].statusId) == 2 || parseInt(dtoDashboardHeaderlst[i].statusId) == 3
+//                        || parseInt(dtoDashboardHeaderlst[i].statusId) == 22 || parseInt(dtoDashboardHeaderlst[i].statusId) == 31
+//                        || parseInt(dtoDashboardHeaderlst[i].statusId) == 37) {
+
+//                        var ForAction = [];
+//                        if (parseInt(dtoDashboardHeaderlst[i].statusId) == 2)
+//                            ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 10; });
+//                        else if (parseInt(dtoDashboardHeaderlst[i].statusId) == 3)
+//                            ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 11; });
+//                        else if (parseInt(dtoDashboardHeaderlst[i].statusId) == 22)
+//                            ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 3 && e.stagesId == 2; });
+//                        else if (parseInt(dtoDashboardHeaderlst[i].statusId) == 31)
+//                            ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 3 && e.stagesId == 3; });
+//                        else if (parseInt(dtoDashboardHeaderlst[i].statusId) == 37)
+//                            ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 3 && e.stagesId == 1; });
+
+//                        for (var j = 0; j < ForAction.length; j++) {
+//                            tot += ForAction[j].tot;
+
+//                            if (ForAction[j].isComplete == false) peding += ForAction[j].tot;
+//                            if (ForAction[j].isComplete == true) sent += ForAction[j].tot;
+//                        }
+
+//                    } else {
+//                        for (var j = 0; j < DTODashboardCount.length; j++) {
+//                            tot += DTODashboardCount[j].tot;
+
+//                            if (DTODashboardCount[j].isComplete == false) peding += DTODashboardCount[j].tot;
+//                            if (DTODashboardCount[j].isComplete == true) sent += DTODashboardCount[j].tot;
+//                        }
+//                    }
+
+//                    listitem += '<div class="icon-container ApprovedProj cursorpointer"><span class="d-none" id="spnstatusId">' + dtoDashboardHeaderlst[i].statusId + '</span>';
+
+//                    // ✅ removed inline image styles + h5 style
+//                    if (dtoDashboardHeaderlst[i].statusId == 2 || dtoDashboardHeaderlst[i].statusId == 3 || dtoDashboardHeaderlst[i].statusId == 22 || dtoDashboardHeaderlst[i].statusId == 31 || dtoDashboardHeaderlst[i].statusId == 37) {
+//                        if (dtoDashboardHeaderlst[i].statusId == 3)
+//                            listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" class="dash-icon-img" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">';
+//                        else
+//                            listitem += '<img src="/assets/images/icons/rejec.png" alt="Icon" class="dash-icon-img">';
+
+//                        listitem += '<h5 class="dash-h5-mt25"> </h5>';
+
+//                    } else {
+//                        listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" class="dash-icon-img" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">';
+
+//                        var approvedcount = dTOApprovedCountlst.filter(function (element) {
+//                            return element.statusId == dtoDashboardHeaderlst[i].statusId;
+//                        });
+
+//                        if (approvedcount.length > 0) {
+
+//                            if (dtoDashboardHeaderlst[i].status.includes("BISAG-N") || dtoDashboardHeaderlst[i].status.includes("Re-Vetting")) {
+//                                listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span>' +
+//                                    '<h5 class="dash-h5-mt8-pad10" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">' + approvedcount[0].total + ' </h5>';
+//                            } else {
+//                                listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span>' +
+//                                    '<h5 class="dash-h5-mt8" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">' + approvedcount[0].total + ' </h5>';
+//                            }
+
+//                        } else {
+//                            listitem += '<span class="d-none" id="spnstatusActionsMappingId">0</span><h5 class="dash-h5-mt8">0 </h5>';
+//                        }
+//                    }
+
+//                    listitem += '<div class="t-1 statusprojsummry d-none">' + dtoDashboardHeaderlst[i].status + '</div> ';
+//                    listitem += '</div>';
+
+//                    listitem += '<div class="cursorpointer btnGetsummay "><span class="d-none" id="spnstatusId">' + dtoDashboardHeaderlst[i].statusId + '</span>';
+//                    listitem += '<div class="">';
+
+//                    // ✅ removed inline padding-top style
+//                    if (dtoDashboardHeaderlst[i].status.includes("BISAG-N") || dtoDashboardHeaderlst[i].status.includes("Re-Vetting")) {
+//                        listitem += '<div class="t-1 statusprojsummry dash-status-pad7">' + dtoDashboardHeaderlst[i].status + '</div> ';
+//                    } else {
+//                        listitem += '<div class="t-1 statusprojsummry">' + dtoDashboardHeaderlst[i].status + '</div> ';
+//                    }
+
+//                    // ✅ removed inline font-size styles
+//                    if (dtoDashboardHeaderlst[i].status.includes("BISAG-N") || dtoDashboardHeaderlst[i].status.includes("Re-Vetting")) {
+
+//                        listitem += '<span class="badge badge-light text-black d-none dash-badge-lg" data-toggle="tooltip" data-placement="top"><span class="badge bg-danger">' + peding + '</span> / <span class="badge bg-success">' + sent + '</span></span>';
+//                        listitem += ' </div>';
+//                        listitem += ' <div class="mb-2">';
+//                        listitem += '<span class="badge badge-primary mr-2 d-none dash-badge-md" data-toggle="tooltip" data-placement="top" title="Total No of transaction at this stage">' + tot + '</span>';
+
+//                    } else {
+
+//                        listitem += '<span class="badge badge-light text-black dash-badge-lg" data-toggle="tooltip" data-placement="top"><span class="badge bg-danger">' + peding + '</span> / <span class="badge bg-success">' + sent + '</span></span>';
+//                        listitem += ' </div>';
+//                        listitem += ' <div class="mb-2">';
+//                        listitem += '<span class="badge badge-primary mr-2 dash-badge-md" data-toggle="tooltip" data-placement="top" title="Total No of transaction at this stage">' + tot + '</span>';
+//                    }
+
+//                    listitem += ' </div>';
+//                    listitem += ' </div>';
+//                    listitem += ' </div>';
+//                    listitem += ' </div>';
+
+//                    stageId = dtoDashboardHeaderlst[i].stageId;
+//                }
+
+//                $("#carddashboardcount").html(listitem);
+
+//                // Optional: initialize tooltips if you use Bootstrap tooltip
+//                // $('[data-toggle="tooltip"]').tooltip();
+
+//                $(document).off("click", ".ApprovedProj").on("click", ".ApprovedProj", function () {
+//                    var spnstatusId = $(this).closest("div").find("#spnstatusId").html();
+//                    var spnstatusActionsMappingId = $(this).closest("div").find("#spnstatusActionsMappingId").html();
+
+//                    tittle = "Approved: " + $(this).closest("div").find(".statusprojsummry").html();
+//                    tittleIPA = "Approved by:  " + $(this).closest("div").find(".statusprojsummry").html() + " (Parallel Processing)";
+
+//                    if (parseInt(spnstatusActionsMappingId) == 1) {
+//                        Status = 'Accepted';
+//                    } else if (parseInt(spnstatusActionsMappingId) == 9) {
+//                        Status = 'obsn Raised';
+//                    } else if (parseInt(spnstatusActionsMappingId) == 113) {
+//                        Status = 'Rectified';
+//                    } else if (parseInt(spnstatusActionsMappingId) == 48 || parseInt(spnstatusActionsMappingId) == 53) {
+//                        Status = 'Approved';
+//                    } else if (parseInt(spnstatusActionsMappingId) == 60) {
+//                        tittle = "Closed Project";
+//                        Status = 'Closed';
+//                    } else if (parseInt(spnstatusActionsMappingId) == 68 || parseInt(spnstatusActionsMappingId) == 73 || parseInt(spnstatusActionsMappingId) == 63
+//                        || parseInt(spnstatusActionsMappingId) == 78 || parseInt(spnstatusActionsMappingId) == 83 || parseInt(spnstatusActionsMappingId) == 88) {
+//                        Status = 'Completed';
+//                    } else if (parseInt(spnstatusActionsMappingId) == 26 || parseInt(spnstatusActionsMappingId) == 31 || parseInt(spnstatusActionsMappingId) == 37) {
+//                        Status = 'Approved';
+//                    }
+
+//                    if (parseInt(spnstatusActionsMappingId) == 0) {
+//                        Swal.fire({
+//                            icon: "error",
+//                            title: "Oops...",
+//                            text: "Data Not Found!"
+//                        });
+//                    } else {
+
+//                        $('#CertName').html("Cert&Att");
+
+//                        if (spnstatusId == 2 || spnstatusId == 3 || spnstatusId == 22) {
+//                            // no action
+//                        }
+//                        else if (parseInt(spnstatusId) == 44 || parseInt(spnstatusId) == 46) {
+//                            $('#ProjectApprovedTittleBisag').html(tittle);
+//                            $('#BISAG-N').modal('show');
+//                            getProjBisagN(spnstatusId, spnstatusActionsMappingId);
+//                        }
+//                        else if (spnstatusId == 21) {
+//                            $('#IPAProjectApprovedTittle').html(tittle);
+//                            $('#IPAProjApproved').modal('show');
+//                            getProjApproved(spnstatusId, spnstatusActionsMappingId);
+//                        }
+//                        else if (spnstatusActionsMappingId == 26 || spnstatusActionsMappingId == 31 || spnstatusActionsMappingId == 37) {
+//                            $('#ProjectApprovedTittle').html(tittleIPA);
+//                            $('#ProjApproved').modal('show');
+//                            getProjApproved(spnstatusId, spnstatusActionsMappingId);
+//                        }
+//                        else {
+//                            debugger;
+//                            var hascert = [24, 25, 26, 27, 28, 29].includes(parseInt(spnstatusId));
+
+//                            if (hascert) {
+//                                $('#IPAProjectApprovedTittle').html(tittle);
+//                                $('#IPAProjApproved').modal('show');
+//                            } else {
+//                                $('#ProjectApprovedTittle').html(tittle);
+//                                $('#ProjApproved').modal('show');
+//                            }
+
+//                            getProjApproved(spnstatusId, spnstatusActionsMappingId);
+//                        }
+//                    }
+//                });
+
+//                $("body").off("click", ".btnGetsummay").on("click", ".btnGetsummay", function () {
+//                    var spnstatusId = $(this).closest("div").find("#spnstatusId").html();
+
+//                    if (spnstatusId != 1041 && parseInt(spnstatusId) != 44 && parseInt(spnstatusId) != 46) {
+//                        $('#ProjGetsummay').modal('show');
+//                        $('#ProjectSummaryTittle').html("Total Proj Movement: " + $(this).closest("div").find(".statusprojsummry").html());
+//                        $('#IsNotduplicate').prop('checked', false);
+
+//                        getProjGetsummay(spnstatusId, true);
+//                    }
+//                });
+//            }
+
+//        },
+//        error: function () {
+//            alert('Error fetching comments.');
+//        }
+//    });
+//}
 
 
     function Getbarchart() {
@@ -417,90 +604,6 @@ function GetAllDashbaordCount() {
 
 
 
-//function getProjGetsummay(spnstatusId) {
-//    var listItem = "";
-//    var userdata =
-//    {
-//        "StatusId": spnstatusId,
-
-//    };
-//    $.ajax({
-//        url: '/Home/GetDashboardStatusDetails',
-//        contentType: 'application/x-www-form-urlencoded',
-//        data: userdata,
-//        type: 'POST',
-
-//        success: function (response) {
-//            if (response != "null" && response != null) {
-
-//                if (response == -1) {
-//                    Swal.fire({
-//                        text: ""
-//                    });
-//                }
-//                else if (response == 0) {
-//                    listItem += "<tr><td class='text-center' colspan=7>No Record Found</td></tr>";
-
-//                    $("#DetailBodysummary").html(listItem);
-//                    $("#lblTotal").html(0);
-//                }
-
-//                else {
-
-//                    var count = 1;
-//                    for (var i = 0; i < response.length; i++) {
-
-//                        listItem += "<tr>";
-
-//                        listItem += "<td class='align-middle'><span id='ProjName'>" + count + "</span></td>";
-//                        listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].projName + "</span></td>";
-//                        listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
-//                        listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].fromUnitName + "</span></td>";
-//                        listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].toUnitName + "</span></td>";
-
-//                        listItem += "<td class='align-middle'><span id='divName'>" + response[i].action + "</span></td>";
-
-//                        if (response[i].isComplete) {
-//                            listItem += "<td ><span class='badge badge-success' id='divName'>Accepted</span></td>";
-//                        } else {
-//                            if (response[i].stkStatusId == 2) {
-//                                listItem += "<td ><span class='badge badge-warning' id='divName'>Obsn</span></td>";
-//                            }
-//                            else if (response[i].stkStatusId == 3) {
-//                                listItem += "<td ><span class='badge badge-danger' id='divName'>Rejected</span></td>";
-
-//                            }
-//                            else {
-//                                listItem += "<td ><span class='badge badge-danger' id='divName'>Pending</span></td>";
-//                            }
-//                        }
-
-//                        listItem += "</tr>";
-//                        count++;
-//                    }
-
-//                    $("#DetailBodysummary").html(listItem);
-
-
-
-
-//                }
-//            }
-//            else {
-//                listItem += "<tr><td class='text-center' colspan=7>No Record Found</td></tr>";
-
-//                $("#DetailBodysummary").html(listItem);
-
-//            }
-//        },
-//        error: function (result) {
-//            Swal.fire({
-//                text: ""
-//            });
-//        }
-//    });
-
-//}
 
 function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
 
@@ -521,7 +624,7 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
         success: function (response) {
             debugger;
             if (response != "null" && response != null) {
-              
+
                 var hasIPA = response.some(item =>
                     [53, 63, 68, 73, 78, 83, 88].includes(item.statusactionMappingid)
                 );
@@ -535,24 +638,24 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                     $("#DetailBodyApproved").html(listItem);
                     $("#lblTotal").html(0);
 
-
                 } else {
                     var count = 1;
 
                     var unitId = $('#spndashboardUnitId').text().trim();
-                  
-                    
+
                     $('#DetailBodyApproved').empty();
                     $('#dashboardApproved').dataTable().fnClearTable();
                     $('#dashboardApproved').dataTable().fnDestroy();
+
                     for (var i = 0; i < response.length; i++) {
-                      
+
                         var projName = response[i].projName;
                         var words = projName.split(" ");
                         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
 
                         listItem += "<tr>";
-                        listItem += "<td class='align-middle' style='width:3%'>" + count + "</td>";
+                        listItem += "<td class='align-middle dp-w-3'>" + count + "</td>";
+
                         //listItem += "<td class='align-middle nowrap'><span id='ProjName'>" + response[i].projName + "</span></td>";
                         if (unitId == 1 || unitId == 2 || unitId == 3 || unitId == 4 || unitId == 5 || unitId == 7) {
                             listItem += "<td class='align-middle nowrap'>" +
@@ -571,22 +674,25 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
 
                         if (response[i].statusactionMappingid == 53) {
                             if (response[i].approvedDt != null && response[i].approvedRemarks != null) {
+
+                                // ✅ removed inline visibility style -> class
+                                var visClass = (response[i].statusactionMappingid == 53) ? "dp-vis-visible" : "dp-vis-hidden";
+
                                 listItem += `
 <td class='text-center noExport'>
-  <button class='badge badge-success generateCertificate'
-      style='visibility:${response[i].statusactionMappingid == 53 ? "visible" : "hidden"}'
+  <button class='badge badge-success generateCertificate ${visClass}'
       onclick="window.open('/Home/Generate?ProjectName=${encodeURIComponent(response[i].projName)}&ApprovedRemarks=${encodeURIComponent(response[i].approvedRemarks)}&ApprovedDt=${encodeURIComponent(response[i].approvedDt)}', '_blank')">
       PDF
   </button>
 </td>`;
+
                             } else {
                                 listItem += `<td></td>`;
                             }
-                            // Show button if mapping ID is 53
 
                         } else if ([63, 68, 73, 78, 83, 88].includes(response[i].statusactionMappingid)) {
 
-                            if (response[i].hasAttachment ==true && response[i].isSponsor ==true ) {
+                            if (response[i].hasAttachment == true && response[i].isSponsor == true) {
                                 listItem += `
 <td>
     <a href="javascript:void(0);" 
@@ -594,7 +700,7 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
        data-id="${response[i].psmIds}">
         <img src="/assets/images/icons/attachemnts_clip.png" 
              alt="Icon" 
-             style="width: 31px; height: 29px; margin-right: 0px;">
+             class="dp-attach-icon">
     </a>
 </td>`;
                             }
@@ -603,19 +709,14 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                             }
 
                         }
-                       
-                      
 
-                        
-
-                      
                         listItem += "</tr>";
                         count++;
                     }
 
                     if (hasIPA) {
                         //initializeDataTable("#IPAdashboardApproved");
-                        refreshDataTable('#IPAdashboardApproved')
+                        refreshDataTable('#IPAdashboardApproved');
                         $("#IPADetailBodyApproved").html(listItem);
                         var table = $('#IPAdashboardApproved').DataTable({
                             lengthChange: true,
@@ -630,13 +731,6 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                                 'copy',
                                 'excel',
                                 'csv',
-                                //{
-                                //    text: 'PDF',
-                                //    extend: 'pdfHtml5',
-                                //    action: function (e, dt, node, config) {
-                                //        PdfDiv();
-                                //    }
-                                //},
                             ],
                             searchBuilder: {
                                 conditions: {
@@ -668,61 +762,52 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                         });
                     } else {
 
-                        refreshDataTable('#dashboardApproved')
+                        refreshDataTable('#dashboardApproved');
                         $("#DetailBodyApproved").html(listItem);
-                    var table = $('#dashboardApproved').DataTable({
-                        lengthChange: true,
-                        dom: 'lBfrtip',
-                        retrieve: true,
-                        destroy: true,
-                        pageLength: 25,
-                        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                        "order": [[0, "asc"]],
-                        
-                        buttons: [
-                            'copy',
-                            'excel',
-                            'csv',
-                            //{
-                            //    text: 'PDF',
-                            //    extend: 'pdfHtml5',
-                            //    action: function (e, dt, node, config) {
-                            //        PdfDiv();
-                            //    }
-                            //},
-                        ],
-                        searchBuilder: {
-                            conditions: {
-                                num: {
-                                    'MultipleOf': {
-                                        conditionName: 'Multiple Of',
-                                        init: function (that, fn, preDefined = null) {
-                                            var el = $('<input/>').on('input', function () { fn(that, this) });
 
-                                            if (preDefined !== null) {
-                                                $(el).val(preDefined[0]);
+                        var table = $('#dashboardApproved').DataTable({
+                            lengthChange: true,
+                            dom: 'lBfrtip',
+                            retrieve: true,
+                            destroy: true,
+                            pageLength: 25,
+                            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                            "order": [[0, "asc"]],
+
+                            buttons: [
+                                'copy',
+                                'excel',
+                                'csv',
+                            ],
+                            searchBuilder: {
+                                conditions: {
+                                    num: {
+                                        'MultipleOf': {
+                                            conditionName: 'Multiple Of',
+                                            init: function (that, fn, preDefined = null) {
+                                                var el = $('<input/>').on('input', function () { fn(that, this) });
+
+                                                if (preDefined !== null) {
+                                                    $(el).val(preDefined[0]);
+                                                }
+
+                                                return el;
+                                            },
+                                            inputValue: function (el) {
+                                                return $(el[0]).val();
+                                            },
+                                            isInputValid: function (el, that) {
+                                                return $(el[0]).val().length !== 0;
+                                            },
+                                            search: function (value, comparison) {
+                                                return value % comparison === 0;
                                             }
-
-                                            return el;
-                                        },
-                                        inputValue: function (el) {
-                                            return $(el[0]).val();
-                                        },
-                                        isInputValid: function (el, that) {
-                                            return $(el[0]).val().length !== 0;
-                                        },
-                                        search: function (value, comparison) {
-                                            return value % comparison === 0;
                                         }
                                     }
                                 }
                             }
-                        }
-                    });
+                        });
                     }
-
-               
-
                 }
             }
             else {
@@ -731,8 +816,6 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                 listItem += "<tr><td class='text-center' colspan='7'>No Record Found</td></tr>";
                 $("#DetailBodyApproved").html(listItem);
 
-
-
             }
         },
         error: function (result) {
@@ -740,6 +823,7 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
         }
     });
 }
+
 function getProjGetsummay(spnstatusId, IsDuplicate) {
    
     var listItem = "";
@@ -783,7 +867,7 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
 
                         listItem += "<tr>";
-                        listItem += "<td class='align-middle' style='width:6%;'><span id='ProjName'>" + count + "</span></td>";
+                        listItem += "<td class='align-middle'><span id='ProjName'>" + count + "</span></td>";
                         //listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].projName + "</span></td>";
                         //listItem += "<td class='align-middle'><span id='ProjName' title='" + projName + "'>" + shortProjName + "</span></td>";
                         if (unitId == 1 || unitId == 2 || unitId == 3 || unitId == 4 || unitId == 5 || unitId == 7/*|| response[i].stakeHolder == unitId*/) {
@@ -1092,7 +1176,7 @@ function getProjBisagN(spnstatusId, spnstatusActionsMappingId) {
                     $('#DetailBodyBisagN').empty();
                     for (var i = 0; i < response.length; i++) {
                         listItem += "<tr>";
-                        listItem += "<td class='align-middle' style='width:3%'>" + count + "</td>";
+                        listItem += "<td class='align-middle'>" + count + "</td>";
                         listItem += "<td class='align-middle nowrap'><span id='ProjName'>" + response[i].projName + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + DateFormateddMMyyyyhhmmss(response[i].timeStamp) + "</span></td>";
@@ -1430,63 +1514,7 @@ function showPopup(segmentIndex) {
 
     $(".spnWhitelistedorDues").html(title);
     GetwhilteListProject(statusActionsMappingId)
-    //$.ajax({
-    //    url: '/Home/GetDashboardApproved',
-    //    contentType: 'application/x-www-form-urlencoded',
-    //    data: userdata,
-    //    type: 'POST',
-    //    success: function (response) {
-    //        //console.log("GetDashboardApprovedData", response);
-    //        if (response != "null" && response != null) {
 
-    //            if (response == -1) {
-    //                Swal.fire({ text: "" });
-    //            } else if (response == 0) {
-
-                  
-
-
-    //            } else {
-                   
-    //                let datestring = "";
-
-    //                if (segmentIndex === 0) {
-    //                    projects = response;
-    //                    datestring ="Whitelisted On"
-    //                    title = `Whitelisted Projects (${projects.length})`;
-    //                } else if (segmentIndex === 1) {
-    //                    projects = response;
-    //                    title = `Due for Re-vetting (${projects.length})`;
-    //                    datestring = "Expired On"
-    //                }
-
-    //                popupTitle.textContent = title;
-
-    //                // Clear existing list
-    //                projectList.innerHTML = '';
-
-    //                // Add projects to list
-    //                projects.forEach(project => {
-    //                    const listItem = document.createElement('li');
-    //                    listItem.className = segmentIndex === 1 ? 'project-item due-revetting' : 'project-item';
-    //                    listItem.innerHTML = `
-    //                <div class="project-name">Project Name : ${project.projName}</div>
-
-    //                <div class="project-status">${datestring}: ${DateFormateddMMyyyyhhmmss(project.timeStamp)} | Sponser: ${project.stakeHolder}</div>
-    //            `;
-    //                    projectList.appendChild(listItem);
-    //                });
-
-    //                popupOverlay.style.display = 'block';
-                   
-    //            }
-    //        }
-          
-    //    },
-    //    error: function (result) {
-    //        Swal.fire({ text: "" });
-    //    }
-    //});
 
 
 
@@ -1516,7 +1544,9 @@ $(document).ready(function () {
 
     // Click event for dynamically generated anchors
     $(document).on("click", ".anchorDetail", function (e) {
+
         e.preventDefault(); // prevent default anchor behavior
+       
         debugger;
         var id = $(this).data('id'); // better than attr()
 

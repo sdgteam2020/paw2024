@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
-    
+
+
+
     var param = sessionStorage.getItem("spntabType");
 
     if (param != null) {
@@ -260,6 +262,7 @@ function ProcessProjConfirm(ProjId) {
 //}
 
 function GetProjectMovHistory(ProjId) {
+   
     var listitem = "";
 
     $.ajax({
@@ -1298,3 +1301,60 @@ $(".parkedProj").on('click', function () {
 
    // 
 });
+
+
+
+
+	$(document).ready(function () {
+		$(document).on('click', '.pdf', function () {
+			$('#AttHistoryView').modal('show');
+		});
+	});
+
+
+
+
+	const containerTabs = document.getElementById("tabs");
+
+	const getInfoTabs = container => {
+		return [...container.querySelectorAll(".tabs__content__item")];
+	};
+
+	const getLinksTab = container => {
+		return [...container.querySelectorAll("a[data-tab]")];
+	};
+
+	const activateTab = (tabId) => {
+		const tabsInfo = getInfoTabs(containerTabs);
+
+		tabsInfo.forEach(tab => {
+			const isActive = tab.getAttribute("id") === tabId;
+			tab.classList.toggle("active-tab", isActive);
+		});
+	};
+
+	const activateLink = (link) => {
+		const linksTab = getLinksTab(containerTabs);
+		linksTab.forEach(tabLink => {
+			tabLink.classList.toggle("active-link", tabLink === link);
+		});
+	};
+
+	const handleTabClick = event => {
+		const clickedElement = event.target;
+		if (clickedElement.tagName === "A" && clickedElement.hasAttribute("data-tab")) {
+			event.preventDefault();
+			const tabId = clickedElement.getAttribute("data-tab");
+			activateTab(tabId);
+
+			activateLink(clickedElement);
+
+
+
+		}
+	};
+
+	containerTabs.addEventListener("click", handleTabClick);
+
+
+

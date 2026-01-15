@@ -21,7 +21,7 @@
                         <div class="col-md-6">
 
                             <div class="form-group">
-                                <label asp-for="RankName"><b>Rank Name</b> <span class="required-indicator"><font style="color:red;"><b>*</b></font></span></label>
+                                <label asp-for="RankName"><b>Rank Name</b> <span class="required-indicator"></label>
                                 <input asp-for="RankName" class="form-control" required onkeyup="ValInData(this)" />
                                 <span asp-validation-for="RankName" class="text-danger"></span>
                             </div>
@@ -30,8 +30,8 @@
 
 
                         <div class="form-group">
-                            <div class="text-center" style="margin-top: 2rem;">
-                                <button type="submit" class="btn btn-primary" style="margin-right: 23px">Create</button>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary" >Create</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             </div>
                         </div>

@@ -1,0 +1,55 @@
+﻿
+.form-card {
+    display: block; /* Initially show the form */
+}
+
+.additional-details {
+    display: none; /* Hide the additional details initially */
+}
+
+.underline-h5 {
+    padding: 0.5rem;
+    width: 100%;
+    margin: 0 auto; /* Center the box */
+    text-align: center;
+    border-color: #03c1fc;
+    /*box-shadow: 2px 6px 5px -3px #062b50;*/
+    background-color: #0cafff;
+    color: white;
+    font-family: Arial;
+    font-size: 19px;
+    margin-bottom: 0.5rem;
+    height: -1px;
+}
+/* Card heading styling */
+.project-heading h2 {
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    height: 33px;
+}
+
+/* Button Styling */
+.btn-save {
+    background-color: blue;
+    color: white;
+}
+
+/* Form control styling */
+.form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Text-danger class for validation messages */
+.text-danger {
+    color: red;
+}
+
+/* For the project heading */
+.project-heading.mb-4 {
+    margin-bottom: 20px;
+}

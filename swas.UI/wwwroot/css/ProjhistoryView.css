@@ -1,0 +1,191 @@
+﻿/* Card Styling */
+.card {
+    border-radius: 10px;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Table Styling */
+.new-proj-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-header {
+    text-align: center;
+    border: 1px solid black;
+}
+
+.table-cell {
+    text-align: left;
+    border: 1px solid black;
+    padding: 8px;
+}
+
+/* PDF Icon Styling */
+.pdf-download-icon {
+    width: 35px;
+    height: 25px;
+}
+
+/* Center Text Alignment for the Table */
+.center-align {
+    text-align: center;
+}
+
+/* Text Wrapping */
+.long-text {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* Styling for Project Headings */
+.projectheading {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Table Column and Row Styling */
+.new-proj-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+/* Modal Custom Width */
+.modal-custom-width {
+    width: 85% !important;
+    margin-left: 79px !important;
+}
+
+/* Modal Dialog Custom Width */
+.modal-dialog-custom-width {
+    width: 203% !important;
+}
+/* Card and Layout Styling */
+.card {
+    border-radius: 10px;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Table Styling */
+.new-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-header {
+    text-align: center;
+    border: 1px solid black;
+    padding: 8px;
+}
+
+.table-cell {
+    text-align: left;
+    border: 1px solid black;
+    padding: 8px;
+}
+
+/* PDF Icon Styling */
+.pdf-download-icon {
+    width: 35px;
+    height: 25px;
+}
+
+/* Custom Styling for checklist title */
+.checklist-title {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Text Wrapping */
+.long-text {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* Table Row Styling */
+.table-row {
+    width: 100%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+/* Table Column Styling */
+.table-cell {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+/* Custom Class for Attachment Icon */
+.attachment-icon {
+    width: 31px;
+    height: 29px;
+    margin-right: 0;
+}
+
+/* Card and Layout Styling */
+.card {
+    border-radius: 10px;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Table Styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .table th,
+    .table td {
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    .table th {
+        background-color: #f2f2f2;
+    }
+
+body {
+    font-family: Arial;
+    font-size: 10pt;
+}
+
+
+
+#checklist th, #checklist td {
+    margin-top: 30px;
+    font-size: 20px;
+    padding: 5px;
+    border: 1px solid #000000;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Watermark styling for print */
+.watermark {
+    transform: rotate(-45deg);
+    z-index: 10000;
+    opacity: 0.3;
+    color: black;
+    position: fixed;
+    top: auto;
+    left: 6%;
+    top: 39%;
+    color: #8e9191;
+    font-size: 80px;
+    font-weight: 500;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}

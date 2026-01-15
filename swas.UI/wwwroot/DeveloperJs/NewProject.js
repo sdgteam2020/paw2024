@@ -220,9 +220,15 @@ function ValInData(input) {
     input.value = input.value.replace(regex, "");
 }
 
-function ButtonClick() {
 
-    if (ButtonText === 'Sign In' && flag === 'True') {
+$('#ProcessId').on('click', function(){
+    ButtonClick();
+})
+
+function ButtonClick() {
+    debugger;
+    var ButtonText = $('#ProcessId').data('button-text');
+    if (ButtonText === 'Sign In') {
         var signInUrl = '/Home/Index';
         window.location.href = signInUrl;
     }

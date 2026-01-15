@@ -9,7 +9,7 @@
     int sno = 0;
 }
 
-
+<link href="~/css/document_index.css" rel="stylesheet"/>
 
 @using (Html.BeginForm("Index", "Documents", FormMethod.Get))
 {
@@ -18,32 +18,14 @@
 
 
 
-<style>
-
-    .underline-h5 {
-        padding: 0.5rem;
-        width: 100%;
-        margin: 0 auto; /* Center the box */
-        text-align: center;
-        border-color: #03c1fc;
-        /*box-shadow: 2px 6px 5px -3px #062b50;*/
-        background-color: #0cafff;
-        color: white;
-        font-family: Arial;
-        font-size: 15px;
-        margin-bottom: 0.5rem;
-        height: -1px;
-    }
-
-</style>
-
 <div>
-    <h5 class="text-center mb-4 underline-h5" style="text-align: center; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); position: relative;height: 33px;">
+    <h5 class="text-center mb-4 underline-h5 custom-h5">
         <span>
             Projects History Details
         </span>
     </h5>
 </div>
+
 
 
 

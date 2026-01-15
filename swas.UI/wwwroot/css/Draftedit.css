@@ -1,0 +1,84 @@
+﻿/* Card and Layout Styling */
+.form-control {
+    width: 100%;
+}
+
+.radius-10 {
+    border-radius: 10px;
+}
+
+.radius-12 {
+    border-radius: 12px;
+}
+
+.error-message {
+    display: none;
+    color: red;
+}
+
+.required-indicator {
+    color: red;
+}
+
+.text-danger {
+    color: red;
+}
+
+.form-card {
+    padding: 20px;
+}
+
+.steps {
+    text-align: center;
+}
+
+.new-table {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.newprojectheading {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Styling for Hidden Error Messages */
+.invalid-feedback {
+    color: red;
+}
+
+/* Styling for specific form components */
+.text-center {
+    text-align: center;
+}
+
+.dropdownsearch {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+/* Card Styling */
+.card {
+    border-radius: 10px;
+}
+
+/* Modal Content Custom Width */
+.modal-custom-width {
+    width: 650px;
+}
+
+/* Optional: Add more styles if needed */
+.modal-header {
+    font-weight: bold;
+}
+
+.btn-close {
+    background-color: transparent;
+    border: none;
+}

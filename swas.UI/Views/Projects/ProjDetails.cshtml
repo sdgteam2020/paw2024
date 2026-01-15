@@ -29,260 +29,6 @@
 <link href="~/css/timeline.css" rel="stylesheet" />
 <link href="~/assets/css/tooltip.css" rel="stylesheet" />
 
-<style>
-	.red-text {
-		color: red;
-	}
-
-	body {
-		font-size: 15px;
-	}
-
-	@@media (min-width: 1200px) {
-		.modal-xl {
-			--bs-modal-width: 1400px;
-		}
-	}
-
-</style>
-
-<style>
-
-	.tabs__head {
-		list-style: none;
-		padding: 0;
-		display: flex;
-	}
-
-		.tabs__head li {
-			margin-right: 10px;
-		}
-
-		.tabs__head a {
-			text-decoration: none;
-			padding: 10px 15px;
-			border: 1px solid #ccc;
-			background-color: #fff; /* Set the default background color */
-		}
-
-			.tabs__head a.active-link {
-				background-color: white; /* Set the active background color to white */
-				border-bottom: 20px solid #dee2e6; /* Adjust this as needed */
-			}
-
-	.tabs__content__item {
-		display: none;
-	}
-
-		.tabs__content__item.active-tab {
-			display: block;
-		}
-</style>
-
-<style>
-	.tabs__content__item {
-		overflow: auto; /* Add this style to enable scrolling */
-		max-height: 700px; /* Set a maximum height for the table to make the scrollbar appear when the content exceeds this height */
-	}
-
-
-		.tabs__content__item::-webkit-scrollbar {
-			width: 8px;
-		}
-
-		.tabs__content__item::-webkit-scrollbar-thumb {
-			background-color: #888;
-		}
-
-	.FontSize {
-		font-size: 15px;
-	}
-
-	.btn-Fwd {
-		height: 1.5rem;
-		margin-top: -1.5rem;
-		padding-top: 0rem
-	}
-
-	.btn-FwdHistory {
-		height: 1.5rem;
-		margin-top: -1.2rem;
-		padding-top: 0rem
-	}
-
-	.btn-FwdHistorysent {
-		height: 1.5rem;
-		margin-top: -1.2rem;
-		padding-top: 0rem
-	}
-
-	.col-width9 {
-		width: 9% !important;
-	}
-
-	.s-no-column {
-		min-width: 40px;
-		max-width: 60px;
-		width: 5vw;
-	}
-
-
-	/* ------------scrollar */
-	/* styles.css */
-
-	.tabs__content__item {
-		height: 100%;
-		display: flex;
-		flex-direction: column;
-	}
-
-	.content {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-	}
-
-	.card {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-	}
-
-	.card-body {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		overflow-y: hidden; /* Prevent scrolling here */
-	}
-
-	.table-wrapper {
-		flex: 1;
-		overflow-y: auto; /* Enable scrolling */
-	}
-
-	table {
-		width: 100%;
-		border-collapse: collapse;
-	}
-
-	th,
-	td {
-		padding: 8px;
-		text-align: left;
-		border-bottom: 1px solid #ddd;
-		font-size: 15px;
-	}
-
-	th {
-		position: -webkit-sticky;
-		position: sticky;
-		top: 0;
-		background: #fff;
-		z-index: 2; /* Ensure header stays on top */
-	}
-
-	tbody tr:nth-child(even) {
-		background-color: #f2f2f2;
-	}
-
-	.buttonsToHide {
-		display: none !important;
-	}
-
-	body {
-		font-size: 15px !important;
-	}
-
-	.bold-text {
-		font-weight: bold;
-	}
-
-	.custom-modal-size {
-		max-width: 85%; /* Set the modal width to 80% of the screen */
-		width: 85%; /* Ensure it scales responsively */
-		margin: auto; /* Center horizontally */
-	}
-
-		.custom-modal-size .custom-modal-content {
-			height: 65vh; /* Ensure the content adjusts dynamically */
-			overflow-y: auto; /* Add vertical scrolling for long content */
-			overflow-x: hidden; /* Prevent horizontal overflow */
-			/* margin-left: 248px; */
-		}
-
-	/* .swal2-title{
-		background-color: #002b5e;
-		color: white;
-		font-size: 18px;
-		padding-bottom: 26px;
-		} */
-	.pullback-title {
-		background-color: #002b5e;
-		color: white;
-		font-size: 18px;
-		padding-bottom: 26px;
-		/* add any other styles you need */
-	}
-
-	/*  .custom-swal-title {
-		background-color: #002b5e;
-		color: white;
-		font-size: 18px;
-		padding-bottom: 26px;
-		padding: 10px;
-		border-radius: 5px;
-		display: inline-block;
-		} */
-
-
-	.custom-modal-size {
-		max-width: 80%; /* Increase the width as required */
-		width: 75%;
-		/* height: 10%; Adjust height if necessary */
-		margin: auto;
-	}
-
-		.custom-modal-size .modal-content {
-			height: 100%; /* Ensure the content fills the modal */
-			overflow: auto; /* Add scrolling for long content */
-		}
-
-	.modal-dialog {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		min-height: 100vh; /* Full height */
-	}
-
-	.tooltip-text {
-		background-color: #5a8cd6;
-	}
-
-	.to-unit-name {
-		min-width: 80px;
-		max-width: 120px;
-		width: 10vw;
-	}
-
-	.projaction {
-		min-width: 80px;
-		max-width: 150px;
-		width: 10vw;
-	}
-
-	.disabled-link {
-		pointer-events: none;
-		opacity: 0.7;
-		cursor: not-allowed;
-	}
-
-	.select2-container--default .select2-selection--multiple.is-invalid,
-	.is-invalid .select2-selection--multiple {
-		border-color: #dc3545 !important; /* Bootstrap's red */
-		box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
-	}
-
-</style>
 
 
 <link href="~/css/timeline.css" rel="stylesheet" />
@@ -315,7 +61,8 @@
 				</a>
 			</li>
 			<li class="me-2 mb-1">
-				<a href="#" data-tab="completed" id="tabcompleted" class="d-flex align-items-center" style="min-width:230px;">
+				<a href="#" data-tab="completed" id="tabcompleted" class="d-flex align-items-center tab-minw-230">
+
 					<img src="~/assets/images/completed.png" width="20" height="20" class="me-1" /> Completed (Hosted On ADN)
 				</a>
 			</li>
@@ -347,17 +94,18 @@
 
 		<div class="tabs__content">
 			<div class="table-responsive">
-				<div class="tabs__content__item active-tab" id="inbox" style="height:100%;">
-					<div class="content" style="height:100%;">
-						<div class="card radius-10 w-100" style="height:100%;">
-							<div class="card-body table-responsive" style="height:100%; overflow-y: auto;">
+				<div class="tabs__content__item active-tab h-100p" id="inbox">
+					<div class="content h-100p">
+						<div class="card radius-10 w-100 h-100p">
+							<div class="card-body table-responsive h-100p overflow-y-auto">
+
 								<table id="Inbox" class="table table-striped table-bordered">
 									<thead>
 										<tr>
 											<th class="s-no-column">Ser No</th>
-											<th style="width:20%">Proj Name</th>
+											<th class="col-w-20">Proj Name</th>
 											<th>Sponsor</th>
-											<th style="width:9%;">From</th>
+											<th class="col-w-9">From</th>
 											@* <th class="to-unit-name">To Unit Name</th> *@
 											<th>Received On</th>
 											<th>Stage</th>
@@ -395,13 +143,17 @@
 
 													@if (@project.HasRemainder1 == true && project.IsCc == false)
 													{
-														<div class="hover-container" style="position: relative; display:inline" id="notificationContainer @project.ProjId">
-															<div style="position: relative; display: inline-block; margin-left: 5px;" id="ReadRemainderNoti" data-projid="@project.ProjId">
-																<img src="/assets/images/icons/notification-unscreen.gif" alt="Notification" style="width:30px; height:30px;" />
+														<div class="hover-container notif-hover-container" id="notificationContainer @project.ProjId">
+
+															<div class="notif-inline-block" id="ReadRemainderNoti" data-projid="@project.ProjId">
+
+																<img src="/assets/images/icons/notification-unscreen.gif" alt="Notification" class="ico-w30h30" />
+
 
 																@if (project.RemainderCount > 0)
 																{
-																	<span class="badge3" id="Remainderbedge" style="position: absolute; top: -5px; right: -5px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px;">
+																	<span class="badge3 rem-badge" id="Remainderbedge">
+
 																		@project.RemainderCount
 																	</span>
 																}
@@ -418,7 +170,7 @@
 																			.Where(r => !string.IsNullOrWhiteSpace(r));
 																			foreach (var remark in remarks)
 																			{
-																				<li style="margin-bottom: 5px;">
+																				<li >
 																					<i class="fas fa-comment-dots text-primary"></i>
 																					@remark
 																				</li>
@@ -502,7 +254,8 @@
 														@if (project.IsCc == true || project.IssentCC == true)
 														{
 															<div class="col-md-2">
-																<div class="RefLetter-container btn btn-warning p-2" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">
+																<div class="RefLetter-container btn btn-warning p-2 cc-pill">
+
 																	<div class="tooltip-container" data-tooltip="@project.CCUnitName">
 																		@if (project.IsCc == true)
 																		{
@@ -525,10 +278,11 @@
 
 												@* <td>@project.ToUnitName</td> *@
 												@* <td>@project.TimeStamp.ToString().Substring(0,10)</td> *@
-												<td style="width:190px" class="TimeStampForcheckdate">@project.TimeStamp</td>
-												<td style="width:150px">@project.Stage</td>
-												<td style="width:190px">@project.Status</td>
-												<td style="width:150px">@project.Action</td>
+												<td class="TimeStampForcheckdate col-w-190">@project.TimeStamp</td>
+												<td class="col-w-150">@project.Stage</td>
+												<td class="col-w-190">@project.Status</td>
+												<td class="col-w-150">@project.Action</td>
+
 
 
 
@@ -536,29 +290,20 @@
 												<td>
 													<div class="row ">
 														<div class="col-md-12 d-flex">
-															@* <div class="mr-2">
-														@if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
-														{
-														<a href="javascript:void(0);" class="processDetail mr-2" data-id="@project.EncyPsmID">
-														<img src="/assets/images/icons/process1.png" alt="Icon" style="height: 22px;">
-														</a>
-														}
-														else
-														{
-														<button type="button" class="btn btn-success btn-Fwd" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
-														}
-														</div> *@
+						
 
 															<div class="mr-2">
 																@if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1)
 																{
 																	<a href="javascript:void(0);" class="processDetail mr-2" data-id="@project.EncyPsmID">
-																		<img src="/assets/images/icons/process1.png" alt="Icon" style="height: 22px;">
+																		<img src="/assets/images/icons/process1.png" alt="Icon" class="ico-h-22">
+
 																	</a>
 																}
 																else if (project.IsCc == false)
 																{
-																	<button type="button" class="btn btn-success btn-Fwd" data-Date_type="@project.AdminApprovalStatus" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Send</button>
+																	<button type="button" class="btn btn-success btn-Fwd btn-mini" data-Date_type="@project.AdminApprovalStatus" data-proj-name="@project.ProjName">Send</button>
+
 
 																}
 
@@ -567,20 +312,22 @@
 															@if (project.StageId == 1 && project.IsProcess == false && Convert.ToInt32(ViewBag.unitid) == 1 && project.IsCc == false)
 															{
 																<div class="col-md-4">
-																	<button type="button" class="btn btn-success btn-Obsn" data-proj-name="@project.ProjName" style="padding: 1px !important;font-size: 13px !important;">Obsn</button>
+																	<button type="button" class="btn btn-success btn-Obsn btn-mini" data-proj-name="@project.ProjName">Obsn</button>
+
 																</div>
 															}
 															<div class="mr-2">
 																@if (project.IsCc == true)
 																{
 
-																	<button type="button" class="btn btn-success invisible" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">Fwd</button>
+																	<button type="button" class="btn btn-success invisible btn-mini">Fwd</button>
 
 
 																}
 															</div>
 															<div class="col-md-4">
-																<button type="button" class="btn btn-success btn-FwdHistory" data-proj-name="@project.ProjName" style="margin-top: 1px;" title="History"><i class="fa-solid fa-timeline"></i></button>
+																<button type="button" class="btn btn-success btn-FwdHistory btn-mt-1" data-proj-name="@project.ProjName" title="History"><i class="fa-solid fa-timeline"></i></button>
+
 															</div>
 														</div>
 													</div>
@@ -598,7 +345,7 @@
 																		<span title="Approved Legacy Project">
 
 																			<a href="#" class="date-action mr-2 disabled-link" data-action="current" data-ids="@project.EncyPsmID">
-																				<img src="/assets/images/icons/Current_date.png" alt="Icon" style="height: 27px;">
+																				<img src="/assets/images/icons/Current_date.png" alt="Icon" class="ico-h-27">
 																			</a>
 																		</span>
 																	}
@@ -607,7 +354,7 @@
 																		<span title="Pending From Admin">
 																			<!-- Pending shown only to the unit that requested -->
 																			<a href="#" class="date-action mr-2 disabled-link" data-action="Pending">
-																				<img src="/assets/images/icons/Pendingbtn.png" alt="Icon" style="height: 30px;">
+																				<img src="/assets/images/icons/Pendingbtn.png" alt="Icon" class="ico-h-30">
 																			</a>
 																		</span>
 																	}
@@ -615,7 +362,7 @@
 																	{
 																		<!-- Other units can still request -->
 																		<a href="#" class="date-action mr-2" data-actiontype="1" data-action="back" data-ids="@project.EncyPsmID" title="Send request to Admin to ingest legacy Project">
-																			<img src="/assets/images/icons/Back_date.png" alt="Icon" style="height: 27px;">
+																			<img src="/assets/images/icons/Back_date.png" alt="Icon" class="ico-h-27">
 																		</a>
 
 																	}
@@ -627,7 +374,7 @@
 																	{
 																		<!-- Other units can still request -->
 																		<a href="#" class="date-action mr-2" data-actiontype="1" data-action="back" data-ids="@project.EncyPsmID" title="Send request to Admin to ingest legacy Project">
-																			<img src="/assets/images/icons/Back_date.png" alt="Icon" style="height: 27px;">
+																			<img src="/assets/images/icons/Back_date.png" alt="Icon" class="ico-h-27">
 																		</a>
 																	}
 																}
@@ -666,7 +413,8 @@
 						</div>
 						<div class="modal-body">
 							<p><b>You are about to send the current project for simultaneous processing and comments of DG SIGS(SIGS-7), AHCC, ACG, ASDC. Pl Confirm!</b></p>
-							<div id="datepickerContainer" style="display: none;">
+							<div id="datepickerContainer" class="d-none-inline">
+
 								<p><b>Please select Date & Time :</b></p>
 								<input type="datetime-local" id="datepicker" class="form-control" placeholder="Select Date" required>
 							</div>
@@ -684,16 +432,17 @@
 			}
 
 			<div class="table-responsive">
-				<div class="tabs__content__item" id="sent" style="height:100%;">
-					<div class="content" style="height:100%;">
-						<div class="card radius-10 w-100" style="height:100%;">
-							<div class="card-body table-responsive" style="height:100%; overflow-y: auto;">
+				<div class="tabs__content__item h-100p" id="sent">
+					<div class="content h-100p">
+						<div class="card radius-10 w-100 h-100p">
+							<div class="card-body table-responsive h-100p overflow-y-auto">
+
 								<table id="Sents" class="table table-striped table-bordered">
 
 									<thead>
 										<tr>
 											<th class="s-no-column">Ser No</th>
-											<th style="width:20%">Proj Name</th>
+											<th class="col-w-20">Proj Name</th>
 											<th>Sponsor</th>
 
 											@* <th class="col-width9">From</th> *@
@@ -730,28 +479,28 @@
 														@snosent
 														@if (project.IsRead == false)
 														{
-															<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="color:#18bb6b"
-																 fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+															<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+																 fill="currentColor" class="bi bi-check text-teal-custom" viewBox="0 0 16 16">
 																<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />
 															</svg>
 														}
 														else
 														{
-															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" style="color:#18bb6b"
+															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" class="text-teal-custom"
 																 height="16" fill="currentColor">
 																<path d="M342.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l80 80c12.5 12.5 32.8 12.5 45.3 0l160-160zm96 128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 402.7 54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l256-256z" />
 															</svg>
 														}
 														@if (project.HasRemainder == true && project.HideReminderIcon == true)
 														{
-															<img src="/assets/images/icons/greenRemainder.png" id="btnRemainder" alt="Reminder Sent" title="UnRead Reminder" data-projid="@project.ProjId" data-projname="@project.ProjName" style="width:20px; height:20px;" />
+															<img src="/assets/images/icons/greenRemainder.png" id="btnRemainder" alt="Reminder Sent" title="UnRead Reminder" data-projid="@project.ProjId" data-projname="@project.ProjName"/>
 														}
 														else if (project.HideReminderIcon == true)
 
 
 
 														{
-															<img src="/assets/images/icons/add-reminder1.png" id="btnRemainder" alt="Reminder" title="Send Reminder" data-projid="@project.ProjId" data-projname="@project.ProjName" style="width:20px; height:20px;" />
+															<img src="/assets/images/icons/add-reminder1.png" id="btnRemainder" alt="Reminder" title="Send Reminder" data-projid="@project.ProjId" data-projname="@project.ProjName" />
 														}
 
 													</div>
@@ -790,41 +539,7 @@
 													
 													
 												</td>
-												@* <td>
-											<div class="d-flex">
-											<div class="col-md-10">
-											<div class="RefLetter-container ">
-											@project.FromUnitUserDetail
-											<div class="RefLetter">
-											@project.FromUnitName
-											</div>
-											</div>
-											</div>
-
-											@if (project.IsCc == true)
-											{
-
-
-											<div class="RefLetter-container btn btn-warning p-2" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">
-											<div class="tooltip-container" data-tooltip="@project.CCUnitName">
-											@if (project.IsCc == true)
-											{
-											<span class="short-text" id="IsccForRemoveRow">Cc</span>
-											}
-											else
-											{
-
-											<span class="short-text">Cc</span>
-
-											}
-											<span class="tooltip tooltip-text">@project.CCUnitName</span>
-											</div>
-
-											</div>
-											}
-											</div>
-
-											</td> *@
+											
 
 												<td class="RefLetter-container">
 
@@ -847,7 +562,8 @@
 														{
 
 
-															<div class=" btn btn-warning p-2" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">
+															<div class="btn btn-warning p-2 cc-pill">
+
 																<div class="tooltip-container" data-tooltip="@project.CCUnitName">
 																	@if (project.IsCc == true)
 																	{
@@ -879,18 +595,7 @@
 														{
 															<div class="col-md-6">
 
-																@* Undo Code  *@
-																@*@if (project.PsmIds == project.undopsmId && project.IsRead == false)
-														{
-														if(project.StageId!=1)
-														{
-														<button type="button" class="btn btn-success btn-Undo ml-2" style="padding: 1px !important;font-size: 13px !important;">Undo </button>
-														}
-
-														}*@
-
-
-																@* Pull Back  *@
+																
 
 
 																@if (project.IsPullBack == false || project.IsPullBack == null) // project.undopsmId for the specified active project, excluding comments and records with undo remarks.
@@ -898,7 +603,7 @@
 																	if ( project.PullbackAction == true) // stageId!=1 means here this project in not in initial stage..
 																	{
 
-																		<button type="button" class="btn btn-success btn-Undo ml-2" style="padding: 1px !important;font-size: 13px !important;">Pull Back </button>
+																		<button type="button" class="btn btn-success btn-Undo ml-2 btn-mini">Pull Back </button>
 																	}
 																}
 																else
@@ -906,7 +611,9 @@
 																	if (project.StageId != 1 && project.IsPullBack == true)
 																		if (project.IsPullBack == true)
 																		{
-																			<span class="btn btn-success ml-2" style="padding: 1px !important;font-size: 13px !important; cursor: not-allowed;">Pulled Back</span>
+																			<span class="btn btn-success ml-2 btn-mini btn_pulledpack">
+																				Pulled Back
+																			</span>
 																		}
 																}
 
@@ -922,7 +629,7 @@
 
 
 														<div class="col-md-2">
-															<button type="button" class="btn btn-success btn-FwdHistorySent" data-proj-name="@project.ProjName" title="History" style="margin-top: 1px;"><i class="fa-solid fa-timeline"></i></button>
+															<button type="button" class="btn btn-success btn-FwdHistorySent btn-mt-1" data-proj-name="@project.ProjName" title="History"><i class="fa-solid fa-timeline"></i></button>
 														</div>
 													</div>
 
@@ -943,10 +650,11 @@
 
 			<!--Completed Items-->
 			<div class="table-responsive">
-				<div class="tabs__content__item" id="completed" style="height:100%;">
-					<div class="content" style="height:100%;">
-						<div class="card radius-10 w-100" style="height:100%;">
-							<div class="card-body" style="height:100%; overflow-y: auto;">
+				<div class="tabs__content__item h-100p" id="completed">
+					<div class="content h-100p">
+						<div class="card radius-10 w-100 h-100p">
+							<div class="card-body table-responsive h-100p overflow-y-auto">
+
 								<table id="Completed" class="table table-striped table-bordered">
 									<thead>
 										<tr>
@@ -1007,10 +715,10 @@
 			<!-- end completed items -->
 			<!----Draft---->
 
-			<div class="tabs__content__item" id="draft" style="height:100%; ">
-				<div class="content" style="height:100%;">
-					<div class="card radius-10 w-100" style="height:100%;">
-						<div class="card-body" style="height:100%; overflow-y: scroll;">
+			<div class="tabs__content__item" id="draft" >
+				<div class="content" >
+					<div class="card radius-10 w-100" >
+						<div class="card-body">
 
 							<table id="Draft" class="table table-striped table-bordered">
 								<thead>
@@ -1085,7 +793,8 @@
 												{
 
 													<a href="javascript:void(0);" class="anchorDetail" data-id="@project.CurrentPslmId">
-														<img src="/assets/images/icons/attachemnts_clip.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
+														<img src="/assets/images/icons/attachemnts_clip.png" alt="Icon" class="attach-clip-icon">
+
 													</a>
 
 
@@ -1104,8 +813,7 @@
 
 														<a href="@Url.Action("Create", "Projects", new { id = project.EncyID })">
 															<div data-project-id="@project.EncyID" id="ProjDetailId-@project.ProjId">
-																<img src="/assets/images/icons/edit.png" alt="Icon" style="width: 35px; height: 30px; margin-right: 0px;">
-
+																<img src="/assets/images/icons/edit.png" alt="Icon" class="edit-icon">
 
 															</div>
 														</a>
@@ -1113,9 +821,7 @@
 
 													</center>
 												}
-												@*  <div class="ProjDetailUndo" data-project-id="@project.EncyID" id="ProjDetailId-@project.ProjId">
-											<img src="/assets/images/icons/undo.png" alt="Icon" style="width: 25px; height: 20px; margin-right: 0px;">
-											</div>*@
+											
 
 											</td>
 										</tr>
@@ -1136,15 +842,16 @@
 				snosent = 0;
 			}
 			<div class="table-responsive">
-				<div class="tabs__content__item" id="Remainder" style="height:100%;">
-					<div class="content" style="height:100%;">
-						<div class="card radius-10 w-100" style="height:100%;">
-							<div class="card-body" style="height:100%; overflow-y: auto;">
+				<div class="tabs__content__item h-100p" id="Remainder">
+					<div class="content h-100p">
+						<div class="card radius-10 w-100 h-100p">
+							<div class="card-body table-responsive h-100p overflow-y-auto">
+
 								<table id="Remainders" class="table table-striped table-bordered">
 									<thead>
 										<tr>
-											<th style="width:5%">Ser No</th>
-											<th style="width:20%">Proj Name</th>
+											<th>Ser No</th>
+											<th class="col-w-20">Proj Name</th>
 											<th>Sponsor</th>
 											<th>From unit</th>
 											<th>Sent On</th>
@@ -1218,7 +925,9 @@
 
 													<td>
 
-														<a href="#" id="btnRemMove" data-proj-name="@project.ProjName" data-action="@project.projid"><img src="/assets/images/icons/Legacyhistory.png" alt="Icon" style="height: 27px;"></a>
+														<a href="#" id="btnRemMove" data-proj-name="@project.ProjName" data-action="@project.projid">
+															<img src="/assets/images/icons/Legacyhistory.png" alt="Icon" class="ico-h-27">
+														</a>
 													</td>
 												</tr>
 
@@ -1247,15 +956,16 @@
 				int snoCc = 0;
 			}
 			<div class="table-responsive">
-				<div class="tabs__content__item" id="ToCc" style="height:100%;">
-					<div class="content" style="height:100%;">
-						<div class="card radius-10 w-100" style="height:100%;">
-							<div class="card-body table-responsive" style="height:100%; overflow-y: auto;">
+				<div class="tabs__content__item h-100p" id="ToCc">
+					<div class="content h-100p">
+						<div class="card radius-10 w-100 h-100p">
+							<div class="card-body table-responsive h-100p overflow-y-auto">
+
 								<table id="CCtable" class="table table-striped table-bordered">
 									<thead>
 										<tr>
 											<th class="s-no-column">Ser No</th>
-											<th style="width:20%">Proj Name</th>
+											<th class="col-w-20">Proj Name</th>
 											<th>Sponsor</th>
 
 											<th class="col-width9">From</th>
@@ -1288,15 +998,16 @@
 				int snoparked = 0;
 			}
 			<div class="table-responsive">
-				<div class="tabs__content__item" id="ToParked" style="height:100%;">
-					<div class="content" style="height:100%;">
-						<div class="card radius-10 w-100" style="height:100%;">
-							<div class="card-body table-responsive" style="height:100%; overflow-y: auto;">
+				<div class="tabs__content__item h-100p" id="ToParked">
+					<div class="content h-100p">
+						<div class="card radius-10 w-100 h-100p">
+							<div class="card-body table-responsive h-100p overflow-y-auto">
+
 								<table id="parkedtable" class="table table-striped table-bordered">
 									<thead>
 										<tr>
 											<th class="s-no-column">Ser No</th>
-											<th style="width:20%">Proj Name</th>
+											<th class="col-w-20">Proj Name</th>
 											<th>Sponsor</th>
 
 											<th class="col-width9">From</th>
@@ -1411,8 +1122,8 @@
 
 	<div class="modal fade" id="ProjRemainderMov" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content modalSize" style="width: 100rem !important;
-    margin: -23rem !important;">
+			<div class="modal-content modalSize rem-modal-content">
+
 				<div class="modal-header">
 
 					<h4 class="modal-title" id="RemProjName"> </h4>
@@ -1426,11 +1137,9 @@
 								<tr>
 
 
-									<th class="nowrap" style="padding-right:0px; width:10px;">Ser No</th>
+									<th class="nowrap th-serno-tight">Ser No</th>
 
-									@* <th class="nowrap dt-serial-number" style="padding-right:0px;">Ser No</th> *@
-
-									@* <th class="nowrap">Proj Name</th> *@
+								
 									<th class="nowrap">Stake Holder</th>
 									<th class="nowrap">From Unit</th>
 									<th class="nowrap col-md-24">Sent on</th>
@@ -1484,273 +1193,4 @@
 
 
 <script src="~/developerjs/fwdproject.js"></script>
-<script type="text/javascript">
-	$(document).ready(function () {
-		$(document).on('click', '.pdf', function () {
-			$('#AttHistoryView').modal('show');
-		});
-	});
-</script>
-
-
-<script>
-	const containerTabs = document.getElementById("tabs");
-
-	const getInfoTabs = container => {
-		return [...container.querySelectorAll(".tabs__content__item")];
-	};
-
-	const getLinksTab = container => {
-		return [...container.querySelectorAll("a[data-tab]")];
-	};
-
-	const activateTab = (tabId) => {
-		const tabsInfo = getInfoTabs(containerTabs);
-
-		tabsInfo.forEach(tab => {
-			const isActive = tab.getAttribute("id") === tabId;
-			tab.classList.toggle("active-tab", isActive);
-		});
-	};
-
-	const activateLink = (link) => {
-		const linksTab = getLinksTab(containerTabs);
-		linksTab.forEach(tabLink => {
-			tabLink.classList.toggle("active-link", tabLink === link);
-		});
-	};
-
-	const handleTabClick = event => {
-		const clickedElement = event.target;
-		if (clickedElement.tagName === "A" && clickedElement.hasAttribute("data-tab")) {
-			event.preventDefault();
-			const tabId = clickedElement.getAttribute("data-tab");
-			activateTab(tabId);
-
-			activateLink(clickedElement);
-
-
-
-		}
-	};
-
-	containerTabs.addEventListener("click", handleTabClick);
-</script>
-
-
-
-<script>
-	const containerTabss = document.getElementById("tabs");
-
-	const getInfoTabs = container => {
-		return [...container.querySelectorAll(".tabs__content__item")];
-	};
-
-	const getLinksTab = container => {
-		return [...container.querySelectorAll("a[data-tab]")];
-	};
-
-	const activateTab = (tabId) => {
-		const tabsInfo = getInfoTabs(containerTabss);
-
-		tabsInfo.forEach(tab => {
-			const isActive = tab.getAttribute("id") === tabId;
-			tab.classList.toggle("active-tab", isActive);
-		});
-	};
-
-	const activateLink = (link) => {
-		const linksTab = getLinksTab(containerTabss);
-		linksTab.forEach(tabLink => {
-			tabLink.classList.remove("active-link");
-		});
-		link.classList.add("active-link");
-	};
-
-	const handleTabClick = event => {
-		const clickedElement = event.target;
-		if (clickedElement.tagName === "A" && clickedElement.hasAttribute("data-tab")) {
-			event.preventDefault();
-			const tabId = clickedElement.getAttribute("data-tab");
-			activateTab(tabId);
-
-			activateLink(clickedElement);
-		}
-	};
-
-	containerTabss.addEventListener("click", handleTabClick);
-</script>
-
-@section Scripts {
-	@* <script>
-        var pad = "00"
-        var datef2 = new Date();
-        var months = "" + `${(datef2.getMonth() + 1)}`;
-        var days = "" + `${(datef2.getDate())}`;
-        var monthsans = pad.substring(0, pad.length - months.length) + months
-        var dayans = pad.substring(0, pad.length - days.length) + days
-        var year = `${datef2.getFullYear()}`;
-        var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-        var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-        var ss = `${datef2.getSeconds()}`;
-
-        var today = year + `-` + monthsans + `-` + dayans;
-        $(document).ready(function () {
-            var claValue = @Logins.cla;
-
-            if (claValue == 2) {
-                 $('#datepicker').attr('type', 'datetime-local');
-            } else {
-                $('#datepicker').attr('type', 'date');
-            }
-        });
-    </script> *@
-
-	<script>
-		// var pad = "00";
-		// var datef2 = new Date();
-
-
-		// var months = "" + (datef2.getMonth() + 1);
-		// var days = "" + datef2.getDate();
-		// var monthsans = pad.substring(0, pad.length - months.length) + months;
-		// var dayans = pad.substring(0, pad.length - days.length) + days;
-		// var year = datef2.getFullYear();
-		// var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-		// var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-		// var ss = `${datef2.getSeconds()}`;
-
-		// // Today's date and time in the required formats
-		// var todayDate = `${year}-${monthsans}-${dayans}`;
-		// var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
-
-		// $(document).ready(function () {
-		//     var claValue = @Logins.cla;
-
-		//     if (claValue == 2) {
-		//         $('#TimeStampToProjfwd').attr('type', 'datetime-local');
-		//         $('#TimeStampToProjfwd').attr('max', todayDateTime);
-		//         $('#TimeStampToProjfwd').prop('disabled', false); // Allow user input
-		//     } else {
-		//         $('#TimeStampToProjfwd').attr('type', 'date');
-		//         $('#TimeStampToProjfwd').val(todayDate); // Set today's date
-		//         $('#TimeStampToProjfwd').prop('disabled', true); // Freeze input
-		//     }
-
-		// });
-
-
-
-
-
-
-	</script>
-
-	@* <script>
-        // TimeStampToProjfwd
-        var pad = "00";
-        var datef2 = new Date();
-
-        // Formatting the current date and time
-        var months = "" + (datef2.getMonth() + 1);
-        var days = "" + datef2.getDate();
-        var monthsans = pad.substring(0, pad.length - months.length) + months;
-        var dayans = pad.substring(0, pad.length - days.length) + days;
-        var year = datef2.getFullYear();
-        var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-        var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-        var ss = `${datef2.getSeconds()}`;
-
-        // Today's date and time in the required formats
-        var todayDate = `${year}-${monthsans}-${dayans}`;
-        var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
-
-        $(document).ready(function () {
-            var claValue = @Logins.cla; // Get the value of Logins.cla
-
-            if (claValue == 2) {
-                // Set type to datetime-local and max to today with current time
-                $('#TimeStampToProjfwd').attr('type', 'datetime-local');
-                $('#TimeStampToProjfwd').attr('max', todayDateTime);
-            } else {
-                $('#TimeStampToProjfwd').attr('type', 'date');
-            }
-        });
-
-    </script> *@
-	<script>
-		// var pad = "00";
-		// var datef2 = new Date();
-
-		// const formattedDate = datef2.toLocaleString("sv-SE").replace("T", " ");
-
-		// // Formatting the current date and time
-		// var months = "" + (datef2.getMonth() + 1);
-		// var days = "" + datef2.getDate();
-		// var monthsans = pad.substring(0, pad.length - months.length) + months;
-		// var dayans = pad.substring(0, pad.length - days.length) + days;
-		// var year = datef2.getFullYear();
-		// var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-		// var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-		// var ss = `${datef2.getSeconds()}`;
-
-		// // Today's date and time in the required formats
-		// var todayDate = `${year}-${monthsans}-${dayans}`;
-		// var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
-
-		// $(document).ready(function () {
-		//     var claValue = @Logins.cla; // Get the value of Logins.cla
-
-		//     if (claValue == 2) {
-		//         // Set type to datetime-local and max to today with current time
-		//         $('#datepicker').attr('type', 'datetime-local');
-		//         $('#datepicker').attr('max', todayDateTime);
-		//     } else {
-		//         $('#datepicker').attr('type', 'date');
-		//     }
-		// });
-	</script>
-
-}
-
-
-@* <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const datePicker = document.getElementById('datepicker');
-        const today = new Date().toISOString().slice(0, 16);
-        datePicker.max = today;
-    });
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const datePicker = document.getElementById('TimeStampToProjfwd');
-        if (datePicker) {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
-            datePicker.max = formattedDate;
-        }
-    });
-</script>
- *@
-@*
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var projects = @Html.Raw(Json.Serialize(Model.InBox));
-
-        projects.forEach(function (project) {
-            var row = document.getElementById("project-row-" + project.ProjId);
-            if (project.IsRead) {
-                row.classList.remove("bold-text");
-            } else {
-                row.classList.add("bold-text");
-            }
-        });
-    });
-</script>*@
 

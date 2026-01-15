@@ -1,0 +1,90 @@
+﻿
+
+.blue-button {
+    /* Add your styles for the black button here */
+    background-color: #044C92; /* Example background color */
+    border: 1px solid #000;
+    color: #fff;
+    /* Add other styles as needed */
+}
+
+.green-button {
+    /* Styles for the green button */
+    background-color: #4CAF50; /* Example green color */
+    /* Add other styles as needed */
+}
+
+.yellow-button {
+    /* Styles for the yellow button */
+    background-color: #FFC107; /* Example yellow color */
+    /* Add other styles as needed */
+}
+
+.red-button {
+    /* Styles for the red button */
+    background-color: #F44336; /* Example red color */
+    /* Add other styles as needed */
+}
+
+/* Add 3D effect styles for the buttons */
+.table-button {
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Example shadow effect */
+    transition: transform 0.3s;
+}
+
+    .table-button:hover {
+        transform: translateY(-3px);
+        background-color: blue; /* Example hover effect for 3D appearance */
+    }
+
+
+/* Custom styles for the icon */
+.icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for the Show More/Show Less functionality */
+.short-comment {
+    display: inline;
+}
+
+.full-comment {
+    display: none;
+}
+
+.show-more {
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.show-less {
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* Styling for the watermark */
+.watermark {
+    transform: rotate(-45deg);
+    z-index: 10000;
+    opacity: 0.3;
+    color: black;
+    position: fixed;
+    top: auto;
+    left: 6%;
+    top: 39%;
+    color: #8e9191;
+    font-size: 80px;
+    font-weight: 500;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}

@@ -7,73 +7,16 @@
 
     int? dtaProjID = ViewBag.DataProjId as int?;
 }
-
-<style>
-
-    .btn-primary {
-        background-color: #F44336;
-        border: none;
-        color: #000;
-        padding: 5px 16px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        transition: transform 0.3s;
-        margin-left: 98%;
-        margin-top: -39px;
-    }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            background-color: darkred; /* Darker red color on hover */
-        }
-
-    .underline-h5 {
-        padding: 0.5rem;
-        width: 100%;
-        margin: 0 auto; /* Center the box */
-        text-align: center;
-        border-color: #03c1fc;
-        /*box-shadow: 2px 6px 5px -3px #062b50;*/
-        background-color: #0cafff;
-        color: white;
-        font-family: Arial;
-        font-size: 15px;
-        margin-bottom: 0.5rem;
-        height: -1px;
-    }
-
-    .btn-outline-secondary {
-        background-color: #F44336;
-        border: none;
-        color: #000;
-        padding: 5px 16px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        transition: transform 0.3s;
-        margin-left: 98%;
-        margin-top: -39px;
-    }
-
-        .btn-outline-secondary:hover {
-            transform: translateY(-3px);
-            background-color: darkred; /* Darker red color on hover */
-        }
-
-    .projectheading {
-        background-color: #3498db;
-        color: #ffffff;
-        padding: 10px;
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
-    }
-
-</style>
-
+<head>  
+    <link href="~/css/SearchProjHistory.css" rel="stylesheet"/>
+</head>
 
 <div id="AddProjDetails" class="row">
     <div>
-        <h5 class="text-center mb-4 underline-h5" style="text-align: center; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); position: relative;height: 33px;">
+        <h5 class="text-center mb-4 underline-h5">
             <span>
-                Details of Projects <button class="btn btn-outline-secondary" type="button" id="closeButton">
-
+                Details of Projects
+                <button class="btn btn-outline-secondary" type="button" id="closeButton">
                     X
                 </button>
             </span>
@@ -85,138 +28,102 @@
             window.location.href = "/Search/CurrentSearch";
         });
     </script>
-    <!--Proj Details-->
-    <div class="col-12 col-lg-12 col-xl-4 d-flex" style="border-radius: 15px;margin-top: -17px;">
-
+    <!-- Proj Details -->
+    <div class="col-12 col-lg-12 col-xl-4 d-flex">
         <div class="card radius-10 w-100">
             <div class="card-body">
                 <div class="projectheading">
-                    Proj Details    <img src="~/assets/images/icons/pdfimg.png" onclick="PrintDiv()" alt="Pdf Download" width="35" height="25">
-
+                    Proj Details
+                    <img src="~/assets/images/icons/pdfimg.png" onclick="PrintDiv()" alt="Pdf Download" class="pdf-download-icon">
                 </div>
-                <table class="new-proj-table" style="width: 100%;">
+                <table class="new-proj-table">
                     <tr>
                         <td>Proj Name</td>
-                        <td>
-                            @Model.FirstOrDefault()?.ProjName
-                        </td>
-
+                        <td>@Model.FirstOrDefault()?.ProjName</td>
                     </tr>
                     <tr>
                         <td>Aim & Scope</td>
                         <td class="long-text">@Model[0].ProjectDetl[1].AimScope</td>
-
                     </tr>
                     <tr>
                         <td>Usability of Proposed Appln</td>
                         <td>@Model[0].ProjectDetl[1].UsabilityofProposedAppln</td>
-
                     </tr>
                     <tr>
                         <td>Major Timeline..?</td>
                         <td>@Model[0].ProjectDetl[1].MajTimeLines</td>
-
                     </tr>
                     <tr>
                         <td>Name of Sponsor</td>
                         <td>@Model.FirstOrDefault()?.InitiatedBy</td>
-
-
                     </tr>
-
                 </table>
             </div>
         </div>
-
     </div>
 
-
-    <!--Sponsor Details-->
-    <div class="col-12 col-lg-12 col-xl-4 d-flex" style="border-radius: 15px;margin-top: -17px;">
-
+    <!-- Sponsor Details -->
+    <div class="col-12 col-lg-12 col-xl-4 d-flex">
         <div class="card radius-10 w-100">
             <div class="card-body">
-
-                <div class="projectheading">
-                    Tech Details
-                </div>
-                <table class="new-proj-table" style="width: 100%;">
+                <div class="projectheading">Tech Details</div>
+                <table class="new-proj-table">
                     <tr>
                         <td>Proposed Tech Stack</td>
                         <td>@Model[0].ProjectDetl[1].TechStackProposed</td>
-
                     </tr>
                     <tr>
                         <td>Type of Software</td>
                         <td>@Model[0].ProjectDetl[1].TypeofSW</td>
+                    </tr>
                     <tr>
                         <td>NW Bandwidth Reqmt</td>
                         <td>@Model[0].ProjectDetl[1].NWBandWidthReqmt</td>
-
                     </tr>
                     <tr>
                         <td>Hosted On</td>
                         <td>@Model[0].ProjectDetl[1].Hostedon</td>
-
                     </tr>
                     <tr>
                         <td>Deployment Type</td>
                         <td>@Model[0].ProjectDetl[1].Deplytype</td>
-
                     </tr>
                     <tr>
                         <td>Being Devp In House..?</td>
                         <td>@Model[0].ProjectDetl[1].BeingDevpInhouse</td>
-
                     </tr>
                 </table>
             </div>
         </div>
-
     </div>
 
-
-    <!--Tech Details-->
-    <div class="col-12 col-lg-12 col-xl-4 d-flex" style="border-radius: 15px;margin-top: -17px;">
-
+    <!-- Tech Details -->
+    <div class="col-12 col-lg-12 col-xl-4 d-flex">
         <div class="card radius-10 w-100">
             <div class="card-body">
-
-                <div class="projectheading">
-                    Other Details
-                </div>
-                <table class="new-proj-table" style="text-align:center; width: 100%;">
+                <div class="projectheading">Other Details</div>
+                <table class="new-proj-table center-align">
                     <tr>
                         <td>Envisaged Cost</td>
                         <td>@Model[0].ProjectDetl[1].EnvisagedCost</td>
-
                     </tr>
                     <tr>
                         <td>Content of SW Appln</td>
                         <td>@Model[0].ProjectDetl[1].ContentofSWApp</td>
-
                     </tr>
                     <tr>
-                        <td>Usability of Propsed Appln</td>
+                        <td>Usability of Proposed Appln</td>
                         <td>@Model[0].ProjectDetl[1].UsabilityofProposedAppln</td>
-
                     </tr>
                     <tr>
                         <td>Reqmt Justification</td>
                         <td class="long-text">@Model[0].ProjectDetl[1].ReqmtJustification</td>
-
                     </tr>
-
                 </table>
             </div>
         </div>
-
     </div>
-
-
 </div>
-
-
 
 <div id='myModal' class='modal' style="width: 85% !important; margin-left: 79px !important;">
     <div class="modal-dialog">
@@ -231,347 +138,197 @@
 @{
     sno = 0;
 }
-
 <div class="container" hidden="hidden">
-    <div id="myPDF" data-page-number="1" role="region" style="width: calc(var(--scale-factor) * 595.32px); height: calc(var(--scale-factor) * 842.04px);" aria-label="Page 1" data-loaded="true">
+    <div id="myPDF" data-page-number="1" role="region" aria-label="Page 1" data-loaded="true">
         <div class="col-20 col-lg-20 col-xl-10 d-flex">
-
             <div class="card-body">
-                <div class="col-20 col-lg-20 col-xl-10 d-flex">
-                </div>
-
-
-
                 <div id="widget-content">
-
-
-                    <table id="htmlTopdf" style="width:100%; border: 1px solid black; border-collapse:collapse;">
-                        <thead class="col-20 col-lg-20 col-xl-10 d-flex">
+                    <table id="htmlTopdf" class="table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Ser No</th>
+                                <th class="text-center">Description</th>
+                                <th class="text-center">Information of Description</th>
+                            </tr>
                         </thead>
                         <tbody>
-                            <div id="checklist" style="text-align:center; margin-top:30px; margin-block-end:20px; font-size:20px;font-weight:bold;text-decoration:underline ">
+                            <div id="checklist" class="checklist">
                                 @Model.FirstOrDefault()?.ProjName : CHECKLIST
                             </div>
 
                             <tr>
-                                <th style="text-align: center; border: 1px solid black; border-collapse:collapse;"> Ser No</th>
-                                <th id="Descrption" style="text-align: center; border: 1px solid black; border-collapse:collapse;">Descrption</th>
-                                <th style="text-align: center; border: 1px solid black; border-collapse:collapse;">Information of Descrption</th>
-                            </tr>
-
-
-                            <tr style="width:100%; border: 1px solid black; border-collapse:collapse;">
-                                <td style="width:10%;text-align:center;border:1px solid black;border-collapse:collapse">1.</td>
-
-                                <td style="width:50%;text-align:left; border:1px solid black;border-collapse:collapse ">Proj Name</td>
-
-                                <td style="text-align:left;">
+                                <td class="text-center">1.</td>
+                                <td class="text-left">Proj Name</td>
+                                <td class="text-left">
                                     @(Model.FirstOrDefault()?.ProjName ?? "No Project Name")
                                 </td>
-
                             </tr>
-                            <tr style="width:100%; border: 1px solid black; border-collapse:collapse;">
-                                <td style="width:10%;text-align:center;border:1px solid black;border-collapse:collapse">2.</td>
-
-                                <td style="width:50%;text-align:left; border:1px solid black;border-collapse:collapse ">Name of Sponsor</td>
-
-                                <td style="text-align:left">
-                                    @Model.FirstOrDefault()?.InitiatedBy
-                                </td>
-
+                            <tr>
+                                <td class="text-center">2.</td>
+                                <td class="text-left">Name of Sponsor</td>
+                                <td class="text-left">@Model.FirstOrDefault()?.InitiatedBy</td>
                             </tr>
 
-                            <tr style="width:100%; border: 1px solid black; border-collapse:collapse;">
-                                <td style="width:10%;text-align:center;border:1px solid black;border-collapse:collapse">3.</td>
-
-                                <td style="width:50%;text-align:left; border:1px solid black;border-collapse:collapse ">Typeof SW (Bespoke/COTS/Customised)</td>
-
-                                <td style="text-align:left;">
-                                    @Model[0].ProjectDetl[1].TypeofSW
-                                </td>
-
+                            <tr>
+                                <td class="text-center">3.</td>
+                                <td class="text-left">Type of SW (Bespoke/COTS/Customised)</td>
+                                <td class="text-left">@Model[0].ProjectDetl[1].TypeofSW</td>
                             </tr>
 
-
-                            <tr style="width:100%; border: 1px solid black; border-collapse:collapse;">
-                                <td style="width:10%;text-align:center;border:1px solid black;border-collapse:collapse">4.</td>
-                                <td style="width:100%;text-align:left; border:1px solid black;border-collapse:collapse" colspan="2">
-
-                                    <u class="text">
-                                        Brief justification on reqmt for devp of SW appl:
-                                    </u>
-                                    <br /> &nbsp;&nbsp;  @Model[0].ProjectDetl[1].ReqmtJustification
-
+                            <tr>
+                                <td class="text-center">4.</td>
+                                <td class="text-left" colspan="2">
+                                    <u>Brief justification on reqmt for devp of SW appl:</u><br />
+                                    &nbsp;&nbsp;  @Model[0].ProjectDetl[1].ReqmtJustification
                                 </td>
                             </tr>
-                            <tr style="width:100%; border: 1px solid black; border-collapse:collapse;">
-                                <td style="width:10%;text-align:center;border:1px solid black;border-collapse:collapse">5.</td>
-                                <td style="width:100%;text-align:left; border:1px solid black;border-collapse:collapse " colspan="2">
-
-                                    <u>
-                                        Aim & Scope (Purpose incl utility,beneficiaries and tgt users):
-                                    </u>
-                                    <br /> &nbsp;&nbsp;  @Model[0].ProjectDetl[1].AimScope
+                            <tr>
+                                <td class="text-center">5.</td>
+                                <td class="text-left" colspan="2">
+                                    <u>Aim & Scope (Purpose incl utility, beneficiaries, and target users):</u><br />
+                                    &nbsp;&nbsp;  @Model[0].ProjectDetl[1].AimScope
                                 </td>
                             </tr>
-                            <tr style="width:100%; border: 1px solid black; border-collapse:collapse;">
-                                <td style="width:10%;text-align:center;border:1px solid black;border-collapse:collapse">6.</td>
-                                <td style="width:100%;text-align:left; border:1px solid black;border-collapse:collapse " colspan="2">
-
-                                    <u>
-                                        To be hosted on Internet/ADN with brief
-                                        Desc:
-                                    </u>
-                                    <br /> &nbsp;&nbsp;  @Model[0].ProjectDetl[1].Hostedon
+                            <tr>
+                                <td class="text-center">6.</td>
+                                <td class="text-left" colspan="2">
+                                    <u>To be hosted on Internet/ADN with brief Desc:</u><br />
+                                    &nbsp;&nbsp;  @Model[0].ProjectDetl[1].Hostedon
                                 </td>
                             </tr>
 
-
-
-                            <tr style="width:100%; border: 1px solid black; border-collapse:collapse;">
-                                <td style="width:10%;text-align:center;border:1px solid black;border-collapse:collapse">7.</td>
-
-                                <td style="width:50%;text-align:left; border:1px solid black;border-collapse:collapse ">Being devp in house or through IT funds</td>
-
-                                <td style="text-align:left">
-                                    @Model[0].ProjectDetl[1].BeingDevpInhouse
-                                </td>
-
+                            <tr>
+                                <td class="text-center">7.</td>
+                                <td class="text-left">Being devp in house or through IT funds</td>
+                                <td class="text-left">@Model[0].ProjectDetl[1].BeingDevpInhouse</td>
                             </tr>
 
-
-                            <tr style="width:100%; border: 1px solid black; border-collapse:collapse;">
-                                <td style="width:10%;text-align:center;border:1px solid black;border-collapse:collapse">8.</td>
-
-                                <td style="width:50%;text-align:left; border:1px solid black;border-collapse:collapse ">
-                                    Usability of proposed appl by other
-                                    arms/service/org/ est
+                            <tr>
+                                <td class="text-center">8.</td>
+                                <td class="text-left">
+                                    Usability of proposed appl by other arms/service/org/est
                                 </td>
-
-                                <td style="text-align:left">
-                                    @Model[0].ProjectDetl[1].UsabilityofProposedAppln
-                                </td>
-
+                                <td class="text-left">@Model[0].ProjectDetl[1].UsabilityofProposedAppln</td>
                             </tr>
 
-
-
-                            <tr style="width:100%; border: 1px solid black; border-collapse:collapse;">
-                                <td style="width:10%;text-align:center;border:1px solid black;border-collapse:collapse">9.</td>
-                                <td style="width:50%;text-align:left; border:1px solid black;border-collapse:collapse ">
-
-                                    HW and IT infrastructure reqd :
-                                </td>
-                                <td style="text-align:left">
-                                    @Model[0].ProjectDetl[1].HQandITinfraReqd
-                                </td>
-
+                            <tr>
+                                <td class="text-center">9.</td>
+                                <td class="text-left">HW and IT infrastructure reqd:</td>
+                                <td class="text-left">@Model[0].ProjectDetl[1].HQandITinfraReqd</td>
                             </tr>
-                            <tr style="width:100%; border: 1px solid black; border-collapse:collapse;">
-                                <td style="width:10%;text-align:center;border:1px solid black;border-collapse:collapse">10.</td>
-                                <td style="width:100%;text-align:left; border:1px solid black;border-collapse:collapse " colspan="2">
 
-                                    <u>
-                                        Brief details of content of the proposed SW
-                                        appl:
-                                    </u>
-                                    <br />&nbsp;&nbsp; @Model[0].ProjectDetl[1].ContentofSWApp
-                                </td>
-                            </tr>
-                            <tr style="width:100%; border: 1px solid black; border-collapse:collapse;">
-                                <td style="width:10%;text-align:center;border:1px solid black;border-collapse:collapse">11.</td>
-                                <td style="width:50%;text-align:left; border:1px solid black;border-collapse:collapse ">
-
-                                    Endorsement by Head of Br/Svc/Fmn ;
-                                </td>
-                                <td style="text-align:left">
-
-                                    @Model[0].ProjectDetl[1].EndorsmentbyHeadof
-                                </td>
-                            </tr>
-                            <tr style="width:100%; border: 1px solid black; border-collapse:collapse;">
-                                <td style="width:10%;text-align:center;border:1px solid black;border-collapse:collapse">12.</td>
-                                <td style="width:50%;text-align:left; border:1px solid black;border-collapse:collapse ">
-
-                                    Details of user base
-                                </td>
-                                <td style="text-align:left">
-
-                                    @Model[0].ProjectDetl[1].DetlsofUserBase
+                            <tr>
+                                <td class="text-center">10.</td>
+                                <td class="text-left" colspan="2">
+                                    <u>Brief details of content of the proposed SW appl:</u><br />
+                                    &nbsp;&nbsp; @Model[0].ProjectDetl[1].ContentofSWApp
                                 </td>
                             </tr>
 
-                            <tr style="width:100%; border: 1px solid black; border-collapse:collapse;">
-                                <td style="text-align: left; font-weight:bold" colspan="3">
+                            <tr>
+                                <td class="text-center">11.</td>
+                                <td class="text-left">Endorsement by Head of Br/Svc/Fmn</td>
+                                <td class="text-left">@Model[0].ProjectDetl[1].EndorsmentbyHeadof</td>
+                            </tr>
+
+                            <tr>
+                                <td class="text-center">12.</td>
+                                <td class="text-left">Details of user base</td>
+                                <td class="text-left">@Model[0].ProjectDetl[1].DetlsofUserBase</td>
+                            </tr>
+
+                            <tr>
+                                <td class="text-left" colspan="3">
                                     Addl Details (Optional in Pre Apvl Stg: Mandatory in Post Apvl Stg)
                                 </td>
                             </tr>
-                            <tr style="width:100%; border: 1px solid black; border-collapse:collapse;">
-                                <td style="width:10%;text-align:center;border:1px solid black;border-collapse:collapse">13.</td>
-                                <td style="width:50%;text-align:left; border:1px solid black;border-collapse:collapse ">
 
-                                    Envisage cost of entire proj incl license
-                                    fees and maint ;
-                                </td>
-                                <td style="text-align:left">
+                            <tr>
+                                <td class="text-center">13.</td>
+                                <td class="text-left">Envisaged cost of entire proj incl license fees and maintenance</td>
+                                <td class="text-left">@Model[0].ProjectDetl[1].EnvisagedCost</td>
+                            </tr>
 
-                                    @Model[0].ProjectDetl[1].EnvisagedCost
+                            <tr>
+                                <td class="text-center">14.</td>
+                                <td class="text-left">Project date of completion incl major timelines</td>
+                                <td class="text-left">@Model[0].ProjectDetl[1].MajTimeLines</td>
+                            </tr>
+
+                            <tr>
+                                <td class="text-center">15.</td>
+                                <td class="text-left" colspan="2">
+                                    <u>Brief details of SW platform and tech stack proposed for development of application including OS dependencies (if any):</u><br />
+                                    &nbsp;&nbsp; @Model[0].ProjectDetl[1].DetlsofUserBase
                                 </td>
                             </tr>
 
-                            <tr style="width:100%; border: 1px solid black; border-collapse:collapse;">
-                                <td style="width:10%;text-align:center;border:1px solid black;border-collapse:collapse">14.</td>
-                                <td style="width:50%;text-align:left; border:1px solid black;border-collapse:collapse ">
-
-                                    Project dt of completion incl maj timelines ;
-                                </td>
-                                <td style="text-align:left">
-
-                                    @Model[0].ProjectDetl[1].MajTimeLines
-                                </td>
+                            <tr>
+                                <td class="text-center">16.</td>
+                                <td class="text-left">Brief details of proposed network and bandwidth requirements</td>
+                                <td class="text-left">@Model[0].ProjectDetl[1].NWBandWidthReqmt</td>
                             </tr>
-                            <tr style="width:100%; border: 1px solid black; border-collapse:collapse;">
-                                <td style="width:10%;text-align:center;border:1px solid black;border-collapse:collapse">15.</td>
-                                <td style="width:100%;text-align:left; border:1px solid black;border-collapse:collapse " ; colspan="2">
 
-                                    <u>
-                                        Brief details of SW platform and tech stack
-                                        proposed for devp of appl incl op sys
-                                        dependencies (if any):
-                                    </u>
-                                    <br /> &nbsp;&nbsp;  @Model[0].ProjectDetl[1].DetlsofUserBase
-                                </td>
+                            <tr>
+                                <td class="text-center">17.</td>
+                                <td class="text-left">Brief details of OS & Sys software requirements</td>
+                                <td class="text-left">@Model[0].ProjectDetl[1].HQandITinfraReqd</td>
                             </tr>
-                            <tr style="width:100%; border: 1px solid black; border-collapse:collapse;">
-                                <td style="width:10%;text-align:center;border:1px solid black;border-collapse:collapse">16.</td>
-                                <td style="width:50%;text-align:left; border:1px solid black;border-collapse:collapse ">
 
-                                    Brief details of proposed network and
-                                    bandwidth reqmts;
-                                </td>
-                                <td style="text-align: left">
-
-                                    @Model[0].ProjectDetl[1].NWBandWidthReqmt
-                                </td>
-                            </tr>
-                            <tr style="width:100%; border: 1px solid black; border-collapse:collapse;">
-                                <td style="width:10%;text-align:center;border:1px solid black;border-collapse:collapse">17.</td>
-                                <td style="width:50%;text-align:left; border:1px solid black;border-collapse:collapse ">
-
-                                    Brief details of OS & Sys software reqmts ;
-                                </td>
-                                <td style="text-align:left">
-
-                                    @Model[0].ProjectDetl[1].HQandITinfraReqd
-                                </td>
-                            </tr>
-                            <tr style="width:100%; height:100%; border: 1px solid black; border-collapse:collapse;">
-                                <td style="width:10%;text-align:center;border:1px solid black;border-collapse:collapse">18.</td>
-                                <td style="width:100%;text-align:left; border:1px solid black;border-collapse:collapse " colspan="2">
-
-                                    <u class="text">
-                                        Brief details of proposed data security
-                                        measures incl backup of data
-                                    </u> :
-                                    <br />&nbsp;&nbsp; @Model[0].ProjectDetl[1].DataSecurity_backup
-                                </td>
-                            </tr>
-                            <tr style="width:100%; height:100%; border: 1px solid black; border-collapse:collapse;">
-                                <td style="width:10%;text-align:center;border:1px solid black;border-collapse:collapse">18.</td>
-                                <td style="width:100%;text-align:left; border:1px solid black;border-collapse:collapse " colspan="2">
-
-                                    <u class="text">
-                                        Deployment Type
-                                    </u> :
-                                    <br />&nbsp;&nbsp; @Model[0].ProjectDetl[1].Deplytype
+                            <tr>
+                                <td class="text-center">18.</td>
+                                <td class="text-left" colspan="2">
+                                    <u>Brief details of proposed data security measures including backup of data:</u><br />
+                                    &nbsp;&nbsp; @Model[0].ProjectDetl[1].DataSecurity_backup
                                 </td>
                             </tr>
 
+                            <tr>
+                                <td class="text-center">19.</td>
+                                <td class="text-left" colspan="2">
+                                    <u>Deployment Type:</u><br />
+                                    &nbsp;&nbsp; @Model[0].ProjectDetl[1].Deplytype
+                                </td>
+                            </tr>
                         </tbody>
-
                     </table>
 
-                    <table style="width:100%; border: 1px solid black; border-collapse:collapse;">
-
-
-                        <thead class="col-20 col-lg-20 col-xl-10 d-flex">
+                    <!-- Movement Table -->
+                    <table class="table-bordered">
+                        <thead>
                             <tr>
-
-                                <th style="text-align: center; border: 1px solid black; ">Ser No</th>
-                                <th style="text-align: center; border: 1px solid black; ">Date</th>
-                                <th style="text-align: center; border: 1px solid black; ">Status</th>
-                                <th style="text-align: center; border: 1px solid black; ">Fwd Fm</th>
-                                <th style="text-align: center; border: 1px solid black; ">Fwd To</th>
-                                <th style="text-align: center; border: 1px solid black; ">Remarks</th>
-                                <th style="text-align: center; border: 1px solid black; ">Comment</th>
-                                <th style="text-align: center; border: 1px solid black; ">Current Stake Holder</th>
-                                <th style="text-align: center; border: 1px solid black; ">Initiated By</th>
-
+                                <th class="text-center">Ser No</th>
+                                <th class="text-center">Date</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Fwd Fm</th>
+                                <th class="text-center">Fwd To</th>
+                                <th class="text-center">Remarks</th>
+                                <th class="text-center">Comment</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <div id="movment" style="text-align:center; margin-top:30px; margin-block-end:20px; font-size:20px;font-weight:bold;text-decoration:underline; page-break-before:always; ">
+                            <div id="movment" class="movment">
                                 @Model.FirstOrDefault()?.ProjName : MOVEMENT
                             </div>
 
                             @foreach (var history in Model)
                             {
-                                <tr style="width:100%; border: 1px solid black; border-collapse:collapse;">
-
-                                    <td style="width:10%;text-align:left;border:1px solid black;border-collapse:collapse">
-                                        @{
-                                            sno++;
-                                        }
-                                        @sno
-                                    </td>
-                                    <td style="width:10%;text-align:left;border:1px solid black;border-collapse:collapse">@history.TimeStamp</td>
-                                    <td style="width:10%;text-align:left;border:1px solid black;border-collapse:collapse">@history.Status</td>
-                                    <td style="width:10%;text-align:left;border:1px solid black;border-collapse:collapse">@history.FromStakeHolder</td>
-                                    <td style="width:10%;text-align:left;border:1px solid black;border-collapse:collapse">@history.CurrentStakeHolder</td>
-
-                                    @*<td>@history.Stages</td>*@
-                                    <td style="width:10%;text-align:left;border:1px solid black;border-collapse:collapse">
-                                        @history.Remarks
-                                    </td>
-                                    <td style="width:10%;text-align:left;border:1px solid black;border-collapse:collapse">@history.Comment</td>
-
-                                    <td style="width:10%;text-align:left;border:1px solid black;border-collapse:collapse">@history.CurrentStakeHolder</td>
-                                    <td style="width:10%;text-align:left;border:1px solid black;border-collapse:collapse">@history.InitiatedBy</td>
-                                    @* <td>
-                                @if (history.AttCnt > 0)
-                                {
-
-                                <a href="javascript:void(0);" class="anchorDetail" data-id="@history.PsmId">
-                                <img src="/assets/images/icons/attachemnts_clip.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
-                                </a>
-
-
-                                }
-                                else
-                                {
-
-                                }
-
-
-                                </td>*@
+                                <tr>
+                                    <td class="text-left">@sno</td>
+                                    <td class="text-left">@history.TimeStamp</td>
+                                    <td class="text-left">@history.Status</td>
+                                    <td class="text-left">@history.FromStakeHolder</td>
+                                    <td class="text-left">@history.CurrentStakeHolder</td>
+                                    <td class="text-left">@history.Remarks</td>
+                                    <td class="text-left">@history.Comment</td>
                                 </tr>
                             }
                         </tbody>
                     </table>
-
-
-
                 </div>
-
             </div>
-
-
-
         </div>
-
     </div>
-
-
 </div>
 
 <!-- PDF END -->
@@ -584,18 +341,14 @@
             sno = 0;
         }
         <table id="SoftwareType" class="table table-striped table-bordered">
-
-
             <thead>
                 <tr>
-
                     <th>Ser No</th>
                     <th>Date</th>
                     <th>Status</th>
                     <th>Fwd Fm</th>
                     <th>Fwd To</th>
                     <th>Remarks</th>
-                    @*<th>Stages</th>*@
                     <th>Comment</th>
                     <th>Current Stake Holder</th>
                     <th>Initiated By</th>
@@ -606,42 +359,24 @@
                 @foreach (var history in Model)
                 {
                     <tr>
-
-                        <td>
-                            @{
+                        <td>@{
                                 sno++;
-                            }
-                            @sno
-                        </td>
+                            } @sno</td>
                         <td>@history.TimeStamp</td>
                         <td>@history.Status</td>
                         <td>@history.FromStakeHolder</td>
                         <td>@history.CurrentStakeHolder</td>
-
-                        @*<td>@history.Stages</td>*@
-                        <td>
-                            @history.Remarks
-                        </td>
+                        <td>@history.Remarks</td>
                         <td>@history.Comment</td>
-
                         <td>@history.CurrentStakeHolder</td>
                         <td>@history.InitiatedBy</td>
                         <td>
                             @if (history.AttCnt > 0)
                             {
-
                                 <a href="javascript:void(0);" class="anchorDetail" data-id="@history.PsmId">
-                                    <img src="/assets/images/icons/attachemnts_clip.png" alt="Icon" style="width: 31px; height: 29px; margin-right: 0px;">
+                                    <img src="/assets/images/icons/attachemnts_clip.png" alt="Icon" class="attachment-icon">
                                 </a>
-
-
                             }
-                            else
-                            {
-
-                            }
-
-
                         </td>
                     </tr>
                 }
@@ -691,6 +426,15 @@
             $('#ViewRecordsHistory').modal('show');
         });
     });
+        // Attach event listener to anchor tags for attachments
+    document.querySelectorAll('.anchorDetail').forEach(item => {
+        item.addEventListener('click', function () {
+            var psmId = this.getAttribute('data-id');
+            // Handle the click event here, e.g., load more details or open a modal
+            console.log('PsmId:', psmId);
+        });
+    });
+
 </script>
 
 <script>

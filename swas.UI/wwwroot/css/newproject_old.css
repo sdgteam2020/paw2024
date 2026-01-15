@@ -1,0 +1,206 @@
+﻿/* General Layout Styles */
+.wrapper {
+    padding: 0rem;
+}
+
+.page-content {
+    margin-top: 5rem;
+}
+
+input[type="search"] {
+    margin: 5px;
+    height: 30px;
+    padding: 2px;
+}
+
+/* Custom Header Styling */
+.headertext {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Custom H5 Styling */
+.custom-h5 {
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    position: relative;
+    height: 33px;
+}
+
+/* Custom Scroll Behavior */
+.custom-scroll {
+    overscroll-behavior-y: auto;
+}
+
+/* Table Responsive */
+.table-responsive {
+    overflow: scroll;
+}
+
+/* Font Styling for Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: Arial, sans-serif !important;
+    font-size: 24px !important;
+}
+
+/* Image and Video Responsiveness */
+img, video {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.btn-preview {
+    align-self: center;
+    background-color: darkblue;
+    color: white;
+    margin-left: 50%;
+}
+
+/* Modal and Table Styling */
+.modal-content {
+    height: auto;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+/* Table Styles */
+.table-striped {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-bordered {
+    border: 1px solid #ddd;
+}
+
+.table th, .table td {
+    padding: 10px;
+    text-align: center;
+}
+
+/* Text-nowrap for columns */
+.text-nowrap {
+    white-space: nowrap;
+}
+
+/* Table Column Widths */
+.col-width6 {
+    width: 6% !important;
+}
+
+.col-width9 {
+    width: 9% !important;
+}
+
+.col-width10 {
+    width: 10% !important;
+}
+
+.f-12 {
+    font-size: 12px;
+}
+
+.f-8 {
+    font-size: 8px;
+}
+
+/* Sticky Header */
+.sticky-header {
+    position: sticky;
+    top: -18px;
+}
+
+/* Footer Styling */
+.footers {
+    background-color: #333;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-text {
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* Footer Icon */
+.logout-icon {
+    width: 10%;
+    height: 10%;
+    margin-left: -10px;
+}
+
+/* Card Padding */
+.card-body {
+    padding: 20px;
+}
+
+/* Bold and Underline */
+.bold-underline {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Custom Login Styling */
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 6vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.login-header {
+    background-color: #044c92;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4px;
+    color: white;
+    width: 28rem;
+    text-align: center;
+    border-radius: 8px;
+}
+
+/* Card Header and Title Styling */
+.card_title {
+    text-align: center;
+    color: black;
+}
+
+.card_image img {
+    max-width: 100%;
+}
+
+/* PDF Link Styling */
+.pdf-link {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.pdf-number {
+    margin-right: 5px;
+}
+
+/* Table header customization for overflow */
+.datatablefordownload {
+    width: 100%;
+    overflow-x: auto;
+}

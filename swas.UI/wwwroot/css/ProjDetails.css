@@ -470,3 +470,600 @@ body {
 #btn-ibutton{
     animation : blink 1.5s linear infinite;
 }
+
+
+
+.red-text {
+    color: red;
+}
+
+body {
+    font-size: 15px;
+}
+
+@media (min-width: 1200px) {
+    .modal-xl {
+        --bs-modal-width: 1400px;
+    }
+}
+
+
+
+
+
+.tabs__head {
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+
+.tabs__head li {
+    margin-right: 10px;
+}
+
+.tabs__head a {
+    text-decoration: none;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    background-color: #fff; /* Set the default background color */
+}
+
+    .tabs__head a.active-link {
+        background-color: white; /* Set the active background color to white */
+        border-bottom: 20px solid #dee2e6; /* Adjust this as needed */
+    }
+
+.tabs__content__item {
+    display: none;
+}
+
+    .tabs__content__item.active-tab {
+        display: block;
+    }
+
+
+
+
+.tabs__content__item {
+    overflow: auto; /* Add this style to enable scrolling */
+    max-height: 700px; /* Set a maximum height for the table to make the scrollbar appear when the content exceeds this height */
+}
+
+
+.tabs__content__item::-webkit-scrollbar {
+    width: 8px;
+}
+
+.tabs__content__item::-webkit-scrollbar-thumb {
+    background-color: #888;
+}
+
+.FontSize {
+    font-size: 15px;
+}
+
+.btn-Fwd {
+    height: 1.5rem;
+    margin-top: -1.5rem;
+    padding-top: 0rem
+}
+
+.btn-FwdHistory {
+    height: 1.5rem;
+    margin-top: -1.2rem;
+    padding-top: 0rem
+}
+
+.btn-FwdHistorysent {
+    height: 1.5rem;
+    margin-top: -1.2rem;
+    padding-top: 0rem
+}
+
+.col-width9 {
+    width: 9% !important;
+}
+
+.s-no-column {
+    min-width: 40px;
+    max-width: 60px;
+    width: 5vw;
+}
+
+
+/* ------------scrollar */
+/* styles.css */
+
+.tabs__content__item {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden; /* Prevent scrolling here */
+}
+
+.table-wrapper {
+    flex: 1;
+    overflow-y: auto; /* Enable scrolling */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 15px;
+}
+
+th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 2; /* Ensure header stays on top */
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.buttonsToHide {
+    display: none !important;
+}
+
+body {
+    font-size: 15px !important;
+}
+
+.bold-text {
+    font-weight: bold;
+}
+
+.custom-modal-size {
+    max-width: 85%; /* Set the modal width to 80% of the screen */
+    width: 85%; /* Ensure it scales responsively */
+    margin: auto; /* Center horizontally */
+}
+
+    .custom-modal-size .custom-modal-content {
+        height: 65vh; /* Ensure the content adjusts dynamically */
+        overflow-y: auto; /* Add vertical scrolling for long content */
+        overflow-x: hidden; /* Prevent horizontal overflow */
+        /* margin-left: 248px; */
+    }
+
+/* .swal2-title{
+		background-color: #002b5e;
+		color: white;
+		font-size: 18px;
+		padding-bottom: 26px;
+		} */
+.pullback-title {
+    background-color: #002b5e;
+    color: white;
+    font-size: 18px;
+    padding-bottom: 26px;
+    /* add any other styles you need */
+}
+
+/*  .custom-swal-title {
+		background-color: #002b5e;
+		color: white;
+		font-size: 18px;
+		padding-bottom: 26px;
+		padding: 10px;
+		border-radius: 5px;
+		display: inline-block;
+		} */
+
+
+.custom-modal-size {
+    max-width: 80%; /* Increase the width as required */
+    width: 75%;
+    /* height: 10%; Adjust height if necessary */
+    margin: auto;
+}
+
+    .custom-modal-size .modal-content {
+        height: 100%; /* Ensure the content fills the modal */
+        overflow: auto; /* Add scrolling for long content */
+    }
+
+.modal-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Full height */
+}
+
+.tooltip-text {
+    background-color: #5a8cd6;
+}
+
+.to-unit-name {
+    min-width: 80px;
+    max-width: 120px;
+    width: 10vw;
+}
+
+.projaction {
+    min-width: 80px;
+    max-width: 150px;
+    width: 10vw;
+}
+
+.disabled-link {
+    pointer-events: none;
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.select2-container--default .select2-selection--multiple.is-invalid,
+.is-invalid .select2-selection--multiple {
+    border-color: #dc3545 !important; /* Bootstrap's red */
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+}
+
+
+/* =========================
+   Mailbox / ProjDetails page
+   (moved from inline styles)
+   ========================= */
+
+/* Tabs header special width */
+.tab-minw-230 {
+    min-width: 230px;
+}
+
+/* Full-height content blocks */
+.h-100p {
+    height: 100%;
+}
+
+.overflow-y-auto {
+    overflow-y: auto;
+}
+
+.overflow-y-scroll {
+    overflow-y: scroll;
+}
+
+/* Table column widths (used on th/td) */
+.col-w-20 {
+    width: 20% !important;
+}
+
+.col-w-9 {
+    width: 9% !important;
+}
+
+.col-w-190 {
+    width: 190px !important;
+}
+
+.col-w-150 {
+    width: 150px !important;
+}
+
+.col-w-5 {
+    width: 5% !important;
+}
+
+/* Small action button (padding/font-size/margin-top) */
+.btn-mini {
+    padding: 1px !important;
+    font-size: 13px !important;
+    margin-top: 1px !important;
+}
+
+/* History icon button top spacing */
+.btn-mt-1 {
+    margin-top: 1px !important;
+}
+
+/* Icons sizing */
+.ico-h-22 {
+    height: 22px !important;
+}
+
+.ico-h-27 {
+    height: 27px !important;
+}
+
+.ico-h-30 {
+    height: 30px !important;
+}
+
+.ico-w20h20 {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.ico-w30h30 {
+    width: 30px !important;
+    height: 30px !important;
+}
+
+/* Attachment icons */
+.attach-clip-icon {
+    width: 31px !important;
+    height: 29px !important;
+    margin-right: 0px !important;
+}
+
+.edit-icon {
+    width: 35px !important;
+    height: 30px !important;
+    margin-right: 0px !important;
+}
+
+/* Notification container */
+.notif-hover-container {
+    position: relative;
+    display: inline;
+}
+
+.notif-inline-block {
+    position: relative;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+/* Remainder badge (replacing inline style on the span) */
+.rem-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+/* CC pill in inbox "From" column */
+.cc-pill {
+    padding: 1px !important;
+    font-size: 13px !important;
+    margin-top: 1px !important;
+}
+
+/* SVG check icon color was inline style */
+.svg-green {
+    color: #18bb6b;
+}
+
+/* Confirmation modal datepicker block */
+.d-none-inline {
+    display: none;
+}
+
+/* ProjRemainderMov modal content sizing (was inline on modal-content) */
+.rem-modal-content {
+    width: 100rem !important;
+    margin: -23rem !important;
+}
+
+/* Tracking table header padding/width */
+.th-serno-tight {
+    padding-right: 0px !important;
+    width: 10px !important;
+}
+/* ===== Remaining inline-style removals ===== */
+
+/* Park / Pullback disabled cursor */
+.cursor-not-allowed {
+    cursor: not-allowed !important;
+}
+
+/* Legacy history icon height */
+.ico-h-27 {
+    height: 27px !important;
+}
+/* (already added in Part A, keep if missing) */
+
+/* Sent tab CC button/pill already handled with .cc-pill (Part A) */
+
+/* Tooltip short text inside anchor is fine (no inline) */
+
+/* Any “invisible button” still using btn-mini */
+.btn-mini {
+    padding: 1px !important;
+    font-size: 13px !important;
+    margin-top: 1px !important;
+}
+/* ensure exists */
+
+/* Any “noExport” icon heights */
+.ico-h-22 {
+    height: 22px !important;
+}
+/* ensure exists */
+.ico-h-30 {
+    height: 30px !important;
+}
+/* ensure exists */
+
+/* Notification / Reminder icons 20px */
+.ico-w20h20 {
+    width: 20px !important;
+    height: 20px !important;
+}
+/* ensure exists */
+
+/* Draft actions center wrapper (replace <center> if you want consistent alignment) */
+.center-block {
+    text-align: center;
+}
+
+
+#btnRemainder {
+    width: 20px;
+    height: 20px;
+    
+}
+
+.text-teal-custom {
+    color: #18bb6b !important;
+}
+
+
+
+
+
+
+.gradient-header {
+    background: linear-gradient(90deg, #4361ee 0%, #3f37c9 100%); /* Softer blue-purple */
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 1.25rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+    .glass-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+        border-color: rgba(67, 97, 238, 0.3);
+    }
+
+.icon-circle {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #4361ee, #3f37c9);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 1.25rem;
+    transition: transform 0.3s ease;
+}
+
+.glass-card:hover .icon-circle {
+    transform: scale(1.15) rotate(8deg);
+}
+
+.label {
+    font-weight: 700;
+    color: #4c4c4c;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.value {
+    font-weight: 500;
+    color: #1e293b;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+.placeholder {
+    color: #94a3b8;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.form-group label {
+    display: block;
+    text-align: left;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+/* ===== ProjFwd modal: moved from inline styles ===== */
+
+/* modal-content width */
+.projfwd-modal-content-w80 {
+    width: 80%;
+}
+
+/* preview card body background */
+.projfwd-preview-body-bg {
+    background-color: #f8f9fa;
+}
+
+/* ProjectsFwd header height */
+.projfwd-header-h50 {
+    height: 50px;
+}
+
+/* info button margin-top */
+.projfwd-btn-mt13 {
+    margin-top: 13px;
+}
+
+/* all selects/inputs width 100% */
+.projfwd-w-100 {
+    width: 100%;
+}
+
+/* remarks textarea width 100% */
+.projfwd-remarks-w100 {
+    width: 100%;
+}
+
+/* date input fixed width */
+.projfwd-date-w200 {
+    width: 200px;
+}
+
+/* header negative margins */
+.projfwd-header-neg-margins {
+    margin-left: -18px;
+    margin-right: -13px;
+}
+
+/* attachment table wrapper overflow */
+.projfwd-overflow-auto {
+    overflow: auto;
+}
+
+/* upload overlay */
+.projfwd-upload-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 1050;
+}
+
+/* spinner size */
+.projfwd-spinner-lg {
+    width: 4rem;
+    height: 4rem;
+}
+.btn_pulledpack
+{
+    cursor:not-allowed;
+}
