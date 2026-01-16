@@ -39,7 +39,7 @@
                 <div class="card radius-14 w-100">
                     <div class="card-body">
                         <div class="projecthead" id="projectDetails">
-                            Proj Details <img src="~/assets/images/icons/pdfimg.png" onclick="PrintDiv()" alt="Pdf Download" width="35" height="25">
+                            Proj Details <img src="~/assets/images/icons/pdfimg.png" alt="Pdf Download" width="35" height="25">
                         </div>
                         <table class="new-proj-table"></table>
                     </div>
@@ -217,58 +217,13 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
+<div id="temp-alerts"
+     data-success="@TempData["SuccessMessage"]"
+     data-failure="@TempData["FailureMessage"]"
+     class="d-none">
+</div>
+@{
+    TempData.Remove("SuccessMessage");
+    TempData.Remove("FailureMessage");
+}
 <script src="~/DeveloperJs/ProjUnitComments.js"></script>
-
-
-
-
-
-
-
-
-<!------------start handle the button click ------------>
-
-
-
-<script>
-    @if (TempData.ContainsKey("SuccessMessage"))
-    {
-        <text>
-            Swal.fire({
-                title: 'Saved & Ready for Next Step',
-                text: '@TempData["SuccessMessage"]',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-
-
-        </text>
-        TempData.Remove("SuccessMessage");
-    }
-</script>
-
-
-
-<script>
-    @if (TempData.ContainsKey("FailureMessage"))
-    {
-        <text>
-            Swal.fire({
-                title: 'Something Went Wrong....!',
-                text: '@TempData["FailureMessage"]',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        </text>
-        TempData.Remove("FailureMessage");
-
-    }
-</script>

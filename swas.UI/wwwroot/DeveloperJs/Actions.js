@@ -1,7 +1,12 @@
 ﻿
-$(document).ready(function () {
-
-   
+$(document).on('ready', function () {
+    $('.alphanumeric-only').on('keyup', function () {
+        ValInData(this);
+    });
+    $(document).on('click', '.btn-delete', function () {
+        var actionId = $(this).data('action-id');
+        functionConfirm1(actionId);
+    });
 
     $("#LimitimeInputa").on("input", function () {
 

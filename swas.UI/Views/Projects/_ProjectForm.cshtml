@@ -191,59 +191,8 @@
         </tr>
     </table>
 }
-
-
-
- 
- <script src="~/DeveloperJs/ddlSanal.js"></script>
-
-
- 
-<script>
-       $(document).ready(function () {
-     
-        populateddlStakeHolder();
-        $('#CurrentPslmId').val('0');
-        $('#IsActive').val('True');
-       
-
-
-        // Get today's date
-        var today = new Date();
-
-        // Format today's date as "yyyy-MM-dd"
-        var year = today.getFullYear();
-        var month = String(today.getMonth() + 1).padStart(2, '0');
-        var day = String(today.getDate()).padStart(2, '0');
-
-        var defaultCompletionDate = year + '-' + month + '-' + day;
-
-       
-        $('#DateTimeOfUpdate').val(defaultCompletionDate);
-        $('#InitialRemark').val('New Project');
-        $('#InitiatedDate').val(defaultCompletionDate);
-        $('#IsWhitelisted').val('No');
-        
-        $('#MyFormSubmit').DataTable();
-
-
-
-        $('#cancelButton').on('click', function () {
-            showAddNewForms();
-        });
-
-        function showAddNewForms() {
-       
-    $('#addNewFormContainer').addClass('hidden');
-    $('#addNewFormContainer').hide(); 
-
-}
-
-});
-
-   
-</script>
-
+<script src="~/developerjs/projects_projectform.js"></script>
+<script src="~/DeveloperJs/ddlSanal.js"></script>
 <style>
     .hidden-date  {
         display: none;

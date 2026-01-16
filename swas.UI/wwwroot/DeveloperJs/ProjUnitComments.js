@@ -1,5 +1,5 @@
 ﻿
-    $(document).ready(function () {
+$(document).on('ready', function () {
         // Handle click event on elements with id starting with "commentDiv_"
         $('[id^="commentDiv_"]').click(function () {
             // Extract the index from the id attribute
@@ -7,6 +7,56 @@
             var index = $(this).attr('id').replace('commentDiv_', '');
             handleDivClick(data[index].comments);
         });
+        var $alerts = $('#temp-alerts');
+
+        if ($alerts.data('success')) {
+            Swal.fire({
+                title: 'Saved & Ready for Next Step',
+                text: $alerts.data('success'),
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        }
+
+        if ($alerts.data('failure')) {
+            Swal.fire({
+                title: 'Something Went Wrong....!',
+                text: $alerts.data('failure'),
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+    }
+
+    $('#StatusUpdate').click(function () {
+        var status = $('#ddlStatus').val();
+        var comments = $('#Comments').val();
+        var stakeholderId = $('#StakeholdertextId').val();
+        var projId = $('#ProjtextId').val();
+        var psmId = $('#PsmToProj').val();
+        //var pdfFile = $('#pdfFile')[0].files[0];
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("UpdateUnitStatus", "Home")',
+            data: {
+                StakeholderId: stakeholderId,
+                ProjId: projId,
+                PsmID: psmId,
+                StatusId: status,
+                Comment: comments,
+                //PsmID: pdfFile
+            },
+            success: function (data) {
+                // Handle success response from the server
+                $('#IndexTable').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr.responseText); // Log the detailed error message
+                alert('Error fetching comments. See console for details.')
+            }
+        });
+    });
+
     });
 
     function handleDivClick(comments) {
@@ -15,37 +65,6 @@
         // You can perform additional actions here
     }
 
-    $(document).ready(function () {
-        $('#StatusUpdate').click(function () {
-            var status = $('#ddlStatus').val();
-            var comments = $('#Comments').val();
-            var stakeholderId = $('#StakeholdertextId').val();
-            var projId = $('#ProjtextId').val();
-            var psmId = $('#PsmToProj').val();
-            //var pdfFile = $('#pdfFile')[0].files[0];
-
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("UpdateUnitStatus", "Home")',
-                data: {
-                    StakeholderId: stakeholderId,
-                    ProjId: projId,
-                    PsmID: psmId,
-                    StatusId: status,
-                    Comment: comments,
-                    //PsmID: pdfFile
-                },
-                success: function (data) {
-                    // Handle success response from the server
-                    $('#IndexTable').html(response);
-                },
-                error: function (xhr, status, error) {
-                    console.log(xhr.responseText); // Log the detailed error message
-                    alert('Error fetching comments. See console for details.')
-                }
-            });
-        });
-    });
 document.addEventListener('DOMContentLoaded', function () {
     var projectDetailsBtns = document.querySelectorAll('.project-details-btn');
 
@@ -203,11 +222,11 @@ document.addEventListener('DOMContentLoaded', function () {
         return true;
     }
 
-
+function redirectToNewPage() {
+    // You can implement redirection logic here if needed
+}
 <script>
-    function redirectToNewPage() {
-        // You can implement redirection logic here if needed
-    }
+
 
     $(document).ready(function () {
         $('.table-button').on('click', function () {

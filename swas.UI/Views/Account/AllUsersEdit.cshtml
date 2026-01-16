@@ -44,7 +44,7 @@
                                     <label asp-for="UserName" class="label control-label up-label-m5">Regn Id (UserName)</label>
                                 </td>
                                 <td class="up-td-w65">
-                                    <input asp-for="UserName" class="form-control" onkeyup="ValInDataEdit(this)" maxlength="20"
+                                    <input asp-for="UserName" class="form-control alphanumeric-only" maxlength="20"
                                            aria-required="true" placeholder="Regn Id Reqd for Login & More Users Regn for this unit" />
                                     <input hidden asp-for="Id" />
                                     <span asp-validation-for="UserName" class="text-danger"></span>
@@ -82,7 +82,7 @@
                                     <label asp-for="appointment" class="label control-label up-label-m5">Appointment</label>
                                 </td>
                                 <td>
-                                    <input asp-for="appointment" class="form-control" onkeyup="ValInDataEdit(this)" maxlength="35"
+                                    <input asp-for="appointment" class="form-control alphanumeric-only" maxlength="35"
                                            aria-required="true" placeholder="Appointment" />
                                     <span asp-validation-for="appointment" class="text-danger"></span>
                                 </td>

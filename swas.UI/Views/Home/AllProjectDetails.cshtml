@@ -25,6 +25,13 @@
     var stage = ViewBag.RFPProj;
     Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor.HttpContext.Session, "User");
 }
+<div id="app-config"
+     data-flag="@flag"
+     data-button-text="@ButtonText"
+     data-username="@username"
+     data-ip="@ip"
+     class="d-none">
+</div>
 <head>
     <link href="~/css/newpage.css" rel="stylesheet" />
     <link  href="~/css/AllprojectDetails.css" rel="stylesheet"/>
@@ -347,48 +354,7 @@
         return truncatedText;
     }
 }
-
-<script>
-    $(document).ready(function () {
-        $('#PolicyWhiteList').on('click', function () {
-            $('#ProjectPolicyModel').modal('show');
-        });
-
-        $('#whitelistCard').on('click', function () {
-            $('#ProjectUnderProcess').modal('show');
-        });
-
-        $('#WhiteListedProject').on('click', function () {
-            $('#WhiteListedProjectDetail').modal('show');
-        });
-    });
-</script>
-
-
-
-
-
-
-
-<script>
-
-    function openForm() {
-        document.getElementById("myForm").style.display = "block";
-    }
-
-    function closeForm() {
-        document.getElementById("myForm").style.display = "none";
-    }
-</script>
-
-
-
-<script>
-    var flag = "@flag";
-    var ButtonText = "@ButtonText";
-    var username = "@username";
-    var ip = '@ip';
-</script>
+<script src="~/developerjs/home_allprojectdetails.js"></script>
 <script src="~/developerjs/Tooltip.js"></script>
 <script src="~/developerjs/newproject.js"></script>
 

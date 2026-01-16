@@ -18,6 +18,10 @@ $(document).ready(function () {
         else
             getProjGetsummay($("#spndashboardstatusId").html(), true);
     });
+    $('.close-btn').on("click",function () {
+        closePopup()
+    });
+
 
     $('[data-toggle="tooltip"]').tooltip();
 })

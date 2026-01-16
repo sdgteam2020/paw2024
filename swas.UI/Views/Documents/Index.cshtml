@@ -60,7 +60,7 @@
                     </td>
                     <td>@pro.ProjId</td>
                     <td>
-                        <a class="MargeButton" data-proj-name="@pro.ProjName" data-proj-id="@pro.EncyID" href="/Documents/DocumentHistory?EncyID=@pro.EncyID">
+                        <a class="MargeButton" data-proj-name="@pro.ProjName" data-proj-id="@pro.EncyID" href="#">
                             @pro.ProjName
                         </a>
                     </td>
@@ -79,18 +79,4 @@
 
 
 </div>
-
-
-
-<script>
-    $(document).ready(function () {
-        $('#Soft').on('click', '.MargeButton', function (e) {
-            e.preventDefault();
-
-            var projId = $(this).data('proj-id');
-            var projName = $(this).data('proj-name');
-
-            window.location.href = '/Documents/DocumentHistory?projId=' + projId + '&projName=' + projName;
-        });
-    });
-</script>
+<script src="~/developerjs/documents_index.js"></script>

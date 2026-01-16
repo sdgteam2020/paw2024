@@ -8,6 +8,12 @@ $(document).ready(function () {
         redirect: "follow"
     };
 
+    // Handle all cancel buttons
+    $(document).on('click', '[data-cancel="true"]', function () {
+        cancelModal(this);
+    });
+
+
     //fetch("https://aman.army.mil/HitCounter/api/ApplicationHit/IncrementHits/65c385d4-6b26-4133-9b03-935a47009eb3?DomainId=" + $("#UserId").val(), requestIncrementWithDomainId)
     //    .then((response) => response.text())
     //    .then((result) => console.log(result))
@@ -489,11 +495,16 @@ $("#btn_Save").on('click', function (e) {
         console.log("This is not valid");
     }
 });
-
-function cancelModal(elem) {
-
-    $('#WhiteListedProjectDetail .modal-content').css('filter', '');
+function cancelModal(button) {
+    // Your existing logic
+    $('#WhiteListModal').modal('hide');
+    $('#WhiteListForm')[0].reset();
+    // etc.
 }
+//function cancelModal(elem) {
+
+//    $('#WhiteListedProjectDetail .modal-content').css('filter', '');
+//}
 
 $(document).ready(function () {
     $(document).on('click', function () {

@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+﻿$(document).on('ready', function () {
     var table = $('#SoftwareXX').DataTable({
         responsive: true, // Enable responsive behavior
         lengthChange: true,

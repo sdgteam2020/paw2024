@@ -1,5 +1,5 @@
 ﻿
-$(document).ready(function () {
+$(document).on('ready', function () {
     $('.table-button').on('click', function () {
         var $button = $(this);
         var stakeHolderId = $button.data('stakeholder-id');
@@ -16,6 +16,7 @@ $(document).ready(function () {
         $button.removeClass('green red yellow'); // Remove existing color classes
         $button.addClass(status); // Add the new color class
     });
+    $('.dropdownsearch').select2();
 });
 
 

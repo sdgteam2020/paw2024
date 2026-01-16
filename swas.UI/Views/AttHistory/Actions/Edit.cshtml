@@ -15,7 +15,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="Actions"><b>Action Name</b> <span class="required-indicator">*</span></label>
-                            <input asp-for="Actions" class="form-control" required onkeyup="ValInData(this)" />
+                            <input asp-for="Actions" class="form-control alphanumeric-only" required />
                             <div class="invalid-feedback">Please provide an action name.</div>
                             <span asp-validation-for="Actions" class="text-danger"></span>
                         </div>
