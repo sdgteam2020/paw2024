@@ -291,3 +291,65 @@
     background-color: #ffff;
    
 }
+/* General styling for the chat request items */
+.chatrequest {
+    padding: 5px 5px 0px 5px;
+}
+
+/* Styling for the circle image */
+.circleimg {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Online icon styling */
+.online_icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    background-color: green;
+    border-radius: 50%;
+}
+
+/* User information styling */
+.user_info {
+    padding-left: 10px;
+}
+
+/* Styling for the profile name */
+#profName {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Styling for the profile image container */
+.img_cont {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* For active chat requests */
+.chatrequest.active {
+    background-color: #f1f1f1;
+}
+
+/* Hide elements by default for chat */
+.d-none {
+    display: none;
+}
+
+/* Styling for the contact list */
+.contacts {
+    list-style: none;
+    padding: 0;
+}

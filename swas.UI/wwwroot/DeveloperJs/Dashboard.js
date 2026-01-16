@@ -1548,7 +1548,7 @@ $(document).ready(function () {
 
     // Click event for dynamically generated anchors
     $(document).on("click", ".anchorDetail", function (e) {
-
+      
         e.preventDefault(); // prevent default anchor behavior
        
         debugger;

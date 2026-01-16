@@ -60,3 +60,187 @@ th {
     justify-content: center;
     align-content: center;
 }
+/* Container for the comment box */
+.comment-box {
+    text-align: justify; /* Justified text alignment */
+    margin-bottom: 15px;
+}
+
+/* Styling for the comment header */
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+/* Styling for the stakeholder name */
+.comment-stakeholder {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: #0793f7;
+}
+
+/* Styling for the comment metadata (date, status) */
+.comment-meta {
+    margin-left: 10px;
+    font-size: 0.9rem;
+}
+
+/* Styling for the status badge */
+.comment-status {
+    font-size: 0.9rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+    
+.accepted {
+    background-color: #28a745;
+    color: white;
+}
+
+.rejected {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Styling for the PDF link */
+.pdf-link {
+    margin-left: 10px;
+}
+
+/* Styling for the PDF icon */
+.pdf-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Styling for the comment content */
+.comment-content {
+    padding: 10px 0;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+/* Container for the comment box */
+.comment-box {
+    text-align: justify; /* Justified text alignment */
+    margin-bottom: 15px;
+}
+
+/* Styling for the comment header */
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+/* Styling for the stakeholder name */
+.comment-stakeholder {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: #0793f7;
+}
+
+/* Styling for the comment metadata (date, status) */
+.comment-meta {
+    margin-left: 10px;
+    font-size: 0.9rem;
+}
+
+/* Styling for the status badge */
+.comment-status {
+    font-size: 0.9rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.accepted {
+    background-color: #28a745;
+    color: white;
+}
+
+.rejected {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Styling for the PDF link */
+.pdf-link {
+    margin-left: 10px;
+}
+
+/* Styling for the PDF icon */
+.pdf-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Styling for the comment content */
+.comment-content {
+    padding: 10px 0;
+    font-size: 0.95rem;
+    color: #333;
+}
+/* Comment Box Styling */
+.comment-box {
+    text-align: justify; /* Justified text alignment */
+    margin-bottom: 15px;
+}
+
+/* Header of each comment */
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+/* Styling for the stakeholder name */
+.comment-stakeholder {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: #0793f7;
+}
+
+/* Styling for the comment meta (date, status) */
+.comment-meta {
+    margin-left: 10px;
+    font-size: 0.9rem;
+}
+
+/* Styling for the status badge */
+.comment-status {
+    font-size: 0.9rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.accepted {
+    background-color: #28a745;
+    color: white;
+}
+
+.rejected {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Styling for the PDF link */
+.pdf-link {
+    margin-left: 10px;
+}
+
+/* Styling for the PDF icon */
+.pdf-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Comment content styling */
+.comment-content {
+    padding: 10px 0;
+    font-size: 0.95rem;
+    color: #333;
+}

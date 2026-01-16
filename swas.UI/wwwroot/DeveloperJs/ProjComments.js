@@ -20,8 +20,6 @@
                     "stakeholderId": stakeHolderId,
                     "ProjId": projId
                 },
-                //contentType: "application/json; charset=utf-8",
-                //dataType: "json",
                 success: function (data) {
 
                     var commentContainer = '';
@@ -30,23 +28,22 @@
                         var date = new Date(data[i].date);
                         var formattedDate = ("0" + date.getDate()).slice(-2) + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
 
-                        commentContainer += '<div class="comment-box" style="text-align: justify;">'; // Use text-align: justify for justified text
+                        commentContainer += '<div class="comment-box">'; // Use text-align: justify for justified text
                         commentContainer += '<div class="comment-header">';
                         commentContainer += '<div>';
-                        commentContainer += '<span style="font-family: Arial; font-weight: bold; color: #0793f7;">' + data[i].stakeholderName + '</span>';
-                        commentContainer += '<span style="margin-left: 10px;" class="comment-meta">' + formattedDate + '</span>';
+                        commentContainer += '<span class="comment-stakeholder">' + data[i].stakeholderName + '</span>';
+                        commentContainer += '<span class="comment-meta">' + formattedDate + '</span>';
                         commentContainer += '</div>';
                         commentContainer += '<div>';
-                        commentContainer += '<span class="comment-meta">' + data[i].statusName + '</span>';
+                        commentContainer += '<span class="comment-status">' + data[i].statusName + '</span>';
                         commentContainer += '<span class="pdf-link">'; // Move the PDF link to the same line as status
 
                         if (data[i].state !== null) {
 
                             commentContainer += '<a href="/Home/WaterMark3?id=' + data[i].state + '" target="_blank">';
-                            commentContainer += '&nbsp;&nbsp; &nbsp;&nbsp;<img src="/assets/images/icons/pdfimg.png" alt="PDF icon" style="width: 24px; height: 24px;">';
+                            commentContainer += '<img src="/assets/images/icons/pdfimg.png" alt="PDF icon" class="pdf-icon">';
                             commentContainer += '</a>';
                         }
-
 
                         commentContainer += '</span>';
                         commentContainer += '</div>';
@@ -55,14 +52,11 @@
                         commentContainer += '</div>';
                     }
 
-                    commentContainer += '</div>'; // Close the container
                     $('#ChatBox').empty().html(commentContainer);
                     $('#AddStatusDetails').show();
 
                     // Hide IndexTable container
                     $('#IndexTableContainer').hide();
-
-                    
                 },
                 error: function () {
                     alert('Error fetching comments.');
@@ -86,77 +80,73 @@
 
 
 
+$(document).ready(function () {
+    $('.table-readonly').on('click', function () {
+        var $button = $(this);
+        var stakeHolderId = $button.data('stakeholder-id');
+        var projId = $button.data('proj-id');
+        var psmId = $button.data('psm-id');
 
-    $(document).ready(function () {
-        $('.table-readonly').on('click', function () {
-            var $button = $(this);
-            var stakeHolderId = $button.data('stakeholder-id');
-            var projId = $button.data('proj-id');
-            var psmId = $button.data('psm-id');
+        $('#StakeholdertextId').val(stakeHolderId);
+        $('#ProjtextId').val(projId);
+        $('#PsmToProj').val(psmId);
 
-            $('#StakeholdertextId').val(stakeHolderId);
-            $('#ProjtextId').val(projId);
-            $('#PsmToProj').val(psmId);
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetComments", "Home")',
+            data: {
+                "PsmId": psmId,
+                "stakeholderId": stakeHolderId,
+                "ProjId": projId
+            },
+            success: function (data) {
+                var commentContainer = '';
 
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("GetComments", "Home")',
-                data: {
-                    "PsmId": psmId,
-                    "stakeholderId": stakeHolderId,
-                    "ProjId": projId
-                },
-                success: function (data) {
-                    var commentContainer = '';
+                for (var i = 0; i < data.length; i++) {
+                    var date = new Date(data[i].date);
+                    var formattedDate = ("0" + date.getDate()).slice(-2) + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
 
-                    for (var i = 0; i < data.length; i++) {
-                        var date = new Date(data[i].date);
-                        var formattedDate = ("0" + date.getDate()).slice(-2) + '-' + ("0" + (date.getMonth() + 1)).slice(-2) + '-' + date.getFullYear();
+                    commentContainer += '<div class="comment-box">'; // Justified text is controlled in CSS
+                    commentContainer += '<div class="comment-header">';
+                    commentContainer += '<div>';
+                    commentContainer += '<span class="comment-stakeholder">' + data[i].stakeholderName + '</span>';
+                    commentContainer += '<span class="comment-meta">' + formattedDate + '</span>';
+                    commentContainer += '</div>';
+                    commentContainer += '<div>';
+                    commentContainer += '<span class="comment-meta">' + data[i].statusName + '</span>';
+                    commentContainer += '<span class="pdf-link">'; // Move the PDF link to the same line as status
 
-                        commentContainer += '<div class="comment-box" style="text-align: justify;">'; // Use text-align: justify for justified text
-                        commentContainer += '<div class="comment-header">';
-                        commentContainer += '<div>';
-                        commentContainer += '<span style="font-family: Arial; font-weight: bold; color: #0793f7;">' + data[i].stakeholderName + '</span>';
-                        commentContainer += '<span style="margin-left: 10px;" class="comment-meta">' + formattedDate + '</span>';
-                        commentContainer += '</div>';
-                        commentContainer += '<div>';
-                        commentContainer += '<span class="comment-meta">' + data[i].statusName + '</span>';
-                        commentContainer += '<span class="pdf-link">'; // Move the PDF link to the same line as status
-
-                        if (data[i].state !== null) {
-                            commentContainer += '<a href="/Home/WaterMark3?id=' + data[i].state + '" target="_blank">';
-                            commentContainer += '&nbsp;&nbsp; &nbsp;&nbsp;<img src="/assets/images/icons/pdfimg.png" alt="PDF icon" style="width: 24px; height: 24px;">';
-                            commentContainer += '</a>';
-                        }
-
-                        commentContainer += '</span>';
-                        commentContainer += '</div>';
-                        commentContainer += '</div>';
-                        commentContainer += '<div class="comment-content">' + data[i].comments + '</div>';
-                        commentContainer += '</div>';
+                    if (data[i].state !== null) {
+                        commentContainer += '<a href="/Home/WaterMark3?id=' + data[i].state + '" target="_blank">';
+                        commentContainer += '<img src="/assets/images/icons/pdfimg.png" alt="PDF icon" class="pdf-icon">';
+                        commentContainer += '</a>';
                     }
 
-                    $('#ChatBoxreadonly').empty().html(commentContainer);
-                    $('#AddStatusDetReadonly').show();
-                    $('#IndexTableContainer').hide();
-
-                    
-                },
-                error: function () {
-                    alert('Error fetching comments.');
+                    commentContainer += '</span>';
+                    commentContainer += '</div>';
+                    commentContainer += '</div>';
+                    commentContainer += '<div class="comment-content">' + data[i].comments + '</div>';
+                    commentContainer += '</div>';
                 }
-            });
-        });
 
+                $('#ChatBoxreadonly').empty().html(commentContainer);
+                $('#AddStatusDetReadonly').show();
+                $('#IndexTableContainer').hide();
+
+            },
+            error: function () {
+                alert('Error fetching comments.');
+            }
+        });
+    });
+
+    $('#AddStatusDetReadonly').hide();
+
+    $('#CancelUpdate1').click(function () {
         $('#AddStatusDetReadonly').hide();
-
-        $('#CancelUpdate1').click(function () {
-            $('#AddStatusDetReadonly').hide();
-            $('#IndexTableContainer').show();
-        });
-
-      
+        $('#IndexTableContainer').show();
     });
+});
 
 
 
@@ -166,147 +156,142 @@
 
 
 
-    document.addEventListener('DOMContentLoaded', function () {
-        var projectDetailsBtns = document.querySelectorAll('.project-details-btn');
+document.addEventListener('DOMContentLoaded', function () {
+    var projectDetailsBtns = document.querySelectorAll('.project-details-btn');
 
-        projectDetailsBtns.forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                var projectDetailsDiv = document.getElementById('projectDetails');
-                var projectDetailsDiv1 = document.getElementById('ProjDetails1');
-                var projectDetailsDiv2 = document.getElementById('ProjDetails2');
-                var projectreadDeatilsDiv = document.getElementById('projectreadDetails');
-                var projectreadDetailsDiv1 = document.getElementById('ProjreadDetails1');
-                var projectreadDetailsDiv2 = document.getElementById('ProjreadDetails2');
+    projectDetailsBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var projectDetailsDiv = document.getElementById('projectDetails');
+            var projectDetailsDiv1 = document.getElementById('ProjDetails1');
+            var projectDetailsDiv2 = document.getElementById('ProjDetails2');
+            var projectreadDeatilsDiv = document.getElementById('projectreadDetails');
+            var projectreadDetailsDiv1 = document.getElementById('ProjreadDetails1');
+            var projectreadDetailsDiv2 = document.getElementById('ProjreadDetails2');
 
-                // Get data from the clicked button
-                var projName = btn.getAttribute('data-proj-namess') || '';
-                var aimScope = btn.getAttribute('data-aim-scope') || '';
-                var Initiateddate = btn.getAttribute('data-initiated-date') || '';
-                var newbandwidth = btn.getAttribute('data-band-with') || '';
-                var hostingtype = btn.getAttribute('data-hosting-type') || '';
-                var reqjustification = btn.getAttribute('data-req-justi') || '';
-                var conceptofsw = btn.getAttribute('data-concept-sw') || '';
-                var initiatedBy = btn.getAttribute('data-initiated-by') || '';
-                var hosttype = btn.getAttribute('data-hosttype') || '';
+            // Get data from the clicked button
+            var projName = btn.getAttribute('data-proj-namess') || '';
+            var aimScope = btn.getAttribute('data-aim-scope') || '';
+            var Initiateddate = btn.getAttribute('data-initiated-date') || '';
+            var newbandwidth = btn.getAttribute('data-band-with') || '';
+            var hostingtype = btn.getAttribute('data-hosting-type') || '';
+            var reqjustification = btn.getAttribute('data-req-justi') || '';
+            var conceptofsw = btn.getAttribute('data-concept-sw') || '';
+            var initiatedBy = btn.getAttribute('data-initiated-by') || '';
+            var hosttype = btn.getAttribute('data-hosttype') || '';
 
-                // Update the content of the projectheading div
-                projectDetailsDiv.innerHTML = `
-                                        Proj Details
-                                        <table class="new-proj-table" style=width: 100%;height: 150px;>
-                                            <tr>
-                                                <td style="color: black;">Proj Name</td>
-                                                <td style="color: black;">${projName}</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="color: black;">Aim & Scope</td>
-                                                        <td class="long-text" style="color: black;">${aimScope}</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="color: black;">Initiated Date</td>
-                                                <td style="color: black;">${Initiateddate}</td>
-                                            </tr>
-                                            <!-- Add more rows as needed -->
-                                        </table>
-                                    `;
+            // Update the content of the projectheading div
+            projectDetailsDiv.innerHTML = `
+                Proj Details
+                <table class="new-proj-table">
+                    <tr>
+                        <td>Proj Name</td>
+                        <td>${projName}</td>
+                    </tr>
+                    <tr>
+                        <td>Aim & Scope</td>
+                        <td class="long-text">${aimScope}</td>
+                    </tr>
+                    <tr>
+                        <td>Initiated Date</td>
+                        <td>${Initiateddate}</td>
+                    </tr>
+                </table>
+            `;
 
-                projectDetailsDiv1.innerHTML = `
-                                        Tech Details
-                                        <table class="new-proj-table">
-                                            <tr>
-                                                <td style="color: black;">New Band With</td>
-                                                <td style="color: black;">${newbandwidth}</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="color: black;">Hosting Type</td>
-                                                <td style="color: black;">${hostingtype}</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="color: black;">Request Justification</td>
-                                                        <td class="long-text" style="color: black;">${reqjustification}</td>
-                                            </tr>
-                                            <!-- Add more rows as needed -->
-                                        </table>
-                                    `;
+            projectDetailsDiv1.innerHTML = `
+                Tech Details
+                <table class="new-proj-table">
+                    <tr>
+                        <td>New Band With</td>
+                        <td>${newbandwidth}</td>
+                    </tr>
+                    <tr>
+                        <td>Hosting Type</td>
+                        <td>${hostingtype}</td>
+                    </tr>
+                    <tr>
+                        <td>Request Justification</td>
+                        <td class="long-text">${reqjustification}</td>
+                    </tr>
+                </table>
+            `;
 
-                projectDetailsDiv2.innerHTML = `
-                                        Other Details
-                                        <table class="new-proj-table" style=width: 100%;height: 150px;>
-                                            <tr>
-                                                <td style="color: black;">Concept Of S/W</td>
-                                                <td style="color: black;">${conceptofsw}</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="color: black;">Initiated By</td>
-                                                <td style="color: black;">${initiatedBy}</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="color: black;">Host Type</td>
-                                                <td style="color: black;">${hosttype}</td>
-                                            </tr>
-                                            <!-- Add more rows as needed -->
-                                        </table>
-                                    `;
-                projectreadDeatilsDiv.innerHTML = `
-                                                Proj Details
-                                                <table class="new-proj-table" style=width: 100%;height: 150px;>
-                                                    <tr>
-                                                        <td style="color: black;">Proj Name</td>
-                                                        <td style="color: black;">${projName}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="color: black;">Aim & Scope</td>
-                                                        <td class="long-text" style="color: black;">${aimScope}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="color: black;">Initiated Date</td>
-                                                        <td style="color: black;">${Initiateddate}</td>
-                                                    </tr>
-                                                    <!-- Add more rows as needed -->
-                                                </table>
-                                            `;
+            projectDetailsDiv2.innerHTML = `
+                Other Details
+                <table class="new-proj-table">
+                    <tr>
+                        <td>Concept Of S/W</td>
+                        <td>${conceptofsw}</td>
+                    </tr>
+                    <tr>
+                        <td>Initiated By</td>
+                        <td>${initiatedBy}</td>
+                    </tr>
+                    <tr>
+                        <td>Host Type</td>
+                        <td>${hosttype}</td>
+                    </tr>
+                </table>
+            `;
 
-                projectreadDetailsDiv1.innerHTML = `
-                                                Tech Details
-                                                <div id="testforscroll">
-                                                   <table class="new-proj-table">
-                                                <tr>
-                                                    <td style="color: black;">New Band With</td>
-                                                    <td style="color: black;">${newbandwidth}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="color: black;">Hosting Type</td>
-                                                    <td style="color: black;">${hostingtype}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="color: black;">Request Justification</td>
-                                                            <td class="long-text" style="color: black;">${reqjustification}</td>
-                                                </tr>
-                                                <!-- Add more rows as needed -->
-                                            </table>
-                                                </div>
-                                            `;
+            projectreadDeatilsDiv.innerHTML = `
+                Proj Details
+                <table class="new-proj-table">
+                    <tr>
+                        <td>Proj Name</td>
+                        <td>${projName}</td>
+                    </tr>
+                    <tr>
+                        <td>Aim & Scope</td>
+                        <td class="long-text">${aimScope}</td>
+                    </tr>
+                    <tr>
+                        <td>Initiated Date</td>
+                        <td>${Initiateddate}</td>
+                    </tr>
+                </table>
+            `;
 
-                projectreadDetailsDiv2.innerHTML = `
-                                                Other Details
-                                                <table class="new-proj-table" style=width: 100%;height: 150px;>
-                                                    <tr>
-                                                        <td style="color: black;">Concept Of S/W</td>
-                                                        <td style="color: black;">${conceptofsw}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="color: black;">Initiated By</td>
-                                                        <td style="color: black;">${initiatedBy}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td style="color: black;">Host Type</td>
-                                                        <td style="color: black;">${hosttype}</td>
-                                                    </tr>
-                                                    <!-- Add more rows as needed -->
-                                                </table>
-                                            `;
-            });
+            projectreadDetailsDiv1.innerHTML = `
+                Tech Details
+                <div id="testforscroll">
+                    <table class="new-proj-table">
+                        <tr>
+                            <td>New Band With</td>
+                            <td>${newbandwidth}</td>
+                        </tr>
+                        <tr>
+                            <td>Hosting Type</td>
+                            <td>${hostingtype}</td>
+                        </tr>
+                        <tr>
+                            <td>Request Justification</td>
+                            <td class="long-text">${reqjustification}</td>
+                        </tr>
+                    </table>
+                </div>
+            `;
+
+            projectreadDetailsDiv2.innerHTML = `
+                Other Details
+                <table class="new-proj-table">
+                    <tr>
+                        <td>Concept Of S/W</td>
+                        <td>${conceptofsw}</td>
+                    </tr>
+                    <tr>
+                        <td>Initiated By</td>
+                        <td>${initiatedBy}</td>
+                    </tr>
+                    <tr>
+                        <td>Host Type</td>
+                        <td>${hosttype}</td>
+                    </tr>
+                </table>
+            `;
         });
     });
+});
 
 
 

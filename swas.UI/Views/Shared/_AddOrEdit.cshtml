@@ -7,7 +7,7 @@
     Model.Updatecde = 1;
 
 }
-
+<link href="~/css/_addoredit.css" rel="stylesheet" />
 <link rel="stylesheet" href="~/" asp-append-version="true" />
 <!--plugins-->
 @*   <link href="~/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" /> *@
@@ -31,43 +31,11 @@
 <link rel="stylesheet" href="~/assets/dataTable/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="~/assets/dataTable/css/all.min.css">
 
-<style>
-    .modal-content {
-        height: auto; /* Remove fixed height to allow dynamic content */
-    }
 
-    .modal-body {
-        padding: 20px; /* Add padding for a more spacious look */
-    }
-
-    .form-group {
-        margin-bottom: 20px; /* Add margin to form groups for spacing */
-    }
-
-    /* Customize your form controls */
-    .form-control {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-
-    /* Style your buttons */
-    .btn-primary {
-        background-color: #007bff;
-        color: #fff;
-    }
-
-    .btn-secondary {
-        background-color: #6c757d;
-        color: #fff;
-    }
-</style>
 
 @using (Html.BeginForm("AddOrEditCREATEPROJ", "UnitDtls", FormMethod.Post, new { id = "addNewForm" }))
 {
-    <div class="row" style="padding:5px;">
+    <div class="row" >
         <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(model => model.UnitName, new { @class = "control-label" })
@@ -110,13 +78,13 @@
                 @Html.DropDownListFor(model => model.CorpsId, new SelectList(new List<SelectListItem>(), "Value", "Text"), new { @class = "form-control dropdownsearch" })
                 @Html.ValidationMessageFor(model => model.CorpsId, "", new { @class = "text-danger" })
             </div>
-            <div class="form-group" style="text-align:center;margin-right:250px; margin-top:10px;">
+            <div class="form-group">
             </div>
 
         </div>
 
         <div class="col-md-6">
-            <div class="col-md-6" style="margin-left:294px">
+            <div class="col-md-6">
 
                 <button type="submit" class="btn btn-primary" id="AddlDetails">Save</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

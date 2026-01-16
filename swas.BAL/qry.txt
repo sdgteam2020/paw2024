@@ -289,7 +289,7 @@ select * into mHostType    from mAppType
                 <input id="ToDate" type="text" class="datePicker" required />
             </div>
         </div>
-        <div class="col-md-auto" style="text-align: center">
+        <div class="col-md-auto" >
             <button type="button" class="btn btn-primary btn-sm" id="searchButton">Search</button>
         </div>
     </form>

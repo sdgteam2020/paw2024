@@ -1,0 +1,78 @@
+﻿
+label {
+    margin-right: 38px !important;
+}
+
+.pagination {
+    width: 85% !important;
+}
+
+.modal-title {
+    text-decoration: underline;
+    width: 65% !important;
+    margin-left: 385px !important;
+}
+
+.modal-header {
+    width: 100% !important;
+}
+
+div.dataTables_wrapper div.dataTables_filter {
+    text-align: left !important;
+    margin-left: 120px !important;
+}
+
+.custom-cancel-button {
+    padding: 5px 10px; /* Adjust padding for button size */
+    font-size: 14px; /* Adjust font size */
+    border-radius: 5px; /* Add rounded corners for a stylish look */
+    border: 1px solid #ccc; /* Add a border for a more defined appearance */
+    background-color: #f7f7f7; /* Change the background color */
+    color: #333; /* Change the text color */
+}
+
+    .custom-cancel-button:hover {
+        background-color: #ddd; /* Change the background color on hover */
+        color: #000; /* Change the text color on hover */
+    }
+
+.underline-h5 {
+    padding: 0.5rem;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    border-color: #03c1fc;
+    background-color: #0cafff;
+    color: white;
+    font-family: Arial;
+    font-size: 15px;
+    margin-bottom: 0.5rem;
+    height: -1px;
+}
+
+
+
+.btn-outline-secondary {
+    position: fixed;
+    top: 17px;
+    right: 0;
+    color: black !important;
+    border-color: red !important;
+    background-color: red;
+    z-index: 999;
+    margin-right: -98% !important; /* Ensure the button is on top of other elements */
+}
+
+
+.card-body {
+    padding: 0 !important;
+    height: 2% !important;
+}
+#btnclose {
+    margin-top: 1px
+}
+
+.table-bordered {
+    width: 90% !important;
+    margin-left: 50px !important
+}
