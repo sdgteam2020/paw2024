@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit Stage";
 
 }
-
+<link href="~/css/editstage.css" rel="stylesheet" />
 <div>
     <div class="container mt-1">
         <div class="row justify-content-center">
@@ -14,23 +14,22 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label asp-for="Stages"><b>Stage Name</b> <span class="required-indicator"><font style="color:red;"><b>*</b></font></span></label>
+                                <label asp-for="Stages" class="form-label">
+                                    <b>Stage Name</b>
+                                    <span class="required-indicator">*</span>
+                                </label>
                                 <input asp-for="Stages" class="form-control" required onkeyup="ValInData(this)" value="@Model.Stages" />
                             </div>
                         </div>
-                       
                     </div>
                     <div class="form-group">
-                        <div class="text-center" style="margin-top: 2rem;">
-
-                            <button type="submit" data-id="@Model.StagesId" data-name="@Model.Stages" class="btn btn-primary btnupdate" style="margin-top:1rem;">Update</button>
-
-                            <button class="btn btn-secondary" type="button" style="margin-top: 1rem;">
-                                <a href="/Stages/Create" style="color: white;">Close</a>
+                        <div class="text-center button-container">
+                            <button type="submit" data-id="@Model.StagesId" data-name="@Model.Stages" class="btn btn-primary btnupdate">Update</button>
+                            <button class="btn btn-secondary" type="button">
+                                <a href="/Stages/Create" class="close-link">Close</a>
                             </button>
                         </div>
                     </div>
-
                 </form>
             </div>
         </div>

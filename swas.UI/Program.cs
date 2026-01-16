@@ -192,21 +192,21 @@ new CookiePolicyOptions
 
 });
 
-app.Use(async (context, next) =>
-{
-    context.Response.Headers.Add(
-        "Content-Security-Policy",
-        "default-src 'self'; " +
-        "script-src 'self' https://cdnjs.cloudflare.com; " +  // Allow Font Awesome scripts
-        "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; " +  // Allow Font Awesome styles and inline styles
-        "img-src 'self' data:; " +
-        "font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; " +  // Allow Font Awesome fonts
-        "connect-src 'self'; " +
-        "frame-ancestors 'none';"
-    );
+//app.Use(async (context, next) =>
+//{
+//    context.Response.Headers.Add(
+//        "Content-Security-Policy",
+//        "default-src 'self'; " +
+//        "script-src 'self' https://cdnjs.cloudflare.com; " +  // Allow Font Awesome scripts
+//        "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; " +  // Allow Font Awesome styles and inline styles
+//        "img-src 'self' data:; " +
+//        "font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; " +  // Allow Font Awesome fonts
+//        "connect-src 'self'; " +
+//        "frame-ancestors 'none';"
+//    );
 
-    await next();
-});
+//    await next();
+//});
 
 app.UseHttpsRedirection();
 

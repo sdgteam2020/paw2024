@@ -1,0 +1,69 @@
+﻿
+#htmlTopdf td {
+    width: 10%;
+    text-align: center;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+#htmlTopdf tr {
+    width: 100%;
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+#htmlTopdf th {
+    width: 10%;
+    text-align: center;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.table-striped {
+    border: 1px solid white !important;
+}
+
+
+/* Custom table styling */
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+    .custom-table th, .custom-table td {
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    /* Table header styling */
+    .custom-table thead {
+        background-color: #044c92;
+        color: white;
+    }
+
+    .custom-table th {
+        font-weight: bold;
+    }
+
+    /* Row hover effect */
+    .custom-table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* Zebra striping for rows */
+    .custom-table tbody tr:nth-child(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .custom-table tbody tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+
+/* Attachment icon styling */
+.attachment-icon {
+    width: 31px;
+    height: 29px;
+    margin-right: 0px;
+}

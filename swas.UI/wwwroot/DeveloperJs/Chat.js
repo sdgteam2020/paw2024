@@ -102,9 +102,8 @@ function GetAllUsers() {
                     if ($("#chatProfileSearch").val() == "" || response[i].offr_Name.toLowerCase().indexOf($("#chatProfileSearch").val().toLowerCase()) !== -1 ||
                         response[i].userName.toLowerCase().indexOf($("#chatProfileSearch").val().toLowerCase()) !== -1) {
                         listitem += '<li class="">';
-                        listitem += '<div class="d-flex bd-highlight chatrequest " style="padding: 5px 5px 0px 5px;">';
+                        listitem += '<div class="d-flex bd-highlight chatrequest">';
                         listitem += ' <div class="img_cont">';
-                        //listitem += '<img src="/assets/images/icons/profilechat.png" class="rounded-circle user_img">';
                         listitem += '<div class="circleimg" style="background-color:' + displayFixedColorAlphabet(response[i].offr_Name.replace(/^\s+|\s+$/gm, '').substr(0, 1).toUpperCase()) + ';color:#ffff">' + response[i].offr_Name.replace(/^\s+|\s+$/gm, '').substr(0, 2).toUpperCase() + '</div>';
                         if (parseInt(response[i].total) > 0)
                             listitem += ' <span class="online_icon"></span>';
@@ -116,7 +115,6 @@ function GetAllUsers() {
                         listitem += '</div>';
                         listitem += '</div>';
                         listitem += ' </li>';
-
                     }
                 }
                 $(".contacts").html(listitem);
@@ -130,12 +128,12 @@ function GetAllUsers() {
 
                     $("#profsortname").html($(this).closest("div").find(".circleimg").html())
                     UserMapChat($(this).closest("div").find("#chatprofileId").html(), $(this).closest("div").find("#profName").html(), $(this).closest("div").find(".circleimg").html());
-                   
                 });
             }
         }
     });
 }
+
 function UserMapChat(ToUserId, profName, sortname) {
     $.ajax({
         url: '/Chat/SaveUserMapChat',

@@ -30,44 +30,12 @@
 <link rel="stylesheet" href="~/assets/dataTable/css/buttons.bootstrap4.min.css">
 <link rel="stylesheet" href="~/assets/dataTable/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="~/assets/dataTable/css/all.min.css">
+<link href="~/css/ccc.css" rel="stylesheet" />
 
-<style>
-    .modal-content {
-        height: auto; /* Remove fixed height to allow dynamic content */
-    }
-
-    .modal-body {
-        padding: 20px; /* Add padding for a more spacious look */
-    }
-
-    .form-group {
-        margin-bottom: 20px; /* Add margin to form groups for spacing */
-    }
-
-    /* Customize your form controls */
-    .form-control {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-
-    /* Style your buttons */
-    .btn-primary {
-        background-color: #007bff;
-        color: #fff;
-    }
-
-    .btn-secondary {
-        background-color: #6c757d;
-        color: #fff;
-    }
-</style>
 
 @using (Html.BeginForm("AddOrEdit2FORUNIT", "UnitDtls", FormMethod.Post, new { id = "addNewForm" }))
 {
-    <div class="row" style="padding:5px;">
+    <div class="row">
         <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(model => model.UnitName, new { @class = "control-label" })
@@ -103,7 +71,7 @@
      
 
         <div class="col-md-6">
-            <div class="col-md-6" style="margin-left:294px">
+            <div class="col-md-6">
 
                 <button type="submit" class="btn btn-primary" id="AddlDetails">Save</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

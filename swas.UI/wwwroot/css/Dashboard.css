@@ -596,7 +596,8 @@ body {
 /* was: background-color:white;height:145px */
 .db-card-box {
     background-color: white;
-    height: 145px;
+    height: 165px;
+    width: 180px;
 }
 
 /* icons height 25px */
@@ -632,4 +633,76 @@ body {
 
 .db-badge-14 {
     font-size: 14px;
+}
+/* Styling for the new project heading */
+.newprojectheading.text-center {
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Container for the dashboard items */
+.r-1 {
+    margin-top: 13px;
+}
+
+/* Styling for the individual dashboard items */
+.cd-1-container {
+    background-color: white;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+/* Icon container for dashboard items */
+.icon-container {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+/* Styling for the image inside icon container */
+.icon-img {
+    height: 25px;
+}
+
+/* Total count for the dashboard item */
+.tot-count {
+    margin-top: 8px;
+}
+
+/* Styling for the status label */
+.t-1 {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Styling for the badge around the actions */
+.badge-primary {
+    background-color: #007bff;
+    color: white;
+    font-size: 12px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+/* Badge for the action count */
+.action-count-badge {
+    font-size: 12px;
+    background-color: lightgray;
+    color: black;
+}
+
+/* Margin for bottom of the badge */
+.mb-2 {
+    margin-bottom: 10px;
+}
+
+/* Styling for the action badge text */
+.action-badge {
+    font-size: 12px;
+}
+
+/* Hide elements if necessary */
+.d-none {
+    display: none;
 }
