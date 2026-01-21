@@ -183,15 +183,15 @@
     padding: 12px;
 }
 
-.custom-modal-size {
+/*.custom-modal-size {
     max-width: 95%;
     width: 95%;
-}
+}*/
 
-.custom-modal-content {
-    height: 70vh; /* Increased modal height */
-    overflow-y: auto;
-}
+/*.custom-modal-content {
+    height: 70vh;*/ /* Increased modal height */
+    /*overflow-y: auto;
+}*/
 
 /* Scrollbar styling */
 .tabs__content__item::-webkit-scrollbar,
@@ -641,18 +641,18 @@ body {
     font-weight: bold;
 }
 
-.custom-modal-size {
-    max-width: 85%; /* Set the modal width to 80% of the screen */
-    width: 85%; /* Ensure it scales responsively */
-    margin: auto; /* Center horizontally */
-}
+/*.custom-modal-size {
+    max-width: 85%;*/ /* Set the modal width to 80% of the screen */
+    /*width: 107%;*/ /* Ensure it scales responsively */
+    /*margin: auto;*/ /* Center horizontally */
+/*}*/
 
-    .custom-modal-size .custom-modal-content {
-        height: 65vh; /* Ensure the content adjusts dynamically */
-        overflow-y: auto; /* Add vertical scrolling for long content */
-        overflow-x: hidden; /* Prevent horizontal overflow */
+    /*.custom-modal-size .custom-modal-content {
+        height: 65vh;*/ /* Ensure the content adjusts dynamically */
+        /*overflow-y: auto;*/ /* Add vertical scrolling for long content */
+        /*overflow-x: hidden;*/ /* Prevent horizontal overflow */
         /* margin-left: 248px; */
-    }
+    /*}*/
 
 /* .swal2-title{
 		background-color: #002b5e;
@@ -679,17 +679,17 @@ body {
 		} */
 
 
-.custom-modal-size {
-    max-width: 80%; /* Increase the width as required */
-    width: 75%;
+/*.custom-modal-size {
+    max-width: 100%;*/ /* Increase the width as required */
+    /*width: 107%;*/
     /* height: 10%; Adjust height if necessary */
-    margin: auto;
+    /*margin: auto;
 }
 
     .custom-modal-size .modal-content {
-        height: 100%; /* Ensure the content fills the modal */
-        overflow: auto; /* Add scrolling for long content */
-    }
+        height: 100%;*/ /* Ensure the content fills the modal */
+        /*overflow: auto;*/ /* Add scrolling for long content */
+    /*}*/
 
 .modal-dialog {
     display: flex;

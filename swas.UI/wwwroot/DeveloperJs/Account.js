@@ -298,30 +298,4 @@ $(document).on('click', '.flag-toggle-btn', function () {
 
 
 
-    if (TempData.ContainsKey("SuccessMessage"))
-    {
-    
-            Swal.fire({
-                title: 'Success',
-                text: '@TempData["SuccessMessage"]',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-       
-        TempData.Remove("SuccessMessage");
-    }
-
-
-
-    if (TempData.ContainsKey("FailureMessage"))
-    {
-       
-            Swal.fire({
-                title: 'Update Failed...!',
-                text: '@TempData["FailureMessage"]',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        
-        TempData.Remove("FailureMessage");
-    }
+   

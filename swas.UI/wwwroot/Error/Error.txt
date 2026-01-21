@@ -1,28 +1,4 @@
 -----------------------------------------------------------------------------
-Date : 28-02-2024 02:41:12
-Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
------------------------------------------------------------------------------
-Date : 28-02-2024 02:41:12
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 02:43:59
-Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
------------------------------------------------------------------------------
-Date : 28-02-2024 00:35:48
-The ConnectionString property has not been initialized.
------------------------------------------------------------------------------
-Date : 28-02-2024 00:35:48
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 00:36:54
-The ConnectionString property has not been initialized.
------------------------------------------------------------------------------
-Date : 28-02-2024 00:36:54
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 00:40:47
-The ConnectionString property has not been initialized.
------------------------------------------------------------------------------
 Date : 28-02-2024 00:40:47
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
@@ -897,4 +873,28 @@ Date : 06-01-2023 14:24:22
 'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
 -----------------------------------------------------------------------------
 Date : 06-01-2023 14:24:22
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 16-01-2026 12:11:57
+'System.Dynamic.DynamicObject' does not contain a definition for 'ProjectEncyId'
+-----------------------------------------------------------------------------
+Date : 16-01-2026 12:11:57
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 16-01-2026 14:45:11
+An exception was thrown while attempting to evaluate a LINQ query parameter expression. See the inner exception for more information. To show additional information call 'DbContextOptionsBuilder.EnableSensitiveDataLogging'.
+-----------------------------------------------------------------------------
+Date : 16-01-2026 14:45:17
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 16-01-2026 16:18:36
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 16-01-2026 16:18:36
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 20-01-2026 12:59:29
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 20-01-2026 12:59:29
 Request failed & Status Code : 200

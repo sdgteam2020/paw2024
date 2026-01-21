@@ -147,29 +147,21 @@
                                         </div>
 
                                         <div class="col-md-2">
-                                            <div class="input-group projname-inputgroup">
-                                                @Html.EditorFor(model => model.ProjName,
-                                                         new
-                                                         {
-                                                             htmlAttributes = new
-                                                             {
-                                                                 @class = "form-control requiredField char-limit projname-editor",
-                                                                 @data_maxlength = "200",
-                                                                 @required = "required",
-                                                                 @placeholder = "Max Char 200 "
-                                                             }
-                                                         })
+                                            <div class="input-group" style="width:250px">
+                                                @Html.EditorFor(model => model.ProjName, new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", @required = "required", @placeholder = "Max Char 200 ", @style = "margin-bottom:0px; width:100px; margin-right:0px" } })
                                                 <span class="charErrorMsg d-none paw-red-font">Cannot exceed 200 characters!</span>
                                                 <span class="input-group-text d-none" id="reVettedTag">Re-Vetting</span>
                                             </div>
-
-                                            <ul id="projectNameDropdown" class="dropdown-list projectname-dropdown">
+                                            <ul id="projectNameDropdown" class="dropdown-list " style="display:none; width:477px">
                                             </ul>
+
 
                                             <div class="invalid-feedback">
                                                 Project Name Required
                                             </div>
                                         </div>
+
+
 
                                         <div class="col-md-2">
                                             @Html.LabelFor(model => model.InitiatedDate, "Initiation Date", new { id = "AddInitiatedDate" })<font class="paw-red-font"><b>*</b></font>
@@ -221,24 +213,28 @@
                                     </div>
 
                                     <div class="row g-3 mb-3">
+
+
                                         <div class="col-md-2">
-                                            @Html.LabelFor(model => model.AimScope, "Aim and Scope", new { id = "AddAimScope1" })<font class="paw-red-font"><b>*</b></font>
+                                            @Html.LabelFor(model => model.MobileNo, new { id = "MobileNumber" })<font class="paw-red-font"><b>*</b></font>
                                         </div>
                                         <div class="col-md-2">
-                                            @Html.TextAreaFor(model => model.AimScope, new { @class = "form-control requiredField char-limit", @data_maxlength = "500", required = "required", @placeholder = "Max Char 500" })
-                                            <span class="charErrorMsg d-none paw-red-font">Cannot exceed 500 characters!</span>
-                                            <div class="invalid-feedback">Aim and Scope Required</div>
+                                            @Html.EditorFor(model => model.MobileNo,
+                                                     new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "11", required = "required", @placeholder = "Max Char 10 " } })
+                                            <span class="charErrorMsg d-none paw-red-font">Cannot exceed 10 characters!</span>
+                                            <div class="invalid-feedback">Mobile Number Required</div>
                                         </div>
 
                                         <div class="col-md-2">
-                                            @Html.LabelFor(model => model.HQandITinfraReqd, "IT Infra Required", new { id = "AddHQandITinfraReqd" })<font class="paw-red-font"><b>*</b></font>
+                                            @Html.LabelFor(model => model.AsconNo, new { id = "ArmyNumber" })<font class="paw-red-font"><b>*</b></font>
                                         </div>
                                         <div class="col-md-2">
-                                            @Html.EditorFor(model => model.HQandITinfraReqd,
-                                                     new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", required = "required", @placeholder = "Max Char 200 " } })
-                                            <span class="charErrorMsg d-none paw-red-font">Cannot exceed 200 characters!</span>
-                                            <div class="invalid-feedback">HQ and IT Infrastructure Required</div>
+                                            @Html.EditorFor(model => model.AsconNo,
+                                                     new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "5", required = "required", @placeholder = "Max Char 5 " } })
+                                            <span class="charErrorMsg d-none paw-red-font">Cannot exceed 5 characters!</span>
+                                            <div class="invalid-feedback">Army Number Required</div>
                                         </div>
+                                       
 
                                         <div class="col-md-2">
                                             @Html.LabelFor(model => model.HostTypeID, new { id = "AddHost" })<font class="paw-red-font"><b>*</b></font>
@@ -284,6 +280,24 @@
 
                                     <div class="row g-3 mb-3">
                                         <div class="col-md-2">
+                                            @Html.LabelFor(model => model.AimScope, "Aim and Scope", new { id = "AddAimScope1" })<font class="paw-red-font"><b>*</b></font>
+                                        </div>
+                                        <div class="col-md-2">
+                                            @Html.TextAreaFor(model => model.AimScope, new { @class = "form-control requiredField char-limit", @data_maxlength = "500", required = "required", @placeholder = "Max Char 500" })
+                                            <span class="charErrorMsg d-none paw-red-font">Cannot exceed 500 characters!</span>
+                                            <div class="invalid-feedback">Aim and Scope Required</div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            @Html.LabelFor(model => model.HQandITinfraReqd, "IT Infra Required", new { id = "AddHQandITinfraReqd" })<font class="paw-red-font"><b>*</b></font>
+                                        </div>
+                                        <div class="col-md-2">
+                                            @Html.EditorFor(model => model.HQandITinfraReqd,
+                                                     new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", required = "required", @placeholder = "Max Char 200 " } })
+                                            <span class="charErrorMsg d-none paw-red-font">Cannot exceed 200 characters!</span>
+                                            <div class="invalid-feedback">HQ and IT Infrastructure Required</div>
+                                        </div>
+                                        <div class="col-md-2">
                                             @Html.LabelFor(model => model.Apptype, "Application Type", new { id = "AddApptype" })<font class="paw-red-font"><b>*</b></font>
                                         </div>
                                         <div class="col-md-2">
@@ -294,30 +308,11 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-2">
-                                            @Html.LabelFor(model => model.MobileNo, new { id = "MobileNumber" })<font class="paw-red-font"><b>*</b></font>
-                                        </div>
-                                        <div class="col-md-2">
-                                            @Html.EditorFor(model => model.MobileNo,
-                                                     new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "11", required = "required", @placeholder = "Max Char 10 " } })
-                                            <span class="charErrorMsg d-none paw-red-font">Cannot exceed 10 characters!</span>
-                                            <div class="invalid-feedback">Mobile Number Required</div>
-                                        </div>
-
-                                        <div class="col-md-2">
-                                            @Html.LabelFor(model => model.AsconNo, new { id = "ArmyNumber" })<font class="paw-red-font"><b>*</b></font>
-                                        </div>
-                                        <div class="col-md-2">
-                                            @Html.EditorFor(model => model.AsconNo,
-                                                     new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "5", required = "required", @placeholder = "Max Char 5 " } })
-                                            <span class="charErrorMsg d-none paw-red-font">Cannot exceed 5 characters!</span>
-                                            <div class="invalid-feedback">Army Number Required</div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <input type="button" id="btnbasic" name="next" class="next action-button" value="Next" />
+                            <input type="button" id="btnbasic" name="btnbasic" class="next action-button" value="Next" />
                         </fieldset>
 
                         <fieldset id="2">
@@ -560,7 +555,7 @@
                             </div>
 
                             <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
-                            <input type="button" id="submitUpload" name="next" class="next action-button btn-next-upload" value="Next & upload Pdf Docus" />
+                            <input type="button" id="submitUpload" name="submitUpload" class="next action-button btn-next-upload" value="Next & upload Pdf Docus" />
                         </fieldset>
 
                         <fieldset id="3">

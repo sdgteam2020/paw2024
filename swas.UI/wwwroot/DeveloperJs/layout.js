@@ -171,6 +171,7 @@
     }
 
     function checksize() {
+
         // ✅ removed stray token "mmittee" (it was breaking JS)
         if ($(window).width() < 1000) {
             $("#menusharp1").removeClass("d-none");

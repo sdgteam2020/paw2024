@@ -76,7 +76,6 @@
 
 });
 
-<script>
     function validateForm() {
         var form = document.querySelector('form.needs-validation');
     if (form.checkValidity() === false) {
@@ -86,4 +85,3 @@
     form.classList.add('was-validated');
     return form.checkValidity();
     }
-</script>

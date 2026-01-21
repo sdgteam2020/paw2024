@@ -119,8 +119,8 @@ body {
 }
 
     .custom-modal-size .modal-content {
-        overflow-y: auto; /* Add vertical scrolling for long content */
-        overflow-x: hidden; /* Prevent horizontal overflow */
+        /*overflow-y: auto;*/ /* Add vertical scrolling for long content */
+        /*overflow-x: hidden;*/ /* Prevent horizontal overflow */
         /* margin-left: 248px; */
     }
 
@@ -160,10 +160,10 @@ body {
 /* ===== PAW Inline-style extraction (no behavior change) ===== */
 
 /* Edit User modal width */
-.paw-edituser-modal-content {
+/*.paw-edituser-modal-content {
     width: 65%;
 }
-
+*/
 /* Common blue header used in your modals */
 .paw-modal-header-blue {
     background-color: #044c92;
@@ -210,6 +210,7 @@ body {
 /* modal-content margin-left:0 */
 .paw-modal-content-ml-0 {
     margin-left: 0;
+    width:1600px !important;
 }
 
 /* Add Comments title styles */
@@ -238,7 +239,7 @@ body {
 /* ===== PAW: removed inline styles (NO UI change) ===== */
 
 .paw-edituser-modal-content {
-    width: 65%;
+    width: 675px !important;
 }
 
 .paw-modal-header-blue {
@@ -383,4 +384,7 @@ body {
 /* previously inline: <font style="color:red;"> */
 .paw-red-font {
     color: red;
+}
+.form-control1 {
+    width:250px !important;
 }

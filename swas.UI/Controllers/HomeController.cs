@@ -52,6 +52,7 @@ using iText.Kernel.Pdf.Canvas.Draw;
 using iText.Layout.Element;
 using iText.IO.Image;
 using iText.Layout.Borders;
+using System.Net;
 
 namespace swas.UI.Controllers
 {
@@ -1621,11 +1622,20 @@ s.IsDashboard,
 
 
 
-        public IActionResult SOPDownload()
+        public IActionResult SOPDownload(string pdftype)
         {
             try
             {
-                string inputPdfPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/SOP/SOP on Whitelisitng of Appl Sw in IA dt 28 May 24.pdf");
+                string inputPdfPath;
+                if (!string.IsNullOrEmpty(pdftype))
+                {
+                    inputPdfPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/SOP/annx.pdf");
+                }
+                else
+                {
+
+                    inputPdfPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/SOP/SOP on Whitelisitng of Appl Sw in IA dt 28 May 24.pdf");
+                }
                 string ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
                 if (System.IO.File.Exists(inputPdfPath))
                 {
@@ -1863,6 +1873,10 @@ s.IsDashboard,
         {
             try
             {
+                ProjectName = WebUtility.UrlDecode(ProjectName);
+                ApprovedRemarks = WebUtility.UrlDecode(ApprovedRemarks);
+                ApprovedDt = WebUtility.UrlDecode(ApprovedDt);
+
                 // Validate input parameters
                 if (string.IsNullOrWhiteSpace(ProjectName) || string.IsNullOrWhiteSpace(ApprovedRemarks) || string.IsNullOrWhiteSpace(ApprovedDt))
                 {

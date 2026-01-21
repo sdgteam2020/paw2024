@@ -28,16 +28,16 @@
            
             $('input[type="date"]').attr('min', today);
             $('input[type="date"]').removeAttr('max');
-            $('.datepicker1').datepicker({
-                minDate: 0
-            });
+            //$('.datepicker1').datepicker({
+            //    minDate: 0
+            //});
             $("#InitiatedDate").val(today);
             $('#InitiatedDate').attr('readonly', true);
             $("#RequestRemarks").attr('disabled', true);
         } else {
             $('input[type="date"]').attr('max', today);
             $('input[type="date"]').removeAttr('min');
-            $('.datepicker1').datepicker(); // default no min/max
+            //$('.datepicker1').datepicker(); // default no min/max
             $('#InitiatedDate').attr('readonly', false);
             $("#RequestRemarks").removeAttr('disabled');
 
@@ -46,7 +46,7 @@
             $('#CompletionDate').removeAttr('max');
         }
 
-        $('.datetimepicker1').datepicker(); // always initialize
+        //$('.datetimepicker1').datepicker(); // always initialize
     }
 
 
@@ -316,10 +316,10 @@ function formatDateToDDMMYYYY(date) {
 
 
 function bindLiveProjectSearch(inputSelector, dropdownSelector, endpointUrl, onItemSelect) {
-    debugger;
+    
 
     $(inputSelector).on("keyup", function () {
-        debugger;
+        
         let query = $(this).val();
         //query = query.replace(/\u00A0/g, "");
         //const validpattern =/^[a-zA-Z0-9]*$/;
@@ -375,7 +375,7 @@ function bindLiveProjectSearch(inputSelector, dropdownSelector, endpointUrl, onI
     });
 
     $(document).on("click", `${dropdownSelector} li`, function () {
-        debugger;
+        
         const projId = $(this).data("id");
 
         const projName = $(this).data("name");
@@ -389,7 +389,7 @@ function bindLiveProjectSearch(inputSelector, dropdownSelector, endpointUrl, onI
             confirmButtonText: 'Submit',
             preConfirm: (remarks) => {
                 if (!remarks) {
-                    debugger;
+                    
                     Swal.ShowValidationMessage('Remarks are Required');
                 } if (remarks.length < 10) {
                     Swal.showValidationMessage('Remarks Must be Atleast 10 characters');
@@ -456,8 +456,6 @@ function breakLinesByWords(text, wordLimit) {
     return result.join("<br>");
 }
 
-
-
 function fetchServerDate() {
     return $.ajax({
         type: "GET",
@@ -465,38 +463,41 @@ function fetchServerDate() {
         dataType: "json",
         cache: false
     }).then(function (data) {
-       
-        let ymd = data.dateYmd || data.serverDate || "";
-        let dt = data.dateTimeLocal || "";
-        let dtana = data.analy || new Date();
 
-        // If the server returned dd-MM-yyyy, convert it to yyyy-MM-dd
-        if (/^\d{2}-\d{2}-\d{4}$/.test(ymd)) {
-            const [dd, mm, yyyy] = ymd.split("-");
-            ymd = `${yyyy}-${mm}-${dd}`;
+        const ymd = data.dateYmd;                // yyyy-MM-dd
+        const dt = data.dateTimeLocal;           // yyyy-MM-ddTHH:mm:ss
+
+        // Safe: ISO-8601 without timezone = local time
+        const serverDate = new Date(dt);
+
+        if (isNaN(serverDate.getTime())) {
+            throw new Error("Invalid server date");
         }
 
-        // If datetime is not provided, build one with current time
-        if (!dt && ymd) {
-            const d = new Date(ymd);
-            const pad = n => String(n).padStart(2, "0");
-            dt = `${ymd}T${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-        }
-
-        // Handle timezone adjustment (ensure it's treated as UTC)
-        const serverDate = new Date(dt + "Z"); // Append 'Z' to ensure it's UTC
-        const localDate = new Date(serverDate.toLocaleString());  // Convert UTC to local time
-
-        // Format date-time for datetime-local (YYYY-MM-DDTHH:mm)
-        const formattedDateTime = localDate.toISOString().slice(0, 19); // YYYY-MM-DDTHH:mm
-
-        return { today: ymd, todayDateTime: formattedDateTime, analy: dtana }; // return the formatted date and time
+        return {
+            today: ymd,
+            todayDateTime: dt,   // perfect for <input type="datetime-local">
+            analy: data.analy
+        };
     }).catch(function (err) {
-        console.error("Error fetching date, using client date:", err);
+
+        console.error("Server date error, using client date:", err);
+
         const d = new Date();
         const pad = n => String(n).padStart(2, "0");
         const ymd = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
         const dt = `${ymd}T${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
-        return { today: ymd, todayDateTime: dt, analy: dt }; // return client date as fallback
+
+        return {
+            today: ymd,
+            todayDateTime: dt,
+            analy: d.toTimeString()
+        };
     });
 }
+
+
+
+
+// for swal error or succes message
+// Central SweetAlert handler

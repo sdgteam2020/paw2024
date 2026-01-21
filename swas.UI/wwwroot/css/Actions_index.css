@@ -19,7 +19,7 @@
     width: 5vw;
 }
 /* Button Save Custom Styles */
-.custom-btn-save {
+#btnsave {
     margin-left: 20rem;
     background-color: #2d5eff;
     color: white;

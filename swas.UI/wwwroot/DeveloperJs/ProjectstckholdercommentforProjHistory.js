@@ -1,13 +1,15 @@
 ﻿$(document).ready(function () {
+   
+   
     initializeDataTable('#SoftwareType');
     sessionStorage.setItem("spntabType", $("#spntabType").html());
 
     GetAllComments2();
-
+    getProjWiseStatus();
     GetAllComments1();
 
     $("#btnAnalytics").click(function () {
-        debugger;
+       
         $('#ProjHoldHistory').modal('show');
         // alert($(this).closest("tr").find(".clsspnprojId").html())
         $(".lblProjHoldHistory").html($("#projectNameCell").html())
@@ -17,7 +19,19 @@
     });
 
 
+       
+
+
 });
+
+function getProjWiseStatus() {
+    var projectId = $(".ProjectcommentprojId").html();
+    if (projectId != null) {
+
+    ProjectWiseStatusByProjid(projectId);
+    }
+}
+
 function GetAllComments2() {
     $.ajax({
         type: "POST",
@@ -98,8 +112,57 @@ function GetAllComments2() {
             $('<button type="button" class="btn btn-primary">+Add Comment</button>')
                 .appendTo('.add-comment-btn')
                 .on('click', function () {
-                    // Your custom +Add Comment button click logic here
-                    alert('Add Comment clicked!');
+                    $(this).attr("addminaproval", adminap);
+                    var approval = $(this).attr("addminaproval");
+
+                    fetchServerDate().then(function (S) {
+
+                        var projId = $(".ProjectcommentprojId").html().trim();
+                        $("#ProjectcommentForStackHolderprojId").html($(".ProjectcommentprojId").html())
+                        $("#ProjectcommentForStackHolderPsmId").html($("#IsCommentPsmiId").html())
+                        mMsater(0, "ddlStatus", 4, 0)
+                        $("#ProjCommentModal").modal('show');
+                        GetAllComments($("#IsCommentPsmiId").html(), $(".ProjectcommentprojId").html());
+
+                        // Added from here for pop up heading with project name in comment (added by Divyanshu on 10/02/2025)
+                        var words = projectName.split(" ");
+                        // Limit to 6 words and add "..." if needed
+                        var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projectName;
+                        var finalTitle = "Project Name: " + shortProjName;
+                        $('#addComment').text(finalTitle);
+
+                        //var pad = "00";
+                        //var datef2 = new Date();
+                        //var months = "" + (datef2.getMonth() + 1);
+                        //var days = "" + datef2.getDate();
+                        //var monthsans = pad.substring(0, pad.length - months.length) + months;
+                        //var dayans = pad.substring(0, pad.length - days.length) + days;
+                        //var year = datef2.getFullYear();
+                        //var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
+                        //var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
+                        //var ss = `${datef2.getSeconds()}`;
+
+                        //// Today's date and time in the required formats
+                        //var todayDate = `${year}-${monthsans}-${dayans}`;
+                        //var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+
+
+
+                        if (approval === "true") {
+
+                            $('#CommentDateFwd').attr('type', 'datetime-local');
+                            $('#CommentDateFwd').attr('max', S.todayDateTime);
+                            $('#CommentDateFwd').prop('disabled', false); // Allow user input
+                            $('#CommentDateFwd').val(S.todayDateTime); // Allow user input
+                        } else {
+
+                            $('#CommentDateFwd').attr('type', 'datetime-local');
+                            $('#CommentDateFwd').val(S.todayDateTime); // Set today's date
+                            $('#CommentDateFwd').prop('disabled', true); // Freeze input
+                        }
+
+                    });
+
                 });
 
             function PdfDiv() {
@@ -417,30 +480,49 @@ $(".btn-FwdFromMOv").on('click', function () {
         alert("Text Copied");
     })
 
+$('.PrintDiv').on('click', function () {
+ 
+    PrintDiv();
+})
 
-    function PrintDiv() {
-        var projectName = document.getElementById('projectNameCell').innerText.trim(); // Get the project name from the table cell
-        var divToPrint = document.getElementById('widget-content');
-        var popupWin = window.open('', '_blank', 'width=800,height=800,location=Center,Center=20px');
-        popupWin.document.open();
-        var tableStyle = getComputedStyle(document.getElementById('htmlTopdf'));
-        popupWin.document.write('<style type="text/css">');
-        popupWin.document.write(tableStyle.cssText);
-        popupWin.document.write('</style>');
-        popupWin.document.write('<html><head><title>' + projectName + '</title></head><body onload="window.print()">' +
-            '<div id="print-container">' +
-            divToPrint.innerHTML +
-            '</div>' +
-            '<div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;color: BLACK; position:fixed;top: auto; left: 6%; top: 39%;color: #8e9191;font-size: 80px; font-weight: 500px;display: grid;justify-content: center;align-content: center;">' +
-            '@(TempData["ipadd"])' + " " +
-            '</div>' +
-            '</body></html>');
+function PrintDiv() {
+    const projectName =
+        document.getElementById('projectNameCell')?.innerText.trim() || 'Print';
 
-        popupWin.document.close();
-    }
+    const divToPrint = document.getElementById('widget-content');
+    const ipText = document.getElementById('IpAddress')?.innerText || '';
 
-    var loginData = @Html.Raw(Json.Serialize(ViewBag.logins));
+    const popupWin = window.open('', '_blank', 'width=800,height=800');
+    popupWin.document.open();
+
+    popupWin.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>${projectName}</title>
+
+            <!-- Load SAME CSS file -->
+            <link rel="stylesheet" href="/css/projhistory.css">
+   
+        </head>
+        <body>
+            <div id="print-container">
+                ${divToPrint.innerHTML}
+            </div>
+
+            <div class="print-watermark">
+                ${ipText}
+            </div>
+
+            <script src="/js/print.js"></script>
+        </body>
+        </html>
+    `);
+
+    popupWin.document.close();
+}
+
+
     var projectid = $(".ProjectcommentprojId").html();
-    ProjectWiseStatusByProjid(projectid);
-
+  
 

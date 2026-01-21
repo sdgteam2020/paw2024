@@ -1,5 +1,5 @@
 ﻿.modal-content {
-    margin-left: -2rem !important;
+    /*margin-left: -2rem !important;*/
     height: auto; /* Remove fixed height to allow dynamic content */
 }
 /* ===== WhiteListedProjectDetail modal (moved from inline styles) ===== */

@@ -1,4 +1,4 @@
-using ASPNetCoreIdentityCustomFields.Data;
+﻿using ASPNetCoreIdentityCustomFields.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.DataProtection;
@@ -25,6 +25,7 @@ using swas.DAL.Logger;
 using swas.BAL.Helpers;
 using swas.DAL.Models;
 using swas.UI.Models;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -192,21 +193,43 @@ new CookiePolicyOptions
 
 });
 
-//app.Use(async (context, next) =>
-//{
-//    context.Response.Headers.Add(
-//        "Content-Security-Policy",
-//        "default-src 'self'; " +
-//        "script-src 'self' https://cdnjs.cloudflare.com; " +  // Allow Font Awesome scripts
-//        "style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; " +  // Allow Font Awesome styles and inline styles
-//        "img-src 'self' data:; " +
-//        "font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; " +  // Allow Font Awesome fonts
-//        "connect-src 'self'; " +
-//        "frame-ancestors 'none';"
-//    );
+app.Use(async (ctx, next) =>
+{
+    // 1) Content Security Policy
+    ctx.Response.Headers["Content-Security-Policy"] =
+        "default-src 'self' blob:; " +
+        "script-src 'self'; " +
+        "style-src 'self' 'unsafe-inline';" +
+        "img-src 'self' data:; " +
+        "font-src 'self' data:; " +
+        "frame-ancestors 'none'; " +
+        "base-uri 'self'; " +
+        "object-src 'self' blob:; " +
+        "form-action 'self';" +
+        "connect-src 'self' wss:";
 
-//    await next();
-//});
+    // 2) X-Frame-Options (align with frame-ancestors)
+    ctx.Response.Headers["X-Frame-Options"] = "DENY";
+
+    // 3) Referrer-Policy
+    ctx.Response.Headers["Referrer-Policy"] = "strict-origin-when-cross-origin";
+
+    // Extra good headers
+    ctx.Response.Headers["X-Content-Type-Options"] = "nosniff";
+    ctx.Response.Headers["X-XSS-Protection"] = "1; mode=block";
+
+
+
+    // Hide tech details where possible
+    ctx.Response.Headers.Remove("X-Powered-By");
+    ctx.Response.Headers.Remove("x-aspnet-version");
+
+    await next();
+});
+
+
+
+
 
 app.UseHttpsRedirection();
 

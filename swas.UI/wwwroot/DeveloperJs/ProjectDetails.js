@@ -49,7 +49,7 @@
 
 
     $(".processDetail").click(function () {
-        debugger;
+        ;
         var $row = $(this).closest('tr');
         var ProjId = $row.find("#SpnCurrentProjId").text().trim();
         var date_type = $row.find("#SpnDate_type").text().trim();
@@ -742,7 +742,7 @@ function truncateText(text, maxWords) {
 
 $(document).on("click", ".date-action", function (e) {
     e.preventDefault();
-    debugger;
+    ;
 
     const action = $(this).data("action");
    
@@ -784,9 +784,9 @@ $(document).on("click", ".date-action", function (e) {
             return remarks;
         }
     }).then((result) => {
-        debugger;
+        ;
         if (result.isConfirmed && result.value) {
-            debugger;
+            ;
             var remarks = result.value;
 
             $.ajax({
@@ -811,7 +811,7 @@ $(document).on("click", ".date-action", function (e) {
                     });
                 },
                 error: function (xhr, status, error) {
-                    debugger;
+                    ;
                     Swal.fire("Error!", "Something went wrong: " + error, "error");
                 }
             });
@@ -873,7 +873,7 @@ function SendRemainder(projid, remarks) {
             Remarks: remarks // if you want to send remarks to backend
         },
         success: function (response) {
-            debugger;
+            ;
             console.log(response);
             if (response > 0) {
                 Swal.fire("Success", "Reminder sent successfully", "success");
@@ -895,7 +895,7 @@ function SendRemainder(projid, remarks) {
 
 
 //$("#tabRemainder").on("click", function () {
-//    debugger;
+//    ;
 
 //    $.ajax({
 //        url: "/Projects/GetRemainderList",
@@ -905,7 +905,7 @@ function SendRemainder(projid, remarks) {
 //            console.log(response); // Fix typo here
 //        },
 //        error: function (xhr, status, error) {
-//            debugger;
+//            ;
 //            Swal.fire("Error!", "Something went wrong: " + error, "error");
 //        }
 //    });
@@ -914,7 +914,7 @@ function SendRemainder(projid, remarks) {
 
 
 $(document).on('click', '#btnRemMove', function () {
-    debugger;
+    ;
 
 
     var ProjId = parseInt($(this).data("action"));
@@ -952,7 +952,7 @@ $(document).on('click', '#btnRemMove', function () {
 
 //}
 function GetProjRemainderMov(ProjId) {
-    debugger;
+    ;
     $('#ProjRemainderMov').modal('show');
 
     $.ajax({
@@ -961,7 +961,7 @@ function GetProjRemainderMov(ProjId) {
         data: { ProjectId: ProjId },
         success: function (response) {
             console.log(response); // Debugging
-            debugger;
+            ;
 
             const data = response.data || []; // Expecting array
             const length = data.length;
@@ -1048,7 +1048,7 @@ function GetProjRemainderMov(ProjId) {
 $(document).on("click", "#ReadRemainderNoti", function (e) {
     e.preventDefault();
    
-    debugger;
+    ;
 
     var $this = $(this);
     var projId = parseInt($this.data("projid"));
@@ -1113,12 +1113,12 @@ $("#tabParked").click(function () {
 
 
 function GetParkedProject() {
-    debugger;
+    ;
     $.ajax({
         url: '/Projects/GetActParkedProject',
         type: 'GET',
         success: function (response) {
-            debugger;
+            ;
             // Clear table body
             $("#parkedtblData").html("");
 

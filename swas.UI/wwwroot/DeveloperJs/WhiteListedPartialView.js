@@ -14,8 +14,8 @@ function GetwhilteListProject(TypeId) {
         contentType: 'application/x-www-form-urlencoded',
         data: userdata,
         success: function (data) {
-            debugger;
-            console.log(data);
+         
+           
             if (data != null) {
                 let count = 1;  // Start count from 1
                 let listItem = '';  // Initialize listItem as an empty string

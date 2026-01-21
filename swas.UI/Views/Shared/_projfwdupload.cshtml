@@ -23,45 +23,52 @@
 
 
 <link href="~/assets/css/tooltip.css" rel="stylesheet" />
-
 <div class="accordion accordion-flush" id="accordionFlushExample">
     @Html.Partial("_ProjectFWDPopup")
+
     <div class="accordion-item">
-        <h2 class="accordion-header " id="flush-headingOne">
-            <button class="btn btn-secondary RefLetter-container" type="button">
+        <h2 class="accordion-header" id="flush-headingOne">
 
-                <img src="/assets/images/icons/pdfimg.png" onclick="PrintDiv()" alt="Pdf Download" width="35" height="25">
-                <div class="RefLetter">
-                   Generate Appx C
-                </div>
-            </button>
+            <!-- CENTER CONTAINER -->
+            <div class="d-flex justify-content-center align-items-center gap-2 flex-wrap">
 
-            <button class="btn btn-secondary" id="btnAnalytics">
-                Analytics
-              
-            </button>
-
-            <button class="btn btn-secondary" type="button">
-                
-                 <a href="javascript:void(0);" onclick="history.go(-1);">Close</a>
-            
-             
-
-            </button>
-            @if (Model.tounitid == Logins.unitid && Model.ProjMov.IsComplete == false && Model.DataProjId == dataProjId)
-            {
-                <button class="btn btn-secondary btn-FwdFromMOv">
-                    Send
-
+                <button class="btn btn-secondary RefLetter-container PrintDiv" type="button">
+                    <img src="/assets/images/icons/pdfimg.png"
+                         
+                         alt="Pdf Download"
+                         width="35"
+                         height="25">
+                    <div class="RefLetter">
+                        Generate Appx C
+                    </div>
                 </button>
-            }
-           
-          
-          
+
+                <button class="btn btn-secondary" id="btnAnalytics">
+                    Analytics
+                </button>
+
+                <button type="button" id="btnClose"
+                        class="btn btn-secondary text-white"
+                        >
+                    Close
+                </button>
+
+                @if (Model.tounitid == Logins.unitid
+                && Model.ProjMov.IsComplete == false
+                && Model.DataProjId == dataProjId)
+                {
+                    <button class="btn btn-secondary btn-FwdFromMOv">
+                        Send
+                    </button>
+                }
+
+            </div>
+            <!-- CENTER CONTAINER END -->
 
         </h2>
     </div>
 </div>
+
 
 <script src="~/developerjs/Tooltip.js"></script>
 <script src="~/developerjs/projectwisereport.js"></script>

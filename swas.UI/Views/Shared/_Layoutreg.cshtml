@@ -71,7 +71,7 @@
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/dataTables.buttons.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/buttons.bootstrap4.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/jszip.min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/pdfmake.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/pdfmake.min.js?v1"></script>
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/vfs_fonts.js"></script>
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/buttons.html5.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/buttons.print.min.js"></script>
@@ -202,14 +202,22 @@
 
     </div>
 
-    @* @if (Logins != null)
+    @if (Logins != null)
     {
         <footer class="footer1 paw-footer-fixed">
             <div class="footer-text">
                 Copyright &copy; Developed by ASDC, DGIS
             </div>
         </footer>
-    } *@
+    }
+    @await Html.PartialAsync("_AlertMessages")
+
+
+
+    <script language="JavaScript" type="text/javascript" src="~/js/sweetalert2.all.min.js"></script>
+
+    <!-- Central JS for handling alerts -->
+    <script src="~/developerjs/centralerrororsuccess.js"></script>
 
     @RenderSection("scripts", required: false)
    <script src="~/DeveloperJs/layoutreg.js"></script>

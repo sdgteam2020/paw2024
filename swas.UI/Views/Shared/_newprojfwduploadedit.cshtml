@@ -143,39 +143,6 @@
 
 
 
-<script>
-    @if (TempData.ContainsKey("SuccessMessage"))
-    {
-        <text>
-            Swal.fire({
-                title: 'New Entry Created',
-                text: '@TempData["SuccessMessage"]',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-
-        </text>
-        TempData.Remove("SuccessMessage");
-        ViewBag.SubmitCde = true;
-    }
-</script>
-
-
-
-<script>
-    @if (TempData.ContainsKey("FailureMessage"))
-    {
-        <text>
-            Swal.fire({
-                title: 'Something Went Wrong....!',
-                text: '@TempData["FailureMessage"]',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        </text>
-        TempData.Remove("FailureMessage");
-    }
-</script>
 
 
 <script>

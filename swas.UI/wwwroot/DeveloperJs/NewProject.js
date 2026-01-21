@@ -232,7 +232,7 @@ $('#ProcessId').on('click', function(){
 })
 
 function ButtonClick() {
-    debugger;
+    
     var ButtonText = $('#ProcessId').data('button-text');
     if (ButtonText === 'Sign In') {
         var signInUrl = '/Home/Index';
@@ -388,7 +388,7 @@ $("#hostedOn,  #certNo, #remarks, #appt").on("input", function () {
 
 $("#btn_Save").on('click', function (e) {
     e.preventDefault();
-    debugger;
+    
     // Gather form inputs
     var formData = {
         ProjName: $('#swName').val(),
@@ -406,7 +406,7 @@ $("#btn_Save").on('click', function (e) {
     var isValid = true;
    
     $("input[required], select[required], textarea[required]").each(function () {
-        debugger;
+        
         var value = $(this).val();
         var maxLength = 200;
 
@@ -561,7 +561,7 @@ $(document).ready(function () {
         },
         minLength: 4, // Minimum characters before search is triggered
         select: function (event, ui) {
-            debugger;
+            
             // Handle item selection
             let selectedOption = ui.item;
 

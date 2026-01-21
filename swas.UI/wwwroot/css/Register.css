@@ -82,5 +82,5 @@
 
 /* UnitAdd modal content width */
 .reg-modal-w650 {
-    width: 650px;
+    width: 120% !important;
 }

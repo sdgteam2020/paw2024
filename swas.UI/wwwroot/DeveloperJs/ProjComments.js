@@ -385,36 +385,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     
-        @if (TempData.ContainsKey("SuccessMessage"))
-        {
-            <text>
-                Swal.fire({
-                    title: 'Saved & Ready for Next Step',
-                text: '@TempData["SuccessMessage"]',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-
-            </text>
-        TempData.Remove("SuccessMessage");
-    }
-    
-
-
-
-    
-        @if (TempData.ContainsKey("FailureMessage"))
-        {
-            <text>
-                Swal.fire({
-                    title: 'Something Went Wrong....!',
-                text: '@TempData["FailureMessage"]',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-            </text>
-        TempData.Remove("FailureMessage");
-
-    }
-    
+     
 

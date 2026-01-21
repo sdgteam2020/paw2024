@@ -25,12 +25,7 @@
     if (tabshift == 0)
         tabshift = 1;
 
-    // if (ViewBag.ProjEdit != null)
-    // {
-    //     Model.ProjEdit = ViewBag.ProjEdit;
-    // }
-    //Projmove pmove = new Projmove();
-    //pmove.DataProjId = 0;
+
     if (Model.ProjEdit != null && TempData["ProjID"] == null)
     {
         if (Model.ProjEdit.ProjId != 0)
@@ -262,114 +257,6 @@
 
 <br />
 
-<script>
-    @if (TempData.ContainsKey("SuccessMessage"))
-    {
-        <text>
-            Swal.fire({
-                title: 'Saved & Ready for Next Step',
-                text: '@TempData["SuccessMessage"]',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-
-
-        </text>
-        TempData.Remove("SuccessMessage");
-    }
-</script>
 
 
 
-<script>
-    @if (TempData.ContainsKey("FailureMessage"))
-    {
-        <text>
-            Swal.fire({
-                title: 'Something Went Wrong....!',
-                text: '@TempData["FailureMessage"]',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        </text>
-        TempData.Remove("FailureMessage");
-
-    }
-</script>
-
-
-<script>
-
-    $(document).ready(function () {
-        // Wait for the document to be ready
-
-        function submitFormnew() {
-
-
-            var curPSMid = 0;
-
-            if (@(Model.ProjEdit != null ? "true" : "false")) {
-                curPSMid = @(Model.ProjEdit?.CurrentPslmId ?? 0);
-
-            }
-
-
-
-            $.ajax({
-
-                type: 'POST',
-                url: 'FwdProjConfirm',
-                data: { "projid": curPSMid },
-                datatype: "json",
-
-                success: function (response) {
-                    console.log('Request successful', response);
-                },
-                error: function (error) {
-                    console.error('Error occurred:', error);
-                }
-            });
-        }
-
-        $("#finalupload").click(function () {
-            submitFormnew();
-            var fdset = "fieldset#" + "4";
-            editFormContainer.style.display = 'none';
-            addFormContainer.style.display = 'block';
-            $(fdset).show();
-            $("fieldset#upload").hide();
-            $("fieldset#2").hide();
-            $("fieldset#1").hide();
-            animateProgressBar();
-        });
-
-        // Any other code that you need to run after the document is ready
-    });
-
-
-
-</script>
-
-
-<style>
-    .hidden-date {
-        display: none;
-    }
-
-    .validation-error {
-        display: none;
-    }
-</style>
-<style>
-    /* Reset all styles for the div and its descendants */
-    .strong-div, .strong-div * {
-        all: initial;
-    }
-
-    /* Apply custom styles to the div */
-    .strong-div {
-        border: 2px solid black;
-        padding: 10px;
-        background-color: lightgray;
-    }
-</style>

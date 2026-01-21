@@ -80,7 +80,7 @@
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/dataTables.buttons.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/buttons.bootstrap4.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/jszip.min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/pdfmake.min.js"></script>
+    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/pdfmake.min.js?v1"></script>
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/vfs_fonts.js"></script>
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/buttons.html5.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/buttons.print.min.js"></script>
@@ -88,7 +88,7 @@
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/dataTables.responsive.min.js"></script>
     <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/responsive.bootstrap4.min.js"></script>
     <script src="~/assets/dataTable/js/buttons.bootstrap4.min.js"></script>
-    <script src="~/assets/dataTable/js/pdfmake.min.js"></script>
+    <script src="~/assets/dataTable/js/pdfmake.min.js?v1"></script>
     <script src="~/assets/dataTable/js/datatables.datetime.min.js"></script>
     <script src="~/assets/dataTable/js/datatables.searchbuilder.min.js"></script>
     <script src="~/assets/dataTable/js/fnmultifilter.js"></script>
@@ -594,8 +594,24 @@
                 @RenderBody()
             </div>
         </div>
-
+        <!--start footer-->
         @if (Logins != null)
+        {
+
+            <footer class="footer" style="position: fixed;margin-bottom: 0px;">
+                <div class="footer-text">
+                    Copyright &copy; Developed by ASDC, DGIS
+                </div>
+                <div style="text-align: right;margin-top: -24px !important;margin-right:20px !important;">
+                    <span id="dailyCounter"></span>
+                    <span id="monthlyCounter"></span>
+                    <span id="totalCounter" style="margin-right: 32px !important"></span>
+                </div>
+            </footer>
+
+        }
+        <!--end footer-->
+@*         @if (Logins != null)
         {
             <footer class="footer paw-footer-fixed">
                 <div class="footer-text">
@@ -607,7 +623,7 @@
                     <span id="totalCounter" class="paw-totalCounter"></span>
                 </div>
             </footer>
-        }
+        } *@
 
         <a href="javaScript:;" class="back-to-top">
             <ion-icon name="arrow-up-outline"></ion-icon>
@@ -648,13 +664,13 @@
                                                     <div>
                                                         <div>
                                                             <label id="Comm"><b>Comment</b> <span class="required-indicator">*</span></label>
-                                                            <textarea id="Comments" class="form-control requiredField paw-comments-textarea" rows="4"></textarea>
+                                                            <textarea id="Comments" class="requiredField paw-comments-textarea" rows="4"></textarea>
                                                             <div class="invalid-feedback">Please provide the Comments</div>
                                                         </div>
 
                                                         <div class="mb-3">
                                                             <label class="control-label"><b>Status</b> <span class="text-danger"><font class="paw-red-font"><b>*</b></font></span></label>
-                                                            <select class="form-control requiredField" id="ddlStatus">
+                                                            <select class="form-control1 form-control requiredField" id="ddlStatus">
                                                                 <option value="">Select a Status</option>
                                                             </select>
 
@@ -665,12 +681,12 @@
 
                                                     <div class="mb-3">
                                                         <label class="control-label"><b>Date of Post:</b></label>
-                                                        <input id="CommentDateFwd" type="date" class="datePicker form-control requiredField" />
+                                                        <input id="CommentDateFwd" type="date" class="datePicker form-control form-control1 requiredField" />
                                                     </div>
 
                                                     <div class="mb-3">
                                                         <label for="pdfFile"><b>Upload PDF</b></label>
-                                                        <input type="file" id="uploadfile" name="uploadfile" accept=".pdf" class="form-control" />
+                                                        <input type="file" id="uploadfile" name="uploadfile" accept=".pdf" class="form-control form-control1" />
                                                     </div>
 
                                                     <div class="text-left">
@@ -723,7 +739,16 @@
             </div>
         </div>
     </div>
+    @await Html.PartialAsync("_AlertMessages")
 
+
+   
+    <script language="JavaScript" type="text/javascript" src="~/js/sweetalert2.all.min.js"></script>
+
+    <!-- Central JS for handling alerts -->
+	<script src="~/developerjs/centralerrororsuccess.js"></script>
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
 
@@ -732,4 +757,4 @@
 <script src="~/DeveloperJs/layout.js"></script>
 <script src="~/developerjs/ProjectstckholdercommentforProjHistory.js"></script>
 
-@RenderSection("scripts", required: false)
+

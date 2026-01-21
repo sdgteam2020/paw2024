@@ -16,7 +16,7 @@ function ProjectWiseStatus() {
         data: userdata,
         type: 'POST',
         success: function (response) {
-            debugger;
+            
             if (response != "null" && response != null) {
 
                 if (response == -1) {
@@ -112,7 +112,8 @@ function ProjectWiseStatus() {
 
 
 function ProjectWiseStatusByProjid(projid) {
-    debugger;
+  
+    
     var listItem = "";
 
     var userdata = {
@@ -125,7 +126,7 @@ function ProjectWiseStatusByProjid(projid) {
         data: userdata,
         type: 'POST',
         success: function (response) {
-            debugger;
+            
             if (response != "null" && response != null) {
 
                 if (response == -1) {
@@ -142,7 +143,7 @@ function ProjectWiseStatusByProjid(projid) {
 
                     for (var i = 0; i < StatusProjectlst.length; i++) {
                         if (StatusProjectlst[i].status !== "BISAG-N" && StatusProjectlst[i].status !== "Re-Vetting") {
-                            listItem += '<th>' + StatusProjectlst[i].status + '</th>';
+                            listItem += '<th class="text-white">' + StatusProjectlst[i].status + '</th>';
                         }
                     }
 
@@ -202,7 +203,7 @@ function ProjectWiseStatusByProjid(projid) {
                             
 
     const pdfFileInput = document.getElementById('pdfFileInput');
-
+if (pdfFileInput != null) {
     pdfFileInput.addEventListener('change', function (event) {
         const file = event.target.files[0];
 
@@ -250,24 +251,6 @@ function ProjectWiseStatusByProjid(projid) {
     });
 
 
-    function compareArrays(array1, array2) {
-        if (array1.length !== array2.length) {
-            return false;
-        }
-        for (let i = 0; i < array1.length; i++) {
-            if (array1[i] !== array2[i]) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-
-
-
-
-
-
     pdfFileInput.addEventListener('change', function (event) {
         const file = event.target.files[0];
 
@@ -297,6 +280,29 @@ function ProjectWiseStatusByProjid(projid) {
             reader.readAsArrayBuffer(file);
         }
     });
+
+}
+    
+
+    function compareArrays(array1, array2) {
+        if (array1.length !== array2.length) {
+            return false;
+        }
+        for (let i = 0; i < array1.length; i++) {
+            if (array1[i] !== array2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+
+
+
+    
+
+    
 
 
     function compareArrays(array1, array2) {
@@ -356,3 +362,11 @@ function ProjectWiseStatusByProjid(projid) {
         $('#uploadButton').prop('disabled', true);
     });
 
+document.addEventListener("DOMContentLoaded", function () {
+    const btn = document.getElementById("btnClose");
+    if (btn) {
+        btn.addEventListener("click", function () {
+            history.back();
+        });
+    }
+});

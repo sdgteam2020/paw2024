@@ -30,10 +30,10 @@ window.closeForm = function () {
 };
 
 $(document).ready(function () {
-
+  
     // 1) AddWhite_proj click -> reset form + show modal + blur background
-    $(document).on("click", "#AddWhite_proj", function () {
-
+    $("#AddWhite_proj").on("click", function () {
+      
         $("input[required], select[required], textarea[required]").removeClass("is-invalid");
         $("input[required], select[required], textarea[required]").siblings(".invalid-feedback").hide();
 

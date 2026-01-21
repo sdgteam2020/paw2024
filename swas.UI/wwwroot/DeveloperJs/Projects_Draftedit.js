@@ -525,7 +525,50 @@
         });
 
     });
+   
 
+            function submitFormnew() {
+
+
+                var curPSMid = 0;
+
+                if (@(Model.ProjEdit != null ? "true" : "false")) {
+                    curPSMid = @(Model.ProjEdit?.CurrentPslmId ?? 0);
+
+                }
+
+
+
+                $.ajax({
+
+                    type: 'POST',
+                    url: 'FwdProjConfirm',
+                    data: { "projid": curPSMid },
+                    datatype: "json",
+
+                    success: function (response) {
+                        console.log('Request successful', response);
+                    },
+                    error: function (error) {
+                        console.error('Error occurred:', error);
+                    }
+                });
+            }
+
+        $("#finalupload").click(function () {
+            submitFormnew();
+        var fdset = "fieldset#" + "4";
+        editFormContainer.style.display = 'none';
+        addFormContainer.style.display = 'block';
+        $(fdset).show();
+        $("fieldset#upload").hide();
+        $("fieldset#2").hide();
+        $("fieldset#1").hide();
+        animateProgressBar();
+        });
+
+       
+   
 });
 function formatDate(dateString) {
     const dateParts = dateString.split('T')[0].split('-');

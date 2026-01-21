@@ -284,7 +284,7 @@ function bindProjHoldChart(labels, totals, totalsForlabel, colors) {
 }
 let projHoldChartcomment;
 function bindProjHoldCommentsChart(labels, totals, totalsForlabel, colors) {
-    debugger;
+   
     // If chart already exists, destroy it before creating new
     if (projHoldChartcomment) {
         projHoldChartcomment.destroy();

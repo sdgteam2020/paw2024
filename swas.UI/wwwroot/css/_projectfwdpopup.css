@@ -1,0 +1,189 @@
+﻿/* Modal general size */
+#ProjFwd .modal-dialog {
+    max-width: 95%;
+    width: 95%;
+    margin: 1rem auto;
+    /*margin-left: -100px;*/
+}
+
+#ProjFwd .modal-content {
+    height: 88vh; /* Adjust modal height */
+    /*  overflow-y: auto;
+    overflow-x: hidden;*/
+    font-size: 12px;
+    /*width: 1400px;*/
+}
+
+/* Modal header and title */
+#ProjFwd .modal-header {
+    padding: 12px 16px;
+}
+
+    /*#ProjFwd .modal-header h5,*/
+  /*  #ProjFwd .modal-header h6 {
+        font-weight: bold;
+        margin: 0;
+    }*/
+
+/* Preview card */
+.projfwd-preview-body-bg {
+    background-color: #f8f9fa;
+}
+
+.Attmenthistory,
+.previewcertificateAttment {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+
+
+.card-body {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /*padding: 16px;*/
+}
+
+/* Form fields */
+.ProjectsFwd select,
+.ProjectsFwd input,
+.ProjectsFwd textarea {
+    width: 100%;
+    font-size: 13px;
+    padding: 6px;
+    margin-bottom: 8px;
+}
+
+.projfwd-w-100 {
+    width: 100%;
+}
+
+.projfwd-remarks-w100 {
+    width: 100%;
+}
+
+.projfwd-date-w200 {
+    width: 200px;
+}
+
+/* Headers and info buttons */
+.projfwd-header-h50 {
+    height: 50px;
+}
+
+#btn-ibutton {
+    animation: blink 1.5s linear infinite;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Table styling inside modal */
+#ProjFwd table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+    #ProjFwd table th,
+    #ProjFwd table td {
+        padding: 6px;
+        text-align: left;
+        vertical-align: middle;
+        border: 1px solid #dee2e6;
+    }
+
+    #ProjFwd table thead th {
+        font-weight: bold;
+        position: sticky;
+        top: 0;
+     
+        z-index: 2;
+        background-color: #044c92;
+    }
+
+    #ProjFwd table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    #ProjFwd table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+/* Upload overlay */
+.projfwd-upload-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 1050;
+}
+
+.projfwd-spinner-lg {
+    width: 4rem;
+    height: 4rem;
+}
+
+/* Buttons */
+#ProjFwd .btn {
+    font-size: 11px;
+    line-height: 1.4;
+    padding: 4px 8px;
+}
+
+#ProjFwd .btn-lg {
+    font-size: 14px;
+    padding: 8px 16px;
+}
+
+.buttonsToHide {
+    display: none !important;
+}
+
+.btn_pulledpack {
+    cursor: not-allowed;
+}
+
+/* Responsive adjustments for modal */
+@media screen and (max-width: 768px) {
+    #ProjFwd .modal-dialog {
+        max-width: 98%;
+    }
+
+    #ProjFwd .modal-body {
+        font-size: 11px;
+    }
+
+    #ProjFwd table {
+        font-size: 10px;
+    }
+
+        #ProjFwd table th, #ProjFwd table td {
+            padding: 4px;
+        }
+
+    .ProjectsFwd select,
+    .ProjectsFwd input,
+    .ProjectsFwd textarea {
+        font-size: 11px;
+    }
+
+    .projfwd-date-w200 {
+        width: 100%;
+    }
+}

@@ -1,12 +1,19 @@
-﻿
+﻿/* =====================
+   Base
+===================== */
 body {
     font-family: Arial;
     font-size: 10pt;
 }
 
+table {
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
 
-
-
+/* =====================
+   Headings & Lines
+===================== */
 .heading-line {
     display: flex;
     align-items: center;
@@ -16,97 +23,78 @@ body {
 .line {
     flex-grow: 1;
     height: 1px;
-    background-color: #333; /* You can change this to your preferred color */
+    background-color: #333;
     margin: 0 10px;
 }
 
-
-
-#checklist th, #checklist td {
+/* =====================
+   Checklist / PDF Tables
+===================== */
+#checklist th,
+#checklist td {
     margin-top: 30px;
     font-size: 20px;
     padding: 5px;
-    border: 1px solid #000000;
+    border: 1px solid #000;
     font-weight: bold;
     text-decoration: underline;
 }
 
-#htmlTopdf td {
-    width: 10%;
-    text-align: center;
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-
+#htmlTopdf th,
+#htmlTopdf td,
 #htmlTopdf tr {
-    width: 100%;
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-
-#htmlTopdf th {
     width: 10%;
     text-align: center;
-    border: 1px solid black;
+    border: 1px solid #000;
     border-collapse: collapse;
 }
 
+/* =====================
+   Text Helpers
+===================== */
 .long-text {
     max-width: 300px;
     overflow: auto;
-    text-overflow: inherit;
     white-space: nowrap;
     display: block;
 }
 
-
-
-
-table {
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
+/* =====================
+   Project Tables
+===================== */
 .new-proj-table {
     width: 45%;
-    height: auto;
+    margin-top: 10px;
     border-collapse: collapse;
-    margin-top: 10px; /* Adjust margin as needed */
 }
-/*  #StakeholderDetails {
-                                        page-break-before: always;
-                                    }*/
+
+/* =====================
+   Modal Layout
+===================== */
 .custom-modal-sizes {
-    max-width: 80%; /* Increase the width as required */
+    max-width: 80%;
     width: 75%;
-    /* height: 10%; Adjust height if necessary */
     margin: auto;
 }
 
     .custom-modal-sizes .modal-content-new {
-        height: 100%; /* Ensure the content fills the modal */
-        overflow: auto; /* Add scrolling for long content */
+        height: 100%;
+        overflow: auto;
     }
 
-.modal-lg {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh; /* Full height */
-}
-
-.custom-modal-size {
-    max-width: 100%; /* Set the modal width to 80% of the screen */
-    width: 95%; /* Ensure it scales responsively */
-    margin: auto; /* Center horizontally */
-}
-
+.modal-lg,
 .modal-dialog {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh; /* Vertically center the modal */
-    margin: 0; /* Remove default margins for better centering */
+    min-height: 100vh;
+    /*margin: 0;*/
+}
+
+.custom-modal-size {
+    max-width: 100%;
+    width: 95%;
+    margin: auto;
 }
 
 .modal-header {
@@ -115,52 +103,53 @@ table {
     align-items: center;
 }
 
-.modal-content-new {
+/*.modal-content-new {
     margin-left: 277px;
     margin-right: -225px;
-}
+}*/
 
-.modal-xl {
+/*.modal-xl {   
     left: 10%;
-}
+}*/
 
-
-/* =========================
-   ProjHistory view: moved from inline <style> + style=""
-   ========================= */
-
-/* Tooltip block (moved from inline <style>) */
-.ph-dflex-safe {
+/* =====================
+   Tooltip (CSP Safe)
+===================== */
+.ph-dflex-safe,
+.d-flex {
     position: relative;
     z-index: 1;
 }
 
-.ph-tooltip-container {
+.ph-tooltip-container,
+.tooltip-container {
     position: relative;
     display: inline-block;
 }
 
-.ph-tooltip-text {
-    visibility: hidden;
-    width: auto;
-    height: auto;
-    background-color: #044c92;
-    color: #fff;
-    text-align: left;
-    padding: 10px;
-    right: -25%;
-    opacity: 0;
-    transition: opacity 0.3s;
-    word-wrap: break-word;
-    box-sizing: border-box;
-}
+    .ph-tooltip-text,
+    .tooltip-container .tooltip-text {
+        visibility: hidden;
+        background-color: #044c92;
+        color: #fff;
+        padding: 10px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        word-wrap: break-word;
+        box-sizing: border-box;
+        text-align: left;
+        right: -25%;
+    }
 
-.ph-tooltip-container:hover .ph-tooltip-text {
-    visibility: visible;
-    opacity: 1;
-}
+    .ph-tooltip-container:hover .ph-tooltip-text,
+    .tooltip-container:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+    }
 
-/* Simple utilities used in this view */
+/* =====================
+   Utility Classes
+===================== */
 .ph-text-center {
     text-align: center;
 }
@@ -169,46 +158,14 @@ table {
     width: 100%;
 }
 
-.ph-mt-3 {
+.ph-mt-3,
+.ph-chat-mt3 {
     margin-top: 3px !important;
 }
 
-/* Headings block in this view */
-.ph-projectheading-center {
-    text-align: center;
-}
-
-.ph-projectheading-title {
-    color: #fff;
-    margin-top: 8px;
-    font-weight: bold;
-}
-
-/* Buttons / pills used in table cells (replaces inline padding/font-size/margin-top) */
-.ph-pill-mini {
-    padding: 1px !important;
-    font-size: 13px !important;
-    margin-top: 1px !important;
-}
-
-/* Copy button/icon (replaces inline style="margin-left:auto" + icon inline style) */
-.ph-copy-push {
-    margin-left: auto;
-}
-
-.ph-copy-icon {
-    font-size: large;
-    cursor: pointer;
-}
-
-/* Attachment icon size (replaces inline width/height/margin-right) */
-.ph-attach-icon {
-    width: 31px;
-    height: 29px;
-    margin-right: 0px;
-}
-
-/* “Checklist / Movement / Comments” section titles (replaces inline style) */
+/* =====================
+   Section Titles
+===================== */
 .ph-section-title {
     text-align: center;
     margin-top: 30px;
@@ -218,7 +175,9 @@ table {
     text-decoration: underline;
 }
 
-/* PDF tables (replaces many inline border/collapse/text-align styles) */
+/* =====================
+   PDF Tables (Unified)
+===================== */
 .ph-pdf-table {
     width: 100%;
     border: 1px solid #000;
@@ -231,10 +190,7 @@ table {
     border-collapse: collapse;
 }
 
-.ph-pdf-th {
-    text-align: center;
-}
-
+.ph-pdf-th,
 .ph-pdf-td-center {
     text-align: center;
 }
@@ -251,134 +207,20 @@ table {
     width: 30%;
 }
 
-/* The “Addl Details” row */
 .ph-pdf-subheading {
-    text-align: left;
     font-weight: bold;
-}
-
-
-
-
-
-
-.d-flex {
-    position: relative;
-    z-index: 1; /* Ensure this is lower than the tooltip */
-}
-
-.tooltip-container {
-    position: relative;
-    display: inline-block;
-}
-
-    .tooltip-container .tooltip-text {
-        visibility: hidden;
-        width: auto;
-        height: auto;
-        background-color: #044c92;
-        color: #fff;
-        text-align: left;
-        padding: 10px;
-        right: -25%;
-        /* right: 100%; */
-        opacity: 0;
-        transition: opacity 0.3s;
-        word-wrap: break-word;
-        box-sizing: border-box;
-    }
-
-    .tooltip-container:hover .tooltip-text {
-        visibility: visible;
-        opacity: 1;
-    }
-.anchorimage {
-    width: 31px;
-    height: 29px;
-    margin-right: 0px;
-}
-
-/* ===== PDF hidden section / checklist / movement / comments ===== */
-
-.ph-section-title {
-    text-align: center;
-    margin-top: 30px;
-    margin-block-end: 20px;
-    font-size: 20px;
-    font-weight: bold;
-    text-decoration: underline;
-}
-
-.ph-pdf-table {
-    width: 100%;
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-
-.ph-pdf-th {
-    text-align: center;
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-
-.ph-pdf-tr {
-    width: 100%;
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-
-.ph-pdf-td-center-5 {
-    width: 5%;
-    text-align: center;
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-
-.ph-pdf-td-left-30 {
-    width: 30%;
-    text-align: left;
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-
-.ph-pdf-td-left {
     text-align: left;
 }
 
-/* Addl Details heading row */
-.ph-pdf-subheading {
-    text-align: left;
-    font-weight: bold;
-}
-
-/* Project Movement section blocks (non PDF table) */
-.ph-heading-center {
-    text-align: center;
-}
-
-.ph-heading-title {
-    color: white;
-    margin-top: 8px;
-    font-weight: bold;
-}
-
-.ph-softtype-table {
-    border-collapse: collapse;
-    border: white;
-}
-
-.ph-td-w1 {
-    width: 1% !important;
-}
-
-/* Mini pill style used many times */
+/* =====================
+   Buttons / Icons
+===================== */
 .ph-pill-mini {
     padding: 1px !important;
     font-size: 13px !important;
     margin-top: 1px !important;
 }
 
-/* Copy button alignment + icon */
 .ph-copy-push {
     margin-left: auto;
 }
@@ -388,12 +230,42 @@ table {
     cursor: pointer;
 }
 
-/* Approved action color */
+.ph-attach-icon,
+.anchorimage {
+    width: 31px;
+    height: 29px;
+    margin-right: 0;
+}
+
+/* =====================
+   Status / Actions
+===================== */
 .ph-action-approved {
     color: green;
 }
 
-/* Chat box spacing */
-.ph-chat-mt3 {
-    margin-top: 3px !important;
+/* =====================
+   Misc
+===================== */
+.ph-softtype-table {
+    border-collapse: collapse;
+    border: none;
+}
+
+.ph-td-w1 {
+    width: 1% !important;
+}
+.print-watermark {
+    transform: rotate(-45deg);
+    position: fixed;
+    left: 6%;
+    top: 39%;
+    z-index: 10000;
+    opacity: 0.3;
+    color: #8e9191;
+    font-size: 80px;
+    font-weight: 500;
+    display: grid;
+    justify-content: center;
+    align-content: center;
 }

@@ -1,13 +1,10 @@
 $(function() {
 
 
+		
 
-  $(function() {
-		$("#menu").metisMenu()
-	})
-
-
-  $(".nav-toggle-icon").on("click", function() {
+	$(".nav-toggle-icon").on("click", function () {
+		
 		$(".wrapper").toggleClass("toggled")
 	})
 
@@ -22,7 +19,8 @@ $(function() {
 	})
 
 
-	$(".toggle-icon").click(function() {
+	$(".toggle-icon").click(function () {
+		debugger;
 		$(".wrapper").hasClass("toggled") ? ($(".wrapper").removeClass("toggled"), $(".sidebar-wrapper").unbind("hover")) : ($(".wrapper").addClass("toggled"), $(".sidebar-wrapper").hover(function() {
 			$(".wrapper").addClass("sidebar-hovered")
 		}, function() {
@@ -177,7 +175,7 @@ function theme8() {
 
 
 
-  new PerfectScrollbar(".header-notifications-list")
+  //new PerfectScrollbar(".header-notifications-list")
 
 
     // Tooltops

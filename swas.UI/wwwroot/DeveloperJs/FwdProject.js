@@ -102,7 +102,7 @@ $(document).ready(function () {
     //    mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnStakeHolderId").html())
     //});
     $(".btn-Undo").click(function () {
-        debugger;
+        
         var projectName = $(this).closest("tr").find("a").data("proj-name");
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
 
@@ -197,7 +197,7 @@ $(document).ready(function () {
 
     });
     $(".btn-FwdHistory").click(function () {
-        debugger;
+        
         var projName = $(this).data('proj-name');
         var words = projName.split(" ");
         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
@@ -335,7 +335,7 @@ $(document).ready(function () {
     });
     $(document).on('click', '#btnAttchMultiforpsmid', function () {
 
-
+        
 
         requiredFields = $('#ProjFwd').find('.requiredFieldAttch');
 
@@ -384,7 +384,7 @@ $(document).ready(function () {
 
 
 //$("#btnFwdConfirm").off().on("click", async function () {
-//    debugger;
+//    
 //    const urlParams = new URLSearchParams(window.location.search);
 //    var psmid;
 //    let allAttachments = [];
@@ -616,7 +616,7 @@ function CheckFwdCondition(CurrentPslmId) {
 
 
 function adjustPreviewLayout() {
-    debugger;
+    
 
     if ($('.previewcertificateAttment').hasClass('d-none')) {
 
@@ -643,7 +643,7 @@ function adjustPreviewLayout() {
 
 
 function SaveFwdTo(CurrentPslmId, generatedPdf, allAttachments) {
-    debugger;
+    
 
     var psmdi = CurrentPslmId;
     var dateValue = $("#TimeStampToProjfwd").val();
@@ -784,7 +784,7 @@ function SaveFwdTo(CurrentPslmId, generatedPdf, allAttachments) {
         processData: false, // Don't process data as a query string
         contentType: false,
         success: function (response) {
-            debugger;
+            
      //console.log(response);
             if (response != null) {
 
@@ -1023,7 +1023,7 @@ function CheckforPreviousapprovals() {
         type: 'POST',
         data: userdata,
         success: function (response) {
-            debugger;
+            
             console.log(response);
             if (response.message.result !== "OK") {
 
@@ -1059,7 +1059,7 @@ $(".btn-Fwd").on('click',function () {
 });
 
 function openForwardModal(btn, isFromMov) {
-    debugger;
+    
     let $btn = $(btn);
 
     // -----------------------------
@@ -1227,7 +1227,7 @@ function SaveDocumentForTemp() {
 
 
 function DigitalSignByAPI(pdfpath) {
-    debugger;
+    
     GetThumbprint().then(function (tprint) {
 
         if (tprint == null) {

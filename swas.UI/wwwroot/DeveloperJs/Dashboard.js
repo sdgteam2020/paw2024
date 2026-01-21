@@ -223,7 +223,7 @@ function GetAllDashbaordCount() {
                         else {
                             //$('#ProjectApprovedTittle').html(tittle);
                             //$('#ProjApproved').modal('show');
-                            debugger;
+                            
                             var hascert = [24, 25, 26, 27, 28, 29].includes(parseInt(spnstatusId));
 
                             if (hascert) {
@@ -467,7 +467,7 @@ function GetAllDashbaordCount() {
 //                            getProjApproved(spnstatusId, spnstatusActionsMappingId);
 //                        }
 //                        else {
-//                            debugger;
+//                            
 //                            var hascert = [24, 25, 26, 27, 28, 29].includes(parseInt(spnstatusId));
 
 //                            if (hascert) {
@@ -551,11 +551,18 @@ function GetAllDashbaordCount() {
 
                 }).flat();
 
-                var ctx = document.getElementById('myChart').getContext('2d');
+                const canvas = document.getElementById("myChart");
+
+                if (!canvas) {
+                    console.warn("Canvas #myChart not found");
+                    return;
+                }
+
+                const ctx = canvas.getContext("2d");
                 var myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: monthNames,
+                        labels: monthNames, 
                         datasets: datasets
                     },
                     options: {
@@ -626,7 +633,7 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
         data: userdata,
         type: 'POST',
         success: function (response) {
-            debugger;
+            
             if (response != "null" && response != null) {
 
                 var hasIPA = response.some(item =>
@@ -683,9 +690,12 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                                 var visClass = (response[i].statusactionMappingid == 53) ? "dp-vis-visible" : "dp-vis-hidden";
 
                                 listItem += `
-<td class='text-center noExport'>
-  <button class='badge badge-success generateCertificate ${visClass}'
-      onclick="window.open('/Home/Generate?ProjectName=${encodeURIComponent(response[i].projName)}&ApprovedRemarks=${encodeURIComponent(response[i].approvedRemarks)}&ApprovedDt=${encodeURIComponent(response[i].approvedDt)}', '_blank')">
+<td class="text-center noExport">
+  <button 
+      class="badge badge-success generateCertificate ${visClass}"
+      data-project="${encodeURIComponent(response[i].projName)}"
+      data-remarks="${encodeURIComponent(response[i].approvedRemarks)}"
+      data-date="${encodeURIComponent(response[i].approvedDt)}">
       PDF
   </button>
 </td>`;
@@ -827,6 +837,17 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
         }
     });
 }
+document.addEventListener("click", function (e) {
+    if (!e.target.classList.contains("generateCertificate")) return;
+
+    const btn = e.target;
+
+    const url = `/Home/Generate?ProjectName=${btn.dataset.project}` +
+        `&ApprovedRemarks=${btn.dataset.remarks}` +
+        `&ApprovedDt=${btn.dataset.date}`;
+
+    window.open(url, "_blank");
+});
 
 function getProjGetsummay(spnstatusId, IsDuplicate) {
    
@@ -1015,11 +1036,16 @@ function updatePieChart(data) {
     var titles = data.map(item => item.Status);
     var chartData = data.map(item => item.TotalProj);
 
-    var canvas = document.getElementById('myChart1');
+  
+    const canvas = document.getElementById("myChart1");
+
     if (!canvas) {
-        console.error("Canvas element 'myChart1' not found.");
+        console.warn("Canvas #myChart1 not found");
         return;
     }
+
+   
+
     var backgroundColors = generateRandomColors(titles.length);
 
     var ctx = canvas.getContext('2d');
@@ -1551,7 +1577,7 @@ $(document).ready(function () {
       
         e.preventDefault(); // prevent default anchor behavior
        
-        debugger;
+        
         var id = $(this).data('id'); // better than attr()
 
         $.ajax({
@@ -1559,7 +1585,7 @@ $(document).ready(function () {
             url: TeamDetailPostBackURL,
             data: { Id: id }, // no quotes needed
             success: function (response) {
-                debugger;
+                
                 $('#myModalContenthistoryAttechment').html(response);
                 $('#myModalPagehistoryAttechment').modal({
                     backdrop: 'static',

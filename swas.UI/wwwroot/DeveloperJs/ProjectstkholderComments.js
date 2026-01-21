@@ -1,6 +1,8 @@
 ﻿var memberTable = "";
 
 $(document).ready(function () {
+
+     
     InboxNotificationCount()
   
     GetProjCommentsByUnitId(0);
@@ -394,7 +396,7 @@ function SendMsg() {
         contentType: false,
         processData: false,
         success: function (response) {
-            debugger;
+            
             $('#uploadLoader').hide();
             if (response == 0) {
 
@@ -409,7 +411,7 @@ function SendMsg() {
                     timer: 3000
                 
                 }).then(() => {
-                    debugger;
+                    
                       if ($("#ddlStatus").val() == 1) {
                     FwdProjConfirm($("#ProjectcommentForStackHolderPsmId").html());
                      }
@@ -463,7 +465,7 @@ function SendMsg() {
     });
 }
 function GetAllComments(PsmId, projId) {
-    debugger;
+    
     $.ajax({
         type: "POST",
         url: '/Projects/GetAllCommentBypsmId_UnitId',

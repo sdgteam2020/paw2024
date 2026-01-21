@@ -40,7 +40,7 @@ async function getGeneratedPdfLogSignFromPreview() {
 
 
 async function getGeneratedPdfFromPreview() {
-    debugger;
+    
 
 
 
@@ -63,7 +63,7 @@ async function getGeneratedPdfFromPreview() {
 
 function AttOnFWD() {
     $('.uploadLoader').addClass('d-none')
-    debugger;
+    
     var listItem = "";
 
     // Check for any previous rows and remove placeholder if needed
@@ -87,7 +87,7 @@ function AttOnFWD() {
     fd.append("remarks", remarksVal); // Add remarks to FormData
 
     // Add files to FormData and store them in the allAttachments array
-  
+    attachments = [];
     for (let i = 0; i < files.length; i++) {
         fd.append("uploadfile[]", files[i]);  // Append files to FormData
         attachments.push({ file: files[i], remarks: remarksVal }); // Track the files and remarks
@@ -136,7 +136,7 @@ function AttOnFWD() {
 
     // When the confirm button is clicked, send all attachments and remarks
     $(".btnFwdConfirm").off().on("click", async function () {
-        debugger;
+        
 
         const urlParams = new URLSearchParams(window.location.search);
         let psmid;

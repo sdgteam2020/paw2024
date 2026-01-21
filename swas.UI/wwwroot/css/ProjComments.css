@@ -81,10 +81,10 @@
 
 
 
-.modal-content {
+/*.modal-content {
     height: 800px !important;
-    width: 1000px !important;
-}
+    width: 1800px !important;
+}*/
 
 .underline-h5 {
     padding: 0.5rem;
@@ -331,10 +331,10 @@
     margin: auto;
 }
 
-    .custom-modal-size .modal-content {
-        height: 100%; /* Ensure the content fills the modal */
-        overflow: auto; /* Add scrolling for long content */
-    }
+    /*.custom-modal-size .modal-content {
+        height: 100%;*/ /* Ensure the content fills the modal */
+        /*overflow: auto;*/ /* Add scrolling for long content */
+    /*}*/
 
 .modal-dialog {
     display: flex;
@@ -373,3 +373,11 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.08);
     }
 
+#Comments
+{
+    width:555px;
+}
+
+.form-control{
+    width:250px;
+}

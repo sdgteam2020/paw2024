@@ -200,7 +200,7 @@ $(document).ready(function () {
         }
     });
     $("#btnbasic").click(function () {
-        debugger;
+        
 
 
         requiredFields = $('#tablebasic').find('.requiredField');
@@ -256,7 +256,7 @@ $(document).ready(function () {
             })
         }
         else {
-            debugger;
+            
             current_fs = $(this).parent();
           
             next_fs = $(this).parent().next();
@@ -315,9 +315,9 @@ $(document).ready(function () {
 
 
     $("#ProjName").on("keyup", function () {
-        debugger;
+        
         var query = $(this).val();
-        if ($("#IsWhitelisted").val() === "Re-Vetted") {
+        if ($("#IsWhitelisted").val() === "Re-Vetted" && query.length>=3) {
             filterProjectNames(query);
         }
     });
@@ -824,9 +824,7 @@ function DeleteProject(ProjectId) {
             notificationTitle = notificationTitle.replace(/'/g, "\\'");
             notificationHtml = notificationHtml.replace(/'/g, "\\'").replace(/\n/g, '\\n').replace(/\r/g, '');
 
-            console.log("Title:", notificationTitle);
-            console.log("HTML:", notificationHtml);
-
+           
             Swal.fire({
                 title: notificationTitle,
                 html: notificationHtml,

@@ -232,7 +232,7 @@
 
 .modalSize {
     width: 110rem !important;
-    margin-left: -12rem !important;
+    /*margin-left: -12rem !important;*/
 }
 
 .scroll {

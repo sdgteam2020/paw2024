@@ -74,41 +74,7 @@
 
 </script>
 
-<script>
 
-
-
-
-
-    @if (TempData.ContainsKey("SuccessMessage"))
-    {
-        <text>
-            Swal.fire({
-                title: 'Success',
-                text: '@TempData["SuccessMessage"]',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
-
-        </text>
-        TempData.Remove("SuccessMessage");
-    }
-</script>
-
-<script>
-    @if (TempData.ContainsKey("FailureMessage"))
-    {
-        <text>
-            Swal.fire({
-                title: 'Something Went Wrong....!',
-                text: '@TempData["FailureMessage"]',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        </text>
-        TempData.Remove("FailureMessage");
-    }
-</script>
 
 <script>
     function functionConfirm1(ProjectId) {
