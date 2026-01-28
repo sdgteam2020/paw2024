@@ -37,31 +37,7 @@ $(document).ready(function () {
         $(".ProjectsCCFwd").removeClass("d-none")
 
     });
-    //$("#ddlfwdAction").change(function () { Comment by Kapoor
 
-    //    mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html(), 0, "");
-    //    mMsaterFwdTo(0, "ddlfwdCCTo", 8, 0, $("#SpnFwdStakeHolderId").html(), 0, "");
-    //});
-
-    //$("select[name='fwdoffrs']").change(function () {
-    //    var selectedText = $(this).find("option:selected").text().trim();
-
-    //    if (selectedText === "More") {
-    //        $(this).hide();
-    //        $("#loadFwdTo").show().focus();
-    //        $("#searchBox").show().focus();
-    //    } else {
-    //        $(this).show();
-    //        $("#searchBox").hide();
-    //        $("#loadFwdTo").hide();
-    //    }
-    //});
-    //$("#loadFwdTo").click(function () {
-    //    mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html(), 0, "");
-    //    $(this).hide();
-    //    $("#searchBox").hide();
-    //    $("select[name='fwdoffrs']").show().focus();
-    //});
     $("select[name='fwdoffrs']").change(function () {
         var selectedText = $(this).find("option:selected").text().trim();
 
@@ -82,7 +58,7 @@ $(document).ready(function () {
 
             // mMsaterFwdTo($(this).closest("tr").find("#SpnStakeHolderId").html(), 1);
         } else {
-            $('.FwdDropdown').addClass('col-md-3');
+            $('.FwdDropdown').removeClass('col-md-3');
             $('.FwdDropdown').addClass('col-md-6');
             $('.ProjectsFwdUnit').addClass('d-none');
 
@@ -181,14 +157,14 @@ $(document).ready(function () {
             }
         });
     });
-    $(".btn-FwdHistorySent").click(function () {
+    $(document).on('click', ".btn-FwdHistorySent",function () {
 
         var projName = $(this).data('proj-name');
         var words = projName.split(" ");
         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
         //var finalTitle = "Mov History: " + shortProjName;
         var finalTitle = "Proj Name: " + projName;
-        $('#lblHistory').text(finalTitle);
+        $('.lblHistory').text(finalTitle);
         $('#ProjFwdHistory').modal('show');
 
         GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentProjId").html());
@@ -196,14 +172,15 @@ $(document).ready(function () {
 
 
     });
-    $(".btn-FwdHistory").click(function () {
-        
+    $(document).on('click', ".btn-FwdHistory",function () {
+       
         var projName = $(this).data('proj-name');
         var words = projName.split(" ");
         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
         //var finalTitle = "Mov History: " + shortProjName;
         var finalTitle = "Proj Name: " + projName;
-        $('#lblHistory').text(finalTitle);
+     
+        $('.lblHistory').text(finalTitle);
         $('#ProjFwdHistory').modal('show');
 
         GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentProjId").html());
@@ -407,12 +384,24 @@ $(document).ready(function () {
 //});
 
 
+$(".btnFwdConfirm").off().on("click", async function (e) {
+    e.preventDefault(); // stop default click
 
+    const result = await Swal.fire({
+        icon: 'warning',
+        title: 'Confirmation',
+        html: 'Do you want to continue?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
+        reverseButtons: true
+    });
 
-$(".btnFwdConfirm").off().on("click", async function () {
+    if (!result.isConfirmed) return; // ❌ NO → stop here
+
+    // ✅ YES → continue
     const urlParams = new URLSearchParams(window.location.search);
     let psmid;
-
 
     if (urlParams.get('Type') === 'XRDC') {
         psmid = urlParams.get('psmid');
@@ -429,6 +418,7 @@ $(".btnFwdConfirm").off().on("click", async function () {
 
     SaveFwdTo(psmid, generatedPdf, allAttachments);
 });
+
 
 let generatedPdfBlob = null;
 
@@ -527,7 +517,7 @@ function CheckFwdCondition(CurrentPslmId) {
                 src="${blobUrl}"
                 width="100%"
                 height="600px"
-                style="border:none;">
+                >
         </iframe>
     `);
 
@@ -643,7 +633,7 @@ function adjustPreviewLayout() {
 
 
 function SaveFwdTo(CurrentPslmId, generatedPdf, allAttachments) {
-    
+    debugger;
 
     var psmdi = CurrentPslmId;
     var dateValue = $("#TimeStampToProjfwd").val();
@@ -898,33 +888,7 @@ function PullBAckProject(ProjId, PslmId, UndoRemarks, StageId) {
     });
 
 }
-//function Updateundo(ProjId, PslmId, UndoRemarks, StageId) {
-//    var userdata =
-//    {
-//        "ProjectId": ProjId,
-//        "PsmId": PslmId,
-//        "Remarks": UndoRemarks,
-//        "StageId": StageId
 
-
-//    };
-//    $.ajax({
-//        url: '/Projects/UndoProject',
-//        type: 'POST',
-//        data: userdata,
-//        success: function (response) {
-//            console.log(response);
-//            if (response != null) {
-//                if (response == 2) {
-//                    alert("Project Successfully Undo");
-//                    location.reload();
-//                }
-//            }
-
-//        }
-//    });
-
-//}
 function reset() {
 
     $("#ddlfwdStage").val('');
@@ -1193,11 +1157,28 @@ function openForwardModal(btn, isFromMov) {
 
 
 //****************************//DigitalSignCode********************************
-$('#btnDigitalsign').on('click', function () {
-    $('.uploadLoader').removeClass('d-none')
-    SaveDocumentForTemp();
+$('#btnDigitalsign').on('click', function (e) {
+    e.preventDefault(); // stop default click
 
-})
+    Swal.fire({
+        icon: 'warning',
+        title: 'Confirmation',
+        html: 'Do you want to continue?',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
+        reverseButtons: true
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+            // ✅ YES → continue
+            $('.uploadLoader').removeClass('d-none');
+            SaveDocumentForTemp();
+        }
+        // ❌ NO → do nothing (stop here)
+    });
+});
+
 
 function SaveDocumentForTemp() {
     if (!generatedPdfBlob) {

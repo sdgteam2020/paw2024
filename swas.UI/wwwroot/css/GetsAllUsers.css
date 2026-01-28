@@ -94,3 +94,13 @@
 .flag-off {
     background: linear-gradient(to right, red 50%, green 50%);
 }
+.watermarktext {
+    transform: rotate(-45deg);
+    opacity: 0.3;
+    color: #8e9191;
+    position: fixed;
+    top: 50%;
+    left: 10%;
+    font-size: 80px;
+    font-weight: 500
+}

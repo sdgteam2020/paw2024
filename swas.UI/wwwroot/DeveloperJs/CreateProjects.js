@@ -815,29 +815,29 @@ function DeleteProject(ProjectId) {
 }
 
 
-      
-        document.addEventListener('DOMContentLoaded', function () {
-            var notificationDiv = document.getElementById('notificationData');
-            var notificationTitle = notificationDiv.getAttribute('data-title');
-            var notificationHtml = notificationDiv.getAttribute('data-html');
+document.addEventListener('DOMContentLoaded', function () {
+    var notificationDiv = document.getElementById('notificationData');
+    var notificationTitle = notificationDiv.getAttribute('data-title');
+    var notificationHtml = notificationDiv.getAttribute('data-html');
 
-            notificationTitle = notificationTitle.replace(/'/g, "\\'");
-            notificationHtml = notificationHtml.replace(/'/g, "\\'").replace(/\n/g, '\\n').replace(/\r/g, '');
+    notificationTitle = notificationTitle.replace(/'/g, "\\'");
+    notificationHtml = notificationHtml.replace(/'/g, "\\'").replace(/\n/g, '\\n').replace(/\r/g, '');
 
-           
-            Swal.fire({
-                title: notificationTitle,
-                html: notificationHtml,
-                icon: 'info',
-                confirmButtonText: 'OK',
-                width: '861px',
-                padding: '20px',
-                background: '#f9f9f9',
-                customClass: {
-                    container: 'swal-container'
-                }
-            });
-        });
+   
+
+    Swal.fire({
+        title: notificationTitle,
+        html: notificationHtml,
+        icon: 'info',
+        confirmButtonText: 'OK',
+        width: '861px',
+        padding: '20px',
+        background: '#f9f9f9',
+        customClass: {
+            container: 'swal-container'
+        }
+    });
+});
  
         document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('btn-Initiation').addEventListener('click', function () {

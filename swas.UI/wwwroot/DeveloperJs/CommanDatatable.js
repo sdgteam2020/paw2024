@@ -1,7 +1,11 @@
-﻿function initializeDataTable(tableSelector) {
+﻿$(document).ready(function () {
+ 
+});
 
+
+function initializeDataTable(tableSelector) {
+  
    
-
     const Initialorder = (tableSelector === "#Comment") ? [[1, 'asc']] : [];
    
     return $(tableSelector).DataTable({
@@ -155,36 +159,54 @@ function PdfDiv(tableSelector, watermarkSelector = "#IpAddress") {
     popupWin.document.open();
 
     const tableStyles = `
-        <style>
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                margin-bottom: 20px;
-            }
-            th, td {
-                padding: 8px;
-                border: 1px solid #ddd;
-                text-align: center;
-            }
-            th {
-                background-color: #f2f2f2;
-                color: black;
-            }
-        </style>`;
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    th, td {
+        padding: 8px;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+    th {
+        background-color: #f2f2f2;
+        color: black;
+    }
+
+    .datatblwatermark {
+        transform: rotate(-45deg);
+        position: fixed;
+        top: 39%;
+        left: 6%;
+        font-size: 80px;
+        opacity: 0.3;
+        z-index: 10000;
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        pointer-events: none;
+        user-select: none;
+    }
+</style>`;
+
 
     popupWin.document.write(`
         <html>
         <head>${tableStyles}</head>
         <body onload="window.print()">
             ${tableHTML}
-            <div style="transform: rotate(-45deg);z-index:10000;opacity: 0.3;
-                position:fixed;left: 6%; top: 39%;font-size: 80px;
-                display: grid;justify-content: center;align-content: center;">
+            <div class="datatblwatermark">
                 ${watermarkText}
             </div>
         </body>
         </html>`);
     popupWin.document.close();
+
+
+
+
 }
 
 

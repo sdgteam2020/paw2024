@@ -37,29 +37,17 @@ async function getGeneratedPdfLogSignFromPreview() {
 
 
 
-
-
 async function getGeneratedPdfFromPreview() {
-    
-
-
-
-    const iframe = document.getElementById("pdfFrame");
-    if (!iframe || !iframe.src.startsWith("blob:")) {
+    if (!generatedPdfBlob) {
         return null;
     }
 
-    const response = await fetch(iframe.src);
-    const blob = await response.blob();
-
-
-
-
-    return new File([blob], "GeneratedCertificate.pdf", {
-        type: "application/pdf"
-    });
+    return new File(
+        [generatedPdfBlob],
+        "GeneratedCertificate.pdf",
+        { type: "application/pdf" }
+    );
 }
-
 
 function AttOnFWD() {
     $('.uploadLoader').addClass('d-none')

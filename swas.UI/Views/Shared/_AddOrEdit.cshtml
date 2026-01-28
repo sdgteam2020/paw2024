@@ -39,28 +39,23 @@
         <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(model => model.UnitName, new { @class = "control-label" })
-                @Html.TextBoxFor(model => model.UnitName, new { @class = "form-control", required = "required", onkeyup="ValInData(this)" })
+                @Html.TextBoxFor(model => model.UnitName, new { @class = "form-control  unit-name", required = "required" })
                 @Html.ValidationMessageFor(model => model.UnitName, "", new { @class = "text-danger" })
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Command, new { @class = "control-label" })
-                @Html.DropDownListFor(model => model.Command, new SelectList(ViewBag.cl, "comdid", "Command_Name"), new { id = "Command", @class = "form-control  dropdownsearch", onchange = "populateCorpsDropdown(this)" })
+                @Html.DropDownListFor(model => model.Command, new SelectList(ViewBag.cl, "comdid", "Command_Name"), new { id = "Command", @class = "form-control  dropdownsearch" })
                 @Html.ValidationMessageFor(model => model.Command, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 @Html.LabelFor(model => model.UnitSusNo, new { @class = "control-label" })
-                @Html.TextBoxFor(model => model.UnitSusNo, new { @class = "form-control", required = "required", onkeyup="ValInData(this)" })
+                @Html.TextBoxFor(model => model.UnitSusNo, new { @class = "form-control  unit-name", required = "required" })
                 @Html.ValidationMessageFor(model => model.UnitSusNo, "", new { @class = "text-danger" })
             </div>
 
-            @*<div class="form-group">
-                @Html.LabelFor(model => model.Loc, new { @class = "control-label" })
-                @Html.TextBoxFor(model => model.Loc, new { @class = "form-control", required = "required", onkeyup="ValInData(this)" })
-                @Html.ValidationMessageFor(model => model.Loc, "", new { @class = "text-danger" })
-            </div>*@
         </div>
         <div class="col-md-6">
             <div class="form-group">
@@ -100,71 +95,6 @@
 
 
 
-
-<script>
-
-    function populateCorpsDropdown(selectElement) {
-        var selectedCommandId = $(selectElement).val();
-
-        $.ajax({
-            url: "/Ddl/ddlCorps",
-            data: { Command: selectedCommandId },
-            type: "GET",
-            dataType: "json",
-            success: function (result) {
-
-                if (result.length > 0) {
-                    var list = "";
+<script src="~/developerjs/addoredit.js"></script>
 
 
-                    list = '<option value="0">---- Select  ----</option>';
-
-                    for (var j = 0; j < result.length; j++) {
-
-
-                        list += '<option value=' + result[j].corpsid + '>' + result[j].corpsname + '</option>';
-                    }
-
-
-
-                    $('#CorpsId').html(list);
-
-                    $('#CorpsId').val($('#addNewForm').html());
-                    $("#CorpsId").val("0");
-
-                }
-                else {
-                    var list = "";
-                    list = '<option value="0" selected="true">---- Select ----</option>';
-
-                    $('#CorpsId').html(list).selectedCommandId;
-
-                    $('#CorpsId').val($('#addNewForm').html());
-
-                    $("#CorpsId").val("0");
-
-                }
-
-            }
-        });
-    };
-
-</script>
-
-<style>
-    .hidden-date {
-        display: none;
-    }
-</style>
-
-
-<script>
-    function ValInData(input) {
-        var regex = /[^a-zA-Z0-9/ ]/g;
-        input.value = input.value.replace(regex, "");
-    }
-
-    $(document).ready(function () {
-        $('.dropdownsearch').select2();
-    });
-</script>

@@ -381,3 +381,11 @@
 .form-control{
     width:250px;
 }
+.cmntrow {
+    font-weight: bold;
+}
+
+.tbncmnt {
+    height: 30px;
+    width: 30px
+}

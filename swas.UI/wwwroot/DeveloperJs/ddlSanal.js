@@ -127,7 +127,11 @@ function populateddlUnit(paramValue) {
             var option = document.createElement("option");
             option.value = "-1";
             option.text = "---- Select ----";
+
+            if (odc != null) {
+
             odc.appendChild(option);
+            }
             //console.log(data);
             for (var i = 0; i < data.length; i++) {
                 var item = data[i];

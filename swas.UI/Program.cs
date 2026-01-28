@@ -193,39 +193,42 @@ new CookiePolicyOptions
 
 });
 
-app.Use(async (ctx, next) =>
+if (app.Environment.IsDevelopment())
 {
-    // 1) Content Security Policy
-    ctx.Response.Headers["Content-Security-Policy"] =
-        "default-src 'self' blob:; " +
-        "script-src 'self'; " +
-        "style-src 'self' 'unsafe-inline';" +
-        "img-src 'self' data:; " +
-        "font-src 'self' data:; " +
-        "frame-ancestors 'none'; " +
-        "base-uri 'self'; " +
-        "object-src 'self' blob:; " +
-        "form-action 'self';" +
-        "connect-src 'self' wss:";
+    app.Use(async (ctx, next) =>
+    {
+        ctx.Response.Headers["Content-Security-Policy"] =
+            "default-src 'self'; " +
+            "script-src 'self'; " +
+            "style-src 'self' 'unsafe-inline'; " +
+            "img-src 'self' data: blob:; " +
+            "font-src 'self' data:; " +
+            "frame-src 'self' blob:; " +
+            "connect-src 'self' http://localhost:* ws://localhost:* wss:;";
 
-    // 2) X-Frame-Options (align with frame-ancestors)
-    ctx.Response.Headers["X-Frame-Options"] = "DENY";
+        await next();
+    });
+}
+else
+{
+    app.Use(async (ctx, next) =>
+    {
+        ctx.Response.Headers["Content-Security-Policy"] =
+            "default-src 'self'; " +
+            "script-src 'self'; " +
+            "style-src 'self' 'unsafe-inline'; " +
+            "img-src 'self' data: blob:; " +
+            "font-src 'self' data:; " +
+            "frame-src 'self' blob:; " +
+            "connect-src 'self' wss: https://dgisapp.army.mil:55102; " +
+            "frame-ancestors 'none'; " +
+            "base-uri 'self'; " +
+            "object-src 'self' blob:; " +
+            "form-action 'self';";
+        await next();
+    });
+}
 
-    // 3) Referrer-Policy
-    ctx.Response.Headers["Referrer-Policy"] = "strict-origin-when-cross-origin";
-
-    // Extra good headers
-    ctx.Response.Headers["X-Content-Type-Options"] = "nosniff";
-    ctx.Response.Headers["X-XSS-Protection"] = "1; mode=block";
-
-
-
-    // Hide tech details where possible
-    ctx.Response.Headers.Remove("X-Powered-By");
-    ctx.Response.Headers.Remove("x-aspnet-version");
-
-    await next();
-});
 
 
 

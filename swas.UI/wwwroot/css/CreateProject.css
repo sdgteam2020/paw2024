@@ -189,3 +189,11 @@
 .paw-display-none {
     display: none;
 }
+
+.swal2-title {
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    line-height: 1.4;
+    text-align: center;
+}

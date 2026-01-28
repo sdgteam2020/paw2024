@@ -31,7 +31,7 @@
 
 <link href="~/assets/css/tooltip.css" rel="stylesheet" />
 <link href="~/css/CreateProject.css" rel="stylesheet" />
-<link href="~/css/CreateProject.Extracted.css" rel="stylesheet" />
+
 
 <body>
 
@@ -147,12 +147,12 @@
                                         </div>
 
                                         <div class="col-md-2">
-                                            <div class="input-group" style="width:250px">
+                                            <div class="input-group">
                                                 @Html.EditorFor(model => model.ProjName, new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", @required = "required", @placeholder = "Max Char 200 ", @style = "margin-bottom:0px; width:100px; margin-right:0px" } })
                                                 <span class="charErrorMsg d-none paw-red-font">Cannot exceed 200 characters!</span>
                                                 <span class="input-group-text d-none" id="reVettedTag">Re-Vetting</span>
                                             </div>
-                                            <ul id="projectNameDropdown" class="dropdown-list " style="display:none; width:477px">
+                                            <ul id="projectNameDropdown" class="dropdown-list ">
                                             </ul>
 
 
@@ -304,7 +304,7 @@
                                             <div id="ApptypeDiv">
                                                 <input hidden asp-for="Apptype" />
                                                 <select id="ddlApptype" class="form-select requiredField ddl-apptype" data-toggle="tooltip" title="Select" required></select>
-                                                <div class="invalid-feedback">Stake Holder Required</div>
+                                                <div class="invalid-feedback">Stakeholder Required</div>
                                             </div>
                                         </div>
 

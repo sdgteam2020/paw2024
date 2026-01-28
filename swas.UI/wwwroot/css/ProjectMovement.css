@@ -174,3 +174,24 @@
     color: red;
     font-weight: bold;
 }
+/* ---------- COMMENT BOX ---------- */
+.comment-box {
+    text-align: justify;
+}
+
+/* ---------- COMMENT HEADER TEXT ---------- */
+.comment-user {
+    font-family: Arial;
+    color: #0793f7;
+}
+
+/* ---------- COMMENT META ---------- */
+.comment-meta {
+    margin-left: 0;
+}
+
+/* ---------- PDF ICON ---------- */
+.pdf-icon {
+    width: 24px;
+    height: 24px;
+}

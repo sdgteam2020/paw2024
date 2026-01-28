@@ -431,17 +431,16 @@ function SendMsg() {
             else if (response == 6) {
                 Swal.fire({
                     position: 'top-end',
-                    icon: 'Error',
-                    /*title: 'No Amdts Allowed as the Project is Already Accepted By You !',*/
-                    title: '<div style="text-align: left;">' +
-                        '<ol style="margin: 0; padding-left: 20px; text-align: left;">' +
-                        '<li>No Amdts Allowed as the Project is Already Accepted By You!</li>' +
-                        '<li>However, only info is allowed after the project is accepted.</li>' +
-                        '</ol>' +
-                        '</div>',
-                    showConfirmButton: true,
-
+                    icon: 'error', // lowercase 'error' is correct
+                    title: `<div class="swal-html-content">
+                <ol>
+                    <li>No Amdts Allowed as the Project is Already Accepted By You!</li>
+                    <li>However, only info is allowed after the project is accepted.</li>
+                </ol>
+            </div>`,
+                    showConfirmButton: true
                 });
+
             }
             else if (response == 8) {
                 Swal.fire({
@@ -465,7 +464,7 @@ function SendMsg() {
     });
 }
 function GetAllComments(PsmId, projId) {
-    
+
     $.ajax({
         type: "POST",
         url: '/Projects/GetAllCommentBypsmId_UnitId',
@@ -488,30 +487,32 @@ function GetAllComments(PsmId, projId) {
                         ("0" + date.getHours()).slice(-2) + ':' +
                         ("0" + date.getMinutes()).slice(-2) + ':' +
                         ("0" + date.getSeconds()).slice(-2);
+
                     if (data[i].userDetails == null)
                         userDetails = '';
                     else
                         userDetails = data[i].userDetails
 
-                    commentContainer += '<div class="comment-box" style="text-align: justify;">'; // Use text-align: justify for justified text
+                    commentContainer += '<div class="comment-box">';
                     commentContainer += '<div class="comment-header">';
                     commentContainer += '<div>';
-                    commentContainer += '<span style="font-family: Arial; color: #0793f7;">' + data[i].stakeholder + ' (' + userDetails + ') </span>';
-                    commentContainer += '<div style="margin-left: 0px;" class="comment-meta">' + DateFormateddMMyyyyhhmmss(data[i].date) + '</div>';
+                    commentContainer += '<span>' + data[i].stakeholder + ' (' + userDetails + ') </span>';
+                    commentContainer += '<div class="comment-meta">' + DateFormateddMMyyyyhhmmss(data[i].date) + '</div>';
                     commentContainer += '</div>';
                     commentContainer += '<div>';
+
                     if (data[i].status == "Accepted" || data[i].status == "Info")
                         commentContainer += '<span class="comment-meta badge badge-success text-white">' + data[i].status + '</span>';
                     else if (data[i].status == "Obsn")
                         commentContainer += '<span class="comment-meta badge badge-warning text-white">' + data[i].status + '</span>';
                     else
                         commentContainer += '<span class="comment-meta badge badge-danger text-white">' + data[i].status + '</span>';
+
                     if (data[i].attpath !== '' && data[i].attpath !== null) {
                         commentContainer += '<a href="/Home/WaterMark3?id=' + data[i].attpath + '" target="_blank">';
-                        commentContainer += '<img src="/assets/images/icons/pdfimg.png" alt="PDF icon" style="width: 24px; height: 24px;">';
+                        commentContainer += '<img src="/assets/images/icons/pdfimg.png" alt="PDF icon">';
                         commentContainer += '</a>';
                     }
-
 
                     commentContainer += '</span>';
                     commentContainer += '</div>';
@@ -520,12 +521,7 @@ function GetAllComments(PsmId, projId) {
                     commentContainer += '</div>';
                 }
 
-                commentContainer += '</div>'; // Close the container
                 $('#ChatBoxForStackholdercomment').empty().html(commentContainer);
-
-
-
-
             }
 
         },
@@ -534,6 +530,7 @@ function GetAllComments(PsmId, projId) {
         }
     });
 }
+
 
 
 

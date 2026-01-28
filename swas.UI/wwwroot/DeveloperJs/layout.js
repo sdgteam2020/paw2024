@@ -104,20 +104,8 @@
         <head>${styles}</head>
         <body onload="window.print()">
           ${tableHTML}
-          <div style="
-            transform: rotate(-45deg);
-            z-index:10000;
-            opacity:0.3;
-            position:fixed;
-            left:6%;
-            top:39%;
-            color:#8e9191;
-            font-size:80px;
-            font-weight:500;
-            display:grid;
-            justify-content:center;
-            align-content:center;
-          ">
+          <div class="datatblwatermark"
+          >
             ${watermarkText}
           </div>
         </body>

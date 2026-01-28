@@ -34,17 +34,12 @@
 <link href="~/css/timeline.css" rel="stylesheet" />
 
 
-<!-- Include jQuery (required for jQuery UI) -->
-@* <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
-@* <script src="~/content/jquery-3.6.0.min.js"></script> *@
-
 <!-- Include jQuery UI CSS -->
-@* <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> *@
+
 <link rel="stylesheet" href="~/content/jquery-ui.css" rel="stylesheet" />
 @* <link href="~/content/jquery-ui.css" rel="stylesheet" /> *@
 <link href="~/css/projdetails.css" rel="stylesheet" />
-<!-- Include jQuery UI JS -->
-@* <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script> *@
+
 <script src="~/content/jquery-ui.min.js"></script>
 <script src="~/developerjs/commandatatable.js"></script>
 <body>
@@ -108,7 +103,7 @@
 											<th>Stage</th>
 											<th>SubStage</th>
 											<th>Action</th>
-											<th class="projaction">Project Action</th>
+											<th class="projaction noExport">Project Action</th>
 											<th>Actions </th>
 										</tr>
 									</thead>
@@ -196,24 +191,24 @@
 
 												<td class="f-12">
 
-													<span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
-													<span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
-													<span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
-													<span class="d-none" id="LatestActionType">@project.LatestActionType</span>
+													<span class="d-none noExport" id="SpnCurrentProjId">@project.ProjId</span>
+													<span class="d-none noExport" id="SpnCurrentpsmId">@project.PsmIds</span>
+													<span class="d-none noExport" id="SpnStakeHolderId">@project.StakeHolderId</span>
+													<span class="d-none noExport" id="LatestActionType">@project.LatestActionType</span>
 													@* <span class="d-none" id="SpnTimeStampId">@project.TimeStamp.ToString().Substring(0, 10)</span> *@
-													<span class="d-none" id="SpnTimeStampId">@project.TimeStamp</span>
-													<span class="d-none" id="SpnStageId">@project.StageId</span>
-													<span class="d-none" id="SpnTimeStatusId">@project.StatusId</span>
+													<span class="d-none noExport" id="SpnTimeStampId">@project.TimeStamp</span>
+													<span class="d-none noExport" id="SpnStageId">@project.StageId</span>
+													<span class="d-none noExport" id="SpnTimeStatusId">@project.StatusId</span>
 
-													<span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
-													<span class="d-none" id="SpnTimeActionId">@project.ActionId</span>
-													<span class="d-none" id="SpnTimeToUnitId">@project.ToUnitId</span>
-													<span class="d-none" id="SpnTimeFromUnitId">@project.FromUnitId</span>
-													<span class="d-none" id="SpnDate_type">@project.Date_type</span>
-													<span class="d-none" id="SpnApprove">@project.AdminApprovalStatus</span>
+													<span class="d-none noExport" id="SpnprojectIsProcess">@project.IsProcess</span>
+													<span class="d-none noExport" id="SpnTimeActionId">@project.ActionId</span>
+													<span class="d-none noExport" id="SpnTimeToUnitId">@project.ToUnitId</span>
+													<span class="d-none noExport" id="SpnTimeFromUnitId">@project.FromUnitId</span>
+													<span class="d-none noExport" id="SpnDate_type">@project.Date_type</span>
+													<span class="d-none noExport" id="SpnApprove">@project.AdminApprovalStatus</span>
 													<a data-proj-name="@project.ProjName" id="ProjectName" class="ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XRDC&psmid=@project.PsmIds">
 														<div class="tooltip-container" data-tooltip="@project.ProjName">
-															<span class="short-text">
+															<span class="short-text noExport">
 																@(project.ProjName.Length>17 ? project.ProjName.Substring(0,17)+"...":project.ProjName)
 																</span>
 															<span class="tooltip tooltip-text">@project.ProjName</span>
@@ -225,7 +220,7 @@
 
 												<td class="RefLetter-container">
 													<div class="tooltip-container" data-tooltip="@project.Sponsor">
-														<span class="short-text">@truncateText(project.UnitName, 2)</span>
+														<span class="short-text noExport">@truncateText(project.UnitName, 2)</span>
 														<span class="tooltip tooltip-text">@project.Sponsor</span>
 													</div>
 													
@@ -238,7 +233,7 @@
 															<div class="RefLetter-container ">
 
 																<div class="tooltip-container" data-tooltip="@project.FromUnitName">
-																	<span class="short-text">@truncateText(project.FromUnitUserDetail, 2)</span>
+																	<span class="short-text noExport">@truncateText(project.FromUnitUserDetail, 2)</span>
 																	<span class="tooltip tooltip-text">@project.FromUnitName</span>
 																</div>
 
@@ -284,8 +279,8 @@
 
 
 
-												<td>
-													<div class="row ">
+												<td class="noExport">
+													<div class="row">
 														<div class="col-md-12 d-flex">
 						
 
@@ -508,18 +503,18 @@
 												</td>
 
 												<td class="f-12">
-													<span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
-													<span class="d-none" id="SpnCurrentpsmId">@project.PsmIds</span>
-													<span class="d-none" id="SpnStakeHolderId">@project.StakeHolderId</span>
+													<span class="d-none noExport" id="SpnCurrentProjId">@project.ProjId</span>
+													<span class="d-none noExport" id="SpnCurrentpsmId">@project.PsmIds</span>
+													<span class="d-none noExport" id="SpnStakeHolderId">@project.StakeHolderId</span>
 													@* <span class="d-none" id="SpnTimeStampId">@project.TimeStamp.ToString().Substring(0,10)</span> *@
-													<span class="d-none" id="SpnTimeStampId">@project.TimeStamp</span>
-													<span class="d-none" id="SpnprojectIsProcess">@project.IsProcess</span>
-													<span class="d-none" id="SpnprojectStageId">@project.StageId</span>
-													<span class="d-none" id="SpnprojectToUnitId">@project.ToUnitId</span>
+													<span class="d-none noExport" id="SpnTimeStampId">@project.TimeStamp</span>
+													<span class="d-none noExport" id="SpnprojectIsProcess">@project.IsProcess</span>
+													<span class="d-none noExport" id="SpnprojectStageId">@project.StageId</span>
+													<span class="d-none noExport" id="SpnprojectToUnitId">@project.ToUnitId</span>
 
 													<a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XR12">
 														<div class="tooltip-container" data-tooltip="@project.ProjName">
-															<span class="short-text">
+															<span class="short-text noExport">
 																@(project.ProjName.Length > 17 ? project.ProjName.Substring(0, 17) + "..." : project.ProjName)
 															</span>
 															<span class="tooltip tooltip-text">@project.ProjName</span>
@@ -529,7 +524,7 @@
 												<td class="f-12">
 
 													<div class="tooltip-container" data-tooltip="@project.Sponsor">
-														<span class="short-text">@truncateText(project.UnitName, 2)</span>
+														<span class="short-text noExport">@truncateText(project.UnitName, 2)</span>
 														<span class="tooltip tooltip-text">@project.Sponsor</span>
 													</div>
 
@@ -546,7 +541,7 @@
 
 
                                                             <div class="tooltip-container" data-tooltip="@project.ToUnitName">
-                                                                <span class="short-text">@truncateText(project.ToUnitName, 2)</span>
+																<span class="short-text noExport">@truncateText(project.ToUnitName, 2)</span>
 																<span class="tooltip tooltip-text">@project.ToUnitName</span>
                                                             </div>
 
@@ -759,31 +754,12 @@
 												@project.ProjName
 											</td>
 											<td>@project.RecdFmUser</td>
-											@*     <td>@project.EditDeleteDate?.ToString("dd-MM-yyyy")</td>
-
-										<td>@project.FwdtoUser</td>
-										<td>@project.FwdtoDate?.ToString("dd-MM-yyyy")</td>
-
-										<td>@project.Stages</td>
-										<td>
-										@project.Status
-										</td>
-										<td>
-										@project.Action
-
-										</td> *@
-											@* <td>
-										@project.Comments
-
-										</td> *@
+										
 											<td>
 												@project.AdRemarks
 
 											</td>
-											@*   <td>
-										@project.TotalDays
-
-										</td> *@
+										
 											<td>
 
 												@if (project.AttCnt > 0)
@@ -915,7 +891,7 @@
 
 														<div class="tooltip-container" data-tooltip="@project.Remarks">
 															<span class="short-text noExport">@shortRemarks</span>
-															<span class="tooltip tooltip-text noExport">@project.Remarks</span>
+															<span class="tooltip tooltip-text ">@project.Remarks</span>
 														</div>
 														
 													</td>
@@ -1038,7 +1014,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 
-					<h4 class="modal-title" id="lblHistory">Project Name Fwd History</h4>
+					<h4 class="modal-title lblHistory" id="lblHistory">Project Name</h4>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 
@@ -1137,7 +1113,7 @@
 									<th class="nowrap th-serno-tight">Ser No</th>
 
 								
-									<th class="nowrap">Stake Holder</th>
+									<th class="nowrap">Stakeholder</th>
 									<th class="nowrap">From Unit</th>
 									<th class="nowrap col-md-24">Sent on</th>
 									<th class="nowrap">To Unit</th>

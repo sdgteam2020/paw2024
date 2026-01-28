@@ -395,7 +395,7 @@ function GetProjectMovement(ProjectId) {
 
                         if (response[i].attCnt > 0) {
                             listItem += "<td><a href='javascript:void(0);' class='anchorDetail' data-id='" + response[i].psmIds + "'>" +
-                                "<img src='/assets/images/icons/attachemnts_clip.png' alt='Icon' style='width: 31px; height: 29px; margin-right: 0px;'>" +
+                                "<img src='/assets/images/icons/attachemnts_clip.png' alt='Icon'  style='width: 31px; height: 29px; margin-right: 0px;'>" +
                                 "</a></td>";
                         } else {
                             listItem += "<td></td>"; // Add an empty cell when there's no attachment
@@ -676,66 +676,67 @@ function GetAllCommentsForEdit(PsmId, projId) {
 
             var commentContainer = '';
             var userDetails = '';
+
             if (data != null) {
                 for (var i = 0; i < data.length; i++) {
-                    var date = new Date(data[i].date);
-                    var formattedDate =
-                        ("0" + date.getDate()).slice(-2) + '-' +
-                        ("0" + (date.getMonth() + 1)).slice(-2) + '-' +
-                        date.getFullYear() + ' ' +
-                        ("0" + date.getHours()).slice(-2) + ':' +
-                        ("0" + date.getMinutes()).slice(-2) + ':' +
-                        ("0" + date.getSeconds()).slice(-2);
+
                     if (data[i].userDetails == null)
                         userDetails = '';
                     else
-                        userDetails = data[i].userDetails
+                        userDetails = data[i].userDetails;
 
-                    commentContainer += '<div class="comment-box" style="text-align: justify;">'; // Use text-align: justify for justified text
+                    commentContainer += '<div class="comment-box">';
                     commentContainer += '<div class="comment-header">';
                     commentContainer += '<div>';
-                    commentContainer += '<span style="font-family: Arial; color: #0793f7;">' + data[i].stakeholder + ' (' + userDetails + ') </span>';
-                    commentContainer += '<div style="margin-left: 0px;" class="comment-meta">' + DateFormateddMMyyyyhhmmss(data[i].date) + '</div>';
+
+                    commentContainer += '<span class="comment-user">' +
+                        data[i].stakeholder + ' (' + userDetails + ')' +
+                        '</span>';
+
+                    commentContainer += '<div class="comment-meta">' +
+                        DateFormateddMMyyyyhhmmss(data[i].date) +
+                        '</div>';
+
                     commentContainer += '</div>';
                     commentContainer += '<div>';
+
                     if (data[i].status == "Accepted" || data[i].status == "Info")
                         commentContainer += '<span class="comment-meta badge badge-success text-white">' + data[i].status + '</span>';
                     else if (data[i].status == "Obsn")
                         commentContainer += '<span class="comment-meta badge badge-warning text-white">' + data[i].status + '</span>';
                     else
                         commentContainer += '<span class="comment-meta badge badge-danger text-white">' + data[i].status + '</span>';
+
                     if (data[i].attpath !== '' && data[i].attpath !== null) {
                         commentContainer += '<a href="/Home/WaterMark3?id=' + data[i].attpath + '" target="_blank">';
-                        commentContainer += '<img src="/assets/images/icons/pdfimg.png" alt="PDF icon" style="width: 24px; height: 24px;">';
+                        commentContainer += '<img src="/assets/images/icons/pdfimg.png" alt="PDF icon" class="pdf-icon">';
                         commentContainer += '</a>';
                     }
 
+                    commentContainer += '</div>';
+                    commentContainer += '</div>';
 
-                    commentContainer += '</span>';
-                    commentContainer += '</div>';
-                    commentContainer += '</div>';
-                    commentContainer += '<div class="comment-content formated-text"><p>' + data[i].comments + '</p></div>';
-                    commentContainer += '<button class="btn btn-warning editComments" data-stkcommentid="' + data[i].stkCommentId + '">' +
+                    commentContainer += '<div class="comment-content formated-text">' +
+                        '<p>' + data[i].comments + '</p>' +
+                        '</div>';
+
+                    commentContainer += '<button class="btn btn-warning editComments" data-stkcommentid="' +
+                        data[i].stkCommentId + '">' +
                         '<i class="fas fa-edit"></i> Edit' +
                         '</button>';
 
                     commentContainer += '</div>';
                 }
 
-                commentContainer += '</div>'; // Close the container
                 $('#ChatBoxForStackholdercomment').empty().html(commentContainer);
-
-
-
-
             }
-
         },
         error: function () {
             alert('Error fetching comments.');
         }
     });
 }
+
 
 
 

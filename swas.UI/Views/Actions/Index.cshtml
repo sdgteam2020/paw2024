@@ -34,7 +34,11 @@
                             <td>@models.EditDeleteDate?.ToString("dd-MM-yyyy")</td>
                             <td>
                                 <a class="btn btn-secondary btn-edit"><i class='bx bx-edit'></i></a>
-                                <a onclick="functionConfirm1('@models.ActionsId')" class="btn btn-secondary btn-delete"><i class="bx bx-trash"></i></a>
+                                <a class="btn btn-secondary btn-delete"
+                                   data-action-id="@models.ActionsId">
+                                    <i class="bx bx-trash"></i>
+                                </a>
+
                             </td>
                         </tr>
                     }

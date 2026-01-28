@@ -1,4 +1,5 @@
 ﻿<link href="~/css/_projectfwdpopup.css" rel="stylesheet" />
+
 <div class="modal fade" id="ProjFwd" tabindex="-1" role="dialog"
 	 data-bs-backdrop="static" data-bs-keyboard="false"
 	 aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -187,12 +188,20 @@
 					</div>
 				</div>
 
-				<div class="form-group col-md-12 mt-4 text-center">
-					<input type="button" id="btnFwdNext" value="Send" class="btn btn-primary btn-lg ProjectsFwd" />
-					<input type="button" id="btnlogsign" value="Digital Log & Send" class="btn btn-primary btn-lg btnFwdConfirm btnhideenonfwd" />
-					<input type="button" id="btnconfirm" value="Confirm" class="btn btn-primary btn-lg Attmenthistory d-none btnFwdConfirm" />
-					<input type="button" id="btnDigitalsign" value="Digital Sign & Send" class="btn btn-primary btn-lg btnhideenonfwd" />
+				<div class="form-group col-md-12 mt-4 d-flex justify-content-center gap-3 flex-wrap">
+					<input type="button" id="btnFwdNext" value="Send"
+						   class="btn btn-primary btn-lg ProjectsFwd" />
+
+					<input type="button" id="btnlogsign" value="Digital Log & Send"
+						   class="btn btn-primary btn-lg btnFwdConfirm btnhideenonfwd d-none" />
+
+					<input type="button" id="btnconfirm" value="Confirm"
+						   class="btn btn-primary btn-lg Attmenthistory d-none btnFwdConfirm" />
+
+					<input type="button" id="btnDigitalsign" value="Digital Sign & Send"
+						   class="btn btn-primary btn-lg btnhideenonfwd d-none" />
 				</div>
+
 
 			</div>
 		</div>

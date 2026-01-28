@@ -32,3 +32,6 @@
 .um-modal-800 {
     max-width: 800px;
 }
+.hiddenData {
+    display: none;
+}

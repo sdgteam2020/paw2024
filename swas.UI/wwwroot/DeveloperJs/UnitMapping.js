@@ -36,7 +36,7 @@
                     tableRows += '<td>' + data[i].stagesName + '</td>';
                     tableRows += '<td>' + data[i].subStagesName + '</td>';
                     tableRows += '<td>' + data[i].actionsName + '</td>';
-                    tableRows += '<td class="hiddenData" style="display: none;">' +
+                    tableRows += '<td class="hiddenData">' +
                         '<span class="spanStatusActionsMappingId">' + data[i].statusActionsMappingId + '</span>' +
                         '<span class="spanMappingStageId">' + data[i].stagesId + '</span>' +
                         '<span class="spanMappingSubStages">' + data[i].subStagesId + '</span>' +

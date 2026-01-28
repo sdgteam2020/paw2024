@@ -561,7 +561,7 @@ $(document).ready(function () {
         },
         minLength: 4, // Minimum characters before search is triggered
         select: function (event, ui) {
-            
+
             // Handle item selection
             let selectedOption = ui.item;
 
@@ -601,7 +601,7 @@ $(document).ready(function () {
 
             // Create the row to be added to the table
             let newRow = `
-            <tr style="font-weight: bold;">
+            <tr class="cmntrow">
                 <td class='noExport d-none'><span class='noExport d-none' id='spnProjId'>${selectedOption.projid}</span><span class='noExport d-none' id='spnpsmId'>${selectedOption.psmid}</span><span class='noExport d-none' id='DateType'>${selectedOption.adminApprovalStatus}</span></td>
                 <td class="s-no-column">${1}</td>
                 <td class='align-middle'>
@@ -614,7 +614,7 @@ $(document).ready(function () {
                 <td>${statusText}</td>
                 <td class="align-middle">
                     <span id="btnedit">
-                        <button type="button" style="height:30px;width:30px" class="cls-btncomment btn-icon btn-round ${buttonClass} mr-1">
+                        <button  type="button" class="cls-btncomment btn-icon btn-round tbncmnt ${buttonClass} mr-1">
                             <i class="fas fa-comment"></i>
                         </button>
                     </span>

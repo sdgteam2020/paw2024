@@ -1,5 +1,7 @@
 ﻿
-
+$('.controlvalidation').on('keyup', function () {
+    ValInData(this);
+})
 
 
     function ValInData(input) {

@@ -1,6 +1,10 @@
 ﻿$(document).ready(function () {
 
-
+    initializeDataTable("#Inbox");
+    initializeDataTable("#Sents");
+    initializeDataTable("#Completed");
+    initializeDataTable("#Remainders");
+ 
 
     var param = sessionStorage.getItem("spntabType");
 
@@ -239,30 +243,8 @@ function ProcessProjConfirm(ProjId) {
     });
 }
 
-//function FwdProjConfirmtounit(psmId) {
-   
-//    $.ajax({
-//        url: '/Projects/FwdProjConfirm',
-//        type: 'POST',
-//        data: { "PslmId": psmId },
-//        success: function (response) {
-//            //console.log(response);
-//            if (response >= 1) {
-//                Swal.fire({
-//                    position: "top-end",
-//                    icon: "success",
-//                    title: "Project Successfully Submitted..!",
-//                    showConfirmButton: false,
-//                    timer: 1500
-//                });
-
-//            }
-//        }
-//    });
-//}
-
 function GetProjectMovHistory(ProjId) {
-   
+
     var listitem = "";
 
     $.ajax({
@@ -270,270 +252,103 @@ function GetProjectMovHistory(ProjId) {
         type: 'POST',
         data: { "ProjectId": ProjId },
         success: function (response) {
-            /*console.log(response);*/
+
             if (response.dtoProjectMovHistorypsmlst.length) {
+
                 listitem += '<div class="timeline-month">';
 
-                /*listitem += '  ' + DateTimeFormatedd_mm_yyyy(new Date($.now())) + '';*/
                 DTOProjectMovHistorypsmlst = response.dtoProjectMovHistorypsmlst;
                 DTOProjectMovHistorycmdlst = response.dtoProjectMovHistorycmdlst;
                 DTOProjectCCHistorylst = response.dtoProjectCCHistorylst;
-                //listitem += '  ' + DateTimeFormatedd_mm_yyyy(new Date($.now())) + '';
+
                 listitem += '<span>' + DTOProjectMovHistorypsmlst.length + ' Entries</span>';
                 listitem += '</div>';
+
                 for (var i = 0; i < DTOProjectMovHistorypsmlst.length; i++) {
 
-                    listitem += '<div class="timeline-section"> <div class="timeline-date"> ' + DateTimeFormatedd_mm_yyyy(DTOProjectMovHistorypsmlst[i].date) + '</div>';
-                    //listitem += '<div class="timeline-section"> <div class="timeline-date"> ' + DateTimeFormatedd_dd_mm_yyyy(DTOProjectMovHistorypsmlst[i].date) + '</div>';
+                    listitem += '<div class="timeline-section"><div class="timeline-date">' +
+                        DateTimeFormatedd_mm_yyyy(DTOProjectMovHistorypsmlst[i].date) + '</div>';
 
-                    /* listitem += '<div class="timeline-section"> <div class="timeline-date"> ' + DateFormatedd_mm_yyyy(DTOProjectMovHistorypsmlst[i].date) + '</div>';*/
                     listitem += '<div class="row"><div class="col-sm-4">';
                     listitem += '<div class="timeline-box">';
+
                     if (DTOProjectMovHistorypsmlst[i].isComment == false) {
-                        if (DTOProjectMovHistorypsmlst[i].actions == "FWD" && (DTOProjectMovHistorypsmlst[i].undoRemarks == "" || DTOProjectMovHistorypsmlst[i].undoRemarks == null))
-                            listitem += '<div class="box-title bg-warning  text-white"><i class="fa-solid fa-forward" style="color: #FFD43B;"></i> ' + DTOProjectMovHistorypsmlst[i].actions + '</div>';
+
+                        if (DTOProjectMovHistorypsmlst[i].actions == "FWD" &&
+                            (DTOProjectMovHistorypsmlst[i].undoRemarks == "" || DTOProjectMovHistorypsmlst[i].undoRemarks == null))
+                            listitem += '<div class="box-title bg-warning text-white"><i class="fa-solid fa-forward icon-warning"></i> ' + DTOProjectMovHistorypsmlst[i].actions + '</div>';
+
                         else if (DTOProjectMovHistorypsmlst[i].actions == "Obsn")
-                            listitem += '<div class="box-title bg-warning text-white"><i class="fa-solid fa-rotate-left fa-xl" style="color: #ffff;"></i> ' + DTOProjectMovHistorypsmlst[i].actions + '</div>';
+                            listitem += '<div class="box-title bg-warning text-white"><i class="fa-solid fa-rotate-left fa-xl icon-white"></i> ' + DTOProjectMovHistorypsmlst[i].actions + '</div>';
 
                         else if (DTOProjectMovHistorypsmlst[i].undoRemarks == "" || DTOProjectMovHistorypsmlst[i].undoRemarks == null)
-                            listitem += '<div class="box-title bg-success text-white"><i class="fa-solid fa-circle-check fa-xl" style="color: #3adb00;"></i> ' + DTOProjectMovHistorypsmlst[i].actions + '</div>';
+                            listitem += '<div class="box-title bg-success text-white"><i class="fa-solid fa-circle-check fa-xl icon-success"></i> ' + DTOProjectMovHistorypsmlst[i].actions + '</div>';
+
                         else
-                            listitem += '<div class="box-title bg-danger text-white"><i class="fa-solid fa-rotate-left fa-xl" style="color: #ffff;"></i> ' + DTOProjectMovHistorypsmlst[i].actions + '</div>';
-
-
+                            listitem += '<div class="box-title bg-danger text-white"><i class="fa-solid fa-rotate-left fa-xl icon-white"></i> ' + DTOProjectMovHistorypsmlst[i].actions + '</div>';
 
                         listitem += '<div class="box-content">';
 
-                        listitem += '<div class="row">';
-                        listitem += '<div class="col-md-4">';
-                        listitem += '<div class="box-item"><strong>Stage</strong>: </div >';
-                        listitem += '</div>';
+                        listitem += '<div class="row"><div class="col-md-4"><div class="box-item"><strong>Stage</strong>:</div></div>';
+                        listitem += '<div class="col-md-8"><div class="box-item"><span class="badge rounded-pill bg-primary">' +
+                            DTOProjectMovHistorypsmlst[i].stages + '</span></div></div></div>';
 
-                        listitem += '<div class="col-md-8">';
-                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-primary">' + DTOProjectMovHistorypsmlst[i].stages + '</span></div>';
-                        listitem += '</div>';
-                        listitem += '</div>';
+                        listitem += '<div class="row"><div class="col-md-4"><div class="box-item"><strong>Sub Stage</strong>:</div></div>';
+                        listitem += '<div class="col-md-8"><div class="box-item"><span class="badge rounded-pill bg-warning text-dark">' +
+                            DTOProjectMovHistorypsmlst[i].status + '</span></div></div></div>';
 
-                        listitem += '<div class="row">';
-                        listitem += '<div class="col-md-4">';
-                        listitem += '<div class="box-item"><strong>Sub Stage</strong>: </div >';
-                        listitem += '</div>';
+                        listitem += '<div class="row"><div class="col-md-4"><div class="box-item"><strong>From</strong>:</div></div>';
+                        listitem += '<div class="col-md-8"><div class="box-item">';
 
-                        listitem += '<div class="col-md-8">';
-                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-warning text-dark">' + DTOProjectMovHistorypsmlst[i].status + '</span></div>'; /*+ DTOProjectMovHistorypsmlst[i].status + */
-                        listitem += '</div>';
-                        listitem += '</div>';
-
-
-                        listitem += '<div class="row">';
-                        listitem += '<div class="col-md-4">';
-                        listitem += '<div class="box-item"><strong>From</strong>: </div >';
-                        listitem += '</div>';
-
-                        listitem += '<div class="col-md-8">';
-                        if (DTOProjectMovHistorypsmlst[i].isPulledBack == 0) {
-                            listitem += '<div class="box-item"><span class="rounded-pill bg-secondary" style="color: white;">' + DTOProjectMovHistorypsmlst[i].fromUnitName + '</span></div>';
-                        }
+                        if (DTOProjectMovHistorypsmlst[i].isPulledBack == 0)
+                            listitem += '<span class="rounded-pill bg-secondary text-white-force">' +
+                                DTOProjectMovHistorypsmlst[i].fromUnitName + '</span>';
                         else {
-                            let fromlist = DTOProjectMovHistorypsmlst[i].fromUnitName.split('(')
-                            listitem += '<div class="box-item"><span class="rounded-pill bg-secondary" style="color: white;">' + fromlist[1].replace(')', '') + '</span></div>';
-
+                            let fromlist = DTOProjectMovHistorypsmlst[i].fromUnitName.split('(');
+                            listitem += '<span class="rounded-pill bg-secondary text-white-force">' +
+                                fromlist[1].replace(')', '') + '</span>';
                         }
-                        listitem += '</div>';
-                        listitem += '</div>';
 
+                        listitem += '</div></div></div>';
 
-                        listitem += '<div class="row">';
-                        listitem += '<div class="col-md-4">';
-                        listitem += '<div class="box-item"><strong>TO</strong>: </div >';
-                        listitem += '</div>';
-
-                        listitem += '<div class="col-md-8">';
-                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-secondary">' + DTOProjectMovHistorypsmlst[i].toUnitName + '</span></div>';
-                        listitem += '</div>';
-                        listitem += '</div>';
-
+                        listitem += '<div class="row"><div class="col-md-4"><div class="box-item"><strong>TO</strong>:</div></div>';
+                        listitem += '<div class="col-md-8"><div class="box-item"><span class="badge rounded-pill bg-secondary">' +
+                            DTOProjectMovHistorypsmlst[i].toUnitName + '</span></div></div></div>';
 
                         listitem += '</div>';
-                        if (DTOProjectMovHistorypsmlst[i].isPulledBack == 0) {
+
+                        if (DTOProjectMovHistorypsmlst[i].isPulledBack == 0)
                             listitem += '<div class="box-footer">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
-                        } else {
-                            var fromlist1 = DTOProjectMovHistorypsmlst[i].fromUnitName.split('(')
+                        else {
+                            var fromlist1 = DTOProjectMovHistorypsmlst[i].fromUnitName.split('(');
                             listitem += '<div class="box-footer">' + fromlist1[1].replace(')', '') + '</div>';
                         }
 
                         listitem += '</div></div>';
-
-
-
-
                     }
-                    else if (DTOProjectMovHistorypsmlst[i].isComment == true) {
-                        listitem += '<div class="box-title bg-danger text-white"><i class="fa-solid fa-comments fa-xl" style="color: #ffff;"></i> ' + DTOProjectMovHistorypsmlst[i].toUnitName + ' for Comments</div>';
 
+                    else {
+                        listitem += '<div class="box-title bg-danger text-white"><i class="fa-solid fa-comments fa-xl icon-white"></i> ' +
+                            DTOProjectMovHistorypsmlst[i].toUnitName + ' for Comments</div>';
 
                         listitem += '<div class="box-content">';
-
-                        listitem += '<div class="row">';
-                        listitem += '<div class="col-md-4">';
-                        listitem += '<div class="box-item"><strong>Stage</strong>: </div >';
+                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-primary">' +
+                            DTOProjectMovHistorypsmlst[i].stages + '</span></div>';
                         listitem += '</div>';
 
-                        listitem += '<div class="col-md-8">';
-                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-primary">' + DTOProjectMovHistorypsmlst[i].stages + '</span></div>';
-                        listitem += '</div>';
-                        listitem += '</div>';
-
-                        listitem += '<div class="row">';
-                        listitem += '<div class="col-md-4">';
-                        listitem += '<div class="box-item"><strong>Sub Stage</strong>: </div >';
-                        listitem += '</div>';
-
-                        listitem += '<div class="col-md-8">';
-                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-warning text-dark">' + DTOProjectMovHistorypsmlst[i].toUnitName + ' For Comments</span></div>'; /*+ DTOProjectMovHistorypsmlst[i].status + */
-                        listitem += '</div>';
-                        listitem += '</div>';
-
-
-                        listitem += '<div class="row">';
-                        listitem += '<div class="col-md-4">';
-                        listitem += '<div class="box-item"><strong>From</strong>: </div >';
-                        listitem += '</div>';
-
-                        listitem += '<div class="col-md-8">';
-                        listitem += '<div class="box-item"><span class="rounded-pill bg-secondary" style="color: white;">' + DTOProjectMovHistorypsmlst[i].fromUnitName + '</span></div>';
-                        listitem += '</div>';
-                        listitem += '</div>';
-
-
-                        listitem += '<div class="row">';
-                        listitem += '<div class="col-md-4">';
-                        listitem += '<div class="box-item"><strong>TO</strong>: </div >';
-                        listitem += '</div>';
-
-                        listitem += '<div class="col-md-8">';
-                        listitem += '<div class="box-item"><span class="badge rounded-pill bg-secondary">' + DTOProjectMovHistorypsmlst[i].toUnitName + '</span></div>';
-                        listitem += '</div>';
-                        listitem += '</div>';
-                        listitem += '</div>';
-                        listitem += '<div class="box-footer ">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
-                        listitem += '</div></div>';
-
-                        var DTODashboardCount = DTOProjectMovHistorycmdlst.filter(function (element) { return element.psmId == DTOProjectMovHistorypsmlst[i].psmId; });
-
-
-                        for (var c = 0; c < DTODashboardCount.length; c++) {
-                            listitem += '<div class="col-sm-4">';
-                            listitem += '<div class="timeline-box">';
-                            listitem += '<div class="box-title">';
-                            listitem += '<i class="fa fa-pencil text-info" aria-hidden="true"></i>  Comment On ' + DateFormateddMMyyyyhhmmss(DTODashboardCount[c].dateTimeOfUpdate) + '';
-                            listitem += '</div>';
-                            listitem += '<div class="box-content">';
-                            if (DTODashboardCount[c].comments.length > 75)
-                                listitem += '<div class="box-item" data-toggle="tooltip" data-placement="top" title="' + DTODashboardCount[c].comments + '">' + DTODashboardCount[c].comments.substring(0, 75) + ' ........</div>';
-                            else
-                                listitem += '<div class="box-item" >' + DTODashboardCount[c].comments + ' </div>';
-
-                            listitem += '</div>';
-                            if (DTODashboardCount[c].status == "Obsn")
-                                listitem += '<div class="box-footer bg-warning">' + DTODashboardCount[c].status + ' by ' + DTODashboardCount[c].userDetails + '</div>'
-                            else if (DTODashboardCount[c].status == "Observation" || DTODashboardCount[c].status == "Rejected")
-                                listitem += '<div class="box-footer bg-danger">' + DTODashboardCount[c].status + ' by ' + DTODashboardCount[c].userDetails + '</div>';
-                            else if (DTODashboardCount[c].status == "Accepted")
-                                listitem += '<div class="box-footer bg-success ">' + DTODashboardCount[c].status + ' by ' + DTODashboardCount[c].userDetails + '</div>';
-                            else
-                                listitem += '<div class="box-footer">' + DTODashboardCount[c].status + ' by ' + DTODashboardCount[c].userDetails + '</div>';
-                            listitem += '</div></div>';
-                        }
-                    }
-
-                    if (DTOProjectMovHistorypsmlst[i].remarks != "") {
-                        //console.log(DTOProjectMovHistorypsmlst);
-                        listitem += '<div class="col-sm-4">';
-                        listitem += '<div class="timeline-box">';
-                        listitem += '<div class="box-title">';
-                        listitem += '<i class="fa fa-pencil text-info" aria-hidden="true"></i> Remarks On ' + DateTimeFormatedd_mm_yyyy(DTOProjectMovHistorypsmlst[i].date);
-                        listitem += '</div>';
-                        listitem += '<div class="box-content">';
-                        /*listitem += ' <a class="btn btn-xs btn-default pull-right">Remarks</a>';*/
-
-                        //console.log("IsPulledBack:", DTOProjectMovHistorypsmlst[i]?.IsPulledBack);
-                        //console.log("UndoRemarks:", DTOProjectMovHistorypsmlst[i]?.UndoRemarks);
-                        if (DTOProjectMovHistorypsmlst[i]?.isPulledBack === true && DTOProjectMovHistorypsmlst[i]?.undoRemarks == null) {
-                            listitem += '<div class="box-item">' + '<strong>Pulled Back by</strong> -  ' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
-                        } else {
-                            listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
-                        }
-
-                        //listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
-                        listitem += '</div>';
-                        if (DTOProjectMovHistorypsmlst[i].actions == "Obsn") {
-                            listitem += '<div class="box-footer bg-warning">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
-                        } else if (DTOProjectMovHistorypsmlst[i].isPulledBack == 0 && DTOProjectMovHistorypsmlst[i].actions != "Obsn") {
-                            listitem += '<div class="box-footer ">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
-                        } else {
-
-                            listitem += '<div class="box-footer ">' + fromlist1[1].replace(')', '') + '</div>';
-                        }
+                        listitem += '<div class="box-footer">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
                         listitem += '</div></div>';
                     }
-                    var DTOProjectCCHistorycccpsmid = DTOProjectCCHistorylst.filter(function (element) { return element.psmId == DTOProjectMovHistorypsmlst[i].psmId; });
 
-                    if (DTOProjectCCHistorycccpsmid.length > 0) {
-                        for (let cc = 0; cc < DTOProjectCCHistorycccpsmid.length; cc++) {
-                            listitem += '<div class="col-sm-4">';
-                            listitem += '<div class="timeline-box">';
-                            listitem += '<div class="box-title bg-warning">';
-                            listitem += '<i class="fa-solid fa-closed-captioning fa-2x"></i>';
-                            listitem += '</div>';
-                            listitem += '<div class="box-content">';
-
-                            let readon = "";
-
-
-                            listitem += '<div class="box-item">' + '<strong>Unit Name : </strong>' + DTOProjectCCHistorycccpsmid[cc].unitName + ' </div>';
-                            if (DTOProjectCCHistorycccpsmid[cc].isRead == true) {
-
-                                listitem += '<div class="box-item">' + '<strong>Read on : </strong>' + DateTimeFormatedd_mm_yyyy(DTOProjectCCHistorycccpsmid[cc].readDate) + ' </div>';
-                                listitem += '<div class="box-item">' + '<strong>Read By : </strong>' + DTOProjectCCHistorycccpsmid[cc].userDetails + ' </div>';
-                            }
-
-
-
-                            listitem += '</div>';
-                            listitem += '</div></div>';
-                        }
-                    }
-
-                    // if (DTOProjectCCHistorylst)
-
-                    //if (DTOProjectMovHistorypsmlst[i].undoRemarks != null) {
-                    //    listitem += '<div class="col-sm-4">';
-                    //    listitem += '<div class="timeline-box">';
-                    //    listitem += '<div class="box-title">';
-                    //    listitem += '<i class="fa fa-pencil text-info" aria-hidden="true"></i>Undo Remarks';
-                    //    listitem += '</div>';
-                    //    listitem += '<div class="box-content">';
-                    //    listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].undoRemarks + '</div>';
-                    //    listitem += '</div>';
-                    //    listitem += '<div class="box-footer">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
-                    //    listitem += '</div></div>';
-                    //}
                     listitem += '</div></div>';
-                    listitem += '';
-                    listitem += '';
                 }
 
-
                 $("#projectmovfistory").html(listitem);
-
-                //$(document).on('click', function () {
-                //    location.reload();
-                //});
             }
         }
     });
 }
+
 function Reset() {
     $("#spanFwdProjectId").html(0);
     $("#ddlfwdStage").val("");
@@ -560,6 +375,7 @@ function IsReadInbox(psmId) {
 function GetCCProject() {
 
     let listitem = "";
+
     $.ajax({
         url: '/Projects/GetActCcProject',
         type: 'POST',
@@ -567,167 +383,92 @@ function GetCCProject() {
         success: function (response) {
             if (response != null) {
                 let count = 0;
-             
+
                 for (let i = 0; i < response.length; i++) {
-                    count++
+                    count++;
+
                     listitem += '<tr>';
 
-                    listitem += '<td><div class="d-flex">' + count +'';
+                    listitem += '<td><div class="d-flex">' + count;
+
                     if (response[i].isRead == false)
-                        listitem += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" style="color:#18bb6b" fill = "currentColor" class="bi bi-check" viewBox = "0 0 16 16" ><path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" /></svg >';
+                        listitem += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="icon-green" fill="currentColor" viewBox="0 0 16 16">' +
+                            '<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />' +
+                            '</svg>';
                     else
-                        listitem += '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" style="color:#18bb6b" height = "16" fill = "currentColor" > <path d="M342.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l80 80c12.5 12.5 32.8 12.5 45.3 0l160-160zm96 128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 402.7 54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l256-256z" /> </svg >';
+                        listitem += '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" height="16" class="icon-green" fill="currentColor">' +
+                            '<path d="M342.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l80 80c12.5 12.5 32.8 12.5 45.3 0l160-160zm96 128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 402.7 54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l256-256z" />' +
+                            '</svg>';
 
                     listitem += '</div></td>';
-                    listitem += '<td><span class="d-none noExport" id="SpnCurrentccProjId"> ' + response[i].projId + '</span>  <a data-proj-name="' + response[i].projName + '" data-proj-id="' + response[i].projId + '" href="/Projects/ProjHistory?EncyID=' + response[i].encyID + '&amp;Type=XR12">' +
+
+                    listitem += '<td>' +
+                        '<span class="d-none noExport" id="SpnCurrentccProjId">' + response[i].projId + '</span>' +
+                        '<a data-proj-name="' + response[i].projName + '" data-proj-id="' + response[i].projId + '" href="/Projects/ProjHistory?EncyID=' + response[i].encyID + '&amp;Type=XR12">' +
                         '<div class="RefLetter-container" data-tooltip="' + response[i].projName + '">' +
-                        '<span class="">' + trimByChars(response[i].projName, 20) + '</span>' +
-                        '<span class="RefLetter noExport" >' + breakLinesByWords(response[i].projName,4) + '</span>' +
-                        '</div>' +
-                        '</a> </td>';
+                        '<span id="projNamecc">' + trimByChars(response[i].projName, 20) + '</span>' +
+                        '<span class="RefLetter noExport">' + breakLinesByWords(response[i].projName, 4) + '</span>' +
+                        '</div></a></td>';
 
-                    listitem += '<td class="RefLetter-container">' +
-                        '' + response[i].unitName + '' +
-                        '<div class="RefLetter noExport">' +
-                        '' + breakLinesByWords(response[i].sponsor,3) + '' +
-                        '</div></td>';
-                    listitem += '<td class="RefLetter-container">' +
-                        '' + response[i].fromUnitUserDetail + '' +
-                        '<div class="RefLetter noExport">' +
-                        '' + breakLinesByWords(response[i].fromUnitName,4) + '' +
-                        '</div></td>';
-                    /* listitem += '<td>' + response[i].toUnitName + '</td>'*/
-                    listitem += '<td>' + DateFormateddMMyyyyhhmmss(response[i].timeStamp) + '</td>'
-                    var user = response[i].userDetails;
-                    // listitem += '<td>' + response[i].userDetails + '</td>'
+                    listitem += '<td class="RefLetter-container">' + response[i].unitName +
+                        '<div class="RefLetter noExport">' + breakLinesByWords(response[i].sponsor, 3) + '</div></td>';
 
+                    listitem += '<td class="RefLetter-container">' + response[i].fromUnitUserDetail +
+                        '<div class="RefLetter noExport">' + breakLinesByWords(response[i].fromUnitName, 4) + '</div></td>';
 
+                    listitem += '<td>' + DateFormateddMMyyyyhhmmss(response[i].timeStamp) + '</td>';
 
-
-
+                    let user = response[i].userDetails;
                     listitem += '<td class="RefLetter-container"><div class="noExport">' + trimByWords(user, 2) + '</div>';
-                    if (user != "") {
-                        listitem += ' <div class="RefLetter" >' + breakLinesByWords(user,4) + '</div>';
 
+                    if (user != "")
+                        listitem += '<div class="RefLetter">' + breakLinesByWords(user, 4) + '</div>';
 
-
-                    }
-                    listitem += ' </td>';  // Use item.Remarks instead of @unitx.Remarks
+                    listitem += '</td>';
 
                     if (response[i].userDetails != "")
-                        listitem += '<td>' + DateFormateddMMyyyyhhmmss(response[i].readDate) + '</td>'
+                        listitem += '<td>' + DateFormateddMMyyyyhhmmss(response[i].readDate) + '</td>';
                     else
-                        listitem += '<td></td>'
-                  
-                 
+                        listitem += '<td></td>';
 
+                    listitem += '<td>' + response[i].stage + '</td>';
+                    listitem += '<td>' + response[i].status + '</td>';
 
-                    listitem += '<td>' + response[i].stage + '</td>'
-                    listitem += '<td>' + response[i].status + '</td>'
                     listitem += '<td>' +
-                        '<div class="RefLetter-container btn btn-warning p-2" style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">' +
+                        '<div class="RefLetter-container btn btn-warning p-2 cc-btn">' +
                         '<span>Cc</span>' +
-                        '<div class="RefLetter noExport">' +
-                        '' + response[i].ccUnitName + '' +
-                        '</div>' +
-                        '</div>' +
-                        '</td>'
+                        '<div class="RefLetter noExport">' + response[i].ccUnitName + '</div>' +
+                        '</div></td>';
 
                     listitem += '<td><div class="row d-flex">' +
                         '<div class="col-md-2">' +
-                        '<button type="button" class="btn btn-success btn-FwdHistoryCcc" data-proj-name="@project.ProjName" title="History" style="margin-top: 1px;"><i class="fa-solid fa-timeline"></i></button>' +
-                        '</div>' +
-                        '</div>' +
-                        '</td>';
-                    listitem += '';
+                        '<button type="button" class="btn btn-success btn-FwdHistoryCcc btn-history" title="History">' +
+                        '<i class="fa-solid fa-timeline"></i></button>' +
+                        '</div></div></td>';
 
+                    listitem += '</tr>';
                 }
-                $("#cctblData").html(listitem); 
+
+                $("#cctblData").html(listitem);
                 initializeDataTable("#CCtable");
-                $(".btn-FwdHistoryCcc").click(function () {
-                    var projName = $(this).closest("tr").find("#projNamecc").html(); //$(this).data('projNamecc');
-                    var words = projName.split(" ");
-                    var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
-                    //var finalTitle = "Mov History: " + shortProjName;
+
+                $(document).on('click', ".btn-FwdHistoryCcc", function () {
+
+                    var projName = $(this).closest("tr").find("#projNamecc").html();
                     var finalTitle = "Mov History: " + projName;
-                    $('#lblHistory').text(finalTitle);
+
                     $('#ProjFwdHistory').modal('show');
+                    $('.lblHistory').text(finalTitle);
 
                     GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentccProjId").html());
                 });
             }
-
         }
     });
 }
 
 
-//$(document).on("click", ".date-action", function (e) {
-//    e.preventDefault();
 
-//    const action = $(this).data("action");
-//    const userReq = (action === "back"); // true for 'back', false otherwise
-
-//    const $row = $(this).closest("tr");
-//    const projId = $row.find("#SpnCurrentProjId").text().trim();
-
-//    if (!projId) {
-//        Swal.fire("Error!", "Project ID not found in row.", "error");
-//        return;
-//    }
-
-//    Swal.fire({
-//        title: "Are you sure?",
-//        text: action === "back"
-//            ? "You want Back date to this project."
-//            : "You want to Current date to this project.",
-//        icon: "warning",
-//        showCancelButton: true,
-//        confirmButtonColor: "#3085d6",
-//        cancelButtonColor: "#d33",
-//        confirmButtonText: "Yes"
-//    }).then((result) => {
-//        if (result.isConfirmed) {
-//            $.ajax({
-//                url: "/Projects/LogDateApproval",
-//                type: "POST",
-//                data: {
-//                    ProjId: projId,
-//                    UserReq: userReq
-//                },
-//                success: function (response) {
-//                    Swal.fire({
-//                        title: response.success ? "Success!" : "Warning!",
-//                        text: response.message,
-//                        icon: response.success ? "success" : "warning"
-//                    })
-//                        .then(() => {
-//                            if (response.success) {
-//                                location.reload();
-//                            }
-//                        });
-//                },
-//                error: function (xhr, status, error) {
-//                    Swal.fire("Error!", "Something went wrong: " + error, "error");
-//                }
-//            });
-//        }
-//    });
-//});
-
-
-//function IsReadNotificationInbox(ProjId) {
-
-//    $.ajax({
-//        url: '/Projects/IsReadNotificationInbox',
-//        type: 'POST',
-//        data: { "PsmId": ProjId },
-//        success: function (response) {
-//            console.log(response);
-
-//        }
-//    });
-//}
 
 
 function truncateText(text, maxWords) {
@@ -932,25 +673,6 @@ $(document).on('click', '#btnRemMove', function () {
 
 
 
-//function GetProjRemainderMov(ProjId) {
-//    $.ajax({
-//        url: '/Projects/GetProjectRemainderHistory',
-//        type: 'GET',
-//        data: { ProjectId: ProjId },
-//        success: function (response) {
-
-
-//            if (response.success) {
-//                console.log(response.data);
-//                // Process the history data
-//            } else {
-//                console.error('Error: ' + response.message);
-//                alert('Failed to load history: ' + response.message);
-//            }
-//        }
-//    });
-
-//}
 function GetProjRemainderMov(ProjId) {
     ;
     $('#ProjRemainderMov').modal('show');
@@ -1011,7 +733,7 @@ function GetProjRemainderMov(ProjId) {
                     const remarkWords = remarks.split(" ");
                     const shortRemarks = remarkWords.length > 3 ? remarkWords.slice(0, 4).join(" ") + "..." : remarks;
 
-                    listItem += '<td class="RefLetter-container align-middle" style="display:block">' +
+                    listItem += '<td class="RefLetter-container shortremarks align-middle">' +
                         shortRemarks +
                         '<div class="RefLetter noExport" >' +
                         remarks +
@@ -1118,7 +840,7 @@ function GetParkedProject() {
         url: '/Projects/GetActParkedProject',
         type: 'GET',
         success: function (response) {
-            ;
+          
             // Clear table body
             $("#parkedtblData").html("");
 
@@ -1126,7 +848,9 @@ function GetParkedProject() {
                 let listitem = "";
                 let count = 0;
                 var prjname = response[0].projName;
+              
                 response.forEach(function (project) {
+                   
                     count++;
 
                     listitem += '<tr>';
@@ -1170,7 +894,7 @@ function GetParkedProject() {
                     // Parked Status
                     listitem += `
                         <td>
-                            <div class="btn btn-warning p-2" style="margin-top: 1px;">
+                            <div class="btn btn-warning p-2">
                                 <span>Parked</span>
                             </div>
                         </td>`;
@@ -1180,12 +904,12 @@ function GetParkedProject() {
                         <td>
                             <div class="row d-flex align-items-center">
                                 <div class="col-auto p-0 me-1">
-                                    <button type="button" class="btn btn-success btn-FwdHistoryCcc" data-proj-name="${project.projName}" title="History" style="margin-top: 1px;">
+                                    <button type="button" class="btn btn-success btn-FwdHistoryParked" data-proj-name="${project.projName}" title="History">
                                         <i class="fa-solid fa-timeline"></i>
                                     </button>
                                 </div>
                                 <div class="col-auto p-0">
-                                    <button class="btn btn-danger btn_unparked" style="margin-top: 1px;">Send to Inbox</button>
+                                    <button class="btn btn-danger btn_unparked">Send to Inbox</button>
                                 </div>
                             </div>
                         </td>`;
@@ -1196,23 +920,14 @@ function GetParkedProject() {
                 $("#parkedtblData").html(listitem);
             }
 
-            // Initialize DataTable safely
-            if ($.fn.DataTable.isDataTable("#parkedtable")) {
-                $("#parkedtable").DataTable().destroy();
-            }
-
-            $("#parkedtable").DataTable({
-                language: {
-                    emptyTable: "No Record Found"
-                },
-                destroy: true,
-                autoWidth: false
-            });
+            initializeDataTable("#parkedtable");
+           
 
             // History button click event
-            $(".btn-FwdHistoryCcc").off('click').on('click', function () {
+            $(".btn-FwdHistoryParked").off('click').on('click', function () {
+              
                 var projName = $(this).closest("tr").find("#projNamecc").html();
-                $('#lblHistory').text(`Mov History: ${projName}`);
+                $('.lblHistory').text(`Mov History: ${projName}`);
                 $('#ProjFwdHistory').modal('show');
 
                 GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentParkedProjId").html());

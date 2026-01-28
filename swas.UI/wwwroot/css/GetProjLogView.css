@@ -29,3 +29,14 @@
     padding: 5px;
     font-size: 1rem;
 }
+
+.justify-content-center {
+    margin-top: 106px
+}
+.col-md-auto {
+    text-align: center
+}
+
+.tblprojcontainer {
+    overflow: scroll
+}

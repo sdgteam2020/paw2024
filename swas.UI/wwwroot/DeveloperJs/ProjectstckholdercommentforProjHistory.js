@@ -89,24 +89,26 @@ function GetAllComments2() {
 
             $('#ChatBox').empty().html(tableHTML);
 
-            var table = $('#ChatBox .table').DataTable({
-                paging: true,
-                ordering: true,
-                info: true,
-                dom: '<"row"<"col-sm-2 col-md-1 add-comment-btn"><"col-sm-12 col-md-11"Bf>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
-                buttons: [
-                    'copy',
-                    'excel',
-                    'csv',
-                    {
-                        text: 'PDF',
-                        extend: 'pdfHtml5',
-                        action: function (e, dt, node, config) {
-                            PdfDiv();
-                        }
-                    }
-                ]
-            });
+            initializeDataTable("#ChatBox .table");
+
+            //var table = $('#ChatBox .table').DataTable({
+            //    paging: true,
+            //    ordering: true,
+            //    info: true,
+            //    dom: '<"row"<"col-sm-2 col-md-1 add-comment-btn"><"col-sm-12 col-md-11"Bf>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+            //    buttons: [
+            //        'copy',
+            //        'excel',
+            //        'csv',
+            //        {
+            //            text: 'PDF',
+            //            extend: 'pdfHtml5',
+            //            action: function (e, dt, node, config) {
+            //                PdfDiv();
+            //            }
+            //        }
+            //    ]
+            //});
 
             // Insert the +Add Comment button inside the left container
             $('<button type="button" class="btn btn-primary">+Add Comment</button>')
@@ -228,7 +230,6 @@ function GetAllComments2() {
     });
 }
 
-
 function GetAllComments1() {
 
     $.ajax({
@@ -240,27 +241,25 @@ function GetAllComments1() {
             "ProjId": $(".ProjectcommentprojId").html()
         },
         success: function (data) {
-            //// Assuming the API returns PsmId as part of the response object
-            //if (data && data.length > 0 && data[0].psmId !== undefined) {
-            //    // Bind the PsmId to a hidden field
-            //    $('#hiddenPsmId').val(data[0].psmId); // Ensure you have an input field with ID "hiddenPsmId"
-            //}
-            var tableHTML = '<table style="width:100%; border: 1px solid black; border-collapse:collapse;">';
+
+            var tableHTML = '<table class="comments-table">';
             tableHTML += '<thead>';
             tableHTML += '<tr>';
-            tableHTML += '<th style="width:5%;text-align:center;border:1px solid black;border-collapse:collapse">Ser No</th>';
-            tableHTML += '<th style="text-align: center; border: 1px solid black;">Stakeholder</th>';
-            tableHTML += '<th style="text-align: center; border: 1px solid black;">Datetime</th>';
-            tableHTML += '<th style="text-align: center; border: 1px solid black;">Comment</th>';
-            tableHTML += '<th style="text-align: center; border: 1px solid black;">Status</th>';
+            tableHTML += '<th class="ser-no">Ser No</th>';
+            tableHTML += '<th>Stakeholder</th>';
+            tableHTML += '<th>Datetime</th>';
+            tableHTML += '<th>Comment</th>';
+            tableHTML += '<th>Status</th>';
             tableHTML += '</tr>';
             tableHTML += '</thead>';
             tableHTML += '<tbody>';
 
             if (data != null) {
                 for (var i = 0; i < data.length; i++) {
+
                     var date = new Date(data[i].date);
-                    var formattedDate = ("0" + date.getDate()).slice(-2) + '-' +
+                    var formattedDate =
+                        ("0" + date.getDate()).slice(-2) + '-' +
                         ("0" + (date.getMonth() + 1)).slice(-2) + '-' +
                         date.getFullYear() + ' ' +
                         ("0" + date.getHours()).slice(-2) + ':' +
@@ -268,11 +267,16 @@ function GetAllComments1() {
                         ("0" + date.getSeconds()).slice(-2);
 
                     tableHTML += '<tr>';
-                    tableHTML += '<td style="border: 1px solid black;">' + (i + 1) + '</td>';
-                    tableHTML += '<td style="border: 1px solid black;">' + data[i].stakeholder + '</td>';
-                    tableHTML += '<td style="border: 1px solid black;">' + formattedDate + '</td>';
-                    tableHTML += '<td style="border: 1px solid black;">' + data[i].comments + '</td>';
-                    tableHTML += '<td style="border: 1px solid black;">' + (data[i].status == "Accepted" ? '<span class="badge badge-success text-white">' + data[i].status + '</span>' : '<span class="badge badge-danger text-white">' + data[i].status + '</span>') + '</td>';
+                    tableHTML += '<td>' + (i + 1) + '</td>';
+                    tableHTML += '<td>' + data[i].stakeholder + '</td>';
+                    tableHTML += '<td>' + formattedDate + '</td>';
+                    tableHTML += '<td>' + data[i].comments + '</td>';
+
+                    if (data[i].status == "Accepted")
+                        tableHTML += '<td><span class="badge badge-success text-white">' + data[i].status + '</span></td>';
+                    else
+                        tableHTML += '<td><span class="badge badge-danger text-white">' + data[i].status + '</span></td>';
+
                     tableHTML += '</tr>';
                 }
             }
@@ -282,10 +286,10 @@ function GetAllComments1() {
 
             $('#ChatBoxPDF').empty().html(tableHTML);
 
-            $('#ChatBoxPDF .table').DataTable({
-                "paging": false,
-                "ordering": false,
-                "info": false
+            $('#ChatBoxPDF .comments-table').DataTable({
+                paging: false,
+                ordering: false,
+                info: false
             });
         },
         error: function () {
@@ -293,6 +297,7 @@ function GetAllComments1() {
         }
     });
 }
+
 
 
 $(document).ready(function () {

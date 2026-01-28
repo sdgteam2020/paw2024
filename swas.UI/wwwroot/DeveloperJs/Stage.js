@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
-
-
+    initializeDataTable("#stagesTable");
+    
     $('.delete-btn').click(function () {
          
         var stageId = $(this).data('id');

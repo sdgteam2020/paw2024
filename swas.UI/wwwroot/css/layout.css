@@ -9,6 +9,8 @@
 .footer {
     background-color: #044c92; /* Replace with your desired footer color */
     color: #044c92; /* Replace with your desired text color for the footer */
+    position: fixed;
+    margin-bottom: 0px;
 }
 
 .wrapper .page-content {
@@ -387,4 +389,108 @@ body {
 }
 .form-control1 {
     width:250px !important;
+}
+.footerCounts {
+    text-align: right;
+    margin-top: -24px !important;
+    margin-right: 20px !important;
+}
+#totalCounter {
+    margin-right: 32px !important
+}
+
+.datatblwatermark {
+  
+}
+/* ---------- COMMENTS TABLE (PDF / VIEW) ---------- */
+.comments-table {
+    width: 100%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+    .comments-table th,
+    .comments-table td {
+        border: 1px solid black;
+    }
+
+    .comments-table th {
+        text-align: center;
+    }
+
+    .comments-table .ser-no {
+        width: 5%;
+        text-align: center;
+    }
+
+
+
+/* ---------- COMMENTS BOX ---------- */
+.comment-box {
+    text-align: justify; /* was inline */
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+    .comment-header div:first-child span {
+        font-family: Arial;
+        color: #0793f7; /* was inline */
+    }
+
+.comment-meta {
+    margin-left: 0; /* was inline */
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.comment-content p {
+    margin: 0;
+}
+
+.comment-content img {
+    width: 24px;
+    height: 24px;
+}
+/* SweetAlert custom content */
+.swal-html-content {
+    text-align: left;
+}
+
+    .swal-html-content ol {
+        margin: 0;
+        padding-left: 20px;
+        text-align: left;
+    }
+/* WhiteList Project Table Custom Styles */
+.RefLetter-container {
+    width: auto; /* Adjust width if needed */
+}
+
+    .RefLetter-container .noExport {
+        /* Already default styles; you can add if needed */
+    }
+
+    .RefLetter-container .RefLetter {
+        display: block;
+    }
+
+.WhitelistedTable-width8 {
+    width: 8%;
+}
+
+.WhitelistedTable-width6 {
+    width: 6%;
+}
+
+.WhitelistedTable-width15 {
+    width: 15%;
 }
