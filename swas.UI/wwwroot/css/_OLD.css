@@ -1,5 +1,5 @@
 
-/* Genral */
+
 
 body {
     color: #4c5258;
@@ -30,11 +30,7 @@ ion-icon {
 }
 
     .wrapper .page-content-wrapper {
-        /*
-    margin-left: 50px;
-    margin-top: 65px;
-    padding-bottom: 20px;
-    transition: .3s all;*/
+       
         margin-left: 260px;
         margin-top: 65px;
         padding-bottom: 20px;
@@ -65,7 +61,7 @@ ion-icon {
 
 
 
-/* Sidebar */
+
 
 .sidebar-wrapper {
     position: fixed;
@@ -94,8 +90,7 @@ ion-icon {
         padding: 0 15px;
         z-index: 5;
         background-color: #ffffff;
-        /*  border-right: 1px solid #e2e3e4;*/
-        /*      border-bottom: 1px solid #e4e4e4;*/
+       
         transition: all .2s;
         background: #007bff;
         background: linear-gradient(90deg,#007bff 100%, #32bfff 77%, rgba(236,37,124,1) 0% );
@@ -112,14 +107,12 @@ ion-icon {
             margin-left: 10px;
             margin-bottom: 0;
             letter-spacing: 1px;
-            /*color: #923eb9;*/
-            color: white;
+           color: white;
         }
 
 .toggle-icon {
     font-size: 26px;
     cursor: pointer;
-/*    color: #923eb9;*/
 color:white;
 }
 .yellow {
@@ -341,7 +334,7 @@ color:white;
     .sidebar-wrapper .metismenu a:active,
     .sidebar-wrapper .metismenu a:focus,
     .sidebar-wrapper .metismenu a:hover {
-        /*color: #923eb9;*/
+        
         color: white;
         text-decoration: none;
         background-color: rgb(146 62 185 / 10%);
@@ -422,26 +415,6 @@ color:white;
 }
 
 
-/* Top Header */
-
-/*.top-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 260px;
-    right: 0;
-    height: 65px;
-    padding: 0 1.5rem;
-    border-bottom: 1px solid #e9ecef;
-    background-clip: border-box;
-    background-color: #ffffff;
-    z-index: 5;
-    transition: 0.3s all;
-    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%);
-   
-}*/
 .top-header {
     display: flex;
     flex-direction: row;
@@ -467,7 +440,7 @@ color:white;
     font-family: "Roboto", sans-serif;
     color: white;
     text-shadow: 2px 2px 4px black;
-    /* animation: shadow-change 30s infinite;*/
+    
 }
 
 .top-header .navbar .dgislogo {
@@ -554,37 +527,6 @@ color:white;
         align-items: center;
         margin-top: 20px;
     }
-/*.headertext {
-    font-size: 40px;
-    font-weight: 600;*/
-    /*    color: #fdfdfe;*/
-    /*color: #4a6af7;*/
-/*    text-shadow: 0px 0px 5px #b393d3, 0px 0px 10px #b393d3, 0px 0px 10px #b393d3, 0px 0px 20px #b393d3;*/
-    /*text-shadow: 0px 0px 5px white, 0px 0px 10px white, 0px 0px 10px white, 0px 0px 20px white;
-}*/
-
-/*@keyframes shadow-change {
-    0% {
-        text-shadow: 0px 0px 5px white, 0px 0px 10px white, 0px 0px 10px white, 0px 0px 20px white;
-    }
-
-    50% {
-        text-shadow: 0px 0px 5px red, 0px 0px 10px red, 0px 0px 10px red, 0px 0px 20px red;
-    }
-
-    100% {
-        text-shadow: 0px 0px 5px white, 0px 0px 10px white, 0px 0px 10px white, 0px 0px 20px white;
-    }
-}*/
-/*@keyframes shadow-change {
-    0%, 50%, 100% {
-        text-shadow: 0px 0px 5px white, 0px 0px 10px white, 0px 0px 10px white, 0px 0px 20px white;
-    }
-
-    25%, 75% {
-        text-shadow: 0px 0px 5px #b393d3, 0px 0px 10px #b393d3, 0px 0px 10px #b393d3, 0px 0px 20px #b393d3;
-    }
-}*/
 
 .dropdown-toggle-nocaret:after {
 	display: none
@@ -889,7 +831,7 @@ color:white;
 }
 
 
-/* Footer */
+
 
 .footer {
     position: absolute;
@@ -911,7 +853,7 @@ color:white;
 }
 
 
-/* Utilities */
+
 
 .radius-10 {
     border-radius: 5px !important;
@@ -1226,7 +1168,7 @@ color:white;
 
 
 
-/* swicther */
+
 
 .btn-switcher {
     position: fixed;
@@ -1244,7 +1186,7 @@ color:white;
     cursor: pointer;
 }
 
-/* eCommerce */
+
 
 .btn-mobile-filter {
     width: 45px;
@@ -1361,7 +1303,7 @@ ul.categories-list li {
     display: inline-block;
 }
 
-/* Order Tracking */
+
 .mytable.mytable-hover.mytable-fixed {
     border-collapse: collapse;
     border: none;
@@ -1370,7 +1312,7 @@ ul.categories-list li {
     .mytable.mytable-hover.mytable-fixed th,
     .mytable.mytable-hover.mytable-fixed td {
         border: none;
-        padding: 5px; /* Adjust as needed */
+        padding: 5px; 
         text-align: left;
         vertical-align: top;
     }
@@ -1383,7 +1325,7 @@ ul.categories-list li {
     display: flex;
     margin-top: 5px;
     float:right;
-    /*margin-left: 500px;*/
+    
     font-size:18px;
     color:red;
    
@@ -1457,14 +1399,14 @@ ul.categories-list li {
 
 @media screen and (min-width: 960px) {
     .tabs {
-        /* width: 800px;*/
+        
    
     }
 }
 
 .tabs__head {
-    /*  width: 100%;*/
-    /* background: rgba(255, 255, 255, 0.94);*/
+    
+    
     display: flex;
     align-items: center;
     list-style: none;
@@ -1483,7 +1425,7 @@ ul.categories-list li {
     .tabs__head {
         background: rgb(247,248,250);
         background: linear-gradient(90deg, rgba(247,248,250,1) 0%, rgba(235,231,236,1) 35%, rgba(217,239,244,1) 100%);
-        /* background-color: rgba(0, 0, 0, .15);*/
+        
     }
 }
 
@@ -1566,22 +1508,22 @@ ul.categories-list li {
     transition: transform 0.4s;
     height: 730px;
     overflow: hidden;
- /*   box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);*/
+ 
 }
 
 @media screen and (min-width: 768px) and (max-width: 960px) {
     .tabs__content {
-       /* height: 100%;*/
+       
     }
 }
 
 .tabs__content__item {
-  /*  background: #fff;*/
+  
     position: absolute;
     transition: 0.5s all;
     opacity: 0;
     transition: 0.3s all;
-   /* height: 100%;*/
+   
     overflow-y: auto;
     z-index: 1;
     width: 100%;
@@ -1788,7 +1730,7 @@ ul.categories-list li {
 }
 #file-preview-container{
     width:100%;
- /*   padding-left:50px;*/
+ 
 
 
 }
@@ -1796,10 +1738,10 @@ ul.categories-list li {
     max-width: 100%;
     max-height: 300px;
     margin-top: 10px;
-  /*  margin-left: 100px;*/
+  
 }
 
-/* Responsive */
+
 
 @media screen and (max-width: 1200px) {
     .filter-sidebar {
@@ -1838,7 +1780,7 @@ ul.categories-list li {
         left: 0px;
     }
 
-    /* Toggeled */
+    
 
 
    .wrapper.toggled .sidebar-wrapper{
@@ -1938,14 +1880,6 @@ ul.categories-list li {
     }
 
 
-/*    .steps {
-        font-size: 16px;
-        color: blue;
-        margin-bottom: 5px;
-        font-weight: normal;
-        text-align: center;
-    }
-*/
 
     .fieldlabels {
         color: gray;
@@ -1968,8 +1902,7 @@ ul.categories-list li {
         box-sizing: border-box;
         width: 100%;
         margin: 0;
-        /*padding-bottom: 20px;*/
-        /*stacking fieldsets above each other*/
+      
         position: relative;
     }
 
@@ -1983,18 +1916,7 @@ ul.categories-list li {
 }
 
 #msform input, #msform textarea {
-    /* padding: 8px 15px 8px 15px;
-    border: 1px solid #ccc;
-    border-radius: 0px;
-    margin-bottom: 10px;
-    margin-top: 2px;
-    width: 250px;
-    box-sizing: border-box;
-    font-family: Arial;
-    color: #2C3E50;
-    background-color: #ECEFF1;
-    font-size: 14px;
-    letter-spacing: 1px;*/
+  
     padding: 10px;
     border: 1px solid #919ca9;
     border-radius: 5px;
@@ -2004,18 +1926,14 @@ ul.categories-list li {
     box-sizing: border-box;
     font-family: Arial, sans-serif;
     color: #000;
-    /* background-color: #f5f5f5; */
+  
     font-size: 14px;
     transition: border-color 0.3s ease;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 }
 
     #msform input:focus, #msform textarea:focus {
-        /*  -moz-box-shadow: none !important;
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important;
-        border: 1px solid #673AB7;
-        outline-width: 0;*/
+     
         outline: none;
         border-color: #3178e8;
         box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
@@ -2030,9 +1948,7 @@ ul.categories-list li {
     border: 0 none;
     border-radius: 0px;
     cursor: pointer;
-    /*padding: 10px 5px;
-    margin: 10px 0px 10px 5px;*/
-    /*float: right;*/
+   
 }
 
     #msform .action-button:hover, #msform .action-button:focus {
@@ -2048,22 +1964,20 @@ ul.categories-list li {
     border: 0 none;
     border-radius: 0px;
     cursor: pointer;
-    /*    padding: 10px 5px;
-    margin: 10px 5px 10px 0px;*/
-    /* float: right;*/
+ 
 }
 
     #msform .action-button-previous:hover, #msform .action-button-previous:focus {
         background-color: #000000;
     }
-/*The background card*/
+
 .card {
     z-index: 0;
     border: none;
     position: relative;
 }
 
-/*FieldSet headings*/
+
 .fs-title {
     font-size: 25px;
     color: #673AB7;
@@ -2077,7 +1991,7 @@ ul.categories-list li {
     font-weight: normal;
 }
 
-/*Step Count*/
+
 .steps {
     font-size: 16px;
     color: #2a0902;
@@ -2086,7 +2000,7 @@ ul.categories-list li {
     text-align: center;
 }
 
-/*Field names*/
+
 .fieldlabels {
     color: gray;
     text-align: left;
@@ -2113,8 +2027,7 @@ ul.categories-list li {
         box-sizing: border-box;
         width: 100%;
         margin: 0;
-        /*padding-bottom: 20px;*/
-        /*stacking fieldsets above each other*/
+    
         position: relative;
     }
 
@@ -2128,18 +2041,7 @@ ul.categories-list li {
 }
 
 #msformx input, #msformx textarea {
-    /* padding: 8px 15px 8px 15px;
-    border: 1px solid #ccc;
-    border-radius: 0px;
-    margin-bottom: 10px;
-    margin-top: 2px;
-    width: 250px;
-    box-sizing: border-box;
-    font-family: Arial;
-    color: #2C3E50;
-    background-color: #ECEFF1;
-    font-size: 14px;
-    letter-spacing: 1px;*/
+  
     padding: 10px;
     border: 1px solid #919ca9;
     border-radius: 5px;
@@ -2149,18 +2051,14 @@ ul.categories-list li {
     box-sizing: border-box;
     font-family: Arial, sans-serif;
     color: #000;
-    /* background-color: #f5f5f5; */
+    
     font-size: 14px;
     transition: border-color 0.3s ease;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 }
 
     #msformx input:focus, #msformx textarea:focus {
-        /*  -moz-box-shadow: none !important;
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important;
-        border: 1px solid #673AB7;
-        outline-width: 0;*/
+      
         outline: none;
         border-color: #3178e8;
         box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
@@ -2175,9 +2073,7 @@ ul.categories-list li {
     border: 0 none;
     border-radius: 0px;
     cursor: pointer;
-    /*padding: 10px 5px;
-    margin: 10px 0px 10px 5px;*/
-    /*float: right;*/
+  
 }
 
     #msformx .action-button:hover, #msformx .action-button:focus {
@@ -2193,22 +2089,20 @@ ul.categories-list li {
     border: 0 none;
     border-radius: 0px;
     cursor: pointer;
-    /*    padding: 10px 5px;
-    margin: 10px 5px 10px 0px;*/
-    /* float: right;*/
+  
 }
 
     #msformx .action-button-previous:hover, #msformx .action-button-previous:focus {
         background-color: #000000;
     }
-/*The background card*/
+
 .card {
     z-index: 0;
     border: none;
     position: relative;
 }
 
-/*FieldSet headings*/
+
 .fs-title {
     font-size: 25px;
     color: #673AB7;
@@ -2222,16 +2116,8 @@ ul.categories-list li {
     font-weight: normal;
 }
 
-/*Step Count*/
-/*.steps {
-    font-size: 16px;
-    color: blue;
-    margin-bottom: 5px;
-    font-weight: normal;
-    text-align: center;
-}*/
 
-/*Field names*/
+
 .fieldlabels {
     color: gray;
     text-align: left;
@@ -2342,7 +2228,7 @@ ul.categories-list li {
 
 .progress-bar {
     background-color: #044c92;
-    /*  background-color: #00b0e4;*/
+    
 }
 
 
@@ -2468,7 +2354,7 @@ ul.categories-list li {
     }
 }
 
-/*inbox style*/
+
 
 body {
     display: flex;

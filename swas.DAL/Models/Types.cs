@@ -5,11 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace swas.DAL.Models
 {
-    ///Created and Reviewed by : Sub Maj Sanal
-    ///Reviewed Date : 07 Aug 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start
     public class Types
     {
         [Key]
@@ -23,7 +18,6 @@ namespace swas.DAL.Models
         public int IsActive { get; set; }
 
     }
-    //AH Added by Sub Maj M Sanal Kumar on 07 Aug 23
     [NotMapped]
     [AllowAnonymous]
     public class AddlTask

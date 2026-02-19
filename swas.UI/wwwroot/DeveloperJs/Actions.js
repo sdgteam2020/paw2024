@@ -45,8 +45,6 @@ function animateBoxes() {
         setTimeout(() => {
             box.style.opacity = 1;
             box.style.transform = 'translateY(0)';
-
-            // Animate link lines alongside the box animations
             if (index < linkLines.length) {
                 setTimeout(() => {
                     linkLines[index].style.height = `${box.scrollHeight}px`;
@@ -54,11 +52,8 @@ function animateBoxes() {
             }
 
             if (index >= scrollThreshold) {
-                // Smoothly scroll the container as new boxes appear
                 box.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
-
-            // Scroll to the end of the container after the last box is revealed
             if (index === totalItems - 1) {
                 setTimeout(() => {
                     container.scrollIntoView({ behavior: 'smooth', block: 'end' });
@@ -89,7 +84,6 @@ function functionConfirm1(ActionsId) {
                 type: 'POST',
                 data: { ActionsId: ActionsId },
                 success: function (response) {
-                    //console.log(response);
                     if (response) {
                         if (response == 1) {
                             Swal.fire({
@@ -159,7 +153,6 @@ $('#btnsave').click(function () {
             }
         },
         error: function (error) {
-            // Handle error
             alert("Error saving data");
         }
     });

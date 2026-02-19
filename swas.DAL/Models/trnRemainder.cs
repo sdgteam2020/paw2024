@@ -25,7 +25,9 @@ namespace swas.DAL.Models
         public bool IsRemainder { get; set; }
         public string? SendDate { get; set; }
         public string? ReadDate { get; set; }
+        [MaxLength(500)]
         public string? UserDetails { get; set; }
+        [MaxLength(500)]
         public string? ToUserDetails { get; set; }
         public string? Remarks { get; set; }
 

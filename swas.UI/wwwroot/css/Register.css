@@ -27,31 +27,31 @@
     }
 
 
-/* ===== Registration page: moved from inline styles ===== */
 
-/* Outer card spacing */
+
+
 .reg-card-wrap {
     margin-right: 20%;
     margin-left: 5%;
 }
 
-/* Inner card width + offset */
+
 .reg-card-inner {
     width: 75%;
     margin-left: 13%;
 }
 
-/* Labels margin */
+
 .reg-label-m5 {
     margin: 5px;
 }
 
-/* Fixed column width for table */
+
 .reg-td-w65 {
     width: 65%;
 }
 
-/* Plus circle button */
+
 .reg-plus-circle {
     width: 40px;
     height: 40px;
@@ -65,22 +65,22 @@
     transition: background-color 0.3s ease;
 }
 
-/* Center rows (was inline style on <tr>) */
+
 .reg-row-center {
     text-align: center;
 }
 
-/* Register button width */
+
 .reg-btn-w132 {
     width: 132px;
 }
 
-/* Temp message color */
+
 .reg-msg-red {
     color: red;
 }
 
-/* UnitAdd modal content width */
+
 .reg-modal-w650 {
     width: 120% !important;
 }

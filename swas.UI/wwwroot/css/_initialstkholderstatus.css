@@ -1,4 +1,4 @@
-﻿/* Custom table styling */
+﻿
 .custom-table {
     width: 100%;
     border-collapse: collapse;
@@ -11,7 +11,7 @@
         border: 1px solid #ddd;
     }
 
-    /* Table header styling */
+    
     .custom-table thead {
         background-color: #044c92;
         color: white;
@@ -21,12 +21,12 @@
         font-weight: bold;
     }
 
-    /* Row hover effect */
+    
     .custom-table tbody tr:hover {
         background-color: #f1f1f1;
     }
 
-    /* Zebra striping for rows */
+    
     .custom-table tbody tr:nth-child(odd) {
         background-color: #f9f9f9;
     }
@@ -35,14 +35,14 @@
         background-color: #ffffff;
     }
 
-/* Attachment icon styling */
+
 .attachment-icon {
     width: 31px;
     height: 29px;
     margin-right: 0px;
 }
 
-/* Custom styling for buttons */
+
 .table-button {
     padding: 5px 10px;
     background-color: #f0ad4e;
@@ -54,7 +54,7 @@
         background-color: #ec971f;
     }
 
-/* Modal styling */
+
 .modal-dialog {
     max-width: 800px;
 }

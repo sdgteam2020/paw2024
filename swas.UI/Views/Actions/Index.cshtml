@@ -21,7 +21,7 @@
                         <th>Action Id</th>
                         <th>Action Name</th>
                         <th>Edit/Delete Date</th>
-                        <th>Edit/Delete</th>
+                         
                     </tr>
                 </thead>
                 <tbody>
@@ -32,14 +32,14 @@
                             <td id="spnActionsId">@models.ActionsId</td>
                             <td id="ActionNames">@models.Actions</td>
                             <td>@models.EditDeleteDate?.ToString("dd-MM-yyyy")</td>
-                            <td>
+                           @*  <td>
                                 <a class="btn btn-secondary btn-edit"><i class='bx bx-edit'></i></a>
                                 <a class="btn btn-secondary btn-delete"
                                    data-action-id="@models.ActionsId">
                                     <i class="bx bx-trash"></i>
                                 </a>
 
-                            </td>
+                            </td> *@
                         </tr>
                     }
                 </tbody>

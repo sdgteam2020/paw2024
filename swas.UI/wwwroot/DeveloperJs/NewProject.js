@@ -7,18 +7,12 @@ $(document).ready(function () {
         method: "POST",
         redirect: "follow"
     };
-
-    // Handle all cancel buttons
     $(document).on('click', '[data-cancel="true"]', function () {
         cancelModal(this);
     });
 
 
-    //fetch("https://aman.army.mil/HitCounter/api/ApplicationHit/IncrementHits/65c385d4-6b26-4133-9b03-935a47009eb3?DomainId=" + $("#UserId").val(), requestIncrementWithDomainId)
-    //    .then((response) => response.text())
-    //    .then((result) => console.log(result))
-    //    .catch((error) => console.error(error));
-
+  
     $("#ddlUnitId").change(function () {
         var selectedMode = $(this).val();
     });
@@ -34,56 +28,6 @@ $(document).ready(function () {
         $("#ProjWhiteListedProjectModal").modal('show');
 
     });
-
-    //$(".EditWhiteListedProj").click(function (e) {
-
-    //    var id = $(this).data('id'); 
-    //    $('#WhiteListedProjectDetail').modal('hide');
-
-    //    $.ajax({
-    //        url: '/Home/GetWhiteListedProjectById',
-    //        type: 'GET',
-    //        data: { id: id },
-    //            success: function (data) {
-    //                if (data) {
-    //                    $('#edit_Id').val(data.id);
-    //                    $('#edit_ProjName').val(data.projName);
-                       
-    //                    var hostedOnMap = {
-    //                        "1": "LAN",
-    //                        "2": "ADN",
-    //                        "3": "Internet",
-    //                        "4": "Standalone"
-    //                    };
-
-    //                    var hostedOnVal = data.mHostTypeId ? data.mHostTypeId.toString() : "";
-    //                    $('#edit_HostedOn').val(hostedOnVal);
-                      
-    //                    if ($('#edit_HostedOn').val() != hostedOnVal) {
-    //                        $('#edit_HostedOn option').each(function () {
-    //                            if ($(this).val() == hostedOnVal) {
-    //                                $(this).prop('selected', true);
-    //                            } else {
-    //                                $(this).prop('selected', false);
-    //                            }
-    //                        });
-    //                    }                        
-    //                    $('#edit_Appt').val(data.appt);
-    //                    $('#edit_Sponser').val(data.fmn);
-    //                    $('#edit_TelNo').val(data.contactNo);
-    //                    $('#edit_Clearance').val(data.clearence ? data.clearence.substring(0, 10) : '');
-    //                    $('#edit_Cert').val(data.certNo);
-    //                    $('#edit_ValidUpto').val(data.validUpto ? data.validUpto.substring(0, 10) : '');
-    //                    $('#edit_Remarks').val(data.remarks);
-
-    //                    $('#EditWhiteListedProjectModal').modal('show');
-    //                }
-    //            },
-    //        error: function () {
-    //            alert('Failed to fetch project details.');
-    //        }
-    //    });
-    //});
 
     $('#WhitelistedTable tbody').on('click', '.EditWhiteListedProj', function (e) {
         e.preventDefault();
@@ -180,46 +124,6 @@ $(document).ready(function () {
 
 });
 
-//$(document).on('click', '.EditWhiteListedProj', function (e) {
-//    e.preventDefault();
-//    var id = $(this).data('id');
-//    $('#WhiteListedProjectDetail').modal('hide');
-
-//    $.ajax({
-//        url: '/Home/GetWhiteListedProjectById',
-//        type: 'GET',
-//        data: { id: id },
-//        success: function (data) {
-//            if (data) {
-//                $('#edit_Id').val(data.id);
-//                $('#edit_ProjName').val(data.projName);
-
-//                var hostedOnVal = data.mHostTypeId ? data.mHostTypeId.toString() : "";
-//                $('#edit_HostedOn').val(hostedOnVal);
-
-//                if ($('#edit_HostedOn').val() != hostedOnVal) {
-//                    $('#edit_HostedOn option').each(function () {
-//                        $(this).prop('selected', $(this).val() == hostedOnVal);
-//                    });
-//                }
-
-//                $('#edit_Appt').val(data.appt);
-//                $('#edit_Sponser').val(data.fmn);
-//                $('#edit_TelNo').val(data.contactNo);
-//                $('#edit_Clearance').val(data.clearence ? data.clearence.substring(0, 10) : '');
-//                $('#edit_Cert').val(data.certNo);
-//                $('#edit_ValidUpto').val(data.validUpto ? data.validUpto.substring(0, 10) : '');
-//                $('#edit_Remarks').val(data.remarks);
-
-//                $('#EditWhiteListedProjectModal').modal('show');
-//            }
-//        },
-//        error: function () {
-//            alert('Failed to fetch project details.');
-//        }
-//    });
-//});
-
 
 function ValInData(input) {
     var regex = /[^a-zA-Z0-9/ ]/g;
@@ -234,7 +138,10 @@ $('#ProcessId').on('click', function(){
 function ButtonClick() {
     
     var ButtonText = $('#ProcessId').data('button-text');
-    if (ButtonText === 'Sign In') {
+    var flag = $('#ProcessId').data('flag');
+   
+
+    if (ButtonText === 'Sign In' &&flag === 'True') {
         var signInUrl = '/Home/Index';
         window.location.href = signInUrl;
     }
@@ -246,28 +153,23 @@ function ButtonClick() {
         else {
             Swal.fire({
                 title: 'Warning!',
-                /*text: 'Contact DDGIT for Necessary Admin Approval (Tel No: 39865, 20862706)',*/
+                
                 html: `Contact DDGIT for Necessary Admin Approval<br><strong>(Tele No:</strong> 39865, 20862706)`,
                 icon: 'warning',
                 confirmButtonColor: '#ffc107',
                 confirmButtonText: 'OK'
             }).then((result) => {
-                // Check if the user clicked the OK button
                 if (result.isConfirmed) {
-                    // Clear session on the server-side via an AJAX request
                     $.ajax({
                         url: '/Home/ClearSession', // The server-side action to clear the session
                         type: 'POST',
                         success: function () {
-                            // Once session is cleared, open the login page
                             var signUpUrl = '/Identity/Account/Login';
                             window.open(signUpUrl, '_self'); // Open login in the same window or tab
                         },
                         error: function () {
-                            // Handle error if the session could not be cleared
                             Swal.fire({
                                 title: 'Error!',
-                                //text: 'Contact DDGIT for Necessary Admin Approval (Tel No: 39865, 20862706)',
                                 html: `Contact DDGIT for Necessary Admin Approval<br><strong>(Tele No:</strong> 39865, 20862706)`,
                                 icon: 'error',
                                 confirmButtonText: 'OK'
@@ -285,8 +187,6 @@ function ButtonClick() {
 $("#telNo").on("keypress", function () {
     var input = $(this).val();
     input = input.replace(/\D/g, '');
-
-    // Optional: limit to 10 digits
     if (input.length > 10) {
         input = input.substring(0, 10);
     }
@@ -295,8 +195,6 @@ $("#telNo").on("keypress", function () {
 });
 $("#telNo").on("keypress", function (e) {
     var charCode = e.which ? e.which : e.keyCode;
-
-    // Allow only digits (0–9)
     if (charCode < 48 || charCode > 57) {
         e.preventDefault();
         $(this).siblings(".invalid-feedback")
@@ -316,12 +214,8 @@ var validPattern = /^[a-zA-Z0-9 ]*$/;
 
 
 $('.form-control').keypress(function (e) {
-    // Get the key code of the pressed key
-    // Get the key code of the pressed key
   
     var keyCode = e.which;
-
-    // Allow only alphabets (A-Z, a-z) and numbers (0-9)
     if ((keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (keyCode >= 48 && keyCode <= 57) || (keyCode == 32)) {
         $(this).siblings(".invalid-feedback").hide();
         return true; // Allow the keypress
@@ -344,14 +238,11 @@ $('.form-control').keypress(function (e) {
 $("#hostedOn,  #certNo, #remarks, #appt").on("input", function () {
     var currentVal = $(this).val();
     var maxLength = 200;
-
-    // For remarks, use 500
     if ($(this).attr('id') === 'remarks') {
         maxLength = 500;
     }
 
     if (!validPattern.test(currentVal)) {
-        // Remove any invalid characters
         $(this).val(currentVal.replace(/[^a-zA-Z0-9 ]/g, ""));
         $(this).siblings(".invalid-feedback")
             .text("Special characters are not allowed.")
@@ -388,8 +279,6 @@ $("#hostedOn,  #certNo, #remarks, #appt").on("input", function () {
 
 $("#btn_Save").on('click', function (e) {
     e.preventDefault();
-    
-    // Gather form inputs
     var formData = {
         ProjName: $('#swName').val(),
         mHostTypeId: $('#hostedOn').val(),
@@ -401,16 +290,12 @@ $("#btn_Save").on('click', function (e) {
         ValidUpto: $('#validUpto').val(),
         Remarks: $('#remarks').val(),
     };
-   
-    // Validation
     var isValid = true;
    
     $("input[required], select[required], textarea[required]").each(function () {
         
         var value = $(this).val();
         var maxLength = 200;
-
-        // For remarks, use 500
         if ($(this).attr('id') === 'remarks') {
             maxLength = 500;
         }
@@ -435,8 +320,6 @@ $("#btn_Save").on('click', function (e) {
             $(this).siblings(".invalid-feedback").hide();
         }
     });
-
-    // Remove invalid class and feedback when user fixes input
     $("input[required], textarea[required]").on("input", function () {
         var maxLength = 200;
         if ($(this).attr('id') === 'remarks') {
@@ -450,8 +333,6 @@ $("#btn_Save").on('click', function (e) {
             $(this).siblings(".invalid-feedback").hide();
         }
     });
-
-    // For selects, use change event
     $("select[required]").on("change", function () {
         var value = $(this).val();
         if (value && value.trim() !== "") {
@@ -459,11 +340,6 @@ $("#btn_Save").on('click', function (e) {
             $(this).siblings(".invalid-feedback").hide();
         }
     });
-
-
-   
-
-    // Proceed with AJAX if validation passes
     if (isValid) {
         $.ajax({
             url: '/Home/SaveWhiteList',
@@ -482,7 +358,6 @@ $("#btn_Save").on('click', function (e) {
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then(() => {
-                    // Refresh the page to reload the updated list
                     location.reload();
                 });
 
@@ -496,15 +371,9 @@ $("#btn_Save").on('click', function (e) {
     }
 });
 function cancelModal(button) {
-    // Your existing logic
     $('#WhiteListModal').modal('hide');
     $('#WhiteListForm')[0].reset();
-    // etc.
 }
-//function cancelModal(elem) {
-
-//    $('#WhiteListedProjectDetail .modal-content').css('filter', '');
-//}
 
 $(document).ready(function () {
     $(document).on('click', function () {
@@ -561,11 +430,7 @@ $(document).ready(function () {
         },
         minLength: 4, // Minimum characters before search is triggered
         select: function (event, ui) {
-
-            // Handle item selection
             let selectedOption = ui.item;
-
-            /*$("#CommentProject").val(selectedOption.value); */ // Set the input value to selected project
 
             var date = new Date(selectedOption.timeStamp);
             var formattedDate =
@@ -575,10 +440,6 @@ $(document).ready(function () {
                 ("0" + date.getHours()).slice(-2) + ':' +
                 ("0" + date.getMinutes()).slice(-2) + ':' +
                 ("0" + date.getSeconds()).slice(-2);
-
-
-
-            // Initialize the status and button variables
             let statusText = "";
             let buttonClass = "";
 
@@ -598,8 +459,6 @@ $(document).ready(function () {
                 statusText = "Pending";
                 buttonClass = "btn-danger";
             }
-
-            // Create the row to be added to the table
             let newRow = `
             <tr class="cmntrow">
                 <td class='noExport d-none'><span class='noExport d-none' id='spnProjId'>${selectedOption.projid}</span><span class='noExport d-none' id='spnpsmId'>${selectedOption.psmid}</span><span class='noExport d-none' id='DateType'>${selectedOption.adminApprovalStatus}</span></td>

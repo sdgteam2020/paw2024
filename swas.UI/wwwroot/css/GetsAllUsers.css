@@ -34,24 +34,24 @@
     align-items: center;
 }
 
-/* ===== Existing Users page: moved from inline styles ===== */
 
-/* Card header background */
+
+
 .users-card-header {
     background-color: #044c92;
 }
 
-/* Hidden button (replaces style="display:none") */
+
 .users-hidden {
     display: none;
 }
 
-/* S/No column width */
+
 .users-col-sno {
     width: 33px;
 }
 
-/* Flag toggle spans */
+
 .flag-pill {
     border: none;
     color: white;
@@ -71,7 +71,7 @@
 .flag-pill-off {
     background: linear-gradient(to right, red 50%, green 50%);
 }
-/* ===== Flag toggle button styles ===== */
+
 
 .flag-pill {
     border: none;
@@ -85,12 +85,12 @@
     cursor: pointer;
 }
 
-/* ON state */
+
 .flag-on {
     background: linear-gradient(to right, green 50%, red 50%);
 }
 
-/* OFF state */
+
 .flag-off {
     background: linear-gradient(to right, red 50%, green 50%);
 }

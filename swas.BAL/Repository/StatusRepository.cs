@@ -105,52 +105,7 @@ namespace swas.BAL.Repository
 
 
        
-        //public async Task<int> AddStatusAsync(tbl_mStatus status)
-        //{
-        //    _dbContext.mStatus.Add(status);
-        //    await _dbContext.SaveChangesAsync();
-        //    return status.StatusId;
-        //}
-       
-        //public async Task<tbl_mStatus> GetStatusByIdAsync(int statusId)
-        //{
-        //    return await _dbContext.mStatus.FindAsync(statusId);
-        //}
-        
-
-
-        //public async Task<bool> UpdateStatusAsync(tbl_mStatus status)
-        //{
-        //    _dbContext.Entry(status).State = EntityState.Modified;
-        //    await _dbContext.SaveChangesAsync();
-        //    return true;
-        //}
-       
-        //public async Task<bool> DeleteStatusAsync(int statusId)
-        //{
-        //    var status = await _dbContext.mStatus.FindAsync(statusId);
-        //    if (status == null)
-        //        return false;
-
-        //    _dbContext.mStatus.Remove(status);
-        //    await _dbContext.SaveChangesAsync();
-        //    return true;
-        //}
-
-
-
-        //public async Task<List<DTODDLComman>> GetAll()
-        //{
-
-        //    var ret1 =await (from Status in _dbContext.mStatus
-        //                select new DTODDLComman
-        //                {
-        //                    Name = Status.Status,
-        //                    Id = Status.StatusId,
-        //                }).ToListAsync();
-
-        //    return ret1;
-        //}
+    
 
     }
 

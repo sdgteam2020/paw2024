@@ -3,11 +3,6 @@ using System.Text;
 
 namespace swas.BAL.Utility
 {
-    ///Created and Reviewed by : Sub Maj Sanal
-    ///Reviewed Date : 30 Jul 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start
     public class Security
     {
         public static byte[] GetHash(string inputString)

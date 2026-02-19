@@ -34,8 +34,8 @@
             list-style: none;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9; /* Set background color to match your row background */
-            border: 1px solid #ccc; /* Set border to match your row border */
+            background-color: #f9f9f9;
+            border: 1px solid #ccc; 
         }
 
             #checkboxes ul li input {
@@ -208,10 +208,6 @@ a {
     display: none;
 }
 
-/*.dropdown dd ul li a {
-        padding: px;
-        display: block;
-    }*/
 
 .dropdown dd ul li a:hover {
     background-color: #dee2e6;

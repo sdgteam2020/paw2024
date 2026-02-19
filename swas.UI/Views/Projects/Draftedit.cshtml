@@ -247,12 +247,21 @@
 </div>
 @if (Model.ProjEdit != null && Model.ProjEdit.CompletionDate.HasValue)
 {
-    var completionDateValue = Model.ProjEdit.CompletionDate.Value.ToString("yyyy-MM-dd");
-    @Html.Raw("ProjEdit_CompletionDate.value = '" + completionDateValue + "';")
+    <script>
+        (function () {
+          const v = @Html.Raw(JsonSerializer.Serialize(
+           Model?.ProjEdit?.CompletionDate?.ToString("yyyy-MM-dd") ?? ""
+      ));
+          const el = document.getElementById("ProjEdit_CompletionDate");
+          if (el) el.value = v;
+        })();
+    </script>
+
 }
+
 <script src="~/developerjs/projects_draftedit.js"></script>
 
-@*HostedonInput.value = project.hostedon;*@
+
 
 
 <br />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -22,25 +23,29 @@ namespace swas.DAL.Models
         public bool? UserRequest { get; set; }
         public bool? DDGIT_approval { get; set; }
 
-        public string User { get; set; }
+        [StringLength(100)]
+        [RegularExpression(@"^[a-zA-Z0-9\s\.\,\-\(\)\/:]+$", ErrorMessage = "Invalid characters.")]
+        public string? User { get; set; }
+
         public bool? IsRead { get; set; }
         public int? RequestType { get; set; }
 
         [NotMapped]
-        public string ProjName { get; set; }
-
-       
-        [NotMapped]
-        public string UnitName { get; set; }
-
-
-        //[NotMapped]
-        //public string? Sponsor { get; set; }
+        [StringLength(200)]
+        [RegularExpression(@"^[a-zA-Z0-9\s\.\,\-\(\)\/:]+$", ErrorMessage = "Invalid characters.")]
+        public string? ProjName { get; set; }
 
         [NotMapped]
-        public string? Remarks { get; set; }
+        [StringLength(200)]
+        [RegularExpression(@"^[a-zA-Z0-9\s\.\,\-\(\)\/:]+$", ErrorMessage = "Invalid characters.")]
+        public string? UnitName { get; set; }
+
+        [NotMapped]
         
+        public string? Remarks { get; set; }
+
         [NotMapped]
+     
         public string? EncyID { get; set; }
 
 

@@ -11,7 +11,6 @@
 
         public async Task Invoke(HttpContext context)
         {
-            // Do something with context near the beginning of request processing.
             var myHeader = context.Request.Path.ToString();
             string referer = context.Request.Headers["Referer"].ToString();
             if (referer != "" && myHeader != "/")
@@ -22,8 +21,6 @@
                 await _next.Invoke(context);
             else
                 context.Response.Redirect("/Account/InvalidPage");
-
-            // Clean up.  
         }
     }
 

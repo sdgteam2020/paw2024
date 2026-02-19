@@ -1,11 +1,6 @@
 ﻿(function () {
     "use strict";
-
-    // -------------------------
-    // Helpers
-    // -------------------------
     function getWatermarkText() {
-        // Prefer hidden span in layout: <span id="IpAddress" class="d-none">...</span>
         var el = document.getElementById("IpAddress");
         return el ? (el.textContent || "").trim() : "";
     }
@@ -16,8 +11,6 @@
 
         var $el = $(selector);
         if (!$el.length) return null;
-
-        // If already DataTable, destroy cleanly
         if ($.fn.dataTable.isDataTable($el)) {
             $el.DataTable().clear().destroy();
         }
@@ -88,8 +81,6 @@
         var watermarkText = (typeof watermarkProvider === "function")
             ? (watermarkProvider() || "")
             : "";
-
-        // ✅ valid CSS (fixed vertical-align/background-color syntax)
         var styles = `
       <style type="text/css">
         table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
@@ -113,17 +104,11 @@
     `);
         popupWin.document.close();
     }
-
-    // If you already have initializeDataTable elsewhere, keep using it.
     function safeCallInitializeDataTable(selector) {
         if (typeof window.initializeDataTable === "function") {
             if ($(selector).length) window.initializeDataTable(selector);
         }
     }
-
-    // -------------------------
-    // UI Handlers
-    // -------------------------
     function bindEditUserModal() {
         $(document).on("click", ".edit-user-btn", function () {
             var username = $(this).data("username");
@@ -159,8 +144,6 @@
     }
 
     function checksize() {
-
-        // ✅ removed stray token "mmittee" (it was breaking JS)
         if ($(window).width() < 1000) {
             $("#menusharp1").removeClass("d-none");
             $("#menusharp").addClass("d-none");
@@ -185,7 +168,6 @@
     }
 
     function ajaxLoader() {
-        // Your layout uses #loading1; earlier code used #loading.
         var $loading = $("#loading1, #loading");
         $loading.addClass("d-none"); // keep hidden by default if you use bootstrap d-none
 
@@ -233,8 +215,6 @@
         $(".dropdown-menu li a[href='" + currentPageUrl + "']").parent().addClass("selected");
         $(".dropdown-menu.selected").addClass("visible");
     }
-
-    // Expose globally (your old code called it inline sometimes)
     window.createNotification = function (event) {
         event.preventDefault();
         var stakeHolderId = document.getElementById("btnid")?.innerText;
@@ -259,25 +239,15 @@
         var regex = /[^a-zA-Z0-9 ]/g;
         input.value = input.value.replace(regex, "");
     };
-
-    // -------------------------
-    // DOM Ready: Initialize
-    // -------------------------
     $(function () {
-
-        // ✅ DataTables with PDF popup (only if those tables exist)
         initDtWithPdfPopup("#Software", getWatermarkText);
-        initDtWithPdfPopup("#SoftwareType1", function () { return ""; });
+        initializeDataTable("#SoftwareType1");
         initDtWithPdfPopup("#mapunit", getWatermarkText);
         initDtWithPdfPopup("#Inbox1", getWatermarkText);
         initDtWithPdfPopup("#SoftwareType3", getWatermarkText);
-
-        // Your other tables using your own initializer
         safeCallInitializeDataTable("#IndexTable");
         safeCallInitializeDataTable("#SoftwareType5");
         safeCallInitializeDataTable("#Soft");
-
-        // SentProjDetails (guarded)
         if ($("#SentProjDetails").length && $.fn.DataTable) {
             var t = safeInitDataTable("#SentProjDetails", {});
             if (t && t.buttons && t.buttons().container) {

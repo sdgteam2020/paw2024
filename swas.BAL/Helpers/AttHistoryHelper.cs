@@ -7,11 +7,6 @@ using swas.DAL.Models;
 
 namespace swas.BAL.Helpers
 {
-    ///Created and Reviewed by : Sub Maj Sanal
-    ///Reviewed Date : 13 Aug 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start
     public static class AttHistoryHelpers
     {
         

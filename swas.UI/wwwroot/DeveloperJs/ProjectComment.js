@@ -1,18 +1,10 @@
-﻿//----Project Comment ----
-
+﻿
 function handleStatusChange() {
 
     var selectedStatus = document.getElementById("ddlStatus").value;
 
 
     var fileInput = document.getElementById("uploadfile");
-
-    //if (selectedStatus === "1") {
-    //    fileInput.removeAttribute("disabled");
-    //} else {
-    //    fileInput.value = "";
-    //    fileInput.setAttribute("disabled", "disabled");
-    //}
 }
 
 

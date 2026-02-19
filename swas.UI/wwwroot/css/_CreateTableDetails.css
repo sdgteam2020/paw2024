@@ -1,5 +1,5 @@
 ﻿
-/* Style for required field indicator */
+
 .required-indicator {
     color: red;
     font-size: 18px;
@@ -15,7 +15,7 @@
 .underline-h5 {
     padding: 0.5rem;
     width: 36rem;
-    margin: 0 auto; /* Center the box */
+    margin: 0 auto; 
     text-align: center;
     border-color: #03c1fc;
     box-shadow: 2px 6px 10px -3px #062b50;
@@ -38,7 +38,7 @@
 }
 
 
-/* Card and Layout Styling */
+
 .card-body {
     padding: 1.5rem;
 }
@@ -51,13 +51,13 @@
     border-radius: 12px;
 }
 
-/* Scrollable Card Body */
+
 .scrollable-card-body {
     height: 600px;
     overflow-y: auto;
 }
 
-/* Form Styling */
+
 .form-group {
     margin-bottom: 1rem;
 }
@@ -66,7 +66,7 @@
     text-align: left;
 }
 
-/* Stakeholder Details */
+
 .stakeholder-info {
     display: flex;
     margin-bottom: 15px;
@@ -80,7 +80,7 @@
     margin-left: 120px;
 }
 
-/* Textarea and Dropdown Styling */
+
 textarea.form-control {
     width: 100%;
 }
@@ -89,17 +89,17 @@ textarea.form-control {
     width: 100%;
 }
 
-/* Button Styling */
+
 .btn-primary, .btn-secondary {
     margin-top: 10px;
 }
 
-/* Validation Feedback */
+
 .invalid-feedback {
     color: red;
 }
 
-/* Custom Text Styling */
+
 .required-indicator {
     color: red;
 }

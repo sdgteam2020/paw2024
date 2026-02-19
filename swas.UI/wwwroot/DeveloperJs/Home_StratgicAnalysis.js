@@ -14,11 +14,6 @@ $(document).on('ready', function () {
 
             updatePieChart(data);
 
-            // var titles = data.map(item => item.Status);
-            // var chartData = data.map(item => item.TotalProj);
-
-            // updatePieChart(titles, chartData);
-
         },
         error: function (error) {
 
@@ -31,7 +26,6 @@ $(document).on('ready', function () {
         method: 'GET',
         dataType: 'json',
         success: function (data) {
-            //console.log(data);
             if (data.error) {
                 console.error('Error fetching data:', data.error);
                 return;
@@ -99,9 +93,6 @@ function lightenColor(color, percent) {
         G = (num & 0x0000FF) + amt;
     return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (B < 255 ? B < 1 ? 0 : B : 255) * 0x100 + (G < 255 ? G < 1 ? 0 : G : 255)).toString(16).slice(1);
 }
-
-
-// Function to generate random color
 function getRandomColorss() {
     var letters = '0123456789ABCDEF';
     var color = '#';

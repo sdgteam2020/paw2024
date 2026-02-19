@@ -5,12 +5,6 @@ using swas.DAL.Models;
 
 namespace swas.UI.Controllers
 {
-
-    ///Created and Reviewed by : Sub Maj M Sanal
-    ///Reviewed Date : 31 Jul 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start
     public class StakeHolderController : Controller
     {
 
@@ -23,18 +17,12 @@ namespace swas.UI.Controllers
             _stakeHolderRepository = stakeHolderRepository;
             _logger = logger;
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        //Reviewed Date : 31 Jul 23
-        // GET: StakeHolder
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Index()
         {
             var stakeHolders = await _stakeHolderRepository.GetAllStakeHoldersAsync();
             return View(stakeHolders);
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        //Reviewed Date : 31 Jul 23
-        // GET: StakeHolder/Details/5
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Details(int id)
         {
@@ -46,9 +34,6 @@ namespace swas.UI.Controllers
 
             return View(stakeHolder);
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        //Reviewed Date : 31 Jul 23
-        // GET: StakeHolder/Create
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create()
         {
@@ -56,9 +41,6 @@ namespace swas.UI.Controllers
             return View(stkhold);
 
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        //Reviewed Date : 31 Jul 23
-        // POST: StakeHolder/Create
         [Authorize(Policy = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -83,9 +65,6 @@ namespace swas.UI.Controllers
             }
 
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        //Reviewed Date : 31 Jul 23
-        // GET: StakeHolder/Edit/5
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
@@ -96,9 +75,6 @@ namespace swas.UI.Controllers
             }
             return View(stakeHolder);
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        //Reviewed Date : 31 Jul 23
-        // POST: StakeHolder/Edit/5
         [Authorize(Policy = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -129,9 +105,6 @@ namespace swas.UI.Controllers
             }
 
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        //Reviewed Date : 31 Jul 23
-        // GET: StakeHolder/Delete/5
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -142,9 +115,6 @@ namespace swas.UI.Controllers
             }
             return View(stakeHolder);
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        //Reviewed Date : 31 Jul 23
-        // POST: StakeHolder/Delete/5
         [Authorize(Policy = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

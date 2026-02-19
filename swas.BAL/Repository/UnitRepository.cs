@@ -13,11 +13,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace swas.BAL
 {
-    ///Created and Reviewed by : Sub Maj Sanal
-    ///Reviewed Date : 10 Aug 23
-    ///Tested By :-  
-    ///Tested Date : 
-    ///Start
     public class UnitRepository : IUnitRepository
     {
         public readonly ApplicationDbContext _context;
@@ -33,7 +28,7 @@ namespace swas.BAL
         {
 
 
-            if (!CheckUserExist(Db.UnitName)) /* Db.UnitSusNo*/
+            if (!CheckUserExist(Db.UnitName)) 
             {
                 Db.Status = true;
                 Db.CorpsId = 0;
@@ -47,16 +42,15 @@ namespace swas.BAL
 
             else
             {
-                //_context.Update(Db);
-                //await _context.SaveChangesAsync();
+               
                 return Convert.ToInt32(EnumHelper.SaveData.Duplicate);
             }
 
         }
-        public bool CheckUserExist(string unitname)   /*, string SusNo*/
+        public bool CheckUserExist(string unitname)   
         {
 
-            return _context.tbl_mUnitBranch.Any(e => e.UnitName == unitname ); /*|| e.UnitSusNo == SusNo*/
+            return _context.tbl_mUnitBranch.Any(e => e.UnitName == unitname ); 
 
         }
 
@@ -162,7 +156,6 @@ namespace swas.BAL
                              Types = t.Name,
 
                              UnitSusNo = d.UnitSusNo,
-                             //Loc = d.Loc,
                              Corps = s.corpsname,
                              Status = d.Status,
                              UpdatedBy = d.UpdatedBy,
@@ -188,31 +181,7 @@ namespace swas.BAL
          
         public async Task<List<DTOUnitMapping>> GetallUnitwithmap1(int StageId , int StatusId)
         {
-            //var ret1 = await(from usm in _context.TrnUnitStatusMapping
-            //                 join ms in _context.mStatus on usm.StatusId equals ms.StatusId
-            //                 join sam in _context.TrnStatusActionsMapping on ms.StatusId equals sam.StatusId
-            //                 join s in _context.mStages on ms.StageId equals s.StagesId
-            //                 join a in _context.mActions on sam.ActionsId equals a.ActionsId
-            //                 join ub in _context.tbl_mUnitBranch on usm.UnitId equals ub.unitid
-            //                 where usm.UnitId==unitId &&
-            //                  !(from ub in _context.tbl_mUnitBranch
-            //                    where ub.unitid == usm.UnitId && ub.TypeId == 6
-            //                    select 1).Any()
-            //                 orderby ub.unitid descending
-            //                 select new DTOUnitMapping
-            //                 {
-            //                     StatusActionsMappingId = sam.StatusActionsMappingId,
-            //                     UnitStatusMappingId = usm.UnitStatusMappingId,  // Keep this property
-            //                     UnitName = ub.UnitName,  // Changed property name to UnitName
-            //                     UnitId = usm.UnitId,
-            //                     StagesName = s.Stages,
-            //                     StagesId = s.StagesId,  // Changed property name to StagesId
-            //                     SubStagesName = ms.Status,
-            //                     SubStagesId = ms.StatusId,  // Changed property name to SubStagesId
-            //                     ActionsName = a.Actions,
-            //                     ActionsId = a.ActionsId
-            //                 }).ToListAsync();
-
+         
             var result = from sam in _context.TrnStatusActionsMapping
                          join ms in _context.mStatus on sam.StatusId equals ms.StatusId
                          join s in _context.mStages on ms.StageId equals s.StagesId
@@ -243,24 +212,7 @@ namespace swas.BAL
 
 
 
-        //public async Task<List<UnitDtl>> GetFindUnitAsync(string UserName)
-        //{
-
-
-        //    var query = from user in _context.Users where user.UserName == UserName
-        //                join unit in _context.tbl_mUnitBranch
-        //                on user.UnitId equals unit.unitid
-        //                select new
-        //                {
-        //                    UserName = user.UserName,
-        //                    UnitName = unit.UnitName
-        //                };
-
-        //    var result = query.ToList();
-
-        //    return result;
-
-        //}
+      
         public Task<List<DTODDLComman>> GetAllUnitNotDte()
         {
             var ret = _context.tbl_mUnitBranch

@@ -4,11 +4,6 @@ using System.Reflection;
 
 namespace swas.BAL.Utility
 {
-    ///Created and Reviewed by : Sub Maj Sanal
-    ///Reviewed Date : 30 Jul 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start
     public static class ExtensionMethods
     {
 

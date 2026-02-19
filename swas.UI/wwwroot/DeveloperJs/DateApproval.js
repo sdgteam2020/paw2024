@@ -1,89 +1,12 @@
-﻿//$(document).on('click', '.approve-btn', function () {
-//    let id = $(this).data('id');
-//    let projectName = $(this).data('project-name');
-
-
-//    let message = '';
-
-//    if ($(this).text().trim() === 'Approved') {
-//        message = `Do you want to Unapprove this date request for This Project: ${projectName} ?`;
-//    } else {
-//        message = `Do you want to approve this date request for This Project: ${projectName} ?`;
-//    }
-
-
-//    $.ajax({
-//        url: '/Notification/GetUnreadProjectCommentsCount',
-//        type: 'POST',
-//        data: { id: id },
-//        success: function (res) {
-//            if (res.success) {
-
-//                loadDateApprovalTable();
-//                fetchProjectCommentsUnreadCount();
-//                Swal.fire({
-//                    title: 'Confirm Approval',
-//                    text: message,
-//                    icon: 'question',
-//                    showCancelButton: true,
-//                    confirmButtonColor: '#28a745',
-//                    cancelButtonColor: '#d33',
-//                    confirmButtonText: 'Yes, Approve',
-//                    cancelButtonText: 'Cancel'
-//                }).then((result) => {
-//                    if (result.isConfirmed) {
-
-//                        $.ajax({
-//                            url: '/Home/ApproveDateRequest',
-//                            type: 'POST',
-//                            data: { id: id },
-//                            success: function (res) {
-//                                if (res.success) {
-//                                    Swal.fire({
-//                                        title: 'Approved!',
-//                                        text: res.message,
-//                                        icon: 'success',
-//                                        timer: 2000,
-//                                        showConfirmButton: false
-//                                    });
-
-//                                    loadDateApprovalTable();
-//                                    fetchProjectCommentsUnreadCount();
-//                                } else {
-//                                    Swal.fire('Error!', res.message, 'error');
-//                                }
-//                            },
-//                            error: function () {
-//                                Swal.fire('Server Error', 'Could not approve the request.', 'error');
-//                            }
-//                        });
-//                    }
-//                });
-//            } else {
-//                Swal.fire('Error!', res.message, 'error');
-//            }
-//        },
-//        error: function () {
-//            Swal.fire('Server Error', 'Could not update read status.', 'error');
-//        }
-//    });
-//});
+﻿
 
 $(document).ready(function () {
     
     $('.tabs__head a').click(function (e) {
         e.preventDefault();
-
-        // Remove active class from all tabs
         $('.tabs__head a').removeClass('active-link');
-
-        // Add active class to clicked tab
         $(this).addClass('active-link');
-
-        // Hide all tab contents
         $('.tab-content').hide();
-
-        // Show the one with the matching data-tab id
         var tabId = $(this).data('tab');
         $('#' + tabId).show();
     });
@@ -101,13 +24,10 @@ $(document).on('click', '.approve-btn', function () {
     let actiontype = $(this).data('actiontype');
     let message= " ";
     if (actiontype === 3) {
-       
-        // message = `Do you want to Reject the Legacy project: ${projectName}? <br>Please enter remarks:`
-        message='Please Enter Remkars:' 
+        message='Please Enter Remarks:' 
     }
     else {
-        //  message = `Do you want to Approve the Legacy  project: ${projectName}?<br> Please enter remarks:`;
-        message = 'Please Enter Remkars:'
+        message = 'Please Enter Remarks:'
 }
    
          
@@ -236,15 +156,9 @@ function GetProjectLegacyHistory(ProjId) {
 
                     listitem += '<div class="timeline-section">';
                     listitem += '<div class="timeline-date">' + DateFormateddMMyyyyhhmmss(item.actionDate) + '</div>';
-
-                    // Start row for boxes
                     listitem += '<div class="row g-3">';
-
-                    // Action Type Box
                     listitem += '<div class="col-md-6">';
                     listitem += '<div class="timeline-box">';
-
-                    // Action Type Colors
                     if (item.actionType === 1) {
                         listitem += '<div class="box-title bg-warning text-white"><i class="fa-solid fa-forward"></i> ' + item.actionTypeText + '</div>';
                     } else if (item.actionType === 2) {
@@ -254,25 +168,19 @@ function GetProjectLegacyHistory(ProjId) {
                     } else {
                         listitem += '<div class="box-title bg-secondary text-white">' + item.actionTypeText + '</div>';
                     }
-
-                    // Action details
                     listitem += '<div class="box-content">';
                     if (item.actionType === 1) {
                         listitem += '<div class="row mb-1"><div class="col-4"><strong> Request By</strong>:</div><div class="col-8"><span class="badge bg-secondary">' + (item.fromunitName || 'N/A') + '</span></div></div>';
                     }
-                        // listitem += '<div class="row"><div class="col-4"><strong>To</strong>:</div><div class="col-8"><span class="badge bg-secondary">' + (item.actionType || 'N/A') + '</span></div></div>';
 
                     if (item.actionType === 3 || item.actionType === 4 || item.actionType === 2) {
                         listitem += '<div class="row mb-1"><div class="col-4"><strong>' + item.actionTypeText + ' By</strong>:</div><div class="col-8"><span class="badge bg-secondary">' + (item.fromunitName || 'N/A') + '</span></div></div>';
-                      //  listitem += '<div class="row"><div class="col-4"><strong>To</strong>:</div><div class="col-8"><span class="badge bg-secondary">' + (item.actionType || 'N/A') + '</span></div></div>';
 
                     }
                     listitem += '</div>'; // box-content
 
                     listitem += '<div class="box-footer">' + (item.userdetails || 'Unknown User') + '</div>';
                     listitem += '</div></div>'; // End Action Box
-
-                    // Remarks Box (if any)
                     if (item.remarks) {
                         listitem += '<div class="col-md-6">';
                         listitem += '<div class="timeline-box">';
@@ -298,78 +206,7 @@ function GetProjectLegacyHistory(ProjId) {
 
 }
 
-//function initializeDataTable(tableSelector) {
-//    return $(tableSelector).DataTable({
-//        lengthChange: true,
-//        dom: 'lBfrtip',
-//        retrieve: true,
-//        destroy: true, // Use `destroy` instead of `bDestroy` (deprecated)
-//        pageLength: -1,
-//        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
-//        buttons: [
-//            {
-//                extend: 'excel',
-//                text: 'Excel',
-//                exportOptions: {
-//                    columns: ':visible:not(:last-child)',
-//                    format: {
-//                        body: function (data, row, column, node) {
-//                            var text = typeof data === 'string' && data.indexOf('<') >= 0 ? $(data).text().trim() : data;
-//                            return column === 0 ? row + 1 : text;
-//                        }
-//                    }
-//                }
-//            },
-//            {
-//                extend: 'csv',
-//                exportOptions: {
-//                    columns: ':visible:not(:last-child)',
-//                    format: {
-//                        body: function (data, row, column, node) {
-//                            var text = typeof data === 'string' && data.indexOf('<') >= 0 ? $(data).text().trim() : data;
-//                            return column === 0 ? row + 1 : text;
-//                        }
-//                    }
-//                }
-//            },
-//            {
-//                extend: 'pdfHtml5',
-//                text: 'PDF',
-//                exportOptions: {
-//                    columns: ':visible:not(:last-child)'
-//                },
-//                action: function (e, dt, node, config) {
-//                    PdfDiv(); // You can pass tableSelector if needed
-//                }
-//            }
-//        ],
-//        searchBuilder: {
-//            conditions: {
-//                num: {
-//                    'MultipleOf': {
-//                        conditionName: 'Multiple Of',
-//                        init: function (that, fn, preDefined = null) {
-//                            var el = $('<input>').on('input', function () { fn(that, this); });
-//                            if (preDefined !== null) {
-//                                $(el).val(preDefined[0]);
-//                            }
-//                            return el;
-//                        },
-//                        inputValue: function (el) {
-//                            return $(el[0]).val();
-//                        },
-//                        isInputValid: function (el, that) {
-//                            return $(el[0]).val().length !== 0;
-//                        },
-//                        search: function (value, comparison) {
-//                            return value % comparison === 0;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    });
-//}
+
 function loadDateApprovalTable() {
     $.ajax({
         url: '/Home/GetDateApprovalList',
@@ -407,8 +244,6 @@ function loadDateApprovalTable() {
                 listItem += "<td class='align-middle'>" + item.user + "</td>";
                 listItem += "<td class='align-middle'>" + item.unitName + "</td>";
                 listItem += "<td class='align-middle'>" + DateFormateddMMyyyyhhmmss(item.request_Date) + "</td>";
-
-                // ✅ removed inline style
                 listItem += "<td class='da-td-mid-center'>" + (item.ddgiT_Approval_dat ? DateFormateddMMyyyyhhmmss(item.ddgiT_Approval_dat) : "-") + "</td>";
 
                 let isApproved = item.ddgiT_approval === true || item.ddgiT_approval === "true";
@@ -474,65 +309,12 @@ function loadDateApprovalTable() {
 }
 
 
-
-
-
-//$("#Find_forApproval").on("keyup", function () {
-
-//    var query = $(this).val();
-
-//        filterProjectNames(query);
-
-//});
-//function filterProjectNames(query) {
-
-//    $.ajax({
-//        url: '/Projects/GetRevettedProjects',
-//        method: 'GET',
-//        data: {
-//            searchQuery: query
-//        },
-//        success: function (data) {
-
-//            $("#projectNameDropdown").empty();
-//            if (data.length > 0) {
-//                data.forEach(function (name) {
-//                    $("#projectNameDropdown").append(`<li class="dropdown-item" data-id="${name.projId}">${name.projName}</li>`);
-//                });
-//                $("#projectNameDropdown").show();
-//            } else {
-//                $("#projectNameDropdown").hide();
-//            }
-//        },
-//        error: function (error) {
-//            console.error('Error fetching project names:', error);
-//        }
-//    });
-//}
-//$(document).on("click", "#projectNameDropdown li", function () {
-//    var projectId = $(this).data("id");
-//    var projectName = $(this).data("name");
-
-
-//    $("#ProjName").val(projectName);
-
-
-//    $("#ProjId").val(projectId);
-
-
-//    getProjectDetails(projectId);
-
-//    $("#projectNameDropdown").hide();
-//});
-
-
 $(document).ready(function () {
     getProjectDetails();
     bindLiveProjectSearch(
         "#Find_forApproval",                  // Input field
         "#projectNameDropdown",
         "/Projects/GetProjectByKeyup",// Dropdown UL
-             // API endpoint
         function (projId, projName, remarks) {        // On select
             $("#ProjName").val(projName);
             $("#ProjId").val(projId);
@@ -540,82 +322,6 @@ $(document).ready(function () {
         }
     );
 });
-
-
-
-
-
-
-//function bindLiveProjectSearch(inputSelector, dropdownSelector, onItemSelect) {
-//    
- 
-//    $(inputSelector).on("keyup", function () {
-        
-//        
-//        let query = $(this).val();
-//        const validpattern = /^[a-zA-Z0-9]*$/;
-
-//        if (!validpattern.test(query)) {
-//            Swal.fire({
-//                icon: 'error',
-//                title: 'Invalid Input',
-//                text: 'Special Characters are not allowed',
-//            });
-//            $(this).val(query.Replace(/[a-zA-Z0-9]/g, ' '));
-//            return;
-//        }
-
-//        if (query.length < 2) {
-//            $(dropdownSelector).hide();
-//            return;
-//        }
-
-       
-           
-//        $.ajax({
-//            url: '/Projects/GetProjectByKeyup',
-//            type: 'GET',
-//            data: { searchQuery: query },
-
-//            success: function (data) {
-//                $(dropdownSelector).empty();
-//                if (data.length > 0) {
-//                    data.forEach(function (item) {
-//                        $(dropdownSelector).append(`
-//                            <li class="dropdown-item" data-id="${item.projId}" data-name="${item.projName}">${item.projName}</li>
-//                        `);
-//                    });
-//                    $(dropdownSelector).show();
-//                } else {
-//                    $(dropdownSelector).hide();
-//                }
-//            },
-//            error: function (err) {
-//                console.error("Error fetching project data:", err);
-//                $(dropdownSelector).hide();
-//            }
-//        });
-//    });
-
-//    $(document).on("click", `${dropdownSelector} li`, function () {
-//        const projId = $(this).data("id");
-
-//        const projName = $(this).data("name");
-
-//        if (typeof onItemSelect === "function") {
-//            onItemSelect(projId, projName);
-//        }
-
-//        $(dropdownSelector).hide();
-//    });
-
-//    // Optional: Hide dropdown when clicking outside
-//    $(document).on("click", function (e) {
-//        if (!$(e.target).closest(inputSelector).length && !$(e.target).closest(dropdownSelector).length) {
-//            $(dropdownSelector).hide();
-//        }
-//    });
-//}
 
 
 
@@ -673,8 +379,6 @@ function getProjectDetails(projId, remarks) {
                 listItem += "<td class='align-middle'>" + item.user + "</td>";
                 listItem += "<td class='align-middle'>" + item.unitName + "</td>";
                 listItem += "<td class='align-middle'>" + DateFormateddMMyyyyhhmmss(item.request_Date) + "</td>";
-
-                // ✅ removed inline style
                 listItem += "<td class='da-td-mid-center'>" + (item.ddgiT_Approval_dat ? DateFormateddMMyyyyhhmmss(item.ddgiT_Approval_dat) : "-") + "</td>";
 
                 listItem += "<td class='align-middle text-start'>" + formatRemarks(item.remarks) + "</td>";

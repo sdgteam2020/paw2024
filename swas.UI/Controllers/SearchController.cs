@@ -10,7 +10,7 @@ using swas.BAL;
 using Microsoft.AspNetCore.Authorization;
 using swas.BAL.DTO;
 using ASPNetCoreIdentityCustomFields.Data;
-using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
+
 using Microsoft.AspNetCore.Identity;
 using swas.DAL;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -23,14 +23,13 @@ using System;
 using NuGet.Packaging.Signing;
 using Microsoft.AspNetCore.DataProtection;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using swas.Areas.Identity.Pages.Account;
 
 namespace swas.UI.Controllers
 {
     public class SearchController : Controller
     {
-        //private readonly ILogger<HomeController> _logger;
         private readonly IProjectsRepository _projectsRepository;
-        //private readonly RepositoryUser _repositoryUser;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
@@ -45,7 +44,6 @@ namespace swas.UI.Controllers
         private readonly IProjStakeHolderMovRepository _stkholdmove;
         public SearchController(IProjectsRepository projectsRepository, SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, UserManager<ApplicationUser> userManager, IDdlRepository dlRepository, ApplicationDbContext context, IUnitRepository unitRepository, IHttpContextAccessor httpContextAccessor, IProjStakeHolderMovRepository psmRepository, IAttHistoryRepository attHistoryRepository, IProjStakeHolderMovRepository stkholdmove, IDataProtectionProvider DataProtector)
         {
-            //  _logger = logger; _repositoryUser = repositoryUser;
             _projectsRepository = projectsRepository;
 
             _signInManager = signInManager;
@@ -140,7 +138,6 @@ namespace swas.UI.Controllers
 
                     if (string.IsNullOrWhiteSpace(TimeStampFrom) || string.IsNullOrWhiteSpace(TimeStampTo))
                     {
-                        // If TimeStampFrom or TimeStampTo is not provided or empty, set a wide date range to include all dates.
                         fromDate = DateTime.MinValue;
                         toDate = DateTime.MaxValue;
                     }
@@ -192,7 +189,6 @@ namespace swas.UI.Controllers
                 else
                 {
                     return Json(0);
-                    //return Redirect("/Identity/Account/Login");
                 }
             }
             catch (Exception ex)
@@ -206,9 +202,6 @@ namespace swas.UI.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-
-     
-        ///Created and Reviewed by : Sub Maj Sanal
         [Authorize(Policy = "Admin")]
         [HttpGet]
         public IActionResult GetProjLogview()
@@ -224,7 +217,6 @@ namespace swas.UI.Controllers
 
 
         }
-        ///Created and Reviewed by : Sub Maj Sanal
         [Authorize(Policy = "Admin")]
         [HttpPost]
         public async Task<IActionResult> GetProjLogview(string fromDate, string toDate)

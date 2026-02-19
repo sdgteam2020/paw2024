@@ -1,11 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-///Created and Reviewed by : Sub Maj Sanal
-///Reviewed Date : 30 Jul 23
-///Tested By :- 
-///Tested Date : 
-///Start
-#nullable disable
+﻿#nullable disable
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -35,14 +28,6 @@ using Org.BouncyCastle.Utilities;
 namespace swas.Areas.Identity.Pages.Account
 {
     [Route("Identity/Account/Register")]
-    ///Created and Reviewed by : Sub Maj Sanal
-    ///Reviewed Date : 30 Jul 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start
-
-    // [Authorize(Policy = "Admin")]
-    //[TypeFilter(typeof(SessionAuthorize))]
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
@@ -51,7 +36,6 @@ namespace swas.Areas.Identity.Pages.Account
         private readonly Microsoft.AspNetCore.Identity.IUserStore<ApplicationUser> _userStore;
         private readonly Microsoft.AspNetCore.Identity.IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
         private readonly ApplicationDbContext _context;
         private readonly Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> _roleManager;
         private readonly IHttpContextAccessor _contextAccessor;
@@ -66,7 +50,6 @@ namespace swas.Areas.Identity.Pages.Account
             ILogger<RegisterModel> logger,
             ApplicationDbContext context,
              Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager,
-            IEmailSender emailSender,
             IHttpContextAccessor httpContextAccessor,
             IUnitRepository unitRepository, IDdlRepository ddlRepository, IUnitStatusMapping unitStatusMapping)
         {
@@ -76,7 +59,6 @@ namespace swas.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _context = context;
-            _emailSender = emailSender;
             _roleManager = roleManager;
             _contextAccessor = httpContextAccessor;
             _unitRepository = unitRepository;
@@ -84,26 +66,11 @@ namespace swas.Areas.Identity.Pages.Account
             _unitStatusMapping = unitStatusMapping;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-
         [BindProperty]
 
         public InputModel Input { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-
         public string ReturnUrl { get; set; }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
@@ -112,18 +79,11 @@ namespace swas.Areas.Identity.Pages.Account
 
         [NotMapped]
         public string Corps { get; set; }
-
-
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [AllowAnonymous]
         public class InputModel
         {
             [Required(ErrorMessage = "UserName is required.")]
-           
+
             [Display(Name = "UserName")]
             public string UserName { get; set; }
 
@@ -143,7 +103,7 @@ namespace swas.Areas.Identity.Pages.Account
             public string RoleName { get; set; }
 
             [Required(ErrorMessage = "OfficerName is required.")]
-          
+
             [Display(Name = "OfficerName")]
             public string OfficerName { get; set; }
 
@@ -169,7 +129,7 @@ namespace swas.Areas.Identity.Pages.Account
             [Display(Name = "Rank")]
             public string Rank { get; set; }
 
-          
+
             [Display(Name = "Tele No (Army)")]
             public string? Tele_Army { get; set; }
 
@@ -179,13 +139,6 @@ namespace swas.Areas.Identity.Pages.Account
 
             public DateTime? CreatedDate { get; set; }
         }
-
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 30 Jul 23
-        ///Tested By :- 
-        ///Tested Date : 
-        ///Start
-        ///
 
         public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
@@ -216,7 +169,6 @@ namespace swas.Areas.Identity.Pages.Account
                 ViewData["unitdtl"] = _context.tbl_mUnitBranch.ToList();
                 ViewData["Unit"] = _context.tbl_mUnitBranch.ToList();
                 Input = new InputModel();
-                //Input.UserName = userName;
 
                 ViewData["IAMUser"] = tasks.ToList();
 
@@ -240,34 +192,20 @@ namespace swas.Areas.Identity.Pages.Account
 
 
                 List<mCommand> cl = new List<mCommand>();
-
-                //---------------Getting Data From Database Using EntityFrameworkCore----------------------
                 cl = await _DdlRepostory.ddlCommand();
-
-                //-------------------Inserting Select Item in List-------------------------
                 cl.Insert(0, new mCommand { comdid = 0, Command_Name = "--Select--" });
-                //--------------Assigning categorylist to ViewBag.ListofCategory --------------------------
                 ViewData["cl"] = _context.mCommand.ToList();
 
                 ViewData["ty"] = _context.tbl_Type.ToList();
                 List<Types> ty = new List<Types>();
-
-                //---------------Getting Data From Database Using EntityFrameworkCore----------------------
                 ty = await _DdlRepostory.ddlType();
-
-                //-------------------Inserting Select Item in List-------------------------
                 ty.Insert(0, new Types { Id = 0, Name = "--Select--" });
-                //--------------Assigning categorylist to ViewBag.ListofCategory --------------------------
 
 
 
                 List<UnitDtl> udtl = new List<UnitDtl>();
 
                 udtl = await _unitRepository.GetAllUnitAsync();
-                //  ViewData["roles"] = _roleManager.Roles.Select(a => a.Name == "Unit" || a.Name == "Dte").ToList();
-
-
-                // ViewData["roles"] = _roleManager.Roles.ToList();
 
                 return Page();
             }
@@ -283,8 +221,6 @@ namespace swas.Areas.Identity.Pages.Account
                 await Task.Delay(1000);
                 Input = new InputModel();
                 Input.UserName = userName;
-                //var adminUserName = User.Identity.Name;
-                //Input.adminUserName = adminUserName;
 
 
                 var addlroles = from Users in _userManager.Users
@@ -315,26 +251,16 @@ namespace swas.Areas.Identity.Pages.Account
 
                 ViewData["corpsId"] = 0;
                 List<mCommand> cl = new List<mCommand>();
-
-                //---------------Getting Data From Database Using EntityFrameworkCore----------------------
                 cl = await _DdlRepostory.ddlCommand();
-
-                //-------------------Inserting Select Item in List-------------------------
                 cl.Insert(0, new mCommand { comdid = 0, Command_Name = "--Select--" });
-                //--------------Assigning categorylist to ViewBag.ListofCategory --------------------------
                 ViewData["cl"] = _context.mCommand.ToList();
 
                 ViewData["ty"] = _context.tbl_Type.ToList();
 
 
                 List<Types> ty = new List<Types>();
-
-                //---------------Getting Data From Database Using EntityFrameworkCore----------------------
                 ty = await _DdlRepostory.ddlType();
-
-                //-------------------Inserting Select Item in List-------------------------
                 ty.Insert(0, new Types { Id = 0, Name = "--Select--" });
-                //--------------Assigning categorylist to ViewBag.ListofCategory --------------------------
 
 
 
@@ -343,46 +269,12 @@ namespace swas.Areas.Identity.Pages.Account
                 udtl = await _unitRepository.GetAllUnitAsync();
 
 
-                //if (Logins.unitid == 1)
-                //{
-                //    ViewData["roles"] = _roleManager.Roles
-                //            .Where(a => a.Name == "Unit" || a.Name == "Dte")
-                //            .Select(a => a)
-                //            .ToList();
-                //}
-                //else
-                //{
-                //    ViewData["roles"] = _roleManager.Roles
-                //           .Where(a => a.Name == "Unit")
-                //           .Select(a => a)
-                //           .ToList();
-                //}
-                //  ViewData["roles"] = _roleManager.Roles.Select(a => a.Name == "Unit" || a.Name == "Dte").ToList();
-
-
                 ViewData["roles"] = _roleManager.Roles.ToList();
 
                 return Page();
             }
-            //}
-            //else
-            //    TempData["FailureMessage"] = "Registration Failed.....";
-            //// return Redirect("/Identity/Account/Register");
-            //return Page();
 
         }
-
-
-
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 16 Aug 23
-        ///Tested By :- 
-        ///Tested Date : 
-        ///Start <summary>
-        /// Created and Reviewed by : Sub Maj Sanal
-        /// </summary>
-        /// <param name="returnUrl"></param>
-        /// <returns></returns>
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
@@ -413,7 +305,6 @@ namespace swas.Areas.Identity.Pages.Account
 
             if (Input.RoleName != null && Input.Password != null && Input.unitId > 0 && Input.UserName != null && Input.Rank != null && Input.OfficerName != null && Input.Tele_Army != null)
             {
-                // Assuming adminUserName is the admin's UserName
                 var adminUserName = User.Identity.Name; // You might need to adjust this based on how you get the admin's UserName
 
                 var rankId = _context.mRank.FirstOrDefault(x => x.RankName == Input.Rank).Id;
@@ -431,7 +322,6 @@ namespace swas.Areas.Identity.Pages.Account
 
                 if (list.Count > 0)
                 {
-                    // Remove the reference to Input.ExRegnId here
                     inputModel = await _userManager.Users
                         .Where(a => a.unitid == Input.unitId)
                         .Select(a => a)
@@ -455,18 +345,15 @@ namespace swas.Areas.Identity.Pages.Account
                 {
                     var user = CreateUser();
 
-                    // Set UserName to be the same as the admin's UserName
-
                     user.EmailConfirmed = true;
                     user.RoleName = Input.RoleName;
                     user.domain_iam = Input.UserName;
                     user.appointment = Input.appointment;
                     user.unitid = Input.unitId;
                     user.UserName = Input.UserName;
-                    //user.Rank = Input.Rank;
                     user.Rank = rankId;
                     user.Offr_Name = Input.OfficerName;
-                    user.Tele_Army = Input.Tele_Army;                    
+                    user.Tele_Army = Input.Tele_Army;
                     user.CreatedDate = DateTime.Now;
 
                     await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
@@ -504,19 +391,8 @@ namespace swas.Areas.Identity.Pages.Account
                 TempData["FailureMessage"] = "One of the important input missing!";
                 return LocalRedirect("~/Identity/Account/Register");
             }
-
-            // If we got this far, something failed, redisplay form
             return Page();
         }
-
-
-
-
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 30 Jul 23
-        ///Tested By :- 
-        ///Tested Date : 
-        ///Start    
         [AllowAnonymous]
         private ApplicationUser CreateUser()
         {
@@ -531,11 +407,6 @@ namespace swas.Areas.Identity.Pages.Account
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 30 Jul 23
-        ///Tested By :- 
-        ///Tested Date : 
-        ///Start
         private Microsoft.AspNetCore.Identity.IUserEmailStore<ApplicationUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
@@ -638,27 +509,6 @@ namespace swas.Areas.Identity.Pages.Account
 
                 var newunit = await _unitRepository.GetUnitDtlwithname(UnitData.UnitName);
 
-                //if (UnitData.unitid == newunit.unitid)
-                //{
-                //    List<int> statusIds = new List<int> { 33, 2, 3, 24, 25, 26, 27, 28, 29, 22, 31 };
-
-
-                //    foreach (var statusId in statusIds)
-                //    {
-                //        TrnUnitStatusMapping trnUnitStatusMapping = new TrnUnitStatusMapping
-                //        {
-                //            UnitId = UnitData.unitid,
-                //            StatusId = statusId,
-                //            UnitStatusMappingId = 0
-                //        };
-
-                //        if (trnUnitStatusMapping.UnitStatusMappingId == 0)
-                //        {
-                //            var ret = await _unitStatusMapping.AddWithReturn(trnUnitStatusMapping);
-                //        }
-                //    }
-                //}
-
                 if (result == 1)
                 {
                     TempData["SuccessMessage"] = "Unit successfully created!";
@@ -730,24 +580,14 @@ namespace swas.Areas.Identity.Pages.Account
                 ViewData["IAMUser"] = tasks.ToList();
 
                 List<mCommand> cl = new List<mCommand>();
-
-                //---------------Getting Data From Database Using EntityFrameworkCore----------------------
                 cl = await _DdlRepostory.ddlCommand();
-
-                //-------------------Inserting Select Item in List-------------------------
                 cl.Insert(0, new mCommand { comdid = 0, Command_Name = "--Select--" });
-                //--------------Assigning categorylist to ViewBag.ListofCategory --------------------------
                 ViewData["cl"] = _context.mCommand.ToList();
 
                 ViewData["ty"] = _context.tbl_Type.ToList();
                 List<Types> ty = new List<Types>();
-
-                //---------------Getting Data From Database Using EntityFrameworkCore----------------------
                 ty = await _DdlRepostory.ddlType();
-
-                //-------------------Inserting Select Item in List-------------------------
                 ty.Insert(0, new Types { Id = 0, Name = "--Select--" });
-                //--------------Assigning categorylist to ViewBag.ListofCategory --------------------------
 
                 List<UnitDtl> udtl = new List<UnitDtl>();
 

@@ -51,12 +51,6 @@ $(document).ready(function () {
             if (selectedText === "More") {
             mMsater(0, "searchBox", 12, 0)
             }
-
-
-
-
-
-            // mMsaterFwdTo($(this).closest("tr").find("#SpnStakeHolderId").html(), 1);
         } else {
             $('.FwdDropdown').removeClass('col-md-3');
             $('.FwdDropdown').addClass('col-md-6');
@@ -67,16 +61,6 @@ $(document).ready(function () {
 
         }
     });
-
-    //$("#ddlfwdSubStage").change(function () {
-
-    //    mMsater(0, "ddlfwdAction", 9, $("#ddlfwdSubStage").val())
-    //});
-
-    //$("#ddlfwdAction").change(function () {
-
-    //    mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnStakeHolderId").html())
-    //});
     $(".btn-Undo").click(function () {
         
         var projectName = $(this).closest("tr").find("a").data("proj-name");
@@ -85,31 +69,7 @@ $(document).ready(function () {
         var words = projectName.split(" ");
         var shortProjName = words.length > 6 ? words.slice(0, 4).join(" ") + "..." : projectName;
 
-        //Swal.fire({
-        //    title: `<div>
-        //            Enter Pull Back Remarks: ${shortProjName}
-        //        </div>`,
-        //    input: "text",
-        //    inputAttributes: {
-        //        autocapitalize: "off"
-        //    },
-        //    showCancelButton: true,
-        //    confirmButtonText: "OK",
-        //    cancelButtonText: "Cancel",
-        //    //position: "top",
-        //    customClass: {
-        //        popup: 'custom-swal-popup',
-        //        confirmButton: 'custom-confirm-button',
-        //        cancelButton: 'custom-cancel-button',
-        //        input: 'custom-input-field'
-        //    },
-        //    preConfirm: async (login) => {
-        //        if (login == "") {
-        //            Swal.showValidationMessage(`Please Enter Remarks for project: ${shortProjName}`);
-        //        }
-        //    },
-        //    allowOutsideClick: () => !Swal.isLoading()
-        //})
+     
 
         Swal.fire({
             title: `Enter Pull Back Remarks: ${shortProjName}`, // your dynamic title
@@ -118,14 +78,12 @@ $(document).ready(function () {
             confirmButtonText: 'OK',
             cancelButtonText: 'Cancel',
 
-            /* Assign custom classes for just this SweetAlert instance */
+            
             customClass: {
                 popup: 'custom-swal-popup',
                 confirmButton: 'custom-confirm-button',
                 cancelButton: 'custom-cancel-button',
                 input: 'custom-input-field',
-
-                // Here is the important part:
                 title: 'pullback-title'
             },
 
@@ -142,17 +100,7 @@ $(document).ready(function () {
                 PullBAckProject($(this).closest("tr").find("#SpnCurrentProjId").html(), $(this).closest("tr").find("#SpnCurrentpsmId").html(), result.value, $(this).closest("tr").find("#SpnprojectStageId").html());
                 UndoNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2, $(this).closest("tr").find("#SpnprojectToUnitId").html());
 
-                //For Notification
-
-
-                //AddNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2, $("#SpnCurrentUserStackholderID").html());
-
-
-                //IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
-
-                //IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
-
-                //$(this).closest("tr").removeClass("bold-text");
+             
 
             }
         });
@@ -162,7 +110,6 @@ $(document).ready(function () {
         var projName = $(this).data('proj-name');
         var words = projName.split(" ");
         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
-        //var finalTitle = "Mov History: " + shortProjName;
         var finalTitle = "Proj Name: " + projName;
         $('.lblHistory').text(finalTitle);
         $('#ProjFwdHistory').modal('show');
@@ -177,7 +124,6 @@ $(document).ready(function () {
         var projName = $(this).data('proj-name');
         var words = projName.split(" ");
         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
-        //var finalTitle = "Mov History: " + shortProjName;
         var finalTitle = "Proj Name: " + projName;
      
         $('.lblHistory').text(finalTitle);
@@ -185,8 +131,6 @@ $(document).ready(function () {
 
         GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentProjId").html());
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
-
-        // IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
         if ($(this).closest("tr").find("#IsccForRemoveRow").html() == "Cc") {
             $(this).closest('tr').remove();
         }
@@ -204,7 +148,6 @@ $(document).ready(function () {
         var projName = $(this).data('proj-name');
         var words = projName.split(" ");
         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
-        //var finalTitle = "Mov History: " + shortProjName;
         var finalTitle = "Proj Name: " + projNameDetail;
         $('#fwdModal').text(finalTitle);
         $('.fwdtitle').text(projNameDetail);
@@ -212,7 +155,7 @@ $(document).ready(function () {
         mMsaterfwdStage($(this).closest("tr").find("#SpnStageId").html(), "ddlfwdStage", 5, 0, 2,1)
         mMsaterStage($(this).closest("tr").find("#SpnTimeStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#SpnStageId").html(), $("#SpnStakeHolderId").html())
 
-        /*mMsater($(this).closest("tr").find("#SpnTimeActionId").html(), "ddlfwdAction", 9, $(this).closest("tr").find("#SpnTimeStatusId").html())*/
+        
         mMsater($(this).closest("tr").find("#SpnTimeActionId").html(), "ddlfwdAction", 7, $(this).closest("tr").find("#SpnTimeStatusId").html())
         mMsaterFwdTo($(this).closest("tr").find("#SpnTimeToUnitId").html(), "ddlfwdFwdTo", 8, 0, $(this).closest("tr").find("#SpnStakeHolderId").html(), 0, "");
         mMsaterFwdTo(0, "ddlfwdCCTo", 8, 0, $(this).closest("tr").find("#SpnStakeHolderId").html(), 0, "");
@@ -250,13 +193,10 @@ $(document).ready(function () {
 
 
         });
-        //GetAllComments($(this).closest("tr").find("#SpnCurrentProjId").html());
     });
 
     $(".ProjName").click(function () {
-        //var row = $(this).closest('tr');
         IsReadInbox($(this).closest("tr").find("#SpnCurrentpsmId").html());
-        // IsReadNotification($(this).closest("tr").find("#SpnCurrentProjId").html(), 2);
         InboxNotificationCount()
         $(this).closest("tr").removeClass("bold-text")
         location.reload();
@@ -304,11 +244,6 @@ $(document).ready(function () {
             CheckFwdCondition();
 
         }
-        //$('.FwdDropdown').addClass('col-md-6');
-        //$('.ProjectsFwdUnit').addClass('d-none');
-
-
-        //$("#searchBox").hide()
     });
     $(document).on('click', '#btnAttchMultiforpsmid', function () {
 
@@ -343,50 +278,22 @@ $(document).ready(function () {
 
                         AttOnFWD()
                     }, 1000)
-                    //setTimeout(function () {
-
-                    //    UploadFiles();
-                    //}, 1000)
-
+                  
                 }
             });
         }
     });
 
-    //$("#btnFwdConfirm").click(function () {
-    //    location.reload();
-    //    $('#ProjFwd').modal('hide');
-    //});
+ 
 });
 
 
-//$("#btnFwdConfirm").off().on("click", async function () {
-//    
-//    const urlParams = new URLSearchParams(window.location.search);
-//    var psmid;
-//    let allAttachments = [];
 
-//    if (urlParams.get('Type') == 'XRDC') {
-
-//        psmid = urlParams.get('psmid');
-
-//    }
-//    else {
-
-
-//        psmid = $("#spanFwdCurrentPslmId").html()
-
-//    }
-//    const generatedPdf = await getGeneratedPdfFromPreview();
-
-//    SaveFwdTo(psmid, generatedPdf, allAttachments);
-
-//});
 
 
 $(".btnFwdConfirm").off().on("click", async function (e) {
     e.preventDefault(); // stop default click
-
+   
     const result = await Swal.fire({
         icon: 'warning',
         title: 'Confirmation',
@@ -398,8 +305,6 @@ $(".btnFwdConfirm").off().on("click", async function (e) {
     });
 
     if (!result.isConfirmed) return; // ❌ NO → stop here
-
-    // ✅ YES → continue
     const urlParams = new URLSearchParams(window.location.search);
     let psmid;
 
@@ -415,7 +320,7 @@ $(".btnFwdConfirm").off().on("click", async function (e) {
     if (ddlaction === "Approved / Completed" && $('#ddlfwdStage').val() == 3) {
         generatedPdf = await getGeneratedPdfLogSignFromPreview();
     }
-
+   
     SaveFwdTo(psmid, generatedPdf, allAttachments);
 });
 
@@ -439,7 +344,6 @@ function CheckFwdCondition(CurrentPslmId) {
         type: 'POST',
         data: userdata,
         success: function (response) {
-            //console.log(response);
             $('.FwdDropdown').addClass('col-md-6');
          $('.ProjectsFwdUnit').addClass('d-none');
 
@@ -478,8 +382,6 @@ function CheckFwdCondition(CurrentPslmId) {
                     if (ddlaction === "Approved / Completed" && $('#ddlfwdStage').val() == 3) {
                      
                         $('.uploadLoader').remove('d-none')
-
-                        // Show only required buttons
                         $("#btnlogsign").removeClass("d-none");
                         $("#btnDigitalsign").removeClass("d-none");
 
@@ -499,7 +401,6 @@ function CheckFwdCondition(CurrentPslmId) {
                             success: function (response) {
                                     $('.uploadLoader').addClass('d-none')
                                 if (response != null) {
-                                    // Base64 → Blob
                                     const byteCharacters = atob(response);
                                     const byteNumbers = new Array(byteCharacters.length);
 
@@ -511,12 +412,10 @@ function CheckFwdCondition(CurrentPslmId) {
                                     generatedPdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
 
                                     const blobUrl = URL.createObjectURL(generatedPdfBlob);
-                                    // Put iframe inside div
                                     $("#Certificatepreview").html(`
         <iframe id="pdfFrame"
                 src="${blobUrl}"
-                width="100%"
-                height="600px"
+                class="pdf-frame"
                 >
         </iframe>
     `);
@@ -547,9 +446,6 @@ function CheckFwdCondition(CurrentPslmId) {
 
 
                     var legapproval = $("#spanLegacyApproval").html();
-
-
-                    //var listItem = "<tr><td class='text-center' colspan=5>No Record Found</td></tr>";
                     const rows = [
                         { label: "To", value: projectMoveData.fwdTo.id != "More" ? projectMoveData.fwdTo.text : projectMoveData.sentToUnit.text, icon: "fa-user" },
                         { label: "CC", value: projectMoveData.ccList.map(c => c.text).join(", ") || "-", icon: "fa-users" },
@@ -590,10 +486,7 @@ function CheckFwdCondition(CurrentPslmId) {
                     $("#previewGrid").html(html);
                     CheckforPreviousapprovals()
 
-
-                    //$("#DetailBody").html(listItem);
-
-                    /*AttOnFWD();*/
+                    
 
                 }
             }
@@ -606,42 +499,33 @@ function CheckFwdCondition(CurrentPslmId) {
 
 
 function adjustPreviewLayout() {
-    
-
+  
     if ($('.previewcertificateAttment').hasClass('d-none')) {
-
-        // Full width
         $('.adjustsizeofdive')
             .removeClass('col-md-6')
             .addClass('col-md-12');
-
-        // Hide buttons
         $('.btnhideenonfwd').addClass('d-none');
 
     } else {
-
-        // Split layout
         $('.adjustsizeofdive')
             .removeClass('col-md-12')
             .addClass('col-md-6');
-
-        // Show buttons
         $('#btnconfirm').addClass('d-none')
         $('.btnhideenonfwd').removeClass('d-none');
     }
 }
 
 
+
 function SaveFwdTo(CurrentPslmId, generatedPdf, allAttachments) {
     debugger;
 
+    
     var psmdi = CurrentPslmId;
     var dateValue = $("#TimeStampToProjfwd").val();
     var get_substage = $('#ddlfwdSubStage option:selected').text();
 
     var currentDate = new Date();
-
-    // Add server's current time if only a date is selected
     var TimeStamps = '';
     if ($('#TimeStampToProjfwd').attr('type') === 'date') {
         if (!dateValue) {
@@ -661,17 +545,6 @@ function SaveFwdTo(CurrentPslmId, generatedPdf, allAttachments) {
     var fromDate = new Date(TimeStampForcheckdate);
     var toDate = new Date(TimeStamps);
     console.log("FromDate: ", fromDate, "Todate: ", toDate);
-    // Compare the dates
-    //if (fromDate > toDate) {
-    //    // If "from" date is greater than "to" date
-    //    Swal.fire({
-    //        icon: "error",
-    //        title: "Oops...",
-    //        text: "Date of forwarding should be greater than the received date!",
-
-    //    });
-    //    e.preventDefault(); // Prevent form submission
-    //}
 
 
 
@@ -700,43 +573,28 @@ function SaveFwdTo(CurrentPslmId, generatedPdf, allAttachments) {
     }
 
    
-    //var currentDate = new Date();
-    //var currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false });
-    //var time = $("#TimeStampToProjfwd").val();
-    //var timeData = time + ' ' + currentTime;
+  
     var formData = new FormData();
     var PsmId = $("#spanFwdCurrentPslmId").html()
     var ccidvalue = $("#ddlfwdCCTo").val();
     var userdata =
     {
         "ProjId": $("#spanFwdProjectId").html(),
-        /* "StatusId": $("#ddlfwdSubStage").val(),*/
+        
 
         "StatusActionsMappingId": $("#ddlfwdAction").val(),
         "Remarks": $("#txtRemarksfwd").val(),
         "ToUnitId": fwdunitid,
-
-        //"TimeStamp": $("#TimeStampToProjfwd").val()
         "TimeStamp": TimeStamps,
         
         
 
     };
-   
-
-    //// Append userdata fields to FormData
     for (var key in userdata) {
         formData.append(key, userdata[key]);
     }
 
-    //// Append files from fd (file input) to FormData
-    //for (let [key, value] of fd.entries()) {
-    //    if (value instanceof File) {
-    //        formData.append("uploadfile[]", value);  // Appending files to formData
-    //    }
-    //}
-
-    // Append currentpsmid to formData
+   
     var currentpsmid = CurrentPslmId;
     formData.append("currentpsmid", currentpsmid);
 
@@ -759,7 +617,6 @@ function SaveFwdTo(CurrentPslmId, generatedPdf, allAttachments) {
         });
 
     }
-    // Attach remarks and files (multiple attachments) directly to the form data
     if (allAttachments != null) {
         allAttachments.forEach((attachment, index) => {
             formData.append(`attachments[${index}].file`, attachment.file);  // Append file
@@ -770,12 +627,15 @@ function SaveFwdTo(CurrentPslmId, generatedPdf, allAttachments) {
     $.ajax({
         url: '/Projects/FwdToProject',
         type: 'POST',
-        data: formData, // FormData is sent directly as the body of the request
+        data: formData,// FormData is sent directly as the body of the request
+
+       
         processData: false, // Don't process data as a query string
         contentType: false,
+        headers: {
+            'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+        },
         success: function (response) {
-            
-     //console.log(response);
             if (response != null) {
 
                 if (response == 9) {
@@ -844,7 +704,6 @@ function SaveFwdTo(CurrentPslmId, generatedPdf, allAttachments) {
                         showConfirmButton: false,
                         timer: 1500
                     });
-                  //FwdProjConfirmtounit(CurrentPslmId);
 
                     $('#ProjFwd').modal('hide');
 
@@ -852,9 +711,6 @@ function SaveFwdTo(CurrentPslmId, generatedPdf, allAttachments) {
 
                     window.location.reload();
                     },1500)
-
-                    // AddNotification($("#spanFwdProjectId").html(), 2,fwdunitid);
-                    //IsReadNotification($("#spanFwdProjectId").html(), 2);
                 }
             }
 
@@ -876,8 +732,10 @@ function PullBAckProject(ProjId, PslmId, UndoRemarks, StageId) {
         url: '/Projects/PullBAckProject',
         type: 'POST',
         data: userdata,
+        headers: {
+            'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+        },
         success: function (response) {
-            //console.log(response);
             if (response != null) {
                 if (response == 2) {
                     location.reload();
@@ -905,7 +763,6 @@ function IsReadInbox(psmId) {
         type: 'POST',
         data: { "PsmId": psmId },
         success: function (response) {
-            //console.log(response);
 
         }
     });
@@ -1005,9 +862,6 @@ function CheckforPreviousapprovals() {
 
             }
             else {
-                // All good — continue your normal logic here
-                // Example:
-                // SubmitForward();
             }
         },
         error: function () {
@@ -1023,19 +877,11 @@ $(".btn-Fwd").on('click',function () {
 });
 
 function openForwardModal(btn, isFromMov) {
-    
+    debugger;
     let $btn = $(btn);
-
-    // -----------------------------
-    // 1. GET IsProcess VALUE
-    // -----------------------------
     let Isprocess = isFromMov
         ? $("#IsProcess").html().trim().toLowerCase() === "false"
         : $btn.closest("tr").find("#SpnprojectIsProcess").html().trim().toLowerCase() === "false";
-
-    // -----------------------------
-    // 2. DATE HANDLING
-    // -----------------------------
     let date_type_raw = isFromMov
         ? $('#spnLatestActiontype').html()
         : $btn.data('date_type');
@@ -1059,28 +905,16 @@ function openForwardModal(btn, isFromMov) {
 
         $('#TimeStampToProjfwd').focus();
     });
-
-    // -----------------------------
-    // 3. BASIC UI RESET
-    // -----------------------------
     $('.FwdDropdown').addClass('col-md-3 col-md-6');
     $('.ProjectsFwdUnit').addClass('d-none');
 
     $("#searchBox").val('').hide();
     TimeStampForcheckdate = new Date($(".TimeStampForcheckdate").html());
-
-    // -----------------------------
-    // 4. PROJECT NAME
-    // -----------------------------
     let projName = isFromMov ? $('#spnprojname').text() : $btn.data('proj-name');
     let words = projName.split(" ");
 
     $('#fwdModal').text("Proj Name: " + projName);
     $('.fwdtitle').text(projName + " Move Details");
-
-    // -----------------------------
-    // 5. STAGE LOGIC
-    // -----------------------------
 
 
     let stageId = isFromMov
@@ -1097,10 +931,6 @@ function openForwardModal(btn, isFromMov) {
     else {
         mMsaterfwdStage(stageId, "ddlfwdStage", 5, 0, 1);
     }
-
-    // -----------------------------
-    // 6. SUBSTAGE, ACTION, FWD TO
-    // -----------------------------    
     let statusId = isFromMov
         ? $("#SpnStatusid").html()
         : $btn.closest("tr").find("#SpnTimeStatusId").html();
@@ -1135,31 +965,24 @@ function openForwardModal(btn, isFromMov) {
         $("#spanFwdCurrentPslmId").html($btn.closest("tr").find("#SpnCurrentpsmId").html())
         $("#SpnFwdStakeHolderId").html($btn.closest("tr").find("#SpnStakeHolderId").html())
         $("#spanLegacyApproval").html($btn.closest("tr").find("#SpnApprove").html())
+        IsReadInbox($btn.closest("tr").find("#SpnCurrentpsmId").html());
+        $btn.closest("tr").removeClass("bold-text")
+        setTimeout(function () {
+
+            InboxNotificationCount();
+        }, 200)
 
     }
-
-
-    // -----------------------------
-    // 7. TABLE EMPTY ROW
-    // -----------------------------
     $("#AttBody").html("<tr><td class='text-center' colspan=5>No Record Found</td></tr>");
-
-    // -----------------------------
-    // 8. SHOW MODAL
-    // -----------------------------
     $('#ProjFwd').modal('show');
     $(".Fwdtitle").html("Projects Move Details");
     $(".ProjectsFwd").removeClass("d-none");
     $(".Attmenthistory").addClass("d-none");
     adjustPreviewLayout()
 }
-
-
-
-//****************************//DigitalSignCode********************************
 $('#btnDigitalsign').on('click', function (e) {
     e.preventDefault(); // stop default click
-
+  
     Swal.fire({
         icon: 'warning',
         title: 'Confirmation',
@@ -1171,11 +994,10 @@ $('#btnDigitalsign').on('click', function (e) {
     }).then((result) => {
 
         if (result.isConfirmed) {
-            // ✅ YES → continue
             $('.uploadLoader').removeClass('d-none');
             SaveDocumentForTemp();
         }
-        // ❌ NO → do nothing (stop here)
+      
     });
 });
 
@@ -1198,7 +1020,7 @@ function SaveDocumentForTemp() {
         success: function (res) {
             var pdfpath = res.tempPath
             DigitalSignByAPI(pdfpath);
-            console.log("Saved temp PDF:", res.tempPath);
+           
         },
         error: function () {
             alert("Error saving temp PDF");
@@ -1224,30 +1046,24 @@ function DigitalSignByAPI(pdfpath) {
 
         let URL = '';
         sendPDFToServer(pdfpath, tprint);
-        //if (tprint) {
-        //    getPdfFilePath(applicationId, tprint);
-        //} else {
-        //    console.error('No thumbprint received.');
-        //}
+       
     }).catch(function (error) {
         console.error('Failed to fetch thumbprint:', error);
     });
 }
-
-
-
-
 function GetThumbprint() {
-    $('.uploadLoader').addClass('d-none')
+   
+    $('.uploadLoader').addClass('d-none');
+
     return $.ajax({
         url: 'https://dgisapp.army.mil:55102/Temporary_Listen_Addresses/FetchUniqueTokenDetails',
-        type: 'GET'
+        type: 'GET',
+        skipAntiForgery: true // this tells prefilter to skip adding the token
     }).then(function (response) {
-
+        console.log(response);
         if (response && response.length > 0 && response[0].Thumbprint) {
             return response[0].Thumbprint;
         } else {
-
             throw new Error('Thumbprint not found in response');
         }
     }).catch(function (error) {
@@ -1256,5 +1072,31 @@ function GetThumbprint() {
     });
 }
 
+$('.btn-close').on('click', function () {
+    $(".ProjectsFwd").removeClass("d-none");
+    $(".Attmenthistory").addClass("d-none");
+    $(".previewcertificateAttment").addClass("d-none");
+    adjustPreviewLayout();
+})
 
-//<************************************End Digital Sign**********************************************>>
+
+$(document).ready(function () {
+
+    $('#pdfFileInput').on('change', function () {
+
+        const file = this.files[0];
+        if (!file) return;
+        if (file.type !== "application/pdf") {
+            Swal.fire({
+                title: 'Invalid File!',
+                text: 'Only PDF files are allowed.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+
+            $(this).val(''); // reset file input
+        }
+    });
+
+});
+

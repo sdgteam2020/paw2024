@@ -28,6 +28,7 @@ namespace swas.DAL.Models
         [ForeignKey("tbl_mActions")]
         public int? ActionsId { get; set; }
         [StringLength(1500)]
+
         public string? Comments { get; set; }
 
         public int? StkStatusId { get; set; }
@@ -37,6 +38,7 @@ namespace swas.DAL.Models
         public DateTime? EditDeleteDate { get; set; }
         public int? UpdatedByUserId { get; set; }
         public DateTime? DateTimeOfUpdate { get; set; }
+        [MaxLength(500)]
         public string? UserDetails { get; set; }
         [NotMapped]
         public string? Reamarks { get; set; }

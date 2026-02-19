@@ -29,5 +29,11 @@ namespace swas.BAL.DTO
         public string unitName { get; set; }
         public string EncyID { get; set; }
 
+
+
+     
+
+  
+
     }
 }

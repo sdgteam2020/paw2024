@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,17 +11,20 @@ namespace swas.BAL.Helpers
     public class MoveFileMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly IConfiguration _configuration;
 
-        public MoveFileMiddleware(RequestDelegate next)
+        public MoveFileMiddleware(RequestDelegate next, IConfiguration configuration)
         {
             _next = next;
+            _configuration = configuration;
         }
 
         public async Task InvokeAsync(HttpContext context)
         {
             try
             {
-                MoveFileProgram.MoveFile();
+                var moveFileProgram = new MoveFileProgram(_configuration);
+                moveFileProgram.MoveFile();
             }
             catch (Exception ex)
             {

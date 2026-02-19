@@ -1,8 +1,4 @@
-/*!
- * Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com
- * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
- * Copyright 2024 Fonticons, Inc.
- */
+
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -327,7 +323,7 @@
 
 
       function binlMD5(x, len) {
-        /* append padding */
+        
         x[len >> 5] |= 0x80 << len % 32;
         x[(len + 64 >>> 9 << 4) + 14] = len;
         var i;
@@ -624,7 +620,6 @@
     } else if (node.href) {
       return md5(node.href);
     } else if (node.innerText && '' !== node.innerText) {
-      // eslint-disable-line yoda
       return md5(node.innerText);
     } else {
       return undefined;
@@ -656,7 +651,6 @@
         showProgress = _ref$showProgress === void 0 ? false : _ref$showProgress,
         progressIndicator = _ref.progressIndicator;
     return new Promise(function (resolve, reject) {
-      // eslint-disable-line compat/compat
       function poll(duration, cumulativeDuration) {
         setTimeout(function () {
           var result = fn();
@@ -666,7 +660,6 @@
           }
 
           if (!!result) {
-            // eslint-disable-line no-extra-boolean-cast
             resolve(result);
           } else {
             var nextDuration = 250;
@@ -693,8 +686,6 @@
       if (t.hasAttribute(detectionIgnoreAttr)) {
         return false;
       } // If the browser has loaded the FA5 CSS, let's not test that <style> element.
-      // Its enough that we'll be testing for traces of the corresponding JS being loaded, and testing
-      // this <style> would only produce a false negative anyway.
 
 
       if (WINDOW.FontAwesomeConfig && t.innerText.match(new RegExp("svg:not\\(:root\\)\\.".concat(WINDOW.FontAwesomeConfig.replacementClass)))) {
@@ -706,7 +697,6 @@
 
     function runDiag(scriptOrLinkTag, md5) {
       var diagFrame = DOCUMENT.createElement('iframe'); // Using "visibility: hidden; position: absolute" instead of "display: none;" because
-      // Firefox will not return the expected results for getComputedStyle if our iframe has display: none.
 
       diagFrame.setAttribute('style', 'visibility: hidden; position: absolute; height: 0; width: 0;');
       var testIconId = 'fa-test-icon-' + md5;
@@ -715,12 +705,6 @@
       iTag.setAttribute('id', testIconId);
       var diagScript = DOCUMENT.createElement('script');
       diagScript.setAttribute('id', diagScriptId); // WARNING: this function will be toString()'d and assigned to innerText of the diag script
-      // element that we'll be putting into a diagnostic iframe.
-      // That means that this code won't compile until after the outer script has run and injected
-      // this code into the iframe. There are some compile time errors that might occur there.
-      // For example, using single line (double-slash) comments like this one inside that function
-      // will probably cause it to choke. Chrome will show an error like this:
-      // Uncaught SyntaxError: Unexpected end of input
 
       var diagScriptFun = function diagScriptFun(nodeUnderTestId, testIconId, md5, parentOrigin) {
         parent.FontAwesomeDetection.__pollUntil({
@@ -918,11 +902,6 @@
     var nodesFound = _objectSpread2(_objectSpread2({}, scriptsToTest), cssToTest);
 
     var testCount = Object.keys(scriptsToTest).length + Object.keys(cssToTest).length; // The resultsCollectionMaxWait allows for the time between when the tests running under
-    // child iframes call postMessage with their results, and when the parent window
-    // receives and handles those events with window.onmessage.
-    // Making it configurable allows us to test the scenario where this timeout is exceeded.
-    // Naming it something very different from "timeout" is to help avoid the potential ambiguity between
-    // these two timeout-related settings.
 
     var masterTimeout = WINDOW.FontAwesomeDetection.timeout + WINDOW.FontAwesomeDetection.resultsCollectionMaxWait;
     console.group('Font Awesome Detector');
@@ -937,7 +916,6 @@
       console.info("\t%c".concat(timeoutAttr, "%c: milliseconds to wait for each test before deciding whether it's a conflict."), 'font-weight: bold;', 'font-size: normal;');
       console.info("\t%c".concat(resultsCollectionMaxWaitAttr, "%c: milliseconds to wait for the browser to accumulate test results before giving up."), 'font-weight: bold;', 'font-size: normal;');
       pollUntil({
-        // Give this overall timer a little extra cushion
         maxDuration: masterTimeout,
         showProgress: true,
         progressIndicator: 'waiting...',
@@ -993,7 +971,6 @@
   };
 
   var _config = _objectSpread2(_objectSpread2(_objectSpread2({}, _default), initialConfig), {}, {
-    // These cannot be overridden
     __pollUntil: pollUntil,
     md5ForNode: md5ForNode,
     detectionDone: false,
@@ -1016,7 +993,6 @@
   var FAMILIES = [FAMILY_CLASSIC, FAMILY_SHARP];
 
   function familyProxy(obj) {
-    // Defaults to the classic family if family is not available
     return new Proxy(obj, {
       get: function get(target, prop) {
         return prop in target ? target[prop] : target[FAMILY_CLASSIC];

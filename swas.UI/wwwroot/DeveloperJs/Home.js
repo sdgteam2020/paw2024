@@ -6,12 +6,9 @@ $(document).on('ready', function () {
         var projId = $button.data('proj-id');
         var psmId = $button.data('psm-id');
         aler("Sanal");
-        // Update the input elements with the values
         $('#StakeholdertextId').val(stakeHolderId);
         $('#ProjtextId').val(projId);
         $('#PsmToProj').val(psmId);
-
-        // Add logic to change the button color here
         var status = $button.closest('td').attr('class');
         $button.removeClass('green red yellow'); // Remove existing color classes
         $button.addClass(status); // Add the new color class
@@ -137,21 +134,11 @@ $(document).ready(function () {
 
                 var colors = []; // Store unique colors for each unit
 
-                // // Generate unique colors for each unit
-                // unitNames.forEach(unitName => {
-                //     colors.push(getRandomColorss()); // One color for TotalIn
-                //     colors.push(getRandomColorss()); // Another color for TotalOut
-                // });
-
-                //  
-
                 var totalInColor = getRandomColorss(); // Get a random color for TotalIn bars
                 var totalOutColor = getRandomColorss(); // Get a random color for TotalOut bars
 
 
                 var colors = []; // Store unique colors for each unit
-
-                // Generate unique colors for each unit
                 unitNames.forEach(unitName => {
                     colors.push(getRandomColorss()); // One color for TotalIn
                     colors.push(getRandomColorss()); // Another color for TotalOut
@@ -200,10 +187,6 @@ $(document).ready(function () {
             });
         }
     });
-
-
-
-    // Function to lighten a given color
     function lightenColor(color, percent) {
         var num = parseInt(color.replace("#", ""), 16),
             amt = Math.round(2.55 * percent),
@@ -212,9 +195,6 @@ $(document).ready(function () {
             G = (num & 0x0000FF) + amt;
         return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (B < 255 ? B < 1 ? 0 : B : 255) * 0x100 + (G < 255 ? G < 1 ? 0 : G : 255)).toString(16).slice(1);
     }
-
-
-    // Function to generate random color
     function getRandomColorss() {
         var letters = '0123456789ABCDEF';
         var color = '#';
@@ -239,11 +219,6 @@ $(document).ready(function () {
             }
 
             updatePieChart(data);
-
-            // var titles = data.map(item => item.Status);
-            // var chartData = data.map(item => item.TotalProj);
-
-            // updatePieChart(titles, chartData);
 
         },
         error: function (error) {
@@ -296,8 +271,6 @@ const handleTabClick = event => {
 };
 
 containerTabs.onclick = handleTabClick;
-
-// Simulate click event on the first tab to load its content on page load
 const firstTabLink = getLinksTab(containerTabs)[0];
 if (firstTabLink) {
     firstTabLink.click();
@@ -326,11 +299,8 @@ function openPopup(id) {
 }
 
 $(document).ready(function () {
-    // Handle dropdown change event
     $("#ddlUnitId").change(function () {
-        // Here you can perform actions based on the selected mode
         var selectedMode = $(this).val();
-        // You may fetch additional data based on the selected mode using AJAX if needed
     });
 });
 

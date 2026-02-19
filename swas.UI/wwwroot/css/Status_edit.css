@@ -1,36 +1,36 @@
-﻿/* Required indicator styling */
+﻿
 .required-indicator {
     color: red;
     font-weight: bold;
 }
 
-/* Form label styling */
+
 .form-label {
     font-size: 1.1rem;
 }
 
-/* Button container styling for alignment */
+
 .form-buttons {
     margin-top: 2rem;
 }
 
-/* Update button styling */
+
 .btnupdate {
     margin-top: 1rem;
 }
 
-/* Styling for the Close button */
+
 .close-link {
     color: white;
     text-decoration: none;
 }
 
-/* Secondary button styling */
+
 .btn-secondary {
     margin-top: 1rem;
 }
 
-/* Form field input styling */
+
 .form-control {
     width: 100%;
     padding: 8px;
@@ -39,7 +39,7 @@
     border: 1px solid #ccc;
 }
 
-/* Styling for validation messages */
+
 .text-danger {
     color: #dc3545;
 }

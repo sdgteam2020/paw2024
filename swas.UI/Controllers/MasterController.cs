@@ -173,14 +173,6 @@ namespace swas.UI.Controllers
                     var ret = await _actionsRepository.GetActionByStatusId(ParentId);
                     return Json(ret);
                 }
-                //else if (id == Mastertablenmumcs.mMappingActions)
-                //{
-                //    var ret = await _actionsRepository.GetActionsMappingIdByStatusId(ParentId);
-
-
-                //    return Json(ret);
-
-                //} else if (id == Mastertablenmumcs.mAnyUnut)
                 {
                     var ret = await _unitRepository.GetAllUnitNotDte();
                     return Json(ret);

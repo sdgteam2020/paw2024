@@ -5,7 +5,6 @@
         if (performance && performance.navigation) {
             isReload = (performance.navigation.type === 1);
         } else {
-            // Modern fallback
             var navEntries = performance.getEntriesByType && performance.getEntriesByType("navigation");
             if (navEntries && navEntries.length) {
                 isReload = (navEntries[0].type === "reload");
@@ -14,7 +13,6 @@
 
         if (isReload) localStorage.setItem("pageRefreshed", "true");
     } catch (e) {
-        // ignore
     }
 })();
 
@@ -25,11 +23,7 @@
     function preventBack() {
         window.history.forward();
     }
-
-    // Same behavior: setTimeout("preventBack()", 0)
     window.setTimeout(preventBack, 0);
-
-    // Same behavior: window.onunload = function(){ null }
     window.onunload = function () { return null; };
 })();
 

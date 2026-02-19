@@ -8,7 +8,6 @@ async function getGeneratedPdfLogSignFromPreview() {
                 responseType: 'blob'
             },
             success: function (pdfBlob) {
-                // Show PDF in iframe
                 const blobUrl = URL.createObjectURL(pdfBlob);
                 $("#Certificatepreview").html(`
                     <iframe id="pdfFrame"
@@ -20,8 +19,6 @@ async function getGeneratedPdfLogSignFromPreview() {
                 `);
 
                 $('#btnDigitalsign').prop('disabled', true);
-
-                // Convert blob to File and resolve
                 const file = new File([pdfBlob], "GeneratedCertificate.pdf", {
                     type: "application/pdf"
                 });
@@ -53,8 +50,6 @@ function AttOnFWD() {
     $('.uploadLoader').addClass('d-none')
     
     var listItem = "";
-
-    // Check for any previous rows and remove placeholder if needed
     if ($.trim($("#AttBody").text()) === "No Record Found") {
         $("#AttBody").empty(); // remove placeholder row
     }
@@ -69,22 +64,14 @@ function AttOnFWD() {
         alert("Please choose at least one PDF.");
         return;
     }
-
-    // Build FormData (though we won’t send it yet)
     const fd = new FormData();
     fd.append("remarks", remarksVal); // Add remarks to FormData
-
-    // Add files to FormData and store them in the allAttachments array
     attachments = [];
     for (let i = 0; i < files.length; i++) {
         fd.append("uploadfile[]", files[i]);  // Append files to FormData
         attachments.push({ file: files[i], remarks: remarksVal }); // Track the files and remarks
     }
-
-    // Store the current attachments and remarks in allAttachments
     allAttachments.push(...attachments);
-
-    // Build table rows for preview (displaying files and remarks in the table)
     for (let i = 0; i < files.length; i++) {
         const f = files[i];
         const tempUrl = URL.createObjectURL(f);
@@ -114,18 +101,12 @@ function AttOnFWD() {
 
         listItem += "</tr>";
     }
-
-    // Clear the form fields
     $("#Reamarks").val("");
     $("#pdfFileInput").val("");
-
-    // Bind to the table
     $("#AttBody").append(listItem);
-
-    // When the confirm button is clicked, send all attachments and remarks
     $(".btnFwdConfirm").off().on("click", async function () {
-        
-
+        debugger;
+       
         const urlParams = new URLSearchParams(window.location.search);
         let psmid;
 
@@ -139,14 +120,11 @@ function AttOnFWD() {
         if (ddlaction === "Approved / Completed" && $('#ddlfwdStage').val() == 3) {
             generatedPdf = await getGeneratedPdfLogSignFromPreview();
         }
-
-        // 🔹 PASS allAttachments ALSO
         SaveFwdTo(psmid, generatedPdf, allAttachments);
     });
 
 
 }
-//********************************Digital Sign**********************************
 
 function sendPDFToServer(pdfpath, thumbprint) {
    
@@ -164,6 +142,7 @@ function sendPDFToServer(pdfpath, thumbprint) {
             Page: "1",
             CustomText: "Digital Signature"
         }]),
+        skipAntiForgery: true,
         success: function (response) {
           
             $('.uploadLoader').addClass('d-none')
@@ -216,8 +195,6 @@ function sendPDFToServer(pdfpath, thumbprint) {
                         style="border:none;">
                 </iframe>
             `);
-
-                    // Determine PSIM
                     const urlParams = new URLSearchParams(window.location.search);
                     let psmid;
                    
@@ -233,7 +210,7 @@ function sendPDFToServer(pdfpath, thumbprint) {
                     if (ddlaction === "Approved / Completed" && $('#ddlfwdStage').val() == 3) {
                         generatedPdf = await getGeneratedPdfFromPreview(); // now works
                     }
-
+                   
                     SaveFwdTo(psmid, generatedPdf, allAttachments);
                 });
             } else {
@@ -250,7 +227,6 @@ function sendPDFToServer(pdfpath, thumbprint) {
     });
 
 }
-//********************************Digital Sign End Here**********************************
 
 
 $(document).on("click", ".att-btnDelete", function () {
@@ -265,14 +241,8 @@ $(document).on("click", ".att-btnDelete", function () {
         confirmButtonText: 'Yes, Delete It!'
     }).then((result) => {
         if (result.value) {
-
-            // Get the index of the row that contains the delete button
             var rowIndex = $(this).closest("tr").index();
-
-            // Remove the attachment from the allAttachments array based on the row index
             allAttachments.splice(rowIndex, 1);
-
-            // Remove the row from the table
             $(this).closest("tr").remove();
 
         }
@@ -370,20 +340,13 @@ function AttechHistory() {
                 }
 
                 else {
-
-
-                    // { attId: 8, psmId: 8, attPath: 'Swas_22ed1265-b2a0-4008-b7ff-b3eb5f704849.pdf', actionId: 0, timeStamp: '2024-05-02T16:17:45.6016413', … }
                     for (var i = 0; i < response.length; i++) {
 
                         listItem += "<tr>";
-
-                        // Hidden IDs
                         listItem += "<td class='d-none'>" +
                             "<span id='spnattId'>" + response[i].attId + "</span>" +
                             "<span id='spnpsmId'>" + response[i].psmId + "</span>" +
                             "</td>";
-
-                        // Delete Button
                         listItem += "<td class='align-middle'>" +
                             "<span id='btnedit'>" +
                             "<button type='button' class='cls-btnDelete btn-icon btn-round btn-danger mr-1'>" +
@@ -391,8 +354,6 @@ function AttechHistory() {
                             "</button>" +
                             "</span>" +
                             "</td>";
-
-                        // Remarks (trimmed to 6 words)
                         var breakRemarks = response[i].reamarks || "";
                         var formatedName = trimByWords(breakRemarks, 4);
 
@@ -400,8 +361,6 @@ function AttechHistory() {
                             "<span id='comdName'>" + formatedName + "</span>" +
                             "<div class='RefLetter'>" + breakRemarks + "</div>" +
                             "</td>";
-
-                        // FileName (trimmed to 4 words, full shown inside hidden div/tooltip)
                         listItem += "<td class='align-middle RefLetter-container'>" +
                             "<span id='corpsName'>" +
                             "<a class='link-success' target='_blank' href='/uploads/" + response[i].attPath + "'>" +
@@ -410,8 +369,6 @@ function AttechHistory() {
                             "</span>" +
                             "<div class='RefLetter'>" + response[i].actFileName + "</div>" +
                             "</td>";
-
-                        // Timestamp
                         listItem += "<td class='align-middle'><span id='divName'>" + DateFormateddMMyyyyhhmmss(response[i].timeStamp) + "</span></td>";
 
                         listItem += "</tr>";
@@ -470,7 +427,6 @@ function Deleteattechment(AttechId) {
         type: 'POST',
         data: { "AttechId": AttechId },
         success: function (response) {
-            //console.log(response);
 
 
             if (response == 1) {

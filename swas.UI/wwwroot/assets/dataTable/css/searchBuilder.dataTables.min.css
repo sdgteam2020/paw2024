@@ -2,7 +2,7 @@ div.dt-button-collection {
     overflow: visible !important;
     z-index: 2002 !important
 }
-/*Manish*/
+
     div.dt-button-collection div.dtsb-searchBuilder {
        
         padding-left: 1em !important;
@@ -144,7 +144,7 @@ div.dtsb-searchBuilder {
                     div.dtsb-searchBuilder div.dtsb-group div.dtsb-criteria div.dtsb-buttonContainer button.dtsb-delete:last-child,
                     div.dtsb-searchBuilder div.dtsb-group div.dtsb-criteria div.dtsb-buttonContainer button.dtsb-right:last-child,
                     div.dtsb-searchBuilder div.dtsb-group div.dtsb-criteria div.dtsb-buttonContainer button.dtsb-left:last-child {
-                        /*margin-right: 0*/
+                        
                         margin-right: 140mm;
                     }
 
@@ -337,8 +337,8 @@ div.dtsb-searchBuilder div.dtsb-group div.dtsb-criteria .dtsb-condition-button {
     top: -5px;
 }
 
-    /* Change the background color of the condition button */
+    
     div.dtsb-searchBuilder div.dtsb-group div.dtsb-criteria .dtsb-condition-button button {
         background-color: #e70f00;
-        /* Add any other styles you want */
+        
     }

@@ -1,9 +1,4 @@
-﻿///Created and Reviewed by : Sub Maj Sanal
-///Reviewed Date : 30 Jul 23
-///Tested By :- 
-///Tested Date : 
-///Start
-
+﻿
 #nullable disable
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authentication;
@@ -22,12 +17,6 @@ using swas.DAL;
 
 namespace swas.Areas.Identity.Pages.Account
 {
-    ///Created and Reviewed by : Sub Maj Sanal
-    ///Reviewed Date : 30 Jul 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start
-    // Customised by Sub Maj M Sanal Kumar on 29 Jul 23
 
     public class LoginModel : PageModel
     {
@@ -39,6 +28,7 @@ namespace swas.Areas.Identity.Pages.Account
 
         private readonly IUserRepository _userRepository;
         public readonly ApplicationDbContext _context;
+       
         private readonly IConfiguration _configuration;
         public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IUnitRepository unitRepository, IUserRepository userRepository, ApplicationDbContext context, IConfiguration configuration)
         {
@@ -50,71 +40,23 @@ namespace swas.Areas.Identity.Pages.Account
             _userRepository = userRepository;
             _context = context;
             _configuration = configuration;
-            _configuration = configuration;
-        }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
+        }
         [BindProperty]
         public InputModel Input { get; set; }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public string ReturnUrl { get; set; }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [TempData]
         public string ErrorMessage { get; set; }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required]
-            //[EmailAddress]
             public string UserName { get; set; }
-
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required]
             [DataType(DataType.Password)]
             public string Password { get; set; }
-
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; } = true;
-
-
-            ///
-            ///Created and Reviewed by : Sub Maj Sanal
-            ///Reviewed Date : 30 Jul 23
-            ///Tested By :- 
-            ///Tested Date : 
-            ///Start
 
 
 
@@ -122,10 +64,6 @@ namespace swas.Areas.Identity.Pages.Account
         [AllowAnonymous]
         public async Task OnGetAsync(string returnUrl = null)
         {
-            ////IAM Code :
-            //Response.Redirect("https://iam2.army.mil/IAM/User", true);
-
-            // Localhost code :
 
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
@@ -135,34 +73,12 @@ namespace swas.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
 
         }
-
-        //public async Task<string> GetUserRoles(string username)
-        //{
-        //    var user = await _userManager.FindByNameAsync(username);
-
-        //    if (user == null)
-        //    {
-        //        // Handle the case where the user is not found
-        //        return null;
-        //    }
-        //    var ss = await _userManager.GetRolesAsync(user);
-        //    string opt = ss[0].ToString();
-        //    return opt;
-        //}
-
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 30 Jul 23
-        ///Tested By :- 
-        ///Tested Date : 
-        ///Start 
         [AllowAnonymous]
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)        
         {
             try
             {
                 returnUrl ??= Url.Content("~/");
-                //await _signInManager.SignOutAsync();
-                //await HttpContext.SignOutAsync();
                 var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
                 var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
                 var watermarkText = $" {ipAddress}\n  {currentDatetime}";
@@ -175,11 +91,20 @@ namespace swas.Areas.Identity.Pages.Account
                 {
                     if (Logins.IsNotNull())
                     {
-                        // ModelState.AddModelError("", "Other User Already Logged In Or Not Properly Logged Out");
                     }
                     else
                     {
                         ViewData["UserName"] = Input.UserName;
+                        var cryptoKey = _configuration["CryptoSettings:LoginKey"];
+
+                        if (!string.IsNullOrEmpty(cryptoKey))
+                        {
+                            Input.UserName = CryptoHelper.SafeDecrypt(Input.UserName, cryptoKey);
+                            Input.Password = CryptoHelper.SafeDecrypt(Input.Password, cryptoKey);
+
+                        }
+
+
 
                         var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: true);
 
@@ -209,7 +134,6 @@ namespace swas.Areas.Identity.Pages.Account
                                         Db.Appontment = userdet.appointment;
                                         Db.UserIntId = userdet.unitid;
                                         Db.Rank_id = Convert.ToInt32(userdet.Rank);
-                                        //Db.Rank=userdet.Rank;
                                         Db.Rank=userRank;
                                         Db.IcNo = userdet.Icno;
                                         Db.Offr_Name = userdet.Offr_Name;
@@ -223,7 +147,6 @@ namespace swas.Areas.Identity.Pages.Account
                                             Db.ActualUserName = Input.UserName;
                                         }
                                     }
-                                    ///////////////login log//////////////////////
                                     tbl_LoginLog logs = new tbl_LoginLog();
                                     var Role = await _userManager.GetRolesAsync(userdet);
                                     logs.UserId = userdet.UserIntId;
@@ -235,7 +158,6 @@ namespace swas.Areas.Identity.Pages.Account
                                     logs.userName = userdet.UserName;
                                     logs.unitid = userdet.unitid;
                                     await _userRepository.Add(logs);
-                                    ////////////////End Log////////////////////////
                                     SessionHelper.SetObjectAsJson(HttpContext.Session, "User", Db);
                                     
 
@@ -282,7 +204,6 @@ namespace swas.Areas.Identity.Pages.Account
             catch (Exception ex)
             {
                 swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                //return Redirect("/Home/Error");
             }
 
             return Page();

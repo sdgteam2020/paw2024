@@ -10,7 +10,7 @@ using swas.BAL;
 using Microsoft.AspNetCore.Authorization;
 using swas.BAL.DTO;
 using ASPNetCoreIdentityCustomFields.Data;
-using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
+
 using Microsoft.AspNetCore.Identity;
 using swas.DAL;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -40,14 +40,13 @@ using Microsoft.AspNetCore.DataProtection;
 using Timer = System.Threading.Timer;
 using System.Net.Http.Headers;
 using System.Net;
+using swas.Areas.Identity.Pages.Account;
 
 namespace swas.UI.Controllers
 {
     public class DocumentsController : Controller
     {
-        //private readonly ILogger<HomeController> _logger;
         private readonly IProjectsRepository _projectsRepository;
-        //private readonly RepositoryUser _repositoryUser;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
@@ -68,7 +67,6 @@ namespace swas.UI.Controllers
         private string downloadFolderPath;
         public DocumentsController(IWebHostEnvironment hostingEnvironment, IDataProtectionProvider DataProtector, IProjectsRepository projectsRepository, SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, UserManager<ApplicationUser> userManager, IDdlRepository dlRepository, ApplicationDbContext context, IUnitRepository unitRepository, IHttpContextAccessor httpContextAccessor, IProjStakeHolderMovRepository psmRepository, IAttHistoryRepository attHistoryRepository, IProjStakeHolderMovRepository stkholdmove, IWebHostEnvironment environment)
         {
-            //  _logger = logger; _repositoryUser = repositoryUser;
             _projectsRepository = projectsRepository;
             _hostingEnvironment = hostingEnvironment;
             _signInManager = signInManager;
@@ -89,7 +87,6 @@ namespace swas.UI.Controllers
 
         [Authorize(Policy = "Admin")]
         [HttpGet]
-        ///Created by Mr Manish  
         public async Task<IActionResult> Index()
         {
             var dateTime = DateTime.Now;
@@ -109,8 +106,6 @@ namespace swas.UI.Controllers
 
                     var AttHistry = _context.AttHistory.FirstOrDefault();
                     ViewBag.AttHistry = AttHistry;
-
-                    // var proj = await _projectsRepository.GetProjforDocView();
                     ViewBag.proj = null;
 
                     return View();
@@ -129,7 +124,6 @@ namespace swas.UI.Controllers
 
         [Authorize(Policy = "Admin")]
         [HttpGet]
-        ///Created by Mr Manish  
         public async Task<IActionResult> DocumentHistory(string projName, string projId)
         {
             int ProjIdi = 0;
@@ -179,7 +173,6 @@ namespace swas.UI.Controllers
 
 
         [HttpPost]
-        ///Created by Mr Manish  
         public async Task<ActionResult> DownloadAction(string[] selectedCheckboxes)
         {
             try
@@ -237,23 +230,16 @@ namespace swas.UI.Controllers
                     downloadFolderPath = System.IO.Path.Combine(_environment.ContentRootPath, "wwwroot/Download/" + Dfilename + ".pdf");
 
                     System.IO.File.WriteAllBytes(downloadFolderPath, mergedPdfBytes);
-
-                    // Perform file download using HttpClient with TLS 1.2
                     string downloadLink = await DownloadFileWithHttpClient(baseUrl, Dfilename);
-
-
-                    // Provide a download link to the user
 
 
 
                     if (downloadLink != null)
                     {
-                        // Provide a download link to the user
                         return Json(new { downloadLink = downloadLink.ToString() });
                     }
                     else
                     {
-                        // Handle the case where downloadLink is null (e.g., return an error message)
                         return View("Error");
                     }
                 }
@@ -273,7 +259,6 @@ namespace swas.UI.Controllers
         {
             try
             {
-                // Use HttpClient with a custom handler to customize certificate validation
                 using (HttpClient httpClient = new HttpClient(new HttpClientHandler
                 {
                     ClientCertificateOptions = ClientCertificateOption.Manual,
@@ -281,35 +266,24 @@ namespace swas.UI.Controllers
                         (httpRequestMessage, cert, certChain, policyErrors) => true
                 }))
                 {
-                    // Set up SSL/TLS and other settings
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                     httpClient.BaseAddress = new Uri(baseUrl);
                     httpClient.DefaultRequestHeaders.Accept.Clear();
                     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/pdf"));
-
-                    // Create a URI for the download link
                     Uri downloadUri = new Uri(new Uri(baseUrl), $"/Download/{Dfilename}.pdf");
-
-                    // Perform the file download
                     HttpResponseMessage response = await httpClient.GetAsync(downloadUri);
 
                     if (response.StatusCode == HttpStatusCode.NotFound)
                     {
-                        // Handle the 404 error (e.g., log, return a specific value, etc.)
                         swas.BAL.Utility.Error.ExceptionHandle($"File not found: {downloadUri}");
                         return null; // Change the return type to Uri, so return null instead of an empty string
                     }
-
-                    // Ensure a successful response
                     response.EnsureSuccessStatusCode();
-
-                    // Save the downloaded file
                     return downloadUri.ToString();
                 }
             }
             catch (HttpRequestException ex)
             {
-                // Handle HTTP request exceptions
                 swas.BAL.Utility.Error.ExceptionHandle($"HttpRequestException: {ex.Message}");
                 return "";
             }
@@ -363,15 +337,12 @@ namespace swas.UI.Controllers
             {
                 if (!string.IsNullOrEmpty(downloadFolderPath) && System.IO.File.Exists(downloadFolderPath))
                 {
-                    // If file found, delete it
                     System.IO.File.Delete(downloadFolderPath);
                     downloadFolderPath = null; // Clear the path after deletion
                 }
             }
             catch (Exception ex)
             {
-                // Log or handle the exception as needed
-                // Comman.ExceptionHandle(ex.Message);
             }
         }
     }

@@ -17,6 +17,7 @@
         <div class="row justify-content-center">
             <div class="container-fluid">
                 <form asp-action="CreateRank" method="post" class="needs-validation" novalidate onsubmit="return validateForm()">
+                    @Html.AntiForgeryToken()
                     <div class="row">
                         <div class="col-md-6">
 
@@ -48,15 +49,4 @@
     <partial name="_ValidationScriptsPartial" />
 }
 
-
-<script>
-    function validateForm() {
-        var form = document.querySelector('form.needs-validation');
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-        return form.checkValidity();
-    }
-</script>
+<script src="~\DeveloperJs\_CreateRank.js"></script>

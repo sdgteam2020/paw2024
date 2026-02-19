@@ -3,11 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace swas.DAL.Models
 {
-	///Created and Reviewed by : Sub Maj Sanal
-	///Reviewed Date : 31 Jul 23
-	///Tested By :- 
-	///Tested Date : 
-	///Start 
 	public class tbl_AttHistory
 	{
 		[Key]
@@ -19,7 +14,6 @@ namespace swas.DAL.Models
 		[Column(TypeName = "varchar(200)")]
 		[Display(Name = "Attach Path")]
 		public string? AttPath { get; set; }
-		// Check with database all the value is 0 that is not possible to make foregin relation with mAction table.
 		public int? ActionId { get; set; }
 		public DateTime? TimeStamp { get; set; }
 		public bool? IsDeleted { get; set; }
@@ -38,8 +32,6 @@ namespace swas.DAL.Models
         [StringLength(250)]
         public string? Reamarks { get; set; }
 		public string? ActFileName { get; set; }
-
-        //public int CommentId { get; set; }
 
 
     }

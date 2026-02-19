@@ -57,7 +57,6 @@ namespace swas.BAL.Repository
             }
             catch (Exception ex)
             {
-                // Optionally log the exception
                 return null;
             }
         }

@@ -1,4 +1,4 @@
-﻿/* General Layout Styles */
+﻿
 .wrapper {
     padding: 0rem;
 }
@@ -13,14 +13,14 @@ input[type="search"] {
     padding: 2px;
 }
 
-/* Custom Header Styling */
+
 .headertext {
     text-align: center;
     font-size: 1.5rem;
     font-weight: bold;
 }
 
-/* Custom H5 Styling */
+
 .custom-h5 {
     text-align: center;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -28,29 +28,29 @@ input[type="search"] {
     height: 33px;
 }
 
-/* Custom Scroll Behavior */
+
 .custom-scroll {
     overscroll-behavior-y: auto;
 }
 
-/* Table Responsive */
+
 .table-responsive {
     overflow: scroll;
 }
 
-/* Font Styling for Headings */
+
 h1, h2, h3, h4, h5, h6 {
     font-family: Arial, sans-serif !important;
     font-size: 24px !important;
 }
 
-/* Image and Video Responsiveness */
+
 img, video {
     max-width: 100% !important;
     height: auto !important;
 }
 
-/* Button Styling */
+
 .btn-primary {
     background-color: #007bff;
     color: #fff;
@@ -68,7 +68,7 @@ img, video {
     margin-left: 50%;
 }
 
-/* Modal and Table Styling */
+
 .modal-content {
     height: auto;
 }
@@ -77,7 +77,7 @@ img, video {
     padding: 20px;
 }
 
-/* Table Styles */
+
 .table-striped {
     width: 100%;
     border-collapse: collapse;
@@ -92,12 +92,12 @@ img, video {
     text-align: center;
 }
 
-/* Text-nowrap for columns */
+
 .text-nowrap {
     white-space: nowrap;
 }
 
-/* Table Column Widths */
+
 .col-width6 {
     width: 6% !important;
 }
@@ -118,13 +118,13 @@ img, video {
     font-size: 8px;
 }
 
-/* Sticky Header */
+
 .sticky-header {
     position: sticky;
     top: -18px;
 }
 
-/* Footer Styling */
+
 .footers {
     background-color: #333;
     color: #fff;
@@ -138,25 +138,25 @@ img, video {
     padding: 10px 0;
 }
 
-/* Footer Icon */
+
 .logout-icon {
     width: 10%;
     height: 10%;
     margin-left: -10px;
 }
 
-/* Card Padding */
+
 .card-body {
     padding: 20px;
 }
 
-/* Bold and Underline */
+
 .bold-underline {
     font-weight: bold;
     text-decoration: underline;
 }
 
-/* Custom Login Styling */
+
 .login {
     display: flex;
     justify-content: center;
@@ -179,7 +179,7 @@ img, video {
     border-radius: 8px;
 }
 
-/* Card Header and Title Styling */
+
 .card_title {
     text-align: center;
     color: black;
@@ -189,7 +189,7 @@ img, video {
     max-width: 100%;
 }
 
-/* PDF Link Styling */
+
 .pdf-link {
     display: block;
     margin-bottom: 10px;
@@ -199,7 +199,7 @@ img, video {
     margin-right: 5px;
 }
 
-/* Table header customization for overflow */
+
 .datatablefordownload {
     width: 100%;
     overflow-x: auto;

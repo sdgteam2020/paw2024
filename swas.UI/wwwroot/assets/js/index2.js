@@ -1,7 +1,4 @@
 $(function() {
-
-  
-    // chart 1
     var options = {
         series: [{
             name: "Total Orders",
@@ -66,7 +63,6 @@ $(function() {
               inverseColors: false,
               opacityFrom: 0.5,
               opacityTo: 0.1,
-              //stops: [0, 100]
             }
           },
         colors: ["#923eb9"],
@@ -93,13 +89,6 @@ $(function() {
     
       var chart = new ApexCharts(document.querySelector("#chart1"), options);
       chart.render();
-    
-    
-    
-    
-    
-      
-    // chart 2
     var options = {
         series: [{
             name: "Total Orders",
@@ -164,7 +153,6 @@ $(function() {
               inverseColors: false,
               opacityFrom: 0.5,
               opacityTo: 0.1,
-              //stops: [0, 100]
             }
           },
         colors: ["#923eb9"],
@@ -191,11 +179,6 @@ $(function() {
     
       var chart = new ApexCharts(document.querySelector("#chart2"), options);
       chart.render();
-    
-    
-    
-      
-    // chart 3
     var options = {
         series: [{
             name: "Total Orders",
@@ -260,7 +243,6 @@ $(function() {
               inverseColors: false,
               opacityFrom: 0.5,
               opacityTo: 0.1,
-              //stops: [0, 100]
             }
           },
         colors: ["#923eb9"],
@@ -287,10 +269,6 @@ $(function() {
     
       var chart = new ApexCharts(document.querySelector("#chart3"), options);
       chart.render();
-    
-    
-    
-    // chart 4
     var options = {
         series: [{
             name: "Total Orders",
@@ -355,7 +333,6 @@ $(function() {
               inverseColors: false,
               opacityFrom: 0.5,
               opacityTo: 0.1,
-              //stops: [0, 100]
             }
           },
         colors: ["#923eb9"],
@@ -382,10 +359,6 @@ $(function() {
     
       var chart = new ApexCharts(document.querySelector("#chart4"), options);
       chart.render();
-    
-    
-    
-        // chart5
         var ctx = document.getElementById('chart5').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
@@ -452,11 +425,6 @@ $(function() {
                   }
             }
         });
-    
-    
-    
-    
-          // chart6
           var ctx = document.getElementById('chart6').getContext('2d');
           var myChart = new Chart(ctx, {
               type: 'pie',
@@ -483,11 +451,6 @@ $(function() {
                  
               }
           });
-    
-    
-    
-    
-    // chart7
     var ctx = document.getElementById('chart7').getContext('2d');
     
     var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
@@ -527,11 +490,6 @@ $(function() {
             
         }
     });
-    
-    
-    
-    
-        // chart8
         var ctx = document.getElementById('chart8').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
@@ -565,7 +523,6 @@ $(function() {
             options: {
                 maintainAspectRatio: false,
                 barPercentage: 0.3,
-                //categoryPercentage: 0.5,
                 plugins: {
                     legend: {
                         position:'bottom',
@@ -584,13 +541,6 @@ $(function() {
                   }
             }
         });
-    
-    
-    
-    
-    
-    
-    // chart 9
     var options = {
         series: [{
             name: "Total Session",
@@ -598,7 +548,6 @@ $(function() {
         }],
         chart: {
             type: "area",
-            //width: 130,
             height: 70,
             toolbar: {
                 show: !1
@@ -655,7 +604,6 @@ $(function() {
               inverseColors: false,
               opacityFrom: 1,
               opacityTo: 1,
-              //stops: [0, 100]
             }
           },
         colors: ["#923eb9"],
@@ -682,11 +630,6 @@ $(function() {
     
       var chart = new ApexCharts(document.querySelector("#chart9"), options);
       chart.render();
-    
-    
-    
-    
-    // chart 10
     var options = {
         series: [{
             name: "Page Views",
@@ -694,7 +637,6 @@ $(function() {
         }],
         chart: {
             type: "area",
-            //width: 130,
             height: 70,
             toolbar: {
                 show: !1
@@ -751,7 +693,6 @@ $(function() {
               inverseColors: false,
               opacityFrom: 1,
               opacityTo: 1,
-              //stops: [0, 100]
             }
           },
         colors: ["#923eb9"],

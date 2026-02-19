@@ -15,7 +15,6 @@
                     type: 'POST',
                     data: { "id": ProjectId, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
                     success: function (response) {
-                        //console.log(response);
 
                         if (response) {
                             if (response >= 1) {

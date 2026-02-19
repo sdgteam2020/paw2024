@@ -1,9 +1,3 @@
-
-
-
-
-
-// to do list 
 var todos = [{
     text: "take out the trash",
     done: false,
@@ -18,7 +12,6 @@ document.getElementById("todo-input").oninput = function (e) {
     currentTodo.text = e.target.value;
 };
 /*
-    //jQuery Version
     $('#todo-input').on('input',function(e){
         currentTodo.text = e.target.value;
        });
@@ -43,7 +36,6 @@ function DrawTodo(todo) {
     dummy.innerHTML = newTodoHTML;
     document.getElementById("todo-container").appendChild(dummy.children[0]);
     /*
-        //jQuery version
          var newTodo = $.parseHTML(newTodoHTML);
          $("#todo-container").append(newTodo);
         */
@@ -55,7 +47,6 @@ function RenderAllTodos() {
         container.removeChild(container.firstChild);
     }
     /*
-        //jQuery version
           $("todo-container").empty();
         */
     for (var i = 0; i < todos.length; i++) {
@@ -67,7 +58,6 @@ RenderAllTodos();
 function DeleteTodo(button) {
     var deleteID = parseInt(button.getAttribute("todo-id"));
     /*
-        //jQuery version
           var deleteID = parseInt($(button).attr("todo-id"));
         */
     for (let i = 0; i < todos.length; i++) {

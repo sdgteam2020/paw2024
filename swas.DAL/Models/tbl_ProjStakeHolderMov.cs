@@ -5,11 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace swas.DAL.Models
 {
-	///Created and Reviewed by : Sub Maj Sanal
-	///Reviewed Date : 31 Jul 23
-	///Tested By :- 
-	///Tested Date : 
-	///Start
 	public class tbl_ProjStakeHolderMov
 	{
         [Key]
@@ -18,13 +13,10 @@ namespace swas.DAL.Models
         [ForeignKey("tbl_Projects")]
         public int ProjId { get; set; }
 
-        // public int StatusId { get; set; }
-
         [ForeignKey("TrnStatusActionsMapping")] 
         public int StatusActionsMappingId { get; set; }
 
-        //[StringLength(20000)]
-        //[Column(TypeName = "varchar(20000)")]
+     
         [Display(Name = "Remarks")]
         public string? Remarks { get; set; }
         public string? UndoRemarks { get; set; }
@@ -56,6 +48,7 @@ namespace swas.DAL.Models
         public bool IsComment { get; set; }
         public bool IsCc { get; set; }
 
+        [MaxLength(500)]
         public string? UserDetails { get; set; }
         public string? CertNo { get; set; }
         [NotMapped]

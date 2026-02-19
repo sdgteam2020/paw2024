@@ -1,6 +1,6 @@
 ﻿
 .header-container {
-    background-color: #044c92; /* Change this to your preferred color */
+    background-color: #044c92; 
     padding: 15px;
     text-align: center;
 }
@@ -11,7 +11,7 @@
 }
 
 
-/* ===== Upload page headings ===== */
+
 
 .fwdupload-title {
     color: #ffffff;
@@ -20,10 +20,10 @@
 
 .fwdupload-title-secondary {
     color: #ffffff;
-    font-size: 1.25rem; /* Bootstrap fs-4 equivalent */
+    font-size: 1.25rem; 
 }
 
-/* ===== Notes ===== */
+
 
 .upload-note {
     margin-bottom: 0.5rem;

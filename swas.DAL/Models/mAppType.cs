@@ -11,6 +11,8 @@ namespace swas.DAL.Models
     {
         [Key]
         public int Apptype { get; set; }
+        [StringLength(100)]
+        [RegularExpression(@"^[a-zA-Z0-9\-_\/\.]+$", ErrorMessage = "Invalid characters.")]
         public string AppDesc { get; set; }
     
         

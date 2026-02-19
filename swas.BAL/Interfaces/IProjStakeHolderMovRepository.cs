@@ -8,12 +8,6 @@ using System.Threading.Tasks;
 
 namespace swas.BAL.Interfaces
 {
-
-    ///Created and Reviewed by : Sub Maj Sanal
-    ///Reviewed Date : 31 Jul 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start
     public interface IProjStakeHolderMovRepository:IGenericRepositoryDL<tbl_ProjStakeHolderMov> 
     {
         Task<int> AddProjStakeHolderMovAsync(tbl_ProjStakeHolderMov psmove);
@@ -21,7 +15,6 @@ namespace swas.BAL.Interfaces
 
         Task<int> GetProjectId(string? ProjName);
         Task<List<DTOProjectsFwd>> ProjectMovement(int? ProjectId);
-        //Task<DTOpR>
         Task<List<DTOProjectHold>> ProjectHolsTimeCalculate(int ProjectId );
         int GetLastRecProjectMov(int? ProjectId);
         Task<int> GetLastRecProjectMovForUnod(int ProjectId,int? TounitId);
@@ -32,17 +25,7 @@ namespace swas.BAL.Interfaces
         Task<bool> CheckFwdCondition(int ProjId, int StatusId,string Actionsname); 
 
         
-        //Task<int> IsReadInbox(int psmId);
-
-        //Task<int> UpdateUndoProjectMov(int ProjectId,int PsmId);
-
-
-
-
-
-
-
-
+       
 
         Task<tbl_ProjStakeHolderMov> GetProjStakeHolderMovByIdAsync(int psmId);
         Task<List<tbl_ProjStakeHolderMov>> GetAllProjStakeHolderMovAsync();

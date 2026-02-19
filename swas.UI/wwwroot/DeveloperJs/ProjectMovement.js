@@ -4,10 +4,6 @@
     $("#ddlfwdStage").change(function () {
         mMsaterStage(0, "ddlfwdSubStage", 6, $("#ddlfwdStage").val(), 0)
     });
-    //$("#ddlfwdSubStage").change(function () {
-
-    //    mMsater(0, "ddlfwdAction", 7, $("#ddlfwdSubStage").val())
-    //});
 
     $("#ddlfwdSubStage").change(function () {
 
@@ -18,11 +14,8 @@
 
         mMsaterFwdTo(0, "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html(), 0, "");
     });
-
-    //GetProjectMovement();
     $("#txtProjectName").autocomplete({
         source: function (request, response) {
-            //alert("Hey");
             if (request.term.length > 1) {
                 var projName = request.term;
                 var param = { "ProjName": projName };
@@ -86,8 +79,6 @@
     function SaveFwdTo(CurrentPslmId) {
         var dateValue = $("#TimeStampToProjfwd").val();
         var currentDate = new Date();
-
-        // Add server's current time if only a date is selected
         var TimeStamps = '';
         if ($('#TimeStampToProjfwd').attr('type') === 'date') {
             if (!dateValue) {
@@ -108,24 +99,18 @@
         {
             "ProjId": $("#spanProjectId").html(),
             "PsmId": $("#spanEditPslmId").html(),
-            /* "StatusId": $("#ddlfwdSubStage").val(),*/
+            
             "StatusActionsMappingId": $("#ddlfwdAction").val(),
             "Remarks": $("#txtRemarksfwd").val(),
             "ToUnitId": $("#ddlfwdFwdTo").val(),
-
-            //"TimeStamp": $("#TimeStampToProjfwd").val()
             "TimeStamp": TimeStamps
         };
-        //console.log("Fwd Data :", userdata)
         $.ajax({
             url: '/Projects/ProjectMovementUpdate',
             type: 'POST',
             data: userdata,
             success: function (response) {
-                // console.log(response);
                 if (response != null) {
-                    /*$("#spanEditPslmId").html(response.psmId);*/
-                    //FwdProjConfirm(CurrentPslmId);
                     $(".Fwdtitle").html("Projects Attch Details");
                     $(".ProjectsFwd").addClass("d-none");
                     $(".Attmenthistory").removeClass("d-none");
@@ -255,8 +240,6 @@ function AttechHistory() {
                 }
 
                 else {
-
-                    // { attId: 8, psmId: 8, attPath: 'Swas_22ed1265-b2a0-4008-b7ff-b3eb5f704849.pdf', actionId: 0, timeStamp: '2024-05-02T16:17:45.6016413', … }
                     for (var i = 0; i < response.length; i++) {
 
                         listItem += "<tr>";
@@ -266,7 +249,7 @@ function AttechHistory() {
                         listItem += "<td class='align-middle'><span id='corpsName'><a class='link-success' target='_blank' href=/uploads/" + response[i].attPath + ">" + response[i].actFileName + "</a></span></td>";
                         listItem += "<td class='align-middle'><span id='divName'>" + response[i].timeStamp + "</span></td>";
 
-                        /*    listItem += "<td class='nowrap'><button type='button' class='cls-btnSend btn btn-outline-success mr-1'>Send To Verification</button></td>";*/
+                        
                         listItem += "</tr>";
                     }
 
@@ -315,7 +298,6 @@ function Deleteattechment(AttechId) {
         type: 'POST',
         data: { "AttechId": AttechId },
         success: function (response) {
-            //console.log(response);
             if (response == 1) {
                 Swal.fire({
                     position: 'top-end',
@@ -342,7 +324,6 @@ function GetProjectMovement(ProjectId) {
         success: function (response) {
             
             var projname = response[0].projName;
-            //console.log("GetProjectMov: ", response);
             if (response != "null" && response != null) {
 
                 if (response == -1) {
@@ -395,15 +376,13 @@ function GetProjectMovement(ProjectId) {
 
                         if (response[i].attCnt > 0) {
                             listItem += "<td><a href='javascript:void(0);' class='anchorDetail' data-id='" + response[i].psmIds + "'>" +
-                                "<img src='/assets/images/icons/attachemnts_clip.png' alt='Icon'  style='width: 31px; height: 29px; margin-right: 0px;'>" +
+                                "<img src='/assets/images/icons/attachemnts_clip.png' alt='Icon' class='attach-clip-icon'>" +
                                 "</a></td>";
                         } else {
                             listItem += "<td></td>"; // Add an empty cell when there's no attachment
                         }
 
                         if (response[i].isComment == true) {
-
-                            // ✅ 1. Correct HTML generation
                             listItem += "<td class='align-middle'>" +
                                 "<span id='ToUnitName'>" +
                                 "<button class='btn btn-primary cls-editCmt' data-psmid='" + response[i].psmIds + "'>" +
@@ -437,12 +416,6 @@ function GetProjectMovement(ProjectId) {
                         "ordering": true,
                         "paging": true,
                         dom: 'lBfrtip',
-                        //buttons: [
-                        //    'copy',
-                        //    'excel',
-                        //    'csv',
-
-                        //],
                         buttons: [
                             {
                                 extend: 'copy',
@@ -498,23 +471,19 @@ function GetProjectMovement(ProjectId) {
 
                         var date = $(this).closest("tr").find("#spnDate").html()
                         var currentTime = date.slice(0, 19);
-                        //alert(currentTime);
-                      /*  TimeStamps = dateValue.replace('T', ' ');*/
+                      
                         $(".ProjectsFwd").removeClass("d-none");
                         $(".Attmenthistory").addClass("d-none");
-                        //alert($(this).closest("tr").find("#spnDate").html());
                         $("#spanProjectId").html($(this).closest("tr").find("#spanProjId").html());
                         $("#spanEditPslmId").html($(this).closest("tr").find("#spnpsmId").html());
                         $("#txtRemarksfwd").val($(this).closest("tr").find("#spnremarks").html());
                         $("#TimeStampToProjfwd").val(currentTime);
                         $("#SpnFwdStakeHolderId").html($(this).closest("tr").find("#spneditstakeHolderId").html());
-                        //$("#ddlfwdFwdTo").html($(this).closest("tr").find("#ToUnitName").html());
 
                         mMsaterfwdStage($(this).closest("tr").find("#spnStageId").html(), "ddlfwdStage", 5, 0, 1)
                         mMsaterStage($(this).closest("tr").find("#spnStatusId").html(), "ddlfwdSubStage", 6, $(this).closest("tr").find("#spnStageId").html(), 0)
-                        /*mMsater($(this).closest("tr").find("#spnActionId").html(), "ddlfwdAction", 7, $(this).closest("tr").find("#spnStatusId").html())*/
+                        
                         mMsater($(this).closest("tr").find("#spnActionId").html(), "ddlfwdAction", 11, $(this).closest("tr").find("#spnStatusId").html())
-                        //mMsaterFwdTo($(this).closest("tr").find("#spnToUnitId").html(), "ddlfwdFwdTo", 8, 0, $("#SpnFwdStakeHolderId").html(), $(this).closest("tr").find("#spnToUnitId").html(), 0, "");
                         mMsaterFwdTo($(this).closest("tr").find("#spnToUnitId").html(), "ddlfwdFwdTo", 8, 0, $(this).closest("tr").find("#spnToUnitId").html(), 0, "edit");
                     });
 
@@ -532,7 +501,6 @@ function GetProjectMovement(ProjectId) {
 
                         $('#EditComments').modal('show');
                         var words = projname.split(" ");
-                        // Limit to 6 words and add "..." if needed
                         var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projname;
                         var finalTitle = "Edit Comments for: " + shortProjName;
 
@@ -553,47 +521,8 @@ function GetProjectMovement(ProjectId) {
 
 }
 
-
-//$(document).ready(function () {
-//    alert("hello from ProjectMovementjs");
-
-//    var TeamDetailPostBackURL = '/Projects/AttDetails';
-//    $(function () {
-//        $(".anchorDetail").click(function () {
-
-//            var $buttonClicked = $(this);
-//            var id = $buttonClicked.attr('data-id');
-//            var options = { "backdrop": "static", keyboard: true };
-//            $.ajax({
-//                type: "GET",
-//                url: TeamDetailPostBackURL,
-//                contentType: "application/json; charset=utf-8",
-//                data: { "Id": id },
-//                datatype: "json",
-//                success: function (datadata) {
-
-//                    $('#myModalPagehistoryAttechment').modal('show');
-//                    $('#myModalContenthistoryAttechment').html(datadata);
-//                    /* $('#myModal').modal(options);*/
-
-
-//                },
-//                error: function () {
-//                    alert("Dynamic content load failed.");
-//                }
-//            });
-
-//        });
-
-//    });
-
-//    $(document).on('click', '.pdf', function () {
-//        $('#ViewRecordsHistory').modal('show');
-//    });
-//});
-
 $(document).ready(function () {
-    /*  alert("hello from ProjectMovementjs");*/
+    
 
     var TeamDetailPostBackURL = '/Projects/AttDetails';
     $(document).on('click', '.anchorDetail', function () {
@@ -633,15 +562,11 @@ $(document).on('click', '.anchorDetail', function () {
 
     var $buttonClicked = $(this);
     var id = $buttonClicked.attr('data-id');
-    //console.log('PsmId:', id); // Check if id is correct
 
     if (!id) {
         alert("No PsmId found.");
         return;
     }
-
-    //var $buttonClicked = $(this);
-    //var id = $buttonClicked.attr('data-id');
     var options = { "backdrop": "static", keyboard: true };
     $.ajax({
         type: "GET",
@@ -774,8 +699,6 @@ $(document).on("click", "#btnCommentUpdate", function () {
     $("#edtCmts, #ddlStatus, #CommentDateFwd, #StkcommentId").removeClass("is-invalid");
 
     let isValid = true;
-
-    // Validate each field
     if (!stkcomment.comments) {
         $("#edtCmts").addClass("is-invalid");
         isValid = false;
@@ -793,8 +716,6 @@ $(document).on("click", "#btnCommentUpdate", function () {
         alert("Please Click on Edit Button")
         isValid = false;
     }
-
-    // Stop further action if invalid
     if (!isValid) {
         return false;
     }
@@ -805,8 +726,6 @@ $(document).on("click", "#btnCommentUpdate", function () {
         type: 'POST',
         data: stkcomment,
         success: function (response) {
-
-            // Check if update was successful
             if (response === 1) {
                 Swal.fire({
                     icon: 'success',

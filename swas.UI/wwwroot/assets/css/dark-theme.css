@@ -12,7 +12,7 @@ html.dark-theme ::placeholder {
 }
 
 
-/* Sidebar */
+
 
 html.dark-theme .sidebar-wrapper,
 html.dark-theme .sidebar-wrapper .sidebar-header
@@ -75,7 +75,7 @@ html.dark-theme .apexcharts-text tspan {
     fill: rgb(255 255 255 / 66%);
 }
 
-/* Header */
+
 
 
 html.dark-theme .top-header {
@@ -112,7 +112,7 @@ html.dark-theme .options {
     color: #fcfcfc;
 }
 
-/* ecommerce */
+
 
 html.dark-theme .shop-container .card {
     border: 1px solid rgb(255 255 255 / 12%);
@@ -157,7 +157,7 @@ html.dark-theme .payment-mode img{
 
 
 
-/* Components */
+
 
 html.dark-theme .btn-dark {
     color: #fff;
@@ -668,7 +668,7 @@ html.dark-theme .footer {
 
 
 
-/* Responsive */
+
 
 @media screen and (max-width:1199px)  {
 

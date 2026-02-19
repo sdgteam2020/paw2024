@@ -1,7 +1,4 @@
 $(function() {
-
-
-    // chart1
     var ctx = document.getElementById('chart1').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'line',
@@ -41,10 +38,6 @@ $(function() {
             }
         }
     });
-
-
-    
-    // chart2
     var ctx = document.getElementById('chart2').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',
@@ -84,9 +77,6 @@ $(function() {
             }
         }
     });
-
-
-     // chart3
      var ctx = document.getElementById('chart3').getContext('2d');
      var myChart = new Chart(ctx, {
          type: 'pie',
@@ -110,10 +100,6 @@ $(function() {
             
          }
      });
-    
-
-
-      // chart4
       var ctx = document.getElementById('chart4').getContext('2d');
       var myChart = new Chart(ctx, {
           type: 'doughnut',
@@ -137,11 +123,6 @@ $(function() {
              
           }
       });
-
-
-
-      
-      // chart5
       var ctx = document.getElementById('chart5').getContext('2d');
       var myChart = new Chart(ctx, {
           type: 'radar',
@@ -186,11 +167,6 @@ $(function() {
             }
           },
       });
-
-
-
-      
-      // chart6
       var ctx = document.getElementById('chart6').getContext('2d');
       var myChart = new Chart(ctx, {
           type: 'polarArea',

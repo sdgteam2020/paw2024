@@ -17,27 +17,7 @@ namespace swas.BAL
         {
             _context = context;
         }
-        //public async Task<IEnumerable<SoftwareType>> GetAll()
-        //{
-        //    var Software = await _context.SoftwareTypes.ToListAsync();
-        //    return Software;
-        //    //throw new NotImplementedException();
-        //}
-
-        //public Task<SoftwareType> GetById(int id)
-        //{
-        //    throw new NotImplementedException();
-        //}
-        //public  Task Add(SoftwareType model)
-        //{
-
-        //    throw new NotImplementedException();
-        //}
-
-        //public Task Update(SoftwareType model)
-        //{
-        //    throw new NotImplementedException();
-        //}
+     
         public Task Delete(int id)
         {
             throw new NotImplementedException();

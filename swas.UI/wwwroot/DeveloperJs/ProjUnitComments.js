@@ -1,8 +1,6 @@
 ﻿
 $(document).on('ready', function () {
-        // Handle click event on elements with id starting with "commentDiv_"
         $('[id^="commentDiv_"]').click(function () {
-            // Extract the index from the id attribute
             alert("Hy buddy");
             var index = $(this).attr('id').replace('commentDiv_', '');
             handleDivClick(data[index].comments);
@@ -33,7 +31,6 @@ $(document).on('ready', function () {
         var stakeholderId = $('#StakeholdertextId').val();
         var projId = $('#ProjtextId').val();
         var psmId = $('#PsmToProj').val();
-        //var pdfFile = $('#pdfFile')[0].files[0];
 
         $.ajax({
             type: "POST",
@@ -44,10 +41,8 @@ $(document).on('ready', function () {
                 PsmID: psmId,
                 StatusId: status,
                 Comment: comments,
-                //PsmID: pdfFile
             },
             success: function (data) {
-                // Handle success response from the server
                 $('#IndexTable').html(response);
             },
             error: function (xhr, status, error) {
@@ -60,9 +55,7 @@ $(document).on('ready', function () {
     });
 
     function handleDivClick(comments) {
-        // Your handling logic here
         console.log('Div clicked with comments:', comments);
-        // You can perform additional actions here
     }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -73,8 +66,6 @@ document.addEventListener('DOMContentLoaded', function () {
             var projectDetailsDiv = document.getElementById('projectDetails');
             var projectDetailsDiv1 = document.getElementById('ProjDetails1');
             var projectDetailsDiv2 = document.getElementById('ProjDetails2');
-
-            // Get data from the clicked button
             var projName = btn.getAttribute('data-proj-namess') || '';
             var aimScope = btn.getAttribute('data-aim-scope') || '';
             var Initiateddate = btn.getAttribute('data-initiated-date') || '';
@@ -84,8 +75,6 @@ document.addEventListener('DOMContentLoaded', function () {
             var conceptofsw = btn.getAttribute('data-concept-sw') || '';
             var initiatedBy = btn.getAttribute('data-initiated-by') || '';
             var hosttype = btn.getAttribute('data-hosttype') || '';
-
-            // Update the content of the projectheading div
             projectDetailsDiv.innerHTML = `
                 <h3>Proj Details</h3>
                 <table class="new-proj-table">
@@ -223,7 +212,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
 function redirectToNewPage() {
-    // You can implement redirection logic here if needed
 }
 <script>
 
@@ -280,8 +268,6 @@ function redirectToNewPage() {
                     commentContainer += '</div>'; // Close the container
                     $('#ChatBox').empty().html(commentContainer);
                     $('#AddStatusDetails').show();
-
-                    // Hide IndexTable container
                     $('#IndexTableContainer').hide();
                 },
                 error: function () {
@@ -294,8 +280,6 @@ function redirectToNewPage() {
 
     $('#CancelUpdate').click(function () {
         $('#AddStatusDetails').hide();
-
-    // Show IndexTable container
     $('#IndexTableContainer').show();
         });
     });

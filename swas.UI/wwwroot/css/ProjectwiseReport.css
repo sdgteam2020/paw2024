@@ -1,4 +1,4 @@
-﻿/* ProjectWiseStatus - replaces inline styled green circle */
+﻿
 .pws-ok-dot {
     width: 25px;
     height: 25px;
@@ -43,7 +43,7 @@
         max-width: 100%;
     }
 }
-/* ProjectWiseStatus - replaces inline styled green circle */
+
 .pws-ok-dot {
     width: 25px;
     height: 25px;

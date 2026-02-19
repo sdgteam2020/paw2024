@@ -1,19 +1,19 @@
 ﻿
 .form-card {
-    display: block; /* Initially show the form */
+    display: block; 
 }
 
 .additional-details {
-    display: none; /* Hide the additional details initially */
+    display: none; 
 }
 
 .underline-h5 {
     padding: 0.5rem;
     width: 100%;
-    margin: 0 auto; /* Center the box */
+    margin: 0 auto; 
     text-align: center;
     border-color: #03c1fc;
-    /*box-shadow: 2px 6px 5px -3px #062b50;*/
+    
     background-color: #0cafff;
     color: white;
     font-family: Arial;
@@ -45,7 +45,7 @@
     width: 785px;
 }
 
-/* Custom H5 Styling */
+
 .custom-h5 {
     text-align: center;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -53,12 +53,12 @@
     height: 33px;
 }
 
-/* Custom Scroll Behavior */
+
 .custom-scroll {
     overscroll-behavior-y: auto;
 }
 
-/* PDF Preview Button Styling */
+
 .btn-preview {
     align-self: center;
     background-color: darkblue;

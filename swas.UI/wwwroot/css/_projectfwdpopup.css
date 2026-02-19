@@ -1,32 +1,23 @@
-﻿/* Modal general size */
+﻿
 #ProjFwd .modal-dialog {
     max-width: 95%;
     width: 95%;
     margin: 1rem auto;
-    /*margin-left: -100px;*/
 }
 
 #ProjFwd .modal-content {
 
-  /*  height: 88vh;*/ /* Adjust modal height */
-    /*  overflow-y: auto;
-    overflow-x: hidden;*/
+
     font-size: 12px;
-    /*width: 1400px;*/
+  
 }
 
-/* Modal header and title */
+
 #ProjFwd .modal-header {
     padding: 12px 16px;
 }
 
-    /*#ProjFwd .modal-header h5,*/
-  /*  #ProjFwd .modal-header h6 {
-        font-weight: bold;
-        margin: 0;
-    }*/
-
-/* Preview card */
+ 
 .projfwd-preview-body-bg {
     background-color: #f8f9fa;
 }
@@ -44,10 +35,10 @@
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    /*padding: 16px;*/
+    
 }
 
-/* Form fields */
+
 .ProjectsFwd select,
 .ProjectsFwd input,
 .ProjectsFwd textarea {
@@ -69,7 +60,7 @@
     width: 200px;
 }
 
-/* Headers and info buttons */
+
 .projfwd-header-h50 {
     height: 50px;
 }
@@ -92,7 +83,7 @@
     }
 }
 
-/* Table styling inside modal */
+
 #ProjFwd table {
     width: 100%;
     border-collapse: collapse;
@@ -124,7 +115,7 @@
         background-color: #f1f1f1;
     }
 
-/* Upload overlay */
+
 .projfwd-upload-overlay {
     position: fixed;
     top: 0;
@@ -140,7 +131,7 @@
     height: 4rem;
 }
 
-/* Buttons */
+
 #ProjFwd .btn {
     font-size: 11px;
     line-height: 1.4;
@@ -160,7 +151,7 @@
     cursor: not-allowed;
 }
 
-/* Responsive adjustments for modal */
+
 @media screen and (max-width: 768px) {
     #ProjFwd .modal-dialog {
         max-width: 98%;
@@ -270,7 +261,7 @@
 
 
 .gradient-header {
-    background: linear-gradient(90deg, #4361ee 0%, #3f37c9 100%); /* Softer blue-purple */
+    background: linear-gradient(90deg, #4361ee 0%, #3f37c9 100%); 
     border-bottom: 1px solid rgba(255,255,255,0.2);
 }
 
@@ -312,5 +303,10 @@
 }
 
 #pdfFrame {
+    border: none;
+}
+.pdf-frame {
+    width: 100%;
+    height: 600px;
     border: none;
 }

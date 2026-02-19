@@ -10,7 +10,7 @@ using swas.BAL;
 using Microsoft.AspNetCore.Authorization;
 using swas.BAL.DTO;
 using ASPNetCoreIdentityCustomFields.Data;
-using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
+
 using Microsoft.AspNetCore.Identity;
 using swas.DAL;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -25,14 +25,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using iText.Commons.Actions.Contexts;
 using Microsoft.AspNetCore.DataProtection;
 using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
+using swas.Areas.Identity.Pages.Account;
 
 namespace swas.UI.Controllers
 {
     public class ProjEditController : Controller
     {
-        //private readonly ILogger<HomeController> _logger;
         private readonly IProjectsRepository _projectsRepository;
-        //private readonly RepositoryUser _repositoryUser;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
@@ -45,7 +44,6 @@ namespace swas.UI.Controllers
 
         public ProjEditController(IProjectsRepository projectsRepository, SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, UserManager<ApplicationUser> userManager, IDdlRepository dlRepository, ApplicationDbContext context, IUnitRepository unitRepository, IHttpContextAccessor httpContextAccessor, IDataProtectionProvider DataProtector)
         {
-            //  _logger = logger; _repositoryUser = repositoryUser;
             _projectsRepository = projectsRepository;
 
             _signInManager = signInManager;
@@ -93,7 +91,6 @@ namespace swas.UI.Controllers
                     var action = _context.mActions.Select(e => e.Actions).ToList();
                     ViewBag.action = action;
                     List<tbl_Projects> modelproj = new List<tbl_Projects>();
-                    ///modelproj =  await _projectsRepository.GetProjforEditAsync();
 
                     return View(modelproj);
                 }

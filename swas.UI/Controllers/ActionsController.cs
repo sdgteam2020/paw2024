@@ -27,10 +27,6 @@ namespace swas.UI.Controllers
             _httpContextAccessor = httpContextAccessor;
             _logger = logger;
         }
-
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        // GET: Actions
         [Authorize(Policy = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -45,9 +41,6 @@ namespace swas.UI.Controllers
             var actions = await _actionsRepository.GetAll();
             return View(actions);
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        // GET: Actions/Details/5
         [Authorize(Policy = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Details(int id)
@@ -60,21 +53,6 @@ namespace swas.UI.Controllers
 
             return View(actions);
         }
-
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        // GET: Actions/Create
-
-        //public async Task<IActionResult> Create()
-        //{
-        //    var stages = _stagesRepository.GetAllStages(); 
-        //    ViewBag.StagesList = new SelectList(stages, "StagesId", "Stages");
-        //    return View();
-        //}
-
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        // POST: Actions/Create
 
         [HttpPost]
         public async Task<IActionResult> Create(tbl_mActions model)

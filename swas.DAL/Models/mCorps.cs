@@ -10,6 +10,8 @@ namespace swas.DAL.Models
 
         [Required]
         [MaxLength(50)]
+        [StringLength(100)]
+        [RegularExpression(@"^[a-zA-Z0-9\-_\/\.]+$", ErrorMessage = "Invalid characters.")]
         public string? corpsname { get; set; }
 
         public int? comdid { get; set; }

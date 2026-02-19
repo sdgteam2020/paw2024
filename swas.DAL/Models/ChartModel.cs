@@ -11,11 +11,6 @@ using System.Threading.Tasks;
 namespace swas.DAL.Models
 {
 
-    ///Developer Name :- Sub Maj M Sanal Kumar
-
-    ///Revised on :- 19,20 & 26, 27 Aug 2023  ---    pie chart incorrect data shown fixed by using sp json
-    /// Revised on :- 07& 08 Oct  2023  ---    removed sp json and corrected BAL and view
-
 
 
     public class ChartModel

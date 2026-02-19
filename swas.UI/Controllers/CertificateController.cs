@@ -33,81 +33,7 @@ namespace swas.UI.Controllers
             _pdfBuilder = builder;
         }
 
-        [HttpGet]
-        public IActionResult GeneratePDF()
-        {
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
-            using (MemoryStream ms = new MemoryStream())
-            {
-                PdfWriter writer = new PdfWriter(ms);
-                PdfDocument pdfDoc = new PdfDocument(writer);
-                Document doc = new Document(pdfDoc);
-
-                // Title
-                Paragraph title = new Paragraph("RESTRICTED")
-                    .SetFont(PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD))
-                    .SetFontSize(24)
-                    .SetTextAlignment(TextAlignment.CENTER)
-                    .SetMarginBottom(30);
-                doc.Add(title);
-
-                // Body
-                doc.Add(new Paragraph("This certificate is proudly awarded to:")
-                    .SetFontSize(14)
-                    .SetTextAlignment(TextAlignment.LEFT));
-
-                doc.Add(new Paragraph("RFP Vetting")
-                    .SetFontSize(20)
-                    .SetBold()
-                    .SetTextAlignment(TextAlignment.CENTER)
-                    .SetMarginBottom(20));
-
-                doc.Add(new Paragraph("For outstanding performance and dedication.")
-                    .SetFontSize(14)
-                    .SetTextAlignment(TextAlignment.CENTER));
-
-                // Name and Rank
-                doc.Add(new Paragraph("(" + Logins.Offr_Name.Trim() + ")")
-                    .SetFontSize(14)
-                    .SetMargin(0)
-                    .SetMultipliedLeading(0.9f)
-                    .SetTextAlignment(TextAlignment.LEFT));
-
-                doc.Add(new Paragraph(Logins.Rank.Trim())
-                    .SetFontSize(14)
-                    .SetMargin(0)
-                    .SetMultipliedLeading(0.9f)
-                    .SetTextAlignment(TextAlignment.LEFT));
-
-                // Username with inline green tick
-                string tickPath = Path.Combine(_webHostEnvironment.WebRootPath, "assets/images/check-mark.png"); // physical path
-                ImageData tickData = ImageDataFactory.Create(tickPath);
-                iText.Layout.Element.Image tickImage = new iText.Layout.Element.Image(tickData)
-                    .ScaleToFit(20, 20);
-
-                Paragraph userDetails = new Paragraph()
-                    .SetFontSize(14)
-                    .SetMargin(0)
-                    .SetMultipliedLeading(0.9f)
-                    .SetTextAlignment(TextAlignment.LEFT);
-
-                userDetails.Add(new Text(Logins.UserName.Trim() + " "));
-                userDetails.Add(tickImage); // inline tick
-
-                doc.Add(userDetails);
-
-                doc.Close();
-
-                string base64 = Convert.ToBase64String(ms.ToArray());
-                return Json(base64);
-            }
-
-
-
-
-
-        }
+      
         [HttpGet]
         public IActionResult GenerateCertificate(int substage, string ddlaction, string ddlRemarks, int Projid)
         {
@@ -142,11 +68,7 @@ namespace swas.UI.Controllers
 
 
             byte[] signedPdf = _pdfBuilder.SignPdf(unsignedPdf, login);
-
-            // Optional: store if needed later
             session.Set("SignedPDF", signedPdf);
-
-            // 🔥 RETURN PDF BYTES
             return File(signedPdf, "application/pdf");
         }
 
@@ -171,8 +93,6 @@ namespace swas.UI.Controllers
             {
                 pdfFile.CopyTo(stream);
             }
-
-            // optional: store path in Session for signing
             HttpContext.Session.SetString("TempPdfPath", fullPath);
             string baseUrl = $"{Request.Scheme}://{Request.Host}";
             string pdfUrl = $"{baseUrl}/temp/{fileName}";

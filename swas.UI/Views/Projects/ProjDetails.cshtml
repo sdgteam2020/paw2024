@@ -7,14 +7,13 @@
 @using swas.BAL.DTO
 @using swas.BAL.Helpers;
 @using swas.DAL.Models
+
 @model MailBox
 @inject IHttpContextAccessor HttpContextAccessor
 
 
 @{
 	Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor.HttpContext.Session, "User");
-
-	// ViewBag.Title = "Projects List";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 	int snoinbox = 0;
 	int snosent = 0;
@@ -37,12 +36,13 @@
 <!-- Include jQuery UI CSS -->
 
 <link rel="stylesheet" href="~/content/jquery-ui.css" rel="stylesheet" />
-@* <link href="~/content/jquery-ui.css" rel="stylesheet" /> *@
+ 
 <link href="~/css/projdetails.css" rel="stylesheet" />
 
 <script src="~/content/jquery-ui.min.js"></script>
 <script src="~/developerjs/commandatatable.js"></script>
 <body>
+	@Html.AntiForgeryToken()
 	<div class="tabs mt-5" id="tabs">
 		<ul class="tabs__head d-flex flex-wrap align-items-center">
 			<li class="me-2 mb-1">
@@ -58,7 +58,7 @@
 			<li class="me-2 mb-1">
 				<a href="#" data-tab="completed" id="tabcompleted" class="d-flex align-items-center tab-minw-230">
 
-					<img src="~/assets/images/completed.png" width="20" height="20" class="me-1" /> Completed (Hosted On ADN)
+					<img src="~/assets/images/completed.png" width="20" height="20" class="me-1" /> Whitelist Completed
 				</a>
 			</li>
 			<li class="me-2 mb-1">
@@ -98,7 +98,7 @@
 											<th class="col-w-20">Proj Name</th>
 											<th>Sponsor</th>
 											<th class="col-w-9">From</th>
-											@* <th class="to-unit-name">To Unit Name</th> *@
+											 
 											<th>Received On</th>
 											<th>Stage</th>
 											<th>SubStage</th>
@@ -131,7 +131,7 @@
 														snoinbox++;
 													}
 													<span>@snoinbox</span>
-													@* Visible content *@
+													 
 
 													@if (@project.HasRemainder1 == true && project.IsCc == false)
 													{
@@ -195,7 +195,7 @@
 													<span class="d-none noExport" id="SpnCurrentpsmId">@project.PsmIds</span>
 													<span class="d-none noExport" id="SpnStakeHolderId">@project.StakeHolderId</span>
 													<span class="d-none noExport" id="LatestActionType">@project.LatestActionType</span>
-													@* <span class="d-none" id="SpnTimeStampId">@project.TimeStamp.ToString().Substring(0, 10)</span> *@
+													 
 													<span class="d-none noExport" id="SpnTimeStampId">@project.TimeStamp</span>
 													<span class="d-none noExport" id="SpnStageId">@project.StageId</span>
 													<span class="d-none noExport" id="SpnTimeStatusId">@project.StatusId</span>
@@ -268,8 +268,8 @@
 													</div>
 												</td>
 
-												@* <td>@project.ToUnitName</td> *@
-												@* <td>@project.TimeStamp.ToString().Substring(0,10)</td> *@
+												 
+												 
 												<td class="TimeStampForcheckdate col-w-190">@project.TimeStamp</td>
 												<td class="col-w-150">@project.Stage</td>
 												<td class="col-w-190">@project.Status</td>
@@ -341,7 +341,7 @@
 																			</a>
 																		</span>
 																	}
-																	else if (project.IsProcess == true && project.LatestActionType == (int)ActionTypeEnum.RequestSent @* project.AdminApprovalStatus == false && project.UserRequest == true && project.RequestUnitId == currentUnitId *@)
+																	else if (project.IsProcess == true && project.LatestActionType == (int)ActionTypeEnum.RequestSent  )
 																	{
 																		<span title="Pending From Admin">
 																			<!-- Pending shown only to the unit that requested -->
@@ -437,9 +437,9 @@
 											<th class="col-w-20">Proj Name</th>
 											<th>Sponsor</th>
 
-											@* <th class="col-width9">From</th> *@
+											 
 											<th class="to-unit-name">To Unit Name</th>
-											@* <th>TimeStamp</th> *@
+											 
 											<th>Sent On</th>
 											<th>Stage</th>
 											<th>SubStage</th>
@@ -452,7 +452,7 @@
 									<tbody class="FontSize">
 										@foreach (var project in Model.SendItems.OrderByDescending(i => i.TimeStamp).ToList())
 										{
-											@* bool hasRemainder = remainderList?.Any(r => r.Projid == project.ProjId && r.IsRead == false) ?? false; *@
+											 
 											@* bool hasRemainder = remainderList?
 										.Where(r => r.Psmid == project.PsmIds)
 
@@ -471,14 +471,14 @@
 														@snosent
 														@if (project.IsRead == false)
 														{
-															<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+															<svg xmlns="" width="16" height="16"
 																 fill="currentColor" class="bi bi-check text-teal-custom" viewBox="0 0 16 16">
 																<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />
 															</svg>
 														}
 														else
 														{
-															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" class="text-teal-custom"
+															<svg xmlns="" viewBox="0 0 448 512" width="16" class="text-teal-custom"
 																 height="16" fill="currentColor">
 																<path d="M342.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l80 80c12.5 12.5 32.8 12.5 45.3 0l160-160zm96 128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 402.7 54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l256-256z" />
 															</svg>
@@ -506,7 +506,7 @@
 													<span class="d-none noExport" id="SpnCurrentProjId">@project.ProjId</span>
 													<span class="d-none noExport" id="SpnCurrentpsmId">@project.PsmIds</span>
 													<span class="d-none noExport" id="SpnStakeHolderId">@project.StakeHolderId</span>
-													@* <span class="d-none" id="SpnTimeStampId">@project.TimeStamp.ToString().Substring(0,10)</span> *@
+													 
 													<span class="d-none noExport" id="SpnTimeStampId">@project.TimeStamp</span>
 													<span class="d-none noExport" id="SpnprojectIsProcess">@project.IsProcess</span>
 													<span class="d-none noExport" id="SpnprojectStageId">@project.StageId</span>
@@ -575,7 +575,7 @@
 
 													</div>
 												</td>
-												@* <td>@project.TimeStamp.ToString().Substring(0, 10)</td> *@
+												 
 												<td>@project.TimeStamp</td>
 												<td>@project.Stage</td>
 												<td>@project.Status</td>
@@ -675,13 +675,18 @@
 												<span class="d-none" id="SpnCurrentProjId">@project.ProjId</span>
 												<td>
 													<a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XR">
-														@project.ProjName
+														<div class="tooltip-container" data-tooltip="@project.ProjName">
+															<span class="short-text noExport">
+																@(project.ProjName.Length > 17 ? project.ProjName.Substring(0, 17) + "..." : project.ProjName)
+															</span>
+															<span class="tooltip tooltip-text">@project.ProjName</span>
+														</div>
 													</a>
 												</td>
 												<td>@project.StakeHolder</td>
-												@* <td>@project.FwdBy</td> *@
+												 
 												<td>@project.RecdFmUser</td>
-												@* <td>@project.DateTimeOfUpdate?.ToString("dd-MM-yyyy")</td> *@
+												 
 												<td>@project.DateTimeOfUpdate</td>
 
 
@@ -716,7 +721,7 @@
 								<thead>
 									<tr>
 										<th class="s-no-column">Ser No</th>
-										@* <th>Proj ID</th> *@
+										 
 										<th>Proj Name</th>
 
 										<th>Recd From</th>
@@ -729,9 +734,9 @@
 										<th>Stage</th>
 										<th>Status</th>
 										<th>Action</th> *@
-										@*   <th>Comments</th> *@
+										 
 										<th>Remarks</th>
-										@*  <th>Days in Inbox</th> *@
+										 
 										<th>Att</th>
 										<th>Edit</th>
 									</tr>
@@ -748,7 +753,7 @@
 												}
 												@snodraft
 											</td>
-											@* <td>@project.ProjId</td> *@
+											 
 											<td>
 
 												@project.ProjName
@@ -942,8 +947,8 @@
 											<th>Sponsor</th>
 
 											<th class="col-width9">From</th>
-											@* <th class="to-unit-name">To Unit Name</th> *@
-											@* <th>TimeStamp</th> *@
+											 
+											 
 											<th>Sent On</th>
 											<th>Read On</th>
 											<th>Read By</th>
@@ -966,7 +971,7 @@
 			</div>
 
 			<!--Completed Items-->
-			@* <------Parked Items---------------> *@
+			 
 			@{
 				int snoparked = 0;
 			}
@@ -1155,7 +1160,7 @@
 <script src="~/developerjs/Tooltip.js"></script>
 
 <script src="~/developerjs/mtable.js"></script>
-<script src="~/developerjs/atthistory.js"></script>
+ 
 
 <script src="~/developerjs/projectdetails.js"></script>
 <script src="~/developerjs/projectstckholdercommentforprojhistory.js"></script>
@@ -1165,5 +1170,5 @@
 
 
 
-<script src="~/developerjs/fwdproject.js"></script>
+ 
 

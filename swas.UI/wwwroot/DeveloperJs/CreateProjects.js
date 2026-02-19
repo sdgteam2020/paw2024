@@ -1,7 +1,5 @@
 ﻿var current = 1;
 $(document).ready(function () {
-    //$("#1").hide();
-    //$("#3").show();
     $(function () {
         $(".datepicker1").datepicker({ dateFormat: 'dd-mm-yy' });
     });
@@ -83,8 +81,6 @@ $(document).ready(function () {
                 $(this).removeClass('is-invalid');
             }
         });
-
-        // Validate character limits
         $('.char-limit').each(function () {
             var inputField = $(this);
             var maxLength = inputField.data('maxlength'); // Get max length from data-maxlength attribute
@@ -118,20 +114,17 @@ $(document).ready(function () {
 
     });
     $(".previous").click(function () {
+        debugger;
+        const fieldset = $("#0");  // jQuery object
+        fieldset.removeClass('d-none'); // hides the fieldset
 
         current_fs = $(this).parent();
         prev_fs = $(this).parent().prev();
-
-        //Add Class Active
         $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
         $("#progressbar li").eq($("fieldset").index(prev_fs)).addClass("active");
-
-        //show the next fieldset
         prev_fs.show();
-        //hide the current fieldset with style
         current_fs.animate({ opacity: 0 }, {
             step: function (now) {
-                // for making fielset appear animation
                 opacity = 1 - now;
 
                 current_fs.css({
@@ -200,9 +193,8 @@ $(document).ready(function () {
         }
     });
     $("#btnbasic").click(function () {
-        
-
-
+       
+       
         requiredFields = $('#tablebasic').find('.requiredField');
         var allFieldsComplete = true;
         requiredFields.each(function (index) {
@@ -228,6 +220,8 @@ $(document).ready(function () {
             "#RequestRemarks"
 
         ];
+        
+
 
         required.forEach(function (selector) {
             var inputField = $(selector);
@@ -256,9 +250,13 @@ $(document).ready(function () {
             })
         }
         else {
-            
+            debugger;
+            const fieldset = $("#0");  // jQuery object
+            fieldset.addClass('d-none'); // hides the fieldset
+
+
             current_fs = $(this).parent();
-          
+
             next_fs = $(this).parent().next();
             $('#IngestionRemarksandToggle').addClass('d-none');
 
@@ -415,7 +413,6 @@ $(document).ready(function () {
 
             $("#ProjName").prop("disabled", false);
             $("#projectNameDropdown").show();
-            // Show Re-Vetted tag
             $("#reVettedTag").removeClass("d-none");
         } else {
             var currentval = $("#ProjName").val();
@@ -457,31 +454,19 @@ $(document).ready(function () {
     });
 });
 function AddProject(thistag) {
+   
     fetchServerDate().then(function (S) {
-      
-        //var initiatedDate = $("#InitiatedDate").val();
-        //var completionDate = $("#CompletionDate").val();
 
-        //// Get current time, or any specific time you want to append
-        //var currentTime = new Date(); // Get current date and time
-        //var hours = currentTime.getHours().toString().padStart(2, '0');
-        //var minutes = currentTime.getMinutes().toString().padStart(2, '0');
-        //var seconds = currentTime.getSeconds().toString().padStart(2, '0');
-
-        //var timeString = hours + ":" + minutes + ":" + seconds;
-
-        //// Combine date with the time (assuming you want the current time appended)
-        //initiatedDate = initiatedDate + " " + timeString;
-        //completionDate = completionDate + " " + timeString;
+        var token = $('input[name="__RequestVerificationToken"]').val();
+        
         var initialDate = $('#InitiatedDate').val();
         var completionDate = $('#CompletionDate').val();
         var currentDate = new Date(S.todayDateTime);
         var currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false });
 
       
-       /* var InitiatedDate = initialDate;*/
+       
         var InitiatedDate = initialDate + ' ' + currentTime;
-        //var CompletionDate = completionDate;
         var CompletionDate = completionDate + ' ' + currentTime;
         console.log("Inititated date:", initialDate + ", Complition Date: ", InitiatedDate)
         $.ajax({
@@ -490,12 +475,10 @@ function AddProject(thistag) {
             data: {
                 "ProjId": $("#ProjId").val(),
                 "ProjName": $("#ProjName").val(),
-                //  "InitiatedDate": $("#InitiatedDate").val(),
                 "InitiatedDate": InitiatedDate,
-                //  "CompletionDate": $("#CompletionDate").val(),
                 "CompletionDate": CompletionDate,
                 "IsWhitelisted": $("#IsWhitelisted").val(),
-                "MobileNo": $("#MobileNo").val(),
+               
                 "AsconNo": $("#AsconNo").val(),
                 "InitialRemark": $("#InitialRemark").val(),
                 "StakeHolderId": $("#ddlStakeHolderId").val(),
@@ -530,9 +513,12 @@ function AddProject(thistag) {
                 "Details_licensing": $("#Details_licensing").val(),
                 "OldPsmid": parseInt($("#spanOldPslmId").html()) || 0,
                 "Date_type": $('input[name="mcalender_dates"]:checked').val(),
-                "RequestRemarks": $("#RequestRemarks").val()
-
-            }, //get the search string
+                "RequestRemarks": $("#RequestRemarks").val(),
+                 "MobileNo": $("#MobileNo").val()
+            },
+            headers: {
+                'RequestVerificationToken': token
+            },//get the search string
             success: function (result) {
 
 
@@ -572,17 +558,6 @@ function AddProject(thistag) {
                         icon: "Error"
                     });
                 }
-
-                //else if (result.indcludes("Error")) {
-                //else if (result.include("Error")) {
-                //    Swal.fire({
-                //        icon: 'error',
-                //        title: 'Oops...',
-                //        text: result,
-
-                //    })
-
-                //}
                 else if (result != null) {
 
                     var projid = result.projId;
@@ -597,17 +572,10 @@ function AddProject(thistag) {
                     AttechHistory();
                     current_fs = $(thistag).parent();
                     next_fs = $(thistag).parent().next();
-
-
-                    //Add Class Active
                     $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-
-                    //show the next fieldset
                     next_fs.show();
-                    //hide the current fieldset with style
                     current_fs.animate({ opacity: 0 }, {
                         step: function (now) {
-                            // for making fielset appear animation
                             opacity = 1 - now;
 
                             current_fs.css({
@@ -635,7 +603,6 @@ function FwdProjConfirm(thisdata) {
         type: 'POST',
         data: { "PslmId": $("#spanCurrentPslmId").html() },
         success: function (response) {
-            //console.log(response);
 
 
             if (response >= 1) {
@@ -650,17 +617,10 @@ function FwdProjConfirm(thisdata) {
 
                 current_fs = $(thisdata).parent();
                 next_fs = $(thisdata).parent().next();
-
-
-                //Add Class Active
                 $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-
-                //show the next fieldset
                 next_fs.show();
-                //hide the current fieldset with style
                 current_fs.animate({ opacity: 0 }, {
                     step: function (now) {
-                        // for making fielset appear animation
                         opacity = 1 - now;
 
                         current_fs.css({
@@ -687,7 +647,6 @@ function ProjectSubmited(thisdata) {
         type: 'POST',
         data: { "projid": $("#spanProjectId").html(), "type": 1, "Remarks": Remarks },
         success: function (response) {
-            //console.log(response);
             if (response >= 1) {
                 $("#RequestRemarks").val("");
             }
@@ -704,17 +663,10 @@ function ProjectSubmited(thisdata) {
 
                 current_fs = $(thisdata).parent();
                 next_fs = $(thisdata).parent().next();
-
-                /* AddNotification($("#spanProjectId").html(), 2, 1);*/
-                //Add Class Active
                 $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-
-                //show the next fieldset
                 next_fs.show();
-                //hide the current fieldset with style
                 current_fs.animate({ opacity: 0 }, {
                     step: function (now) {
-                        // for making fielset appear animation
                         opacity = 1 - now;
 
                         current_fs.css({
@@ -740,36 +692,25 @@ function ProjectSaveAsDraft(thisdata) {
         type: 'POST',
         data: { "projid": $("#spanProjectId").html(), "type": 2, "Remarks": "" },
         success: function (response) {
-            //console.log(response);
             if (response >= 1) {
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
                     title: "Draft Saved Successfully in Initiated Projects",
-                    //title: "Draft Saved Successfully",
                     showConfirmButton: false,
                     timer: 1500
                 });
-
-                // Disable Save button and apply blur effect
                 $("#draftUpload").prop("disabled", true).removeClass("enabled-button").addClass("disabled-button");
-
-                // Enable Submit button and remove blur effect
                 $("#finalupload").prop("disabled", false).removeClass("disabled-button").addClass("enabled-button");
             }
         }
     });
 }
 function validationIsSuccessful() {
-    // Your validation logic goes here
-    // Return true if validation passes, false otherwise
-    // Example:
     var inputVal = $("#ProjEdit_DetlsofUserBase").val();
     if (inputVal === "") {
-        // Validation fails
         return false;
     }
-    // Validation passes
     return true;
 }
 function DateFormateyyy_mm_dd(date) {
@@ -790,8 +731,6 @@ function DateFormateyyy_mm_dd(date) {
     else {
         return '';
     }
-
-    //`${datef2.getFullYear()}/` + monthsans + `/` + dayans ;
 }
 
 function DeleteProject(ProjectId) {
@@ -800,7 +739,6 @@ function DeleteProject(ProjectId) {
         type: 'POST',
         data: { "ProjectId": ProjectId },
         success: function (response) {
-            //console.log(response);
 
 
             if (response == 1) {
@@ -847,8 +785,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     icon: 'info',
                     confirmButtonText: 'OK',
                     customClass: {
-                        title: 'swal2-title', /* Apply center-aligned title styles */
-                        htmlContainer: 'swal2-html-container' /* Apply center-aligned content styles */
+                        title: 'swal2-title', 
+                        htmlContainer: 'swal2-html-container' 
                     }
                 });
             });
@@ -859,8 +797,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     icon: 'info',
                     confirmButtonText: 'OK',
                     customClass: {
-                        title: 'swal2-title', /* Apply center-aligned title styles */
-                        htmlContainer: 'swal2-html-container' /* Apply center-aligned content styles */
+                        title: 'swal2-title', 
+                        htmlContainer: 'swal2-html-container' 
                     }
                 });
             });
@@ -871,8 +809,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     icon: 'info',
                     confirmButtonText: 'OK',
                     customClass: {
-                        title: 'swal2-title', /* Apply center-aligned title styles */
-                        htmlContainer: 'swal2-html-container' /* Apply center-aligned content styles */
+                        title: 'swal2-title', 
+                        htmlContainer: 'swal2-html-container' 
                     }
                 });
             });
@@ -880,23 +818,41 @@ document.addEventListener('DOMContentLoaded', function () {
   
  
         $(document).ready(function () {
-            // Select all inputs with the 'char-limit' class
             $('.char-limit').each(function () {
-                var inputField = $(this);
-                var maxLength = inputField.data('maxlength');  // Get the max length from data-maxlength attribute
-                var errorMsg = inputField.closest('div').find('.charErrorMsg');
-                // console.log("error",errorMsg)
-                // Listen for input event on the input field
-                inputField.on('input', function () {
-                    var currentLength = inputField.val().length;
 
-                    // Show error message if the current length exceeds the max length
-                    if (currentLength > maxLength) {
-                        errorMsg.removeClass('d-none');  // Display error message
+                var inputField = $(this);
+                var maxLength = parseInt(inputField.data('maxlength'));
+                var errorMsg = inputField.closest('div').find('.charErrorMsg');
+
+                inputField.on('input', function () {
+
+                    var value = inputField.val();
+
+                    // Stop typing after max length
+                    if (value.length > maxLength) {
+                        inputField.val(value.substring(0, maxLength));
+                        errorMsg.removeClass('d-none');
                     } else {
-                        errorMsg.addClass('d-none');  // Hide error message if within limit
+                        errorMsg.addClass('d-none');
                     }
+
                 });
+
             });
+
         });
- 
+
+$('#RequestRemarks').on('input', function () {
+
+    const maxLength = $(this).data('maxlength');
+    const errorMsg = $(this).siblings('.charErrorMsg');
+
+    if (this.value.length > maxLength) {
+        this.value = this.value.slice(0, maxLength);
+        errorMsg.removeClass('d-none');
+        $(this).addClass('is-invalid');
+    } else {
+        errorMsg.addClass('d-none');
+        $(this).removeClass('is-invalid');
+    }
+});

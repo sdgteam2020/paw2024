@@ -9,12 +9,6 @@ using System.Xml.Linq;
 
 namespace swas.DAL.Models
 {
-    /// <summary>
-    /// Created and Reviewed by: [Your Reviewer Name]
-    /// Reviewed Date: [Review Date]
-    /// Tested By: 
-    /// Tested Date: 
-    /// </summary>
     public class tbl_mUnitBranch
     {
         [Key]

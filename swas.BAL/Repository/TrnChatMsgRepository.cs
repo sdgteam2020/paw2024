@@ -53,8 +53,6 @@ namespace swas.BAL.Repository
 								IsRead= msg.IsRead
 							 }).ToListAsync();
 
-			//var chat = await _context.TrnChatMsg.Where(i => i.UserMapChatId == UserMapChatId).ToListAsync();
-			//var chat1 = await _context.TrnChatMsg.Where(i => i.UserMapChatId == ret.UserMapChatId).ToListAsync();
 			if(ret!=null)
 			{
 				var chat1 = await (from msg in _context.TrnChatMsg
@@ -73,7 +71,7 @@ namespace swas.BAL.Repository
 
 				chat.AddRange(chat1);
 			}
-			//var retww = chat.OrderByDescending(i => i.CreatedOn);
+		
 			return chat.OrderBy(i => i.CreatedOn).ToList();
 		}
 
@@ -114,36 +112,7 @@ namespace swas.BAL.Repository
                              }).ToListAsync();
             return ret;
         }
-        //public async Task<List<DTOApplicationUserWithChatRead>> GetAllUsers()
-        //{
-        //	try
-        //	{
-        //              var ret = await (from users in _context.Users
-        //                                   //join mapchat in _context.mUserMapChat on users.Id equals mapchat.ToUserId
-        //                               let datetime = (from map1 in _context.mUserMapChat
-        //                                               join trnchat1 in _context.TrnChatMsg on map1.UserMapChatId equals trnchat1.UserMapChatId
-        //                                               orderby trnchat1.CreatedOn descending
-        //                                               where users.Id == map1.ToUserId
-        //                                               select trnchat1.CreatedOn).FirstOrDefault()
-
-        //                               select new DTOApplicationUserWithChatRead
-        //                               {
-        //                                   Id = users.Id,
-        //                                   Rank = users.Rank,
-        //                                   Offr_Name = users.Offr_Name,
-        //                                   UserName = users.UserName,
-
-        //                                   CreatedDate = datetime
-        //                               }).ToListAsync();
-        //              return ret;
-
-        //          }
-        //          catch (Exception ex	)
-        //	{
-
-        //		throw ex;
-        //	}			
-        //}
+      
         public async Task<List<DTOApplicationUserWithChatRead>> GetAllUsers()
         {
             var commonHelper = new CommonHelper(_context);
@@ -160,7 +129,6 @@ namespace swas.BAL.Repository
                                  {
                                      
                                      Id = users.Id,
-                                     //Rank = users.Rank 
                                      RankName = commonHelper.GetRankByRankId(users.Rank),
                                      Offr_Name = users.Offr_Name,
                                      UserName = users.UserName,

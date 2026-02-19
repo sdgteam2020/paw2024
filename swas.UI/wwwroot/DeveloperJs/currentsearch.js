@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 
-    /* ================= COMMON HELPERS ================= */
+    
 
     function formatDate(dateStr) {
         if (!dateStr) return '';
@@ -66,7 +66,7 @@
         win.document.close();
     }
 
-    /* ================= PROJECT NAME SEARCH ================= */
+    
 
     let projTable;
 
@@ -122,7 +122,7 @@
         });
     });
 
-    /* ================= STACK / STAGE / STATUS / ACTION / INITIATED ================= */
+    
 
     function genericSearch(btn, url, tableId, bodyId, fromId, toId) {
         let table;
@@ -185,7 +185,7 @@
         });
     }
 
-    /* Calls (IDs SAME) */
+    
     genericSearch('#searchstackButton',
         '@Url.Action("SearchstackResult","Search")',
         '#SearchStackHolderTable',

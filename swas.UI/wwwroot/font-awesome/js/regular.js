@@ -1,6 +1,6 @@
 /*!
- * Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com
- * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ * Font Awesome Free 6.5.2 by @fontawesome - 
+ * License -  (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  * Copyright 2024 Fonticons, Inc.
  */
 (function () {
@@ -112,7 +112,6 @@
   var FAMILIES = [FAMILY_CLASSIC, FAMILY_SHARP];
 
   function familyProxy(obj) {
-    // Defaults to the classic family if family is not available
     return new Proxy(obj, {
       get: function get(target, prop) {
         return prop in target ? target[prop] : target[FAMILY_CLASSIC];

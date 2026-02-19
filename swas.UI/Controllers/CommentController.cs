@@ -8,12 +8,6 @@ namespace swas.UI.Controllers
 {
     public class CommentController : Controller
     {
-
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        ///Tested By :- 
-        ///Tested Date : 
-        ///Start
         private readonly ICommentRepository _commentRepository;
         private readonly ILogger<CommentController> _logger;
         public CommentController(ICommentRepository commentRepository, ILogger<CommentController> logger)
@@ -21,9 +15,6 @@ namespace swas.UI.Controllers
             _commentRepository = commentRepository;
             _logger = logger;
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        // GET: Comment
         [Authorize(Policy = "StakeHolders")]
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -31,9 +22,6 @@ namespace swas.UI.Controllers
             var comments = await _commentRepository.GetAllCommentsAsync();
             return View(comments);
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        // GET: Comment/Details/5
         [Authorize(Policy = "StakeHolders")]
         [HttpGet]
         public async Task<IActionResult> Details(int id)
@@ -46,19 +34,13 @@ namespace swas.UI.Controllers
 
             return View(comment);
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        // GET: Comment/Create
         [Authorize(Policy = "StakeHolders")]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
             var commets = await _commentRepository.GetAllCommentsAsync();
             return View(commets);
-           // return View();
         }
-
-        // POST: Comment/Create
         [Authorize(Policy = "StakeHolders")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -83,9 +65,6 @@ namespace swas.UI.Controllers
             }
             
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        // GET: Comment/Edit/5
         [Authorize(Policy = "StakeHolders")]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
@@ -97,9 +76,6 @@ namespace swas.UI.Controllers
             }
             return View(comment);
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        // POST: Comment/Edit/5
         [Authorize(Policy = "StakeHolders")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -129,9 +105,6 @@ namespace swas.UI.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        // GET: Comment/Delete/5
         [Authorize(Policy = "StakeHolders")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -142,9 +115,6 @@ namespace swas.UI.Controllers
             }
             return View(comment);
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        // POST: Comment/Delete/5
         [Authorize(Policy = "StakeHolders")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

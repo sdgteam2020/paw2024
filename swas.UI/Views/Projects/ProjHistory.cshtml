@@ -8,21 +8,14 @@
     ViewBag.Title = "Project History List";
     Layout = "~/Views/Shared/_Layout.cshtml";
     int snoa = 0;
-    //if (Model.Projmove == null)
-    // {
-    //     Model.Projmove = new Projmove(); // Initialize Projmove if it's null
-    // }
-
-    //Model.Projmove.Submitcde = false;
-    //ViewBag.SubmitCde = ViewBag.SubmitCde;
     int? DataProjId = ViewBag.DataProjId as int?;
 }
 @{
     int projIdFromViewBag = Convert.ToInt32(ViewBag.Projid);
 }
-@*<link href="~/assets/css/tooltip.css" rel="stylesheet" />*@
+ 
 
-@* <link href="~/css/chatbox.css" rel="stylesheet" /> *@
+ 
 
 <link href="~/css/projhistory.css" rel="stylesheet" />
 <link href="~/css/ProjectwiseReport.css" rel="stylesheet" />
@@ -51,7 +44,7 @@
         <div class="card radius-10 w-100">
             <div class="card-body">
                 <div class="projectheading">
-                    Proj Details  @*  <img src="~/assets/images/icons/pdfimg.png" onclick="PrintDiv()" alt="Pdf Download" width="35" height="25">*@
+                    Proj Details   
 
                 </div>
                 <div class="table-responsive">
@@ -81,12 +74,8 @@
                         </tr>
                         
 
-                        </tr>
-                        @* <tr>
-                            <td class="new-proj-table">Timeline</td>
-                            <td class="long-text">@Model[0].ProjectDetl[1].MajTimeLines</td>
-
-                        </tr> *@
+                        
+                       
                         <tr>
                             <td class="new-proj-table">Name of Sponsor</td>
                             <td>@Model.FirstOrDefault()?.InitiatedBy</td>
@@ -128,12 +117,9 @@
                     <table  >
                         <tr>
                             <td class="new-proj-table">Tech Stack</td>
-                            @*  <td>@Model[0].ProjectDetl[1].TechStackProposed</td>*@
+                             
 
-                            @*<td class="tooltip-container" data-tooltip="@Model[0].ProjectDetl[1].TechStackProposed">
-                            <span class="short-text">@truncateText(Model[0].ProjectDetl[1].TechStackProposed, 6)</span>
-                            <span class="tooltip tooltip-text">@Model[0].ProjectDetl[1].TechStackProposed</span>
-                            </td>*@
+                         
                             <td class="tooltip-container">
                                 <span class="short-text">@truncateText(Model[0].ProjectDetl[1].TechStackProposed, 6)</span>
                                 <span class="tooltip tooltip-text">@Model[0].ProjectDetl[1].TechStackProposed</span>
@@ -143,7 +129,7 @@
 
                         <tr>
                             <td class="new-proj-table">Usage</td>
-                            @*<td>@Model[0].ProjectDetl[1].UsabilityofProposedAppln</td>*@
+                             
                             <td class="tooltip-container">
                                 <span class="short-text">@truncateText(Model[0].ProjectDetl[1].UsabilityofProposedAppln, 6)</span>
                                 <span class="tooltip tooltip-text">@Model[0].ProjectDetl[1].UsabilityofProposedAppln</span>
@@ -686,7 +672,7 @@
             <span id="ipAdd" class="d-none">@TempData["ipadd"]</span>
             <h6 class="ph-heading-title">Comment By Stakeholders</h6>
         </div>
-
+        <div class="add-comment-btn text-start mb-2 mt-2"></div>
         <div class="chat-messages ph-chat-mt3" id="ChatBox">
             <!-- Your chat messages go here -->
         </div>
@@ -698,8 +684,8 @@
 
 @await Html.PartialAsync("_ProjectPendingStatus")
 <script src="~/developerjs/mtable.js"></script>
-<script src="~/developerjs/projectstckholdercommentforprojhistory.js"></script>
-<script src="~/developerjs/projectstkholdercomments.js"></script>
+
+ 
 <script src="~/developerjs/FwdProject.js"> </script>
 
 @functions {

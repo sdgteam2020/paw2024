@@ -28,78 +28,7 @@ namespace swas.BAL
         }
         public async Task<List<DTOProComments>> GetAllStkForComment(int UnitId, int StatusId)
         {
-            #region GetAllStkForCommentWithLinq
-
-            //var queryforstackholderself = from a in _context.Projects
-            //                              join b in _context.ProjStakeHolderMov on a.ProjId equals b.ProjId
-
-            //                              where b.IsComment == true
-            //                              && a.StakeHolderId == b.ToUnitId
-            //                              group b by new { b.ToUnitId, a.ProjId } into grp
-            //                              where grp.Count() > 1
-            //                              select new DTOForStackHolderCout
-            //                              {
-            //                                  ProjId = grp.Key.ProjId,
-            //                                  UnitId = grp.Key.ToUnitId
-            //                              };
-
-
-            //var maxpsmid = await (from a in _context.ProjStakeHolderMov
-            //                      join b in queryforstackholderself on a.ProjId equals b.ProjId
-            //                      where a.IsComment == true
-            //                      select new DTOForStackHolderCout
-            //                      {
-            //                          ProjId = b.ProjId,
-            //                          PsmId = a.PsmId,
-            //                      }).ToListAsync();
-
-            //var lastpsmiid = maxpsmid.GroupBy(x => x.ProjId).Select(x => x.OrderByDescending(a => a.PsmId).FirstOrDefault()).ToList();
-
-
-
-            //List<DTOProComments> lst = new List<DTOProComments>();
-            //var queryes = await (from proj in _context.Projects
-            //                     join mov in _context.ProjStakeHolderMov on proj.ProjId equals mov.ProjId
-            //                     //join com in _context.StkComment on proj.ProjId equals com.ProjId
-            //                     join stakeholder in _context.tbl_mUnitBranch on proj.StakeHolderId equals stakeholder.unitid
-            //                     let StkStatusId =
-            //                 (from cr1 in _context.StkComment
-            //                  join Stdkst in _context.StkStatus on cr1.StkStatusId equals Stdkst.StkStatusId
-            //                  where cr1.StakeHolderId == mov.ToUnitId && cr1.PsmId == mov.PsmId
-            //                  orderby cr1.StkCommentId descending
-            //                  select cr1.StkStatusId
-            //                 ).FirstOrDefault()/*.Count()*/
-            //                     where mov.ToUnitId == UnitId && mov.IsComment == true //&& mov.StatusId==5
-
-            //                     select new DTOProComments
-            //                     {
-            //                         ProjectName = proj.ProjName,
-            //                         Stakeholder = stakeholder.UnitName,
-            //                         Status = "",
-            //                         StkStatusId = Convert.ToInt32(StkStatusId),
-            //                         //StkStatusId = comment.StkStatusId,
-            //                         ProjId = proj.ProjId,
-            //                         PsmId = mov.PsmId,
-            //                         EncyID = _dataProtector.Protect(proj.ProjId.ToString()),
-            //                         //TimeStamp = _context.StkComment.Where(i => i.StkStatusId == StkStatusId).Select(i => i.DateTimeOfUpdate).SingleOrDefault()?? mov.TimeStamp,
-            //                         TimeStamp = mov.TimeStamp,
-            //                         UnitId = mov.ToUnitId,
-            //                         IsComment = mov.IsRead
-            //                         //StkCommentId = com.StkCommentId
-            //                     }
-            //                     // Group by both ProjId and ToUnitId  /////old  by new { proj.ProjId, mov.ToUnitId } into g 
-            //                     ).ToListAsync();
-
-            ////var data = lst.OrderByDescending(x => x.StkCommentId).ToList();
-
-            //lst.AddRange(queryes);
-
-            //lst.RemoveAll(item => lastpsmiid.Any(item2 => item.PsmId == item2.PsmId));
-
-            //return lst.OrderByDescending(i => i.TimeStamp).ToList();
-            ////return data;
-
-            #endregion
+           
 
             #region GetAllStkForCommentWithProc
             try
@@ -161,12 +90,7 @@ namespace swas.BAL
                                           Status = status.Status,
                                           StkStatusId = comment.StkStatusId,
                                       }).OrderByDescending(c => c.StkCommentId).SingleOrDefaultAsync();
-            // Where(comment.StakeHolderId == UnitId)
-            //.OrderByDescending(x => x.StkCommentId)
-            //.Take(1)
-            //.Select(x => x.StkStatusId)
-            //.ToList()
-            //.FirstOrDefault();
+         
             return null;
         }
 

@@ -1,36 +1,29 @@
 ﻿.modal-content {
-    /*margin-left: -2rem !important;*/
-    height: auto; /* Remove fixed height to allow dynamic content */
+    
+    height: auto; 
 }
-/* ===== WhiteListedProjectDetail modal (moved from inline styles) ===== */
 
-/* was: style="display:none;" on modal (Bootstrap handles this, but keep safe) */
 .wl-modal-hidden {
     display: none;
 }
 
-/* was: modal-dialog style="max-width:95% !important" */
 .wl-modal-dialog {
     max-width: 95% !important;
 }
 
-/* was: modal-content style="width:111rem !important" */
 .wl-modal-content {
     width: 111rem !important;
 }
 
-/* was: table style="overflow: scroll;" */
 .wl-table-scroll {
     overflow: scroll;
 }
 
-/* was: thead style="position: sticky; top:-18px" */
 .wl-thead-sticky {
     position: sticky;
     top: -18px;
 }
 
-/* was: width styles on each th */
 .wl-w-1 {
     width: 1% !important;
 }

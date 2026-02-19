@@ -52,7 +52,7 @@ jQuery.fn.dataTableExt.oApi.fnMultiFilter = function( oSettings, oData ) {
 			{
 				if( oSettings.aoColumns[i].sName == key )
 				{
-					/* Add single column filter */
+					
 					oSettings.aoPreSearchCols[ i ].sSearch = oData[key];
 					break;
 				}

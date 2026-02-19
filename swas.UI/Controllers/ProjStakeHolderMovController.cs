@@ -36,19 +36,11 @@ namespace swas.UI.Controllers
             _dataProtector = DataProtector.CreateProtector("swas.UI.Controllers.ProjectsController");
             _logger = logger;
         }
-        ///Created by : Sub Maj M Sanal Kumar
-        // Reviewed Date : 30 Jul 23
-        // GET: ProjStakeHolderMov
         public async Task<IActionResult> Index()
         {
             var projStakeHolderMovList = await _psmRepo.GetAllProjStakeHolderMovAsync();
             return View(projStakeHolderMovList);
         }
-        ///Created by : Sub Maj M Sanal Kumar
-        // Reviewed Date : 30 Jul 23
-
-        // GET: ProjStakeHolderMov/Details/5
-        //[Authorize(Policy = "StakeHolders")]
         public async Task<IActionResult> Details(int id)
         {
             var projStakeHolderMov = await _psmRepo.GetProjStakeHolderMovByIdAsync(id);
@@ -59,10 +51,6 @@ namespace swas.UI.Controllers
 
             return View(projStakeHolderMov);
         }
-        ///Created by : Sub Maj M Sanal Kumar
-        // Reviewed Date : 30 Jul 23
-        // GET: ProjStakeHolderMov/Create
-        //[Authorize(Policy = "StakeHolders")]
         public async Task<IActionResult> Create()
         {
             var stackhold = await _psmRepo.GetAllProjStakeHolderMovAsync();
@@ -90,10 +78,6 @@ namespace swas.UI.Controllers
                 return Redirect("/Identity/Account/login");
             }
         }
-        ///Created by : Sub Maj M Sanal Kumar
-        // Reviewed Date : 30 Jul 23
-        // POST: ProjStakeHolderMov/Edit/5
-        //[Authorize(Policy = "StakeHolders")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, tbl_ProjStakeHolderMov projStakeHolderMov)
@@ -132,10 +116,6 @@ namespace swas.UI.Controllers
                 return Redirect("/Identity/Account/login");
             }
         }
-        ///Created by : Sub Maj M Sanal Kumar
-        // Reviewed Date : 30 Jul 23
-        // GET: ProjStakeHolderMov/Delete/5
-        //[Authorize(Policy = "StakeHolders")]
 
         public async Task<IActionResult> Delete(int id)
         {
@@ -155,10 +135,6 @@ namespace swas.UI.Controllers
                 return Redirect("/Identity/Account/login");
             }
         }
-        ///Created by : Sub Maj M Sanal Kumar
-        // Reviewed Date : 30 Jul 23
-        // POST: ProjStakeHolderMov/Delete/5
-        //[Authorize(Policy = "StakeHolders")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -2,13 +2,13 @@
 
 
 .header {
-    background-color: blue; /* Replace with your desired header color */
-    color: blue; /* Replace with your desired text color for the header */
+    background-color: blue; 
+    color: blue; 
 }
 
 .footer {
-    background-color: #044c92; /* Replace with your desired footer color */
-    color: #044c92; /* Replace with your desired text color for the footer */
+    background-color: #044c92; 
+    color: #044c92; 
     position: fixed;
     margin-bottom: 0px;
 }
@@ -110,28 +110,28 @@ body {
 }
 
 .new-badge-icon {
-    color: red; /* Badge color */
-    font-size: 10px; /* Adjust size as needed */
+    color: red; 
+    font-size: 10px; 
 }
 
 .custom-modal-size {
-    max-width: 100%; /* Set the modal width to 80% of the screen */
-    width: 95%; /* Ensure it scales responsively */
-    margin: auto; /* Center horizontally */
+    max-width: 100%; 
+    width: 95%; 
+    margin: auto; 
 }
 
     .custom-modal-size .modal-content {
-        /*overflow-y: auto;*/ /* Add vertical scrolling for long content */
-        /*overflow-x: hidden;*/ /* Prevent horizontal overflow */
-        /* margin-left: 248px; */
+         
+         
+        
     }
 
 .modal-dialog {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh; /* Vertically center the modal */
-    margin: 0; /* Remove default margins for better centering */
+    min-height: 100vh; 
+    margin: 0; 
 }
 
 
@@ -154,35 +154,35 @@ body {
 
 .modal-title {
     flex-grow: 1;
-    text-align: center; /* This centers the heading within the available space */
+    text-align: center; 
 }
 
 
-/* ===== Inline style replacements for _Layout.cshtml ===== */
-/* ===== PAW Inline-style extraction (no behavior change) ===== */
 
-/* Edit User modal width */
+
+
+
 /*.paw-edituser-modal-content {
     width: 65%;
 }
 */
-/* Common blue header used in your modals */
+
 .paw-modal-header-blue {
     background-color: #044c92;
     color: #fff;
 }
 
-/* Sidebar header blue */
+
 .paw-sidebar-header-blue {
     background-color: #044c92 !important;
 }
 
-/* Top header text color */
+
 .paw-topheader-text-blue {
     color: #044c92;
 }
 
-/* Bars margin-top */
+
 .paw-bar-mt-62 {
     margin-top: 62px;
 }
@@ -191,31 +191,25 @@ body {
     margin-top: 70px;
 }
 
-/* Footer fixed */
+
 .paw-footer-fixed {
     position: fixed;
     margin-bottom: 0;
 }
 
-/* Footer right info alignment */
-.paw-footer-right-info {
-    text-align: right;
-    margin-top: -24px !important;
-    margin-right: 20px !important;
-}
 
-/* total counter margin */
+
 .paw-totalCounter {
     margin-right: 32px !important;
 }
 
-/* modal-content margin-left:0 */
+
 .paw-modal-content-ml-0 {
     margin-left: 0;
     width:1600px !important;
 }
 
-/* Add Comments title styles */
+
 .paw-addcomment-title {
     text-align: left;
     font-size: 16px;
@@ -224,21 +218,21 @@ body {
     color: antiquewhite;
 }
 
-/* Upload loader overlay */
+
 .paw-uploadLoader {
     display: none;
     position: fixed;
-    inset: 0; /* top:0; right:0; bottom:0; left:0 */
+    inset: 0; 
     background-color: rgba(0,0,0,0.4);
     z-index: 1050;
 }
 
-/* Spinner size */
+
 .paw-spinner-4rem {
     width: 4rem;
     height: 4rem;
 }
-/* ===== PAW: removed inline styles (NO UI change) ===== */
+
 
 .paw-edituser-modal-content {
     width: 675px !important;
@@ -265,19 +259,14 @@ body {
     margin-top: 70px;
 }
 
-.paw-footer-fixed {
-    position: fixed;
-    margin-bottom: 0;
-}
+
+
+
 
 .paw-footer-right-info {
     text-align: right;
     margin-top: -24px !important;
     margin-right: 20px !important;
-}
-
-.paw-totalCounter {
-    margin-right: 32px !important;
 }
 
 .paw-modal-content-ml-0 {
@@ -292,7 +281,7 @@ body {
     color: antiquewhite;
 }
 
-/* Upload loader overlay */
+
 .paw-uploadLoader {
     display: none;
     position: fixed;
@@ -301,53 +290,53 @@ body {
     z-index: 1050;
 }
 
-/* Spinner size */
+
 .paw-spinner-4rem {
     width: 4rem;
     height: 4rem;
 }
 
-/* previously inline: menu icon width */
+
 .paw-menu-icon {
     width: 16px;
 }
 
-/* previously inline: loader title margin-top */
+
 .paw-loading-title {
     margin-top: -20px;
 }
 
-/* previously inline: edit user link color */
+
 .paw-edituser-link-white {
     color: #fff;
 }
 
-/* previously inline: user-pen icon size */
+
 .paw-userpen-icon {
     font-size: x-large;
 }
 
-/* previously inline: small font blocks */
+
 .paw-font-small {
     font-size: small;
 }
 
-/* previously inline: user logout img height */
+
 .paw-logout-img {
     height: 35px;
 }
 
-/* previously inline: sidebar menu bold */
+
 .paw-sidebar-bold {
     font-weight: bold;
 }
 
-/* previously inline: menu-title margin-left 0 */
+
 .paw-menu-title-left0 {
     margin-left: 0 !important;
 }
 
-/* previously inline: inbox container spacing */
+
 .paw-inbox-ml-46 {
     margin-left: 46px !important;
 }
@@ -356,34 +345,34 @@ body {
     margin-left: -43px;
 }
 
-/* previously inline: admin iconcontainer spacing */
+
 .paw-admin-iconcontainer {
     margin-right: -10px;
     letter-spacing: -0.5px !important;
 }
 
-/* previously inline: user-setting margin-right */
+
 .paw-user-setting-mr-100 {
     margin-right: 100px;
 }
 
-/* previously inline: switcher hidden */
+
 .paw-switcher-hidden {
     visibility: hidden;
 }
 
-/* previously inline: chat emoji size */
+
 .paw-chat-emoji {
     font-size: 20px;
 }
 
-/* previously inline: comments textarea width/height */
+
 .paw-comments-textarea {
     width: 100%;
     height: 240px;
 }
 
-/* previously inline: <font style="color:red;"> */
+
 .paw-red-font {
     color: red;
 }
@@ -402,7 +391,7 @@ body {
 .datatblwatermark {
   
 }
-/* ---------- COMMENTS TABLE (PDF / VIEW) ---------- */
+
 .comments-table {
     width: 100%;
     border: 1px solid black;
@@ -425,9 +414,9 @@ body {
 
 
 
-/* ---------- COMMENTS BOX ---------- */
+
 .comment-box {
-    text-align: justify; /* was inline */
+    text-align: justify; 
     margin-bottom: 15px;
     padding: 10px;
     border: 1px solid #ddd;
@@ -443,11 +432,11 @@ body {
 
     .comment-header div:first-child span {
         font-family: Arial;
-        color: #0793f7; /* was inline */
+        color: #0793f7; 
     }
 
 .comment-meta {
-    margin-left: 0; /* was inline */
+    margin-left: 0; 
     font-size: 0.85rem;
     color: #555;
 }
@@ -460,7 +449,7 @@ body {
     width: 24px;
     height: 24px;
 }
-/* SweetAlert custom content */
+
 .swal-html-content {
     text-align: left;
 }
@@ -470,13 +459,13 @@ body {
         padding-left: 20px;
         text-align: left;
     }
-/* WhiteList Project Table Custom Styles */
+
 .RefLetter-container {
-    width: auto; /* Adjust width if needed */
+    width: auto; 
 }
 
     .RefLetter-container .noExport {
-        /* Already default styles; you can add if needed */
+        
     }
 
     .RefLetter-container .RefLetter {
@@ -493,4 +482,44 @@ body {
 
 .WhitelistedTable-width15 {
     width: 15%;
+}
+.Datatablestyle table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.Datatablestyle th,
+.Datatablestyle td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.Datatablestyle th {
+    background-color: #f2f2f2;
+    color: black;
+}
+
+.datatblwatermark {
+    transform: rotate(-45deg);
+    position: fixed;
+    top: 39%;
+    left: 6%;
+    font-size: 80px;
+    opacity: 0.3;
+    z-index: 10000;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    pointer-events: none;
+    user-select: none;
+}
+.attach-clip-icon {
+    width: 31px !important;
+    height: 29px !important;
+    margin-right: 0px !important;
+}
+.modal-header .btn-close {
+    background-color: red;
 }

@@ -1,655 +1,3 @@
------------------------------------------------------------------------------
-Date : 28-02-2024 00:40:47
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 00:41:41
-The ConnectionString property has not been initialized.
------------------------------------------------------------------------------
-Date : 28-02-2024 00:41:41
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 00:42:32
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 00:42:38
-The ConnectionString property has not been initialized.
------------------------------------------------------------------------------
-Date : 28-02-2024 00:42:38
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 00:42:52
-The ConnectionString property has not been initialized.
------------------------------------------------------------------------------
-Date : 28-02-2024 00:42:52
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 01:43:21
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 27-02-2024 22:15:37
-Could not find stored procedure '
-WhiteListedProjects'.
------------------------------------------------------------------------------
-Date : 27-02-2024 22:15:54
-Could not find stored procedure 'usp_GetActInbox'.
------------------------------------------------------------------------------
-Date : 27-02-2024 22:15:54
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 27-02-2024 22:16:01
-Could not find stored procedure 'usp_GetActInbox'.
------------------------------------------------------------------------------
-Date : 27-02-2024 22:16:01
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 02:57:53
-Input string was not in a correct format.
------------------------------------------------------------------------------
-Date : 28-02-2024 02:57:54
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 02:59:23
-Input string was not in a correct format.
------------------------------------------------------------------------------
-Date : 28-02-2024 02:59:23
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 03:00:08
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 01:18:08
-A transport-level error has occurred when receiving results from the server. (provider: Session Provider, error: 19 - Physical connection is not usable)
------------------------------------------------------------------------------
-Date : 28-02-2024 05:04:18
-String or binary data would be truncated in table 'test.dbo.trnWhiteListed', column 'Fmn'. Truncated value: 'HQ CC (GS BRANCH) clkorh_asdc_ihqa (Hav Birhade As'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 28-02-2024 05:07:15
-String or binary data would be truncated in table 'test.dbo.trnWhiteListed', column 'Fmn'. Truncated value: 'HQ CC (GS BRANCH) clkorh_asdc_ihqa (Hav Birhade As'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 28-02-2024 05:07:28
-String or binary data would be truncated in table 'test.dbo.trnWhiteListed', column 'Fmn'. Truncated value: 'HQ CC (GS BRANCH) clkorh_asdc_ihqa (Hav Birhade As'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 28-02-2024 05:08:26
-String or binary data would be truncated in table 'test.dbo.trnWhiteListed', column 'Fmn'. Truncated value: 'HQ CC (GS BRANCH) clkorh_asdc_ihqa (Hav Birhade As'.
-The statement has been terminated.
------------------------------------------------------------------------------
-Date : 17-06-2025 11:01:09
-'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
------------------------------------------------------------------------------
-Date : 17-06-2025 11:01:09
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-06-2025 11:04:23
-Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
------------------------------------------------------------------------------
-Date : 17-06-2025 11:04:23
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-06-2025 11:38:02
-'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
------------------------------------------------------------------------------
-Date : 17-06-2025 11:38:02
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-06-2025 11:38:05
-'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
------------------------------------------------------------------------------
-Date : 17-06-2025 11:38:05
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-06-2025 11:40:51
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 17-06-2025 11:40:51
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-06-2025 11:40:55
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 17-06-2025 11:40:55
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-06-2025 11:41:00
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 17-06-2025 11:41:00
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-06-2025 11:41:13
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 17-06-2025 11:41:13
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-06-2025 11:42:00
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 17-06-2025 11:42:00
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-06-2025 11:43:35
-Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
------------------------------------------------------------------------------
-Date : 17-06-2025 11:43:35
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-06-2025 11:43:38
-Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
------------------------------------------------------------------------------
-Date : 17-06-2025 11:43:38
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-06-2025 11:43:39
-Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
------------------------------------------------------------------------------
-Date : 17-06-2025 11:43:39
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-06-2025 11:43:39
-Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
------------------------------------------------------------------------------
-Date : 17-06-2025 11:43:39
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-06-2025 11:44:03
-Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
------------------------------------------------------------------------------
-Date : 17-06-2025 11:44:03
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-06-2025 11:45:46
-Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
------------------------------------------------------------------------------
-Date : 17-06-2025 11:45:58
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-06-2025 11:46:37
-Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
------------------------------------------------------------------------------
-Date : 17-06-2025 11:47:00
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-06-2025 11:47:41
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-06-2025 11:47:59
-Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
------------------------------------------------------------------------------
-Date : 17-06-2025 11:47:59
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-06-2025 11:51:55
-Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
------------------------------------------------------------------------------
-Date : 17-06-2025 11:51:55
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-06-2025 11:53:42
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-06-2025 11:55:10
-Unable to cast object of type 'System.DBNull' to type 'System.Int32'.
------------------------------------------------------------------------------
-Date : 17-06-2025 11:55:10
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-06-2025 12:13:29
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 20-06-2025 17:15:50
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 20-06-2025 17:15:50
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 20-06-2025 17:16:26
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 20-06-2025 17:16:26
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 20-06-2025 17:19:03
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 20-06-2025 17:19:03
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 20-06-2025 17:23:18
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 20-06-2025 17:23:18
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 04:42:40
-Add Project:-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 28-02-2024 04:33:55
-Sequence contains more than one element.
------------------------------------------------------------------------------
-Date : 28-02-2024 11:00:01
-Sequence contains more than one element.
------------------------------------------------------------------------------
-Date : 28-02-2024 07:58:04
-Add Project:-Object reference not set to an instance of an object.
------------------------------------------------------------------------------
-Date : 28-02-2024 14:34:30
-Add Project:-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 28-02-2024 14:35:01
-Add Project:-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 28-02-2024 14:36:41
-Add Project:-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 28-02-2024 14:57:04
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
------------------------------------------------------------------------------
-Date : 28-02-2024 14:57:04
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 14:57:13
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
------------------------------------------------------------------------------
-Date : 28-02-2024 14:57:13
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-02-2024 14:57:19
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
------------------------------------------------------------------------------
-Date : 28-02-2024 14:57:19
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 01-07-2025 15:42:48
-Could not find a part of the path 'C:\Users\Administrator\Desktop\New folder (3)\final paw code 01Jul 25 _1430Hrs\swas.UI\wwwroot\Download\290.pdf'.
------------------------------------------------------------------------------
-Date : 01-07-2025 15:43:21
-Could not find a part of the path 'C:\Users\Administrator\Desktop\New folder (3)\final paw code 01Jul 25 _1430Hrs\swas.UI\wwwroot\Download\532.pdf'.
------------------------------------------------------------------------------
-Date : 01-07-2025 17:45:11
-Sequence contains more than one element.
------------------------------------------------------------------------------
-Date : 01-07-2025 17:55:22
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 01-07-2025 17:55:22
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 01-07-2025 17:55:52
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 01-07-2025 18:05:45
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 01-07-2025 18:05:48
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 01-07-2025 18:06:49
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 01-07-2025 18:06:49
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 01-07-2025 18:08:40
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 01-07-2025 18:09:58
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 01-07-2025 18:10:24
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 01-07-2025 18:10:24
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 01-07-2025 18:12:37
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 01-07-2025 18:17:05
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 01-07-2025 18:18:16
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 01-07-2025 18:19:11
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 01-07-2025 18:19:55
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 01-07-2025 18:19:55
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 01-07-2025 18:54:22
-Sequence contains more than one element.
------------------------------------------------------------------------------
-Date : 01-07-2025 18:55:19
-Sequence contains more than one element.
------------------------------------------------------------------------------
-Date : 02-07-2025 16:20:57
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 02-07-2025 16:57:49
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 15-07-2025 10:54:07
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
------------------------------------------------------------------------------
-Date : 15-07-2025 10:54:07
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 15-07-2025 10:54:13
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
------------------------------------------------------------------------------
-Date : 15-07-2025 10:54:13
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 15-07-2025 14:35:19
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 15-07-2025 14:45:08
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 15-07-2025 14:46:16
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 15-07-2025 14:46:22
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 15-07-2025 15:23:18
-Sequence contains more than one element.
------------------------------------------------------------------------------
-Date : 16-07-2025 14:18:42
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 16-07-2025 14:18:42
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 16-07-2025 14:20:03
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 16-07-2025 14:20:33
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 16-07-2025 14:21:46
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 16-07-2025 14:21:46
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 16-07-2025 14:23:12
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 16-07-2025 14:32:15
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 16-07-2025 14:32:15
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 16-07-2025 14:59:48
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 21-07-25 23:03:13
-Invalid column name 'ToUserDetails'.
------------------------------------------------------------------------------
-Date : 21-07-25 23:03:13
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 21-07-25 23:03:55
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 21-07-25 23:05:27
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 21-07-25 23:06:14
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 21-07-25 23:06:19
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 21-07-25 23:07:02
-Invalid column name 'ToUserDetails'.
------------------------------------------------------------------------------
-Date : 21-07-25 23:07:02
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 21-07-25 23:07:06
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 21-07-25 23:07:08
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 21-07-25 23:11:33
-Invalid column name 'ToUserDetails'.
------------------------------------------------------------------------------
-Date : 21-07-25 23:11:33
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 21-07-25 23:11:35
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 21-07-25 23:11:38
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 21-07-25 23:11:39
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 21-07-25 23:11:39
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 21-07-25 23:11:40
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 21-07-25 23:13:36
-Invalid column name 'ToUserDetails'.
------------------------------------------------------------------------------
-Date : 21-07-25 23:13:36
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 21-07-25 23:13:43
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 21-07-25 23:13:52
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 21-07-25 23:17:56
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 21-07-25 23:21:23
-Invalid object name 'DB_PAW.dbo.ProjStakeHolderCcMov'.
------------------------------------------------------------------------------
-Date : 21-07-25 23:21:23
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 21-07-25 23:21:27
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 06-08-25 12:50:18
-'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
------------------------------------------------------------------------------
-Date : 06-08-25 12:50:18
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 06-08-25 12:50:19
-'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
------------------------------------------------------------------------------
-Date : 06-08-25 12:50:19
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 06-08-25 12:50:49
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 06-08-25 12:51:38
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 06-08-25 12:52:50
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 18-08-25 20:13:58
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
------------------------------------------------------------------------------
-Date : 18-08-25 20:13:58
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 18-08-25 20:14:05
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
------------------------------------------------------------------------------
-Date : 18-08-25 20:14:06
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 18-08-25 20:14:11
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
------------------------------------------------------------------------------
-Date : 18-08-25 20:14:11
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 18-08-25 20:14:17
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
------------------------------------------------------------------------------
-Date : 18-08-25 20:14:17
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 18-08-25 20:15:51
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
------------------------------------------------------------------------------
-Date : 18-08-25 20:15:51
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 18-08-25 20:16:05
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
------------------------------------------------------------------------------
-Date : 18-08-25 20:16:05
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 18-08-25 20:16:08
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 18-08-25 20:16:21
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 18-08-25 20:17:20
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
------------------------------------------------------------------------------
-Date : 18-08-25 20:17:20
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 18-08-25 20:17:46
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
------------------------------------------------------------------------------
-Date : 18-08-25 20:17:46
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 27-08-25 10:12:10
-'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
------------------------------------------------------------------------------
-Date : 27-08-25 10:12:10
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 09-09-25 10:58:59
-A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SNI_PN11, error: 26 - Error Locating Server/Instance Specified)
------------------------------------------------------------------------------
-Date : 09-09-25 10:59:03
-A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SNI_PN11, error: 26 - Error Locating Server/Instance Specified)
------------------------------------------------------------------------------
-Date : 09-09-25 11:00:11
-A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SNI_PN11, error: 26 - Error Locating Server/Instance Specified)
------------------------------------------------------------------------------
-Date : 09-09-25 11:01:21
-Procedure GetLatestWhiteListedProjects has no parameters and arguments were supplied.
------------------------------------------------------------------------------
-Date : 10-09-25 00:33:53
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
------------------------------------------------------------------------------
-Date : 10-09-25 00:33:53
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 10-09-25 00:34:30
-Sequence contains more than one element.
------------------------------------------------------------------------------
-Date : 15-09-25 10:07:22
-Value cannot be null. (Parameter 'userName')
------------------------------------------------------------------------------
-Date : 15-09-25 10:07:59
-Value cannot be null. (Parameter 'userName')
------------------------------------------------------------------------------
-Date : 15-09-25 10:09:36
-Value cannot be null. (Parameter 'userName')
------------------------------------------------------------------------------
-Date : 15-09-25 10:09:51
-'System.Dynamic.DynamicObject' does not contain a definition for 'ProcessButtonColor'
------------------------------------------------------------------------------
-Date : 15-09-25 10:11:37
-Value cannot be null. (Parameter 'userName')
------------------------------------------------------------------------------
-Date : 15-09-25 19:53:35
-'System.Dynamic.DynamicObject' does not contain a definition for 'Projects'
------------------------------------------------------------------------------
-Date : 15-09-25 19:53:35
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 17-09-25 18:32:41
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
------------------------------------------------------------------------------
-Date : 17-09-25 18:32:41
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 18-09-25 01:38:53
-Add Project:-Object reference not set to an instance of an object.
------------------------------------------------------------------------------
-Date : 19-09-25 12:13:31
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
------------------------------------------------------------------------------
-Date : 19-09-25 12:13:31
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 19-09-25 12:14:02
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
------------------------------------------------------------------------------
-Date : 19-09-25 12:14:02
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 20-09-25 08:08:58
-Sequence contains more than one element.
------------------------------------------------------------------------------
-Date : 20-09-25 08:09:06
-Sequence contains more than one element.
------------------------------------------------------------------------------
-Date : 21-09-25 08:56:03
-'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
------------------------------------------------------------------------------
-Date : 21-09-25 08:56:03
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 21-09-25 08:56:05
-'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
------------------------------------------------------------------------------
-Date : 21-09-25 08:56:05
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 14-10-25 20:31:08
-Sequence contains more than one element.
------------------------------------------------------------------------------
-Date : 14-10-25 20:31:27
-Sequence contains more than one element.
------------------------------------------------------------------------------
-Date : 14-10-25 20:32:13
-Sequence contains more than one element.
------------------------------------------------------------------------------
-Date : 14-10-25 20:32:46
-Sequence contains more than one element.
------------------------------------------------------------------------------
-Date : 14-10-25 20:34:10
-Sequence contains more than one element.
------------------------------------------------------------------------------
-Date : 14-10-25 20:34:37
-Sequence contains more than one element.
------------------------------------------------------------------------------
-Date : 15-10-25 03:29:27
-Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
------------------------------------------------------------------------------
-Date : 15-10-25 03:29:27
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
 Date : 16-10-25 08:48:19
@@ -897,4 +245,656 @@ Date : 20-01-2026 12:59:29
 'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
 -----------------------------------------------------------------------------
 Date : 20-01-2026 12:59:29
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 29-01-2026 11:32:22
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 29-01-2026 11:32:22
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 29-01-2026 12:19:16
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 29-01-2026 12:19:16
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 29-01-2026 12:44:52
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 29-01-2026 12:44:52
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 03-02-2026 14:36:30
+'System.Dynamic.DynamicObject' does not contain a definition for 'flag'
+-----------------------------------------------------------------------------
+Date : 03-02-2026 15:25:16
+'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
+-----------------------------------------------------------------------------
+Date : 03-02-2026 15:25:16
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 04-02-2026 15:54:14
+The data types varchar(400) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226') collation_name = 'Latin1_General_BIN2' and nvarchar are incompatible in the equal to operator.
+-----------------------------------------------------------------------------
+Date : 04-02-2026 16:33:27
+The data types varchar(400) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226') collation_name = 'Latin1_General_BIN2' and nvarchar are incompatible in the equal to operator.
+-----------------------------------------------------------------------------
+Date : 04-02-2026 16:33:50
+Operand type clash: varchar is incompatible with varchar(200) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226') collation_name = 'Latin1_General_BIN2'
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 04-02-2026 16:33:50
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 04-02-2026 16:33:58
+Operand type clash: varchar is incompatible with varchar(200) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226') collation_name = 'Latin1_General_BIN2'
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 04-02-2026 16:33:58
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 04-02-2026 16:34:55
+The data types varchar(400) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226') collation_name = 'Latin1_General_BIN2' and nvarchar are incompatible in the equal to operator.
+-----------------------------------------------------------------------------
+Date : 04-02-2026 16:35:09
+Operand type clash: varchar is incompatible with varchar(200) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226') collation_name = 'Latin1_General_BIN2'
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 04-02-2026 16:35:09
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 09:34:58
+Cannot resolve the collation conflict between "SQL_Latin1_General_CP1_CI_AS" and "Latin1_General_BIN2" in the equal to operation.
+-----------------------------------------------------------------------------
+Date : 05-02-2026 09:35:13
+Implicit conversion of varchar value to varchar cannot be performed because the collation of the value is unresolved due to a collation conflict between "SQL_Latin1_General_CP1_CI_AS" and "Latin1_General_BIN2" in add operator.
+-----------------------------------------------------------------------------
+Date : 05-02-2026 09:35:13
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 09:57:06
+Cannot resolve the collation conflict between "SQL_Latin1_General_CP1_CI_AS" and "Latin1_General_BIN2" in the equal to operation.
+-----------------------------------------------------------------------------
+Date : 05-02-2026 09:57:56
+Cannot resolve the collation conflict between "SQL_Latin1_General_CP1_CI_AS" and "Latin1_General_BIN2" in the equal to operation.
+-----------------------------------------------------------------------------
+Date : 05-02-2026 10:07:02
+Cannot resolve the collation conflict between "SQL_Latin1_General_CP1_CI_AS" and "Latin1_General_BIN2" in the equal to operation.
+-----------------------------------------------------------------------------
+Date : 05-02-2026 10:53:35
+'System.Dynamic.DynamicObject' does not contain a definition for 'WhitelistOptions'
+-----------------------------------------------------------------------------
+Date : 05-02-2026 10:53:35
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 11:01:38
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 11:16:00
+An error occurred while saving the entity changes. See the inner exception for details.
+-----------------------------------------------------------------------------
+Date : 05-02-2026 11:16:07
+Operand type clash: varchar(200) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226') collation_name = 'SQL_Latin1_General_CP1_CI_AS' is incompatible with nvarchar
+-----------------------------------------------------------------------------
+Date : 05-02-2026 11:17:45
+Operand type clash: varchar(200) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226') collation_name = 'SQL_Latin1_General_CP1_CI_AS' is incompatible with nvarchar
+-----------------------------------------------------------------------------
+Date : 05-02-2026 12:23:20
+An error occurred while saving the entity changes. See the inner exception for details.
+-----------------------------------------------------------------------------
+Date : 05-02-2026 12:26:44
+Operand type clash: varchar is incompatible with nvarchar(200) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 05-02-2026 12:26:44
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 12:26:47
+Operand type clash: varchar is incompatible with nvarchar(200) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 05-02-2026 12:26:47
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 12:27:15
+Operand type clash: varchar is incompatible with nvarchar(200) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 05-02-2026 12:27:19
+Operand type clash: varchar is incompatible with nvarchar(200) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 05-02-2026 12:27:19
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 12:51:12
+Operand type clash: varchar is incompatible with nvarchar(200) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 05-02-2026 12:51:15
+FromUnitName
+-----------------------------------------------------------------------------
+Date : 05-02-2026 12:51:15
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 12:51:18
+FromUnitName
+-----------------------------------------------------------------------------
+Date : 05-02-2026 12:51:18
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 12:51:38
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 12:51:39
+FromUnitName
+-----------------------------------------------------------------------------
+Date : 05-02-2026 12:51:39
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:12:00
+Operand type clash: varchar is incompatible with nvarchar(200) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:12:05
+FromUnitName
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:12:05
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:17:01
+FromUnitName
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:17:01
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:18:56
+LatestRemarks
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:18:56
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:19:15
+Operand type clash: nvarchar(200) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226') is incompatible with varchar
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:19:15
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:20:13
+Operand type clash: varchar is incompatible with nvarchar(200) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:20:20
+Operand type clash: nvarchar(200) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226') is incompatible with varchar
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:20:20
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:22:57
+Operand type clash: nvarchar(200) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226') is incompatible with varchar
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:22:57
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:23:11
+FromUnitName
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:23:11
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:23:42
+FromUnitName
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:23:42
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:24:20
+FromUnitName
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:24:20
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:25:07
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:25:09
+FromUnitName
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:25:09
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:25:14
+FromUnitName
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:25:14
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:31:22
+FromUnitName
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:31:22
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:33:29
+Operand type clash: varchar is incompatible with nvarchar(200) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:43:04
+LatestRemarks
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:43:04
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:43:11
+LatestRemarks
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:43:11
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:43:37
+LatestRemarks
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:43:37
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:47:50
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:53:33
+FromUnitName
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:53:33
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:54:37
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:55:46
+FromUnitName
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:55:46
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:55:47
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:56:09
+FromUnitName
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:56:09
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:56:48
+Operand type clash: varchar is incompatible with nvarchar(200) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:57:25
+FromUnitName
+-----------------------------------------------------------------------------
+Date : 05-02-2026 14:57:25
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-02-2026 16:01:15
+Operand type clash: varchar is incompatible with nvarchar(200) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 05-02-2026 16:30:50
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 05-02-2026 16:34:56
+An error occurred while saving the entity changes. See the inner exception for details.
+-----------------------------------------------------------------------------
+Date : 05-02-2026 16:35:16
+An error occurred while saving the entity changes. See the inner exception for details.
+-----------------------------------------------------------------------------
+Date : 05-02-2026 16:38:42
+An error occurred while saving the entity changes. See the inner exception for details.
+-----------------------------------------------------------------------------
+Date : 05-02-2026 16:39:17
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 05-02-2026 16:39:38
+An error occurred while saving the entity changes. See the inner exception for details.
+-----------------------------------------------------------------------------
+Date : 05-02-2026 16:41:38
+An error occurred while saving the entity changes. See the inner exception for details.
+-----------------------------------------------------------------------------
+Date : 05-02-2026 16:46:10
+An error occurred while saving the entity changes. See the inner exception for details.
+-----------------------------------------------------------------------------
+Date : 05-02-2026 16:46:22
+An error occurred while saving the entity changes. See the inner exception for details.
+-----------------------------------------------------------------------------
+Date : 05-02-2026 16:49:59
+An error occurred while saving the entity changes. See the inner exception for details.
+-----------------------------------------------------------------------------
+Date : 06-02-2026 10:19:14
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 10:28:50
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 10:30:49
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 10:34:11
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 10:55:06
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 10:59:55
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:01:58
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:02:00
+'System.Dynamic.DynamicObject' does not contain a definition for 'UnitId'
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:02:00
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:02:19
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:06:13
+'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:06:13
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:06:25
+'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:06:25
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:07:11
+'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:07:11
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:12:40
+'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:12:40
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:12:56
+'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:12:56
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:13:04
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:13:24
+'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:13:24
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:15:02
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:17:07
+Sequence contains more than one element.
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:23:05
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:23:59
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:25:47
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:26:39
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 11:44:43
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:00:33
+UserDetails
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:00:33
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:01:02
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:01:05
+UserDetails
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:01:05
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:03:47
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:03:50
+UserDetails
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:03:50
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:04:34
+UserDetails
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:04:34
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:04:58
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:05:04
+UserDetails
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:05:04
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:05:28
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:10:03
+UserDetails
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:10:03
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:21:03
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:23:59
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:26:30
+Sequence contains more than one element.
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:26:42
+Sequence contains more than one element.
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:41:27
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 12:57:28
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 13:00:19
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 13:00:56
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 13:01:20
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 13:04:54
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 13:04:56
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 13:05:00
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 13:05:01
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 13:06:33
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 13:06:36
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 13:06:36
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 13:07:26
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 13:07:48
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 13:09:02
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 13:09:44
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 13:10:20
+Operand type clash: varchar is incompatible with nvarchar(500) encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'CEK_Auto1', column_encryption_key_database_name = 'paw40226')
+-----------------------------------------------------------------------------
+Date : 06-02-2026 13:11:30
+'System.Dynamic.DynamicObject' does not contain a definition for 'HoldProj'
+-----------------------------------------------------------------------------
+Date : 09-02-2026 10:40:18
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 09-02-2026 10:40:43
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 09-02-2026 10:43:41
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 09-02-2026 10:44:22
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 09-02-2026 10:44:58
+Padding is invalid and cannot be removed.
+-----------------------------------------------------------------------------
+Date : 09-02-2026 10:45:50
+Padding is invalid and cannot be removed.
+-----------------------------------------------------------------------------
+Date : 09-02-2026 10:47:32
+Padding is invalid and cannot be removed.
+-----------------------------------------------------------------------------
+Date : 09-02-2026 10:47:51
+Padding is invalid and cannot be removed.
+-----------------------------------------------------------------------------
+Date : 09-02-2026 10:51:30
+Padding is invalid and cannot be removed.
+-----------------------------------------------------------------------------
+Date : 09-02-2026 10:52:50
+Padding is invalid and cannot be removed.
+-----------------------------------------------------------------------------
+Date : 09-02-2026 10:53:20
+Padding is invalid and cannot be removed.
+-----------------------------------------------------------------------------
+Date : 09-02-2026 10:56:17
+Padding is invalid and cannot be removed.
+-----------------------------------------------------------------------------
+Date : 09-02-2026 10:56:38
+Padding is invalid and cannot be removed.
+-----------------------------------------------------------------------------
+Date : 09-02-2026 10:57:35
+Padding is invalid and cannot be removed.
+-----------------------------------------------------------------------------
+Date : 09-02-2026 11:01:17
+Padding is invalid and cannot be removed.
+-----------------------------------------------------------------------------
+Date : 09-02-2026 11:01:29
+Padding is invalid and cannot be removed.
+-----------------------------------------------------------------------------
+Date : 09-02-2026 11:02:38
+Padding is invalid and cannot be removed.
+-----------------------------------------------------------------------------
+Date : 09-02-2026 11:05:02
+Padding is invalid and cannot be removed.
+-----------------------------------------------------------------------------
+Date : 09-02-2026 11:05:04
+Padding is invalid and cannot be removed.
+-----------------------------------------------------------------------------
+Date : 09-02-2026 12:10:15
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 09-02-2026 12:10:15
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 09-02-2026 12:10:19
+'System.Dynamic.DynamicObject' does not contain a definition for 'SubmitCde'
+-----------------------------------------------------------------------------
+Date : 09-02-2026 12:10:19
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 09-02-2026 12:17:51
+'System.Dynamic.DynamicObject' does not contain a definition for 'logins'
+-----------------------------------------------------------------------------
+Date : 09-02-2026 12:17:51
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 09-02-2026 14:22:34
+An exception was thrown while attempting to evaluate a LINQ query parameter expression. See the inner exception for more information. To show additional information call 'DbContextOptionsBuilder.EnableSensitiveDataLogging'.
+-----------------------------------------------------------------------------
+Date : 09-02-2026 14:22:36
+Object reference not set to an instance of an object.
+-----------------------------------------------------------------------------
+Date : 09-02-2026 14:22:36
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 16-02-2026 13:00:40
+Unable to cast object of type 'System.String' to type 'System.Boolean'.
+-----------------------------------------------------------------------------
+Date : 16-02-2026 13:00:40
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 16-02-2026 13:01:20
+Unable to cast object of type 'System.String' to type 'System.Boolean'.
+-----------------------------------------------------------------------------
+Date : 16-02-2026 13:01:21
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 16-02-2026 14:41:23
+UserDetails
+-----------------------------------------------------------------------------
+Date : 16-02-2026 14:41:23
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 16-02-2026 14:42:23
+UserDetails
+-----------------------------------------------------------------------------
+Date : 16-02-2026 14:42:23
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 16-02-2026 14:46:54
+UserDetails
+-----------------------------------------------------------------------------
+Date : 16-02-2026 14:46:55
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 16-02-2026 14:49:44
+UserDetails
+-----------------------------------------------------------------------------
+Date : 16-02-2026 14:49:44
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 18-02-2026 10:54:36
+Add Project failed in ProjectsController.
+-----------------------------------------------------------------------------
+Date : 19-02-2026 10:43:16
+Add Project failed in ProjectsController.
+-----------------------------------------------------------------------------
+Date : 19-02-2026 10:43:57
+Add Project failed in ProjectsController.
+-----------------------------------------------------------------------------
+Date : 19-02-2026 10:46:04
+Invalid column name 'FwdtoDate'.
+Statement(s) could not be prepared.
+-----------------------------------------------------------------------------
+Date : 19-02-2026 10:46:04
 Request failed & Status Code : 200

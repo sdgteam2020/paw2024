@@ -2,10 +2,10 @@
 .underline-h5 {
     padding: 0.5rem;
     width: 100%;
-    margin: -16px auto; /* Center the box */
+    margin: -16px auto; 
     text-align: center;
     border-color: #03c1fc;
-    /*box-shadow: 2px 6px 5px -3px #062b50;*/
+    
     background-color: #0cafff;
     color: white;
     font-family: Arial;
@@ -21,12 +21,12 @@
 }
 
 
-/* Custom button styling */
+
 .add-stage-button {
-    margin-left: 91%; /* Moves button to the right */
+    margin-left: 91%; 
 }
 
-/* Modal header styling */
+
 .modal-header h5 {
     text-align: center;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -34,7 +34,7 @@
     height: 33px;
 }
 
-/* Table styling */
+
 #stagesTable {
     width: 100%;
     border-collapse: collapse;
@@ -47,7 +47,7 @@
         border: 1px solid #ddd;
     }
 
-    /* Table header styling */
+    
     #stagesTable thead {
         background-color: #044c92;
         color: white;
@@ -57,12 +57,12 @@
         font-weight: bold;
     }
 
-    /* Row hover effect */
+    
     #stagesTable tbody tr:hover {
         background-color: #f1f1f1;
     }
 
-    /* Zebra striping for rows */
+    
     #stagesTable tbody tr:nth-child(odd) {
         background-color: #f9f9f9;
     }
@@ -71,7 +71,7 @@
         background-color: #ffffff;
     }
 
-/* Modal dialog max-width */
+
 .modal-dialog {
     max-width: 800px;
 }

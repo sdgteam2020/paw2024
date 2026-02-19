@@ -61,12 +61,8 @@ function GetAllDashbaordCount() {
                         if (dtoDashboardHeaderlst[i].stageId === 3) stage = "(Serial Processing)";
 
                         listitem += '<div class="newprojectheading text-center"> ' + dtoDashboardHeaderlst[i].stages + " " + stage + ' </div>';
-
-                        // ✅ removed inline style
                         listitem += '<div class="r-1 row g-3 mt-2 db-stage-row">';
                     }
-
-                    // ✅ removed inline style
                     listitem += '<div class="cd-1 col-12 col-sm-6 col-md-4 col-lg-1 db-card-box">';
 
                     tot = 0;
@@ -109,8 +105,6 @@ function GetAllDashbaordCount() {
                     }
 
                     listitem += '<div class="icon-container ApprovedProj cursorpointer"><span class="d-none" id="spnstatusId">' + dtoDashboardHeaderlst[i].statusId + '</span>';
-
-                    // ✅ removed inline style from img + h5
                     if (dtoDashboardHeaderlst[i].statusId == 2 || dtoDashboardHeaderlst[i].statusId == 3 || dtoDashboardHeaderlst[i].statusId == 22 || dtoDashboardHeaderlst[i].statusId == 31 || dtoDashboardHeaderlst[i].statusId == 37) {
                         if (dtoDashboardHeaderlst[i].statusId == 3)
                             listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" class="db-icon-25" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">';
@@ -145,16 +139,12 @@ function GetAllDashbaordCount() {
                     listitem += '</div>';
                     listitem += '<div class="cursorpointer btnGetsummay "><span class="d-none" id="spnstatusId">' + dtoDashboardHeaderlst[i].statusId + '</span>';
                     listitem += '<div class="">';
-
-                    // ✅ removed inline padding-top
                     if (dtoDashboardHeaderlst[i].status.includes("BISAG-N") || dtoDashboardHeaderlst[i].status.includes("Re-Vetting")) {
                         listitem += '<div class="t-1 statusprojsummry db-status-pt7">' + dtoDashboardHeaderlst[i].status + '</div> ';
                     }
                     else {
                         listitem += '<div class="t-1 statusprojsummry">' + dtoDashboardHeaderlst[i].status + '</div> ';
                     }
-
-                    // ✅ removed inline font-size
                     if (dtoDashboardHeaderlst[i].status.includes("BISAG-N") || dtoDashboardHeaderlst[i].status.includes("Re-Vetting")) {
 
                         listitem += '<span class="badge badge-light text-black d-none db-badge-18" data-toggle="tooltip" data-placement="top"><span class="badge bg-danger">' + peding + '</span> / <span class="badge bg-success">' + sent + '</span></span>';
@@ -221,8 +211,6 @@ function GetAllDashbaordCount() {
 
 
                         else {
-                            //$('#ProjectApprovedTittle').html(tittle);
-                            //$('#ProjApproved').modal('show');
                             
                             var hascert = [24, 25, 26, 27, 28, 29].includes(parseInt(spnstatusId));
 
@@ -241,7 +229,8 @@ function GetAllDashbaordCount() {
                     }
                 });
 
-                $("body").on("click", ".btnGetsummay", function () {
+                $(document).on("click", ".btnGetsummay", function () {
+                    
                     var spnstatusId = $(this).closest("div").find("#spnstatusId").html();
                     if (spnstatusId != 1041 && parseInt(spnstatusId) != 44 && parseInt(spnstatusId) != 46) {
                         $('#ProjGetsummay').modal('show');
@@ -262,7 +251,6 @@ function GetAllDashbaordCount() {
 
 
     function Getbarchart() {
-        // Fetching data for the first chart
         $.ajax({
             url: '/Home/indexToBarChartS',
             method: 'GET',
@@ -341,13 +329,9 @@ function GetAllDashbaordCount() {
                         }
                     }
                 });
-
-                // Set the title for the first chart
                 $('#chartTitle').text('Bar Chart Title');
             }
         });
-
-        // Fetching data for the second chart
         $.ajax({
             url: '/Home/indexToPieChart',
             method: 'GET',
@@ -359,8 +343,6 @@ function GetAllDashbaordCount() {
                 }
 
                 updatePieChart(data);
-
-                // Set the title for the second chart
                 $('#chart1Title').text('Pie Chart Title');
             },
             error: function (error) {
@@ -378,7 +360,7 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
     var listItem = "";
     var table = new DataTable('#dashboardApproved');
     table.destroy();
-    /* alert(spnstatusActionsMappingId)*/
+    
     var userdata = {
         "StatusId": spnstatusId,
         "statusActionsMappingId": spnstatusActionsMappingId,
@@ -423,8 +405,6 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
 
                         listItem += "<tr>";
                         listItem += "<td class='align-middle dp-w-3'>" + count + "</td>";
-
-                        //listItem += "<td class='align-middle nowrap'><span id='ProjName'>" + response[i].projName + "</span></td>";
                         if (unitId == 1 || unitId == 2 || unitId == 3 || unitId == 4 || unitId == 5 || unitId == 7) {
                             listItem += "<td class='align-middle nowrap'>" +
                                 "<a class='ProjName' title='" + shortProjName + "' data-proj-id='" + response[i].projId + "' data-proj-name='" + shortProjName + "' " +
@@ -436,14 +416,10 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
 
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + DateFormateddMMyyyyhhmmss(response[i].timeStamp) + "</span></td>";
-                        //if (response[i].status != "BISAG-N") {
                         listItem += "<td ><span class='badge badge-success' id='divName'>" + Status + "</span></td>";
-                        //}
 
                         if (response[i].statusactionMappingid == 53) {
                             if (response[i].approvedDt != null && response[i].approvedRemarks != null) {
-
-                                // ✅ removed inline visibility style -> class
                                 var visClass = (response[i].statusactionMappingid == 53) ? "dp-vis-visible" : "dp-vis-hidden";
 
                                 listItem += `
@@ -486,7 +462,6 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                     }
 
                     if (hasIPA) {
-                        //initializeDataTable("#IPAdashboardApproved");
                         refreshDataTable('#IPAdashboardApproved');
                         $("#IPADetailBodyApproved").html(listItem);
                         var table = $('#IPAdashboardApproved').DataTable({
@@ -650,9 +625,7 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
 
                         listItem += "<tr>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + count + "</span></td>";
-                        //listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].projName + "</span></td>";
-                        //listItem += "<td class='align-middle'><span id='ProjName' title='" + projName + "'>" + shortProjName + "</span></td>";
-                        if (unitId == 1 || unitId == 2 || unitId == 3 || unitId == 4 || unitId == 5 || unitId == 7/*|| response[i].stakeHolder == unitId*/) {
+                        if (unitId == 1 || unitId == 2 || unitId == 3 || unitId == 4 || unitId == 5 || unitId == 7) {
                             listItem += "<td class='align-middle'>" +
                                 "<a class='ProjName' title='" + projName + "' data-proj-id='" + response[i].projId + "' data-proj-name='" + projName + "' " +
                                 "href='/Projects/ProjHistory?EncyID=" + response[i].encyID + "&Type=XRDC'>" +
@@ -687,7 +660,6 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                                 listItem += "<td ><span class='badge badge-success' id='divName'>Info</span></td>";
                             }
                             else {
-                                //listItem += "<td ><span class='badge badge-success' id='divName'>Processed</span></td>";
                                 listItem += `<td ><span class='badge badge-success' id='divName' title='Processed by ${response[i].toUnitName}'>${response[i].toUnitName}</span></td>`;
                             }
                         }
@@ -700,7 +672,6 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                             else if (response[i].stkStatusId == 5) {
                                 listItem += "<td ><span class='badge badge-success' id='divName'>Info</span></td>";
                             } else {
-                                //listItem += "<td ><span class='badge badge-danger' id='divName'>Pending</span></td>";
                                 listItem += `<td ><span class='badge badge-danger' id='divName' title='Pending with ${response[i].toUnitName}'>${response[i].toUnitName}</span></td>`;
                             }
                         }
@@ -718,7 +689,7 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                         bDestroy: true,
                         destroy: true,
                         searching: true,
-                        /* stateSave: true,*/
+                        
                         "order": [[0, "asc"]],
                         "ordering": true,
                         "paging": true,
@@ -728,13 +699,6 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                             'copy',
                             'excel',
                             'csv',
-                            //{
-                            //    text: 'PDF',
-                            //    extend: 'pdfHtml5',
-                            //    action: function (e, dt, node, config) {
-                            //        PdfDiv();
-                            //    }
-                            //},
                         ],
                         searchBuilder: {
                             conditions: {
@@ -764,12 +728,6 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                             }
                         }
                     });
-
-                    //setTimeout(function () {   //calls click event after a certain time
-                    //    $('input[type=search]').val('');
-                    //    $('input[type=search]').trigger("click");
-                    //    $('input[type=search]').focus();
-                    //}, 1000);
 
                 }
             }
@@ -897,12 +855,6 @@ function DateFormateddMMyyyyhhmmss(date) {
 
     var todaysDate = new Date();
     var datef1 = new Date(date);
-    //if (datef1.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
-    //    // Date equals today's date
-
-    //    return 'Today';
-    //}
-    //else {
     var datef2 = new Date(date);
     var months = "" + `${(datef2.getMonth() + 1)}`;
     var days = "" + `${(datef2.getDate())}`;
@@ -924,9 +876,6 @@ function DateFormateddMMyyyyhhmmss(date) {
     else {
         return '';
     }
-    // }
-
-    //`${datef2.getFullYear()}/` + monthsans + `/` + dayans ;
 }
 
 
@@ -972,8 +921,6 @@ function getProjBisagN(spnstatusId, spnstatusActionsMappingId) {
                     }
 
                     $("#DetailBodyBisagN").html(listItem);
-
-                    // Initialize the DataTable
                     var table = $('#dashboardApprovedBisagN').DataTable({
                         lengthChange: true,
                         retrieve: true,
@@ -1050,8 +997,6 @@ function CreateChartSummary() {
                 "#f9cb48", "#d7aaff", "#4fd4ff", "#faa4a4", "#a6eb48",
                 "#faa6d6", "#c6b4ff", "#40dff4", "#fa4d78", "#a285ff"
             ];
-          
-            // Map names and totals
             const labels = ProjectStatus.map(x => x.name);
             const totals = ProjectStatus.map(x => x.total);
 
@@ -1071,7 +1016,7 @@ function CreateChartSummary() {
                     plugins: {
                         title: {
                             display: true,
-                           /* text: 'Years Wise Status'*/
+                           
                         },
                         legend: {
                             display: false
@@ -1091,10 +1036,7 @@ function CreateChartSummary() {
                 },
                 plugins: [ChartDataLabels] // Register the plugin
             });
-            //Pre  Approved Projects Chart
             const ApprovedProjects = data.approvedProjectsPre;
-
-            // Map names and totals
             const labels1 = ApprovedProjects.map(x => x.name);
             const totals1 = ApprovedProjects.map(x => x.total);
             new Chart(document.getElementById('approvedProjectsChart'), {
@@ -1111,7 +1053,7 @@ function CreateChartSummary() {
                     plugins: {
                         title: {
                             display: true,
-                           /* text: 'Stage Approve Status'*/
+                           
                         },
                         legend: {
                             display: false
@@ -1131,11 +1073,7 @@ function CreateChartSummary() {
                 },
                 plugins: [ChartDataLabels] // Register the plugin
             });
-
-            //Pre  Approved Projects Chart
             const ApprovedProjectsPost = data.approvedProjectsPost;
-
-            // Map names and totals
             const labels11 = ApprovedProjectsPost.map(x => x.name);
             const totals11 = ApprovedProjectsPost.map(x => x.total);
             new Chart(document.getElementById('approvedProjectsChartPost'), {
@@ -1152,7 +1090,7 @@ function CreateChartSummary() {
                     plugins: {
                         title: {
                             display: true,
-                            /* text: 'Stage Approve Status'*/
+                            
                         },
                         legend: {
                             display: false
@@ -1172,14 +1110,9 @@ function CreateChartSummary() {
                 },
                 plugins: [ChartDataLabels] // Register the plugin
             });
-
-
-
-            // Whitelisted Projects Chart
             const WhitelistedProjects = data.whitelistedProjects;
             const colorspie = [
                 "green", "red"]
-            // Map names and totals
             const labels2 = WhitelistedProjects.map(x => x.name);
             const totals2 = WhitelistedProjects.map(x => x.total);
             new Chart(document.getElementById('whitelistedChart'), {
@@ -1221,46 +1154,7 @@ function CreateChartSummary() {
                 },
                 plugins: [ChartDataLabels]
             });
-
-            // Total Projects Pie Chart
             const TotalProjects = data.totalProjects;
-
-            // Map names and totals
-            //const labels3 = TotalProjects.map(x => x.name);
-            //const totals3 = TotalProjects.map(x => x.total);
-            //new Chart(document.getElementById('totalProjectsChart'), {
-            //    type: 'pie',
-            //    data: {
-            //        labels: labels3, // e.g. ['Processed - 72', 'Pending - 9']
-            //        datasets: [{
-            //            backgroundColor: colors,
-            //            data: totals3,     // e.g. [72, 9]
-                           
-            //        }]
-            //    },
-            //    options: {
-            //        responsive: true,
-            //        maintainAspectRatio: false,
-            //        plugins: {
-            //            legend: {
-            //                position: 'top'
-            //            },
-            //            title: {
-            //                display: true,
-            //                text: 'Total Projects'
-            //            },
-            //            datalabels: {
-            //                color: '#fff',
-            //                font: {
-            //                    weight: 'bold',
-            //                    size: 18
-            //                },
-            //                formatter: (value) => value
-            //            }
-            //        }
-            //    },
-            //    plugins: [ChartDataLabels] // register the plugin
-            //});
 
         }
 
@@ -1310,15 +1204,11 @@ function showPopup(segmentIndex) {
 function closePopup() {
     document.getElementById('popupOverlay').style.display = 'none';
 }
-
-// Close popup when clicking outside
 document.getElementById('popupOverlay').addEventListener('click', function (event) {
     if (event.target === this) {
         closePopup();
     }
 });
-
-// Close popup with Escape key
 document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') {
         closePopup();
@@ -1328,8 +1218,6 @@ document.addEventListener('keydown', function (event) {
 $(document).ready(function () {
 
     var TeamDetailPostBackURL = '/Projects/AttDetails';
-
-    // Click event for dynamically generated anchors
     $(document).on("click", ".anchorDetail", function (e) {
       
         e.preventDefault(); // prevent default anchor behavior
@@ -1355,10 +1243,9 @@ $(document).ready(function () {
             }
         });
     });
-
-    // PDF click handler
     $(document).on('click', '.pdf', function () {
         $('#ViewRecordsHistory').modal('show');
     });
 
 });
+

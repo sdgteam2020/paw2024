@@ -18,14 +18,14 @@
 }
 
 .custom-modal-size {
-    max-width: 85%; /* Set the modal width to 80% of the screen */
-    width: 85%; /* Ensure it scales responsively */
-    /* Center horizontally */
+    max-width: 85%; 
+    width: 85%; 
+    
 }
 
     .custom-modal-size .modal-content {
-        overflow-y: auto; /* Add vertical scrolling for long content */
-        overflow-x: hidden; /* Prevent horizontal overflow */
+        overflow-y: auto; 
+        overflow-x: hidden; 
         margin-left: 248px;
     }
 
@@ -33,48 +33,48 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh; /* Vertically center the modal */
-    /*  margin: 0; */ /* Remove default margins for better centering */
+    min-height: 100vh; 
+     
 }
 
 
 
 
-/* Custom modal styling */
+
 .custom-modal .custom-modal-dialog {
-    max-width: 80%; /* Adjust the modal width */
-    margin: auto; /* Center align the modal */
+    max-width: 80%; 
+    margin: auto; 
 }
 
 .custom-modal-content {
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-    overflow: hidden; /* Prevent content overflow */
+    border-radius: 10px; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); 
+    overflow: hidden; 
 }
 
-/* Header styling */
+
 .custom-modal-header {
-    background-color: #0044cc; /* Blue background color */
-    color: white; /* White text */
-    border-bottom: 1px solid #ddd; /* Divider line */
+    background-color: #0044cc; 
+    color: white; 
+    border-bottom: 1px solid #ddd; 
     padding: 10px 15px;
 }
 
     .custom-modal-header .custom-btn-close {
-        color: white; /* Close button color */
+        color: white; 
         background-color: red;
         border: none;
         font-size: 20px;
         line-height: 1;
     }
 
-/* Body styling */
+
 .custom-modal-body {
     padding: 15px;
-    background-color: #f9f9f9; /* Light background color */
+    background-color: #f9f9f9; 
 }
 
-    /* Table styling */
+    
     .custom-modal-body table {
         width: 100%;
         border-collapse: collapse;
@@ -99,14 +99,14 @@
 
 
 
-/* ===== ProjectMovement page: moved from inline styles ===== */
 
-/* main table wrapper */
+
+
 .pm-overflow-scroll {
     overflow: scroll;
 }
 
-/* movement table header cells */
+
 .pm-th-center {
     text-align: center;
     border: 1px solid black;
@@ -116,23 +116,23 @@
     width: 23.4375px;
 }
 
-/* form controls width 100% */
+
 .pm-w-100 {
     width: 100%;
 }
 
-/* textarea fixed size */
+
 .pm-textarea-240 {
     width: 100%;
     height: 240px;
 }
 
-/* attachments list wrapper */
+
 .pm-overflow-auto {
     overflow: auto;
 }
 
-/* overlay loader (used twice in your markup) */
+
 .pm-upload-overlay {
     display: none;
     position: fixed;
@@ -144,23 +144,23 @@
     z-index: 1050;
 }
 
-/* loader spinner size */
+
 .pm-spinner-lg {
     width: 4rem;
     height: 4rem;
 }
 
-/* EditComments modal content margin-left (your inline has typo, we keep intent) */
+
 .pm-modal-ml0 {
     margin-left: 0px;
 }
 
-/* emoji size */
+
 .pm-emoji {
     font-size: 20px;
 }
 
-/* h7 title style */
+
 .pm-h7-title {
     text-align: left;
     font-size: 16px;
@@ -169,28 +169,27 @@
     color: antiquewhite;
 }
 
-/* red star (you used <font style="color:red">) */
 .pm-required-star {
     color: red;
     font-weight: bold;
 }
-/* ---------- COMMENT BOX ---------- */
+
 .comment-box {
     text-align: justify;
 }
 
-/* ---------- COMMENT HEADER TEXT ---------- */
+
 .comment-user {
     font-family: Arial;
     color: #0793f7;
 }
 
-/* ---------- COMMENT META ---------- */
+
 .comment-meta {
     margin-left: 0;
 }
 
-/* ---------- PDF ICON ---------- */
+
 .pdf-icon {
     width: 24px;
     height: 24px;

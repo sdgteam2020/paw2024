@@ -1,5 +1,5 @@
 ﻿
-/* Custom CSS for form styling */
+
 .form-container {
     background-color: #f7f7f7;
     padding: 20px;
@@ -7,19 +7,19 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Style for required field indicator */
+
 .required-indicator {
     color: red;
     font-size: 18px;
 }
 
 
-/* Custom class for centering the buttons */
+
 .custom-buttons {
     margin-top: 2rem;
 }
 
-    /* Custom class for adding margin-right to buttons */
+    
     .custom-buttons button {
         margin-right: 23px;
     }

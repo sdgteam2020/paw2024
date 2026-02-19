@@ -4,11 +4,6 @@ using Newtonsoft.Json;
 
 namespace swas.BAL.Helpers
 {
-    ///Created and Reviewed by : Sub Maj Sanal
-    ///Reviewed Date : 30 Jul 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start
     [AllowAnonymous]
     public static class SessionHelper
     {

@@ -10,11 +10,7 @@ $(document).ready(function () {
 
     $(".cmtbtn").unbind().click(function () {
         $(".cmtbtn").removeClass("border border-dark bold-border btn-small-large");
-
-        // Add the 'border-dark', 'bold-border', 'btn-small-large' (custom size) classes to the clicked button
         $(this).addClass("border border-dark bold-border btn-small-large");
-
-        // Get the corresponding unit ID based on the button ID
         var unitId = 0;
         switch ($(this).attr('id')) {
             case 'btnAccepted':
@@ -32,30 +28,12 @@ $(document).ready(function () {
             default:
                 unitId = 0; // For btnPending
         }
-
-        // Call the function to get project comments by the determined unit ID
         GetProjCommentsByUnitId(unitId);
     });
-    //$("#btnPending").unbind().click(function () {
-    //    $("#btnPending").addClass('border border-red');
-    //    GetProjCommentsByUnitId(0);
-       
-    //});
-    //$("#btnAccepted").unbind().click(function () {
-    //    GetProjCommentsByUnitId(1);
-    //});
-    //$("#btnObsn").unbind().click(function () {
-    //    GetProjCommentsByUnitId(2);
-    //});
-    //$("#btnRejected").unbind().click(function () {
-    //    GetProjCommentsByUnitId(3);
-    //});
-    //$("#btnInfo").unbind().click(function () {
-    //    GetProjCommentsByUnitId(5);
-    //});
+   
 
     $("#btnStatusUpdate").unbind().click(function () {
-
+    
         requiredFields = $('#projectcommentforstackholder').find('.requiredField');
         var allFieldsComplete = true;
         requiredFields.each(function (index) {
@@ -67,13 +45,7 @@ $(document).ready(function () {
             }
         });
 
-        //var fileInput = $("#uploadfile");
-        //if (fileInput.val().trim() === "") {
-        //    fileInput.addClass('is-invalid');
-        //    allFieldsComplete = false;
-        //} else {
-        //    fileInput.removeClass('is-invalid');
-        //}
+       
 
         if (!allFieldsComplete) {
 
@@ -97,7 +69,6 @@ function IsUnReadInbox(psmId) {
         type: 'POST',
         data: { "PsmId": psmId },
         success: function (response) {
-            //console.log(response);
 
         }
     });
@@ -106,13 +77,13 @@ function GetProjCommentsByUnitId(Id) {
     var listItem = "";
 
     $("#DetailBody").html(listItem);
-    /*let boldCount = 0;*/
+    
     $.ajax({
         url: '/Projects/GetProjCommentsByUnitId',
         type: 'POST',
         data: { "StatusId": Id },
         success: function (response) {
-            /*console.log("GetAllProjectByUnitId", response);*/
+            
 
 
 
@@ -152,55 +123,62 @@ function GetProjCommentsByUnitId(Id) {
                         if (response[i].isComment == false) {
                             listItem += "<tr class='bold-text'>";
                             commentFalseCount++;
-                            /* boldCount++;*/
+                            
                         } else {
                             listItem += "<tr>";
                         }
-                        //listItem += "<td class='noExport d-none'><span class='noExport d-none' id='spnProjId'>" + response[i].projId + "</span><span class='noExport d-none' id='spnpsmId'>" + response[i].psmId + "</span></td>";
                         listItem += "<td class='noExport d-none'><span class='noExport d-none' id='spnProjId'>" + response[i].projId + "</span><span class='noExport d-none' id='spnpsmId'>" + response[i].psmId + "</span><span class='noExport d-none' id='DateType'>" + response[i].adminApprovalStatus + "</span></td>";
-                        //listItem += "<td class='align-middle'><span id='divName'>" + count + "</span></td>";
                         listItem += "<td class='align-middle sorting'>" + (count + 1) + "</td>";
-                        /*   listItem += "<td class='align-middle ser-no'></td>";*/
-
-                        listItem += "<td class='align-middle RefLetter-container'>";
-                        listItem += "<a  href='/Projects/ProjHistory?EncyID=" + encodeURIComponent(response[i].encyID) + "'>";
-
-                         
-                        listItem += "<span id='projectName' class='projNameDetail noExport' >" + trimByChars(response[i].projectName, 40) + "</span>";
-                        listItem += "</a>";
-                            listItem += ' <div class="RefLetter">' + response[i].projectName + '</div>';
-
-
-
                         
-                       
 
-                        /*listItem += "<span id='projectName' class='projNameDetail' >" + response[i].projectName + "</span>";*/
-                  
+                        listItem += "<td class='align-middle RefLetter-container nowrap'>";
+
+                        listItem += "<a href='/Projects/ProjHistory?EncyID=" +
+                            encodeURIComponent(response[i].encyID) + "'>";
+
+                        listItem += "<div class='tooltip-container ' data-tooltip='" +
+                            response[i].projectName + "'>";
+
+                        listItem += "<span class='projNameDetail short-text noExport'>" +
+                            trimByChars(response[i].projectName, 40) +
+                            "</span>";
+
+                        listItem += "<span class='tooltip tooltip-text' id='projectNameforcomment'>" +
+                            response[i].projectName +
+                            "</span>";
+
+                        listItem += "</div>"; // tooltip-container
+                        listItem += "</a>";
+
+                        listItem += "<div class='RefLetter'>" +
+                            breakLinesByWords(response[i].projectName, 3) +
+                            "</div>";
+
                         listItem += "</td>";
+
                         listItem += "<td class='align-middle'><span id='stakeholder'>" + response[i].stakeholder + "</span></td>";
                         listItem += "<td class='align-middle'><span id='TimeStamp'>" + TimeStamp + "</span></td>";
                         if (response[i].stkStatusId == 1) {
                             listItem += "<td class='align-middle'><span id='status'>Accepted</span></td>";
-                            listItem += "<td class='align-middle '><span id='btnedit'><button type='button' style='height:30px;width:30px' class='cls-btncomment btn-icon btn-round btn-success mr-1'><i class='fas fa-comment'></i></button></td>";
+                            listItem += "<td class='align-middle '><span id='btnedit'><button type='button'  class='cls-btncomment btn-icon btn-round btn-success mr-1'><i class='fas fa-comment'></i></button></td>";
 
                         }
                         else if (response[i].stkStatusId == 5) {
                             listItem += "<td class='align-middle'><span id='status'>Info</span></td>";
-                            listItem += "<td class='align-middle'><span id='btnedit'><button type='button' style='height:30px;width:30px' class='cls-btncomment btn-icon btn-round btn-success mr-1'><i class='fas fa-comment'></i></button></td>";
+                            listItem += "<td class='align-middle'><span id='btnedit'><button type='button'  class='cls-btncomment btn-icon btn-round btn-success mr-1'><i class='fas fa-comment'></i></button></td>";
                         }
                         else if (response[i].stkStatusId == 2) {
                             listItem += "<td class='align-middle'><span id='status'>Obsn</span></td>";
-                            listItem += "<td class='align-middle'><span id='btnedit'><button type='button' style='height:30px;width:30px' class='cls-btncomment btn-icon btn-round  btn-warning mr-1'><i class='fas fa-comment'></i></button></td>";
+                            listItem += "<td class='align-middle'><span id='btnedit'><button type='button'  class='cls-btncomment btn-icon btn-round  btn-warning mr-1'><i class='fas fa-comment'></i></button></td>";
 
                         }
                         else if (response[i].stkStatusId == 3) {
                             listItem += "<td class='align-middle'><span id='status'>Rejected</span></td>";
-                            listItem += "<td class='align-middle'><span id='btnedit'><button type='button' style='height:30px;width:30px' class='cls-btncomment btn-icon btn-round btn-danger mr-1'><i class='fas fa-comment'></i></button></td>";
+                            listItem += "<td class='align-middle'><span id='btnedit'><button type='button' class='cls-btncomment btn-icon btn-round btn-danger mr-1'><i class='fas fa-comment'></i></button></td>";
                         }
                         else {
                             listItem += "<td class='align-middle'><span id='status'>Pending</span></td>";
-                            listItem += "<td class='align-middle'><span id='btnedit'><button type='button' style='height:30px;width:30px' class='cls-btncomment btn-icon btn-round btn-danger mr-1'><i class='fas fa-comment'></i></button></td>";
+                            listItem += "<td class='align-middle'><span id='btnedit'><button type='button'  class='cls-btncomment btn-icon btn-round btn-danger mr-1'><i class='fas fa-comment'></i></button></td>";
                         }
                         listItem += "</tr>";
                         count++;
@@ -222,15 +200,16 @@ function GetProjCommentsByUnitId(Id) {
 
                     initializeDataTable('#Comment');
 
-                    /* $('#ProjectCommentCount').html(boldCount);*/
+                    
 
                     $("body").off("click").on("click", ".cls-btncomment", function () {
+                        debugger;
                         $(".custom-modal").addClass("custom-modal-size")
-                        // Store the correct context (`this`) of the clicked element
                         var self = this;
 
                             var action = $(self).closest("tr").find("#status").html();
                         fetchServerDate().then(function (S) {
+                            debugger;
                             let stkid = 0;
 
                             switch (action) {
@@ -254,25 +233,17 @@ function GetProjCommentsByUnitId(Id) {
                                 $(".cmtbtn").removeClass("border border-dark bold-border btn-small-large");
                                 $("#btnPending").addClass("border border-dark bold-border btn-small-large");
                             }
-
-                            // Populate project details for the modal
                             $("#ProjectcommentForStackHolderprojId").html($(self).closest("tr").find("#spnProjId").html());
                             $("#ProjectcommentForStackHolderPsmId").html($(self).closest("tr").find("#spnpsmId").html());
                             $("#ProjectcommentForStackHolderDate_type").html($(self).closest("tr").find("#DateType").html());
-
-                            // Mark comment as read
                             IsReadComment($(self).closest("tr").find("#spnProjId").html(), $(self).closest("tr").find("#spnpsmId").html());
                             $(self).closest("tr").removeClass("bold-text");
 
                             reset();
                             mMsater(0, "ddlStatus", 4, 0);
                             $("#ProjCommentModal").modal('show');
-
-                            // Get all comments for the project
                             GetAllComments($("#ProjectcommentForStackHolderPsmId").html(), $("#ProjectcommentForStackHolderprojId").html());
-
-                            // Format the project name for modal heading
-                            var projName = $(self).closest("tr").find("#projectName").html();
+                            var projName = $(self).closest("tr").find("#projectNameforcomment").html();
                             var words = projName.split(" ");
                             var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
                             var finalTitle = "Project Name: " + projName;
@@ -282,8 +253,6 @@ function GetProjCommentsByUnitId(Id) {
                             const dateType = (dateTypeText === "true");
 
                             $("#ProjectcommentForStackHolderDate_type").text(dateType);
-
-                            // Get the current date and time in required formats
                             var pad = "00";
                             var datef2 = new Date();
                             var months = "" + (datef2.getMonth() + 1);
@@ -299,8 +268,6 @@ function GetProjCommentsByUnitId(Id) {
                             var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
 
                             const formattedDateTime = new Date(S.todayDateTime).toISOString().slice(0, 16);  // Convert to YYYY-MM-DDTHH:MM
-
-                            // Set input fields based on the date type
                             if (dateType) {
                                
                                 $('#CommentDateFwd').attr('type', 'datetime-local');
@@ -313,8 +280,6 @@ function GetProjCommentsByUnitId(Id) {
                                 $('#CommentDateFwd').val(S.todayDateTime); // Set today's date
                                 $('#CommentDateFwd').prop('disabled', true); // Freeze input
                             }
-
-                            // Get project comments (after modal setup)
                             setTimeout(function () {
                                 GetProjCommentsByUnitId(stkid);
                             }, 200);
@@ -326,7 +291,6 @@ function GetProjCommentsByUnitId(Id) {
                     $("body").on("click", ".projNameDetail", function () {
 
                         IsReadComment($(this).closest("tr").find("#spnProjId").html(), $(this).closest("tr").find("#spnpsmId").html());
-                        // IsReadNotification($(this).closest("tr").find("#spnProjId").html(), 1);
 
                     });
 
@@ -363,8 +327,6 @@ function SendMsg() {
 
     var dateValue = $('#CommentDateFwd').val();
     var currentDate = new Date();
-
-    // Add server's current time if only a date is selected
     var commentDateTime = '';
     if ($('#CommentDateFwd').attr('type') === 'date') {
         if (!dateValue) {
@@ -387,7 +349,6 @@ function SendMsg() {
     formData.append("StkStatusId", $("#ddlStatus").val());
     formData.append("ProjectId", $("#ProjectcommentForStackHolderprojId").html());
     formData.append("psmid", $("#ProjectcommentForStackHolderPsmId").html());
-    //formData.append("CommentDate", $("#CommentDateFwd").val());
     formData.append("CommentDate", commentDateTime);
     $.ajax({
         type: "POST",
@@ -418,9 +379,6 @@ function SendMsg() {
 
 
                     GetAllComments($("#ProjectcommentForStackHolderPsmId").html(), $("#ProjectcommentForStackHolderprojId").html());
-                   /* GetProjCommentsByUnitId();*/
-                    //IsUnReadComment($("#ProjectcommentForStackHolderprojId").html());
-                    //GetNotification($("#ProjectcommentForStackHolderprojId").html());
                     UnReadNotification($("#ProjectcommentForStackHolderprojId").html(), 2);
                     IsUnReadComment($("#ProjectcommentForStackHolderprojId").html(), $("#ProjectcommentForStackHolderPsmId").html());
                     reset();
@@ -451,11 +409,6 @@ function SendMsg() {
 
                 });
             }
-
-
-
-
-            //IsReadComment($("#ProjectcommentForStackHolderprojId").html());
         },
         error: function (error) {
 
@@ -510,7 +463,7 @@ function GetAllComments(PsmId, projId) {
 
                     if (data[i].attpath !== '' && data[i].attpath !== null) {
                         commentContainer += '<a href="/Home/WaterMark3?id=' + data[i].attpath + '" target="_blank">';
-                        commentContainer += '<img src="/assets/images/icons/pdfimg.png" alt="PDF icon">';
+                        commentContainer += '<img src="/assets/images/icons/pdfimg.png" alt="PDF icon" class="pdf-icon">';
                         commentContainer += '</a>';
                     }
 
@@ -540,7 +493,6 @@ function IsReadComment(ProjId, PsmId) {
         type: 'POST',
         data: { "ProjId": ProjId, "PsmId": PsmId },
         success: function (response) {
-            //console.log(response);
         }
     })
 }
@@ -567,8 +519,7 @@ function IsUnReadComment(ProjId, PsmId) {
             "PsmId": PsmId
         },
         success: function (response) {
-            //console.log(response);
-          /*  window.location.reload();*/
+          
         }
     })
 }
@@ -580,50 +531,10 @@ function IsReadInbox(psmId) {
         type: 'POST',
         data: { "PsmId": psmId },
         success: function (response) {
-            //console.log(response);
 
         }
     });
 }
-
-//function IsUnReadNotification(ProjId) {
-
-//    $.ajax({
-//        url: '/Projects/IsUnReadNotification',
-//        type: 'POST',
-//        data: { "ProjId": ProjId },
-//        success: function (response) {
-//            console.log(response);
-
-//        }
-//    });
-//}
-
-//function IsCommentedUnreadNotification(ProjId) {
-
-//    $.ajax({
-//        url: '/Projects/IsCommentedUnreadNotification',
-//        type: 'POST',
-//        data: { "ProjId": ProjId },
-//        success: function (response) {
-//            console.log(response);
-
-//        }
-//    });
-//}
-
-//function IsReadNotification(ProjId) {
-
-//    $.ajax({
-//        url: '/Projects/IsReadNotification',
-//        type: 'POST',
-//        data: { "ProjId": ProjId },
-//        success: function (response) {
-//            console.log(response);
-
-//        }
-//    });
-//}
 
 function reset() {
     $("#Comments").val("");
@@ -681,7 +592,6 @@ function IsCommentedUnreadNotification(ProjId) {
         type: 'POST',
         data: { "ProjId": ProjId },
         success: function (response) {
-            //console.log(response);
 
         }
     });
@@ -701,8 +611,6 @@ document.addEventListener('DOMContentLoaded', function () {
         datePicker.max = formattedDate;
     }
 });
-
-// JavaScript to reset the date when the modal closes
 $('#ProjCommentModal').on('hidden.bs.modal', function (e) {
     $('#CommentDateFwd').val('');
 });

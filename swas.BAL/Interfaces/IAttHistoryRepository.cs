@@ -9,12 +9,6 @@ namespace swas.BAL.Interfaces
 {
     public interface IAttHistoryRepository:IGenericRepositoryDL<tbl_AttHistory>
     {
-
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        ///Tested By :- 
-        ///Tested Date : 
-        ///Start
         Task<int> AddAttHistoryAsync(tbl_AttHistory attHistory);
         
         Task<List<tbl_AttHistory>> GetAttHistoryByIdAsync(int? psmid);

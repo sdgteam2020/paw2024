@@ -5,13 +5,6 @@
 
     var UnitId = $("#Spnmodalunitid").html();
 
-    //$("#ddlStage").change(function () {
-    //    mMsaterStage(0, "ddlSubStage1", 6, $("#ddlStage").val(), 100);
-    //});
-    //$("#ddlSubStage1").change(function () {
-    //    mMsater($("#ddlSubStage1").val(), "ddlAction1", 7, $("#ddlSubStage1").val());
-    //});
-
     $(document).on('click', '.btn-editmapping', function () {
         var closestRow = $(this).closest("tr");
         var hiddenData = closestRow.find(".hiddenData");
@@ -168,14 +161,6 @@
             }
         });
     });
-
-
-
-
-
-    // =========================
-    // Edit Mapping
-    // =========================
     $(document).on('click', '.btn-editmapping', function () {
 
         var closestRow = $(this).closest("tr");
@@ -193,17 +178,9 @@
         mMsaterStage(subStageId, "ddlSubStage1", 6, stageId, 100);
         mMsater(actionId, "ddlAction1", 7, subStageId);
     });
-
-    // =========================
-    // Select2 Initialization
-    // =========================
     $('#ddlStage').select2();
     $('#ddlSubStage1').select2();
     $('#ddlAction1').select2();
-
-    // =========================
-    // Save Mapping
-    // =========================
     $('#btnsave').on('click', function () {
 
         var data = {
@@ -249,10 +226,6 @@
             }
         });
     });
-
-    // =========================
-    // Delete Mapping
-    // =========================
     $(document).on('click', '.btn-deletemapping', function () {
 
         var mappingId = $(this)
@@ -296,53 +269,24 @@
         });
     });
 
-    // ================================
-    // Show Add Unit Modal
-    // ================================
-
 
     $("#AddButon").on('click', function () {
         $('#UnitAdd').modal('show');
     });
 
 });
-
-
-
-
-
-
-
-
-
-
-// ================================
-// Sync ddlSubStage with hidden input
-// ================================
 document.addEventListener('DOMContentLoaded', function () {
 
     var selectElement = document.getElementById('ddlSubStage');
     var hiddenInput = document.getElementById('hiddenFwdoffrs');
 
     if (selectElement && hiddenInput) {
-
-        // Set initial value
         hiddenInput.value = selectElement.value;
-
-        // Update hidden input on change
         selectElement.addEventListener('change', function () {
             hiddenInput.value = this.value;
         });
     }
 });
-
-
-
-
-
-// ================================
-// Filter Unit Mapping (SINGLE FUNCTION)
-// ================================
 function filterUnitMapping(unitId) {
 
     const rows = document.querySelectorAll('#mapunit tbody tr');
@@ -361,7 +305,5 @@ function filterUnitMapping(unitId) {
             row.style.display = 'none';
         }
     });
-
-    // Show modal
     $('#unitMapping').modal('show');
 }

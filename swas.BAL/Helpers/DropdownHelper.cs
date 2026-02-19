@@ -9,11 +9,6 @@ using System.Linq.Expressions;
 
 namespace swas.BAL.Helpers
 {
-    ///Created and Reviewed by : Sub Maj Sanal
-    ///Reviewed Date : 10 Aug 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start
     public static class DropdownHelper
     {
         public static List<SelectListItem> GetDropdownList<TModel, TValue>(

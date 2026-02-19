@@ -72,7 +72,7 @@ function ProjectWiseStatus() {
                                     if (isstatus.length != 0) {
                                         listItem += '<td class="align-middle text-center" data-toggle="tooltip" data-placement="top" title="' +
                                             DateFormateddMMyyyyhhmmss(isstatus[0].timeStamp) +
-                                            '"><div class="pws-ok-dot">✔</div></td>';
+                                            '"><div class="pws-ok-dot">✔</div><span class="d-none">' + DateFormateddMMyyyyhhmmss(isstatus[0].timeStamp) +'</span></td>';
                                     } else {
                                         listItem += '<td class="align-middle text-center"><img src="/assets/images/icons/Cross_red_circle.png" width="22" height="22" alt="Readed"></td>';
                                     }
@@ -87,9 +87,6 @@ function ProjectWiseStatus() {
                     listItem += '</tbody>';
 
                     $("#tblProjectWiseStatus").html(listItem);
-
-                    // ⚠️ your original code used $(document).unbind() which removes ALL document handlers.
-                    // Keeping your behavior, but safer is to only unbind this selector.
                     $(document).off("click", ".btn-clsprojName").on("click", ".btn-clsprojName", function () {
                      
                         $('#ProjHoldHistory').modal('show');
@@ -255,7 +252,6 @@ if (pdfFileInput != null) {
         const file = event.target.files[0];
 
         if (file) {
-            // Read the first few bytes of the file as a Uint8Array
             const reader = new FileReader();
             reader.onloadend = function () {
                 const bytes = new Uint8Array(reader.result);
@@ -272,7 +268,6 @@ if (pdfFileInput != null) {
                         icon: 'error',
                         confirmButtonText: 'OK'
                     });
-                    // Reset the input
                 }
             };
 

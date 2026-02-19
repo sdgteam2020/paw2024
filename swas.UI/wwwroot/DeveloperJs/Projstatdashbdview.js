@@ -20,7 +20,7 @@
                         type: 'POST',
                         data: { "id": ProjectId, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
                         success: function (response) {
-                            console.log(response);
+                           
                             if (response && response === 1) {
                                 Swal.fire({
                                     position: 'top-end',
@@ -35,7 +35,6 @@
                         },
                         error: function (error) {
                             console.error('Error occurred:', error);
-                            // Handle error if needed
                         }
                     });
                 }
@@ -73,7 +72,7 @@
                         type: 'POST',
                         data: { "id": ProjectId, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
                         success: function (response) {
-                            console.log(response);
+                         
                             if (response && response === 1) {
                                 Swal.fire({
                                     position: 'top-end',
@@ -88,7 +87,6 @@
                         },
                         error: function (error) {
                             console.error('Error occurred:', error);
-                            // Handle error if needed
                         }
                     });
                 }
@@ -112,13 +110,8 @@
                 input: 'text', // Add an input field for comments
                 inputPlaceholder: 'Enter your observation comments...',
                 inputValidator: (value) => {
-                    // Apply the regex to remove unwanted characters
                     var cleanedValue = value.replace(/[^a-zA-Z0-9/ ]/g, "");
-
-                    // Update the input value with the cleaned value
                     Swal.getInput().value = cleanedValue;
-
-                    // You can add additional validation if needed
                     if (!cleanedValue) {
                         return 'Please enter your observation comments!';
                     }
@@ -136,7 +129,7 @@
                             "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
                         },
                         success: function (response) {
-                            console.log(response);
+                          
                             if (response && response === 1) {
                                 Swal.fire({
                                     icon: 'success',
@@ -150,13 +143,10 @@
                         },
                         error: function (error) {
                             console.error('Error occurred:', error);
-                            // Handle error if needed
                         }
                     });
                 }
             });
-
-            // Add event listener for keyup and input events
             Swal.getInput().addEventListener('keyup', function () {
                 var cleanedValue = this.value.replace(/[^a-zA-Z0-9/ ]/g, "");
                 this.value = cleanedValue;
@@ -178,3 +168,16 @@
 
 
 
+function showMore(index) {
+    document.getElementById('shortComment_' + index).style.display = 'none';
+    document.getElementById('fullComment_' + index).style.display = 'inline';
+    document.getElementById('showMoreLink_' + index).style.display = 'none';
+    document.getElementById('showLessLink_' + index).style.display = 'inline';
+}
+
+function showLess(index) {
+    document.getElementById('shortComment_' + index).style.display = 'inline';
+    document.getElementById('fullComment_' + index).style.display = 'none';
+    document.getElementById('showMoreLink_' + index).style.display = 'inline';
+    document.getElementById('showLessLink_' + index).style.display = 'none';
+}

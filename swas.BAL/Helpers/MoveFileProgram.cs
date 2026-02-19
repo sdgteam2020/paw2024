@@ -3,28 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace swas.BAL.Helpers
 {
     public class MoveFileProgram
     {
-        public static void MoveFile()
+        private static string des = "";
+        private static string source = "";
+        private static string file = "";
+
+        public MoveFileProgram(IConfiguration configuration)
+        {
+            des = configuration.GetValue<string>("destinationFolder") ?? "";
+            source = configuration.GetValue<string>("sourceFolder") ?? "";
+            file = configuration.GetValue<string>("filePath") ?? "";
+        }
+        public  void MoveFile()
         {
             try
             {
-                // Define paths
-                string destinationFolder = @"D:\Git_Work\swas.UI\wwwroot\Uploads";
-                string sourceFolder = @"D:\Git_Work\swas.UI\wwwroot\temp";
-                string filePath = @"C:\Users\lanmanager\Desktop\MoveFile.txt";
-
-                // Check if the text file exists
+                string destinationFolder = des;
+                string sourceFolder = source;
+                string filePath = file;
                 if (!File.Exists(filePath))
                 {
                     Console.WriteLine("MoveFile.txt not found.");
                     return;
                 }
-
-                // Read file names from MoveFile.txt
                 string[] fileNames = File.ReadAllLines(filePath);
 
                 foreach (string fileName in fileNames)
@@ -37,7 +43,6 @@ namespace swas.BAL.Helpers
 
                     if (File.Exists(sourceFile))
                     {
-                        // Move the file
                         File.Move(sourceFile, destinationFile);
                         Console.WriteLine($"Moved: {trimmedFileName}");
                     }

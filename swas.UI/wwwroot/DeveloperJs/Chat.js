@@ -10,8 +10,6 @@
         .ajaxError(function () {
             $("#loading").hide();
         });
-
-    // Initial load
     GetAllUsers();
 
  
@@ -79,6 +77,8 @@ function GetAllUsers() {
             var listitem = "";
 
             for (var i = 0; i < response.length; i++) {
+                const letter = response[i].offr_Name.trim().charAt(0).toUpperCase();
+                const colorClass = displayFixedColorAlphabet(letter);
 
                 if (
                     $("#chatProfileSearch").val() === "" ||
@@ -88,10 +88,11 @@ function GetAllUsers() {
                     listitem += '<li>';
                     listitem += '<div class="d-flex bd-highlight chatrequest">';
                     listitem += '<div class="img_cont">';
-                    listitem += '<div class="circleimg" style="background-color:' +
-                        displayFixedColorAlphabet(response[i].offr_Name.trim().substr(0, 1).toUpperCase()) +
-                        ';color:#fff">' +
-                        response[i].offr_Name.trim().substr(0, 2).toUpperCase() +
+                  listitem +=
+    '<div class="circleimg ' + colorClass + '">' +
+    letter +
+    
+                       
                         '</div>';
 
                     if (parseInt(response[i].total) > 0)
@@ -142,13 +143,14 @@ function UserMapChat(ToUserId, profName, sortname) {
             $("#profsortname").html(sortname);
             $("#spnUserMapChatId").html(response.userMapChatId);
             $("#spnToUserIdMapChatId").html(ToUserId);
+            const letter = sortname.trim().charAt(0).toUpperCase();
+            const colorClass = displayFixedColorAlphabet(letter);
 
             $("#img_contuser").html(
-                '<div class="circleimg" style="background-color:' +
-                displayFixedColorAlphabet(sortname.trim().substr(0, 1).toUpperCase()) +
-                ';color:#fff">' + sortname.toUpperCase() + '</div>'
+                '<div class="circleimg ' + colorClass + '">' +
+                sortname.toUpperCase() +
+                '</div>'
             );
-
             UserChat(response.userMapChatId, ToUserId, sortname);
         }
     });
@@ -165,14 +167,15 @@ function UserChat(userMapChatId, FromUserId, sortname) {
 
             if (response && response.length > 0) {
                 for (var i = 0; i < response.length; i++) {
-
+                    const name = $(".spnOffr_Name").text().trim();
+                    const letter = name.charAt(0).toUpperCase();
+                    const colorClass = displayFixedColorAlphabet(letter);
                     if (response[i].type == 1) {
                         listitem += '<div class="d-flex justify-content-start mb-4">';
                         listitem += '<div class="img_cont_msg">';
-                        listitem += '<div class="circleimgchat" style="background-color:' +
-                            displayFixedColorAlphabet($(".spnOffr_Name").html().trim().substr(0, 1).toUpperCase()) +
-                            ';color:#fff">' +
-                            $(".spnOffr_Name").html().substr(0, 2).toUpperCase() +
+                        listitem +=
+                            '<div class="circleimgchat ' + colorClass + '">' +
+                            name.substr(0, 2).toUpperCase() +
                             '</div></div>';
                         listitem += '<div class="msg_cotainer">';
                         listitem += response[i].msg;
@@ -201,20 +204,10 @@ function UserChat(userMapChatId, FromUserId, sortname) {
     });
 }
 
-const colors = [
-    '#759c84', '#d6dbdf', '#5d6d7e', '#5b7382', '#3498db',
-    '#2c3e50', '#6da8a8', '#6495ED', '#000080', '#0000FF',
-    '#008080', '#C0C0C0', '#999999', '#a85e5e', '#008000',
-    '#454545', '#52be80', '#283747', '#1b4f72', '#1b4f72',
-    '#d6dbdf', '#b3b6b7', '#28b463', '#aed6f1', '#17202a',
-    '#73c6b6'
-];
 
-function displayFixedColorAlphabet(latter) {
+function displayFixedColorAlphabet(letter) {
     const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-    for (let i = 0; i < alphabet.length; i++) {
-        if (latter.toUpperCase() === alphabet[i].toUpperCase()) {
-            return colors[i];
-        }
-    }
+    const index = alphabet.indexOf(letter.toLowerCase());
+    return index >= 0 ? 'circle-color-' + index : 'circle-color-0';
 }
+

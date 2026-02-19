@@ -1,11 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-///Created and Reviewed by : Sub Maj Sanal
-///Reviewed Date : 30 Jul 23
-///Tested By :- 
-///Tested Date : 
-///Start
-#nullable disable
+﻿#nullable disable
 
 using System;
 using System.Threading.Tasks;
@@ -19,11 +12,6 @@ using Microsoft.Extensions.Logging;
 
 namespace swas.Areas.Identity.Pages.Account
 {
-    ///Reviewed by : Sub Maj Sanal
-    ///Reviewed Date : 09 Jan 23
-    ///Tested By :- 
-    ///Tested Date : 10 Jan 23
-    ///Start
     public class LogoutModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -42,18 +30,13 @@ namespace swas.Areas.Identity.Pages.Account
         [AllowAnonymous]
         public async Task OnGetAsync(string returnUrl = null)
         {
-            // Response.Redirect("https://iam3.army.mil/IAM/User", true);
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
             }
 
             returnUrl ??= Url.Content("~/");
-
-            // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
-            // ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
 
             ReturnUrl = returnUrl;
@@ -72,12 +55,9 @@ namespace swas.Areas.Identity.Pages.Account
             {
 
                 return LocalRedirect("/Identity/Account/Login");
-              //  return LocalRedirect(returnUrl);
             }
             else
             {
-                // This needs to be a redirect so that the browser performs a new
-                // request and the identity for the user gets updated.
                 return RedirectToPage("/Identity/Account/Logout");
             }
         }

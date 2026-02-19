@@ -21,43 +21,43 @@
 }
 
 .blue-button {
-    /* Add your styles for the black button here */
-    background-color: #044C92; /* Example background color */
+    
+    background-color: #044C92; 
     border: 1px solid #000;
     color: #fff;
     width: 41px;
     height: 23px;
-    /* Add other styles as needed */
+    
 }
 
 .green-button {
-    /* Styles for the green button */
-    background-color: #4CAF50; /* Example green color */
-    /* Add other styles as needed */
+    
+    background-color: #4CAF50; 
+    
     width: 41px;
     height: 23px;
 }
 
 .yellow-button {
-    /* Styles for the yellow button */
-    background-color: #FFC107; /* Example yellow color */
+    
+    background-color: #FFC107; 
     width: 41px;
     height: 23px;
-    /* Add other styles as needed */
+    
 }
 
 .red-button {
-    /* Styles for the red button */
-    background-color: #F44336; /* Example red color */
-    /* Add other styles as needed */
+    
+    background-color: #F44336; 
+    
 }
 
-/* Add 3D effect styles for the buttons */
+
 .table-button {
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Example shadow effect */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); 
     transition: transform 0.3s;
 }
 
@@ -65,13 +65,13 @@
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Example shadow effect */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); 
     transition: transform 0.3s;
 }
 
 .table-button:hover {
     transform: translateY(-3px);
-    background-color: blue; /* Example hover effect for 3D appearance */
+    background-color: blue; 
 }
 
 .required-indicator {
@@ -89,10 +89,10 @@
 .underline-h5 {
     padding: 0.5rem;
     width: 100%;
-    margin: 0 auto; /* Center the box */
+    margin: 0 auto; 
     text-align: center;
     border-color: #03c1fc;
-    /*box-shadow: 2px 6px 5px -3px #062b50;*/
+    
     background-color: #0cafff;
     color: white;
     font-family: Arial;
@@ -114,28 +114,28 @@
 }
 
 .row {
-    display: flex; /* Make the row a flex container */
-    align-items: stretch; /* Align child elements to have equal height */
+    display: flex; 
+    align-items: stretch; 
 }
 
 .col-lg-6 {
-    flex: 1; /* Distribute the available space equally between the two columns */
-    margin-right: 10px; /* Add some space between the columns (adjust as needed) */
+    flex: 1; 
+    margin-right: 10px; 
 }
 
 
 .cancel-button {
-    background-color: #F44336; /* Red color */
+    background-color: #F44336; 
     border: none;
-    color: #000; /* Black text color */
+    color: #000; 
     padding: 5px 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Shadow effect */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); 
     transition: transform 0.3s;
 }
 
     .cancel-button:hover {
         transform: translateY(-3px);
-        background-color: darkred; /* Darker red color on hover */
+        background-color: darkred; 
     }
 
 
@@ -222,9 +222,9 @@
 }
 
 
-/* ===== moved from inline styles in ProjComments.cshtml ===== */
 
-/* Headings */
+
+
 .pc-heading-h5 {
     text-align: center;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -238,48 +238,48 @@
     right: 0;
 }
 
-/* Top 3 detail cards columns */
+
 .pc-detail-col {
     border-radius: 15px;
     margin-top: -17px;
 }
 
-/* Tech details table fixed size */
+
 .pc-tech-table {
     width: 100%;
     height: 150px;
 }
 
-/* Two big cards (left/right) */
+
 .pc-scroll-card {
     height: 550px;
     overflow-y: auto;
 }
 
-/* Chat inner card scroll */
+
 .pc-chat-card {
     overflow-y: auto;
 }
 
-/* Emoji span font size */
+
 .pc-emoji {
     font-size: 20px;
 }
 
-/* Section heading h7 */
+
 .pc-h7-title {
     text-align: left;
     text-decoration-color: revert;
     color: antiquewhite;
 }
 
-/* Textarea fixed size */
+
 .pc-textarea {
     width: 100%;
     height: 240px;
 }
 
-/* (Optional) if you want same look of that inline font red star */
+
 .pc-required-star {
     color: red;
     font-weight: bold;
@@ -287,18 +287,15 @@
 
 
 
-/* replaces: style="height: 550px; overflow-y: auto;" */
 .pc-scroll-card {
     height: 550px;
     overflow-y: auto;
 }
 
-/* replaces: style="font-size: 20px;" */
 .pc-emoji {
     font-size: 20px;
 }
 
-/* replaces h7 inline style (text-align + font-size + weight + color etc.) */
 .pc-h7-title {
     text-align: left;
     text-decoration-color: revert;
@@ -310,7 +307,6 @@
     font-weight: bold;
 }
 
-/* replaces: style="overflow-y: auto;" */
 .pc-chat-card {
     overflow-y: auto;
 }
@@ -325,22 +321,22 @@
 }
 
 .custom-modal-size {
-    max-width: 100%; /* Set the modal width to 80% of the screen */
+    max-width: 100%; 
     width: 95%;
-    /* height: 10%; Adjust height if necessary */
+    
     margin: auto;
 }
 
     /*.custom-modal-size .modal-content {
-        height: 100%;*/ /* Ensure the content fills the modal */
-        /*overflow: auto;*/ /* Add scrolling for long content */
-    /*}*/
+        height: 100%;*/ 
+         
+    
 
 .modal-dialog {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh; /* Full height */
+    min-height: 100vh; 
 }
 
 .s-no-column {
@@ -350,12 +346,12 @@
 }
 
 .bold-border {
-    border-width: 2px !important; /* Make border width bold */
+    border-width: 2px !important; 
 }
 
 .btn-small-large {
-    padding: 0.5rem 0.7rem; /* Slightly larger padding than the default */
-    font-size: 0.8rem; /* Slightly larger font size */
+    padding: 0.5rem 0.7rem; 
+    font-size: 0.8rem; 
 }
 
 .btn-3d {

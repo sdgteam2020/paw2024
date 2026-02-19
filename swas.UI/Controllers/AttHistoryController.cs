@@ -6,12 +6,6 @@ using System.Threading.Tasks;
 
 namespace swas.UI.Controllers
 {
-
-    ///Created and Reviewed by : Sub Maj Sanal
-    ///Reviewed Date : 31 Jul 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start
     public class AttHistoryController : Controller
     {
         private readonly IAttHistoryRepository _attHistoryRepository;
@@ -21,10 +15,6 @@ namespace swas.UI.Controllers
             _attHistoryRepository = attHistoryRepository;
             _logger = logger;
         }
-
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        // GET: AttHistory
         [Authorize(Policy = "StakeHolders")]
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -32,9 +22,6 @@ namespace swas.UI.Controllers
             var attHistories = await _attHistoryRepository.GetAllAttHistoriesAsync();
             return View(attHistories);
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        // GET: AttHistory/Details/5
         [Authorize(Policy = "StakeHolders")]
         [HttpGet]
         public async Task<IActionResult> Details(int id)
@@ -47,9 +34,6 @@ namespace swas.UI.Controllers
 
             return View(attHistory);
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        // GET: AttHistory/Create
         [Authorize(Policy = "StakeHolders")]
         [HttpGet]
         public async Task<IActionResult> Create()
@@ -58,9 +42,6 @@ namespace swas.UI.Controllers
             return View(atthist);
             
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        // POST: AttHistory/Create
         [Authorize(Policy = "StakeHolders")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -84,9 +65,6 @@ namespace swas.UI.Controllers
             }
             
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        // GET: AttHistory/Edit/5
         [Authorize(Policy = "StakeHolders")]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
@@ -98,9 +76,6 @@ namespace swas.UI.Controllers
             }
             return View(attHistory);
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        // POST: AttHistory/Edit/5
         [Authorize(Policy = "StakeHolders")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -128,9 +103,6 @@ namespace swas.UI.Controllers
             }
             
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        // GET: AttHistory/Delete/5
         [Authorize(Policy = "StakeHolders")]
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
@@ -142,9 +114,6 @@ namespace swas.UI.Controllers
             }
             return View(attHistory);
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
-        // POST: AttHistory/Delete/5
         [Authorize(Policy = "StakeHolders")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

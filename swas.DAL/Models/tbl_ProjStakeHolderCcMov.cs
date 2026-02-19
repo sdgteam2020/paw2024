@@ -27,6 +27,7 @@ namespace swas.DAL.Models
         public bool IsRead { get; set; }
         public DateTime ReadDate { get; set; }
 
+        [MaxLength(500)]
         public string? UserDetails { get; set; }
     }
 }

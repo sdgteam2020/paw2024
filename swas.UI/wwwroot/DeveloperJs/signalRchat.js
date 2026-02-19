@@ -121,8 +121,6 @@ const colors = [
     '#17202a',
     '#73c6b6'
 ];
-
-// Function to display a to z with fixed colors
 function displayFixedColorAlphabet(latter) {
 
     const alphabet = 'abcdefghijklmnopqrstuvwxyz';

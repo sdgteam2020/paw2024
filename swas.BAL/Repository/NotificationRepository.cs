@@ -51,7 +51,6 @@ namespace swas.BAL.Repository
             {
                 var notification = await _context.Notification
                 .Where(n => n.NotificationType == type
-                // && n.IsRead == true   
                 && n.NotificationTo == toUnitId
                 && n.ProjId == projId
                 && n.NotificationFrom == fromUNitId)
@@ -67,7 +66,6 @@ namespace swas.BAL.Repository
 
         public async Task<List<Notification>> GetNotifExcludingToUnit(int? unitId, int projId)
         {
-            // Fetch the latest notification of type 2 for each ProjId where NotificationTo is not the excluded unit and is not deleted
             var latestType2 = await _context.Notification
                 .Where(n => n.NotificationType == 2
                             && n.NotificationTo != unitId
@@ -75,15 +73,11 @@ namespace swas.BAL.Repository
                 .GroupBy(n => n.ProjId)
                 .Select(g => g.OrderByDescending(n => n.NotificationId).FirstOrDefault())
                 .ToListAsync();
-
-            // Fetch notifications of type 1 where NotificationTo is not the excluded unit and is not deleted
             var notifications = await _context.Notification
                 .Where(n => n.NotificationType == 1
                             && n.NotificationTo != unitId
                             && n.IsDeleted == false && n.ProjId == projId)
                 .ToListAsync();
-
-            // Combine results and order by NotificationId
             var combinedResults = notifications
                 .Union(latestType2)
                 .OrderBy(n => n.NotificationId)

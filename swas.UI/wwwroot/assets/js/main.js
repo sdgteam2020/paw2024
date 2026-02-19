@@ -87,12 +87,6 @@ $(function() {
 
   }), 
 
-
-
-
-
-// Theme switcher 
-
 $("#LightTheme").on("click", function() {
   $("html").attr("class", "light-theme")
 }),
@@ -104,9 +98,6 @@ $("#DarkTheme").on("click", function() {
 $("#SemiDark").on("click", function() {
   $("html").attr("class", "semi-dark")
 }),
-
-
-// headercolor colors 
 
 $("#headercolor1").on("click", function() {
   $("html").addClass("color-header headercolor1"), $("html").removeClass("headercolor2 headercolor3 headercolor4 headercolor5 headercolor6 headercolor7 headercolor8")
@@ -125,9 +116,6 @@ $("#headercolor1").on("click", function() {
 }), $("#headercolor8").on("click", function() {
   $("html").addClass("color-header headercolor8"), $("html").removeClass("headercolor1 headercolor2 headercolor4 headercolor5 headercolor6 headercolor7 headercolor3")
 })
-
-
-// sidebar colors 
 $('#sidebarcolor1').click(theme1);
 $('#sidebarcolor2').click(theme2);
 $('#sidebarcolor3').click(theme3);
@@ -168,17 +156,6 @@ function theme7() {
 function theme8() {
   $('html').attr('class', 'color-sidebar sidebarcolor8');
 }
-
-
-
-
-
-
-
-  //new PerfectScrollbar(".header-notifications-list")
-
-
-    // Tooltops
     $(function () {
       $('[data-bs-toggle="tooltip"]').tooltip();
     })

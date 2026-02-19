@@ -43,13 +43,13 @@ input[type="search"] {
     z-index: 999999 !important;
 }
 
-/* headings */
+
 h1, h2, h3, h4, h5, h6 {
     font-family: Arial, sans-serif !important;
     font-size: 24px !important;
 }
 
-/* responsive */
+
 img, video {
     max-width: 100% !important;
     height: auto !important;
@@ -64,7 +64,7 @@ div.dataTables_wrapper div.dataTables_filter {
     margin-top: -3rem !important;
 }
 
-/* logos */
+
 .dgislogo,
 .dgislogo1 {
     width: 90px;
@@ -76,7 +76,7 @@ div.dataTables_wrapper div.dataTables_filter {
     margin-top: -7px;
 }
 
-/* modal sizing overrides */
+
 .modal-content {
     margin-left: -20rem !important;
     width: 111rem !important;
@@ -171,9 +171,9 @@ div.dataTables_wrapper div.dataTables_filter {
     box-shadow: 1px 1px 6px 1px gray !important;
 }
 
-    .card1:hover {
-        transform: scale(1.1);
-    }
+.card1:hover {
+    transform: scale(1.1);
+}
 
 .modal-header {
     color: white;
@@ -187,11 +187,13 @@ div.dataTables_wrapper div.dataTables_filter {
 .card-r {
     margin-left: 0.9rem !important;
 }
-
 .main-card {
     background-image: url('/assets/images/test.jpg');
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    min-height: 100vh; 
 }
-
 .col-sponsor {
     width: 20%;
 }
@@ -242,25 +244,21 @@ div.dataTables_wrapper div.dataTables_filter {
     cursor: pointer;
 }
 
-/* ---------- moved inline styles ---------- */
 
-/* header style="background-color:#333;color:#fff" */
+
 .paw-top-headers {
     background-color: #333;
     color: #fff;
 }
 
-/* removed style="text-align:center" */
 .paw-headertext-center {
     text-align: center;
 }
 
-/* wrapper style="display:none" */
 .paw-wrapper-hidden {
     display: none;
 }
 
-/* modal inline styles removed */
 .paw-sticky-thead {
     position: sticky;
     top: -18px;
@@ -270,7 +268,7 @@ div.dataTables_wrapper div.dataTables_filter {
     overflow: scroll;
 }
 
-/* widths formerly inline on th/td */
+
 .paw-w-1 {
     width: 1% !important;
 }
@@ -299,14 +297,13 @@ div.dataTables_wrapper div.dataTables_filter {
     width: 15% !important;
 }
 
-/* edit icon was inline */
+
 .paw-edit-icon {
     width: 35px;
     height: 30px;
     margin-right: 0;
 }
 
-/* footer style="background-color:#333;color:#fff;position:fixed;bottom:0;width:100%" */
 .paw-footers {
     background-color: #333;
     color: #fff;
@@ -315,42 +312,42 @@ div.dataTables_wrapper div.dataTables_filter {
     width: 100%;
 }
 
-/* footer right div inline */
+
 .paw-footer-right {
     text-align: right;
     margin-top: -24px !important;
     margin-right: 20px !important;
 }
 
-/* logo1 inline width:130px */
+
 .paw-logo1 {
     width: 130px;
 }
 
-/* login block inline margin-top:1rem */
+
 .paw-login-mt {
     margin-top: 1rem;
 }
 
-/* login card inline margin-left/width */
+
 .paw-login-card {
     margin-left: 7.5rem;
     width: 29rem;
 }
 
-/* card title inline */
+
 .paw-card-title {
     text-align: center;
     color: black;
 }
 
-/* invalid feedback inline red */
+
 .paw-invalid-red {
     color: red;
 }
 
-/* ---------- process button class mapping (CSP-safe) ---------- */
-.paw-process-btn { /* base */
+
+.paw-process-btn { 
 }
 
 .paw-process-btn-primary {

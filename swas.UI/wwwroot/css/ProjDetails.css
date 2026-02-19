@@ -2,18 +2,18 @@
     width: 100%;
     max-width: 100%;
     border-collapse: collapse;
-    font-size: 13px; /* Reduced font size for better fit */
+    font-size: 13px; 
 }
 
     .table th, .table td {
-        padding: 6px; /* Reduced padding */
+        padding: 6px; 
         text-align: left;
         vertical-align: middle;
         border: 1px solid #dee2e6;
     }
 
     .table thead th {
-        /*background-color: #f8f9fa;*/
+        
         font-weight: bold;
         position: sticky;
         top: 0;
@@ -28,26 +28,26 @@
         background-color: #f1f1f1;
     }
 
-/* Card and card-body styling */
+
 .card {
     width: 100%;
-    height: 80vh; /* Increased card height */
+    height: 80vh; 
     overflow: hidden;
 }
 
 .card-body {
     height: 100%;
-    overflow-y: auto; /* Vertical scroll */
+    overflow-y: auto; 
     overflow-x: hidden;
 }
 
-/* Table wrapper for horizontal scrolling */
+
 .table-responsive {
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+    -webkit-overflow-scrolling: touch; 
 }
 
-/* Tab styling */
+
 .tabs__head {
     list-style: none;
     padding: 0;
@@ -65,7 +65,7 @@
         padding: 8px 12px;
         border: 1px solid #ccc;
         background-color: #fff;
-        font-size: 12px; /* Reduced font size */
+        font-size: 12px; 
         display: flex;
         align-items: center;
     }
@@ -84,7 +84,7 @@
         display: block;
     }
 
-/* Tooltip styling */
+
 .tooltip-container {
     position: relative;
     display: inline-block;
@@ -98,8 +98,8 @@
     color: #fff;
     padding: 4px 8px;
     border-radius: 4px;
-    font-size: 11px; /* Reduced font size */
-    width: 150px; /* Smaller width */
+    font-size: 11px; 
+    width: 150px; 
     text-align: center;
     top: 100%;
     left: 50%;
@@ -110,9 +110,9 @@
     visibility: visible;
 }
 
-/* Notification and popup styling */
+
 .notification-icon {
-    width: 24px; /* Reduced size */
+    width: 24px; 
     height: 24px;
     cursor: pointer;
     transition: transform 0.2s ease;
@@ -128,25 +128,25 @@
     left: 0;
     padding: 12px;
     min-width: 200px;
-    max-width: 280px; /* Reduced width */
+    max-width: 280px; 
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(8px);
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     z-index: 1000;
-    font-size: 12px; /* Reduced font size */
+    font-size: 12px; 
 }
 
 .popup-title {
-    font-size: 14px; /* Reduced font size */
+    font-size: 14px; 
     font-weight: 600;
     color: #333;
     margin-bottom: 8px;
 }
 
 .popup-list li {
-    font-size: 12px; /* Reduced font size */
+    font-size: 12px; 
     color: #444;
     margin-bottom: 6px;
 }
@@ -156,26 +156,26 @@
         margin-right: 6px;
     }
 
-/* Button styling */
+
 .btn {
-    /*padding: 3px 6px;*/ /* Reduced padding */
-    font-size: 11px; /* Reduced font size */
+     
+    font-size: 11px; 
     line-height: 1.4;
 }
 
     .btn img {
-        max-width: 18px; /* Reduced icon size */
+        max-width: 18px; 
         height: auto;
     }
 
-/* Modal styling */
+
 .modal-dialog {
-    /*max-width: 90%;*/
+    
     margin: 1rem auto;
 }
 
 .modal-content {
-    font-size: 12px; /* Reduced font size */
+    font-size: 12px; 
 
 }
 
@@ -189,11 +189,11 @@
 }*/
 
 /*.custom-modal-content {
-    height: 70vh;*/ /* Increased modal height */
+    height: 70vh;*/ 
     /*overflow-y: auto;
 }*/
 
-/* Scrollbar styling */
+
 .tabs__content__item::-webkit-scrollbar,
 .card-body::-webkit-scrollbar {
     width: 6px;
@@ -205,20 +205,20 @@
     border-radius: 3px;
 }
 
-/* Media Queries for Mobile Responsiveness */
+
 @media screen and (max-width: 768px) {
     .table {
-        font-size: 9px; /* Further reduced font size */
+        font-size: 9px; 
     }
 
         .table th, .table td {
-            padding: 4px; /* Further reduced padding */
+            padding: 4px; 
         }
 
-            /* Hide non-critical columns */
+            
             .table th:not(.s-no-column):not(:nth-child(2)),
             .table td:not(.s-no-column):not(:nth-child(2)) {
-                display: none; /* Show only Serial No and Project Name */
+                display: none; 
             }
 
     .s-no-column {
@@ -286,7 +286,7 @@
     }
 
     .card {
-        height: 85vh; /* Increased height for mobile */
+        height: 85vh; 
     }
 }
 
@@ -325,7 +325,7 @@
     }
 }
 
-/* Additional styles from original code */
+
 .red-text {
     color: red;
 }
@@ -354,12 +354,12 @@
     text-decoration: none;
     padding: 10px 15px;
     border: 1px solid #ccc;
-    background-color: #fff; /* Set the default background color */
+    background-color: #fff; 
 }
 
     .tabs__head a.active-link {
-        background-color: white; /* Set the active background color to white */
-        border-bottom: 20px solid #dee2e6; /* Adjust this as needed */
+        background-color: white; 
+        border-bottom: 20px solid #dee2e6; 
     }
 
 .active-link {
@@ -370,8 +370,8 @@
 }
 
 .tabs__head a.active-link {
-    background-color: white; /* Set the active background color to white */
-    border-bottom: 20px solid #dee2e6; /* Adjust this as needed */
+    background-color: white; 
+    border-bottom: 20px solid #dee2e6; 
 }
 
 .tabs__content__item, .content {
@@ -431,12 +431,12 @@ body {
     text-decoration: none;
     padding: 10px 15px;
     border: 1px solid #ccc;
-    background-color: #fff; /* Set the default background color */
+    background-color: #fff; 
 }
 
     .tabs__head a.active-link {
-        background-color: white; /* Set the active background color to white */
-        border-bottom: 20px solid #dee2e6; /* Adjust this as needed */
+        background-color: white; 
+        border-bottom: 20px solid #dee2e6; 
     }
 
 .tabs__content__item {
@@ -451,8 +451,8 @@ body {
 
 
 .tabs__content__item {
-    overflow: auto; /* Add this style to enable scrolling */
-    max-height: 700px; /* Set a maximum height for the table to make the scrollbar appear when the content exceeds this height */
+    overflow: auto; 
+    max-height: 700px; 
 }
 
 
@@ -497,8 +497,8 @@ body {
 }
 
 
-/* ------------scrollar */
-/* styles.css */
+
+
 
 .tabs__content__item {
     height: 100%;
@@ -522,12 +522,12 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow-y: hidden; /* Prevent scrolling here */
+    overflow-y: hidden; 
 }
 
 .table-wrapper {
     flex: 1;
-    overflow-y: auto; /* Enable scrolling */
+    overflow-y: auto; 
 }
 
 table {
@@ -548,7 +548,7 @@ th {
     position: sticky;
     top: 0;
     background: #fff;
-    z-index: 2; /* Ensure header stays on top */
+    z-index: 2; 
 }
 
 tbody tr:nth-child(even) {
@@ -568,17 +568,17 @@ body {
 }
 
 /*.custom-modal-size {
-    max-width: 85%;*/ /* Set the modal width to 80% of the screen */
-    /*width: 107%;*/ /* Ensure it scales responsively */
-    /*margin: auto;*/ /* Center horizontally */
-/*}*/
+    max-width: 85%;*/ 
+     
+     
+
 
     /*.custom-modal-size .custom-modal-content {
-        height: 65vh;*/ /* Ensure the content adjusts dynamically */
-        /*overflow-y: auto;*/ /* Add vertical scrolling for long content */
-        /*overflow-x: hidden;*/ /* Prevent horizontal overflow */
-        /* margin-left: 248px; */
-    /*}*/
+        height: 65vh;*/ 
+         
+         
+        
+    
 
 /* .swal2-title{
 		background-color: #002b5e;
@@ -591,7 +591,7 @@ body {
     color: white;
     font-size: 18px;
     padding-bottom: 26px;
-    /* add any other styles you need */
+    
 }
 
 /*  .custom-swal-title {
@@ -606,22 +606,22 @@ body {
 
 
 /*.custom-modal-size {
-    max-width: 100%;*/ /* Increase the width as required */
-    /*width: 107%;*/
-    /* height: 10%; Adjust height if necessary */
+    max-width: 100%;*/ 
+    
+    
     /*margin: auto;
 }
 
     .custom-modal-size .modal-content {
-        height: 100%;*/ /* Ensure the content fills the modal */
-        /*overflow: auto;*/ /* Add scrolling for long content */
-    /*}*/
+        height: 100%;*/ 
+         
+    
 
 .modal-dialog {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh; /* Full height */
+    min-height: 100vh; 
 }
 
 .tooltip-text {
@@ -648,7 +648,7 @@ body {
 
 .select2-container--default .select2-selection--multiple.is-invalid,
 .is-invalid .select2-selection--multiple {
-    border-color: #dc3545 !important; /* Bootstrap's red */
+    border-color: #dc3545 !important; 
     box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
 }
 
@@ -658,12 +658,12 @@ body {
    (moved from inline styles)
    ========================= */
 
-/* Tabs header special width */
+
 .tab-minw-230 {
     min-width: 230px;
 }
 
-/* Full-height content blocks */
+
 .h-100p {
     height: 100%;
 }
@@ -676,7 +676,7 @@ body {
     overflow-y: scroll;
 }
 
-/* Table column widths (used on th/td) */
+
 .col-w-20 {
     width: 20% !important;
 }
@@ -697,19 +697,19 @@ body {
     width: 5% !important;
 }
 
-/* Small action button (padding/font-size/margin-top) */
+
 .btn-mini {
     padding: 1px !important;
     font-size: 13px !important;
     margin-top: 1px !important;
 }
 
-/* History icon button top spacing */
+
 .btn-mt-1 {
     margin-top: 1px !important;
 }
 
-/* Icons sizing */
+
 .ico-h-22 {
     height: 22px !important;
 }
@@ -732,12 +732,8 @@ body {
     height: 30px !important;
 }
 
-/* Attachment icons */
-.attach-clip-icon {
-    width: 31px !important;
-    height: 29px !important;
-    margin-right: 0px !important;
-}
+
+
 
 .edit-icon {
     width: 35px !important;
@@ -745,7 +741,7 @@ body {
     margin-right: 0px !important;
 }
 
-/* Notification container */
+
 .notif-hover-container {
     position: relative;
     display: inline;
@@ -757,7 +753,7 @@ body {
     margin-left: 5px;
 }
 
-/* Remainder badge (replacing inline style on the span) */
+
 .rem-badge {
     position: absolute;
     top: -5px;
@@ -769,77 +765,77 @@ body {
     font-size: 12px;
 }
 
-/* CC pill in inbox "From" column */
+
 .cc-pill {
     padding: 1px !important;
     font-size: 13px !important;
     margin-top: 1px !important;
 }
 
-/* SVG check icon color was inline style */
+
 .svg-green {
     color: #18bb6b;
 }
 
-/* Confirmation modal datepicker block */
+
 .d-none-inline {
     display: none;
 }
 
-/* ProjRemainderMov modal content sizing (was inline on modal-content) */
+
 .rem-modal-content {
     width: 100rem !important;
     margin: -23rem !important;
 }
 
-/* Tracking table header padding/width */
+
 .th-serno-tight {
     padding-right: 0px !important;
     width: 10px !important;
 }
-/* ===== Remaining inline-style removals ===== */
 
-/* Park / Pullback disabled cursor */
+
+
 .cursor-not-allowed {
     cursor: not-allowed !important;
 }
 
-/* Legacy history icon height */
+
 .ico-h-27 {
     height: 27px !important;
 }
-/* (already added in Part A, keep if missing) */
 
-/* Sent tab CC button/pill already handled with .cc-pill (Part A) */
 
-/* Tooltip short text inside anchor is fine (no inline) */
 
-/* Any “invisible button” still using btn-mini */
+
+
+
+
 .btn-mini {
     padding: 1px !important;
     font-size: 13px !important;
     margin-top: 1px !important;
 }
-/* ensure exists */
 
-/* Any “noExport” icon heights */
+
+
 .ico-h-22 {
     height: 22px !important;
 }
-/* ensure exists */
+
 .ico-h-30 {
     height: 30px !important;
 }
-/* ensure exists */
 
-/* Notification / Reminder icons 20px */
+
+
 .ico-w20h20 {
     width: 20px !important;
     height: 20px !important;
 }
-/* ensure exists */
 
-/* Draft actions center wrapper (replace <center> if you want consistent alignment) */
+
+
 .center-block {
     text-align: center;
 }
@@ -885,55 +881,55 @@ body {
     font-weight: 600;
 }
 
-/* ===== ProjFwd modal: moved from inline styles ===== */
 
-/* modal-content width */
+
+
 .projfwd-modal-content-w80 {
     width: 80%;
 }
 
-/* preview card body background */
+
 .projfwd-preview-body-bg {
     background-color: #f8f9fa;
 }
 
-/* ProjectsFwd header height */
+
 .projfwd-header-h50 {
     height: 50px;
 }
 
-/* info button margin-top */
+
 .projfwd-btn-mt13 {
     margin-top: 13px;
 }
 
-/* all selects/inputs width 100% */
+
 .projfwd-w-100 {
     width: 100%;
 }
 
-/* remarks textarea width 100% */
+
 .projfwd-remarks-w100 {
     width: 100%;
 }
 
-/* date input fixed width */
+
 .projfwd-date-w200 {
     width: 200px;
 }
 
-/* header negative margins */
+
 .projfwd-header-neg-margins {
     margin-left: -18px;
     margin-right: -13px;
 }
 
-/* attachment table wrapper overflow */
+
 .projfwd-overflow-auto {
     overflow: auto;
 }
 
-/* upload overlay */
+
 .projfwd-upload-overlay {
     position: fixed;
     top: 0;
@@ -944,7 +940,7 @@ body {
     z-index: 1050;
 }
 
-/* spinner size */
+
 .projfwd-spinner-lg {
     width: 4rem;
     height: 4rem;
@@ -953,7 +949,7 @@ body {
 {
     cursor:not-allowed;
 }
-/* ---------- CSP SAFE ICON COLORS ---------- */
+
 .icon-warning {
     color: #FFD43B;
 }
@@ -966,23 +962,23 @@ body {
     color: #3adb00;
 }
 
-/* ---------- FORCE WHITE TEXT (used for pills) ---------- */
+
 .text-white-force {
     color: #ffffff;
 }
-/* ---------- ICON COLOR ---------- */
+
 .icon-green {
     color: #18bb6b;
 }
 
-/* ---------- CC BUTTON STYLE ---------- */
+
 .cc-btn {
     padding: 1px !important;
     font-size: 13px !important;
     margin-top: 1px;
 }
 
-/* ---------- HISTORY BUTTON ---------- */
+
 .btn-history {
     margin-top: 1px;
 }
@@ -991,4 +987,14 @@ body {
 
 .shortremarks {
     display: block
+}
+#swal2-title,
+.swal2-title {
+    line-height: 1.25 !important;
+    margin: 0.6em 0 0.3em !important;
+    padding: 0 !important;
+    position: static !important;
+    transform: none !important;
+    letter-spacing: normal !important;
+    white-space: normal !important;
 }

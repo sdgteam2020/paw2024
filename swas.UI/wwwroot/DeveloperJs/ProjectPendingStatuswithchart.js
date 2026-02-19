@@ -13,7 +13,6 @@
         data: userdata,
         type: 'POST',
         success: function (response) {
-            // console.log(response);
             if (response != "null" && response != null) {
 
                 if (response == -1) {
@@ -235,18 +234,11 @@
         }
     });
 }
-
-// Declare chart globally so you can destroy it later
 let projHoldChart;
-
-// Function to create/rebind the chart
 function bindProjHoldChart(labels, totals, totalsForlabel, colors) {
-    // If chart already exists, destroy it before creating new
     if (projHoldChart) {
         projHoldChart.destroy();
     }
-
-    // Create new chart
     projHoldChart = new Chart(document.getElementById('ProjHoldHistoryChart'), {
         type: 'bar',
         data: {
@@ -262,7 +254,7 @@ function bindProjHoldChart(labels, totals, totalsForlabel, colors) {
             plugins: {
                 title: {
                     display: true,
-                    /*text: 'Project Hold History (in Hours.Minute)'*/
+                    
                 },
                 legend: { display: false },
                 datalabels: {
@@ -273,7 +265,6 @@ function bindProjHoldChart(labels, totals, totalsForlabel, colors) {
                     font: {
                         weight: 'bold'
                     }, formatter: function (value, context) {
-                        // Use value from holdLabels array by index
                         return totalsForlabel[context.dataIndex];
                     }
                 }
@@ -284,13 +275,9 @@ function bindProjHoldChart(labels, totals, totalsForlabel, colors) {
 }
 let projHoldChartcomment;
 function bindProjHoldCommentsChart(labels, totals, totalsForlabel, colors) {
-   
-    // If chart already exists, destroy it before creating new
     if (projHoldChartcomment) {
         projHoldChartcomment.destroy();
     }
-
-    // Create new chart
     projHoldChartcomment = new Chart(document.getElementById('ProjHoldHistoryCommentChart'), {
         type: 'bar',
         data: {
@@ -306,7 +293,7 @@ function bindProjHoldCommentsChart(labels, totals, totalsForlabel, colors) {
             plugins: {
                 title: {
                     display: true,
-                    /*text: 'Project Hold History (in Hours.Minute)'*/
+                    
                 },
                 legend: { display: false },
                 datalabels: {
@@ -319,7 +306,6 @@ function bindProjHoldCommentsChart(labels, totals, totalsForlabel, colors) {
                     },
                     textAlign: "center",
                     formatter: function (value, context) {
-                        // Use value from holdLabels array by index
                         return totalsForlabel[context.dataIndex];
                     }
                 }
@@ -329,33 +315,18 @@ function bindProjHoldCommentsChart(labels, totals, totalsForlabel, colors) {
     });
 }
 function calculateTotalTime(response) {
-    // Result object to hold the grouped data
     let result = {};
-
-    // Iterate over the response and process each entry
     response.forEach(entry => {
         const { tounitId, tounit, timeStampfrom, timeStampTo } = entry;
-
-        // Parse timestamps into Date objects
         const from = new Date(timeStampfrom);
         const to = new Date(timeStampTo);
-
-        // Calculate time spent in minutes
         const timeSpent = (to - from) / 1000 / 60; // Difference in minutes
-
-        // Create a unique key for each (fromunitId, statusId, fromunit, status) combination
         const key = `${tounitId}_${tounit}`;
-
-        // If the group doesn't exist, initialize it
         if (!result[key]) {
             result[key] = 0;
         }
-
-        // Add the time spent to the group
         result[key] += timeSpent;
     });
-
-    // Transform the result into a more readable array
     const groupedResult = Object.keys(result).map(key => {
         const [tounitId, tounit] = key.split('_');
         return {
@@ -368,58 +339,39 @@ function calculateTotalTime(response) {
 
     return groupedResult;
 }
-// Assuming totalTimeSpent is in minutes
 function convertMinutesToAgo(minutes) {
     if (minutes == null || isNaN(minutes) || minutes < 0) {
         minutes = 0;
     }
-    // Calculate total hours from minutes
     const totalHours = minutes / 60;
-
-    // Calculate remaining minutes after extracting hours
     const remainingMinutes = minutes % 60;
 
     let ago = "";
     let formatted;
-
-    // Calculate years first
     if (totalHours >= 8760) {
         const days = Math.round(totalHours / 24);
         const hours = Math.round(totalHours % 24);  // Remaining hours after extracting days
         formatted = `${hours.toString().padStart(2, '0')}:${Math.round(remainingMinutes).toString().padStart(2, '0')}`;
-        //ago = `${days} Days (${formatted})`;
         const daysforyear = `${days} Days`;
 
 
 
         const years = Math.round(totalHours / 8760);  // 8760 hours in a year
-        // const remainingHoursInYear = totalHours % 8760;
         formatted = `${Math.round(totalHours).toString().padStart(3, '0')}:${Math.round(remainingMinutes).toString().padStart(2, '0')}`;
-        //ago = `${years} Years (${formatted})`;
         ago = `${years} Years (${daysforyear})`;
     }
-    // Calculate months if total hours are less than a year but greater than or equal to 730 hours (~30 days)
     else if (totalHours >= 730) {
-        // const months = Math.round(totalHours / 730);  // 730 hours in a month (approx)
-        // // const remainingHoursInMonth = totalHours % 730;
-        // formatted = `${Math.round(totalHours).toString().padStart(3, '0')}:${Math.round(remainingMinutes).toString().padStart(2, '0')}`;
-        // //ago = `${months} Months (${formatted})`;
-        // ago = `${months} Months`;
         const days = Math.round(totalHours / 24);
         const hours = Math.round(totalHours % 24);  // Remaining hours after extracting days
         formatted = `${hours.toString().padStart(2, '0')}:${Math.round(remainingMinutes).toString().padStart(2, '0')}`;
-        //ago = `${days} Days (${formatted})`;
         ago = `${days} Days`;
     }
-    // Calculate days if total hours are less than 730 but greater than 24 hours
     else if (totalHours >= 24) {
         const days = Math.round(totalHours / 24);
         const hours = Math.round(totalHours % 24);  // Remaining hours after extracting days
         formatted = `${hours.toString().padStart(2, '0')}:${Math.round(remainingMinutes).toString().padStart(2, '0')}`;
-        //ago = `${days} Days (${formatted})`;
         ago = `${days} Days`;
     }
-    // For less than 24 hours, simply show the minutes
     else {
         if (minutes == 0) {
             ago = "Till Now"

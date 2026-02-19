@@ -31,37 +31,37 @@
 .swal2-html-container {
     font-size: 16px;
     color: #666;
-    line-height: 1.5; /* Spacing between lines */
-    text-align: left; /* Align text to the left */
-    margin-bottom: 20px; /* Space below content */
+    line-height: 1.5; 
+    text-align: left; 
+    margin-bottom: 20px; 
 }
 
 .swal2-confirm {
-    background-color: #007bff; /* Blue button */
-    color: #fff; /* White text */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Rounded corners */
-    font-size: 16px; /* Font size */
-    padding: 10px 20px; /* Padding */
-    cursor: pointer; /* Pointer cursor */
-    transition: background-color 0.3s; /* Smooth color transition */
+    background-color: #007bff; 
+    color: #fff; 
+    border: none; 
+    border-radius: 5px; 
+    font-size: 16px; 
+    padding: 10px 20px; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
 }
 
     .swal2-confirm:hover {
-        background-color: #0056b3; /* Darker blue on hover */
+        background-color: #0056b3; 
     }
 
     .swal2-confirm:focus {
-        outline: none; /* Remove default outline */
+        outline: none; 
     }
 
 
 .swal2-title {
-    text-align: center; /* Center-align the title text */
+    text-align: center; 
 }
 
 .swal2-html-container {
-    text-align: center; /* Center-align the content text */
+    text-align: center; 
 }
 
 
@@ -72,7 +72,7 @@
 }
 
 .enabled-button {
-    background-color: #004b93 !important; /* Adjust color as needed */
+    background-color: #004b93 !important; 
     cursor: pointer !important;
     opacity: 1;
 }
@@ -106,13 +106,13 @@
 }
 
 
-/* ===== inline style removals ===== */
+
 
 .paw-ingestion-mt {
     margin-top: 10px;
 }
 
-/* overlay */
+
 .paw-uploadLoader {
     display: none;
     position: fixed;
@@ -126,12 +126,11 @@
     height: 4rem;
 }
 
-/* formerly <font style="color:red"> */
 .paw-red-font {
     color: red;
 }
 
-/* project name group */
+
 .paw-projname-inputgroup {
     width: 250px;
 }
@@ -152,7 +151,7 @@
     display: none;
 }
 
-/* buttons with margin-top */
+
 #btn-Initiation {
     margin-top: -8px;
 }
@@ -165,7 +164,7 @@
     margin-top: -10px;
 }
 
-/* widths */
+
 .paw-w-100 {
     width: 100% !important;
 }
@@ -178,14 +177,14 @@
     width: 12rem !important;
 }
 
-/* edit icon */
+
 .edit-icon {
     width: 35px;
     height: 30px;
     margin-right: 0;
 }
 
-/* helper */
+
 .paw-display-none {
     display: none;
 }
@@ -196,4 +195,7 @@
     overflow-wrap: break-word !important;
     line-height: 1.4;
     text-align: center;
+}
+.text-start {
+    text-align: left !important;
 }

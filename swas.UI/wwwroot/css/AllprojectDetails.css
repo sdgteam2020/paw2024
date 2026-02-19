@@ -8,7 +8,7 @@
 }
 
 label {
-    /*  margin-top: 18px;*/
+    
     display: inline-flex;
 }
 
@@ -23,21 +23,21 @@ input[type="search"] {
 }
 
 
-/* Apply a common font family and size to all headings */
+
 h1, h2, h3, h4, h5, h6 {
     font-family: Arial, sans-serif !important;
     font-size: 24px !important;
 }
 
-/* Make the page responsive */
-/* Example of how to make images and videos responsive */
+
+
 img, video {
     max-width: 79% !important;
-    /*  max-width: 100% !important;*/
+    
     height: auto !important;
 }
 
-/* Example of how to make tables responsive */
+
 .table-responsive {
     overflow-x: auto !important;
 }
@@ -78,27 +78,27 @@ div.dataTables_wrapper div.dataTables_filter {
 .modal-content {
     margin-left: -20rem !important;
     width: 111rem !important;
-    height: auto; /* Remove fixed height to allow dynamic content */
+    height: auto; 
 }
 
 .modal-body {
-    padding: 20px; /* Add padding for a more spacious look */
+    padding: 20px; 
 }
 
 .form-group {
-    margin-bottom: 20px; /* Add margin to form groups for spacing */
+    margin-bottom: 20px; 
 }
 
-/* Customize your form controls */
+
 .form-control {
     width: 100%;
-    /*padding: 10px;*/
+    
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
 }
 
-/* Style your buttons */
+
 .btn-primary {
     background-color: #007bff;
     color: #fff;
@@ -120,22 +120,22 @@ div.dataTables_wrapper div.dataTables_filter {
     align-items: center;
     height: 6vh;
     margin: 0;
-    /*background-color: #f0f0f0;*/
+    
 }
 
 .login-header {
     background-color: #044c92;
     height: 3rem;
-    /* width: 60rem !important;*/
+    
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 4px;
     color: white;
-    width: 29rem; /* Optional: to make the header full width */
-    /* Optional: to limit the width */
+    width: 29rem; 
+    
     text-align: center;
-    border-radius: 8px; /* Optional: to give rounded corners */
+    border-radius: 8px; 
 }
 
 .headertext {
@@ -156,7 +156,7 @@ div.dataTables_wrapper div.dataTables_filter {
 
 .images {
     margin-left: 2rem;
-    /* margin-right: 8rem; */
+    
     margin-top: -1rem;
     height: 12rem !important;
     width: 12rem;
@@ -216,19 +216,19 @@ div.dataTables_wrapper div.dataTables_filter {
 
 
 .col-width9 {
-    width: 6% !important; /* Adjust the width as needed */
+    width: 6% !important; 
 }
 
 .s-no-column {
-    width: 1%; /* This is the percentage width you want */
+    width: 1%; 
 }
 
 .col-width10 {
-    width: 10% !important; /* Adjust the width as needed */
+    width: 10% !important; 
 }
 
 .col-width16 {
-    width: 16% !important; /* Adjust the width as needed */
+    width: 16% !important; 
 }
 
 .dt-buttons {
@@ -247,7 +247,7 @@ a {
     text-decoration: none;
 }
 
-/* Custom H5 Styling */
+
 .custom-h5 {
     text-align: center;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -255,12 +255,12 @@ a {
     height: 33px;
 }
 
-/* Custom Scroll Behavior */
+
 .custom-scroll {
     overscroll-behavior-y: auto;
 }
 
-/* PDF Preview Button Styling */
+
 .btn-preview {
     align-self: center;
     background-color: darkblue;
@@ -268,13 +268,13 @@ a {
     margin-left: 50%;
 }
 
-/* Sticky Header */
+
 .sticky-header {
     position: sticky;
     top: -18px;
 }
 
-/* Center modal title */
+
 .title-white {
     text-align: center;
     color: black;

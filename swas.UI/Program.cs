@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting.Internal;
 using swas.DAL;
 using swas.BAL;
+
 using swas.BAL.Interfaces;
 using swas.Exceptions;
 using swas.UI.Controllers;
@@ -30,31 +31,9 @@ using System;
 var builder = WebApplication.CreateBuilder(args);
 
 
-
-
-
-//var builder = WebApplication.CreateBuilder(new WebApplicationOptions
-//{
-//    Args = args,
-//    ApplicationName = typeof(Program).Assembly.FullName,
-//    ContentRootPath = Directory.GetCurrentDirectory(),
-//    EnvironmentName = Environments.Staging,
-//    WebRootPath = "customwwwroot"
-//});
-
-
-/// Add services to the container.
-///
-///Developer :- Sub Maj M Sanal Kumar 
-///Created On :  29 Jul 23
-
-
 var connectionString = builder.Configuration.GetConnectionString("DB");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
-
-//builder.Services.AddScoped<HandlerSessionMW>();
-//builder.Services.AddTransient<ExHandMW>();
 builder.Services.AddSingleton<IAuthorizationHandler, CustomAuthorizationHandler>();
 builder.Services.AddScoped<AccountController, AccountController>();
 builder.Services.AddScoped<HomeController, HomeController>();
@@ -103,8 +82,9 @@ builder.Services.AddScoped<PdfCertificateBuilder>();
 
 
 
-
 builder.Services.AddAntiforgery(o => o.SuppressXFrameOptionsHeader = true);
+
+
 
 
 builder.Services.AddIdentity<ASPNetCoreIdentityCustomFields.Data.ApplicationUser, IdentityRole>(options =>
@@ -112,12 +92,11 @@ builder.Services.AddIdentity<ASPNetCoreIdentityCustomFields.Data.ApplicationUser
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(60);
     options.Lockout.MaxFailedAccessAttempts = 3;
     options.User.RequireUniqueEmail = false;
-    options.SignIn.RequireConfirmedAccount = true;
+    options.SignIn.RequireConfirmedAccount = true ;
     options.SignIn.RequireConfirmedEmail = false;
     options.Lockout.AllowedForNewUsers = true;
 
 })
-    .AddDefaultUI()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
@@ -127,13 +106,26 @@ builder.Services.Configure<FormOptions>(options =>
     options.MultipartBodyLengthLimit = 100 * 1024 * 1024;
 });
 
-//builder.Services.AddRazorPages();
+
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+});
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizePage("/Identity/Account/Register");
-    options.Conventions.ConfigureFilter(new IgnoreAntiforgeryTokenAttribute());
+    options.Conventions.ConfigureFilter(new ValidateAntiForgeryTokenAttribute());
 
 });
+
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.ConfigureFilter(
+        new AutoValidateAntiforgeryTokenAttribute());
+});
+
+
+
 
 builder.Services.AddAuthorization(options =>
 {
@@ -144,6 +136,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("StakeHolders",
       builder => builder.RequireRole("Unit", "Dte"));
 });
+
 
 builder.Services.AddControllersWithViews();
 
@@ -160,12 +153,6 @@ builder.Services.AddSession(options =>
 
 });
 
-//builder.Services.Configure<FormOptions>(options =>
-//{
-
-//    options.MultipartBodyLengthLimit = 100 * 1024 * 1024;
-//});
-
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
@@ -174,15 +161,67 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     options.CheckConsentNeeded = context => true;
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowArmyApp",
+        builder =>
+        {
+            builder.WithOrigins("https://192.168.10.92", "https://dgisapp.army.mil:55102")
+                   .WithHeaders("Content-Type", "RequestVerificationToken") // allow your custom header
+                   .WithMethods("GET", "POST", "OPTIONS");
+        });
+});
+
 builder.Services.AddSignalR();
 builder.Services.AddHttpContextAccessor();
 
-// Configure logging to use the custom database logger provider
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<SanitizeActionFilter>(); 
+});
+
+
 builder.Logging.ClearProviders();
 builder.Logging.AddProvider(new DbLoggerProvider(builder.Services.BuildServiceProvider()));
 builder.Services.Configure<SiteSettings>(builder.Configuration.GetSection("SiteSettings"));
 var app = builder.Build();
-//app.UseMiddleware<MoveFileMiddleware>();
+app.Use(async (ctx, next) =>
+{
+    string styleHashes =
+        "'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' " +
+        "'sha256-nmbYH9QL932nGzG6pP3juQVw3fieOoiq7lDMU409Uyk=' " +
+        "'sha256-Kfztztcv/X/MB3GPFWC63/lmUeORVtnXht+HcmqoIKA=' " +
+        "'sha256-OPXav01Qif81Tq84iQ+sHdcLqfFebewGp3RzUL8vy00=' " +
+        "'sha256-7oERheaqPgauHfP5d4xw0v6p4MUYc+/Quwioe/4rjOI='";
+
+    bool isDev = app.Environment.IsDevelopment();
+    string connectSrc = isDev
+        ? "connect-src 'self' https: wss:; "
+        : "connect-src 'self'; ";
+
+    string csp =
+        "default-src 'self'; " +
+        "script-src 'self'; " +
+        $"style-src 'self' 'unsafe-hashes' {styleHashes}; " +
+        "img-src 'self' data: blob:; " +
+        "font-src 'self' data:; " +
+        "frame-src 'self' blob:; " +
+        "object-src 'none'; " +
+        "base-uri 'self'; " +
+        "form-action 'self'; " +
+        "frame-ancestors 'none'; " +
+        connectSrc;
+
+    ctx.Response.Headers["Content-Security-Policy"] = csp;
+
+    ctx.Response.Headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()";
+    ctx.Response.Headers["X-Content-Type-Options"] = "nosniff";
+    ctx.Response.Headers["X-Frame-Options"] = "DENY";
+    ctx.Response.Headers["Referrer-Policy"] = "no-referrer";
+
+    await next();
+});
+
 
 app.UseCookiePolicy(
 new CookiePolicyOptions
@@ -193,64 +232,21 @@ new CookiePolicyOptions
 
 });
 
-if (app.Environment.IsDevelopment())
+
+if (!app.Environment.IsDevelopment())
 {
-    app.Use(async (ctx, next) =>
-    {
-        ctx.Response.Headers["Content-Security-Policy"] =
-            "default-src 'self'; " +
-            "script-src 'self'; " +
-            "style-src 'self' 'unsafe-inline'; " +
-            "img-src 'self' data: blob:; " +
-            "font-src 'self' data:; " +
-            "frame-src 'self' blob:; " +
-            "connect-src 'self' http://localhost:* ws://localhost:* wss:;";
-
-        await next();
-    });
+    app.UseHsts();
 }
-else
-{
-    app.Use(async (ctx, next) =>
-    {
-        ctx.Response.Headers["Content-Security-Policy"] =
-            "default-src 'self'; " +
-            "script-src 'self'; " +
-            "style-src 'self' 'unsafe-inline'; " +
-            "img-src 'self' data: blob:; " +
-            "font-src 'self' data:; " +
-            "frame-src 'self' blob:; " +
-            "connect-src 'self' wss: https://dgisapp.army.mil:55102; " +
-            "frame-ancestors 'none'; " +
-            "base-uri 'self'; " +
-            "object-src 'self' blob:; " +
-            "form-action 'self';";
-        await next();
-    });
-}
-
-
-
-
-
 
 app.UseHttpsRedirection();
-
+app.UseHsts();
 app.UseStaticFiles();
 
-//app.UseMiddleware<ExHandMW>();
-//app.UseExceptionHandler("/Home/Error");
-
+app.UseCors("AllowArmyApp");
 app.UseRouting();
 app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
-
-//app.UseEndpoints(endpoints =>
-//{
-//    endpoints.MapDefaultControllerRoute().RequireAuthorization();
-//    endpoints.MapRazorPages();
-//});
 
 app.UseEndpoints(endpoints =>
 {

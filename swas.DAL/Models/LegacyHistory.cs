@@ -32,7 +32,7 @@ namespace swas.DAL.Models
 
         public DateTime ActionDate { get; set; } = DateTime.Now;
 
-
+        [MaxLength(500)]
         public string Userdetails { get; set; }
 
 
@@ -44,8 +44,6 @@ namespace swas.DAL.Models
             Approved = 2,
             Rejected = 3,
            UnApprove =4
-           
-            // Add more as needed
         }
 
         [NotMapped]

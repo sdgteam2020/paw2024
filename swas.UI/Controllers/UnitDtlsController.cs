@@ -16,8 +16,6 @@ using System.Text;
 namespace swas.UI.Controllers
 {
     [Authorize]
-
-    //[ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
     public class UnitDtlsController : Controller
     {
 
@@ -73,28 +71,15 @@ namespace swas.UI.Controllers
 
                 ViewBag.corpsId = 0;
                 List<mCommand> cl = new List<mCommand>();
-
-                //---------------Getting Data From Database Using EntityFrameworkCore----------------------
                 cl = await _DdlRepostory.ddlCommand();
-
-                //-------------------Inserting Select Item in List-------------------------
                 cl.Insert(0, new mCommand { comdid = 0, Command_Name = "--Select--" });
-                //--------------Assigning categorylist to ViewBag.ListofCategory --------------------------
                 ViewBag.cl = cl.ToList();
 
 
                 List<Types> ty = new List<Types>();
-
-                //---------------Getting Data From Database Using EntityFrameworkCore----------------------
                 ty = await _DdlRepostory.ddlType();
-
-                //-------------------Inserting Select Item in List-------------------------
                 ty.Insert(0, new Types { Id = 0, Name = "--Select--" });
-                //--------------Assigning categorylist to ViewBag.ListofCategory --------------------------
                 ViewBag.ty = ty.ToList();
-
-
-                //List<UnitDtl> udtl = new List<UnitDtl>();
                 List<tbl_mStatus> status = new List<tbl_mStatus>();
                 var test = from st in _context.mStatus
                            join s in _context.mStages on st.StageId equals s.StagesId
@@ -109,7 +94,6 @@ namespace swas.UI.Controllers
                 var resultList = await test.ToListAsync();
 
                 ViewBag.StatusData=resultList;
-                //udtl = await _unitRepository.GetAllUnitAsync();
 
 
 
@@ -188,7 +172,6 @@ namespace swas.UI.Controllers
 
                 if (UnitData.Updatecde == 1)
                 {
-                    //return Redirect("AddOrEdit");
 
                     return View(udtl);
                 }
@@ -216,19 +199,6 @@ namespace swas.UI.Controllers
 
             return encoded.ToString();
         }
-
-        //private int Decode(string input)
-        //{
-        //    StringBuilder decoded = new StringBuilder();
-        //    foreach (char c in input)
-        //    {
-        //        int digitValue = c - 'A' + '0';
-        //        decoded.Append((char)digitValue);
-        //    }
-        //    int decodedValue;
-        //    int.TryParse(decoded.ToString(), out decodedValue);
-        //    return decodedValue;
-        //}
 
 
         public async Task<IActionResult> AddOrEditCREATEPROJ(UnitDtl UnitData)
@@ -262,31 +232,19 @@ namespace swas.UI.Controllers
 
                 ViewBag.corpsId = 0;
                 List<mCommand> cl = new List<mCommand>();
-
-                //---------------Getting Data From Database Using EntityFrameworkCore----------------------
                 cl = await _DdlRepostory.ddlCommand();
-
-                //-------------------Inserting Select Item in List-------------------------
                 cl.Insert(0, new mCommand { comdid = 0, Command_Name = "--Select--" });
-                //--------------Assigning categorylist to ViewBag.ListofCategory --------------------------
                 ViewBag.cl = cl.ToList();
 
 
                 List<Types> ty = new List<Types>();
-
-                //---------------Getting Data From Database Using EntityFrameworkCore----------------------
                 ty = await _DdlRepostory.ddlType();
-
-                //-------------------Inserting Select Item in List-------------------------
                 ty.Insert(0, new Types { Id = 0, Name = "--Select--" });
-                //--------------Assigning categorylist to ViewBag.ListofCategory --------------------------
                 ViewBag.ty = ty.ToList();
 
                 if (UnitData.Updatecde == 1)
                 {
                     return Redirect("../Projects/Create");
-
-                    //return View("../Projects/Create", UnitData);
                 }
                 else
                 {
@@ -336,31 +294,19 @@ namespace swas.UI.Controllers
 
                 ViewBag.corpsId = 0;
                 List<mCommand> cl = new List<mCommand>();
-
-                //---------------Getting Data From Database Using EntityFrameworkCore----------------------
                 cl = await _DdlRepostory.ddlCommand();
-
-                //-------------------Inserting Select Item in List-------------------------
                 cl.Insert(0, new mCommand { comdid = 0, Command_Name = "--Select--" });
-                //--------------Assigning categorylist to ViewBag.ListofCategory --------------------------
                 ViewBag.cl = cl.ToList();
 
 
                 List<Types> ty = new List<Types>();
-
-                //---------------Getting Data From Database Using EntityFrameworkCore----------------------
                 ty = await _DdlRepostory.ddlType();
-
-                //-------------------Inserting Select Item in List-------------------------
                 ty.Insert(0, new Types { Id = 0, Name = "--Select--" });
-                //--------------Assigning categorylist to ViewBag.ListofCategory --------------------------
                 ViewBag.ty = ty.ToList();
 
                 if (UnitData.Updatecde == 1)
                 {
                     return Redirect("../Home/NewProject");
-
-                    //return View("../Projects/Create", UnitData);
                 }
                 else
                 {
@@ -379,20 +325,12 @@ namespace swas.UI.Controllers
 
         public int CheckNameExist(UnitDtl unit)
         {
-            //var result = _context.tbl_mUnitBranch.Select(p => p.UnitName.ToUpper() == unit.UnitName.ToUpper() && p.Id != unit.Id).ToList();
-            //if (result.Contains(true))
             return 1;
-            //else
-            //    return 0;
         }
 
         public int CheckNameExistID(UnitDtl unit)
         {
-            //var result = _context.tbl_mUnitBranch.Select(p => p.UnitName.ToUpper() == unit.UnitName.ToUpper() && p.Id != unit.Id).ToList();
-            //if (result.Contains(true))
             return 1;
-            //else
-            //    return 0;
 
         }
 
@@ -403,30 +341,6 @@ namespace swas.UI.Controllers
 
             if (Logins.IsNotNull())
             {
-                //try
-                //{
-                //    if (DelID != null)
-                //    {
-                //        int Idd = int.Parse(_dataProtector.Unprotect(DelID.ToString()));
-
-                //        var UnitDtl = await _context.tbl_mUnitBranch.FindAsync(Idd);
-                //        _context.tbl_mUnitBranch.Remove(UnitDtl);
-                //        await _context.SaveChangesAsync();
-                //        TempData["Status"] = nmum.Delete;
-                //        return RedirectToAction(nameof(AddOrEdit));
-                //    }
-                //    else
-                //    {
-                //        TempData["Status"] = nmum.Null;
-                //        return RedirectToAction("AddOrEdit");
-                //    }
-
-                //}
-                //catch (Exception ex)
-                //{
-                //    TempData["Status"] = nmum.Exception;
-                //    return RedirectToAction("AddOrEdit");
-                //}
                 return RedirectToAction("AddOrEdit");
             }
             else
@@ -456,35 +370,12 @@ namespace swas.UI.Controllers
                     StatusActionsMappingId = data.StatusActionsMappingId
                 };
 
-                //TrnUnitStatusMapping trnUnitStatusMapping = new TrnUnitStatusMapping
-                //{
-                //    StatusId = data.SubStagesId,
-                //    UnitId = data.UnitId,
-                //    UnitStatusMappingId = data.UnitStatusMappingId
-                //};
-
 
                 var existingStatusActionsMapping = await _statusActionsMapping.GetByActionsAndStatusAsync(data.StatusActionsMappingId, data.ActionsId, data.SubStagesId);
                 if (existingStatusActionsMapping != null)
                 {
                     return Json(new { message = "StatusActionsMapping data is already in the table" });
                 }
-
-
-                //var existingUnitStatusMapping = await _unitStatusMapping.GetByUnitAndStatusAsync(data.UnitStatusMappingId,data.UnitId, data.SubStagesId);
-                //if (existingUnitStatusMapping != null)
-                //{
-                //    return Json(new { message = "UnitStatusMapping data is already in the table" });
-                //}
-
-                //if (trnUnitStatusMapping.UnitStatusMappingId == 0)
-                //{
-                //    var ret = await _unitStatusMapping.AddWithReturn(trnUnitStatusMapping);
-                //}
-                //else
-                //{
-                //    var ret = await _unitStatusMapping.UpdateWithReturn(trnUnitStatusMapping);
-                //}
 
                 
                 if (statusActionsMapping.StatusActionsMappingId == 0)

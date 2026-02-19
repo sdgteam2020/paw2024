@@ -33,14 +33,11 @@ namespace swas.DAL.Logger
 
         public async Task Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
         {
-            //if (!IsEnabled(logLevel))
-            //    return;
             if (logLevel != LogLevel.Error)  // Log only if it's an error
                 return;
 
             var message = formatter(state, exception);
             var ipAddress = GetIpAddress();
-            // Capture the current thread ID and event name
             int threadId = Thread.CurrentThread.ManagedThreadId;  // Get the current thread ID
             string eventName = eventId.Name ?? "Unknown Event";
 
@@ -61,8 +58,6 @@ namespace swas.DAL.Logger
             await _context.Errors.AddAsync(logEntry);
             await _context.SaveChangesAsync();
         }
-
-        // The correct signature for the Log method
         void ILogger.Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
         {
             _ = Log(logLevel, eventId, state, exception, formatter); // Fire and forget

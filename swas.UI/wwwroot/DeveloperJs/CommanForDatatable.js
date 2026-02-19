@@ -39,8 +39,6 @@
                                                                                                  </style>
                                                                                              `;
 
-                // var table = $('#NewProjDetails').DataTable();
-
                 var filteredData = table1.rows({ search: 'applied' }).data().toArray();
 
                 var tableHTML = '<table>';
@@ -154,8 +152,6 @@ var table3 = $('#WhitelistedTableModal').DataTable({
                                                                                                  </style>
                                                                                              `;
 
-                // var table = $('#NewProjDetails').DataTable();
-
                 var filteredData = table3.rows({ search: 'applied' }).data().toArray();
 
                 var tableHTML = '<table>';
@@ -260,8 +256,6 @@ var table4 = $('#HeldTablemodal').DataTable({
 
                                                                                                  </style>
                                                                                              `;
-
-                // var table = $('#NewProjDetails').DataTable();
 
                 var filteredData = table4.rows({ search: 'applied' }).data().toArray();
 
@@ -377,8 +371,6 @@ setTimeout(function () {
 
                                                                                                  </style>
                                                                                              `;
-
-                    // var table = $('#NewProjDetails').DataTable();
 
                     var filteredData = coomatable.rows({ search: 'applied' }).data().toArray();
 

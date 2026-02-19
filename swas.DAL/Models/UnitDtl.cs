@@ -4,11 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace swas.DAL.Models
 {
-    ///Created and Reviewed by : Sub Maj Sanal
-    ///Reviewed Date : 31 Jul 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start
     [AllowAnonymous]
     public class UnitDtl
     {
@@ -33,10 +28,7 @@ namespace swas.DAL.Models
         [StringLength(15)]
         public string UnitSusNo { get; set; }
 
-        //[Required]
-        //[Column("area_loc", TypeName = "varchar(200)")]
-        //public string? Loc { get; set; }
-
+    
         [Required]
         [Display(Name = "Type (Unit/Fmn)")]
 

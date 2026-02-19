@@ -1,7 +1,4 @@
-﻿///Created by : Sub Maj M Sanal Kumar on 04 Aug 23
-// Reviewed by : Mr Rahul on 04 Aug 23
-// GET: Projects/Create
-
+﻿
 function populateddlStakeHolder(paramValue) {
   
     $.ajax({
@@ -14,7 +11,6 @@ function populateddlStakeHolder(paramValue) {
             option.value = "-1";
             option.text = "---- Select ----";
             odc.appendChild(option);
-            //console.log(data);
             for (var i = 0; i < data.length; i++) {
                 var item = data[i];
                 var opt1 = document.createElement("option");
@@ -26,8 +22,6 @@ function populateddlStakeHolder(paramValue) {
     });
 
 }
-
-//Proj Details and Edit
 function populateddlActions(paramValue) {
 
     $.ajax({
@@ -40,7 +34,6 @@ function populateddlActions(paramValue) {
             option.value = "-1";
             option.text = "---- Select ----";
             odc.appendChild(option);
-            //console.log(data);
             for (var i = 0; i < data.length; i++) {
                 var item = data[i];
                 var opt1 = document.createElement("option");
@@ -98,7 +91,6 @@ function populateddlUnitedit(paramValue) {
             option.value = "-1";
             option.text = "---- Select ----";
             odc.appendChild(option);
-            //console.log(data);
             for (var i = 0; i < data.length; i++) {
                 var item = data[i];
                 var opt1 = document.createElement("option");
@@ -132,7 +124,6 @@ function populateddlUnit(paramValue) {
 
             odc.appendChild(option);
             }
-            //console.log(data);
             for (var i = 0; i < data.length; i++) {
                 var item = data[i];
                 var opt1 = document.createElement("option");
@@ -226,7 +217,6 @@ function populateddlAppType(paramValue) {
             option.value = "-1";
             option.text = "---- Select ----";
             odc.appendChild(option);
-            //console.log(data);
             for (var i = 0; i < data.length; i++) {
                 var item = data[i];
                
@@ -476,7 +466,6 @@ function getActionsByStatus(selectedStatusId) {
     });
 
 }
-// fwd process
 function EditActionsByStatus(selectedStatusId, selectedStageId, projIds) {
 
     

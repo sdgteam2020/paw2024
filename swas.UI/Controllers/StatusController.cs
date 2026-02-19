@@ -59,41 +59,6 @@ namespace swas.UI.Controllers
             return View(status);
         }
 
-     
-
-        //[Authorize(Policy = "Admin")]
-        //public async Task<IActionResult> Create()
-        //{
-        //    var Status = await _statusRepository.GetAll();
-        //    return View(Status);
-            
-        //}
-
-
-        
-        //[HttpPost]
-        
-        //public async Task<IActionResult> CreateStatus (tbl_mStatus status)
-        //{
-        //    Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
-        //    if (ModelState.IsValid)
-        //    {
-        //        status.EditDeleteBy = (int)Logins.unitid;
-        //        status.UpdatedByUserId = (int)Logins.unitid;
-        //        status.IsDeleted = false;
-        //        status.IsActive = true;
-        //        status.DateTimeOfUpdate = DateTime.Now;
-        //        status.EditDeleteDate = DateTime.Now;
-        //        status.InitiaalID = false;
-        //        status.FininshID = false;
-
-        //        await _statusRepository.Add(status);
-        //        return RedirectToAction(nameof(Create));
-        //    }
-        //    //return View(status);
-        //    return RedirectToAction(nameof(Create));
-        //}
-
         [HttpPost]
         public async Task<IActionResult> Create(tbl_mStatus model)
         {
@@ -116,7 +81,6 @@ namespace swas.UI.Controllers
                     if (model.StatusId == 0)
                     {
                         await _statusRepository.AddWithReturn(model);
-                        //await _actionsRepository.AddWithReturn(model);
                         return Json(nmum.Save);
                     }
 
@@ -172,8 +136,6 @@ namespace swas.UI.Controllers
                     await _statusRepository.UpdateWithReturn(status);
                     return RedirectToAction(nameof(Index));
                 }
-
-                //return View(status);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)

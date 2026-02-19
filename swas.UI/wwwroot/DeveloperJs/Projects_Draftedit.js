@@ -255,7 +255,7 @@
                 const remarks = uploadedFile.remarks !== "" ? uploadedFile.remarks : "No Remarks";
                 const fileSize = formatFileSize(uploadedFile.file.size);
                 listItem.innerHTML = `${uploadedFile.file.name} (${fileSize}) - Remarks: ${remarks}`;
-                /*listItem.innerHTML = `${uploadedFile.file.name} (${fileSize})`;*/
+                
                 selectedFileList.appendChild(listItem);
             }
         }
@@ -285,10 +285,6 @@
             var fdset = "fieldset#" + fdsetid + "";
 
         }
-
-
-        //$("fieldset").hide();
-        //$(fdset).show();
 
         $("#1").hide();
         $(fdset).show();
@@ -333,9 +329,6 @@
             } else if (fdsetid == 8) {
                 $("#confirmed").addClass("active");
             }
-
-
-            // Validation
             var isValid = true;
             current_fs.find("input[required]").each(function () {
                 if ($(this).val() === "") {

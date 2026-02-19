@@ -38,10 +38,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const embed = document.createElement("object");
 
             if (downloadLink.startsWith("http")) {
-                // If the downloadLink is a URL, set it as the data attribute
                 embed.data = downloadLink;
             } else {
-                // If the downloadLink is a file path, create a Blob and use it as the data
                 const blob = new Blob([downloadLink], { type: "application/pdf" });
                 embed.data = URL.createObjectURL(blob);
             }

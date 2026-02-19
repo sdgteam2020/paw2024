@@ -4,66 +4,66 @@
     text-overflow: inherit;
     white-space: nowrap;
 }
-/* Card Styling */
+
 .card {
     border-radius: 10px;
 }
 
-/* Card Body Padding */
+
 .card-body {
     padding: 1.5rem;
 }
 
-/* Table Styling */
+
 .new-proj-table {
     width: 100%;
     border-collapse: collapse;
 }
 
-/* PDF Icon Styling */
+
 .pdf-download-icon {
     width: 35px;
     height: 25px;
 }
 
-/* Center Text Alignment for the Table */
+
 .center-align {
     text-align: center;
 }
 
-/* Long Text Class for Wrapping */
+
 .long-text {
-    white-space: pre-wrap; /* Allows text wrapping */
-    word-wrap: break-word; /* Breaks words when necessary */
+    white-space: pre-wrap; 
+    word-wrap: break-word; 
 }
 
-/* Text with a Red Color for Required Indicator */
+
 .required-indicator {
     color: red;
 }
 
-/* Styling for Project Headings */
+
 .projectheading {
     font-weight: bold;
     font-size: 16px;
 }
 
-/* Table Column and Row Styling */
+
 .new-proj-table td {
     padding: 8px;
     border-bottom: 1px solid #ddd;
 }
-/* Modal Custom Width */
+
 .modal-custom-width {
     width: 85% !important;
     margin-left: 79px !important;
 }
 
-/* Modal Dialog Custom Width */
+
 .modal-dialog-custom-width {
     width: 203% !important;
 }
-/* Card and Layout Styling */
+
 .card {
     border-radius: 10px;
 }
@@ -72,7 +72,7 @@
     padding: 1.5rem;
 }
 
-/* Table Styling */
+
 .new-table {
     width: 100%;
     border-collapse: collapse;
@@ -89,7 +89,7 @@
     padding: 8px;
 }
 
-/* Custom Styling for checklist title */
+
 .checklist-title {
     text-align: center;
     margin-top: 30px;
@@ -99,13 +99,13 @@
     text-decoration: underline;
 }
 
-/* Text Wrapping */
+
 .long-text {
     white-space: pre-wrap;
     word-wrap: break-word;
 }
 
-/* Styling for Table Cells */
+
 .table-cell {
     padding: 8px;
     border-bottom: 1px solid #ddd;
@@ -132,7 +132,7 @@ body {
     text-decoration: underline;
 }
 
-/* Watermark styling for print */
+
 .watermark {
     transform: rotate(-45deg);
     z-index: 10000;

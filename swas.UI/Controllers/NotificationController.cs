@@ -41,27 +41,23 @@ namespace swas.UI.Controllers
             int count = 0;
             try
             {
-                //if (type == 3)
-                //{
-                //    string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                //    var data = await _trnChatMsg.GetIsChat(id);
-                //    if (data != null)
-                //    {
-                //        count = data.Count;
-                //    }
-                //    return new JsonResult(count);
-                //}
                 var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
                 count = await _notificationRepository.GetNotificationCountByType(type, loginUser.unitid);
                 return new JsonResult(count);
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { message = ex.Message })
+                _logger.LogError(ex, "Unhandled exception occurred in NotificationController GetNotificationCount function.");
+
+                return new JsonResult(new
+                {
+                    message = "An unexpected error occurred. Please try again later."
+                })
                 {
                     StatusCode = 500
                 };
             }
+
         }
 
         public async Task<IActionResult> AddNotification(int type, int ProjId, int unitid)
@@ -313,7 +309,6 @@ namespace swas.UI.Controllers
                             if (notify != null)
                             {
                                 notify.ReadDateTime = DateTime.Now;
-                                //notify.IsDeleted = true;
                                 notify.IsRead = true;  // Added 12thNov
 
                                 var updateResult = await _notificationRepository.UpdateNotification(notify);
@@ -362,13 +357,19 @@ namespace swas.UI.Controllers
             {
                 int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
                 var eventId = new EventId(dynamicEventId, "GetNotificationCountForChat");
-                _logger.Log(LogLevel.Error, eventId, "An error occurred while on Undo GetNotificationCountForChat in NotificationController.", ex, (s, e) => $"{s} - {e?.Message}");
 
-                return new JsonResult(new { message = ex.Message })
+                _logger.LogError(eventId, ex,
+                    "An error occurred while executing GetNotificationCountForChat in NotificationController.");
+
+                return new JsonResult(new
+                {
+                    message = "Unable to retrieve notification count. Please try again later."
+                })
                 {
                     StatusCode = 500
                 };
             }
+
 
         }
         [HttpGet]
@@ -389,18 +390,15 @@ namespace swas.UI.Controllers
                 record.IsRead = true;
                 _dbContext.SaveChanges();
             }
-
-            // Return updated unread count
             int count = _dbContext.DateApproval.Count(x => x.IsRead == false);
             return Json(new { success = true, message = "Marked as read", count });
         }
 
         [HttpGet]
+ 
         public async Task<IActionResult> GetInboxUnreadCount()
         {
             var inboxList = await _projectsRepository.GetActInboxAsync();
-
-            // Filter unread
             int unreadCount = inboxList.Count(x => x.IsRead == false);
 
             return Json(unreadCount);

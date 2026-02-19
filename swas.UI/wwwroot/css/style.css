@@ -1,5 +1,5 @@
 
-/* Genral */
+
 
 body {
     color: #4c5258;
@@ -11,7 +11,7 @@ body {
 }
 
 a {
-/*    color: #007bff;*/
+
     text-decoration: none;
 }
 
@@ -69,7 +69,7 @@ ion-icon {
 
 
 
-/* Sidebar */
+
 
 .sidebar-wrapper {
     position: fixed;
@@ -97,8 +97,8 @@ ion-icon {
         padding: 0 15px;
         z-index: 5;
         background-color: #ffffff;
-        /*  border-right: 1px solid #e2e3e4;*/
-        /*      border-bottom: 1px solid #e4e4e4;*/
+        
+        
         transition: all .2s;
         background: #044c92;
        
@@ -115,14 +115,14 @@ ion-icon {
             margin-left: 10px;
             margin-bottom: 0;
             letter-spacing: 1px;
-            /*color: #923eb9;*/
+            
             color: white;
         }
 
 .toggle-icon {
     font-size: 26px;
     cursor: pointer;
-    /*    color: #923eb9;*/
+    
     color: white;
 }
 
@@ -348,7 +348,7 @@ ion-icon {
     .sidebar-wrapper .metismenu a:active,
     .sidebar-wrapper .metismenu a:focus,
     .sidebar-wrapper .metismenu a:hover {
-        /*color: #923eb9;*/
+        
         color: white;
         text-decoration: none;
         background-color: rgb(146 62 185 / 10%);
@@ -439,7 +439,7 @@ ion-icon {
 }
 
 
-/* Top Header */
+
 
 /*.top-header {
     display: flex;
@@ -483,7 +483,7 @@ ion-icon {
     font-family: "Roboto", sans-serif;
     color: white;
     text-shadow: 2px 2px 4px black;
-    /* animation: shadow-change 30s infinite;*/
+    
 }
 
 .top-header .navbar .dgislogo {
@@ -569,9 +569,9 @@ ion-icon {
 /*.headertext {
     font-size: 40px;
     font-weight: 600;*/
-/*    color: #fdfdfe;*/
-/*color: #4a6af7;*/
-/*    text-shadow: 0px 0px 5px #b393d3, 0px 0px 10px #b393d3, 0px 0px 10px #b393d3, 0px 0px 20px #b393d3;*/
+
+
+
 /*text-shadow: 0px 0px 5px white, 0px 0px 10px white, 0px 0px 10px white, 0px 0px 20px white;
 }*/
 
@@ -903,7 +903,7 @@ ion-icon {
 }
 
 
-/* Footer */
+
 
 .footer {
     position: absolute;
@@ -924,7 +924,7 @@ ion-icon {
 }
 
 
-/* Utilities */
+
 
 .radius-10 {
     border-radius: 5px !important;
@@ -1239,7 +1239,7 @@ ion-icon {
 
 
 
-/* swicther */
+
 
 .btn-switcher {
     position: fixed;
@@ -1257,7 +1257,7 @@ ion-icon {
     cursor: pointer;
 }
 
-/* eCommerce */
+
 
 .btn-mobile-filter {
     width: 45px;
@@ -1378,7 +1378,7 @@ ul.categories-list li {
     display: inline-block;
 }
 
-/* Order Tracking */
+
 .mytable.mytable-hover.mytable-fixed {
     border-collapse: collapse;
     border: none;
@@ -1387,7 +1387,7 @@ ul.categories-list li {
     .mytable.mytable-hover.mytable-fixed th,
     .mytable.mytable-hover.mytable-fixed td {
         border: none;
-        padding: 5px; /* Adjust as needed */
+        padding: 5px; 
         text-align: left;
         vertical-align: top;
     }
@@ -1401,7 +1401,7 @@ ul.categories-list li {
     display: flex;
     margin-top: 5px;
     float: right;
-    /*margin-left: 500px;*/
+    
     font-size: 18px;
     color: red;
 }
@@ -1483,13 +1483,13 @@ ul.categories-list li {
 
 @media screen and (min-width: 960px) {
     .tabs {
-        /* width: 800px;*/
+        
     }
 }
 
 .tabs__head {
-    /*  width: 100%;*/
-    /* background: rgba(255, 255, 255, 0.94);*/
+    
+    
     display: flex;
     align-items: center;
     list-style: none;
@@ -1508,10 +1508,10 @@ ul.categories-list li {
 
 @media screen and (min-width: 960px) {
     .tabs__head {
-        /* background: none;*/
+        
         background: rgb(247,248,250);
         background: linear-gradient(90deg, rgba(247,248,250,1) 0%, rgba(235,231,236,1) 35%, rgba(217,239,244,1) 100%);
-        /*   background-color: #3d3b34;*/
+        
     }
 }
 
@@ -1559,7 +1559,7 @@ ul.categories-list li {
     }
 
 .tabs__head li a.active-link {
-    /*box-shadow: 0 2px #000000 inset;*/
+    
     box-shadow: 0 -2px 1px #9d0101 inset;
     color: #000;
     background: #fff;
@@ -1594,22 +1594,22 @@ ul.categories-list li {
     transition: transform 0.4s;
     height: 730px;
     overflow: hidden;
-    /*   box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);*/
+    
 }
 
 @media screen and (min-width: 768px) and (max-width: 960px) {
     .tabs__content {
-        /* height: 100%;*/
+        
     }
 }
 
 .tabs__content__item {
-    /*  background: #fff;*/
+    
     position: absolute;
     transition: 0.5s all;
     opacity: 0;
     transition: 0.3s all;
-    /* height: 100%;*/
+    
     overflow-y: auto;
     z-index: 1;
     width: 100%;
@@ -1817,17 +1817,17 @@ ul.categories-list li {
 
 #file-preview-container {
     width: 100%;
-    /*   padding-left:50px;*/
+    
 }
 
 #file-preview {
     max-width: 100%;
     max-height: 300px;
     margin-top: 10px;
-    /*  margin-left: 100px;*/
+    
 }
 
-/* Responsive */
+
 
 @media screen and (max-width: 1200px) {
     .filter-sidebar {
@@ -1861,7 +1861,7 @@ ul.categories-list li {
         left: 0px;
     }
 
-    /* Toggeled */
+    
 
 
     .wrapper.toggled .sidebar-wrapper {
@@ -1986,8 +1986,8 @@ ul.categories-list li {
         box-sizing: border-box;
         width: 100%;
         margin: 0;
-        /*padding-bottom: 20px;*/
-        /*stacking fieldsets above each other*/
+        
+        
         position: relative;
     }
 
@@ -2022,7 +2022,7 @@ ul.categories-list li {
     box-sizing: border-box;
     font-family: Arial, sans-serif;
     color: #000;
-    /* background-color: #f5f5f5; */
+    
     font-size: 14px;
     transition: border-color 0.3s ease;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
@@ -2050,7 +2050,7 @@ ul.categories-list li {
     cursor: pointer;
     /*padding: 10px 5px;
     margin: 10px 0px 10px 5px;*/
-    /*float: right;*/
+    
 }
 
     #msform .action-button:hover, #msform .action-button:focus {
@@ -2068,20 +2068,20 @@ ul.categories-list li {
     cursor: pointer;
     /*    padding: 10px 5px;
     margin: 10px 5px 10px 0px;*/
-    /* float: right;*/
+    
 }
 
     #msform .action-button-previous:hover, #msform .action-button-previous:focus {
         background-color: #000000;
     }
-/*The background card*/
+
 .card {
     z-index: 0;
     border: none;
     position: relative;
 }
 
-/*FieldSet headings*/
+
 .fs-title {
     font-size: 25px;
     color: #673AB7;
@@ -2095,7 +2095,7 @@ ul.categories-list li {
     font-weight: normal;
 }
 
-/*Step Count*/
+
 .steps {
     font-size: 16px;
     color: #2a0902;
@@ -2104,7 +2104,7 @@ ul.categories-list li {
     text-align: center;
 }
 
-/*Field names*/
+
 .fieldlabels {
     color: gray;
     text-align: left;
@@ -2131,8 +2131,8 @@ ul.categories-list li {
         box-sizing: border-box;
         width: 100%;
         margin: 0;
-        /*padding-bottom: 20px;*/
-        /*stacking fieldsets above each other*/
+        
+        
         position: relative;
     }
 
@@ -2167,7 +2167,7 @@ ul.categories-list li {
     box-sizing: border-box;
     font-family: Arial, sans-serif;
     color: #000;
-    /* background-color: #f5f5f5; */
+    
     font-size: 14px;
     transition: border-color 0.3s ease;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
@@ -2195,7 +2195,7 @@ ul.categories-list li {
     cursor: pointer;
     /*padding: 10px 5px;
     margin: 10px 0px 10px 5px;*/
-    /*float: right;*/
+    
 }
 
     #msformx .action-button:hover, #msformx .action-button:focus {
@@ -2213,20 +2213,20 @@ ul.categories-list li {
     cursor: pointer;
     /*    padding: 10px 5px;
     margin: 10px 5px 10px 0px;*/
-    /* float: right;*/
+    
 }
 
     #msformx .action-button-previous:hover, #msformx .action-button-previous:focus {
         background-color: #000000;
     }
-/*The background card*/
+
 .card {
     z-index: 0;
     border: none;
     position: relative;
 }
 
-/*FieldSet headings*/
+
 .fs-title {
     font-size: 25px;
     color: #673AB7;
@@ -2240,7 +2240,7 @@ ul.categories-list li {
     font-weight: normal;
 }
 
-/*Step Count*/
+
 /*.steps {
     font-size: 16px;
     color: blue;
@@ -2249,7 +2249,7 @@ ul.categories-list li {
     text-align: center;
 }*/
 
-/*Field names*/
+
 .fieldlabels {
     color: gray;
     text-align: left;
@@ -2359,7 +2359,7 @@ ul.categories-list li {
 
 .progress-bar {
     background-color: #044c92;
-    /*  background-color: #00b0e4;*/
+    
 }
 
 .fit-image {
@@ -2520,7 +2520,7 @@ ul.categories-list li {
     align-items: center;
     align-items: center;
     align-content: center;
-    /* margin-top: 3px; */
+    
 }
 
 @media (max-width: 768px) {

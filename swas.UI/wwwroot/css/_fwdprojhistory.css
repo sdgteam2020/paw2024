@@ -24,7 +24,7 @@
 }
 
 
-/* Custom table styling */
+
 .custom-table {
     width: 100%;
     border-collapse: collapse;
@@ -37,7 +37,7 @@
         border: 1px solid #ddd;
     }
 
-    /* Table header styling */
+    
     .custom-table thead {
         background-color: #044c92;
         color: white;
@@ -47,12 +47,12 @@
         font-weight: bold;
     }
 
-    /* Row hover effect */
+    
     .custom-table tbody tr:hover {
         background-color: #f1f1f1;
     }
 
-    /* Zebra striping for rows */
+    
     .custom-table tbody tr:nth-child(odd) {
         background-color: #f9f9f9;
     }
@@ -61,7 +61,7 @@
         background-color: #ffffff;
     }
 
-/* Attachment icon styling */
+
 .attachment-icon {
     width: 31px;
     height: 29px;

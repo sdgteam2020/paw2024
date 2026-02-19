@@ -11,7 +11,6 @@
     $("#btnAnalytics").click(function () {
        
         $('#ProjHoldHistory').modal('show');
-        // alert($(this).closest("tr").find(".clsspnprojId").html())
         $(".lblProjHoldHistory").html($("#projectNameCell").html())
         $("#cardforProjHoldHistory").removeClass("d-none");
         GetProjHold($(".ProjectcommentprojId").html());
@@ -53,8 +52,8 @@ function GetAllComments2() {
             tableHTML += '<th class="table-header">Datetime</th>';
             tableHTML += '<th class="table-header">Comment</th>';
             tableHTML += '<th class="table-header">Status</th>';
-            tableHTML += '<th class="table-header">PDF</th>';
-            tableHTML += '<th class="d-none">DateType</th>';
+            tableHTML += '<th class="table-header noExport">PDF</th>';
+            tableHTML += '<th class="d-none noExport">DateType</th>';
             tableHTML += '</tr>';
             tableHTML += '</thead>';
             tableHTML += '<tbody>';
@@ -72,7 +71,7 @@ function GetAllComments2() {
                             (data[i].status === "Info" ? "badge-info" : "badge-danger"));
                     tableHTML += '<td class="table-cell"><span class="badge ' + statusClass + '">' + data[i].status + '</span></td>';
 
-                    tableHTML += '<td class="table-cell">';
+                    tableHTML += '<td class="table-cell noExport">';
                     if (data[i].state !== null && data[i].attpath !== null && data[i].attpath !== '') {
                         tableHTML += '<a href="/Home/WaterMark3?id=' + data[i].attpath + '" target="_blank">';
                         tableHTML += '<img src="/assets/images/icons/pdfimg.png" alt="PDF icon" class="pdf-icon">';
@@ -90,139 +89,49 @@ function GetAllComments2() {
             $('#ChatBox').empty().html(tableHTML);
 
             initializeDataTable("#ChatBox .table");
+            if ($('.add-comment-btn button').length === 0) {
+                $('<button type="button" class="btn btn-primary">+Add Comment</button>')
+                    .appendTo('.add-comment-btn')
+                    .on('click', function () {
+                        $(this).attr("addminaproval", adminap);
 
-            //var table = $('#ChatBox .table').DataTable({
-            //    paging: true,
-            //    ordering: true,
-            //    info: true,
-            //    dom: '<"row"<"col-sm-2 col-md-1 add-comment-btn"><"col-sm-12 col-md-11"Bf>>rt<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
-            //    buttons: [
-            //        'copy',
-            //        'excel',
-            //        'csv',
-            //        {
-            //            text: 'PDF',
-            //            extend: 'pdfHtml5',
-            //            action: function (e, dt, node, config) {
-            //                PdfDiv();
-            //            }
-            //        }
-            //    ]
-            //});
+                       
+                        var approval = $(this).attr("addminaproval");
 
-            // Insert the +Add Comment button inside the left container
-            $('<button type="button" class="btn btn-primary">+Add Comment</button>')
-                .appendTo('.add-comment-btn')
-                .on('click', function () {
-                    $(this).attr("addminaproval", adminap);
-                    var approval = $(this).attr("addminaproval");
-
-                    fetchServerDate().then(function (S) {
-
-                        var projId = $(".ProjectcommentprojId").html().trim();
-                        $("#ProjectcommentForStackHolderprojId").html($(".ProjectcommentprojId").html())
-                        $("#ProjectcommentForStackHolderPsmId").html($("#IsCommentPsmiId").html())
-                        mMsater(0, "ddlStatus", 4, 0)
-                        $("#ProjCommentModal").modal('show');
-                        GetAllComments($("#IsCommentPsmiId").html(), $(".ProjectcommentprojId").html());
-
-                        // Added from here for pop up heading with project name in comment (added by Divyanshu on 10/02/2025)
-                        var words = projectName.split(" ");
-                        // Limit to 6 words and add "..." if needed
-                        var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projectName;
-                        var finalTitle = "Project Name: " + shortProjName;
-                        $('#addComment').text(finalTitle);
-
-                        //var pad = "00";
-                        //var datef2 = new Date();
-                        //var months = "" + (datef2.getMonth() + 1);
-                        //var days = "" + datef2.getDate();
-                        //var monthsans = pad.substring(0, pad.length - months.length) + months;
-                        //var dayans = pad.substring(0, pad.length - days.length) + days;
-                        //var year = datef2.getFullYear();
-                        //var hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-                        //var mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-                        //var ss = `${datef2.getSeconds()}`;
-
-                        //// Today's date and time in the required formats
-                        //var todayDate = `${year}-${monthsans}-${dayans}`;
-                        //var todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
+                        fetchServerDate().then(function (S) {
+                            debugger;
+                            var projId = $(".ProjectcommentprojId").html().trim();
+                            $("#ProjectcommentForStackHolderprojId").html($(".ProjectcommentprojId").html())
+                            $("#ProjectcommentForStackHolderPsmId").html($("#IsCommentPsmiId").html())
+                            mMsater(0, "ddlStatus", 4, 0)
+                            $("#ProjCommentModal").modal('show');
+                            GetAllComments($("#IsCommentPsmiId").html(), $(".ProjectcommentprojId").html());
+                            var words = projectName.split(" ");
+                            var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projectName;
+                            var finalTitle = "Project Name: " + shortProjName;
+                            $('#addComment').text(finalTitle);
 
 
 
-                        if (approval === "true") {
+                            if (approval === "true") {
 
-                            $('#CommentDateFwd').attr('type', 'datetime-local');
-                            $('#CommentDateFwd').attr('max', S.todayDateTime);
-                            $('#CommentDateFwd').prop('disabled', false); // Allow user input
-                            $('#CommentDateFwd').val(S.todayDateTime); // Allow user input
-                        } else {
+                                $('#CommentDateFwd').attr('type', 'datetime-local');
+                                $('#CommentDateFwd').attr('max', S.todayDateTime);
+                                $('#CommentDateFwd').prop('disabled', false); // Allow user input
+                                $('#CommentDateFwd').val(S.todayDateTime); // Allow user input
+                            } else {
 
-                            $('#CommentDateFwd').attr('type', 'datetime-local');
-                            $('#CommentDateFwd').val(S.todayDateTime); // Set today's date
-                            $('#CommentDateFwd').prop('disabled', true); // Freeze input
-                        }
+                                $('#CommentDateFwd').attr('type', 'datetime-local');
+                                $('#CommentDateFwd').val(S.todayDateTime); // Set today's date
+                                $('#CommentDateFwd').prop('disabled', true); // Freeze input
+                            }
+
+                        });
 
                     });
-
-                });
-
-            function PdfDiv() {
-                var popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
-                popupWin.document.open();
-
-                var tableStyles = `
-            <style type="text/css">
-                table.custom-table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin-bottom: 20px;
-                }
-                thead {
-                    vertical-align: bottom;
-                    background-color: red;
-                }
-                th, td {
-                    padding: 8px;
-                    border: 1px solid #ddd;
-                    text-align: center;
-                }
-                th {
-                    background-color: #f2f2f2;
-                    color: black;
-                }
-            </style>
-        `;
-
-                var filteredData = table.rows({ search: 'applied' }).data().toArray();
-
-                var tableHTML = '<table>';
-
-                tableHTML += '<thead><tr>';
-                table.columns().header().each(function (header) {
-                    tableHTML += '<th>' + header.innerHTML + '</th>';
-                });
-                tableHTML += '</tr></thead>';
-
-                tableHTML += '<tbody>';
-                for (var i = 0; i < filteredData.length; i++) {
-                    tableHTML += '<tr>';
-                    for (var j = 0; j < filteredData[i].length; j++) {
-                        tableHTML += '<td>' + filteredData[i][j] + '</td>';
-                    }
-                    tableHTML += '</tr>';
-                }
-                tableHTML += '</tbody></table>';
-
-                var ipadds = $("#ipAdd").html().replace(/\n/g, ' | ').trim();
-                var watermarkText = ipadds;
-
-                popupWin.document.write('<html><head>'
-                    + tableStyles + '</head><body onload="window.print()">'
-                    + tableHTML + `<div class="watermark">${watermarkText}</div></body></html>`);
-
-                popupWin.document.close();
             }
+
+           
         },
         error: function () {
             alert('Error fetching comments.');
@@ -304,7 +213,7 @@ $(document).ready(function () {
 
     var TeamDetailPostBackURL = '/Projects/AttDetails';
     $(function () {
-        /*$(".anchorDetail").click(function () {*/
+        
         $(".anchorDetail").on("click", function () {
           
             var $buttonClicked = $(this);
@@ -320,7 +229,7 @@ $(document).ready(function () {
 
                     $('#myModalPagehistoryAttechment').modal('show');
                     $('#myModalContenthistoryAttechment').html(datadata);
-                    /* $('#myModal').modal(options);*/
+                    
 
 
                 },

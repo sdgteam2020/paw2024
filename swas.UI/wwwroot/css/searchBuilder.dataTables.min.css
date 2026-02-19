@@ -139,7 +139,7 @@ div.dtsb-searchBuilder {
                     div.dtsb-searchBuilder div.dtsb-group div.dtsb-criteria div.dtsb-buttonContainer button.dtsb-delete:last-child,
                     div.dtsb-searchBuilder div.dtsb-group div.dtsb-criteria div.dtsb-buttonContainer button.dtsb-right:last-child,
                     div.dtsb-searchBuilder div.dtsb-group div.dtsb-criteria div.dtsb-buttonContainer button.dtsb-left:last-child {
-                        /*margin-right: 0*/
+                        
                         margin-right: 140mm;
                     }
 

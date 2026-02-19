@@ -1,22 +1,22 @@
-﻿/* General Card Styling */
+﻿
 .card {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Card body padding */
+
 .card-body {
     padding: 20px;
 }
 
-/* Heading inside cards */
+
 .projectheading {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 15px;
 }
 
-/* PDF Icon styling */
+
 .pdf-icon {
     width: 35px;
     height: 25px;
@@ -24,7 +24,7 @@
     margin-left: 10px;
 }
 
-/* Table Styling */
+
 .new-proj-table {
     width: 100%;
     border-collapse: collapse;
@@ -37,7 +37,7 @@
         border: 1px solid #ddd;
     }
 
-    /* Zebra Striping for Rows */
+    
     .new-proj-table tbody tr:nth-child(odd) {
         background-color: #f9f9f9;
     }
@@ -46,7 +46,7 @@
         background-color: #ffffff;
     }
 
-/* Responsive Columns */
+
 .col-12 {
     width: 100%;
 }

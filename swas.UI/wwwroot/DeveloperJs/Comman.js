@@ -7,16 +7,9 @@
         redirect: "follow"
     };
 
-    //fetch("https://aman.army.mil/HitCounter/api/Application/ApplicationSessionStart/65c385d4-6b26-4133-9b03-935a47009eb3?DomainId=" + $("#spnUsername").val(), requestStartdomainId)
-    //    .then((response) => response.text())
-    //    .then((result) => console.log(result))
-    //    .catch((error) => console.error(error));
-
 
 
     fetchServerDate().then(function (S) {
-
-        // Initial apply once date is available
         applyDateLogic(S.today);
     });
     function applyDateLogic(today) {
@@ -28,16 +21,12 @@
            
             $('input[type="date"]').attr('min', today);
             $('input[type="date"]').removeAttr('max');
-            //$('.datepicker1').datepicker({
-            //    minDate: 0
-            //});
             $("#InitiatedDate").val(today);
             $('#InitiatedDate').attr('readonly', true);
             $("#RequestRemarks").attr('disabled', true);
         } else {
             $('input[type="date"]').attr('max', today);
             $('input[type="date"]').removeAttr('min');
-            //$('.datepicker1').datepicker(); // default no min/max
             $('#InitiatedDate').attr('readonly', false);
             $("#RequestRemarks").removeAttr('disabled');
 
@@ -45,18 +34,12 @@
             $('#CompletionDate').attr('min', $("#InitiatedDate").val());
             $('#CompletionDate').removeAttr('max');
         }
-
-        //$('.datetimepicker1').datepicker(); // always initialize
     }
 
 
     fetchServerDate().then(function (S) {
-
-        // Initial apply once date is available
         applyDateLogic(S.today);
     });
-
-    // Re-run when calendar toggle changes
     $('input[name="mcalender_dates"]').on('change', function () {
         fetchServerDate().then(function (S) {
 
@@ -71,21 +54,9 @@
 
     });
 
-
-
-    // Remove the max date setting for CompletionDate to allow future selection when InitiatedDate changes
-    //$("#InitiatedDate").change(function () {
-    //    $('#CompletionDate').val("");
-    //    $('#CompletionDate').attr('min', $("#InitiatedDate").val());
-    //    $('input[type="date"]').removeAttr('max');
-    //});
-
     $('input[name="mcalender_dates"]').change(function () {
 
         var selectedValue = $('input[name="mcalender_dates"]:checked').val();
-
-
-        // Send value to server to store in session
         $.ajax({
             url: '/Projects/SetCalendarModeInSession', // controller endpoint
             type: 'POST',
@@ -101,11 +72,7 @@
 
 
     $('.form-control').keypress(function (e) {
-        // Get the key code of the pressed key
-        // Get the key code of the pressed key
         var keyCode = e.which;
-
-        // Allow only alphabets (A-Z, a-z) and numbers (0-9)
         if ((keyCode >= 65 && keyCode <= 90) || (keyCode >= 97 && keyCode <= 122) || (keyCode >= 48 && keyCode <= 57) || (keyCode == 32)) {
             return true; // Allow the keypress
         } else {
@@ -124,12 +91,6 @@ function DateFormateyyy_mm_dd(date) {
 
     var todaysDate = new Date();
     var datef1 = new Date(date);
-    //if (datef1.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
-    //    // Date equals today's date
-
-    //    return 'Today';
-    //}
-    //else {
     var datef2 = new Date(date);
     var months = "" + `${(datef2.getMonth() + 1)}`;
     var days = "" + `${(datef2.getDate())}`;
@@ -151,20 +112,11 @@ function DateFormateyyy_mm_dd(date) {
     else {
         return '';
     }
-    // }
-
-    //`${datef2.getFullYear()}/` + monthsans + `/` + dayans ;
 }
 function DateFormateddMMyyyyhhmmss(date) {
 
     var todaysDate = new Date();
     var datef1 = new Date(date);
-    //if (datef1.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
-    //    // Date equals today's date
-
-    //    return 'Today';
-    //}
-    //else {
     var datef2 = date ? new Date(date) : new Date();
     var months = "" + `${(datef2.getMonth() + 1)}`;
     var days = "" + `${(datef2.getDate())}`;
@@ -186,9 +138,6 @@ function DateFormateddMMyyyyhhmmss(date) {
     else {
         return '';
     }
-    // }
-
-    //`${datef2.getFullYear()}/` + monthsans + `/` + dayans ;
 }
 
 
@@ -200,12 +149,6 @@ function DateFormated(date) {
 
     var todaysDate = new Date();
     var datef1 = new Date(date);
-    //if (datef1.setHours(0, 0, 0, 0) == todaysDate.setHours(0, 0, 0, 0)) {
-    //    // Date equals today's date
-
-    //    return 'Today';
-    //}
-    //else {
     var datef2 = new Date(date);
     var months = "" + `${(datef2.getMonth() + 1)}`;
     var days = "" + `${(datef2.getDate())}`;
@@ -235,52 +178,35 @@ function DateFormated(date) {
     else {
         return '';
     }
-    // }
-
-    //`${datef2.getFullYear()}/` + monthsans + `/` + dayans ;
 }
 
 function DateCalculateago(fmDate, end_actual_time) {
-    // Initial variables
     
    
     var ago = "";
     var start_actual_time = new Date(fmDate);  // Start time
     var end_actual_time = end_actual_time ? new Date(end_actual_time) : new Date();  // End time
-
-    // Calculate difference in milliseconds
     var diff = end_actual_time - start_actual_time;
-   
-    // Convert the difference to seconds, minutes, hours, days, months, and years
     var diffSeconds = diff / 1000;
     var diffMinutes = diffSeconds / 60;
     var diffHours = diffMinutes / 60;
     var diffDays = diffHours / 24;
     var diffMonths = diffDays / 30;
     var diffYears = diffDays / 365;
-
-    // Calculate hours and minutes from the difference
     var HH = Math.floor(diffHours);  // Total hours
     var MM = Math.floor(diffMinutes % 60);  // Remaining minutes after calculating hours
-
-    // Format hours and minutes
     var formatted = (HH < 10 ? "0" + HH : HH) + ":" + (MM < 10 ? "0" + MM : MM);
      const wholedays = Math.floor(diffDays);
      const Remainderhours = diffHours - (wholedays *24);
      var Rounddays = Remainderhours >=12 ? (wholedays +1): wholedays;
-    // Calculate the time difference in days, months, or years and format the result
     if (diffHours < 24) {
         ago = formatted + ' Min';
     } else if (diffHours < 730) {  // Less than 730 hours (~30 days)
-        //ago = Math.floor(diffDays) + ' Days (' + formatted + ')';
        
         ago = Math.floor(Rounddays) + ' Days';
     } else if (diffHours < 8760) {  // Less than 8760 hours (~365 days)
-       
-        //ago = Math.floor(diffMonths) + ' Months (' + formatted + ')';
         ago = Math.floor(Rounddays) + ' Days';
     } else {
-        //ago = Math.floor(diffYears) + ' Years (' + formatted + ')';
         ago = Math.floor(diffYears) + ' Years'+" "+"("+Math.floor(Rounddays)+' Days)';
     }
 
@@ -296,20 +222,13 @@ function DateCalculateagoForChart(fmDate, end_actual_time) {
 
 }
 function formatDateToDDMMYYYY(date) {
-    // Parse the input date
     var dateObj = new Date(date);
-
-    // Ensure the date is valid
     if (isNaN(dateObj.getTime())) {
         return ''; // Return an empty string if the date is invalid
     }
-
-    // Extract day, month, and year
     var day = dateObj.getDate().toString().padStart(2, '0'); // Ensure 2 digits
     var month = (dateObj.getMonth() + 1).toString().padStart(2, '0'); // Ensure 2 digits
     var year = dateObj.getFullYear();
-
-    // Return the formatted date
     return `${day}-${month}-${year}`;
 }
 
@@ -321,18 +240,6 @@ function bindLiveProjectSearch(inputSelector, dropdownSelector, endpointUrl, onI
     $(inputSelector).on("keyup", function () {
         
         let query = $(this).val();
-        //query = query.replace(/\u00A0/g, "");
-        //const validpattern =/^[a-zA-Z0-9]*$/;
-
-        //if (!validpattern.test(query)) {
-        //    Swal.fire({
-        //        icon: 'error',
-        //        title: 'Invalid Input',
-        //        text: 'Special Characters are not allowed',
-        //    });
-        //    $(this).val(query.Replace(/[a-zA-Z0-9]/g,' '));
-        //    return;
-        //}
         if (query.length > 200) {
 
             Swal.fire({
@@ -415,8 +322,6 @@ function bindLiveProjectSearch(inputSelector, dropdownSelector, endpointUrl, onI
 
 
     });
-
-    // Optional: Hide dropdown when clicking outside
     $(document).on("click", function (e) {
         if (!$(e.target).closest(inputSelector).length && !$(e.target).closest(dropdownSelector).length) {
             $(dropdownSelector).hide();
@@ -434,8 +339,6 @@ function trimByWords(text, wordLimit) {
     }
     return text;
 }
-
-// 2️⃣ Break by Characters
 function trimByChars(text, charLimit) {
     if (!text) return "";
     if (text.length > charLimit) {
@@ -443,7 +346,6 @@ function trimByChars(text, charLimit) {
     }
     return text;
 }
-// 3️⃣ Break lines after some words
 function breakLinesByWords(text, wordLimit) {
     if (!text) return "";
     var words = text.split(" ");
@@ -457,6 +359,7 @@ function breakLinesByWords(text, wordLimit) {
 }
 
 function fetchServerDate() {
+    debugger;
     return $.ajax({
         type: "GET",
         url: "/Projects/GetDate",
@@ -466,8 +369,6 @@ function fetchServerDate() {
 
         const ymd = data.dateYmd;                // yyyy-MM-dd
         const dt = data.dateTimeLocal;           // yyyy-MM-ddTHH:mm:ss
-
-        // Safe: ISO-8601 without timezone = local time
         const serverDate = new Date(dt);
 
         if (isNaN(serverDate.getTime())) {
@@ -495,9 +396,41 @@ function fetchServerDate() {
         };
     });
 }
+$(document).ready(function () {
+    var token = $('input[name="__RequestVerificationToken"]').val();
 
+    if (token) {
+        $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+            if (!options.skipAntiForgery) {
+                jqXHR.setRequestHeader('RequestVerificationToken', token);
+            }
+        });
+    }
+});
 
+$(document).ready(function () {
+    $('.char-limit').each(function () {
 
+        var inputField = $(this);
+        var maxLength = $(this).data('maxlength');
+      
+        var errorMsg = inputField.closest('div').find('.charErrorMsg');
 
-// for swal error or succes message
-// Central SweetAlert handler
+        inputField.on('input', function () {
+
+           
+            var value = inputField.val();
+
+            // Stop typing after max length
+            if (value.length > maxLength) {
+                inputField.val(value.substring(0, maxLength));
+                errorMsg.removeClass('d-none');
+            } else {
+                errorMsg.addClass('d-none');
+            }
+
+        });
+
+    });
+
+});

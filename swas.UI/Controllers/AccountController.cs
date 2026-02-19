@@ -32,22 +32,14 @@ using Newtonsoft.Json;
 
 namespace swas.UI.Controllers
 {
-    //  Customised by Sub Maj Sanal on 29 Jul  
     [Authorize]
     public class AccountController : Controller
     {
-
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 30 Jul 23
-        ///Tested By :- 
-        ///Tested Date : 
-        ///Start
 
         private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> _roleManager;
         public readonly ApplicationDbContext _context;
-        //  private readonly HomeController _homeController;
         private readonly IUnitRepository _unitRepository;
         private readonly ILogger<LoginModel> _logger;
         private readonly Microsoft.AspNetCore.Identity.IUserStore<ApplicationUser> _userStore;
@@ -56,6 +48,7 @@ namespace swas.UI.Controllers
 
         private readonly IUserRepository _userRepository;
         private readonly IConfiguration _configuration;
+       
         public AccountController(Microsoft.AspNetCore.Identity.IUserStore<ApplicationUser> userStore, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, ApplicationDbContext context, IUnitRepository unitRepository, ILogger<LoginModel> logger, IRankRepository rankRepository, IUserRepository userRepository,
         IConfiguration configuration)
@@ -70,8 +63,9 @@ namespace swas.UI.Controllers
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _rankRepository = rankRepository;
-            _userRepository = userRepository;
-            _configuration = configuration;
+                _userRepository = userRepository;
+                _configuration = configuration;
+            
         }
 
 
@@ -83,8 +77,6 @@ namespace swas.UI.Controllers
             }
             return (Microsoft.AspNetCore.Identity.IUserEmailStore<ApplicationUser>)_userStore;
         }
-
-        // [Authorize(Policy = "Admin")] 
         public IActionResult Register()
         {
 
@@ -114,10 +106,6 @@ namespace swas.UI.Controllers
         }
 
 
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 30 Jul 23
-
-
         [Authorize(Policy = "Admin")]
 
         public async Task<IActionResult> GetAllUsers()
@@ -129,8 +117,6 @@ namespace swas.UI.Controllers
             ApplicationUser inputModel = new ApplicationUser();
 
             var users = await userManager.Users.ToListAsync();
-
-            //Users inputModel = new Users();
             foreach (var v in users)
             {
                 inputModel = new ApplicationUser();
@@ -158,19 +144,14 @@ namespace swas.UI.Controllers
             return View(inputModel);
 
         }
-
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 30 Jul 23
-        ///Tested By :- 
-        ///Tested Date : 
-        ///Start
         public async Task<IActionResult> SetValue(string selectedValue)
         {
             TempData["SelectedValue"] = selectedValue; // Store the value in TempData or ViewBag as per your requirement
             await signInManager.SignOutAsync();
             await HttpContext.SignOutAsync();
+            string psskey = _configuration.GetValue<string>("TestCredentials")??"";
 
-            var result = await signInManager.PasswordSignInAsync(selectedValue, "Dte@123", true, lockoutOnFailure: true);
+            var result = await signInManager.PasswordSignInAsync(selectedValue, psskey, true, lockoutOnFailure: true);
 
             if (result.Succeeded)
             {
@@ -181,7 +162,6 @@ namespace swas.UI.Controllers
                 userdet = await userManager.FindByNameAsync(selectedValue);
                 var unitget = await _unitRepository.GetUnitDtl(userdet.unitid);
                 var usrole = await userManager.GetRolesAsync(userdet);
-                // string rolename = ssd.Name;
                 await Task.Delay(1000);
 
                 Login Dbs = new Login();
@@ -223,16 +203,6 @@ namespace swas.UI.Controllers
 
 
         }
-        ///Created and Reviewed by : Sub Maj M   Sanal
-        ///Reviewed Date : 30 Jul 23
-        ///Tested By :- 
-        ///Tested Date : 
-        ///Start <summary>
-        /// Created and Reviewed by : Sub Maj M   Sanal
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        /// 
         [AllowAnonymous]
         public IActionResult Logins()
         {
@@ -247,97 +217,22 @@ namespace swas.UI.Controllers
             public string SAMLRole { get; set; }
         }
 
-        //[AllowAnonymous]
-        //public void UpdateAppSetting(string key, string value)
-        //{
-        //    // Get the path to the appsettings.json file
-        //    var configFilePath = Path.Combine(Directory.GetCurrentDirectory(), "appsettings.json");
-
-        //    // Read the current content of appsettings.json
-        //    var json = System.IO.File.ReadAllText(configFilePath);
-
-        //    // Deserialize the JSON into a dynamic object
-        //    dynamic config = JsonConvert.DeserializeObject(json);
-
-        //    // Check if the AppSettings section exists, and create it if not
-        //    if (config.AppSettings == null)
-        //    {
-        //        config.AppSettings = new Newtonsoft.Json.Linq.JObject();
-        //    }
-
-        //    // Update or add the setting
-        //    if (config.AppSettings[key] != null)
-        //    {
-        //        // Update the existing value
-        //        config.AppSettings[key] = value;
-        //    }
-        //    else
-        //    {
-        //        // Add the new setting
-        //        config.AppSettings.Add(key, value);
-        //    }
-
-        //    // Serialize the updated configuration back to JSON format
-        //    var updatedJson = JsonConvert.SerializeObject(config, Formatting.Indented);
-
-        //    // Write the updated JSON back to the appsettings.json file
-        //    System.IO.File.WriteAllText(configFilePath, updatedJson);
-
-        //    // Optionally, you may want to log this or reload the config (if needed)
-        //    Console.WriteLine($"AppSetting '{key}' has been updated to: {value}");
-        //}
+       
 
         [AllowAnonymous]
         public async Task<IActionResult> Login()
         {
             String EncryptedResponse = "";
-            //var debugWithIAMflag = "false";                       
-            //if (debugWithIAMflag == "true")
-            //{
-            //    if (_configuration["LocalHostActive"] == "0")
-            //    {
-            //        // Get the SAML response from the form
-            //        EncryptedResponse = Request.Form["SAMLResponse"];
-
-            //        // Update the debugWithIAM setting to false using the UpdateAppSetting method
-            //        UpdateAppSetting("debugWithIAM", "false");
-
-            //        // Send the SAMLResponse to the server
-            //        using (HttpClient client = new HttpClient())
-            //        {
-            //            var values = new FormUrlEncodedContent(new[]
-            //            {
-            //                 new KeyValuePair<string, string>("SAMLResponse", EncryptedResponse)
-            //            });
-            //            HttpResponseMessage response = await client.PostAsync("https://localhost:7152/Account/Login", values);
-            //            string responseString = await response.Content.ReadAsStringAsync();
-            //            Console.WriteLine("Server Response: " + responseString);
-            //        }
-            //    }
-
-            //    else if (_configuration["debugWithIAM"] == "1")
-            //    {
-            //        EncryptedResponse = Request.Form["SAMLResponse"];
-            //        // Update settings dynamically using UpdateAppSetting method
-            //        UpdateAppSetting("hardSAMLResonoce", EncryptedResponse);
-            //        UpdateAppSetting("LocalHostActive", "2");
-            //        //stop code directelly from here to debug code with IAM, and Run this on this URL "https://localhost:7152/Account/Login". 
-            //    }
-            //    else
-            //    {
-            //        //EncryptedResponse = ConfigurationManager.AppSettings["hardSAMLResonoce"];
-            //        EncryptedResponse = _configuration["hardSAMLResonoce"];
-            //    }
-            //}
-
-            //********************IAM COMMENTED CODE START**********************************
             EncryptedResponse = Request.Form["SAMLResponse"];
             var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
             var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
             var watermarkText = $" {ipAddress}\n  {currentDatetime}";
             if (!string.IsNullOrEmpty(EncryptedResponse))
+
             {
-                string decryptedsamlresponse = DecryptSAmlResponseNew(EncryptedResponse, "C:\\Cert\\App Certificate\\applwhitelisting.army.mil.p12", "Abc@2022");
+                 string psskey = _configuration.GetValue<string>("CertCredentials") ?? "";
+
+                string decryptedsamlresponse = DecryptSAmlResponseNew(EncryptedResponse, "C:\\Cert\\App Certificate\\applwhitelisting.army.mil.p12", psskey);
 
                 AccountSettings accountSettings = new AccountSettings();
                 OneLogin.Saml.Response samlResponse = new Response(accountSettings);
@@ -357,8 +252,8 @@ namespace swas.UI.Controllers
 
                         TempData["NameId"] = log.NameId;
                         TempData["RoleId"] = log.SAMLRole;
-
-                        var result = await signInManager.PasswordSignInAsync(log.NameId.ToLower(), "Dte@123", false, lockoutOnFailure: true);
+                       
+                        var result = await signInManager.PasswordSignInAsync(log.NameId.ToLower(), psskey, false, lockoutOnFailure: true);
                         if (result.Succeeded)  ///   registered user
                         {
                             ApplicationUser userdet = new ApplicationUser();
@@ -380,7 +275,6 @@ namespace swas.UI.Controllers
                                 Db.Unit = unitdetl.UnitName;
                                 Db.unitid = userdet.unitid;
                                 Db.UserIntId = userdet.UserIntId;
-                                //Db.Rank = userdet.Rank;
                                 Db.Rank = userRank;
                                 Db.IcNo = userdet.Icno;
                                 Db.Offr_Name = userdet.Offr_Name;
@@ -395,7 +289,6 @@ namespace swas.UI.Controllers
 
                                 try
                                 {
-                                    /////////////login log//////////////////////
                                     tbl_LoginLog logs = new tbl_LoginLog();
                                     var Role = await userManager.GetRolesAsync(userdet);
                                     logs.UserId = userdet.UserIntId;
@@ -407,7 +300,6 @@ namespace swas.UI.Controllers
                                     logs.userName = userdet.UserName;
                                     logs.unitid = userdet.unitid;
                                     await _userRepository.Add(logs);
-                                    //////////////End Log////////////////////////
                                 }
 
                                 catch (Exception ex)
@@ -469,7 +361,6 @@ namespace swas.UI.Controllers
                 Response.Redirect("https://iam2.army.mil/IAM/User", true);
             }
             return RedirectToAction("UnAuthUser", "Account");
-            //********************IAM COMMENTED CODE END**********************************
         }
 
 
@@ -496,10 +387,7 @@ namespace swas.UI.Controllers
                 var plainTextBytes = System.Text.Encoding.UTF8.GetBytes("alpha");
 
                 String[] spearator = { Convert.ToBase64String(plainTextBytes) };
-
-                // using the method
                 String[] newstring = Encryptedtext.Split(spearator, StringSplitOptions.RemoveEmptyEntries);
-                //string[] newstring = encryptedvalue.Split();
                 string key = newstring[1].ToString();
                 string plain = newstring[0].ToString();
                 #region decryptkeyusingprivatekey
@@ -512,12 +400,13 @@ namespace swas.UI.Controllers
 
                     try
                     {
-                        myCert2 = new X509Certificate2(@"C:\\Cert\\App Certificate\\acms.army.mil.pfx", "Abc@2022");
-                        // rsa = (RSACryptoServiceProvider)myCert2.PrivateKey;
+                        string psskey = _configuration.GetValue<string>("CertCredentials") ?? "";
+
+
+                        myCert2 = new X509Certificate2(@"C:\\Cert\\App Certificate\\acms.army.mil.pfx", psskey);
                         #region test
                         using (RSA rs = myCert2.GetRSAPrivateKey())
                         {
-                            // rs.KeySize = 16;
                             decryptedkey = rs.Decrypt(byteData, RSAEncryptionPadding.Pkcs1);
 
                         }
@@ -531,8 +420,6 @@ namespace swas.UI.Controllers
 
 
                     byte[] iv1 = new byte[16] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
-
-                    // result = DecryptString0705222_Final(plain, rsa.Decrypt(byteData, RSAEncryptionPadding.Pkcs1), iv1);
                     result = DecryptString0705222_Final(plain, decryptedkey, iv1);
                 }
                 catch (Exception exxx)
@@ -553,64 +440,45 @@ namespace swas.UI.Controllers
         [AllowAnonymous]
         private string DecryptString0705222_Final(string cipherText, byte[] key, byte[] iv)
         {
-            // Instantiate a new Aes object to perform string symmetric encryption
-            Aes encryptor = Aes.Create();
+            if (string.IsNullOrWhiteSpace(cipherText))
+                return string.Empty;
 
-            encryptor.Mode = CipherMode.ECB;
+            if (key == null || key.Length < 16)
+                throw new ArgumentException("Key must be at least 16 bytes.", nameof(key));
 
-            // Set key and IV
-            byte[] aesKey = new byte[16];
-            Array.Copy(key, 0, aesKey, 0, 16);
-            encryptor.Key = aesKey;
-            encryptor.IV = iv;
-            encryptor.Padding = PaddingMode.PKCS7;
+            if (iv == null || iv.Length != 16)
+                throw new ArgumentException("IV must be exactly 16 bytes (AES block size).", nameof(iv));
 
-            // Instantiate a new MemoryStream object to contain the encrypted bytes
-            MemoryStream memoryStream = new MemoryStream();
+            byte[] cipherBytes = Convert.FromBase64String(cipherText);
 
-            // Instantiate a new encryptor from our Aes object
-            ICryptoTransform aesDecryptor = encryptor.CreateDecryptor();
-
-            // Instantiate a new CryptoStream object to process the data and write it to the 
-            // memory stream
-            CryptoStream cryptoStream = new CryptoStream(memoryStream, aesDecryptor, CryptoStreamMode.Write);
-
-            // Will contain decrypted plaintext
-            string plainText = String.Empty;
-
-            try
+            // AES supports 16/24/32 byte keys. If you only have more/less, normalize safely.
+            byte[] aesKey;
+            if (key.Length == 16 || key.Length == 24 || key.Length == 32)
+                aesKey = key;
+            else
             {
-                // Convert the ciphertext string into a byte array
-                byte[] cipherBytes = Convert.FromBase64String(cipherText);
+                aesKey = new byte[16];
+                Buffer.BlockCopy(key, 0, aesKey, 0, 16); // keep your original behavior
+            }
 
-                // Decrypt the input ciphertext string
+            using var aes = Aes.Create();
+            aes.Mode = CipherMode.CBC;              // ✅ NOT ECB
+            aes.Padding = PaddingMode.PKCS7;
+            aes.Key = aesKey;
+            aes.IV = iv;
+
+            using var memoryStream = new MemoryStream();
+            using (var cryptoStream = new CryptoStream(memoryStream, aes.CreateDecryptor(), CryptoStreamMode.Write))
+            {
                 cryptoStream.Write(cipherBytes, 0, cipherBytes.Length);
-
-                // Complete the decryption process
                 cryptoStream.FlushFinalBlock();
-
-                // Convert the decrypted data from a MemoryStream to a byte array
-                byte[] plainBytes = memoryStream.ToArray();
-
-                // Convert the decrypted byte array to string
-                plainText = Encoding.ASCII.GetString(plainBytes, 0, plainBytes.Length);
-            }
-            catch (Exception exx)
-            {
-
-            }
-            finally
-            {
-                // Close both the MemoryStream and the CryptoStream
-                memoryStream.Close();
-                cryptoStream.Close();
             }
 
-            // Return the decrypted data as a string
-            return plainText;
+            byte[] plainBytes = memoryStream.ToArray();
 
+            // ✅ Use UTF8 unless you KNOW plaintext is strictly ASCII
+            return Encoding.UTF8.GetString(plainBytes);
         }
-
 
         [AllowAnonymous]
         public IActionResult FinalLogout()
@@ -633,8 +501,6 @@ namespace swas.UI.Controllers
             AccountSettings accountSettings = new AccountSettings();
 
             OneLogin.Saml.AuthRequest req = new AuthRequest(new AppSettings(), accountSettings);
-
-            //string ReuestXML = req.GetRequest(AuthRequest.AuthRequestFormat.Base64);
             string ReuestXML = req.GetLogOutRequest(AuthRequest.AuthRequestFormat.Base64, issueurl, "https://iam2.army.mil/IAM/logout");
 
 
@@ -642,11 +508,6 @@ namespace swas.UI.Controllers
 
 
         }
-        ///Created and Reviewed by : Sub Maj M  Sanal
-        ///Reviewed Date : 30 Jul 23
-        ///Tested By :- 
-        ///Tested Date : 
-        ///Start
         [HttpPost]
         public async Task<IActionResult> AddlTask(string UserName, string UserName2)
         {
@@ -657,7 +518,6 @@ namespace swas.UI.Controllers
             if (user != null)
             {
                 user.domain_iam = UserName;
-                //user.UserName = UserName2;
             }
 
 
@@ -665,19 +525,9 @@ namespace swas.UI.Controllers
             if (!result.Succeeded)
             {
                 Console.WriteLine("Successfully updated ");
-                // Failed to update the user, handle the error or redirect to an appropriate page
             }
-
-            // User updated successfully, perform any additional actions or redirect to a success page
             return RedirectToAction("AddlTask");
         }
-
-
-        ///Created and Reviewed by : Sub Maj  M Sanal
-        ///Reviewed Date : 30 Jul 23
-        ///Tested By :- 
-        ///Tested Date : 
-        ///Start
 
         public IActionResult AddlTask()
         {
@@ -694,13 +544,6 @@ namespace swas.UI.Controllers
             return View();
         }
 
-
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 30 Jul 23
-        ///Tested By :- 
-        ///Tested Date : 
-        ///Start
-
         [HttpPost]
         public async Task<IActionResult> ResetAddlTask(string UserName, string UserName2)
         {
@@ -712,7 +555,6 @@ namespace swas.UI.Controllers
             if (user != null)
             {
                 user.domain_iam = null;
-                //user.UserName = UserName2;
             }
 
 
@@ -720,14 +562,11 @@ namespace swas.UI.Controllers
             if (!result.Succeeded)
             {
                 Console.WriteLine("Successfully updated ");
-                // Failed to update the user, handle the error or redirect to an appropriate page
             }
             else
             {
                 return Json("Failed");
             }
-
-            //return RedirectToAction("AddlTask");
 
             return Json("Success");
         }
@@ -748,18 +587,12 @@ namespace swas.UI.Controllers
 
             if (returnUrl != null)
             {
-                //return RedirectToAction(nameof("/Identity/Account/Login"));
 
-                return RedirectToAction("/Identity/Account/Login");
-                //  return LocalRedirect(returnUrl);
+                return RedirectToAction("Login", "Account", new { area = "Identity" });
             }
             else
             {
-                // This needs to be a redirect so that the browser performs a new
-                // request and the identity for the user gets updated.
                 return RedirectToAction("FinalLogout", "Account");
-
-                //return RedirectToPage("/Identity/Account/Login");
             }
         }
 
@@ -868,10 +701,21 @@ namespace swas.UI.Controllers
             {
                 int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
                 var eventId = new EventId(dynamicEventId, "UserDelete");
-                _logger.Log(LogLevel.Error, eventId, "An error occurred while on UserDelete in AccountConfirmed.", ex, (s, e) => $"{s} - {e?.Message}");
 
-                return StatusCode(500, $"An error occurred: {ex.Message}");
+                // Log full exception details on server
+                _logger.LogError(eventId, ex, "Error in UserDelete (AccountConfirmed).");
+
+                // Provide a non-sensitive id the user/admin can reference
+                var errorId = HttpContext?.TraceIdentifier ?? dynamicEventId.ToString();
+
+                // Return generic error (no ex.Message)
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    message = "An unexpected error occurred. Please try again or contact the administrator.",
+                    errorId
+                });
             }
+
         }
 
 
@@ -892,6 +736,7 @@ namespace swas.UI.Controllers
             if (user == null)
             {
                 return LocalRedirect("/Identity/Account/Login");
+
             }
 
             if (user != null)
@@ -985,7 +830,6 @@ namespace swas.UI.Controllers
 
 
         public async Task<IActionResult> UpdateUserEdit(InputModel input)
-        
         {
           
             Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
@@ -1023,12 +867,10 @@ namespace swas.UI.Controllers
 
                 if (userToUpdate != null)
                 {
-                    // Update user properties
                     userToUpdate.RoleName = input.RoleName;
                     userToUpdate.domain_iam = input.UserName;
                     userToUpdate.appointment = input.appointment;
                     userToUpdate.unitid = input.unitId;
-                    //userToUpdate.Rank = input.RankName;
                     userToUpdate.Rank = input.RankId;
                     userToUpdate.Offr_Name = input.OfficerName;
                     userToUpdate.Tele_Army = input.Tele_Army;
@@ -1122,7 +964,7 @@ namespace swas.UI.Controllers
                 }
             }
 
-            return View();
+            return RedirectToAction("GetsAllUsers");
         }
     }
 

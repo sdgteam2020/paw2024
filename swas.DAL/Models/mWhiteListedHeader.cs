@@ -12,16 +12,16 @@ namespace swas.DAL.Models
     {
         [Key]
         public int Id { get; set; }
+        [StringLength(100)]
+        [RegularExpression(@"^[a-zA-Z0-9\-_\/\.]+$", ErrorMessage = "Invalid characters.")]
         public string Header { get; set; }
     }
 
     [Keyless]
-    //[NotMapped]
     public class DToWhiteListeds
     {
         public int? Id { get; set; }
-        //public int ProjId { get; set; }
-        public string? ProjName { get; set; }
+      public string? ProjName { get; set; }
         public string? HostedOn { get; set; }
         public string? Fmn { get; set; }
         public string? ContactNo { get; set; }

@@ -21,6 +21,7 @@
 
 <div>
     <form method="post">
+        @Html.AntiForgeryToken()
         <button class="btn btn-danger" type="submit">Disable 2FA</button>
     </form>
 </div>

@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using System.Runtime.InteropServices;
+using Microsoft.AspNetCore.Mvc;
 
 namespace swas.BAL.DTO
 {
@@ -96,6 +97,10 @@ namespace swas.BAL.DTO
         public string? IpAddress { get; set; }
         public int cla { get; set; }
         public int? Rank_id { get; set; }
+
+        [BindProperty]
+        public string? CryptoKey { get; set; }
+
     }
     public class DefaultValueID
     {
@@ -375,7 +380,7 @@ namespace swas.BAL.DTO
         public string? RoleName { get; set; }
 
         [Required(ErrorMessage = "OfficerName is required.")]
-        //[RegularExpression(@"^[a-zA-Z/S]*$", ErrorMessage = "OfficerName should contain only letters.")]
+     
         [Display(Name = "OfficerName")]
         public string? OfficerName { get; set; }
 
@@ -391,21 +396,18 @@ namespace swas.BAL.DTO
         [Display(Name = "Unit")]
         public int unitId { get; set; }
 
-        //[RegularExpression(@"^[a-zA-Z0-9\s]*$", ErrorMessage = "Appointment should contain only letters and numbers.")]
         [Display(Name = "Appointment")]
         public string? appointment { get; set; }
 
 
         [Required(ErrorMessage = "Rank is required.")]
-        //[RegularExpression(@"^[a-zA-Z]*$", ErrorMessage = "Rank should contain only letters.")]
-        [Display(Name = "Rank")]
+       [Display(Name = "Rank")]
         public int? RankId { get; set; }
 
 
         public string RankName { get; set; }
 
-        //[RegularExpression(@"^\d{0,5}$", ErrorMessage = "Tele_Army should be a maximum of 10-digit number.")]
-        [Display(Name = "Tele No (Army)")]
+       [Display(Name = "Tele No (Army)")]
         public string? Tele_Army { get; set; }
 
     }
@@ -493,20 +495,13 @@ namespace swas.BAL.DTO
     public class SearObj
     {
         public string[] searchStakename { get; set; }
-        public string TimeStampFrom { get; set; }
+        public string? TimeStampFrom { get; set; }
 
-        public string TimeStampTo { get; set; }
+        public string? TimeStampTo { get; set; }
 
     }
 
-    //public class SearRes
-    //{
-    //    public string SearchText { get; set; }
-    //    public string TimeStampFrom { get; set; }
-
-    //    public string TimeStampTo { get; set; }
-
-    //}
+    
     public class HitCounterDaily
     {
         public int Today { get; set; }

@@ -22,7 +22,7 @@
             if (response != "null" && response != null) {
                 if (response == 0) {
                     listItemddl += '<option  Value = "", Disabled = true, Selected = true>--Select--</option>';
-                    /* listItemddl += '<option value="">Please Select</option>';*/
+                    
                     $("#" + ddl + "").html(listItemddl);
                 }
 
@@ -30,7 +30,7 @@
 
                     var listItemddl = "";
 
-                    /* listItemddl += '<option value="">Please Select</option>';*/
+                    
                     listItemddl += '<option  Value = "", Disabled = true, Selected = true>--Select--</option>';
 
 
@@ -38,32 +38,16 @@
                         listItemddl += '<option value="' + response[i].id + '">' + response[i].name + '</option>';
                     }
                     $("#" + ddl + "").html(listItemddl);
-
-                    //if (TableId == 5 || TableId == 7 || TableId == 8) {
-
-                    //    if (sectid != '') {
-                    //        $("#" + ddl + " option").filter(function () {
-                    //            return this.text == sectid;
-                    //        }).attr('selected', true);
-
-                    //    }
-                    //}
-                    //else {
                   
                         if (sectid != '') {
                             $("#" + ddl + "").val(sectid);
 
                         }
 
-                    //}
-
 
                 }
             }
             else {
-                //Swal.fire({
-                //    text: "No data found Offrs"
-                //});
             }
         },
         error: function (result) {
@@ -103,7 +87,6 @@ function mMsaterfwdStage(sectid = '', ddl, TableId, ParentId, type, projecttype)
 
 
                     for (var i = 0; i < response.length; i++) {
-                        //listItemddl += '<option value="' + response[i].id + '">' + response[i].name + '</option>';
                         if (projecttype === "Re-Vetted") {
                             if (response[i].id == 3) {
                                 listItemddl += '<option value="' + response[i].id + '" selected>' + response[i].name + '</option>';
@@ -121,18 +104,6 @@ function mMsaterfwdStage(sectid = '', ddl, TableId, ParentId, type, projecttype)
                         }
                     }
                     $("#" + ddl + "").html(listItemddl);
-
-                    //if (TableId == 5 || TableId == 7 || TableId == 8) {
-
-                    //    if (sectid != '') {
-                    //        $("#" + ddl + " option").filter(function () {
-                    //            return this.text == sectid;
-                    //        }).attr('selected', true);
-
-                    //    }
-                    //}
-                    //else
-                    //{
                     if (sectid != '') {
                         $("#" + ddl + "").val(sectid);
 
@@ -143,7 +114,7 @@ function mMsaterfwdStage(sectid = '', ddl, TableId, ParentId, type, projecttype)
                             $("#ddlfwdStage option[value='3']").remove();
                         }
                         else {
-                            /* $("#ddlfwdStage option[value='1']").remove();*/   /*ajayUpdate*/
+                               
 
                         }
                     }
@@ -151,15 +122,11 @@ function mMsaterfwdStage(sectid = '', ddl, TableId, ParentId, type, projecttype)
                         $("#ddlfwdStage option[value='2']").remove();
                         $("#ddlfwdStage option[value='3']").remove();
                     }
-                    //}
 
 
                 }
             }
             else {
-                //Swal.fire({
-                //    text: "No data found Offrs"
-                //});
             }
         },
         error: function (result) {
@@ -203,32 +170,15 @@ function mMsaterStage(sectid = '', ddl, TableId, ParentId, StakeHolderId) {
                         listItemddl += '<option value="' + response[i].id + '">' + response[i].name + '</option>';
                     }
                     $("#" + ddl + "").html(listItemddl);
-
-                    //if (TableId == 5 || TableId == 7 || TableId == 8) {
-
-                    //    if (sectid != '') {
-                    //        $("#" + ddl + " option").filter(function () {
-                    //            return this.text == sectid;
-                    //        }).attr('selected', true);
-
-                    //    }
-                    //}
-                    //else
-                    //{
                     if (sectid != '') {
                         $("#" + ddl + "").val(sectid);
 
                     }
 
-                    //}
-
 
                 }
             }
             else {
-                //Swal.fire({
-                //    text: "No data found Offrs"
-                //});
             }
         },
         error: function (result) {
@@ -277,8 +227,6 @@ function mMsaterFwdTo(sectid = '', ddl, TableId, ParentId, StakeHolderId, type, 
                             listItemddl += '<option value="' + response[i].id + '">' + response[i].name + '</option>';
                         }
                         $("#" + ddl + "").html(listItemddl);
-
-                        // If autocomplete returned list, switch UI from searchBox to dropdown
                         if (response.length > 0) {
                             $("#searchBox").hide();
                             $("select[name='fwdoffrs']").show();
@@ -397,44 +345,29 @@ function DateFormatedd_mm_yyyy(date) {
     else {
         return '';
     }
-
-    //`${datef2.getFullYear()}/` + monthsans + `/` + dayans ;
 }
 
 
 function DateTimeFormatedd_mm_yyyy(date) {
     var dateObj = new Date(date); // Convert input date to Date object
-
-    // Check if dateObj is a valid Date object
     if (Object.prototype.toString.call(dateObj) !== "[object Date]" || isNaN(dateObj.getTime())) {
         return ''; // Return empty string if date is invalid
     }
-
-    // Format date as dd/mm/yyyy
     var day = dateObj.getDate().toString().padStart(2, '0');
     var month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
     var year = dateObj.getFullYear();
-
-    // Format time as HH:MM:SS
     var hours = dateObj.getHours().toString().padStart(2, '0');
     var minutes = dateObj.getMinutes().toString().padStart(2, '0');
     var seconds = dateObj.getSeconds().toString().padStart(2, '0');
-
-    // Combine date and time
     var formattedDateTime = day + '/' + month + '/' + year + ' ' + hours + ':' + minutes + ':' + seconds;
 
     return formattedDateTime;
 }
 function DateTimeFormatedd_dd_mm_yyyy(dateString) {
-    // Create a Date object from the input string
     const date = new Date(dateString);
-
-    // Get the day, month, and year
     const day = String(date.getDate()).padStart(2, '0');  // Add leading zero if single digit
     const month = String(date.getMonth() + 1).padStart(2, '0');  // Get month (0-based)
     const year = date.getFullYear();
-
-    // Return the date in the format: dd/mm/yyyy
     return `${day}/${month}/${year}`;
 }
 

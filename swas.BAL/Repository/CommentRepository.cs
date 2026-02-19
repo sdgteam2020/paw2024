@@ -12,12 +12,6 @@ using System.Threading.Tasks;
 
 namespace swas.BAL.Repository
 {
-
-    ///Created and Reviewed by : Sub Maj Sanal
-    ///Reviewed Date : 31 Jul 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start
     public class CommentRepository : ICommentRepository
     {
         private readonly ApplicationDbContext _dbContext;
@@ -49,14 +43,14 @@ namespace swas.BAL.Repository
             var totalCount = await _dbContext.ProjStakeHolderMov
            .Where(psm => psm.ToUnitId == stkhol
          
-            //&& psm.ActionId != 48
+          
             && _dbContext.Projects.Any(proj => proj.IsActive == true
             && proj.CurrentPslmId == psm.PsmId))
            .Join(_dbContext.ProjStakeHolderMov,
             comment => comment.PsmId,
             proj => proj.PsmId,
             (comment, proj) => new { Comment = comment, Proj = proj })
-           //.Where(joined => joined.Proj.ActionId == 5)
+          
            .GroupBy(joined => joined.Comment.PsmId)
            .Where(group => group.Any())
            .CountAsync();
@@ -64,14 +58,7 @@ namespace swas.BAL.Repository
          }
         
 
-        //public async Task<int> GetNotificationCommentCount()
-        //{
-
-        //    int notificationCount = await _dbContext.Notification
-        //        .Where(n => n.NotificationType == 1 && n.IsRead == false)
-        //        .CountAsync();
-        //    return notificationCount;
-        //}
+      
 
         public async Task<int> GetNotificationInboxCount()
         {
@@ -82,54 +69,10 @@ namespace swas.BAL.Repository
         }
 
         
-    //    public async Task<List<Notification>> GetNotificationAsync(int ProjId)
-    //    {
-    //        // Retrieve the latest project stakeholder movement record
-    //        var commentData = await (from projMov in _dbContext.ProjStakeHolderMov
-    //                                 join project in _dbContext.Projects on projMov.ProjId equals project.ProjId
-    //                                 where projMov.ProjId == ProjId
-    //                                 orderby projMov.PsmId descending
-    //                                 select new
-    //                                 {
-    //                                     projMov.ProjId,
-    //                                     NotificationFrom = projMov.FromUnitId,
-    //                                     NotificationTo = projMov.ToUnitId,
-    //                                     projMov.IsRead
-    //                                 })
-    //                                .Take(1)
-    //                                .FirstOrDefaultAsync(); // Use async version
-
-    //        // Check if there is any data
-    //        if (commentData == null)
-    //        {
-    //            return new List<Notification>(); // Return an empty list if no data is found
-    //        }
-
-    //        // Create a list to hold notifications to be added
-    //        var notifications = new List<Notification>
-    //{
-    //    new Notification
-    //    {
-    //        ProjId = commentData.ProjId,
-    //        NotificationFrom = commentData.NotificationFrom,
-    //        NotificationTo = commentData.NotificationTo,
-    //        IsRead = commentData.IsRead,
-    //        ReadDateTime = DateTime.Now,
-    //        NotificationType = 1
-
-    //    }
-    //};
-
-    //        // Add the notification to the database
-    //        await _dbContext.Notification.AddRangeAsync(notifications);
-    //        await _dbContext.SaveChangesAsync();
-
-    //        return notifications;
-    //    }
+  
 
         public async Task<List<Notification>> GetNotificationInbox(int ProjId)
         {
-            // Retrieve the latest project stakeholder movement record
             var commentData = await (from projMov in _dbContext.ProjStakeHolderMov
                                      join project in _dbContext.Projects on projMov.ProjId equals project.ProjId
                                      where projMov.ProjId == ProjId
@@ -143,14 +86,10 @@ namespace swas.BAL.Repository
                                      })
                                     .Take(1)
                                     .FirstOrDefaultAsync(); // Use async version
-
-            // Check if there is any data
             if (commentData == null)
             {
                 return new List<Notification>(); // Return an empty list if no data is found
             }
-
-            // Create a list to hold notifications to be added
             var notifications = new List<Notification>
     {
         new Notification
@@ -164,8 +103,6 @@ namespace swas.BAL.Repository
 
         }
     };
-
-            // Add the notification to the database
             await _dbContext.Notification.AddRangeAsync(notifications);
             await _dbContext.SaveChangesAsync();
 

@@ -1,4 +1,4 @@
-﻿/* Card and Layout Styling */
+﻿
 .form-control {
     width: 100%;
 }
@@ -46,12 +46,12 @@
     padding: 1.5rem;
 }
 
-/* Styling for Hidden Error Messages */
+
 .invalid-feedback {
     color: red;
 }
 
-/* Styling for specific form components */
+
 .text-center {
     text-align: center;
 }
@@ -63,17 +63,17 @@
 .form-group {
     margin-bottom: 15px;
 }
-/* Card Styling */
+
 .card {
     border-radius: 10px;
 }
 
-/* Modal Content Custom Width */
+
 .modal-custom-width {
     width: 650px;
 }
 
-/* Optional: Add more styles if needed */
+
 .modal-header {
     font-weight: bold;
 }

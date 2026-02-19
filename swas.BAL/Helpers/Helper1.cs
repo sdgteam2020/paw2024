@@ -10,7 +10,7 @@ namespace swas.UI.Helpers
             string result = $"{Logins.Rank.Trim()} {Logins.Offr_Name.Trim()} / {Logins.UserName.Trim()}";
 
             return result;
-            //return Logins.Rank.Trim() + " " + Logins.Offr_Name.Trim()+" / "+Logins.UserName.Trim()+ "";
+           
         }
     }
 }

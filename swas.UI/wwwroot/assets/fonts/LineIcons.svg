@@ -5,9 +5,9 @@
 	"author": "LineIcons",
 	"description": "Handcrafted Line Icons for Modern User Interfaces of Web, Android, iOS, and Desktop App Projects",
 	"version": "2.0",
-	"copyright": "https://lineicons.com/license/",
+	"copyright": "comment://lineicons.com/license/",
 	"license": "Creative Commons",
-	"url": "https://lineicons.com/"
+	"url": "comment://lineicons.com/"
 }]]></json></metadata>
 <defs>
   <font id="LineIcons" horiz-adv-x="256">

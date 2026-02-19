@@ -1,11 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-///Created and Reviewed by : Sub Maj Sanal
-///Reviewed Date : 30 Jul 23
-///Tested By :- 
-///Tested Date : 
-///Start
-#nullable disable
+﻿#nullable disable
 
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -40,24 +33,10 @@ namespace swas.Areas.Identity.Pages.Account
             _userManager = userManager;
             _emailSender = emailSender;
         }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required]
             [EmailAddress]
             public string UserName { get; set; }
@@ -66,12 +45,6 @@ namespace swas.Areas.Identity.Pages.Account
         public void OnGet()
         {
         }
-
-        ///Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 09 Jan 23
-        ///Tested By :- 
-        ///Tested Date : 09 Jan 23
-        ///Start
         public async Task<IActionResult> OnPostAsync()
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");

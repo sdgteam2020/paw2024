@@ -13,6 +13,8 @@ namespace swas.DAL.Models
         [Key]
         
         public int Id { get; set; }
+        [StringLength(100)]
+        [RegularExpression(@"^[a-zA-Z0-9\-_\/\.]+$", ErrorMessage = "Invalid characters.")]
         public string? RankName { get; set; }
     }
 }

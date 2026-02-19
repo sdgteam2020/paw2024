@@ -110,7 +110,6 @@ function CheckProjectExists(Type) {
         type: 'POST',
         data: userdata,
         success: function (response) {
-            //console.log(response);
             if (response != null) {
 
                 if (response == true) {
@@ -152,7 +151,6 @@ function SaveActionException() {
         type: 'POST',
         data: userdata,
         success: function (response) {
-            //console.log(response);
             if (response != null) {
                 
                 Swal.fire({
@@ -160,7 +158,6 @@ function SaveActionException() {
                     title: "Success...",
                     text: "Project is Submitted Successfully!",
                 }).then(() => {
-                    // Reload the page when the user clicks "OK"
                     window.location.reload();
                 });
 
@@ -184,7 +181,6 @@ function UpdateActionException() {
         type: 'POST',
         data: userdata,
         success: function (response) {
-            //console.log(response);
             if (response != null) {
 
                 Swal.fire({
@@ -192,7 +188,6 @@ function UpdateActionException() {
                     title: "Success...",
                     text: "Project is Updated Successfully!",
                 }).then(() => {
-                    // Reload the page when the user clicks "OK"
                     window.location.reload();
                 });
 

@@ -35,6 +35,7 @@
             </div>
 
             <form method="post" action="@Url.Action("UpdateUserEdit", "Account")">
+                @Html.AntiForgeryToken()
                 <div class="row">
                     <div class="col-md-12">
 

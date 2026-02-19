@@ -15,17 +15,7 @@
 
         }
     });
-
-    //jQuery.ajax({
-    //    type: "POST",
-    //    url: "/Login.cshtml.cs/CheckLogin",
-    //    success: function (data) { alert(data); },
-    //    failure: function (errMsg) {
-    //        alert(errMsg);
-    //    }
-    //});
 });
-// CSP-safe password toggle (replaces onclick="myFunction()")
 (function () {
     "use strict";
 
@@ -36,7 +26,6 @@
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-        // checkbox inside #show_hide_password
         var container = document.getElementById("show_hide_password");
         if (!container) return;
 
@@ -47,3 +36,19 @@
     });
 
 })();
+function encryptData(text) {
+    const key = "DGIS-Login-AES-256-Key-Change-Me";
+    return CryptoJS.AES.encrypt(text, key).toString();
+}
+
+$('#account').on('submit', function (e) {
+    e.preventDefault();
+
+    const encUser = encryptData($('#Input_UserName').val());
+    const encPass = encryptData($('input[name="Input.Password"]').val());
+
+    $('#Input_UserName').val(encUser);
+    $('input[name="Input.Password"]').val(encPass);
+
+    this.submit();
+});

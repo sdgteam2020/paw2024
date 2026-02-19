@@ -74,21 +74,7 @@
                                         <a href="javascript:void(0);" id="showMoreLink_@commentIndex" class="show-more" onclick="showMore('@commentIndex')">Show More</a>
                                         <a href="javascript:void(0);" id="showLessLink_@commentIndex" class="show-less" onclick="showLess('@commentIndex')">Show Less</a>
 
-                                        <script>
-                                            function showMore(index) {
-                                                document.getElementById('shortComment_' + index).style.display = 'none';
-                                                document.getElementById('fullComment_' + index).style.display = 'inline';
-                                                document.getElementById('showMoreLink_' + index).style.display = 'none';
-                                                document.getElementById('showLessLink_' + index).style.display = 'inline';
-                                            }
-
-                                            function showLess(index) {
-                                                document.getElementById('shortComment_' + index).style.display = 'inline';
-                                                document.getElementById('fullComment_' + index).style.display = 'none';
-                                                document.getElementById('showMoreLink_' + index).style.display = 'inline';
-                                                document.getElementById('showLessLink_' + index).style.display = 'none';
-                                            }
-                                        </script>
+                                     
                                     }
                                     else
                                     {

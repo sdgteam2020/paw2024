@@ -97,8 +97,6 @@
 
                 var dateValue = $('#datepicker').val();
                 var currentDate = new Date();
-
-                // Add server's current time if only a date is selected
                 var FwdDateForComment = '';
                 if ($('#datepicker').attr('type') === 'date') {
 
@@ -114,7 +112,7 @@
                 }
                 $('#confirmationModal').modal('hide');
                 SentForComment(ProjId, psmId, 0, FwdDateForComment);
-                /* AddNotification(ProjId, 1, 0);*/
+                
                 ProcessProjConfirm(ProjId);
                 IsReadInbox(psmId);
                 InboxNotificationCount();
@@ -145,7 +143,6 @@ function GetForCommentStakeHolder(ProjId, psmId) {
         type: 'POST',
         data: { "Id": 0 },
         success: function (response) {
-            //console.log(response);
 
 
             if (response != null) {
@@ -154,7 +151,6 @@ function GetForCommentStakeHolder(ProjId, psmId) {
                     SentForComment(ProjId, psmId, response[i].unitid)
 
                 }
-                //SentForComment(ProjId, psmId);
 
                 ProcessProjConfirm(ProjId)
             }
@@ -173,7 +169,6 @@ function SentForComment(ProjId, psmId, unitid, FwdDateForComment) {
             "unitid": unitid, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
         },
         success: function (response) {
-            //console.log(response);
             if (response && response === 1) {
                 Swal.fire({
                     position: 'top-end',
@@ -188,7 +183,6 @@ function SentForComment(ProjId, psmId, unitid, FwdDateForComment) {
         },
         error: function (error) {
             console.error('Error occurred:', error);
-            // Handle error if needed
         }
     });
 }
@@ -202,12 +196,10 @@ function SentForNotification(ProjId, psmId, unitid, FwdDateForComment) {
             "unitid": unitid, "__RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
         },
         success: function (response) {
-            //console.log(response);
             if (response && response === 1) {
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',
-                    //title: 'Project Notification Added  successfully',
                     title: 'Project Submit Successfully',
                     showConfirmButton: false,
                     timer: 700
@@ -218,7 +210,6 @@ function SentForNotification(ProjId, psmId, unitid, FwdDateForComment) {
         },
         error: function (error) {
             console.error('Error occurred:', error);
-            // Handle error if needed
         }
     });
 }
@@ -228,7 +219,6 @@ function ProcessProjConfirm(ProjId) {
         type: 'POST',
         data: { "ProjId": ProjId },
         success: function (response) {
-            //console.log(response);
             if (response >= 1) {
                 Swal.fire({
                     position: "top-end",
@@ -252,7 +242,7 @@ function GetProjectMovHistory(ProjId) {
         type: 'POST',
         data: { "ProjectId": ProjId },
         success: function (response) {
-
+            debugger;
             if (response.dtoProjectMovHistorypsmlst.length) {
 
                 listitem += '<div class="timeline-month">';
@@ -338,10 +328,90 @@ function GetProjectMovHistory(ProjId) {
 
                         listitem += '<div class="box-footer">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
                         listitem += '</div></div>';
+
+                        var DTODashboardCount = DTOProjectMovHistorycmdlst.filter(function (element) { return element.psmId == DTOProjectMovHistorypsmlst[i].psmId; });
+
+
+                        for (var c = 0; c < DTODashboardCount.length; c++) {
+                            listitem += '<div class="col-sm-4">';
+                            listitem += '<div class="timeline-box">';
+                            listitem += '<div class="box-title">';
+                            listitem += '<i class="fa fa-pencil text-info" aria-hidden="true"></i>  Comment On ' + DateFormateddMMyyyyhhmmss(DTODashboardCount[c].dateTimeOfUpdate) + '';
+                            listitem += '</div>';
+                            listitem += '<div class="box-content">';
+                            if (DTODashboardCount[c].comments.length > 75)
+                                listitem += '<div class="box-item" data-toggle="tooltip" data-placement="top" title="' + DTODashboardCount[c].comments + '">' + DTODashboardCount[c].comments.substring(0, 75) + ' ........</div>';
+                            else
+                                listitem += '<div class="box-item" >' + DTODashboardCount[c].comments + ' </div>';
+
+                            listitem += '</div>';
+                            if (DTODashboardCount[c].status == "Obsn")
+                                listitem += '<div class="box-footer bg-warning">' + DTODashboardCount[c].status + ' by ' + DTODashboardCount[c].userDetails + '</div>'
+                            else if (DTODashboardCount[c].status == "Observation" || DTODashboardCount[c].status == "Rejected")
+                                listitem += '<div class="box-footer bg-danger">' + DTODashboardCount[c].status + ' by ' + DTODashboardCount[c].userDetails + '</div>';
+                            else if (DTODashboardCount[c].status == "Accepted")
+                                listitem += '<div class="box-footer bg-success ">' + DTODashboardCount[c].status + ' by ' + DTODashboardCount[c].userDetails + '</div>';
+                            else
+                                listitem += '<div class="box-footer">' + DTODashboardCount[c].status + ' by ' + DTODashboardCount[c].userDetails + '</div>';
+                            listitem += '</div></div>';
+                        }
                     }
 
+                    if (DTOProjectMovHistorypsmlst[i].remarks != "") {
+                        listitem += '<div class="col-sm-4">';
+                        listitem += '<div class="timeline-box">';
+                        listitem += '<div class="box-title">';
+                        listitem += '<i class="fa fa-pencil text-info" aria-hidden="true"></i> Remarks On ' + DateTimeFormatedd_mm_yyyy(DTOProjectMovHistorypsmlst[i].date);
+                        listitem += '</div>';
+                        listitem += '<div class="box-content">';
+                        if (DTOProjectMovHistorypsmlst[i]?.isPulledBack === true && DTOProjectMovHistorypsmlst[i]?.undoRemarks == null) {
+                            listitem += '<div class="box-item">' + '<strong>Pulled Back by</strong> -  ' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
+                        } else {
+                            listitem += '<div class="box-item">' + DTOProjectMovHistorypsmlst[i].remarks + '</div>';
+                        }
+                        listitem += '</div>';
+                        if (DTOProjectMovHistorypsmlst[i].actions == "Obsn") {
+                            listitem += '<div class="box-footer bg-warning">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
+                        } else if (DTOProjectMovHistorypsmlst[i].isPulledBack == 0 && DTOProjectMovHistorypsmlst[i].actions != "Obsn") {
+                            listitem += '<div class="box-footer ">' + DTOProjectMovHistorypsmlst[i].userDetails + '</div>';
+                        } else {
+
+                            listitem += '<div class="box-footer ">' + fromlist1[1].replace(')', '') + '</div>';
+                        }
+                        listitem += '</div></div>';
+                    }
+                    var DTOProjectCCHistorycccpsmid = DTOProjectCCHistorylst.filter(function (element) { return element.psmId == DTOProjectMovHistorypsmlst[i].psmId; });
+
+                    if (DTOProjectCCHistorycccpsmid.length > 0) {
+                        for (let cc = 0; cc < DTOProjectCCHistorycccpsmid.length; cc++) {
+                            listitem += '<div class="col-sm-4">';
+                            listitem += '<div class="timeline-box">';
+                            listitem += '<div class="box-title bg-warning">';
+                            listitem += '<i class="fa-solid fa-closed-captioning fa-2x"></i>';
+                            listitem += '</div>';
+                            listitem += '<div class="box-content">';
+
+                            let readon = "";
+
+
+                            listitem += '<div class="box-item">' + '<strong>Unit Name : </strong>' + DTOProjectCCHistorycccpsmid[cc].unitName + ' </div>';
+                            if (DTOProjectCCHistorycccpsmid[cc].isRead == true) {
+
+                                listitem += '<div class="box-item">' + '<strong>Read on : </strong>' + DateTimeFormatedd_mm_yyyy(DTOProjectCCHistorycccpsmid[cc].readDate) + ' </div>';
+                                listitem += '<div class="box-item">' + '<strong>Read By : </strong>' + DTOProjectCCHistorycccpsmid[cc].userDetails + ' </div>';
+                            }
+
+
+
+                            listitem += '</div>';
+                            listitem += '</div></div>';
+                        }
+                    }
                     listitem += '</div></div>';
+                    listitem += '';
+                    listitem += '';
                 }
+                
 
                 $("#projectmovfistory").html(listitem);
             }
@@ -392,11 +462,11 @@ function GetCCProject() {
                     listitem += '<td><div class="d-flex">' + count;
 
                     if (response[i].isRead == false)
-                        listitem += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="icon-green" fill="currentColor" viewBox="0 0 16 16">' +
+                        listitem += '<svg xmlns="" width="16" height="16" class="icon-green" fill="currentColor" viewBox="0 0 16 16">' +
                             '<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />' +
                             '</svg>';
                     else
-                        listitem += '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" height="16" class="icon-green" fill="currentColor">' +
+                        listitem += '<svg xmlns="" viewBox="0 0 448 512" width="16" height="16" class="icon-green" fill="currentColor">' +
                             '<path d="M342.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l80 80c12.5 12.5 32.8 12.5 45.3 0l160-160zm96 128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 402.7 54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l256-256z" />' +
                             '</svg>';
 
@@ -484,7 +554,7 @@ function truncateText(text, maxWords) {
 $(document).on("click", ".date-action", function (e) {
     e.preventDefault();
     ;
-
+   
     const action = $(this).data("action");
    
     const userReq = (action === "back"); // true for 'back', false otherwise
@@ -538,7 +608,10 @@ $(document).on("click", ".date-action", function (e) {
                     ProjId: projId,
                     UserReq: userReq,
                     actiontype: actiontype,
-                    remarks: remarks
+                    remarks: remarks,
+                    
+                }, headers: {
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
                 },
                 success: function (response) {
                     Swal.fire({
@@ -635,23 +708,6 @@ function SendRemainder(projid, remarks) {
 
 
 
-//$("#tabRemainder").on("click", function () {
-//    ;
-
-//    $.ajax({
-//        url: "/Projects/GetRemainderList",
-//        type: "GET",
-//        success: function (response) {
-//            alert(1);
-//            console.log(response); // Fix typo here
-//        },
-//        error: function (xhr, status, error) {
-//            ;
-//            Swal.fire("Error!", "Something went wrong: " + error, "error");
-//        }
-//    });
-//});
-
 
 
 $(document).on('click', '#btnRemMove', function () {
@@ -663,7 +719,6 @@ $(document).on('click', '#btnRemMove', function () {
     var projName = $(this).data('proj-name');
     var words = projName.split(" ");
     var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
-    //var finalTitle = "Mov History: " + shortProjName;
     var finalTitle = "Reminder History: " + projName;
     $('#RemProjName').text(finalTitle);
 
@@ -698,9 +753,6 @@ function GetProjRemainderMov(ProjId) {
 
                     listItem += "<tr>";
                     listItem += "<td class='align-middle'>" + (i + 1) + "</td>";
-                    //listItem += "<td class='align-middle nowrap'>" +
-                    //    "<a class='ProjName' title='" + projName + "' data-proj-name='" + shortProjName + "'>" +
-                    //    shortProjName + "</a></td>";
 
                     listItem += '<td class="RefLetter-container align-middle">' +
                         '' + item.unitName + '' +
@@ -708,16 +760,16 @@ function GetProjRemainderMov(ProjId) {
                         '' + item.sponsor + '' +
                         '</div></td>';
 
-                   /* listItem += "<td class='align-middle'>" + (item.sponsor || 'N/A') + "</td>";*/
+                   
 
-                    /*  listItem += "<td class='align-middle'>" + (item.fromUnit || 'N/A') + "</td>";*/
+                    
                     listItem += "<td class='align-middle'><div class='col-md-24'>" + DateFormated(item.sentOn || '-') + "</div></td>";
                     listItem += '<td class="RefLetter-container align-middle">' +
                         '' + item.fromUnit + '' +
                         '<div class="RefLetter noExport">' +
                         '' + item.userDetails + '' +
                         '</div></td>';
-                    /*  listItem += "<td class='align-middle'>" + (item.toUnit || 'N/A') + "</td>";*/
+                    
                     listItem += '<td class="RefLetter-container align-middle">' +
                         '' + item.toUnit + '' +
                         '<div class="RefLetter noExport">' +
@@ -726,7 +778,7 @@ function GetProjRemainderMov(ProjId) {
                    
                   
                     listItem += "<td class='align-middle' ><div class='col-md-24'>" + (item.readOn || '-') + "</div></td>"; 
-                  /*  listItem += "<td class='align-middle'>" + (item.remarks || '') + "</td>";*/
+                  
 
 
                     const remarks = item.remarks || 'No Remarks';
@@ -774,21 +826,11 @@ $(document).on("click", "#ReadRemainderNoti", function (e) {
 
     var $this = $(this);
     var projId = parseInt($this.data("projid"));
-
-    // Remove bold styling to indicate it is read
     $this.closest("tr").removeClass("bold-text");
-
-    // Get and pass current PSM ID to mark as read
     var psmId = $this.closest("tr").find("#SpnCurrentpsmId").text();
     IsReadInbox(psmId);
-
-    // Hide or reset the badge
     $("#Remainderbedge").text("0").hide();
-
-    // Update the read date in the backend
     updateReadDateForRemainder(projId);
-
-    // Refresh remainder movement and notification count after a short delay
    
 });
 
@@ -840,8 +882,6 @@ function GetParkedProject() {
         url: '/Projects/GetActParkedProject',
         type: 'GET',
         success: function (response) {
-          
-            // Clear table body
             $("#parkedtblData").html("");
 
             if (response != null && response.length > 0) {
@@ -855,8 +895,6 @@ function GetParkedProject() {
 
                     listitem += '<tr>';
                     listitem += `<td><div class="d-flex">${count}</div></td>`;
-
-                    // Project Name & IDs
                     listitem += `
                         <td>
                             <span class="d-none noExport" id="SpnCurrentParkedProjId">${project.projId}</span>
@@ -869,37 +907,25 @@ function GetParkedProject() {
                                 </div>
                             </a>
                         </td>`;
-
-                    // Sponsor
                     listitem += `
                         <td class="RefLetter-container">
                             ${project.unitName}
                             <div class="RefLetter noExport">${breakLinesByWords(project.sponsor, 3)}</div>
                         </td>`;
-
-                    // From Unit
                     listitem += `
                         <td class="RefLetter-container">
                             ${project.fromUnitUserDetail}
                             <div class="RefLetter noExport">${breakLinesByWords(project.fromUnitName, 4)}</div>
                         </td>`;
-
-                    // Received On
                     listitem += `<td>${DateFormateddMMyyyyhhmmss(project.timeStamp)}</td>`;
-
-                    // Stage & SubStage
                     listitem += `<td>${project.stage}</td>`;
                     listitem += `<td>${project.subStage ?? project.status ?? ""}</td>`;
-
-                    // Parked Status
                     listitem += `
                         <td>
                             <div class="btn btn-warning p-2">
                                 <span>Parked</span>
                             </div>
                         </td>`;
-
-                    // Actions: History + Unpark
                     listitem += `
                         <td>
                             <div class="row d-flex align-items-center">
@@ -921,9 +947,6 @@ function GetParkedProject() {
             }
 
             initializeDataTable("#parkedtable");
-           
-
-            // History button click event
             $(".btn-FwdHistoryParked").off('click').on('click', function () {
               
                 var projName = $(this).closest("tr").find("#projNamecc").html();
@@ -932,8 +955,6 @@ function GetParkedProject() {
 
                 GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentParkedProjId").html());
             });
-
-            // Unpark button click event
             $(".btn_unparked").off('click').on('click', function () {
                 var psmid = $(this).closest("tr").find("#spnCurrentPsmid").text();
                 Swal.fire({
@@ -955,7 +976,6 @@ function GetParkedProject() {
         },
         error: function (xhr, status, error) {
             console.error("Error fetching parked projects:", status, error);
-            // Display empty table message
             if ($.fn.DataTable.isDataTable("#parkedtable")) {
                 $("#parkedtable").DataTable().destroy();
             }
@@ -979,6 +999,10 @@ function Unparkedbypsmid(psmid) {
         url: '/Projects/ParkedProject',
         type: 'POST',
         data: { psmid: psmid },
+        headers: {
+            'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+        },
+      
         success: function (response) {
 
             if (response && response != null) {
@@ -1013,8 +1037,6 @@ $(".parkedProj").on('click', function () {
         }
 
     });
-
-   // 
 });
 
 
@@ -1070,6 +1092,8 @@ $(".parkedProj").on('click', function () {
 	};
 
 	containerTabs.addEventListener("click", handleTabClick);
+
+
 
 
 

@@ -1,8 +1,4 @@
-/*!
- * Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com
- * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
- * Copyright 2024 Fonticons, Inc.
- */
+
 (function () {
   'use strict';
 
@@ -112,7 +108,6 @@
   var FAMILIES = [FAMILY_CLASSIC, FAMILY_SHARP];
 
   function familyProxy(obj) {
-    // Defaults to the classic family if family is not available
     return new Proxy(obj, {
       get: function get(target, prop) {
         return prop in target ? target[prop] : target[FAMILY_CLASSIC];
@@ -887,7 +882,6 @@
   var FAMILIES = [FAMILY_CLASSIC, FAMILY_SHARP];
 
   function familyProxy(obj) {
-    // Defaults to the classic family if family is not available
     return new Proxy(obj, {
       get: function get(target, prop) {
         return prop in target ? target[prop] : target[FAMILY_CLASSIC];
@@ -1335,7 +1329,6 @@
   var FAMILIES = [FAMILY_CLASSIC, FAMILY_SHARP];
 
   function familyProxy(obj) {
-    // Defaults to the classic family if family is not available
     return new Proxy(obj, {
       get: function get(target, prop) {
         return prop in target ? target[prop] : target[FAMILY_CLASSIC];
@@ -3186,7 +3179,6 @@
   var FAMILIES = [FAMILY_CLASSIC, FAMILY_SHARP];
 
   function familyProxy(obj) {
-    // Defaults to the classic family if family is not available
     return new Proxy(obj, {
       get: function get(target, prop) {
         return prop in target ? target[prop] : target[FAMILY_CLASSIC];
@@ -3309,8 +3301,6 @@
   }
 
   function coerce(val) {
-    // Getting an empty string will occur if the attribute is set on the HTML tag but without a value
-    // We'll assume that this is an indication that it should be toggled to true
     if (val === '') return true;
     if (val === 'false') return false;
     if (val === 'true') return true;
@@ -3683,7 +3673,7 @@
   /**
    * ucs2decode() and codePointAt() are both works of Mathias Bynens and licensed under MIT
    *
-   * Copyright Mathias Bynens <https://mathiasbynens.be/>
+   * Copyright Mathias Bynens <comments://mathiasbynens.be/>
 
    * Permission is hereby granted, free of charge, to any person obtaining
    * a copy of this software and associated documentation files (the
@@ -3716,7 +3706,6 @@
         var extra = string.charCodeAt(counter++);
 
         if ((extra & 0xFC00) == 0xDC00) {
-          // eslint-disable-line eqeqeq
           output.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
         } else {
           output.push(value);
@@ -3789,15 +3778,15 @@
     }
   }
 
-  var duotonePathRe = [/*#__PURE__*/_wrapRegExp(/path d="((?:(?!")[\s\S])+)".*path d="((?:(?!")[\s\S])+)"/, {
+  var duotonePathRe = [_wrapRegExp(/path d="((?:(?!")[\s\S])+)".*path d="((?:(?!")[\s\S])+)"/, {
     d1: 1,
     d2: 2
-  }), /*#__PURE__*/_wrapRegExp(/path class="((?:(?!")[\s\S])+)".*d="((?:(?!")[\s\S])+)".*path class="((?:(?!")[\s\S])+)".*d="((?:(?!")[\s\S])+)"/, {
+  }), _wrapRegExp(/path class="((?:(?!")[\s\S])+)".*d="((?:(?!")[\s\S])+)".*path class="((?:(?!")[\s\S])+)".*d="((?:(?!")[\s\S])+)"/, {
     cls1: 1,
     d1: 2,
     cls2: 3,
     d2: 4
-  }), /*#__PURE__*/_wrapRegExp(/path class="((?:(?!")[\s\S])+)".*d="((?:(?!")[\s\S])+)"/, {
+  }), _wrapRegExp(/path class="((?:(?!")[\s\S])+)".*d="((?:(?!")[\s\S])+)"/, {
     cls1: 1,
     d1: 2
   })];
@@ -3875,7 +3864,6 @@
       });
       return acc;
     }); // If we have a Kit, we can't determine if regular is available since we
-    // could be auto-fetching it. We'll have to assume that it is available.
 
     var hasRegular = 'far' in styles || config.autoFetchSvg;
     var shimLookups = reduce(shims, function (acc, shim) {
@@ -4016,8 +4004,6 @@
         acc.prefix = shim.prefix || acc.prefix;
 
         if (acc.prefix === 'far' && !styles['far'] && styles['fas'] && !config.autoFetchSvg) {
-          // Allow a fallback from the regular style to solid if regular is not available
-          // but only if we aren't auto-fetching SVGs
           acc.prefix = 'fas';
         }
       }
@@ -4039,15 +4025,13 @@
     }
 
     if (canonical.prefix === 'fa' || givenPrefix === 'fa') {
-      // The fa prefix is not canonical. So if it has made it through until this point
-      // we will shift it to the correct prefix.
       canonical.prefix = getDefaultUsablePrefix() || 'fas';
     }
 
     return canonical;
   }
 
-  var Library = /*#__PURE__*/function () {
+  var Library = function () {
     function Library() {
       _classCallCheck(this, Library);
 
@@ -4437,7 +4421,7 @@
         'data-icon': iconName,
         'class': attrClass,
         'role': extra.attributes.role || 'img',
-        'xmlns': 'http://www.w3.org/2000/svg',
+        'xmlns': '',
         'viewBox': "0 0 ".concat(width, " ").concat(height)
       })
     };
@@ -4731,7 +4715,7 @@
   }
 
   function createElementNS(tag) {
-    return DOCUMENT.createElementNS('http://www.w3.org/2000/svg', tag);
+    return DOCUMENT.createElementNS('', tag);
   }
 
   function createElement(tag) {
@@ -4762,10 +4746,10 @@
 
   function nodeAsComment(node) {
     var comment = " ".concat(node.outerHTML, " ");
-    /* BEGIN.ATTRIBUTION */
+    
 
     comment = "".concat(comment, "Font Awesome fontawesome.com ");
-    /* END.ATTRIBUTION */
+    
 
     return comment;
   }
@@ -4790,7 +4774,6 @@
     nest: function nest(mutation) {
       var node = mutation[0];
       var _abstract2 = mutation[1]; // If we already have a replaced node we do not want to continue nesting within it.
-      // Short-circuit to the standard replacement
 
       if (~classArray(node).indexOf(config.replacementClass)) {
         return mutators.replace(mutation);
@@ -5495,7 +5478,6 @@
     var pendingAttribute = "".concat(DATA_FA_PSEUDO_ELEMENT_PENDING).concat(position.replace(':', '-'));
     return new Promise(function (resolve, reject) {
       if (node.getAttribute(pendingAttribute) !== null) {
-        // This node is already being processed
         return resolve();
       }
 
@@ -5509,9 +5491,6 @@
       var content = styles.getPropertyValue('content');
 
       if (alreadyProcessedPseudoElement && !fontFamily) {
-        // If we've already processed it but the current computed style does not result in a font-family,
-        // that probably means that a class name that was previously present to make the icon has been
-        // removed. So we now should delete the icon.
         node.removeChild(alreadyProcessedPseudoElement);
         return resolve();
       } else if (fontFamily && content !== 'none' && content !== '') {
@@ -5536,14 +5515,12 @@
             prefix = iconName4.prefix;
           }
         } // Only convert the pseudo element in this ::before/::after position into an icon if we haven't
-        // already done so with the same prefix and iconName
 
 
         if (iconName && !isSecondary && (!alreadyProcessedPseudoElement || alreadyProcessedPseudoElement.getAttribute(DATA_PREFIX) !== prefix || alreadyProcessedPseudoElement.getAttribute(DATA_ICON) !== iconIdentifier)) {
           node.setAttribute(pendingAttribute, iconIdentifier);
 
           if (alreadyProcessedPseudoElement) {
-            // Delete the old one, since we're replacing it with a new one
             node.removeChild(alreadyProcessedPseudoElement);
           }
 
@@ -5562,7 +5539,7 @@
               watchable: true
             }));
 
-            var element = DOCUMENT.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            var element = DOCUMENT.createElementNS('', 'svg');
 
             if (position === '::before') {
               node.insertBefore(element, node.firstChild);
@@ -5984,7 +5961,6 @@
         });
 
         if (!reduceMotion) {
-          // Exclamation
           gChildren.push({
             tag: 'path',
             attributes: _objectSpread2(_objectSpread2({}, FILL), {}, {

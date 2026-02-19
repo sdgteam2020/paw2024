@@ -1,9 +1,4 @@
-﻿///Created and Reviewed by : Sub Maj Sanal
-///Reviewed Date : 30 Jul 23
-///Tested By :- 
-///Tested Date : 
-///Start
-using System;
+﻿using System;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -27,23 +22,8 @@ namespace swas.Areas.Identity.Pages.Account
             _userManager = userManager;
             _sender = sender;
         }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public string Email { get; set; }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public bool DisplayConfirmAccountLink { get; set; }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public string EmailConfirmationUrl { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string email, string returnUrl = null)
@@ -61,7 +41,6 @@ namespace swas.Areas.Identity.Pages.Account
             }
 
             Email = email;
-            // Once you add a real email sender, you should remove this code that lets you confirm the account
             DisplayConfirmAccountLink = true;
             if (DisplayConfirmAccountLink)
             {

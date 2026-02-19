@@ -21,15 +21,12 @@ namespace swas.DAL.Models
         public string? ContentText { get; set; }
 
         public string ContentType { get; set; } = string.Empty;
-        // Values: TableRow | Paragraph | Header
 
         public int DisplayOrder { get; set; }
 
         public bool IsActive { get; set; } = true;
 
         public DateTime CreatedOn { get; set; } = DateTime.Now;
-
-        // Navigation
         public tbl_mCertificate Certificate { get; set; } = null!;
     }
     public enum CertificateContentType

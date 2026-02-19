@@ -1,15 +1,5 @@
 ﻿
 using Microsoft.AspNetCore.Identity;
-
-///
-///Developer Name :- Sub Maj M Sanal Kumar
-///Purpose :-
-///Authority & Reference :- 
-///Kind Of Request :- 
-///Version :- 
-///Dated :- 29/07/2023
-///Remarks :- 
-///
 namespace ASPNetCoreIdentityCustomFields.Data
 {
     public class ApplicationUser : IdentityUser
@@ -29,6 +19,6 @@ namespace ASPNetCoreIdentityCustomFields.Data
         public bool? Flag { get; set; }
         public DateTime? CreatedDate { get; set; }
 
-        //public int skipImdtFmn { get; set; } = 0;
+       
     }
 }

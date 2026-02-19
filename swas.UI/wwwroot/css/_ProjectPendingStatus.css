@@ -41,3 +41,12 @@
     font-weight: bold;
     font-size: 18px;
 }
+.table-cell {
+    text-align: left;
+    border: 1px solid black;
+    padding: 8px;
+}
+.pdf-icon {
+    width: 24px;
+    height: 24px;
+}

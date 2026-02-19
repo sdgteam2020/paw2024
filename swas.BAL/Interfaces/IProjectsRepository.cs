@@ -11,12 +11,6 @@ using System.Threading.Tasks;
 
 namespace swas.BAL.Interfaces
 {
-
-    ///Created and Reviewed by : Sub Maj Sanal
-    ///Reviewed Date : 31 Jul 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start 
     public interface IProjectsRepository
     {
         Task<int> AddProjectAsync(tbl_Projects project, string Remarks);
@@ -55,21 +49,14 @@ namespace swas.BAL.Interfaces
         Task<List<tbl_ProjStakeHolderMov>> GetInboxByProjIdAsync(int projId);
 
 
-        //Task<Notification> GetNotificationByProjId(int projId);
-
-        //Task<bool> UpdateNotification(Notification notify);
-
-        //Task<bool> UpdateUnReadNotification(Notification notify);
+      
 
         Task<tbl_ProjStakeHolderMov> GetNextPsmMoveAsync(int projId, int currentPsmId);
 
         Task<List<DTODDLComman>> GetALLByProjectName(string ProjName);
 
-        //Task<bool> UpdateNotificationByProjID(Notification notify);
-
+      
         Task<int> GetNotificationCommentCount();
-
-        //Task<bool> UpdateCommentedUnReadNotification(Notification notify);
 
         Task<List<tbl_ProjStakeHolderMov>> GetInboxByProjIdExcludingPsmIdAsync(int projId, int psmId);
 
@@ -80,12 +67,11 @@ namespace swas.BAL.Interfaces
         Task<tbl_ProjStakeHolderMov> GetProjStkHolderMovmentByPsmiId(int? PsmId);
         Task<bool> UpdateProjectStkMovementAsync(tbl_ProjStakeHolderMov project);
         Task<ApplicationUser> GetUserByUnitId(int? UnitId);
-        //Task<List<tbl_ProjStakeHolderMov>> GetProjStkHolderMovmentByProjId(int? ProjId);
-
+        
         Task<List<AddNewProject>> GetMyProjects();
 
         Task<List<DTOProjectsFwd>> GetActParkedItemsAsync();
-		//Task<int> GetProjIdByPsmiId(int? Psmid, int? StackHolderId);
+		
 	}
 
 

@@ -9,6 +9,10 @@
         "flatpickr.min.js",
         "flatpickr.min.css"
       ]
+    },
+    {
+      "library": "jquery@3.7.1",
+      "destination": "wwwroot/assets/js/"
     }
   ]
 }

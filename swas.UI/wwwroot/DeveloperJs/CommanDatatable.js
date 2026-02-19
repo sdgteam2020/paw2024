@@ -5,9 +5,9 @@
 
 function initializeDataTable(tableSelector) {
   
-   
+    
     const Initialorder = (tableSelector === "#Comment") ? [[1, 'asc']] : [];
-   
+    
     return $(tableSelector).DataTable({
         lengthChange: true,
         dom: 'lBfrtip',
@@ -17,9 +17,6 @@ function initializeDataTable(tableSelector) {
         lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
 
         order: Initialorder,  // Initial sort by serial number
-        //columnDefs: [
-        //    { orderable: false, targets: 0 } // Disable sorting on serial number column
-        //],
         rowCallback: function (row, data, displayIndex) {
             $(row).find('.ser-no')
                 .html(displayIndex + 1);
@@ -33,7 +30,6 @@ function initializeDataTable(tableSelector) {
                     format: {
                         body: function (data, row, column, node) {
                             console.log(data);
-                            // 🔄 CHANGED: added logic to remove `.noExport` content
                             if (typeof data === 'string' && data.indexOf('<') >= 0) {
                                 var el = $('<div>' + data + '</div>'); // ✅ ADDED
                                 el.find('.noExport').remove();        // ✅ ADDED
@@ -50,7 +46,6 @@ function initializeDataTable(tableSelector) {
                     columns: ':visible:not(:last-child)',
                     format: {
                         body: function (data, row, column, node) {
-                            // 🔄 CHANGED: added logic to remove `.noExport` content
                             if (typeof data === 'string' && data.indexOf('<') >= 0) {
                                 var el = $('<div>' + data + '</div>'); // ✅ ADDED
                                 el.find('.noExport').remove();        // ✅ ADDED
@@ -106,13 +101,18 @@ function initializeDataTable(tableSelector) {
     });
 }
 function PdfDiv(tableSelector, watermarkSelector = "#IpAddress") {
-    debugger;
+ 
     const table = $(tableSelector).DataTable();
-    const filteredData = table.rows({ search: 'applied' }).data().toArray();
+    (tableSelector === "#SoftwareType")
+        ? table.order([1, 'asc']).draw()
+        : null;
+
+   
+    const filteredData = table.rows({ search: 'applied', order: 'applied' }).data().toArray();
 
     let headers = [];
     table.columns(':visible').header().each(function (header, index) {
-        if (!$(header).hasClass('noExport') && index !== table.columns().count() - 1) {
+        if (!$(header).hasClass('noExport') && index !== table.columns().count()) {
             headers.push($(header).text().trim());
         }
     });
@@ -120,7 +120,7 @@ function PdfDiv(tableSelector, watermarkSelector = "#IpAddress") {
     let data = [];
     for (let i = 0; i < filteredData.length; i++) {
         let rowData = [];
-        for (let j = 0; j < filteredData[i].length - 1; j++) {
+        for (let j = 0; j <=filteredData[i].length - 1; j++) {
             if ($(table.column(j).header()).hasClass('noExport')) {
                 continue;
             }; 
@@ -132,9 +132,9 @@ function PdfDiv(tableSelector, watermarkSelector = "#IpAddress") {
                     .replace(/<br\s*\/?>/gi, '\n')              // ✅ Keep line breaks
                     .replace(/<\/?[^>]+(>|$)/g, "")             // ✅ Strip remaining HTML
                     .trim();
-                rowData.push(j === 0 ? i + 1 : cleanText);
+                rowData.push(j === 0 ? i+1 : cleanText);
             } else {
-                rowData.push(j === 0 ? i + 1 : cellData);
+                rowData.push(j === 0 ? i+1 : cellData);
             }
         }
         data.push(rowData);
@@ -158,43 +158,14 @@ function PdfDiv(tableSelector, watermarkSelector = "#IpAddress") {
     const popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
     popupWin.document.open();
 
-    const tableStyles = `
-<style>
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-    }
-    th, td {
-        padding: 8px;
-        border: 1px solid #ddd;
-        text-align: center;
-    }
-    th {
-        background-color: #f2f2f2;
-        color: black;
-    }
-
-    .datatblwatermark {
-        transform: rotate(-45deg);
-        position: fixed;
-        top: 39%;
-        left: 6%;
-        font-size: 80px;
-        opacity: 0.3;
-        z-index: 10000;
-        display: grid;
-        justify-content: center;
-        align-content: center;
-        pointer-events: none;
-        user-select: none;
-    }
-</style>`;
+ 
 
 
     popupWin.document.write(`
         <html>
-        <head>${tableStyles}</head>
+      <head>
+    <link rel="stylesheet" href="/css/print-table.css">
+</head>
         <body onload="window.print()">
             ${tableHTML}
             <div class="datatblwatermark">

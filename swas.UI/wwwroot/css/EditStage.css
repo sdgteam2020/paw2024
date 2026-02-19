@@ -1,31 +1,31 @@
-﻿/* Required indicator styling */
+﻿
 .required-indicator {
     color: red;
     font-weight: bold;
 }
 
-/* Form label styling */
+
 .form-label {
     font-size: 1.1rem;
 }
 
-/* Button container styling for alignment */
+
 .button-container {
     margin-top: 2rem;
 }
 
-/* Update button styling */
+
 .btnupdate {
     margin-top: 1rem;
 }
 
-/* Styling for the Close button */
+
 .close-link {
     color: white;
     text-decoration: none;
 }
 
-/* Secondary button */
+
 .btn-secondary {
     margin-top: 1rem;
 }

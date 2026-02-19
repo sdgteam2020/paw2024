@@ -10,8 +10,6 @@
 @inject IHttpContextAccessor HttpContextAccessor
 @{
 
-    // Layout = "~/Views/Shared/_Layout.cshtml";
-
     var roles = (List<Types>)ViewData["roles"];
     var iamuser = (List<AddlTask>)ViewData["IAMUser"];
     var units = (List<UnitDtl>)ViewData["Unit"];
@@ -26,6 +24,7 @@
 
 
 <form id="updateProfileFormPartial" method="post" action="@Url.Action("UpdateUserEdit", "Account")">
+    @Html.AntiForgeryToken()
     <table class="table table-striped table-bordered">
         <tr>
             <td>
@@ -75,12 +74,18 @@
         <tr>
             <td><label asp-for="unitId" class="label control-label">Select Unit</label></td>
             <td>
-                <select asp-for="unitId" class="form-control dropdownsearch"
-                        asp-items="@(new SelectList((List<UnitDtl>)ViewData["Unit"], "unitid", "UnitName", Model.unitId))">
+                <select asp-for="unitId"
+                        class="form-control dropdownsearch"
+                        asp-items="@(new SelectList((List<UnitDtl>)ViewData["Unit"], "unitid", "UnitName", Model.unitId))"
+                        disabled>
                 </select>
+
+                <!-- Hidden field to post value -->
+                <input type="hidden" asp-for="unitId" />
 
                 <span asp-validation-for="unitId" class="text-danger"></span>
             </td>
+
         </tr>
 
         <tr>
@@ -134,14 +139,4 @@
     </table>
 </form>
 
-<script>
-    function ValInDataEdit(input) {
-        var regex = /[^a-zA-Z0-9_]/g; // underscore allowed
-        input.value = input.value.replace(regex, "");
-    }
-
-
-
-      
-
-</script>
+<script src="~/DeveloperJs/_AllUsersEditPartial.js"></script>

@@ -12,6 +12,8 @@
 			</div>
 
 			<div class="modal-body">
+				@Html.AntiForgeryToken()
+
 				<div class="row">
 					<div class="col-md-12">
 						<span class="d-none" id="spanCurrentPslmId">0</span>
@@ -125,9 +127,17 @@
 
 									<div class="form-group col-md-6 ProjectsFwd">
 										<strong><label for="SubStage" class="bold-text">6. Remarks</label></strong>
-										<textarea class="form-control requiredField projfwd-remarks-w100" id="txtRemarksfwd"></textarea>
+										<textarea class="form-control requiredField projfwd-remarks-w100 char-limit"
+												data-maxlength="500"
+												  required
+												  placeholder="Max Char 500"
+												  id="txtRemarksfwd">
+</textarea>
+										<span class="charErrorMsg text-danger paw-red-font d-none">
+											Maximum 500 characters allowed.
+										</span>
 									</div>
-
+									
 									<div class="form-group col-md-4 ProjectsFwd">
 										<strong><label class="bold-text">7. Date of Fwd:</label></strong>
 										<input id="TimeStampToProjfwd" type="date" class="form-control requiredField projfwd-date-w200" />
@@ -224,6 +234,6 @@
 </div>
 
 
-@* <script src="~/DeveloperJs/FwdProject.js"></script> *@
-@* <script src="~/DeveloperJs/AttHistory.js"></script> *@
+<script src="~/DeveloperJs/FwdProject.js"></script> 
+ <script src="~/DeveloperJs/AttHistory.js"></script>
 <script src="~/DeveloperJs/Mtable.js"></script>

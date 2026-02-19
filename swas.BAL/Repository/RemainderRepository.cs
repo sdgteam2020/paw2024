@@ -57,7 +57,7 @@ namespace swas.BAL.Repository
                 IsRead = false
             };
 
-            _dbContext.TrnRemainders.Add(tblRemainder);
+                _dbContext.TrnRemainders.Add(tblRemainder);
             return await _dbContext.SaveChangesAsync();
         }
 
@@ -134,7 +134,7 @@ namespace swas.BAL.Repository
                 {
                     throw new ArgumentNullException(nameof(ProjectId), "ProjectId cannot be null.");
                 }
-
+                
                 var history = await (from Rm in _dbContext.TrnRemainders
                                      join p in _dbContext.Projects on Rm.Projid equals p.ProjId
                                      join u in _dbContext.tbl_mUnitBranch on Rm.FromUnitId equals u.unitid
@@ -147,15 +147,15 @@ namespace swas.BAL.Repository
                                      {
 
                                          projid = Rm.Projid,
-                                         ProjName = p.ProjName ?? "No Project",
-                                         SentOn = Rm.SendDate ?? "-",
-                                         Remarks = Rm.Remarks ?? "No Remarks",
-                                         userDetails = Rm.UserDetails ?? "No User",
-                                         ReadOn = Rm.ReadDate ?? "-",
-                                         FromUnit = u.UnitName ?? "No Unit",
-                                         ToUnit = f.UnitName ?? "No Unit",
-                                         Sponsor = p.Sponsor ?? "No Unit",
-                                         unitName = stakeholder.UnitName ?? "No Sponsor",
+                                         ProjName = p.ProjName,
+                                         SentOn = Rm.SendDate ,
+                                         Remarks = Rm.Remarks ,
+                                         userDetails = Rm.UserDetails ,
+                                         ReadOn = Rm.ReadDate ,
+                                         FromUnit = u.UnitName ,
+                                         ToUnit = f.UnitName ,
+                                         Sponsor = p.Sponsor,
+                                         unitName = stakeholder.UnitName,
                                          TouserDetails = Rm.ToUserDetails
                                          
                                      }).ToListAsync();

@@ -10,12 +10,6 @@ using System.Threading.Tasks;
 
 namespace swas.BAL.Repository
 {
-
-    ///Created and Reviewed by : Sub Maj Sanal
-    ///Reviewed Date : 31 Jul 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start
     public class AttHistoryRepository : GenericRepositoryDL<tbl_AttHistory>, IAttHistoryRepository
     {
         private readonly ApplicationDbContext _dbContext;
@@ -35,9 +29,6 @@ namespace swas.BAL.Repository
             await _dbContext.SaveChangesAsync();
             return attHistory.AttId;
         }
-
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
         public async Task<List<tbl_AttHistory>> GetAttHistoryByIdAsync(int? psmid)
         {
             List<tbl_AttHistory> tblhis = new List<tbl_AttHistory>();
@@ -57,15 +48,10 @@ namespace swas.BAL.Repository
             tbl_AttHistory atthis = await _dbContext.AttHistory.Where(a => a.PsmId == psmid).FirstOrDefaultAsync();
             return atthis;
         }
-
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
         public async Task<List<tbl_AttHistory>> GetAllAttHistoriesAsync()
         {
             return await _dbContext.AttHistory.ToListAsync();
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 31 Jul 23
         public async Task<bool> UpdateAttHistoryAsync(tbl_AttHistory attHistory)
         {
             _dbContext.Entry(attHistory).State = EntityState.Modified;

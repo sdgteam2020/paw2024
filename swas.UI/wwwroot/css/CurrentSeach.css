@@ -20,7 +20,7 @@ th {
          */
 
 
-/* Display the table with the class "display-table" */
+
 .display-table {
     display: table;
 }
@@ -263,12 +263,12 @@ a {
 }
 
 
-/* Centering content */
+
 .center-content {
     text-align: center;
 }
 
-/* Styling for custom radio buttons */
+
 .custom-radio {
     display: inline-block;
     margin-right: 15px;
@@ -279,14 +279,14 @@ a {
     font-size: 16px;
     color: #333;
 }
-/* Centering content */
+
 .text-center {
     text-align: center;
 }
 
-/* Styling for form elements if needed */
+
 .search-container {
-    /* Add any specific styles for the container */
+    
 }
 
 .datePicker {
@@ -294,12 +294,12 @@ a {
     padding: 5px;
     width: 100%;
 }
-/* Centering content */
+
 .text-center {
     text-align: center;
 }
 
-/* Custom styles for the dropdown */
+
 .dropdown {
     width: 100%;
 }
@@ -326,17 +326,17 @@ a {
     width: 100%;
 }
 
-/* Custom styling for the button */
+
 .btn-sm {
     font-size: 12px;
     padding: 5px 10px;
 }
-/* Centering content */
+
 .text-center {
     text-align: center;
 }
 
-/* Custom styles for the dropdown */
+
 .dropdown {
     width: 100%;
 }
@@ -363,17 +363,17 @@ a {
     width: 100%;
 }
 
-/* Custom styling for the button */
+
 .btn-sm {
     font-size: 12px;
     padding: 5px 10px;
 }
-/* Centering content */
+
 .text-center {
     text-align: center;
 }
 
-/* Custom styles for the dropdown */
+
 .dropdown {
     width: 100%;
 }
@@ -400,17 +400,17 @@ a {
     width: 100%;
 }
 
-/* Custom styling for the button */
+
 .btn-sm {
     font-size: 12px;
     padding: 5px 10px;
 }
-/* Centering content */
+
 .text-center {
     text-align: center;
 }
 
-/* Custom styles for the dropdown */
+
 .dropdown {
     width: 100%;
 }
@@ -437,17 +437,17 @@ a {
     width: 100%;
 }
 
-/* Custom styling for the button */
+
 .btn-sm {
     font-size: 12px;
     padding: 5px 10px;
 }
-/* Centering content */
+
 .text-center {
     text-align: center;
 }
 
-/* Custom styles for the dropdown */
+
 .dropdown {
     width: 100%;
 }
@@ -474,12 +474,12 @@ a {
     width: 100%;
 }
 
-/* Custom styling for the button */
+
 .btn-sm {
     font-size: 12px;
     padding: 5px 10px;
 }
-/* Table styles */
+
 #SearchProjTable {
     width: 100%;
     border-collapse: collapse;
@@ -492,7 +492,7 @@ a {
         border: 1px solid #ddd;
     }
 
-    /* Table header styling */
+    
     #SearchProjTable thead {
         background-color: #044c92;
         color: white;
@@ -502,12 +502,12 @@ a {
         font-weight: bold;
     }
 
-    /* Optional: You can add some hover effects for rows */
+    
     #SearchProjTable tbody tr:hover {
         background-color: #f1f1f1;
     }
 
-    /* Optional: You can add stripe effect for rows */
+    
     #SearchProjTable tbody tr:nth-child(odd) {
         background-color: #f9f9f9;
     }
@@ -515,7 +515,7 @@ a {
     #SearchProjTable tbody tr:nth-child(even) {
         background-color: #ffffff;
     }
-/* Table styling */
+
 #SearchStackHolderTable {
     width: 100%;
     border-collapse: collapse;
@@ -528,7 +528,7 @@ a {
         border: 1px solid #ddd;
     }
 
-    /* Table header styling */
+    
     #SearchStackHolderTable thead {
         background-color: #044c92;
         color: white;
@@ -538,12 +538,12 @@ a {
         font-weight: bold;
     }
 
-    /* Optional: Row hover effect */
+    
     #SearchStackHolderTable tbody tr:hover {
         background-color: #f1f1f1;
     }
 
-    /* Optional: Zebra striping for rows */
+    
     #SearchStackHolderTable tbody tr:nth-child(odd) {
         background-color: #f9f9f9;
     }
@@ -551,7 +551,7 @@ a {
     #SearchStackHolderTable tbody tr:nth-child(even) {
         background-color: #ffffff;
     }
-/* General Table Styling */
+
 .table {
     width: 100%;
     border-collapse: collapse;
@@ -564,7 +564,7 @@ a {
         border: 1px solid #ddd;
     }
 
-    /* Table header styling */
+    
     .table thead {
         background-color: #044c92;
         color: white;
@@ -574,12 +574,12 @@ a {
         font-weight: bold;
     }
 
-    /* Optional: Row hover effect */
+    
     .table tbody tr:hover {
         background-color: #f1f1f1;
     }
 
-    /* Optional: Zebra striping for rows */
+    
     .table tbody tr:nth-child(odd) {
         background-color: #f9f9f9;
     }
@@ -588,13 +588,13 @@ a {
         background-color: #ffffff;
     }
 
-/* Card styling */
+
 .card {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Body styling */
+
 .card-body {
     padding: 20px;
 }

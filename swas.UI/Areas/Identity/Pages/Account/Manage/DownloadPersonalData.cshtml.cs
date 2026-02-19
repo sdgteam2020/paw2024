@@ -1,11 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-///Created and Reviewed by : Sub Maj Sanal
-///Reviewed Date : 30 Jul 23
-///Tested By :- 
-///Tested Date : 
-///Start
-#nullable disable
+﻿#nullable disable
 
 using System;
 using System.Collections.Generic;
@@ -47,8 +40,6 @@ namespace swas.Areas.Identity.Pages.Account.Manage
             }
 
             _logger.LogInformation("User with ID '{UserId}' asked for their personal data.", _userManager.GetUserId(User));
-
-            // Only include personal data for download
             var personalData = new Dictionary<string, string>();
             var personalDataProps = typeof(IdentityUser).GetProperties().Where(
                             prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));

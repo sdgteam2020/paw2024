@@ -9,7 +9,7 @@ namespace swas.BAL.DTO
     public class DTOProComments
     {
         public int StkCommentId { get; set; }
-        public int ProjId { get; set; }
+        public int? ProjId { get; set; }
         public string? ProjectName { get; set; }
         public int? PsmId { get; set; }
         public string? Stakeholder { get; set; }

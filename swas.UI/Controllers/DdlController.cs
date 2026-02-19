@@ -17,8 +17,6 @@ namespace swas.UI.Controllers
             _ddlRepository = ddlRepository;
             _httpContextAccessor = httpContextAccessor;
         }
-
-        //ddlStackholder xfgfdgdfgdf
     
         public async Task<List<UnitDtl>> ddlStackHlder(int id)
         {
@@ -128,13 +126,11 @@ namespace swas.UI.Controllers
 
             
             return ss;
-            //return RedirectToAction(nameof(Index));
         }
         public Task<List<mAppType>> DdlAppType()
         {
             var ss = _ddlRepository.DdlAppType();
             return ss;
-            //return RedirectToAction(nameof(Index));
         }
 
     }

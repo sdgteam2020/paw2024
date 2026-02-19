@@ -12,6 +12,8 @@ namespace swas.DAL.Models
 
         [Required]
         [MaxLength(50)]
+        
+        [RegularExpression(@"^[a-zA-Z0-9\-_\/\.]+$", ErrorMessage = "Invalid characters.")]
         public string? Command_Name { get; set; }
 
         public bool? IsDeleted { get; set; }

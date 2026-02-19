@@ -10,25 +10,25 @@ body {
 
 
 .my-button-class {
-    background-color: #007bff; /* Blue background color */
-    color: #fff; /* White text color */
-    padding: 10px 20px; /* Padding around the button text */
-    border: none; /* Remove the button border */
-    border-radius: 5px; /* Add rounded corners */
-    cursor: pointer; /* Change cursor to a pointer on hover */
+    background-color: #007bff; 
+    color: #fff; 
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
     width: 250px;
     font-display: block;
 }
 
-    /* Define a hover effect for the button */
+    
     .my-button-class:hover {
-        background-color: #0056b3; /* Darker blue on hover */
+        background-color: #0056b3; 
     }
 
 #marquee-container {
     position: relative;
-    width: 300px; /* Adjust the width as needed */
-    height: 100px; /* Adjust the height as needed */
+    width: 300px; 
+    height: 100px; 
     overflow: hidden;
 }
 
@@ -38,7 +38,7 @@ body {
     font-size: 20px;
     position: absolute;
     bottom: 0;
-    animation: scrollText 10s linear infinite; /* Adjust duration as needed */
+    animation: scrollText 10s linear infinite; 
 }
 
 body {

@@ -56,9 +56,6 @@
             } else if (fdsetid == 8) {
         $("#confirmed").addClass("active");
             }
-
-
-    // Validation
     var isValid = true;
     current_fs.find("input[required]").each(function () {
                 if ($(this).val() === "") {
@@ -222,7 +219,6 @@
 
 
     $(document).ready(function () {
-        // Wait for the document to be ready
 
         function submitFormnew() {
 
@@ -252,10 +248,6 @@
                 }
             });
         }
-
-
-
-        // Any other code that you need to run after the document is ready
     });
 
 

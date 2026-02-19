@@ -28,7 +28,6 @@ using iText.Layout.Properties;
 
 
 using Microsoft.AspNetCore.DataProtection;
-//using Org.BouncyCastle.Asn1.Ocsp;
 using System.Timers;
 using Color = iText.Kernel.Colors.Color;
 using Document = iText.Layout.Document;
@@ -36,7 +35,7 @@ using Paragraph = iText.Layout.Element.Paragraph;
 using Rectangle = iText.Kernel.Geom.Rectangle;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NuGet.Protocol.Plugins;
-using MessagePack.Formatters;
+
 using swas.BAL.Repository;
 using Org.BouncyCastle.Utilities;
 using iText.Commons.Actions.Contexts;
@@ -56,19 +55,9 @@ using System.Net;
 
 namespace swas.UI.Controllers
 {
-    ///
-    ///Developer Name :- Sub Maj M Sanal Kumar
-    ///Purpose :-
-    ///Authority & Reference :- 
-    ///Kind Of Request :- 
-    ///Version :- 
-    ///Dated :- 29/07/2023  
-    ///Remarks :- 
-    //manish
 
     public class HomeController : Controller
     {
-        //private readonly ILogger<HomeController> _logger;
         private readonly IProjectsRepository _projectsRepository;
         private readonly IProjStakeHolderMovRepository _stkholdmove;
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -91,11 +80,9 @@ namespace swas.UI.Controllers
         private readonly IDateApprovalRepository _repo;
         private readonly ILegacyHistoryRepository _legacyHistoryRepository;
         private readonly IWatermarkRepository _watermarkRepo;
-        //private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager;
 
         public HomeController(IWatermarkRepository watermark,IProjectsRepository projectsRepository, ICommentRepository commentRepository, SignInManager<ApplicationUser> signInManager, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IDdlRepository dlRepository, ApplicationDbContext context, IUnitRepository unitRepository, IProjStakeHolderMovRepository stkholdmove, IChartService chartService, IWebHostEnvironment _webHostEnvironment, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, IDataProtectionProvider dataProtector, IActionsRepository actionsRepository, IAttHistoryRepository attHistoryRepository, ILogger<HomeController> logger, IDateApprovalRepository repo, ILegacyHistoryRepository legacyHistoryRepository)
         {
-            //  _logger = logger; _repositoryUser = repositoryUser;
             _projectsRepository = projectsRepository;
             _commentRepository = commentRepository;
             _signInManager = signInManager;
@@ -118,13 +105,6 @@ namespace swas.UI.Controllers
 			_watermarkRepo = watermark;
         }
 
-
-
-        ///Developer Name :- Sub Maj M Sanal Kumar
-        ///Revised on :- 01/10/2023ddgf 
-        ///    chart generation corrected df fgdgd sdfsdf dsfdsfsdfsfd dsfdsfdsf fgfdgdfgdfg
-        ///    
-
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -135,12 +115,6 @@ namespace swas.UI.Controllers
                 {
                     return Redirect("/Identity/Account/Login");
                 }
-
-                //ApplicationUser user = await _userManager.FindByNameAsync(Logins.UserName);
-                //if (user == null || user.Flag == false)
-                //{
-                //    return Redirect("/Identity/Account/Login");
-                //}
                 ViewBag.UnitId = Logins?.unitid;
                 return View();
             }
@@ -189,6 +163,7 @@ namespace swas.UI.Controllers
         {
             return View();
         }
+        
         public async Task<IActionResult> GetDashboardCount(int Id)
         {
             try
@@ -203,6 +178,7 @@ namespace swas.UI.Controllers
                 return Json(nmum.Exception);
             }
         }
+        
         public async Task<IActionResult> CreateChartSummary(int Id)
         {
             try
@@ -243,49 +219,6 @@ namespace swas.UI.Controllers
 
                 var Stk_StatusForDte = _context.StkStatus.Where(s => s.StkStatusId == 4).ToList();
                 ViewBag.Stk_StatusForDte = Stk_StatusForDte;
-
-
-                //var queryes = (from comment in _context.StkComment
-                //               join stakeholder in _context.tbl_mUnitBranch on comment.StakeHolderId equals stakeholder.unitid
-                //               join status in _context.StkStatus on comment.StkStatusId equals status.StkStatusId into statusGroup
-                //               from status in statusGroup.DefaultIfEmpty() // Left Join
-                //               join project in _context.Projects on comment.ProjId equals project.ProjId // Assuming 'ProjId' is in the 'Stk_Comments' table
-                //               orderby comment.StkCommentId descending
-                //               select new
-                //               {
-                //                   StakeholderName = stakeholder.UnitName,
-                //                   StatusName = status != null ? status.Status : null,
-                //                   Comments = comment.Comments ?? "",
-                //                   ProjId = comment.ProjId ?? 0, // Include ProjId
-                //                   PsmId = project.CurrentPslmId,
-                //                   Date = comment.DateTimeOfUpdate,
-                //                   CommentId = comment.StkCommentId,
-                //                   StakeholderId = comment.StakeHolderId
-
-                //               }).ToList();
-
-                //var queryes = (from proj in _context.Projects
-                //               join mov in _context.ProjStakeHolderMov on proj.ProjId equals mov.ProjId
-                //               join stakeholder in _context.tbl_mUnitBranch on proj.StakeHolderId equals stakeholder.unitid
-                //               join comment in _context.StkComment on mov.PsmId equals comment.PsmId into com
-                //               from comment in com.DefaultIfEmpty()
-                //               join status in _context.StkStatus on comment.StkStatusId equals status.StkStatusId into statusGroup
-                //               from status in statusGroup.DefaultIfEmpty()
-                //               select new
-                //               {
-                //                   StakeholderName = stakeholder.UnitName,
-                //                   StatusName = status.Status ?? "" ,
-                //                   Comments = comment.Comments ?? "",
-                //                   ProjId = comment.ProjId ?? 0, // Include ProjId
-                //                   PsmId = mov.PsmId,
-                //                   Date = comment.DateTimeOfUpdate ?? null,
-                //                   CommentId = comment.StkCommentId == null ? 0 : comment.StkCommentId,
-                //                   StakeholderId = stakeholder.unitid == null ? 0 : stakeholder.unitid
-                //               }).ToList();
-
-
-
-                //ViewBag.queryes = queryes;
                 StkComment stkcm = new StkComment();
 
                 return View("ProjComments", stkcm);
@@ -297,14 +230,6 @@ namespace swas.UI.Controllers
             }
         }
 
-        //public async Task<IActionResult> GetNotification(int ProjId)
-        //{
-        //    List<Notification> notifications = await _commentRepository.GetNotificationAsync(ProjId);
-        //    return View();
-
-
-        //}
-
         public async Task<IActionResult> GetNotificationInbox(int ProjId)
         {
             List<Notification> notifications = await _commentRepository.GetNotificationInbox(ProjId);
@@ -312,16 +237,6 @@ namespace swas.UI.Controllers
 
 
         }
-
-
-
-
-        ///Developer Name :- Sub Maj M Sanal Kumar
-
-        ///Revised on :- 17 & 23 Sep 2023
-
-        ///    chart generation full dynamic tested and error rectified
-        ///    
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> indexToPieChart()
         {
@@ -335,15 +250,6 @@ namespace swas.UI.Controllers
 
                 if (Logins.IsNotNull())
                 {
-
-                    //var g = stageNamesList.GroupBy(i => i);
-                    //var countDictionary = new Dictionary<string, int>();
-
-                    //foreach (var grp in g)
-                    //{
-                    //    countDictionary[grp.Key] = grp.Count();
-                    //    Console.WriteLine("{0} {1}", grp.Key, grp.Count());
-                    //}
 
                     var sql = @"
 SELECT
@@ -397,8 +303,6 @@ s.IsDashboard,
                     string jsonStatuses = JsonConvert.SerializeObject(statuses); // Serialize to JSON
 
                     return Content(jsonStatuses, "application/json");
-
-                    //return Json(statuses);
                 }
 
                 else
@@ -444,19 +348,8 @@ s.IsDashboard,
 
         }
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-
-        ///Developer Name :- Sub Maj M Sanal Kumar
-
-        ///Revised on :- 03 & 10 Sep 2023
-
-        ///    chart generation full dynamic tested and error rectified
-        ///    
-
         [HttpGet]
+        
         public async Task<IActionResult> NewProject()
         {
             try
@@ -473,8 +366,6 @@ s.IsDashboard,
 
                     var flag = userflag.Flag;
                     ViewBag.flag = flag;
-
-                    //  bool isUserRegistered = await _projectsRepository.UserRegistered(Logins.UserName); comment by kapoor
                     if (true)
                     {
                         ViewBag.ProcessButtonColor = "green";
@@ -491,8 +382,8 @@ s.IsDashboard,
 
 
 
-                    ViewBag.LoggedInUserName = Logins.UserName;
-                    ViewBag.Units = await _unitRepository.GetAllUnitAsync();
+                                ViewBag.LoggedInUserName = Logins.UserName;
+                               ViewBag.Units = await _unitRepository.GetAllUnitAsync();
                     var typeo = _context.mHostType.Select(x => new { x.HostTypeID, x.HostingDesc }).ToList();
                     ViewBag.hosttype = typeo;
 
@@ -506,14 +397,7 @@ s.IsDashboard,
                         ViewBag.userRole = userRole;
 
                     }
-                    // Pass roles data to the view
-
-                    // var data = await _projectsRepository.GetWhitelistedProjAsync();
-                    // ViewBag.ProjectList = data;
                     ViewBag.WhiteListed = await _projectsRepository.GetWhiteListedActionProj(0);
-                    // ViewBag.RecentAction = await _projectsRepository.GetRecentActionProj();
-
-                    //ViewBag.RFPProj = await _projectsRepository.GetHoldRFPProj();
 
                     ViewBag.HoldProj = await _projectsRepository.GetHoldActionProj();
 
@@ -563,8 +447,6 @@ s.IsDashboard,
                     {
                         cl = new List<mCommand>();
                     }
-
-                    // Insert item only if cl is not null
                     if (cl != null)
                     {
                         cl.Insert(0, new mCommand { comdid = 0, Command_Name = "--Select--" });
@@ -575,13 +457,8 @@ s.IsDashboard,
                     ty.Insert(0, new Types { Id = 0, Name = "--Select--" });
                     ViewBag.ty = ty.ToList();
                     ViewBag.ty = ty.ToList();
-
-                    // var data = await _projectsRepository.GetWhitelistedProjAsync();
-                    // ViewBag.ProjectList = data;
                     ViewBag.WhiteListed = await _projectsRepository.GetWhiteListedActionProj(0);
-                    // ViewBag.RecentAction = await _projectsRepository.GetRecentActionProj();
                     ViewBag.HoldProj = await _projectsRepository.GetHoldActionProj();
-                    //ViewBag.RFPProj = await _projectsRepository.GetHoldRFPProj();
 
 
 
@@ -616,7 +493,6 @@ s.IsDashboard,
             catch (Exception ex)
             {
                 swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                //return Redirect("/Home/Error");
                 return View();
             }
         }
@@ -649,13 +525,6 @@ s.IsDashboard,
             return View("_unitdetls", ude);
         }
 
-        ///Developer Name :- Sub Maj M Sanal Kumar
-
-        ///Revised on :- 19,20 & 26, 27 Aug 2023
-
-        ///    New Project Creation with multiple forms and upload errors
-        ///    
-
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -664,13 +533,6 @@ s.IsDashboard,
             swas.BAL.Utility.Error.ExceptionHandle("Request failed & Status Code : " + HttpContext.Response.StatusCode.ToString() ?? Activity.Current?.Id);
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-        ///Developer Name :- Sub Maj M Sanal Kumar
-
-        ///Revised on :- 19,20 & 26, 27 Aug 2023
-
-        ///   Required code sync before release *****************  imp
-        /// 
 
         public async void ddlGen()
         {
@@ -693,24 +555,12 @@ s.IsDashboard,
             ViewBag.ty = ty.ToList();
 
         }
-
-
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 30 Jul 23
-        ///Tested By :- 
-        ///Tested Date : 
-        ///Start <summary>
-        /// Created and Reviewed by : Sub Maj Sanal
-        /// </summary>
-        /// <param name="r"></param>
-        /// <returns></returns>
         [AllowAnonymous]
         public IActionResult CheckLogin(int r)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
             if (Logins.IsNotNull())
             {
-                //ModelState.AddModelError("", "Other User Already Login Or Not Proper Logout");
                 return Json("1");
             }
             else
@@ -720,14 +570,6 @@ s.IsDashboard,
             }
 
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 07 Aug 23
-        ///Tested By :- 
-        ///Tested Date : 
-        ///Start <summary>
-        /// Created and Reviewed by : Sub Maj Sanal
-        /// </summary>
-        /// <returns></returns>
 
         public IActionResult LogOut()
         {
@@ -742,41 +584,19 @@ s.IsDashboard,
             else
                 return Redirect("/Identity/Account/Login");
         }
-        ///end
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 07 Aug 23
-        ///Tested By :- 
-        ///Tested Date : 
-        ///Start
-        //public int GetRoleId(string rolename)
-        //{   
-        //    int roleid = _repositoryUser.GetRoleId(rolename);
-        //    return roleid;
-
-        //}
-        ///Created and Reviewed by : Sub Maj Sanal
-        ///Reviewed Date : 07 Aug 23
-        ///Tested By :- 
-        ///Tested Date : 
-        ///Start
 
 
         string filepathpdf = "";
 
         public IActionResult WaterMark2(string id)
         {
-            //var stream = new FileStream(@"path\to\file", FileMode.Open);
-            //return new FileStreamResult(stream, "application/pdf");
             try
             {
                 var ip = _httpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
-                // var filePath = System.IO.Path.Combine(_env.ContentRootPath, "wwwroot/PDF/" + id + "");
                 var filePath = System.IO.Path.Combine(_env.WebRootPath, "PDF\\" + id + "");
-                //  var filePath = System.IO.Path.Combine(_env.WebRootPath, "PDF\\" + id + "");
                 filepathpdf = generate2(filePath, ip);
 
                 aTimer = new System.Timers.Timer(60000);
-                // Hook up the Elapsed event for the timer.
                 aTimer.Elapsed += OnTimer;
 
                 aTimer.Enabled = true;
@@ -784,27 +604,31 @@ s.IsDashboard,
             }
             catch (Exception ex)
             {
-                swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                //Comman.ExceptionHandle(ex.Message);
-                return Json(0);
+                _logger.LogError(ex, "Unhandled exception in HomeController WaterMark2 function.");
+
+                // Log generic context only
+                swas.BAL.Utility.Error.ExceptionHandle(
+                    "Unhandled exception occurred in HomeController.");
+
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Something went wrong. Please try again later."
+                });
             }
+
         }
 
 
         public IActionResult WaterMark(string id)
         {
-            //var stream = new FileStream(@"path\to\file", FileMode.Open);
-            //return new FileStreamResult(stream, "application/pdf");
             try
             {
                 var ip = _httpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
-                // var filePath = System.IO.Path.Combine(_env.ContentRootPath, "wwwroot/PDF/" + id + "");
                 var filePath = System.IO.Path.Combine(_env.WebRootPath, "PDFWhiteListed\\" + id + "");
-                //  var filePath = System.IO.Path.Combine(_env.WebRootPath, "PDF\\" + id + "");
                 filepathpdf = generate2(filePath, ip);
 
                 aTimer = new System.Timers.Timer(60000);
-                // Hook up the Elapsed event for the timer.
                 aTimer.Elapsed += OnTimer;
 
                 aTimer.Enabled = true;
@@ -812,10 +636,19 @@ s.IsDashboard,
             }
             catch (Exception ex)
             {
-                swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                //Comman.ExceptionHandle(ex.Message);
-                return Json(0);
+                _logger.LogError(ex, "Unhandled exception in HomeController WaterMark function.");
+
+                // Log generic context only
+                swas.BAL.Utility.Error.ExceptionHandle(
+                    "Unhandled exception occurred in HomeController.");
+
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Something went wrong. Please try again later."
+                });
             }
+
         }
 
 
@@ -828,7 +661,6 @@ s.IsDashboard,
 
                 if (System.IO.File.Exists(filePath1))
                 {
-                    // If file found, delete it    
 
                     System.IO.File.Delete(filePath1);
 
@@ -837,7 +669,6 @@ s.IsDashboard,
             }
             catch (Exception ex)
             {
-                //Comman.ExceptionHandle(ex.Message);
             }
         }
 
@@ -878,12 +709,12 @@ s.IsDashboard,
             catch (Exception ex)
             {
                 swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                //Comman.ExceptionHandle(ex.Message);
                 return "";
             }
         }
 
         [Authorize(Policy = "Admin")]
+        
         public async Task<IActionResult> indexToBarChartS()
         {
             try
@@ -960,10 +791,6 @@ s.IsDashboard,
             return View();
         }
 
-        // Added by Manish  Reviewed by Sub Maj Sanal
-        // Reviewed..   Incorrect Stakeholder join corrected && All stkholder comment reqd chjanged on 24 Nov 23
-        //  Comment Error Rectified on 20 Nov 23
-
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> GetComments(int psmId, int stakeholderId, int projId)
         {
@@ -995,8 +822,6 @@ s.IsDashboard,
                 tbl_Projects stkc = new tbl_Projects();
                 stkc = await _projectsRepository.GetProjectByPsmIdAsync(psmId);
 
-                //int cntcomment = await _commentRepository.GetNotificationAsync(projId);   //    12/08/24
-
                 ViewBag.ProjDetl = stkc;
                 ViewBag.query = query.OrderByDescending(s => s.CommentId).ToList();
 
@@ -1007,18 +832,12 @@ s.IsDashboard,
                 var notificationsToUpdate = _context.Notification
         .Where(notification => notification.ProjId == projId && notification.IsRead == false && notification.NotificationFrom == stakeholderId)
         .ToList();
-
-                // Update IsRead property to true and set ReadDateTime to current time
                 foreach (var notification in notificationsToUpdate)
                 {
                     notification.IsRead = true;
                     notification.ReadDateTime = DateTime.Now;
                 }
-
-                // Save changes to the database
                 await _context.SaveChangesAsync();
-
-                // Return partial view with the filtered comments
                 return Json(query);
 
 
@@ -1071,7 +890,6 @@ s.IsDashboard,
                                    Date = comment.DateTimeOfUpdate,
                                    CommentId = comment.StkCommentId,
                                    StakeholderId = comment.StakeHolderId
-                                   // Include PsmId (assuming it's in the 'Projects' table)
                                }).ToList();
 
 
@@ -1091,7 +909,6 @@ s.IsDashboard,
 
         public async Task<IActionResult> GetUnitComments(int psmId, int stakeholderId, int projId)
         {
-            // Your existing code for getting comments
             try
             {
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
@@ -1102,7 +919,6 @@ s.IsDashboard,
                              from status in statusGroup.DefaultIfEmpty() // Left Join
                              join project in _context.Projects on comment.ProjId equals project.ProjId // Assuming 'ProjId' is in the 'Stk_Comments' table
                              where comment.ProjId == projId
-                             //where project.CurrentPslmId == psmId && comment.StakeHolderId == stakeholderId
                              orderby comment.StkCommentId descending                                                                     //where project.ProjId == projId
                              select new
                              {
@@ -1154,8 +970,6 @@ s.IsDashboard,
 
                 if (ModelState.IsValid && stkComment.Comments != null)
                 {
-                    // Model is valid, proceed with processing
-                    // ...
 
                     _context.StkComment.Add(stkComment);
                     _context.SaveChanges();
@@ -1242,9 +1056,6 @@ s.IsDashboard,
                 return RedirectToAction("Error", "Home");
             }
         }
-
-
-        //   created by ajay for unit comments on 24 Nov 23
         string filepathpdf1 = "";
 
         public IActionResult WaterMark3(string id)
@@ -1269,12 +1080,20 @@ s.IsDashboard,
             }
             catch (Exception ex)
             {
-                swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                return Json(0);
-            }
-        }
+                _logger.LogError(ex, "Unhandled exception in HomeController WaterMark3 Function.");
 
-        //   created by ajay for unit comments on 24 Nov 23
+                // Log generic context only
+                swas.BAL.Utility.Error.ExceptionHandle(
+                    "Unhandled exception occurred in HomeController.");
+
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Something went wrong. Please try again later."
+                });
+            }
+
+        }
         public void OnTimer1(Object source, ElapsedEventArgs e)
         {
             try
@@ -1282,7 +1101,6 @@ s.IsDashboard,
                 var filePath1 = System.IO.Path.Combine(_env.ContentRootPath, "wwwroot\\Download\\" + filepathpdf + ".pdf");
                 if (System.IO.File.Exists(filePath1))
                 {
-                    // If file found, delete it    
                     System.IO.File.Delete(filePath1);
                 }
             }
@@ -1292,9 +1110,6 @@ s.IsDashboard,
             }
         }
 
-
-        //   created by ajay for unit comments on 24 Nov 23
-
         public string generate3(string Path, string ip)
         {
             try
@@ -1302,7 +1117,6 @@ s.IsDashboard,
                 Random rnd = new Random();
                 string Dfilename = rnd.Next(1, 1000).ToString();
                 var filePath1 = System.IO.Path.Combine(_env.ContentRootPath, "wwwroot\\Download\\" + Dfilename + ".pdf");
-                // var filePath1 = System.IO.Path.Combine(_env.ContentRootPath, "wwwroot/Download/" + Dfilename + ".pdf");
                 PdfDocument pdfDoc = new PdfDocument(new PdfReader(Path), new PdfWriter(filePath1));
                 Document doc = new Document(pdfDoc);
                 PdfFont font = PdfFontFactory.CreateFont(FontProgramFactory.CreateFont(StandardFonts.HELVETICA));
@@ -1473,12 +1287,6 @@ s.IsDashboard,
             }
         }
 
-        //public async Task<IActionResult> GetNotification(int stakeHolderId)
-        //{
-        //    List<Notification> notifications = await _commentRepository.GetNotificationAsync(stakeHolderId);
-        //    return View();
-        //}
-
         [HttpGet]
         public async Task<IActionResult> AllProjectDetails()
         {
@@ -1530,8 +1338,6 @@ s.IsDashboard,
                     {
                         cl = new List<mCommand>();
                     }
-
-                    // Insert item only if cl is not null
                     if (cl != null)
                     {
                         cl.Insert(0, new mCommand { comdid = 0, Command_Name = "--Select--" });
@@ -1543,9 +1349,7 @@ s.IsDashboard,
                     ViewBag.ty = ty.ToList();
                     ViewBag.ty = ty.ToList();
                     ViewBag.WhiteListed = await _projectsRepository.GetWhiteListedActionProj(0);
-                    // ViewBag.RecentAction = await _projectsRepository.GetRecentActionProj();
                     ViewBag.HoldProj = await _projectsRepository.GetHoldActionProj();
-                    //ViewBag.RFPProj = await _projectsRepository.GetHoldRFPProj();
 
 
 
@@ -1608,8 +1412,6 @@ s.IsDashboard,
                 .GroupBy(ul => ul.logindate.Date)
                 .Select(g => g.Select(x => x.unitid).Distinct().Count())
                 .Sum();
-
-            // Populate HitCounterDaily object
             var counter = new HitCounterDaily
             {
                 Today = visitorsToday,
@@ -1708,18 +1510,6 @@ s.IsDashboard,
             return View();
         }
 
-        //[HttpGet]
-        //public JsonResult GetDateApprovalList()
-        //{
-        //    var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-        //    var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
-        //    var watermarkText = $" {ipAddress}\n  {currentDatetime}";
-        //    TempData["ipadd"] = watermarkText;
-
-        //    var data = _repo.GetDateApprovalList();
-        //    return Json(data);
-        //}
-
 
 
 
@@ -1742,7 +1532,6 @@ s.IsDashboard,
                 {
                     return Json(new { success = false, message = "Record already exists." });
                 }
-                // Save AdminApprovalForLegacy record 
                 var adminLegacy = new DateApproval
                 {
                     ProjId = projId,
@@ -1785,57 +1574,14 @@ s.IsDashboard,
 
             return Json(data);
         }
-
-        //[HttpPost]
-        //public async Task<IActionResult> ApproveDateRequest(int id)
-        //{
-        //    try
-        //    {
-        //        var entry = await _context.DateApproval.FindAsync(id);
-        //        if (entry == null)
-        //            return Json(new { success = false, message = "Record not found." });
-
-
-        //        entry.DDGIT_approval = !(entry.DDGIT_approval ?? false);
-        //        entry.DDGIT_Approval_dat = DateTime.Now;
-        //        //entry.IsRead = true;
-
-        //        await _context.SaveChangesAsync();
-
-        //        var message = entry.DDGIT_approval == true ? "Request approved successfully." : "Request unapproved.";
-
-        //        return Json(new { success = true, message = message, currentStatus = entry.DDGIT_approval });
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return Json(new { success = false, message = "An error occurred while updating." });
-        //    }
-        //}
-
-        //public async Task<IActionResult> SaveWhiteList(trnWhiteListed whitelist)
-        //{
-        //    var message = "";
-        //    if (!ModelState.IsValid)
-        //    {
-
-        //        return BadRequest(new { message = "Please fill all the fields" });
-        //    }
-        //    _context.trnWhiteListed.Add(whitelist);
-
-
-        //    return Json(new { message = "Data Save successfully..." });
-        //}
         public async Task<IActionResult> SaveWhiteList(trnWhiteListed whitelist)
         {
             var message = "";
 
             if (!ModelState.IsValid)
             {
-                // Return a BadRequest if the model is not valid with a custom message
                 return BadRequest(new { message = "Please fill all the fields" });
             }
-
-            // Try to add and save the whitelist entry to the database
             try
             {
                 var Exist = _context.trnWhiteListed
@@ -1852,18 +1598,20 @@ s.IsDashboard,
                 whitelist.IsWhiteListed=true;
                 _context.trnWhiteListed.Add(whitelist);
                 await _context.SaveChangesAsync();  // Ensure the changes are saved asynchronously
-
-                // Return success message dynamically
                 message = "Whitelisted entry saved successfully!";
             }
             catch (Exception ex)
             {
-                // Handle any errors that may occur during the insert
-                message = $"Error: {ex.Message}";
-                return StatusCode(500, new { message });
+                _logger.LogError(ex, "Unhandled exception occurred while processing request.");
+
+                return StatusCode(500, new
+                {
+                    message = "An unexpected error occurred. Please try again later."
+                });
             }
 
-          
+
+
             return Json(new { message });
         }
 
@@ -1876,14 +1624,10 @@ s.IsDashboard,
                 ProjectName = WebUtility.UrlDecode(ProjectName);
                 ApprovedRemarks = WebUtility.UrlDecode(ApprovedRemarks);
                 ApprovedDt = WebUtility.UrlDecode(ApprovedDt);
-
-                // Validate input parameters
                 if (string.IsNullOrWhiteSpace(ProjectName) || string.IsNullOrWhiteSpace(ApprovedRemarks) || string.IsNullOrWhiteSpace(ApprovedDt))
                 {
                     return BadRequest("All parameters (ProjectName, ApprovedRemarks, ApprovedDt) are required.");
                 }
-
-                // Parse ApprovedDt safely
                 if (!DateTime.TryParse(ApprovedDt, out DateTime approvedDate))
                 {
                     return BadRequest("Invalid ApprovedDt format. Use a valid date string (e.g., '2025-10-27 16:10:00').");
@@ -1893,26 +1637,11 @@ s.IsDashboard,
                 {
                     string ip = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
                     string watermark = $"{ip}   {DateTime.Now:dd-MM-yyyy HH:mm:ss}";
-                    // Initialize PDF document
                     PdfWriter writer = new PdfWriter(ms);
                     PdfDocument pdf = new PdfDocument(writer);
                     Document document = new Document(pdf, iText.Kernel.Geom.PageSize.A4);
-
-                    // Set default font
                     PdfFont font = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
                     document.SetFont(font);
-
-                    // Add header
-                    //Paragraph header = new Paragraph("PAW (Portal For Application WhiteListing)")
-                    //    .SetFontSize(24)
-                    //    .SetBold()
-                    //    .SetTextAlignment(TextAlignment.CENTER)
-                    //    .SetMarginTop(20)
-                    //    .SetMarginBottom(15)
-                    //    .SetFontColor(ColorConstants.DARK_GRAY);
-                    //document.Add(header);
-
-                    // Add title with a decorative background
                     Paragraph title = new Paragraph("IPA Certificate: Portal for Application Whitelisting (PAW)")
                         .SetFontSize(18)
                         .SetBold()
@@ -1921,40 +1650,34 @@ s.IsDashboard,
                         .SetPadding(5)
                         .SetMarginBottom(20);
                     document.Add(title);
-
-                    // Add decorative line
                     document.Add(new LineSeparator(new SolidLine(1f))
                         .SetMarginBottom(20)
                         .SetStrokeColor(ColorConstants.BLACK));
-
-                    // Project completion message
                     document.Add(new Paragraph("It is certified that IPA has been granted by Steering Tech Committee.")
                         .SetFontSize(14)
                         .SetTextAlignment(TextAlignment.CENTER)
                         .SetMarginBottom(25)
                         .SetFontColor(ColorConstants.BLACK));
-
-                    // Create a table for project details with a subtle border
-                    Table table = new Table(UnitValue.CreatePercentArray(new float[] { 40, 60 }))
+                    Table table = new Table(UnitValue.CreatePercentArray(new float[] { 40, 5,55 }))
                         .UseAllAvailableWidth()
                         .SetMarginBottom(25)
                         .SetBorder(new iText.Layout.Borders.SolidBorder(ColorConstants.LIGHT_GRAY, 0.5f))
                         .SetPadding(8)
                         .SetBackgroundColor(new DeviceRgb(245, 245, 245));
-
-                    // Add table cells
-                    table.AddCell(CreateCell("Project Name:", true));
+                    table.AddCell(CreateCell("Project Name", true));
+                    table.AddCell(CreateCell(":", true).SetPadding(4).SetWidth(15));     // Colon cell narrow width
                     table.AddCell(CreateCell(ProjectName, false));
-                    table.AddCell(CreateCell("Approved Remarks (DDGIT):", true));
+                    table.AddCell(CreateCell("Approved Remarks (DDGIT)", true));
+                    table.AddCell(CreateCell(":", true).SetPadding(4).SetWidth(15));
                     table.AddCell(CreateCell(ApprovedRemarks, false));
-                    table.AddCell(CreateCell("Approved Date (PAW):", true));
+                    table.AddCell(CreateCell("Approved Date (PAW)", true));
+                    table.AddCell(CreateCell(":", true).SetPadding(4).SetWidth(15));
                     table.AddCell(CreateCell(approvedDate.ToString("dd-MM-yyyy HH:mm:ss"), false));
-                    table.AddCell(CreateCell("Date of Generation:", true));
+                    table.AddCell(CreateCell("Date of Generation", true));
+                    table.AddCell(CreateCell(":", true).SetPadding(4).SetWidth(15));
                     table.AddCell(CreateCell(DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), false));
 
                     document.Add(table);
-
-                    // Add additional instructions
                     document.Add(new Paragraph(
                         "This Certificate is auto-generated based on electronic data and does not require an ink sign." +
                         "It may therefore be treated as an authorized document.")
@@ -1962,15 +1685,6 @@ s.IsDashboard,
                         .SetTextAlignment(TextAlignment.JUSTIFIED)
                         .SetMarginTop(20)
                         .SetMarginBottom(15));
-
-                    //document.Add(new Paragraph(
-                    //    "Please print out this page and attach a copy of the certificate to the final page in all assignments you submit on each module as part of your programme.")
-                    //    .SetFontSize(10)
-                    //    .SetBold()
-                    //    .SetTextAlignment(TextAlignment.JUSTIFIED)
-                    //    .SetMarginBottom(20));
-
-                    // Add footer with IP address and decorative line
 
                     Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
                     var user = Helper.LoginDetails(Logins);
@@ -1985,13 +1699,7 @@ s.IsDashboard,
                         .SetTextAlignment(TextAlignment.CENTER)
                         .SetFontColor(ColorConstants.BLACK)
                         );
-
-                    // Close the document
-
-                    //_watermarkRepo.AddWatermark(pdf, watermark);
                     document.Close();
-
-                    // Return PDF to open in a new tab
                     byte[] fileBytes = ms.ToArray();
                     Response.Headers["Content-Disposition"] = "inline; filename=Certificate.pdf";
                     Response.Headers["Content-Type"] = "application/pdf";
@@ -2000,12 +1708,13 @@ s.IsDashboard,
             }
             catch (Exception ex)
             {
-                // Log the exception (use your preferred logging mechanism)
-                return StatusCode(500, $"An error occurred while generating the PDF: {ex.Message}");
-            }
-        }
+                _logger.LogError(ex, "Error occurred while generating the PDF.");
 
-        // Helper method to create table cells
+                return StatusCode(500,
+                    "An error occurred while generating the PDF. Please try again later.");
+            }
+
+        }
         private Cell CreateCell(string text, bool isBold)
         {
             Paragraph p = new Paragraph(text)

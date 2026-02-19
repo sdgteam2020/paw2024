@@ -24,7 +24,7 @@
     margin-top: -200px !important;
     margin-right: 274px !important;
 }
-/* ✅ moved from inline styles in cshtml */
+
 .login-title {
     text-align: center;
     font-size: 33px;
@@ -41,12 +41,12 @@
     margin-bottom: 0px;
     margin-left: -280px;
 }
-/* Center the login heading */
+
 .loginheading {
     font-size: 28px;
 }
 
-/* Footer with fixed position */
+
 .fixed-footer {
     position: fixed;
     margin-bottom: 0px;

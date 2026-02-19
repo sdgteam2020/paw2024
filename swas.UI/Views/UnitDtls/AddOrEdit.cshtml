@@ -1,6 +1,6 @@
 ﻿@using swas.DAL.Models
 @using swas.BAL.DTO
-@*@model List<UnitDtl>*@
+ 
 
 
 
@@ -22,7 +22,7 @@
                         <th>Stage</th>
                         <th>SubStage</th>
 
-                        <th>Mapping</th>
+                         
 
                     </tr>
                 </thead>
@@ -45,12 +45,12 @@
                                 <div>@unit.Stages</div>
                             </td>
                             <td>@unit.Status</td>
-                            <td>
+                           @*  <td>
 
                                 <button type="button" data-name="@unit.Status" data-id="@unit.StatusId" class="btn btn-success btn-Mapping">Status Mapping</button>
 
 
-                            </td>
+                            </td> *@
 
                         </tr>
                     }

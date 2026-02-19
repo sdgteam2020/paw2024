@@ -54,8 +54,6 @@
 
                     $('#ChatBox').empty().html(commentContainer);
                     $('#AddStatusDetails').show();
-
-                    // Hide IndexTable container
                     $('#IndexTableContainer').hide();
                 },
                 error: function () {
@@ -68,8 +66,6 @@
 
         $('#CancelUpdate').click(function () {
             $('#AddStatusDetails').hide();
-
-            // Show IndexTable container
             $('#IndexTableContainer').show();
         });
       
@@ -167,8 +163,6 @@ document.addEventListener('DOMContentLoaded', function () {
             var projectreadDeatilsDiv = document.getElementById('projectreadDetails');
             var projectreadDetailsDiv1 = document.getElementById('ProjreadDetails1');
             var projectreadDetailsDiv2 = document.getElementById('ProjreadDetails2');
-
-            // Get data from the clicked button
             var projName = btn.getAttribute('data-proj-namess') || '';
             var aimScope = btn.getAttribute('data-aim-scope') || '';
             var Initiateddate = btn.getAttribute('data-initiated-date') || '';
@@ -178,8 +172,6 @@ document.addEventListener('DOMContentLoaded', function () {
             var conceptofsw = btn.getAttribute('data-concept-sw') || '';
             var initiatedBy = btn.getAttribute('data-initiated-by') || '';
             var hosttype = btn.getAttribute('data-hosttype') || '';
-
-            // Update the content of the projectheading div
             projectDetailsDiv.innerHTML = `
                 Proj Details
                 <table class="new-proj-table">
@@ -309,13 +301,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         var fileInput = document.getElementById("uploadfile");
-
-        //if (selectedStatus === "1") {
-            //    fileInput.removeAttribute("disabled");
-            //} else {
-            //    fileInput.value = "";
-            //    fileInput.setAttribute("disabled", "disabled");
-            //}
         }
     
 

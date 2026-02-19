@@ -1,58 +1,37 @@
-﻿
-    $(document).ready(function () {
-        var todaysDate = new Date();
-    if ($("#fromDate").val() == "") {
-        $("#fromDate").val(DateFormateyyy_mm_dd(todaysDate));
-    $("#toDate").val(DateFormateyyy_mm_dd(todaysDate));
-        }
+﻿$(document).ready(function () {
+    const today = new Date();
 
+    if (!$("#fromDate").val()) {
+        $("#fromDate")[0].valueAsDate = today;
+        $("#toDate")[0].valueAsDate = today;
+    }
 
     $('#SearchData').click(function (event) {
+        event.preventDefault();
 
+        const from = $("#fromDate").val();
+        const to = $("#toDate").val();
 
-            var fromTimeStamp = $('#fromDate').val();
-    var toTimeStamp = $('#toDate').val();
+        if (!from || !to) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Missing Date',
+                text: 'Please enter both From and To dates.',
+                confirmButtonColor: '#d33'
+            });
+            return;
+        }
 
-            if (fromTimeStamp > toTimeStamp) {
-        Swal.fire({
-            icon: 'error',
-            title: 'From Date must be less than To Date',
-            text: 'Enter a date value',
-            confirmButtonColor: '#d33',
-            confirmButtonText: 'OK'
-        });
-    $('#toDate').val('');
+        if (from > to) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Range',
+                text: 'From Date must be less than or equal to To Date.',
+                confirmButtonColor: '#d33'
+            });
+            return;
+        }
 
-    event.preventDefault();
-            }
-
-    else if (fromTimeStamp === '') {
-        Swal.fire({
-            icon: 'error',
-            title: 'Invalid From Date',
-            text: 'Enter a date value',
-            confirmButtonColor: '#d33',
-            confirmButtonText: 'OK'
-        });
-    $('#toDate').val('');
-
-    event.preventDefault();
-            }
-    else if (toTimeStamp === '') {
-        Swal.fire({
-            icon: 'error',
-            title: 'Invalid To Date',
-            text: 'Enter a date value',
-            confirmButtonColor: '#d33',
-            confirmButtonText: 'OK'
-        });
-    $('#toDate').val('');
-
-    event.preventDefault();
-            }
-    else {
         $('#searchFormProjName').submit();
-            }
-           
-        });
     });
+});

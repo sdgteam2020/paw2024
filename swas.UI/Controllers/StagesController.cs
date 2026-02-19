@@ -11,11 +11,6 @@ using System.Threading.Tasks;
 
 namespace swas.UI.Controllers
 {
-    ///Created and Reviewed by : Sub Maj M Sanal
-    ///Reviewed Date : 31 Jul 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start
    
     public class StagesController : Controller
     {
@@ -30,18 +25,12 @@ namespace swas.UI.Controllers
             _stagesRepository = stagesRepository;
             _logger = logger;
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        //Reviewed Date : 31 Jul 23
-        // GET: Stages
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Index()
         {
             var stages = await _stagesRepository.GetAll();
             return View(stages);
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        //Reviewed Date : 31 Jul 23
-        // GET: Stages/Details/5
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Details(int id)
         {
@@ -53,18 +42,12 @@ namespace swas.UI.Controllers
 
             return View(stage);
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        //Reviewed Date : 31 Jul 23
-        // GET: Stages/Create
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create()
         {
             var stages = await _stagesRepository.GetAll();
             return View(stages);
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        //Reviewed Date : 31 Jul 23
-        // POST: Stages/Create
       
         [HttpPost]
         public async Task<IActionResult> CreateStage(tbl_mStages stage)
@@ -98,9 +81,6 @@ namespace swas.UI.Controllers
             }
            
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        //Reviewed Date : 31 Jul 23
-        // GET: Stages/Edit/5
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Edit(int id)
         {
@@ -111,9 +91,6 @@ namespace swas.UI.Controllers
             }
             return View(stage);
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        //Reviewed Date : 31 Jul 23
-        // POST: Stages/Edit/5
         [Authorize(Policy = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -144,9 +121,6 @@ namespace swas.UI.Controllers
             }
             
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        //Reviewed Date : 31 Jul 23
-        // GET: Stages/Delete/5
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -157,9 +131,6 @@ namespace swas.UI.Controllers
             }
             return View(stage);
         }
-        ///Created and Reviewed by : Sub Maj Sanal
-        //Reviewed Date : 31 Jul 23
-        // POST: Stages/Delete/5
         [Authorize(Policy = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

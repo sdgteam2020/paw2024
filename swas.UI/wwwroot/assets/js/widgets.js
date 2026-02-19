@@ -1,16 +1,11 @@
 $(function() {
-
-
-// chart 1
 var options = {
     series: [{
         name: "Total Earnings",
-       // data: [0, 160, 671, 414, 555, 257, 901, 613, 727, 414, 555, 0]
         data: [0, 160, 671, 414, 555, 414, 555, 257, 300, 0]
     }],
     chart: {
         type: "area",
-        //width: 130,
         height: 70,
         toolbar: {
             show: !1
@@ -67,7 +62,6 @@ var options = {
 		  inverseColors: false,
 		  opacityFrom: 1,
 		  opacityTo: 1,
-		  //stops: [0, 100]
 		}
 	  },
     colors: ["#ff0080"],
@@ -94,11 +88,6 @@ var options = {
 
   var chart = new ApexCharts(document.querySelector("#chart1"), options);
   chart.render();
-
-
-
-
-// chart 2
 var options = {
     series: [{
         name: "Total Expense",
@@ -106,7 +95,6 @@ var options = {
     }],
     chart: {
         type: "area",
-        //width: 130,
         height: 70,
         toolbar: {
             show: !1
@@ -163,7 +151,6 @@ var options = {
 		  inverseColors: false,
 		  opacityFrom: 1,
 		  opacityTo: 1,
-		  //stops: [0, 100]
 		}
 	  },
     colors: ["#ff6a00"],
@@ -190,11 +177,6 @@ var options = {
 
   var chart = new ApexCharts(document.querySelector("#chart2"), options);
   chart.render();
-
-
-
-
-// chart 3
 var options = {
     series: [{
         name: "Total Orders",
@@ -202,7 +184,6 @@ var options = {
     }],
     chart: {
         type: "area",
-        //width: 130,
         height: 70,
         toolbar: {
             show: !1
@@ -259,7 +240,6 @@ var options = {
 		  inverseColors: false,
 		  opacityFrom: 1,
 		  opacityTo: 1,
-		  //stops: [0, 100]
 		}
 	  },
     colors: ["#2af598"],
@@ -286,12 +266,6 @@ var options = {
 
   var chart = new ApexCharts(document.querySelector("#chart3"), options);
   chart.render();
-
-
-
-  
-  
-// chart 4
 var options = {
     series: [{
         name: "Total Orders",
@@ -356,7 +330,6 @@ var options = {
 		  inverseColors: false,
 		  opacityFrom: 0.5,
 		  opacityTo: 0.1,
-		  //stops: [0, 100]
 		}
 	  },
     colors: ["#f7971e"],
@@ -383,13 +356,6 @@ var options = {
 
   var chart = new ApexCharts(document.querySelector("#chart4"), options);
   chart.render();
-
-
-
-  
-  
-  
-// chart 5
 var options = {
     series: [{
         name: "Total Orders",
@@ -454,7 +420,6 @@ var options = {
 		  inverseColors: false,
 		  opacityFrom: 0.5,
 		  opacityTo: 0.1,
-		  //stops: [0, 100]
 		}
 	  },
     colors: ["#17ad37"],
@@ -481,12 +446,6 @@ var options = {
 
   var chart = new ApexCharts(document.querySelector("#chart5"), options);
   chart.render();
-
-
-
-
-  
-// chart 6
 var options = {
     series: [{
         name: "Total Orders",
@@ -551,7 +510,6 @@ var options = {
 		  inverseColors: false,
 		  opacityFrom: 0.5,
 		  opacityTo: 0.1,
-		  //stops: [0, 100]
 		}
 	  },
     colors: ["#005bea"],
@@ -578,11 +536,6 @@ var options = {
 
   var chart = new ApexCharts(document.querySelector("#chart6"), options);
   chart.render();
-
-
-
-  
-// chart 7
 var options = {
     series: [{
         name: "Total Orders",
@@ -663,11 +616,6 @@ var options = {
   var chart = new ApexCharts(document.querySelector("#chart7"), options);
   chart.render();
 
-
-
-
-  // chart 8
-
   $('#chart8').easyPieChart({
     
     easing: 'easeOutBounce',
@@ -680,9 +628,6 @@ var options = {
     }
 
 });
-
-
-// chart 9
 
 $('#chart9').easyPieChart({
 
@@ -697,9 +642,6 @@ onStep: function(from, to, percent) {
 
 });
 
-
-// chart 10
-
 $('#chart10').easyPieChart({
 
 easing: 'easeOutBounce',
@@ -713,12 +655,6 @@ onStep: function(from, to, percent) {
 
 });
 
-
-
-
-  
-   // chart 11
-
    var options = {
 	chart: {
 	  height: 200,
@@ -729,8 +665,6 @@ onStep: function(from, to, percent) {
 	},
 	plotOptions: {
 	  radialBar: {
-        //startAngle: -90,
-        //endAngle: 90,
 		 hollow: {
 		  margin: 0,
 		  size: '82%',
@@ -749,7 +683,6 @@ onStep: function(from, to, percent) {
 		  }
 		},
 		track: {
-		 // background: '#eee',
 		  strokeWidth: '67%',
 		  margin: 0, // margin is in pixels
 		  dropShadow: {
@@ -798,7 +731,6 @@ onStep: function(from, to, percent) {
 	series: [72],
 	stroke: {
 	  lineCap: 'round',
-	  //dashArray: 4
 	},
 	labels: ['Server Load'],
 	responsive: [
@@ -821,12 +753,6 @@ onStep: function(from, to, percent) {
 
   chart.render();
 
-
-
-
-
-   // chart 12
-
    var options = {
 	chart: {
 	  height: 200,
@@ -837,8 +763,6 @@ onStep: function(from, to, percent) {
 	},
 	plotOptions: {
 	  radialBar: {
-        //startAngle: -90,
-        //endAngle: 90,
 		 hollow: {
 		  margin: 0,
 		  size: '82%',
@@ -857,7 +781,6 @@ onStep: function(from, to, percent) {
 		  }
 		},
 		track: {
-		 // background: '#eee',
 		  strokeWidth: '67%',
 		  margin: 0, // margin is in pixels
 		  dropShadow: {
@@ -906,7 +829,6 @@ onStep: function(from, to, percent) {
 	series: [68],
 	stroke: {
 	  lineCap: 'round',
-	  //dashArray: 4
 	},
 	labels: ['Bandwidth'],
 	responsive: [
@@ -929,11 +851,6 @@ onStep: function(from, to, percent) {
 
   chart.render();
 
-
-
-
-   // chart 13
-
    var options = {
 	chart: {
 	  height: 200,
@@ -944,8 +861,6 @@ onStep: function(from, to, percent) {
 	},
 	plotOptions: {
 	  radialBar: {
-        //startAngle: -90,
-        //endAngle: 90,
 		 hollow: {
 		  margin: 0,
 		  size: '82%',
@@ -964,7 +879,6 @@ onStep: function(from, to, percent) {
 		  }
 		},
 		track: {
-		 // background: '#eee',
 		  strokeWidth: '67%',
 		  margin: 0, // margin is in pixels
 		  dropShadow: {
@@ -1013,7 +927,6 @@ onStep: function(from, to, percent) {
 	series: [54],
 	stroke: {
 	  lineCap: 'round',
-	  //dashArray: 4
 	},
 	labels: ['Diskspace'],
 	responsive: [
@@ -1036,10 +949,6 @@ onStep: function(from, to, percent) {
 
   chart.render();
 
-
-
-   // chart 14
-
    var options = {
 	chart: {
 	  height: 200,
@@ -1050,8 +959,6 @@ onStep: function(from, to, percent) {
 	},
 	plotOptions: {
 	  radialBar: {
-        //startAngle: -90,
-        //endAngle: 90,
 		 hollow: {
 		  margin: 0,
 		  size: '82%',
@@ -1118,7 +1025,6 @@ onStep: function(from, to, percent) {
 	series: [82],
 	stroke: {
 	  lineCap: 'round',
-	  //dashArray: 4
 	},
 	labels: ['Total Traffic'],
 	responsive: [
@@ -1140,21 +1046,13 @@ onStep: function(from, to, percent) {
   );
 
   chart.render();
-
-
-
-
-
-// chart 15
 var options = {
     series: [{
         name: "Total Earnings",
         data: [180, 380, 671, 414, 555, 257, 901, 613, 420]
-        //data: [0, 160, 671, 414, 555, 414, 555, 257, 300, 0]
     }],
     chart: {
         type: "bar",
-        //width: 130,
         height: 210,
         toolbar: {
             show: !1
@@ -1211,7 +1109,6 @@ var options = {
 		  inverseColors: false,
 		  opacityFrom: 1,
 		  opacityTo: 1,
-		  //stops: [0, 100]
 		}
 	  },
     colors: ["#ff0080"],

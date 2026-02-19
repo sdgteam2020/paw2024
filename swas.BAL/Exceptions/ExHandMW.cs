@@ -6,11 +6,6 @@ using System.Net;
 
 namespace swas.Exceptions
 {
-    ///Created and Reviewed by : Sub Maj Sanal
-    ///Reviewed Date : 30 Jul 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start
     class ExHandMW : IMiddleware
     {
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)

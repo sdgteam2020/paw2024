@@ -6,7 +6,6 @@
         var isRestricted = '@isRestricted' === 'True';
 
         if (isRestricted) {
-            // Hide Back button
             $('a[href="/Account/GetsAllUsers"]').closest('button').hide();
         }
 

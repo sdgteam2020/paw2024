@@ -28,7 +28,7 @@ border-bottom-right-radius: .3rem;
 }
 
 
-/* Optional: Enhance the 3D effect */
+
 .hover-point {
     perspective: 1000px;
 }
@@ -44,7 +44,7 @@ border-bottom-right-radius: .3rem;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~hover ~~~~~~~~~~~~~~~~~~*/
+
 .tooltip-container {
     position: relative;
     display: inline-block;

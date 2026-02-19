@@ -21,10 +21,6 @@ namespace swas.BAL.Repository
         {
             _dbContext = dbContext;
         }
-        ///Developer Name :- Sub Maj M Sanal Kumar
-
-        ///Revised on :- 19,20 & 26, 27 Aug 2023  ---    pie chart incorrect data shown fixed by using sp json
-        /// Revised on :- 07& 08 Oct  2023  ---   month order and chart error fixed and tested
 
 
         public async Task<List<ChartModelS>> GetChartDataS()
@@ -57,7 +53,6 @@ namespace swas.BAL.Repository
             catch (Exception ex)
             {
                 string errorMessage = ex.Message;
-                // Log or handle the exception
                 return new List<ChartModel>();
             }
         }

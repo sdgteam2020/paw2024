@@ -25,8 +25,6 @@
     var stage = ViewBag.RFPProj;
 
     Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor.HttpContext.Session, "User");
-
-    // ✅ CSP: no inline style allowed -> map ProcessButtonColor to a class (extend as needed)
     string processBtnClass = "paw-process-btn";
     string processColor = (ViewBag.ProcessButtonColor as string) ?? "";
     var c = processColor.ToLowerInvariant();
@@ -56,7 +54,6 @@
     <link href="~/css/select2.min.css" rel="stylesheet" />
     <link href="~/assets/css/font-awesome/fonts/font-awesome.min.css" rel="stylesheet" />
 
-    <!-- ✅ CSP-safe extracted CSS (from inline <style> + style="...") -->
     <link href="~/css/paw-whitelist-page.css" rel="stylesheet" asp-append-version="true" />
 
     <script src="~/assets/js/jquery.min.js"></script>
@@ -210,9 +207,15 @@
                                         </td>
 
                                         <td>
-                                            <div class="RefLetter-container" data-tooltip="@unitsa.ProjName">
-                                                <span class="short-text noExport">@truncateText(unitsa.ProjName, 6)</span>
-                                                <span class="RefLetter">@unitsa.ProjName</span>
+                                            <div class="tooltip-container" data-tooltip="@unitsa.ProjName">
+                                                <span class="short-text noExport">
+                                                    @(unitsa.ProjName.Length > 25
+                                                        ? unitsa.ProjName.Substring(0, 25) + "..."
+                                                        : unitsa.ProjName)
+                                                </span>
+
+
+                                                <span class="tooltip tooltip-text">@unitsa.ProjName</span>
                                             </div>
                                         </td>
 
@@ -230,6 +233,8 @@
                                         <td class="col-width10">
                                             <div class="RefLetter-container" data-tooltip="@unitsa.Remark">
                                                 <span class="short-text noExport">@truncateText(unitsa.Remark, 2)....</span>
+
+
                                                 <span class="RefLetter">@unitsa.Remark</span>
                                             </div>
                                         </td>
@@ -291,7 +296,7 @@
 
                                         <td class="RefLetter-container paw-w-6">
                                             <span class="noExport">
-                                                @(string.IsNullOrEmpty(unitx.ProjName) ? "" : (unitx.ProjName.Length > 10) ? unitx.ProjName.Substring(0, 10) + "...." : unitx.ProjName)
+                                                @(string.IsNullOrEmpty(unitx.ProjName) ? "" : (unitx.ProjName.Length > 25) ? unitx.ProjName.Substring(0, 25) + "...." : unitx.ProjName)
                                             </span>
                                             <div class="RefLetter">@unitx.ProjName</div>
                                         </td>
@@ -316,10 +321,10 @@
 
                                         <td class="RefLetter-container">
                                             <span class="noExport">
-                                                @(string.IsNullOrEmpty(unitx.Remarks) ? "" : (unitx.Remarks.Length > 10) ? unitx.Remarks.Substring(0, 10) + "...." : unitx.Remarks)
+                                                @(string.IsNullOrEmpty(unitx.Remarks) ? "" : (unitx.Remarks.Length > 25) ? unitx.Remarks.Substring(0, 25) + "...." : unitx.Remarks)
                                             </span>
 
-                                            @if (!string.IsNullOrEmpty(unitx.Remarks) && (unitx.Remarks.Length > 10))
+                                            @if (!string.IsNullOrEmpty(unitx.Remarks) && (unitx.Remarks.Length > 25))
                                             {
                                                 <div class="RefLetter">@unitx.Remarks</div>
                                             }
@@ -499,7 +504,7 @@
                                                                 <button type="button"
                                                                         class="btn btn-primary btn-block @processBtnClass"
                                                                         id="ProcessId"
-                                                                        data-button-text="@ButtonText">
+                                                                        data-button-text="@ButtonText" data-flag="@ViewBag.flag">
                                                                     @ButtonText
                                                                 </button>
                                                             </div>
@@ -661,9 +666,9 @@
     <script src="~/developerjs/newproject.js"></script>
     <script src="~/developerjs/CommanDatatable.js"></script>    
     <script src="~/developerjs/NewProjectDataTable.js"></script>
+    <script src="~/developerjs/Comman.js"></script>
  
 
-    <!-- ✅ CSP-safe extracted JS (from all inline <script>) -->
     <script src="~/developerjs/paw-whitelist-page.js"></script>
     
 </body>

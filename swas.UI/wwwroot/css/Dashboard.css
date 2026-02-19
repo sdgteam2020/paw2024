@@ -46,19 +46,19 @@
 }
 
 #myChart1 {
-    width: 100%; /* Make the element take up the full width of its parent container */
-    height: auto; /* Allow the height to adjust proportionally to the width */
+    width: 100%; 
+    height: auto; 
 
-    max-width: 752px !important; /* Set a maximum width for the element */
-    max-height: 388px !important; /* Set a maximum height for the element */
+    max-width: 752px !important; 
+    max-height: 388px !important; 
 }
 
 #myChart {
-    width: 100%; /* Make the element take up the full width of its parent container */
-    height: auto; /* Allow the height to adjust proportionally to the width */
+    width: 100%; 
+    height: auto; 
 
-    max-width: 752px !important; /* Set a maximum width for the element */
-    max-height: 388px !important; /* Set a maximum height for the element */
+    max-width: 752px !important; 
+    max-height: 388px !important; 
 }
 
 .js-is-visible {
@@ -71,19 +71,19 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 50%; /* Adjust the width as needed */
-    max-width: 80%; /* Optional: Set a maximum width if desired */
-    height: auto; /* Set a fixed height, or adjust as needed */
-    background-color: #0000; /* Set the background color */
+    width: 50%; 
+    max-width: 80%; 
+    height: auto; 
+    background-color: #0000; 
     z-index: 999;
-    border-radius: 5px; /* Optional: Add rounded corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Optional: Add a shadow */
-    overflow: auto; /* Add scrollbars if the content exceeds the height */
+    border-radius: 5px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+    overflow: auto; 
 }
 
 .popup-content {
     padding: 20px;
-    /* Other styling for your content */
+    
 }
 
 #popupOverlay {
@@ -112,7 +112,7 @@
 }
 
 .tabs {
-    /* Styles for your tabs content */
+    
 }
 
 
@@ -141,43 +141,43 @@
 
 
 .blue-button {
-    /* Add your styles for the black button here */
-    background-color: #044C92; /* Example background color */
+    
+    background-color: #044C92; 
     border: 1px solid #000;
     color: #fff;
-    /* Add other styles as needed */
+    
 }
 
 .green-button {
-    /* Styles for the green button */
-    background-color: #4CAF50; /* Example green color */
-    /* Add other styles as needed */
+    
+    background-color: #4CAF50; 
+    
 }
 
 .yellow-button {
-    /* Styles for the yellow button */
-    background-color: #FFC107; /* Example yellow color */
-    /* Add other styles as needed */
+    
+    background-color: #FFC107; 
+    
 }
 
 .red-button {
-    /* Styles for the red button */
-    background-color: #F44336; /* Example red color */
-    /* Add other styles as needed */
+    
+    background-color: #F44336; 
+    
 }
 
-/* Add 3D effect styles for the buttons */
+
 .table-button {
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Example shadow effect */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); 
     transition: transform 0.3s;
 }
 
     .table-button:hover {
         transform: translateY(-3px);
-        background-color: blue; /* Example hover effect for 3D appearance */
+        background-color: blue; 
     }
 
 .r-1 {
@@ -232,7 +232,7 @@
 
 .modalSize {
     width: 110rem !important;
-    /*margin-left: -12rem !important;*/
+    
 }
 
 .scroll {
@@ -296,7 +296,7 @@ h5[data-toggle="tooltip"] + .tooltip-inner {
 }
 
 .modal-lg {
-    max-width: 95% !important; /* Customize as needed */
+    max-width: 95% !important; 
 }
 
 .dashboard {
@@ -437,7 +437,7 @@ body {
 }
 
 
-/* moved from inline styles */
+
 
 .paw-dashboard-zoom {
     zoom: 0.8;
@@ -471,7 +471,7 @@ body {
 }
 
 
-/* ===== Dashboard dynamic HTML (replaces inline styles in GetAllDashbaordCount) ===== */
+
 
 .dash-stage-row {
     margin-top: 13px;
@@ -511,13 +511,13 @@ body {
     font-size: 14px;
 }
 
-/* ===== removed inline styles from getProjApproved() HTML ===== */
+
 
 .dp-w-3 {
     width: 3% !important;
 }
 
-/* Instead of inline style visibility:visible/hidden */
+
 .dp-vis-visible {
     visibility: visible;
 }
@@ -526,22 +526,22 @@ body {
     visibility: hidden;
 }
 
-/* Attachment icon style */
+
 .dp-attach-icon {
     width: 31px;
     height: 29px;
     margin-right: 0px;
 }
-/* ===== Dashboard page inline-style replacements ===== */
 
-/* Dashboard count container (was zoom + width/max-width inline) */
+
+
 .db-zoom-80 {
     zoom: 0.8;
     width: 100%;
     max-width: 100%;
 }
 
-/* Canvas height limits */
+
 .db-canvas-h400 {
     max-height: 400px;
 }
@@ -551,7 +551,7 @@ body {
     height: 379px;
 }
 
-/* Modal title sizes */
+
 .db-modal-title-lg {
     font-size: 1.5rem;
 }
@@ -560,7 +560,7 @@ body {
     font-size: 1rem;
 }
 
-/* Table column widths */
+
 .db-col-w6 {
     width: 6%;
 }
@@ -580,53 +580,53 @@ body {
 .db-col-w3pct {
     width: 3%;
 }
-/* optional helper */
 
-/* If you want consistent width on serno header where you used 3% */
+
+
 .db-sno-3 {
     width: 3%;
 }
-/* ===== Dashboard cards (GetAllDashbaordCount) ===== */
 
-/* was: style="margin-top: 13px" */
+
+
 .db-stage-row {
     margin-top: 13px;
 }
 
-/* was: background-color:white;height:145px */
+
 .db-card-box {
     background-color: white;
     height: 165px;
     width: 180px;
 }
 
-/* icons height 25px */
+
 .db-icon-25 {
     height: 25px;
 }
 
-/* h5 margin-top 25px */
+
 .db-h5-mt25 {
     margin-top: 25px;
 }
 
-/* h5 margin-top 8px */
+
 .db-h5-mt8 {
     margin-top: 8px;
 }
 
-/* h5 margin-top 8px + padding-top 10px */
+
 .db-h5-mt8-pt10 {
     margin-top: 8px;
     padding-top: 10px;
 }
 
-/* status text padding-top 7px */
+
 .db-status-pt7 {
     padding-top: 7px;
 }
 
-/* badge font sizes */
+
 .db-badge-18 {
     font-size: 18px;
 }
@@ -634,18 +634,18 @@ body {
 .db-badge-14 {
     font-size: 14px;
 }
-/* Styling for the new project heading */
+
 .newprojectheading.text-center {
     text-align: center;
     font-weight: bold;
 }
 
-/* Container for the dashboard items */
+
 .r-1 {
     margin-top: 13px;
 }
 
-/* Styling for the individual dashboard items */
+
 .cd-1-container {
     background-color: white;
     padding: 5px;
@@ -654,29 +654,29 @@ body {
     margin-bottom: 15px;
 }
 
-/* Icon container for dashboard items */
+
 .icon-container {
     text-align: center;
     margin-bottom: 8px;
 }
 
-/* Styling for the image inside icon container */
+
 .icon-img {
     height: 25px;
 }
 
-/* Total count for the dashboard item */
+
 .tot-count {
     margin-top: 8px;
 }
 
-/* Styling for the status label */
+
 .t-1 {
     font-weight: bold;
     font-size: 14px;
 }
 
-/* Styling for the badge around the actions */
+
 .badge-primary {
     background-color: #007bff;
     color: white;
@@ -685,24 +685,37 @@ body {
     margin-left: 10px;
 }
 
-/* Badge for the action count */
+
 .action-count-badge {
     font-size: 12px;
     background-color: lightgray;
     color: black;
 }
 
-/* Margin for bottom of the badge */
+
 .mb-2 {
     margin-bottom: 10px;
 }
 
-/* Styling for the action badge text */
+
 .action-badge {
     font-size: 12px;
 }
 
-/* Hide elements if necessary */
+
 .d-none {
     display: none;
 }
+
+#swal2-title,
+.swal2-title {
+    line-height: 1.25 !important;
+    margin: 0.6em 0 0.3em !important;
+    padding: 0 !important;
+    position: static !important;
+    transform: none !important;
+    letter-spacing: normal !important;
+    white-space: normal !important;
+}
+
+

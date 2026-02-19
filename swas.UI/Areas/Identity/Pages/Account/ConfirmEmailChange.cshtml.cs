@@ -1,11 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-///Created and Reviewed by : Sub Maj Sanal
-///Reviewed Date : 30 Jul 23
-///Tested By :- 
-///Tested Date : 
-///Start
-#nullable disable
+﻿#nullable disable
 
 using System;
 using System.Text;
@@ -29,11 +22,6 @@ namespace swas.Areas.Identity.Pages.Account
             _userManager = userManager;
             _signInManager = signInManager;
         }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [TempData]
         public string StatusMessage { get; set; }
 
@@ -57,9 +45,6 @@ namespace swas.Areas.Identity.Pages.Account
                 StatusMessage = "Error changing email.";
                 return Page();
             }
-
-            // In our UI email and user name are one and the same, so when we update the email
-            // we need to update the user name.
             var setUserNameResult = await _userManager.SetUserNameAsync(user, email);
             if (!setUserNameResult.Succeeded)
             {

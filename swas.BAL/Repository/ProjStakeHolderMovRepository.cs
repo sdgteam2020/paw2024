@@ -31,12 +31,6 @@ using static swas.DAL.Models.LegacyHistory;
 
 namespace swas.BAL.Repository
 {
-
-    ///Created and Reviewed by : Sub Maj M Sanal
-    ///Reviewed Date : 31 Jul 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start
     public class ProjStakeHolderMovRepository : GenericRepositoryDL<tbl_ProjStakeHolderMov>, IProjStakeHolderMovRepository
     {
         private readonly ApplicationDbContext _dbContext;
@@ -77,7 +71,7 @@ namespace swas.BAL.Repository
                                    StatusId = ststus.StatusId,
                                    Action = act.Actions,
                                    ActionId = b.StatusActionsMappingId,
-                                   FromUnitName = " " + b.UserDetails + " ( " + fromunit.UnitName + ")",
+                                   FromUnitName = $" {b.UserDetails} ({fromunit.UnitName})",
                                    ToUnitName = tounit.UnitName,
                                    ToUnitId = tounit.unitid,
                                    DateTimeOfUpdate = b.TimeStamp,
@@ -96,116 +90,119 @@ namespace swas.BAL.Repository
 
         public async Task<DTOProjectMovHistory> ProjectMovHistory(int? ProjectId)
         {
-            DTOProjectMovHistory lst=new DTOProjectMovHistory();
-            var queryforstackholderself = await (from a in _dbContext.Projects
-                                                 join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
-                                                 where a.ProjId == ProjectId && b.IsComment == true
-                                                 && a.StakeHolderId == b.ToUnitId //&& b.StatusActionsMappingId == 21
-                                                 select new DTOForStackHolderCout
-                                                 {
-                                                     PsmId = b.PsmId
-                                                 }
-                                                 ).ToListAsync();
+            try
+            {
+                DTOProjectMovHistory lst = new DTOProjectMovHistory();
+                var queryforstackholderself = await (from a in _dbContext.Projects
+                                                     join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
+                                                     where a.ProjId == ProjectId && b.IsComment == true
+                                                     && a.StakeHolderId == b.ToUnitId //&& b.StatusActionsMappingId == 21
+                                                     select new DTOForStackHolderCout
+                                                     {
+                                                         PsmId = b.PsmId
+                                                     }
+                                                     ).ToListAsync();
 
 
 
 
-            var query = await (from a in _dbContext.Projects
-                               join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
-                               join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid
-                               join tounit in _dbContext.tbl_mUnitBranch on b.ToUnitId equals tounit.unitid
-                               join fromunit in _dbContext.tbl_mUnitBranch on b.FromUnitId equals fromunit.unitid
-                               join actmap in _dbContext.TrnStatusActionsMapping on b.StatusActionsMappingId equals actmap.StatusActionsMappingId
-                               join ststus in _dbContext.mStatus on actmap.StatusId equals ststus.StatusId
-                               join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
-                               join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
+                var query = await (from a in _dbContext.Projects
+                                   join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
+                                   join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid
+                                   join tounit in _dbContext.tbl_mUnitBranch on b.ToUnitId equals tounit.unitid
+                                   join fromunit in _dbContext.tbl_mUnitBranch on b.FromUnitId equals fromunit.unitid
+                                   join actmap in _dbContext.TrnStatusActionsMapping on b.StatusActionsMappingId equals actmap.StatusActionsMappingId
+                                   join ststus in _dbContext.mStatus on actmap.StatusId equals ststus.StatusId
+                                   join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
+                                   join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
 
-                               let legacy = _dbContext.LegacyHistory
-         .Where(l => l.ProjectId == a.ProjId)
-         .OrderByDescending(l => l.HistoryId)
-         .FirstOrDefault()
-                               where b.ProjId == ProjectId
-                               orderby b.TimeStamp descending
-                               //orderby b.PsmId descending
-                               select new DTOProjectMovHistorypsm
-                               {
-                                   PsmId = b.PsmId,
-                                   Stages = stge.Stages,
-                                   //Status = tounit.UnitName + " " + "For Comments",
-                                   Status = ststus.Status,
-                                   StatusId= ststus.StatusId,
-                                   Actions = act.Actions,
-                                   FromUnitName = " " + b.UserDetails + " ( " + fromunit.UnitName + ")",
-                                   ToUnitName = tounit.UnitName,
-                                   FromUser = "", 
-                                   ToUser = "",
-                                   Date = b.TimeStamp,
-                                   Remarks = b.Remarks,
-                                   UndoRemarks = b.UndoRemarks,
-                                   IsComment = b.IsComment,
-                                   AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == b.PsmId),
-                                   UserDetails = b.UserDetails,
-                                   LatestActionType = legacy != null ? legacy.ActionType : default(ActionTypeEnum),
-                                   StageId = stge.StagesId,
-                                   ActionsId = act.ActionsId,
-                                   FromUnitId = b.FromUnitId,
-                                   StakeHolderId = a.StakeHolderId,
-                                   IsPulledBack = b.IsPullBack,
-                                   StatusActionsMappingId=b.StatusActionsMappingId,
-                                   IsCc = b.IsCc,
-                                   CcUnits = string.Join(", ",
-    _dbContext.ProjStakeHolderCcMov
-        .Where(cc => cc.PsmId == b.PsmId)
-        .Join(_dbContext.tbl_mUnitBranch,
-              cc => cc.ToCcUnitId,
-              unit => unit.unitid,
-              (cc, unit) => unit.UnitName)
-        .ToList()
-)
-
-                               }).ToListAsync();
-            if (queryforstackholderself != null && queryforstackholderself.Count==2)
-                lst.DTOProjectMovHistorypsmlst = query.Where(i=>i.PsmId!= queryforstackholderself[1].PsmId).ToList();
-            else
-                lst.DTOProjectMovHistorypsmlst = query;
-            // lst.DTOProjectMovHistorypsmlst = query.GroupBy(x => x.StatusId).Select(grp => grp.FirstOrDefault()).ToList();
-            var comments = await (from mov in _dbContext.ProjStakeHolderMov
-                                  join stk in _dbContext.StkComment on mov.PsmId equals stk.PsmId
-                                  join stksts in _dbContext.StkStatus on stk.StkStatusId equals stksts.StkStatusId
-                                  where mov.ProjId == ProjectId
-                                  select new DTOProjectMovHistorycmd
-                                  {
-                                      PsmId = mov.PsmId,
-                                      Status =stksts.Status,
-                                      Comments = stk.Comments,
-                                      DateTimeOfUpdate = stk.DateTimeOfUpdate,
-                                      UserDetails = stk.UserDetails != null ? stk.UserDetails : "____",
+                                   let legacy = _dbContext.LegacyHistory
+             .Where(l => l.ProjectId == a.ProjId)
+             .OrderByDescending(l => l.HistoryId)
+             .FirstOrDefault()
+                                   where b.ProjId == ProjectId
+                                   orderby b.TimeStamp descending
+                                   select new DTOProjectMovHistorypsm
+                                   {
+                                       PsmId = b.PsmId,
+                                       Stages = stge.Stages,
                                       
-                                      
-                                      
-                                  }).ToListAsync();
-            //var lastInitialStageRecord = query.LastOrDefault(record => record.Stages == "Initial Stage");
+                                       Status = ststus.Status,
+                                       StatusId = ststus.StatusId,
+                                       Actions = act.Actions,
+                                       FromUnitName = $"{b.UserDetails} ({fromunit.UnitName})",
+                                       ToUnitName = tounit.UnitName,
+                                       FromUser = "",
+                                       ToUser = "",
+                                       Date = b.TimeStamp,
+                                       Remarks = b.Remarks,
+                                       UndoRemarks = b.UndoRemarks,
+                                       IsComment = b.IsComment,
+                                       AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == b.PsmId),
+                                       UserDetails = b.UserDetails,
+                                       LatestActionType = legacy != null ? legacy.ActionType : default(ActionTypeEnum),
+                                       StageId = stge.StagesId,
+                                       ActionsId = act.ActionsId,
+                                       FromUnitId = b.FromUnitId,
+                                       StakeHolderId = a.StakeHolderId,
+                                       IsPulledBack = b.IsPullBack,
+                                       StatusActionsMappingId = b.StatusActionsMappingId,
+                                       IsCc = b.IsCc,
+                                       CcUnits = string.Join(", ",
+        _dbContext.ProjStakeHolderCcMov
+            .Where(cc => cc.PsmId == b.PsmId)
+            .Join(_dbContext.tbl_mUnitBranch,
+                  cc => cc.ToCcUnitId,
+                  unit => unit.unitid,
+                  (cc, unit) => unit.UnitName)
+            .ToList()
+    )
 
-            //if (lastInitialStageRecord != null)
-            //{
-            //    lastInitialStageRecord.Status = lastInitialStageRecord.ToUnitName;
-            //}
-            lst.DTOProjectMovHistorycmdlst = comments;
+                                   }).ToListAsync();
+                if (queryforstackholderself != null && queryforstackholderself.Count == 2)
+                    lst.DTOProjectMovHistorypsmlst = query.Where(i => i.PsmId != queryforstackholderself[1].PsmId).ToList();
+                else
+                    lst.DTOProjectMovHistorypsmlst = query;
+                 var blank = "____";
+                var comments = await (from mov in _dbContext.ProjStakeHolderMov
+                                      join stk in _dbContext.StkComment on mov.PsmId equals stk.PsmId
+                                      join stksts in _dbContext.StkStatus on stk.StkStatusId equals stksts.StkStatusId
+                                      where mov.ProjId == ProjectId
+                                      select new DTOProjectMovHistorycmd
+                                      {
+                                          PsmId = mov.PsmId,
+                                          Status = stksts.Status,
+                                          Comments = stk.Comments,
+                                          DateTimeOfUpdate = stk.DateTimeOfUpdate,
+                                          UserDetails = stk.UserDetails != null ? stk.UserDetails : blank,
 
-            var retcc = await (from a in _dbContext.Projects
-                               join b in _dbContext.ProjStakeHolderCcMov on a.ProjId equals b.ProjId
-                               join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid
-                               join tounit in _dbContext.tbl_mUnitBranch on b.ToCcUnitId equals tounit.unitid
-                               select new DTOProjectCCHistory
-                               {
-                                   PsmId=b.PsmId,
-                                   UnitName = tounit.UnitName,
-                                   IsRead=b.IsRead,
-                                   ReadDate = b.ReadDate,
-                                   UserDetails=b.UserDetails != null ? b.UserDetails : "____"
-                               }).ToListAsync();
-           lst.DTOProjectCCHistorylst = retcc;
-            return lst;
+
+
+                                      }).ToListAsync();
+             
+                lst.DTOProjectMovHistorycmdlst = comments;
+
+                var retcc = await (from a in _dbContext.Projects
+                                   join b in _dbContext.ProjStakeHolderCcMov on a.ProjId equals b.ProjId
+                                   join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid
+                                   join tounit in _dbContext.tbl_mUnitBranch on b.ToCcUnitId equals tounit.unitid
+                                   select new DTOProjectCCHistory
+                                   {
+                                       PsmId = b.PsmId,
+                                       UnitName = tounit.UnitName,
+                                       IsRead = b.IsRead,
+                                       ReadDate = b.ReadDate,
+                                       UserDetails = b.UserDetails != null ? b.UserDetails : blank
+                                   }).ToListAsync();
+                lst.DTOProjectCCHistorylst = retcc;
+                return lst;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+
+            }
+         
         }
         public async Task<List<DTOProjectHold>> ProjectHolsTimeCalculate(int ProjectId)
         {
@@ -239,7 +236,6 @@ namespace swas.BAL.Repository
 											 let Reject = _dbContext.StkComment
 											 .FirstOrDefault(c => c.PsmId == mov.PsmId && c.StkStatusId == 3)
 											 where
-											 // mov.IsComment==false &&
 											 mov.ProjId == ProjectId
 
 											 orderby mov.PsmId
@@ -258,13 +254,11 @@ namespace swas.BAL.Repository
                                                  IsComment = mov.IsComment,
                                                  IsComplete = mov.IsComplete,
                                                  UndoRemarks = mov.UndoRemarks,
-                                                 // resolve status text from the latest comment's status id (left-join semantics)
                                                  StkStauts = _dbContext.StkStatus
                     .Where(s => s.StkStatusId == latestComment.StkStatusId)
                     .Select(s => s.Status)
                     .FirstOrDefault(),
                                                  FirstActionDate = Firstactiondt.DateTimeOfUpdate,
-                                                 // ✅ latest comment date (null if none exists)
                                                  LatestCommentDate = latestComment.DateTimeOfUpdate,
 
 
@@ -303,13 +297,7 @@ namespace swas.BAL.Repository
                             {
                                 db.TimeStampTo = DateTime.Now;
                             }
-                            //else
-                            //{
-
-                            //     db.TimeStampTo = databyprojectid[i].TimeStamp;
-
-
-                            //}
+                          
 
 
                             db.TounitId = databyprojectid[i].TounitId;
@@ -394,9 +382,7 @@ namespace swas.BAL.Repository
         {
             try
             {
-                //var query = _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.IsActive==true && i.IsComment==false && i.UndoRemarks==null).Max(p => p.PsmId);
-                //return query;
-
+              
                 var maxPsmIdParameter = new SqlParameter("@MaxPsmId", SqlDbType.Int)
                 {
                     Direction = ParameterDirection.Output
@@ -416,8 +402,7 @@ namespace swas.BAL.Repository
         {
             try
             {
-               // var query = _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.PsmId < (_context.ProjStakeHolderMov.Max(p => p.PsmId))).Max(p => p.PsmId);
-                var query =await _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.IsActive == true && i.IsComment == false && i.ToUnitId== TounitId).OrderByDescending(i=>i.PsmId).Take(1).Select(i=>i.PsmId).SingleOrDefaultAsync();
+               var query =await _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.IsActive == true && i.IsComment == false && i.ToUnitId== TounitId).OrderByDescending(i=>i.PsmId).Take(1).Select(i=>i.PsmId).SingleOrDefaultAsync();
                 return query;
 
             }
@@ -428,238 +413,7 @@ namespace swas.BAL.Repository
         {
             DTODashboard db = new DTODashboard();
 
-            #region DashboaardWithLinq
-            //var query = await (from mov in _dbContext.ProjStakeHolderMov
-            //                   join proj in _dbContext.Projects on mov.ProjId equals proj.ProjId
-            //                   join actmap in _dbContext.TrnStatusActionsMapping on mov.StatusActionsMappingId equals actmap.StatusActionsMappingId
-            //                   join ststus in _dbContext.mStatus on actmap.StatusId equals ststus.StatusId
-            //                   join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
-            //                   //join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
-            //                   where
-            //                   //mov.ToUnitId == UserId &&
-            //                   mov.IsComplete == false
-            //                   && mov.IsActive == true
-            //                   /*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
-            //                   && ststus.IsDashboard == true
-            //                   && proj.IsSubmited == true
-            //                   && mov.StatusActionsMappingId != 118 && mov.StatusActionsMappingId != 4
-            //                   orderby stge.StagesId ascending
-            //                   group mov by new
-            //                   {
-            //                       ststus.StatusId,
-            //                       QStages = stge.Stages,
-            //                       QStagesId = stge.StagesId,
-            //                       QStatus = ststus.Status,
-
-            //                       QIsComplete = mov.IsComplete,
-            //                       QprojId = proj.ProjId
-
-            //                   } into gr  //,QActionId= actmap.ActionsId
-
-            //                   select new DTODashboardCount
-            //                   {
-
-            //                       StatusId = gr.Key.StatusId,
-            //                       Stages = gr.Key.QStages,
-            //                       StagesId = gr.Key.QStagesId,
-            //                       Status = gr.Key.QStatus,
-            //                       IsComplete = gr.Key.QIsComplete,
-            //                       //ActionId = gr.Key.QActionId,
-            //                       Tot = gr.Count(),
-
-            //                   }).ToListAsync();
-
-            //db.DTODashboardCountlst = (query);
-
-            //var query11 = await (from mov in _dbContext.ProjStakeHolderMov
-            //                     join proj in _dbContext.Projects on mov.ProjId equals proj.ProjId
-            //                     join actmap in _dbContext.TrnStatusActionsMapping on mov.StatusActionsMappingId equals actmap.StatusActionsMappingId
-            //                     join ststus in _dbContext.mStatus on actmap.StatusId equals ststus.StatusId
-            //                     join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
-            //                     //join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
-            //                     where
-            //                     // mov.FromUnitId == UserId && 
-            //                     mov.IsComplete == true
-            //                      && mov.IsActive == true/*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
-            //                     && ststus.IsDashboard == true
-            //                     && proj.IsSubmited == true
-            //                      && mov.StatusActionsMappingId != 118 && mov.StatusActionsMappingId != 4
-            //                     orderby stge.StagesId ascending
-            //                     group mov by new
-            //                     {
-            //                         ststus.StatusId,
-            //                         QStages = stge.Stages,
-            //                         QStagesId = stge.StagesId,
-            //                         QStatus = ststus.Status,
-
-            //                         QIsComplete = mov.IsComplete,
-            //                         QprojId = proj.ProjId
-
-            //                     } into gr  //,QActionId= actmap.ActionsId
-
-            //                     select new DTODashboardCount
-            //                     {
-
-            //                         StatusId = gr.Key.StatusId,
-            //                         Stages = gr.Key.QStages,
-            //                         StagesId = gr.Key.QStagesId,
-            //                         Status = gr.Key.QStatus,
-            //                         IsComplete = gr.Key.QIsComplete,
-            //                         //ActionId = gr.Key.QActionId,
-
-            //                         Tot = gr.Count()
-            //                     }).ToListAsync();
-
-
-            //db.DTODashboardCountlst.AddRange(query11);
-            //db.DTODashboardCountlst = db.DTODashboardCountlst.OrderBy(x => x.StagesId).OrderBy(x => x.StatusId).ToList();
-
-            //var queryForAction = await (from mov in _dbContext.ProjStakeHolderMov
-            //                            join proj in _dbContext.Projects on mov.ProjId equals proj.ProjId
-            //                            join actmap in _dbContext.TrnStatusActionsMapping on mov.StatusActionsMappingId equals actmap.StatusActionsMappingId
-            //                            join ststus in _dbContext.mStatus on actmap.StatusId equals ststus.StatusId
-            //                            join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
-            //                            //join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
-            //                            where
-            //                          //mov.ToUnitId == UserId &&
-            //                          // mov.IsComplete == false &&
-            //                          (mov.StatusActionsMappingId == 4 || mov.StatusActionsMappingId == 118 || mov.StatusActionsMappingId == 3   //-----stage1
-            //                         || mov.StatusActionsMappingId == 49 || mov.StatusActionsMappingId == 54 //-----stage2
-            //                         || mov.StatusActionsMappingId == 64 || mov.StatusActionsMappingId == 69 //-----stage3
-            //                         || mov.StatusActionsMappingId == 74 || mov.StatusActionsMappingId == 79 //-----stage3
-            //                         || mov.StatusActionsMappingId == 84 || mov.StatusActionsMappingId == 89 //-----stage3
-            //                         )
-            //                           && mov.IsActive == true
-            //                            /*&& mov.ToUnitId == 1 && mov.StatusId != 5*/
-
-            //                            && proj.IsSubmited == true
-            //                            orderby stge.StagesId ascending
-            //                            group mov by new
-            //                            {
-            //                                ststus.StatusId,
-            //                                QStages = stge.Stages,
-            //                                QStagesId = stge.StagesId,
-            //                                QStatus = ststus.Status,
-            //                                QActionsId = actmap.ActionsId,
-            //                                QIsComplete = mov.IsComplete,
-            //                                QprojId = proj.ProjId
-
-            //                            } into gr  //,QActionId= actmap.ActionsId
-
-            //                            select new DTODashboardCount
-            //                            {
-
-            //                                StatusId = gr.Key.StatusId,
-            //                                Stages = gr.Key.QStages,
-            //                                StagesId = gr.Key.QStagesId,
-            //                                Status = gr.Key.QStatus,
-            //                                IsComplete = gr.Key.QIsComplete,
-            //                                ActionId = gr.Key.QActionsId,
-            //                                Tot = gr.Count(),
-
-            //                            }).ToListAsync();
-
-            //db.DTODashboardCountlstForAction = (queryForAction);
-
-
-
-
-            //var query1 = await (from ststus in _dbContext.mStatus
-            //                    join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
-            //                    where ststus.IsDashboard == true
-
-            //                    select new DTODashboardHeader
-            //                    {
-            //                        StageId = stge.StagesId,
-            //                        StatusId = ststus.StatusId,
-            //                        Status = ststus.Status,
-            //                        Stages = stge.Stages,
-            //                        Icons = ststus.Icon,
-            //                        Statseq = ststus.Statseq
-
-            //                    }).ToListAsync();
-            //db.DTODashboardHeaderlst = query1;
-            //db.DTODashboardHeaderlst = db.DTODashboardHeaderlst.OrderBy(x => x.Statseq).ToList().OrderBy(x => x.StageId).ToList();
-
-            ////db.DTODashboardHeaderlst = (List<DTODashboardHeader>)db.DTODashboardHeaderlst.OrderBy(i => i.Statseq);
-            ////var query2 = await (from actmap in _dbContext.TrnStatusActionsMapping
-            ////                    join ststus in _dbContext.mStatus on actmap.StatusId equals ststus.StatusId
-            ////                    join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
-            ////                    orderby actmap.ActionsId ascending
-            ////                    select new DTODashboardAction
-            ////                    {
-            ////                        StatusId= ststus.StatusId,
-            ////                        ActionId= act.ActionsId,
-            ////                        Action=act.Actions
-            ////                    }).ToListAsync();
-            ////db.DTODashboardActionlst = query2;
-
-            //var approvedcount = await (from mov in _dbContext.ProjStakeHolderMov
-            //                           join pro in _context.Projects on mov.ProjId equals pro.ProjId
-            //                           join stsmap in _context.TrnStatusActionsMapping on mov.StatusActionsMappingId equals stsmap.StatusActionsMappingId
-            //                           where mov.IsActive == true && pro.IsProcess == true &&
-            //                           (stsmap.StatusActionsMappingId == 1 ||    //New Projects
-            //                           stsmap.StatusActionsMappingId == 9 ||      //Obsn
-            //                           stsmap.StatusActionsMappingId == 113 ||   //Obsn Rectified
-            //                           stsmap.StatusActionsMappingId == 48 ||     //Auto Committee
-            //                           stsmap.StatusActionsMappingId == 53 ||     //IPA Stage
-            //                           stsmap.StatusActionsMappingId == 60 ||     //Closed
-            //                           stsmap.StatusActionsMappingId == 63 ||     //AHCC (Arch Vetting)
-            //                           stsmap.StatusActionsMappingId == 68 ||     //ACG (Lab Test)
-            //                           stsmap.StatusActionsMappingId == 73 ||     //AHCC (IAM Integ)
-            //                           stsmap.StatusActionsMappingId == 78 ||     //ACG (Remote Test)
-            //                           stsmap.StatusActionsMappingId == 83 ||     //MI-11 Clearance
-            //                           stsmap.StatusActionsMappingId == 88 ||     //Whitelisting Completed
-            //                                                                      // ---CommentAttribute----
-            //                           ((stsmap.StatusActionsMappingId == 26 ||//ASDC Vetting
-            //                           stsmap.StatusActionsMappingId == 31 ||// ACG Vetting
-            //                           stsmap.StatusActionsMappingId == 37) && mov.IsComplete == true)) //AHCC Vetting
-            //                           group mov by new
-            //                           {
-            //                               stsmap.StatusId,
-            //                               stsmap.StatusActionsMappingId,
-            //                               pro.ProjId
-
-            //                           } into gr
-            //                           select new DTOApprovedCount
-            //                           {
-            //                               ProjId = gr.Key.ProjId,
-            //                               StatusId = gr.Key.StatusId,
-            //                               StatusActionsMappingId = gr.Key.StatusActionsMappingId,
-            //                               Total = gr.Count()
-
-            //                           }).ToListAsync();
-            //db.DTOApprovedCountlst = approvedcount
-            //    .GroupBy(p => new { p.StatusId, p.StatusActionsMappingId })
-            //    .Select(g => new DTOApprovedCount
-            //    {
-            //        StatusId = g.Key.StatusId,
-            //        StatusActionsMappingId = g.Key.StatusActionsMappingId,
-            //        Total = g.Count()
-            //    }).ToList();
-
-            //int StatusId = _dbContext.mStatus.Where(x => x.Status == "BISAG-N").FirstOrDefault().StatusId;
-            ////var bisagNProjId = await (from proj in _dbContext.Projects
-            ////                          where proj.BeingDevpInhouse == "BISAG-N" && proj.IsSubmited == true /*&& proj.IsProcess == true*/
-            ////                          select proj.ProjId).FirstOrDefaultAsync();
-
-            //var bisagNCount = await (from proj in _dbContext.Projects
-            //                         where proj.BeingDevpInhouse == "BISAG-N" && proj.IsSubmited == true /*&& proj.IsProcess == true*/
-            //                         select proj).CountAsync();
-
-            //var bisagNEntry = new DTOApprovedCount
-            //{
-            //    //ProjId = bisagNProjId, 
-            //    //StatusId = 1041, // 
-            //    StatusId = StatusId,
-            //    Status = "BISAG-N",
-            //    StatusActionsMappingId = 1,
-            //    Total = bisagNCount  // The total count for BISAG-N projects
-            //};
-
-            //db.DTOApprovedCountlst.Add(bisagNEntry);
-            #endregion
-
+            
 
             #region DashboardWithStoredProcedure
 
@@ -673,8 +427,6 @@ namespace swas.BAL.Repository
                     {
                         cmd.CommandText = "dbo.usp_DashboardCount";
                         cmd.CommandType = CommandType.StoredProcedure;
-
-                        // Add parameter
                         var param = cmd.CreateParameter();
                         param.ParameterName = "@UserId";
                         param.Value = UserId;
@@ -687,7 +439,6 @@ namespace swas.BAL.Repository
 
                         using (var reader = await cmd.ExecuteReaderAsync())
                         {
-                            // 1st result set => DTODashboardCountlst (incomplete & active)
                             db.DTODashboardCountlst = new List<DTODashboardCount>();
                             while (await reader.ReadAsync())
                             {
@@ -702,8 +453,6 @@ namespace swas.BAL.Repository
                                     ActionId = 0 // no ActionId in this result set
                                 });
                             }
-
-                            // Move to 2nd result set => completed & active
                             await reader.NextResultAsync();
                             while (await reader.ReadAsync())
                             {
@@ -718,8 +467,6 @@ namespace swas.BAL.Repository
                                     ActionId = 0
                                 });
                             }
-
-                            // Move to 3rd result set => counts with ActionId
                             await reader.NextResultAsync();
                             db.DTODashboardCountlstForAction = new List<DTODashboardCount>();
                             while (await reader.ReadAsync())
@@ -735,8 +482,6 @@ namespace swas.BAL.Repository
                                     ActionId = reader.GetInt32(reader.GetOrdinal("ActionId"))
                                 });
                             }
-
-                            // Move to 4th result set => Dashboard headers
                             await reader.NextResultAsync();
                             db.DTODashboardHeaderlst = new List<DTODashboardHeader>();
                             while (await reader.ReadAsync())
@@ -751,8 +496,6 @@ namespace swas.BAL.Repository
                                     Statseq = reader.GetInt32(reader.GetOrdinal("Statseq"))
                                 });
                             }
-
-                            // Move to 5th result set => Approved counts
                             await reader.NextResultAsync();
                             var approvedList = new List<DTOApprovedCount>();
                             while (await reader.ReadAsync())
@@ -765,8 +508,6 @@ namespace swas.BAL.Repository
                                     Total = reader.GetInt32(reader.GetOrdinal("Total"))
                                 });
                             }
-
-                            // Group approved counts by StatusId and StatusActionsMappingId as in your original logic
                             db.DTOApprovedCountlst = approvedList
                                 .GroupBy(p => new { p.StatusId, p.StatusActionsMappingId })
                                 .Select(g => new DTOApprovedCount
@@ -775,8 +516,6 @@ namespace swas.BAL.Repository
                                     StatusActionsMappingId = g.Key.StatusActionsMappingId,
                                     Total = g.Sum(x => x.Total)
                                 }).ToList();
-
-                            // Move to 6th result set => BISAG-N count
                             await reader.NextResultAsync();
                             while (await reader.ReadAsync())
                             {
@@ -789,8 +528,6 @@ namespace swas.BAL.Repository
                                     ProjId = 0
                                 });
                             }
-
-                            // Move to 7th result set => Re-Vetting count
                             await reader.NextResultAsync();
                             while (await reader.ReadAsync())
                             {
@@ -838,13 +575,10 @@ namespace swas.BAL.Repository
                     {
                         cmd.CommandText = "dbo.usp_DashboardChartSummary";
                         cmd.CommandType = CommandType.StoredProcedure;
-
-                        // Add parameter
                         cmd.Parameters.Add(new SqlParameter("@UserId", SqlDbType.Int) { Value = UserId });
 
                         using (var reader = await cmd.ExecuteReaderAsync())
                         {
-                            // 1st Result Set - Project Status (Year-wise)
                             List<DTOChartSummary> lstdb = new List<DTOChartSummary>();
                             while (await reader.ReadAsync())
                             {
@@ -854,8 +588,6 @@ namespace swas.BAL.Repository
                                 lstdb.Add(db);
                             }
                             lst.ProjectStatus=lstdb;
-
-                            // 2nd Result Set - Pre Approved Projects (Stage-wise)
                             if (await reader.NextResultAsync())
                             {
                                 List<DTOChartSummary> lstdbApproved = new List<DTOChartSummary>();
@@ -869,7 +601,6 @@ namespace swas.BAL.Repository
                                 }
                                 lst.ApprovedProjectsPre = lstdbApproved;
                             }
-                            // 3nd Result Set - Post Approved Projects (Stage-wise)
                             if (await reader.NextResultAsync())
                             {
                                 List<DTOChartSummary> lstdbApproved = new List<DTOChartSummary>();
@@ -883,7 +614,7 @@ namespace swas.BAL.Repository
                                 }
                                 lst.ApprovedProjectsPost = lstdbApproved;
                             }
-                            // 4rd Result Set - Whitelisted Projects (Year-wise)
+                           
                             if (await reader.NextResultAsync())
                             {
                                 List<DTOChartSummary> lstdbWhitelisted = new List<DTOChartSummary>();
@@ -897,20 +628,7 @@ namespace swas.BAL.Repository
                                 lst.WhitelistedProjects = lstdbWhitelisted;
                             }
 
-                            // 4th Result Set - Total Projects (Processed vs Pending)
-                            //if (await reader.NextResultAsync())
-                            //{
-                            //    List<DTOChartSummary> lstdbTotalProjects = new List<DTOChartSummary>();
-                            //    while (await reader.ReadAsync())
-                            //    {
-                            //        DTOChartSummary db = new DTOChartSummary();
-
-                            //        db.Name = Convert.ToString(reader["Status"]);
-                            //        db.Total = Convert.ToInt32(reader["Total"]);
-                            //        lstdbTotalProjects.Add(db);
-                            //    }
-                            //    lst.TotalProjects = lstdbTotalProjects;
-                            //}
+                           
                         }
                     }
 
@@ -934,10 +652,7 @@ namespace swas.BAL.Repository
             {
                 if (StatusId != 1)
                 {
-                    //select act.StatusActionsMappingId,sts.StatusId,sts.Status from TrnStatusActionsMapping act
-                    //inner join mStatus sts on act.StatusId=sts.StatusId
-                    //inner join ProjStakeHolderMov mov on mov.StatusActionsMappingId=act.StatusActionsMappingId
-                    //where act.ActionsId=2 and act.StatusId=20 and mov.ProjId=1
+                   
                     var ret = await (from act in _dbContext.TrnStatusActionsMapping
                                      join sts in _dbContext.mStatus on act.StatusId equals sts.StatusId
                                      join mov in _dbContext.ProjStakeHolderMov on act.StatusActionsMappingId equals mov.StatusActionsMappingId
@@ -974,71 +689,20 @@ namespace swas.BAL.Repository
             return false;
           
         }
-
-
-        
-
-        //public async Task<int> IsReadInbox(int psmId)
-        //{
-
-        //    var _person = new tbl_ProjStakeHolderMov() {PsmId=psmId, IsRead=true};
-
-
-        //    _context.ProjStakeHolderMov.Attach(_person);
-        //    _context.Entry(_person).Property(X => X.PsmId).IsModified = true;
-        //    _context.SaveChanges();
-        //    return 1;
-        //}
-        ///Created and Reviewed by : Sub Maj M Sanal Kumar
-        // Reviewed Date : 15,16 & 31 Jul 23
-        // Reviewed Date : 27 Aug 23, 02,03, 09 & 10 Oct 23  ---   Flags Error Rectified
-        //  Data Transfer Error Rectified...   Get Request error by remove antifurg....  carried out
-        //  outside user access error rectified
-        //   model validation removed
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        ///Created and Reviewed by : Sub Maj M Sanal Kumar
-        // Reviewed Date : 17 Nov 23
-
-
-
-
-
-        ///Created and Reviewed by : Sub Maj M Sanal Kumar
-        // Reviewed Date : 31 Jul 23
         public async Task<tbl_ProjStakeHolderMov> GetProjStakeHolderMovByIdAsync(int psmId)
         {
             return await _dbContext.ProjStakeHolderMov.FindAsync(psmId);
         }
-        ///Created and Reviewed by : Sub Maj M Sanal Kumar
-        // Reviewed Date : 31 Jul 23
         public async Task<List<tbl_ProjStakeHolderMov>> GetAllProjStakeHolderMovAsync()
         {
             return await _dbContext.ProjStakeHolderMov.ToListAsync();
         }
-        ///Created and Reviewed by : Sub Maj M Sanal Kumar
-        // Reviewed Date : 31 Jul 23
         public async Task<bool> UpdateProjStakeHolderMovAsync(tbl_ProjStakeHolderMov projStakeHolderMov)
         {
             _dbContext.Entry(projStakeHolderMov).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
             return true;
         }
-        ///Created and Reviewed by : Sub Maj M Sanal Kumar
-        // Reviewed Date : 31 Jul 23
         public async Task<bool> DeleteProjStakeHolderMovAsync(int psmId)
         {
             var projStakeHolderMov = await _dbContext.ProjStakeHolderMov.FindAsync(psmId);
@@ -1049,12 +713,6 @@ namespace swas.BAL.Repository
             await _dbContext.SaveChangesAsync();
             return true;
         }
-
-
-      
-
-     
-        // added by Sub Maj Sanal on 21 Nov 23
         public async Task<int> ValStatusAsync(int? ProjId)
         {
             int? maxStatusId = _dbContext.ProjStakeHolderMov
@@ -1114,70 +772,7 @@ namespace swas.BAL.Repository
 
             try
             {
-                #region GetProjLogviewAsyncWithLinq
-
-                //var result = from b in _dbContext.ProjStakeHolderMov
-                //             join c in _dbContext.Projects on b.ProjId equals c.ProjId
-                //             join a in _dbContext.TrnStatusActionsMapping on b.StatusActionsMappingId equals a.StatusActionsMappingId
-
-                //             join e in _dbContext.mStatus on a.StatusId equals e.StatusId
-                //             join d in _dbContext.mStages on e.StageId equals d.StagesId
-                //             join f in _dbContext.mActions on a.ActionsId equals f.ActionsId
-                //             join g in _dbContext.tbl_mUnitBranch on b.ToUnitId equals g.unitid
-                //             join h in _dbContext.tbl_mUnitBranch on b.FromUnitId equals h.unitid
-                //             join j in _dbContext.Comment on b.PsmId equals j.PsmId into commentGroup
-                //             from j in commentGroup.DefaultIfEmpty()
-                //             join k in _dbContext.tbl_mUnitBranch on c.StakeHolderId equals k.unitid
-                //             where b.TimeStamp >= DateTime.Parse(startDate) &&
-                //                   b.TimeStamp <= DateTime.Parse(endDate)
-                //             orderby b.TimeStamp descending
-                //             select new
-                //             {
-                //                 b.PsmId,
-                //                 b.ProjId,
-                //                 c.ProjName,
-                //                 k.UnitName,
-                //                 d.Stages,
-                //                 e.Status,
-                //                 f.Actions,
-                //                 b.TimeStamp,
-                //                 FwdBy = h.UnitName,
-                //                 FwdTo = g.UnitName,
-                //                 j.Comment,
-                //                 AttDocu = string.Join(", ", _dbContext.AttHistory
-                //                                            .Where(a => a.PsmId == b.PsmId)
-                //                                            .Select(a => $"Desc: {a.Reamarks} : Docu: {a.ActFileName}")),
-                //                 Comments = string.Join(", ", _dbContext.StkComment
-                //                                            .Where(sc => sc.PsmId == b.PsmId)
-                //                                            .Select(sc => $"{k.UnitName} Desc: {sc.Comments} : Docu: {sc.ActFileName}")),
-                //                 b.Remarks,
-                //                 b.UpdatedByUserId,
-                //                 EncyId = _dataProtector.Protect(b.PsmId.ToString())
-                //             };
-
-                //// Assuming ProjLogView has the necessary properties
-                //var projLogViews = result.ToList().Select(x => new ProjLogView
-                //{
-                //    PsmId = x.PsmId,
-                //    ProjId = x.ProjId,
-                //    ProjName = x.ProjName,
-                //    UnitName = x.UnitName,
-                //    Stages = x.Stages,
-                //    Status = x.Status,
-                //    Actions = x.Actions,
-                //    TimeStamp = x.TimeStamp,
-                //    FwdBy = x.FwdBy,
-                //    FwdTo = x.FwdTo,
-                //    Comment = x.Comment,
-                //    AttDocu = x.AttDocu,
-                //    Comments = x.Comments,
-                //    AddRemarks = x.Remarks,
-                //    ActionByUser = (int)x.UpdatedByUserId,
-                //    EncyId = x.EncyId
-                //}).ToList();
-
-                //return projLogViews;
-                #endregion
+             
 
                 #region GetProjLogviewAsyncWithProc
                 List<ProjLogView> resultList = new List<ProjLogView>();
@@ -1251,7 +846,6 @@ namespace swas.BAL.Repository
             }
             catch (Exception ex)
             {
-                // Log the exception (ex) if necessary
                 return null;
             }
         }
@@ -1259,11 +853,7 @@ namespace swas.BAL.Repository
 
         public async Task<int> GetProjectId(string? ProjName)
         {
-            //var data = from a in _dbContext.Projects where a.ProjName == ProjName
-            //           select a.ProjId;
-            //int data1 = Convert.ToInt32(data);
-            //return data1;
-
+        
             int? ProjId  = _dbContext.Projects
            .Where(p => p.ProjName == ProjName)
             .Select(p => (int?)p.ProjId)
@@ -1284,7 +874,6 @@ namespace swas.BAL.Repository
 
 		public async Task<string> CheckPreviousApprovals(int statusId, int projId, int actionsId)
 		{
-			// Fetch mapping to validate action
 			var trn = await _dbContext.TrnStatusActionsMapping
 				.FirstOrDefaultAsync(x => x.ActionsId == 2 && x.StatusActionsMappingId == actionsId);
 
@@ -1294,18 +883,11 @@ namespace swas.BAL.Repository
  {
 	 6, 7, 11, 20, 21, 24, 25, 26, 27, 28, 29
  };
-
-
-				// Validation
 				if (trn == null || !previousStatusIds.Contains(statusId) || actionsId != trn.StatusActionsMappingId)
 					return "OK";
-
-				// Determine required (previous) statuses
 				var requiredStatusIds = previousStatusIds
 										.Where(x => x < statusId)
 										.ToList();
-
-				// Fetch approved statuses (Action 2)
 				var approvedStatuses = await (from act in _dbContext.TrnStatusActionsMapping
 											  join mov in _dbContext.ProjStakeHolderMov
 												  on act.StatusActionsMappingId equals mov.StatusActionsMappingId
@@ -1317,8 +899,6 @@ namespace swas.BAL.Repository
 											  select act.StatusId)
 											  .Distinct()
 											  .ToListAsync();
-
-				// Fetch comment-completed statuses (Action 1 + comment + complete)
 				var commentStatuses = await (from act in _dbContext.TrnStatusActionsMapping
 											 join mov in _dbContext.ProjStakeHolderMov
 												 on act.StatusActionsMappingId equals mov.StatusActionsMappingId
@@ -1331,8 +911,6 @@ namespace swas.BAL.Repository
 											 select act.StatusId)
 											 .Distinct()
 											 .ToListAsync();
-
-				// Find missing approvals
 				var notApprovedStatuses = requiredStatusIds
 										  .Except(approvedStatuses)
 										  .Except(commentStatuses)
@@ -1352,7 +930,6 @@ namespace swas.BAL.Repository
 			}
 			catch (Exception ex)
 			{
-				// Proper exception handling to preserve stack trace
 				throw;
 			}
 		}

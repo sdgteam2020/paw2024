@@ -7,11 +7,6 @@ using System.Threading.Tasks;
 
 namespace swas.BAL.Interfaces
 {
-    ///Created and Reviewed by : Sub Maj Sanal
-    ///Reviewed Date : 31 Jul 23
-    ///Tested By :- 
-    ///Tested Date : 
-    ///Start
     public interface ICommentRepository
     {
         Task<int> AddCommentAsync(tbl_Comment comment);
@@ -22,12 +17,8 @@ namespace swas.BAL.Interfaces
         Task<tbl_Comment> GetCommentByPsmIdAsync(int? PsmId);
 
         Task<int> CountCommentAsync(int stkhol);
-
-        //Task<List<Notification>> GetNotificationAsync(int ProjId);
         Task<List<Notification>> GetNotificationInbox (int ProjId);
-        //Task<int> GetNotificationCommentCount();
         Task<int> GetNotificationInboxCount();
-        //
     }
 
 }

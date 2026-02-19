@@ -41,7 +41,6 @@ namespace swas.UI.Models
         {
             using (var ms = new MemoryStream())
             {
-                // ---------------- PDF SETUP ----------------
                 PdfWriter writer = new PdfWriter(ms);
                 PdfDocument pdf = new PdfDocument(writer);
                 Document document = new Document(pdf, PageSize.A4);
@@ -49,8 +48,6 @@ namespace swas.UI.Models
 
                 PdfFont font = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
                 document.SetFont(font);
-
-                // ---------------- HEADER ----------------
                 Table header = new Table(new float[] { 80, 20 }).UseAllAvailableWidth();
                 DeviceRgb headerColor = new DeviceRgb(230, 230, 230);
 
@@ -73,15 +70,11 @@ namespace swas.UI.Models
 
                 document.Add(header);
                 document.Add(new LineSeparator(new SolidLine(0.7f)));
-
-                // ---------------- INTRO ----------------
                 document.Add(new Paragraph(
                     $"It is certified that {data.CertificateName ?? string.Empty} has been approved for ibid project. Details are as under:")
                     .SetFontSize(12)
                     .SetBold()
                     .SetMarginBottom(10));
-
-                // ---------------- BASE TABLE ----------------
                 Table table = new Table(new float[] { 35, 5, 60 })
                     .UseAllAvailableWidth()
                     .SetBorder(new SolidBorder(ColorConstants.LIGHT_GRAY, 0.8f))
@@ -96,16 +89,11 @@ namespace swas.UI.Models
                 {
                     substage = 27;
                 }
-
-
-                // ---------------- DYNAMIC CONTENT FROM DB ----------------
                 var contents = context.tbl_mCertificateContent
                     .Where(x=>x.SubStage == substage
                              && x.IsActive)
                     .OrderBy(x => x.DisplayOrder )
                     .ToList();
-    //            var footerContent = contents
-    //.FirstOrDefault(x => x.ContentId == 7);
 
                 var mainContents = contents
                     .Where(x => x.ContentId != 7 && x.ContentId != 1006)
@@ -146,12 +134,9 @@ namespace swas.UI.Models
                             break;
                     }
                 }
-
-                // ---------------- COMMON FOOTER ROWS ----------------
                 AddRow(table, "Deploy Scenario", data.HostType ?? "N/A");
                 AddRow(table, "Security Cl of data", "Restricted");
                 AddRow(table, "Cert Generation Date", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"));
-                // Get label (Std Remarks) and text (As-is basis)
                 var stdRemarkLabel = contents.FirstOrDefault(x => x.ContentId == 3);
                 var stdRemarkText = contents.FirstOrDefault(x => x.ContentId == 7);
 
@@ -160,7 +145,6 @@ namespace swas.UI.Models
                 
                 if (stdRemarkLabel != null || stdRemarkText != null)
                 {
-                    // LABEL FROM DB (ContentId = 3)
                     if (stdRemarkLabel != null)
                     {
                         table.AddCell(new Cell(1, 3)
@@ -171,8 +155,6 @@ namespace swas.UI.Models
                              .SetBorder(Border.NO_BORDER));
                            
                     }
-
-                    // REMARK TEXT FROM DB (ContentId = 7)
                     if (stdRemarkText != null)
                     {
                         string footerText = stdRemarkText.ContentText!
@@ -188,8 +170,6 @@ namespace swas.UI.Models
                 if (archrevmarks != null)
                 {
                    
-                    // REMARK TEXT FROM DB (ContentId = 7)
-                   
                         string footerText = archrevmarks.ContentText!
                             .Replace("{ProjName}", data.ProjName);
 
@@ -204,8 +184,6 @@ namespace swas.UI.Models
 
 
                 document.Add(table);
-
-                // ---------------- FOOTER ----------------
                 document.Add(new Paragraph("This certificate is auto-generated and does not require Ink signature.")
                     .SetFontSize(9)
                     .SetTextAlignment(TextAlignment.CENTER)
@@ -218,10 +196,7 @@ namespace swas.UI.Models
                     .SetFontSize(9)
                     .SetTextAlignment(TextAlignment.CENTER)
                     .SetOpacity(0.6f));
-
-                // ---------------- BACKGROUND & WATERMARK ----------------
                 AddBackgroundShield(pdf);
-                // _watermarkRepo.AddWatermark(pdf, watermark);
 
                 document.Close();
                 return ms.ToArray();
@@ -289,12 +264,8 @@ namespace swas.UI.Models
                 Image img = new Image(wmImage)
                     .ScaleToFit(imgMaxWidth, imgMaxHeight)
                     .SetOpacity(0.4f);
-
-                // Get actual scaled dimensions
                 float actualWidth = img.GetImageScaledWidth();
                 float actualHeight = img.GetImageScaledHeight();
-
-                // Calculate position to center the image
                 float x = (pageSize.GetWidth() - actualWidth) / 2;
                 float y = (pageSize.GetHeight() - actualHeight) / 2;
 
@@ -309,19 +280,14 @@ namespace swas.UI.Models
         private void AddOfficerInfoOverlayTick(Document document, PdfDocument pdf, Login logins, string tickImagePath = "wwwroot/assets/images/verified_tick.png")
         {
             PdfPage page = pdf.GetPage(1);
-
-            // 1️⃣ Draw tick as background
             PdfCanvas canvas = new PdfCanvas(page.NewContentStreamBefore(), page.GetResources(), pdf);
 
             ImageData tickData = ImageDataFactory.Create(tickImagePath);
             Image tick = new Image(tickData)
                 .ScaleToFit(100, 100)        // adjust size as needed
                 .SetFixedPosition(50, 100);  // X,Y from bottom-left, adjust for placement
-            /*  .SetOpacity(0.2f);    */       // faint, watermark style
 
             new Canvas(canvas, page.GetPageSize()).Add(tick);
-
-            // 2️⃣ Overlay officer info on top of tick
             float textX = 60;  // adjust horizontal position relative to tick
             float textY = 150; // starting vertical position
             document.Add(new Paragraph("(" + logins.Offr_Name.Trim() + ")")

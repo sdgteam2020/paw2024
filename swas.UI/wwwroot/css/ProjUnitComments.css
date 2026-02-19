@@ -1,10 +1,10 @@
 ﻿
-/* Add 3D effect styles for the buttons */
+
 .table-button {
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Example shadow effect */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); 
     transition: transform 0.3s;
 }
 
@@ -12,13 +12,13 @@
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Example shadow effect */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); 
     transition: transform 0.3s;
 }
 
 .table-button:hover {
     transform: translateY(-3px);
-    background-color: blue; /* Example hover effect for 3D appearance */
+    background-color: blue; 
 }
 
 .required-indicator {
@@ -36,10 +36,10 @@
 .underline-h5 {
     padding: 0.5rem;
     width: 100%;
-    margin: 0 auto; /* Center the box */
+    margin: 0 auto; 
     text-align: center;
     border-color: #03c1fc;
-    /*box-shadow: 2px 6px 5px -3px #062b50;*/
+    
     background-color: #0cafff;
     color: white;
     font-family: Arial;
@@ -61,28 +61,28 @@
 }
 
 .row {
-    display: flex; /* Make the row a flex container */
-    align-items: stretch; /* Align child elements to have equal height */
+    display: flex; 
+    align-items: stretch; 
 }
 
 .col-lg-6 {
-    flex: 1; /* Distribute the available space equally between the two columns */
-    margin-right: 10px; /* Add some space between the columns (adjust as needed) */
+    flex: 1; 
+    margin-right: 10px; 
 }
 
 
 .cancel-button {
-    background-color: #F44336; /* Red color */
+    background-color: #F44336; 
     border: none;
-    color: #000; /* Black text color */
+    color: #000; 
     padding: 5px 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Shadow effect */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); 
     transition: transform 0.3s;
 }
 
     .cancel-button:hover {
         transform: translateY(-3px);
-        background-color: darkred; /* Darker red color on hover */
+        background-color: darkred; 
     }
 
 
@@ -210,10 +210,10 @@
     width: 4px;
     height: 4px;
     margin-right: 0px;
-    /* Add any additional styling you need for the attachment icon */
+    
 }
 
-/* Header Styles */
+
 .text-center {
     text-align: center;
 }
@@ -230,7 +230,7 @@
     text-decoration: underline;
 }
 
-/* Cancel Button */
+
 .cancel-button {
     position: absolute;
     top: 0;
@@ -238,7 +238,7 @@
     width: 15px;
 }
 
-/* Card Styles */
+
 .card {
     border-radius: 15px;
 }
@@ -251,7 +251,7 @@
     border-radius: 12px;
 }
 
-/* Form Styles */
+
 .form-group {
     margin-bottom: 1rem;
 }
@@ -264,12 +264,12 @@
     color: red;
 }
 
-/* Chat Box Styles */
+
 .chat-messages {
     overflow-y: auto;
 }
 
-/* Custom Icon Sizes */
+
 .text-with-icon span {
     font-size: 20px;
 }
@@ -280,11 +280,11 @@
     color: antiquewhite;
 }
 
-/* Validation and Form Styling */
+
 .invalid-feedback {
     color: red;
 }
-/* Table and Card Styling */
+
 .card-body {
     padding: 1.5rem;
 }
@@ -307,12 +307,12 @@
     cursor: pointer;
 }
 
-/* Comment Icon Styling */
+
 .comment-icon {
     height: 31px;
 }
 
-/* Align Table Cells */
+
 .d-flex {
     display: flex;
 }
@@ -321,13 +321,13 @@
     justify-content: center;
 }
 
-/* Add any other necessary styles for spacing, borders, etc. */
-/* General layout styles */
+
+
 .container {
     padding: 20px;
 }
 
-/* Card styles */
+
 .card-body {
     padding: 20px;
     border-radius: 10px;
@@ -356,14 +356,14 @@
         border: 1px solid #ccc;
     }
 
-/* Text area with long-text class for overflow handling */
+
 .long-text {
     white-space: normal;
     word-wrap: break-word;
     max-width: 100%;
 }
 
-/* For button styling */
+
 .project-details-btn {
     padding: 10px 20px;
     background-color: #007bff;
@@ -376,18 +376,18 @@
         background-color: #0056b3;
     }
 
-/* Other details heading */
+
 h3 {
     font-size: 20px;
     font-weight: bold;
     margin-top: 20px;
 }
-/* General styles for comment container */
+
 .comment-container {
     background-color: #f0f0f0;
 }
 
-/* Styles for comment boxes */
+
 .comment-box {
     text-align: justify;
     background-color: #ffffff;
@@ -396,32 +396,32 @@ h3 {
     border-radius: 8px;
 }
 
-/* Styles for comment header */
+
 .comment-header {
     font-family: Arial, sans-serif;
     font-weight: bold;
     color: #0793f7;
 }
 
-/* Meta information in comment */
+
 .comment-meta {
     margin-left: 10px;
     font-size: 0.9em;
     color: #777;
 }
 
-/* Styles for PDF link */
+
 .pdf-link {
     margin-left: 15px;
 }
 
-/* PDF icon styling */
+
 .pdf-icon {
     width: 24px;
     height: 24px;
 }
 
-/* Styles for content inside the comment box */
+
 .comment-content {
     font-size: 1em;
     line-height: 1.6;
@@ -429,12 +429,12 @@ h3 {
     color: #333;
 }
 
-/* Hide AddStatusDetails section initially */
+
 #AddStatusDetails {
     display: none;
 }
 
-/* Style for the cancel button */
+
 #CancelUpdate {
     background-color: #f44336;
     color: white;
@@ -448,7 +448,7 @@ h3 {
         background-color: #e53935;
     }
 
-/* Style for table button */
+
 .table-button {
     background-color: #007bff;
     color: white;

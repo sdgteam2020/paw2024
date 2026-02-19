@@ -42,12 +42,9 @@ namespace swas.UI.Controllers
         {
             try
             {
-                //var userdet = await _userManager.Users.ToListAsync();
                 string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                //var userdet = await _userManager.Users.ToListAsync();
                 var userdet = await _trnChatMsg.GetAllUsers();
                 var ischat = await _trnChatMsg.GetIsChat(id);
-                //  var orderby = await _trnChatMsg.GetAllUserLastchatDateFororderBy();
                 List<DTOApplicationUserWithChatRead> lstuser = new List<DTOApplicationUserWithChatRead>();
                 if (userdet.Count > 0)
                 {
@@ -75,7 +72,7 @@ namespace swas.UI.Controllers
                         }
                     }
                 }
-                return Json(lstuser/*.OrderByDescending(i => i.Total).OrderByDescending(i => i.CreatedOn)*/);
+                return Json(lstuser);
             }
             catch (Exception ex)
             {
@@ -86,59 +83,6 @@ namespace swas.UI.Controllers
                 return Json(nmum.Exception);
             }
         }
-        //public async Task<IActionResult> GetAllUsers(int Id)
-        //{
-        //    try
-        //    {
-        //        string id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        //        var userdet = await _userManager.Users.ToListAsync();
-        //        var ischat = await _trnChatMsg.GetIsChat(id);
-
-        //        List<DTOApplicationUserWithChatRead> lstuser = new List<DTOApplicationUserWithChatRead>();
-
-        //        if (userdet.Count > 0)
-        //        {
-        //            foreach (var user in userdet)
-        //            {
-        //                if (id != user.Id)
-        //                {
-        //                    DTOApplicationUserWithChatRead db = new DTOApplicationUserWithChatRead
-        //                    {
-        //                        Id = user.Id,
-        //                        Rank = user.Rank,
-        //                        Offr_Name = user.Offr_Name,
-        //                        UserName = user.UserName
-        //                    };
-
-        //                    if (ischat != null && ischat.Count > 0)
-        //                    {
-        //                        var dTOIsChat = ischat.FirstOrDefault(i => i.FromUserID == user.Id);
-
-        //                        if (dTOIsChat != null)
-        //                        {
-        //                            db.Total = dTOIsChat.Total;
-        //                            db.CreatedOn = dTOIsChat.CreatedOn;
-        //                        }
-        //                    }
-
-        //                    lstuser.Add(db);
-        //                }
-        //            }
-        //        }
-
-        //        // Sort users: first by unread messages, then by most recent message timestamp (descending)
-        //        var sortedUsers = lstuser
-        //            .OrderByDescending(i => i.Total)      // First sort by unread message count
-        //            .ThenByDescending(i => i.CreatedOn)   // Then sort by the latest message timestamp
-        //            .ToList();
-
-        //        return Json(sortedUsers);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json(ex);
-        //    }
-        //}
 
         public async Task<IActionResult> SaveUserMapChat(mUserMapChat mUserMapChat)
         {

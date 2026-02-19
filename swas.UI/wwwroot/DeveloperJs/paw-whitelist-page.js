@@ -3,22 +3,16 @@
    ========================= */
 
 (function () {
-    // Make Razor values available globally (previously inline var flag=..., etc.)
-    // Read from <body data-...>
     var b = document.body;
     window.flag = b.getAttribute("data-flag") || "";
     window.ButtonText = b.getAttribute("data-buttontext") || "";
     window.username = b.getAttribute("data-username") || "";
     window.ip = b.getAttribute("data-ip") || "";
 })();
-
-// Keep this global because you use onkeyup="ValInData(this)"
 window.ValInData = function (input) {
     var regex = /[^a-zA-Z0-9/ ]/g;
     input.value = input.value.replace(regex, "");
 };
-
-// Keep these globals (you had inline openForm/closeForm)
 window.openForm = function () {
     var el = document.getElementById("myForm");
     if (el) el.style.display = "block";
@@ -30,8 +24,6 @@ window.closeForm = function () {
 };
 
 $(document).ready(function () {
-  
-    // 1) AddWhite_proj click -> reset form + show modal + blur background
     $("#AddWhite_proj").on("click", function () {
       
         $("input[required], select[required], textarea[required]").removeClass("is-invalid");
@@ -43,17 +35,11 @@ $(document).ready(function () {
         $m.find("textarea").val("");
 
         $m.modal("show");
-
-        // keep your blur behavior
         $("#WhiteListedProjectDetail .modal-content").css("filter", "blur(4px)");
     });
-
-    // 2) DataTable init (kept same call as your code)
     if (typeof initializeDataTable === "function") {
         initializeDataTable("#HeldTable11");
     }
-
-    // 3) Apply select2 inside modal with dropdownParent
     $("#WhiteListModal").on("shown.bs.modal", function () {
         $("#sponsor").select2({
             placeholder: "-- Select Sponsor --",
@@ -62,23 +48,17 @@ $(document).ready(function () {
             dropdownParent: $("#WhiteListModal")
         });
     });
-
-    // 4) Hit counter
     $.get("/Home/getCountertoday", function (data) {
         $("#dailyCounter").text("Visitors Today: " + data.today);
         $("#monthlyCounter").text("Monthly: " + data.currentMonth);
         $("#totalCounter").text("Total Visitors: " + data.total);
     });
-
-    // 5) Open the 3 modals on card click
     $("#PolicyWhiteList").on("click", function () { $("#ProjectPolicyModel").modal("show"); });
     $("#whitelistCard").on("click", function () { $("#ProjectUnderProcess").modal("show"); });
     $("#WhiteListedProject").on("click", function () {
        
         $("#WhiteListedProjectDetail").modal("show");
     });
-
-    // 6) Dummy data button
     $("#btnDummyData").on("click", function () {
 
         function randomString(length) {

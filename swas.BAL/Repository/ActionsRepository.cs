@@ -34,56 +34,9 @@ namespace swas.BAL.Repository
             return _dbContext.mActions.FirstOrDefault(a => a.Actions == name);
         }
 
-        
-
-        ///Created by : Ajay
-        ///Reviewed Date : 30 Aug 23
-        ///Revied by Sub Maj Sanal
-        ///01 Sep 23
 
 
-
-        //    select pm.StageId, pm.StatusId, pm.actionid, (select ActionsId from mActions where StatCompId= 4 and StagesId = 2
-
-
-
-        //and ActionsId not in (select actionid from ProjStakeHolderMov where projid= 178)
-        //        ) as nextactionid,
-        //              (select StatusId from mActions where StatCompId=4 and StagesId = 2 ) as nextstatus,
-        //              (select StagesId from mActions where StatCompId=4 and StagesId = 2  ) as nextstage,
-
-        //               pj.*
-        //               from Projects pj
-        //              left join ProjStakeHolderMov pm
-        //              on pj.CurrentPslmId = pm.PsmId
-        //              left join mActions ma on
-        //              pm.ActionId = ma.ActionsId
-        //              where pm.StageId = 2 and pj.ProjId= 178
-
-
-
-
-
-        //select pm.StageId, pm.StatusId, pm.actionid, (select ActionsId from mActions where StatCompId= 4 and StageId = 2) as nextactionid,
-        //(select StatusId from mActions where StatCompId=4 and StageId = 2 ) as nextstatus,
-        //(select StageId from mActions where StatCompId=4 and StageId = 2  ) as nextstage,
-
-        // pj.*
-        // from Projects pj
-        //left join ProjStakeHolderMov pm
-        //on pj.CurrentPslmId = pm.PsmId
-        //left join mActions ma on
-        //pm.ActionId = ma.ActionsId
-        //where pm.StageId = 2 and pj.ProjId= 111
-
-
-
-
-
-
-        //join map in _dbContext.TrnStatusActionsMapping on act.ActionsId equals map.ActionsId
-        //where map.StatusId == StatusId 
-
+      
 
 
 
@@ -164,7 +117,7 @@ namespace swas.BAL.Repository
             return lst;
             
 
-            //return await query.ToListAsync();
+           
         }
 
          
@@ -253,7 +206,6 @@ namespace swas.BAL.Repository
 
 
             lst = ret;
-            //.Where(i => i.UnitId == UnitId)
             var ret1 = acttoallow.ToList();
             if (ret1.Count() == 0)
             {
@@ -265,7 +217,6 @@ namespace swas.BAL.Repository
                 }
 
             }
-            //.Where(i => i.UnitId != UnitId)
             var ret2 = acttoallow.ToList();
 
             if (ret2.Count() > 0)
@@ -287,7 +238,6 @@ namespace swas.BAL.Repository
             return lst;
 
 
-            //return await query.ToListAsync();
         }
 
 
