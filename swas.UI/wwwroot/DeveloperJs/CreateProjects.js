@@ -16,7 +16,9 @@ $(document).ready(function () {
 
 
     $("#uploadButton").click(function () {
-       
+
+        // Example logic — replace with your actual validation
+      
         var requiredFields = $('#fwduploaditems').find('.requiredField');
         var allFieldsComplete = true;
 
@@ -58,7 +60,7 @@ $(document).ready(function () {
             setTimeout(function () {
                 UploadFiles();
             }, 1000)
-          
+           
         }
     });
 
@@ -114,7 +116,7 @@ $(document).ready(function () {
 
     });
     $(".previous").click(function () {
-        debugger;
+        
         const fieldset = $("#0");  // jQuery object
         fieldset.removeClass('d-none'); // hides the fieldset
 
@@ -193,7 +195,7 @@ $(document).ready(function () {
         }
     });
     $("#btnbasic").click(function () {
-       
+        
        
         requiredFields = $('#tablebasic').find('.requiredField');
         var allFieldsComplete = true;
@@ -211,13 +213,12 @@ $(document).ready(function () {
             "#InitiatedDate",
             "#CompletionDate",
             "#IsWhitelisted",
-            "#InitialRemark",
+           
             "#AimScope",
-            "#HQandITinfraReqd",
-            "#ContentofSWApp",
-            "#ReqmtJustification",
-            "#UsabilityofProposedAppln",
-            "#RequestRemarks"
+            
+            
+           
+           
 
         ];
         
@@ -250,7 +251,7 @@ $(document).ready(function () {
             })
         }
         else {
-            debugger;
+            
             const fieldset = $("#0");  // jQuery object
             fieldset.addClass('d-none'); // hides the fieldset
 
@@ -454,7 +455,7 @@ $(document).ready(function () {
     });
 });
 function AddProject(thistag) {
-   
+    
     fetchServerDate().then(function (S) {
 
         var token = $('input[name="__RequestVerificationToken"]').val();
@@ -464,7 +465,7 @@ function AddProject(thistag) {
         var currentDate = new Date(S.todayDateTime);
         var currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false });
 
-      
+       
        
         var InitiatedDate = initialDate + ' ' + currentTime;
         var CompletionDate = completionDate + ' ' + currentTime;
@@ -478,7 +479,7 @@ function AddProject(thistag) {
                 "InitiatedDate": InitiatedDate,
                 "CompletionDate": CompletionDate,
                 "IsWhitelisted": $("#IsWhitelisted").val(),
-               
+                "Security_Classification": $("#Security_Classification").val(),
                 "AsconNo": $("#AsconNo").val(),
                 "InitialRemark": $("#InitialRemark").val(),
                 "StakeHolderId": $("#ddlStakeHolderId").val(),
@@ -514,7 +515,9 @@ function AddProject(thistag) {
                 "OldPsmid": parseInt($("#spanOldPslmId").html()) || 0,
                 "Date_type": $('input[name="mcalender_dates"]:checked').val(),
                 "RequestRemarks": $("#RequestRemarks").val(),
-                 "MobileNo": $("#MobileNo").val()
+                 "MobileNo": $("#MobileNo").val(),
+                "Devlopment_Language": $("#Devlopment_Language").val(),
+                "operation_system_hosting_env": $("#operation_system_hosting_env").val()
             },
             headers: {
                 'RequestVerificationToken': token
@@ -647,12 +650,18 @@ function ProjectSubmited(thisdata) {
         type: 'POST',
         data: { "projid": $("#spanProjectId").html(), "type": 1, "Remarks": Remarks },
         success: function (response) {
+            console.log(response);
+            if (response.type == 404) {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: response.message,
+                    showConfirmButton: true,
+
+                });
+            }
             if (response >= 1) {
                 $("#RequestRemarks").val("");
-            }
-
-            if (response >= 1) {
-
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
@@ -692,6 +701,16 @@ function ProjectSaveAsDraft(thisdata) {
         type: 'POST',
         data: { "projid": $("#spanProjectId").html(), "type": 2, "Remarks": "" },
         success: function (response) {
+            console.log(response);
+            if (response.type == 404) {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: response.message,
+                    showConfirmButton: true,
+                   
+                });
+            }
             if (response >= 1) {
                 Swal.fire({
                     position: "top-end",

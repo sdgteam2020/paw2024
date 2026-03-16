@@ -489,21 +489,32 @@ namespace swas.BAL.Repository
                 }
 
                 tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
+                if(project.Date_type ==1)
+                {
+                    psmove.DateTimeOfUpdate = project.InitiatedDate;
+                    psmove.TimeStamp = project.InitiatedDate;
+                    cmt.DateTimeOfUpdate = project.InitiatedDate;
+                }
+                else
+                {
+                    psmove.DateTimeOfUpdate = DateTime.Now;
+                    psmove.TimeStamp = DateTime.Now;
+                    cmt.DateTimeOfUpdate = DateTime.Now;
+                }
 
-
-                psmove.ProjId = project.ProjId;
+                    psmove.ProjId = project.ProjId;
                 psmove.StatusActionsMappingId = 1; //21  //ajayupdate
                 psmove.Remarks = project.InitialRemark;
                 psmove.FromUnitId = Logins.unitid ?? 0;
                 psmove.ToUnitId = 1; //  
                 psmove.UserDetails = Helper1.LoginDetails(Logins);
                 psmove.UpdatedByUserId = Logins.unitid; // change with userid
-                psmove.DateTimeOfUpdate = project.InitiatedDate;
+                
                 psmove.IsActive = true;
 
                 psmove.EditDeleteDate = DateTime.Now;
                 psmove.EditDeleteBy = Logins.unitid;
-                psmove.TimeStamp = project.InitiatedDate;
+               
                 psmove.IsComplete = false;
                 psmove.IsComment = false;
                 psmove.IsPullBack = false;
@@ -520,7 +531,7 @@ namespace swas.BAL.Repository
                 cmt.EditDeleteDate = DateTime.Now;
                 cmt.IsDeleted = false;
                 cmt.IsActive = true;
-                cmt.DateTimeOfUpdate = project.InitiatedDate;
+             
                 cmt.Comment = project.InitialRemark;
                 cmt.PsmId = psmove.PsmId;
                 cmt.UpdatedByUserId = Logins.UserIntId;
@@ -1110,7 +1121,15 @@ try
 
         public async Task<tbl_Projects> GetProjectByIdAsync(int projectId)
         {
+            try
+            {
+
             return await _dbContext.Projects.FindAsync(projectId);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<tbl_Projects> GetProjectByIdAsync1(int? dataProjId)
@@ -1290,102 +1309,124 @@ try
 
         public async Task<bool> UpdateProjectAsync(tbl_Projects project, string Remarks)
         {
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-            if (Logins != null)
+            try
             {
-               
-                if (project.Date_type == 1 && project.IsSubmited == true && Remarks!="1")
+                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+                if (Logins != null)
                 {
 
-                    var existpsmid = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == project.CurrentPslmId);
-
-                    if (existpsmid != null)
+                    if (project.Date_type == 1 && project.IsSubmited == true && Remarks != "1")
                     {
-                        existpsmid.TimeStamp = project.InitiatedDate;
-                        _dbContext.ProjStakeHolderMov.Update(existpsmid);
-                        _dbContext.SaveChanges();
-                    }
-                    var dateApp = _dbContext.DateApproval
-                        .Where(x => x.ProjId == project.ProjId)
-                        .OrderByDescending(x => x.ProjId) // Ideally use a DateTime or Id field
-                        .FirstOrDefault();
 
-                    if (dateApp == null)
-                    {
-                        dateApp = new DateApproval
+                       
+                        var dateApp = _dbContext.DateApproval
+                            .Where(x => x.ProjId == project.ProjId)
+                            .OrderByDescending(x => x.ProjId) // Ideally use a DateTime or Id field
+                            .FirstOrDefault();
+
+                        if (dateApp == null)
                         {
-                            ProjId = project.ProjId,
-                            UnitId = Logins.unitid,
-                            Request_Date = DateTime.Now,
-                            UserRequest = true,
-                            User = Helper1.LoginDetails(Logins),
-                            IsRead = false,
-                            RequestType = 1
-                        };
-                        _dbContext.DateApproval.Add(dateApp);
+                            dateApp = new DateApproval
+                            {
+                                ProjId = project.ProjId,
+                                UnitId = Logins.unitid,
+                                Request_Date = DateTime.Now,
+                                UserRequest = true,
+                                User = Helper1.LoginDetails(Logins),
+                                IsRead = false,
+                                RequestType = 1
+                            };
+                            _dbContext.DateApproval.Add(dateApp);
+                        }
+                        else
+                        {
+                            dateApp.ProjId = project.ProjId;
+                            dateApp.UnitId = Logins.unitid;
+                            dateApp.Request_Date = DateTime.Now;
+                            dateApp.UserRequest = true;
+                            dateApp.User = Helper1.LoginDetails(Logins);
+                            dateApp.IsRead = false;
+                            dateApp.RequestType = 1;
+
+                            _dbContext.DateApproval.Update(dateApp);
+                        }
+
+                        _dbContext.SaveChanges();
+                        var legacyHistory = _dbContext.LegacyHistory
+                            .Where(x => x.ProjectId == project.ProjId)
+                            .OrderByDescending(x => x.ProjectId)
+                            .FirstOrDefault();
+
+                        if (legacyHistory == null)
+                        {
+                            legacyHistory = new LegacyHistory
+                            {
+                                ProjectId = project.ProjId,
+                                UnitId = Logins.unitid,
+                                FromUnit = Logins.unitid,
+                                ActionBy = Logins.Rank + " " + Logins.Offr_Name,
+                                ActionType = (LegacyHistory.ActionTypeEnum)1,
+                                Remarks = Remarks ?? "No Remarks",
+                                ActionDate = DateTime.Now,
+                                Userdetails = Helper1.LoginDetails(Logins)
+                            };
+                            _dbContext.LegacyHistory.Add(legacyHistory);
+                        }
+                        else
+                        {
+                            legacyHistory.ProjectId = project.ProjId;
+                            legacyHistory.UnitId = Logins.unitid;
+                            legacyHistory.FromUnit = Logins.unitid;
+                            legacyHistory.ActionBy = Logins.Rank + " " + Logins.Offr_Name;
+                            legacyHistory.ActionType = (LegacyHistory.ActionTypeEnum)1;
+                            legacyHistory.Remarks = Remarks ?? "No Remarks";
+                            legacyHistory.ActionDate = DateTime.Now;
+                            legacyHistory.Userdetails = Helper1.LoginDetails(Logins);
+
+                            _dbContext.LegacyHistory.Update(legacyHistory);
+
+                            _dbContext.SaveChanges();
+                        }
+
+                    }
+
+
+                    _dbContext.Entry(project).State = EntityState.Modified;
+
+                    await _dbContext.SaveChangesAsync();
+
+                        var existpsmid = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == project.CurrentPslmId);
+                    if(project.Date_type ==1)
+                    {
+
+                        if (existpsmid != null)
+                        {
+                            existpsmid.TimeStamp = project.InitiatedDate;
+                            _dbContext.ProjStakeHolderMov.Update(existpsmid);
+                            _dbContext.SaveChanges();
+                        }
                     }
                     else
                     {
-                        dateApp.ProjId = project.ProjId;
-                        dateApp.UnitId = Logins.unitid;
-                        dateApp.Request_Date = DateTime.Now;
-                        dateApp.UserRequest = true;
-                        dateApp.User = Helper1.LoginDetails(Logins);
-                        dateApp.IsRead = false;
-                        dateApp.RequestType = 1;
-
-                        _dbContext.DateApproval.Update(dateApp);
-                    }
-
-                    _dbContext.SaveChanges();
-                    var legacyHistory = _dbContext.LegacyHistory
-                        .Where(x => x.ProjectId == project.ProjId)
-                        .OrderByDescending(x => x.ProjectId)
-                        .FirstOrDefault();
-
-                    if (legacyHistory == null)
-                    {
-                        legacyHistory = new LegacyHistory
+                        if (existpsmid != null)
                         {
-                            ProjectId = project.ProjId,
-                            UnitId = Logins.unitid,
-                            FromUnit = Logins.unitid,
-                            ActionBy = Logins.Rank + " " + Logins.Offr_Name,
-                            ActionType = (LegacyHistory.ActionTypeEnum)1,
-                            Remarks = Remarks ?? "No Remarks",
-                            ActionDate = DateTime.Now,
-                            Userdetails = Helper1.LoginDetails(Logins)
-                        };
-                        _dbContext.LegacyHistory.Add(legacyHistory);
+                            existpsmid.TimeStamp = DateTime.Now;
+                            _dbContext.ProjStakeHolderMov.Update(existpsmid);
+                            _dbContext.SaveChanges();
+                        }
                     }
-                    else
-                    {
-                        legacyHistory.ProjectId = project.ProjId;
-                        legacyHistory.UnitId = Logins.unitid;
-                        legacyHistory.FromUnit = Logins.unitid;
-                        legacyHistory.ActionBy = Logins.Rank + " " + Logins.Offr_Name;
-                        legacyHistory.ActionType = (LegacyHistory.ActionTypeEnum)1;
-                        legacyHistory.Remarks = Remarks ?? "No Remarks";
-                        legacyHistory.ActionDate = DateTime.Now;
-                        legacyHistory.Userdetails = Helper1.LoginDetails(Logins);
-
-                        _dbContext.LegacyHistory.Update(legacyHistory);
-
-                        _dbContext.SaveChanges();
-                    }
-
+                        return true;
                 }
-
-
-                _dbContext.Entry(project).State = EntityState.Modified;
-
-                await _dbContext.SaveChangesAsync();
-                return true;
+                else
+                {
+                    return false;
+                }
             }
-            else
-            {
-                return false;
+            catch(Exception ex) {
+
+                throw ex;
             }
+           
         }
 
         public async Task<bool> UpdateTxnAsync(tbl_ProjStakeHolderMov psmov)

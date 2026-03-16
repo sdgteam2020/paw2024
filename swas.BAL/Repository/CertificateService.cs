@@ -24,13 +24,13 @@ namespace swas.BAL.Repository
 				.Where(x => x.Statusid == substage)
 				.Select(x => x.CertificateName)
 				.FirstOrDefault();
-			var remotetestvalidationdate = substage == 29
-				? _db.ProjStakeHolderMov
-					.Where(x => x.ProjId == projId && x.StatusActionsMappingId == 78)
-					.Select(x => (DateTime?)x.TimeStamp) // make nullable
-					.FirstOrDefault() ?? DateTime.Now      // fallback to now if null
-				: DateTime.Now;
-			var remoteTestNext3Years = remotetestvalidationdate.AddYears(3);
+			//var remotetestvalidationdate = substage == 29
+			//	? _db.ProjStakeHolderMov
+			//		.Where(x => x.ProjId == projId && x.StatusActionsMappingId == 78)
+			//		.Select(x => (DateTime?)x.TimeStamp) // make nullable
+			//		.FirstOrDefault() ?? DateTime.Now      // fallback to now if null
+			//	: DateTime.Now;
+			var remoteTestNext3Years = DateTime.Now.AddYears(3);
 			var result = (from p in _db.Projects
 						  join h in _db.mHostType
 							  on p.HostTypeID equals h.HostTypeID into hostGrp
@@ -41,8 +41,9 @@ namespace swas.BAL.Repository
 							  ProjId = p.ProjId,
 							  Sponsor = p.Sponsor,
 							  ProjName = p.ProjName,
+                              Security_Classification=p.Security_Classification,
 
-							  RemoteTestNext3Years = remoteTestNext3Years, // new field for 3 years later
+                              RemoteTestNext3Years = remoteTestNext3Years, // new field for 3 years later
 							  HostType = h != null ? h.HostingDesc : "N/A",
 							  CertificateName = certName
 						  }).FirstOrDefault();

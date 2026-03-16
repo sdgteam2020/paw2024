@@ -24,71 +24,154 @@
 </head>
 
 <body class="bg-primary">
+
     <div id="layoutAuthentication">
+
         <div id="layoutAuthentication_content">
+
             <main>
+
                 <div class="container aj">
+
                     <div class="row justify-content-center">
+
                         <div class="d-flex1">
 
                             <div class="col-sm-12">
 
                                 <div class="card shadow-lg border-0 rounded-lg">
+
                                     <div class="card-header">
                                         <h6 class="loginheading text-center">Login</h6>
                                     </div>
+
                                     <div class="card-body">
-                                        <form id="account" method="post" class="form-group row g-3">
+
+                                        <form id="account" method="post" class="form-group row g-3" novalidate>
+
                                             @Html.AntiForgeryToken()
+
                                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                            <!-- Username -->
                                             <div class="col-12">
-                                                <label asp-for="Input.UserName" class="form-label">Username</label>
+
+                                                <label asp-for="Input.UserName" class="form-label"></label>
+
                                                 <div class="input-group">
-                                                    <input asp-for="Input.UserName" class="form-control" aria-required="true" placeholder="Username" />
-                                                    <span asp-validation-for="Input.UserName" class="text-danger"></span>
+
+                                                    <input asp-for="Input.UserName"
+                                                           class="form-control char-limit"
+                                                           maxlength="100"
+                                                           data-maxlength="100"
+                                                           placeholder="Enter Username"
+                                                           autocomplete="username"
+                                                           required />
+
+                                                    <span class="charErrorMsg d-none paw-red-font">
+                                                        Cannot exceed 100 characters!
+                                                    </span>
+
                                                 </div>
+
+                                                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+
                                             </div>
 
+
+                                            <!-- Password -->
                                             <div class="col-12">
-                                                <label asp-for="Input.Password" class="inputChoosePassword form-label">Enter Password</label>
-                                                <div class="input-group" id="show_hide_password">
-                                                    <input asp-for="Input.Password" type="password" class="form-control"  aria-required="true" id="myInput" placeholder="Password" />
-                                                   @*  <a href="javascript:;" class="input-group-text bg-transparent">
-                                                        <input type="checkbox">
-                                                    </a> *@
-                                                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+
+                                                <label asp-for="Input.Password" class="form-label"></label>
+
+                                                <div class="input-group">
+
+                                                    <input asp-for="Input.Password"
+                                                           type="password"
+                                                           class="form-control char-limit"
+                                                           maxlength="100"
+                                                           data-maxlength="100"
+                                                           placeholder="Enter Password"
+                                                           autocomplete="current-password"
+                                                           required />
+
+                                                    <span class="charErrorMsg d-none paw-red-font">
+                                                        Cannot exceed 100 characters!
+                                                    </span>
+
                                                 </div>
+
+                                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+
                                             </div>
 
+
+                                            <!-- Remember Me -->
                                             <div class="col-12">
+
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-                                                    <label class="form-check-label" for="flexSwitchCheckChecked">Remember Me</label>
+
+                                                    <input asp-for="Input.RememberMe"
+                                                           class="form-check-input"
+                                                           type="checkbox"
+                                                           id="rememberMe" />
+
+                                                    <label class="form-check-label" for="rememberMe">
+                                                        Remember Me
+                                                    </label>
+
                                                 </div>
+
                                             </div>
 
+
+                                            <!-- Submit Button -->
                                             <div class="col-12">
+
                                                 <div class="d-grid">
-                                                    <button id="login-submit" type="submit" class="btn btn-primary"><i class="bx bxs-lock-open"></i>Sign in</button>
+
+                                                    <button id="login-submit"
+                                                            type="submit"
+                                                            class="btn btn-primary">
+
+                                                        Sign In
+
+                                                    </button>
+
                                                 </div>
+
                                             </div>
 
                                         </form>
+
                                     </div>
+
                                 </div>
+
                             </div>
+
                         </div>
+
                     </div>
+
                 </div>
+
             </main>
+
         </div>
 
+
+        <!-- Footer -->
         <footer class="footer1 paw-footer-fixed">
+
             <div class="footer-text">
-                Copyright &copy; Developed by ASDC, DGIS
+                Copyright © Developed by ASDC, DGIS
             </div>
+
         </footer>
+
     </div>
+
 
     <script src="~/js/jquery.min.js"></script>
     <script src="~/js/sweetalert2.all.min.js"></script>
@@ -100,13 +183,10 @@
     <script src="~/lib/cryptojs/cipher-core.js"></script>
     <script src="~/lib/cryptojs/aes.js"></script>
 
-
-
-
-
     <script src="~/developerjs/login.js"></script>
 
     @section Scripts {
         <partial name="_ValidationScriptsPartial" />
     }
+
 </body>

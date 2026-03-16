@@ -184,6 +184,12 @@ builder.Services.AddControllersWithViews(options =>
 builder.Logging.ClearProviders();
 builder.Logging.AddProvider(new DbLoggerProvider(builder.Services.BuildServiceProvider()));
 builder.Services.Configure<SiteSettings>(builder.Configuration.GetSection("SiteSettings"));
+builder.Services.AddHsts(options =>
+{
+    options.MaxAge = TimeSpan.FromDays(365);
+    options.IncludeSubDomains = true;
+});
+
 var app = builder.Build();
 app.Use(async (ctx, next) =>
 {
@@ -238,8 +244,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
 app.UseHsts();
+app.UseHttpsRedirection();  
 app.UseStaticFiles();
 
 app.UseCors("AllowArmyApp");

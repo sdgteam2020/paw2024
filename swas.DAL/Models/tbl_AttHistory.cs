@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace swas.DAL.Models
 {
@@ -32,8 +33,10 @@ namespace swas.DAL.Models
         [StringLength(250)]
         public string? Reamarks { get; set; }
 		public string? ActFileName { get; set; }
+		
+        public int? DocumentTypeId { get; set; }
 
-
+        public DocumentType? DocumentType { get; set; }
     }
 
 

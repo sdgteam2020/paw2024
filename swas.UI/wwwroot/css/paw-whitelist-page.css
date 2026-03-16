@@ -367,3 +367,14 @@ div.dataTables_wrapper div.dataTables_filter {
     color: #000 !important;
 }
 
+#myForm {
+    display: none;
+}
+
+.form-visible {
+    display: block;
+}
+
+.modal-blur {
+    filter: blur(4px);
+}

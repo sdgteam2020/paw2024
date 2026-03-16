@@ -317,10 +317,10 @@ $(".btnFwdConfirm").off().on("click", async function (e) {
     let ddlaction = $("#ddlfwdAction option:selected").text();
     let generatedPdf = null;
 
-    if (ddlaction === "Approved / Completed" && $('#ddlfwdStage').val() == 3) {
+    if (ddlaction === "Approved / Completed" && $('#ddlfwdStage').val() == 3  && parseInt($('#ddlfwdSubStage').val()) != 33) {
         generatedPdf = await getGeneratedPdfLogSignFromPreview();
     }
-   
+  
     SaveFwdTo(psmid, generatedPdf, allAttachments);
 });
 
@@ -379,8 +379,9 @@ function CheckFwdCondition(CurrentPslmId) {
                     $(".Fwdtitle").html("Projects Attch Details");
                     $(".ProjectsFwd").addClass("d-none");
                     $(".Attmenthistory").removeClass("d-none");
-                    if (ddlaction === "Approved / Completed" && $('#ddlfwdStage').val() == 3) {
-                     
+                   
+                    if (ddlaction === "Approved / Completed" && $('#ddlfwdStage').val() == 3 && parseInt($('#ddlfwdSubStage').val())!=33 ) {
+                       
                         $('.uploadLoader').remove('d-none')
                         $("#btnlogsign").removeClass("d-none");
                         $("#btnDigitalsign").removeClass("d-none");
@@ -516,15 +517,11 @@ function adjustPreviewLayout() {
 }
 
 
-
 function SaveFwdTo(CurrentPslmId, generatedPdf, allAttachments) {
-    debugger;
 
-    
     var psmdi = CurrentPslmId;
     var dateValue = $("#TimeStampToProjfwd").val();
     var get_substage = $('#ddlfwdSubStage option:selected').text();
-
     var currentDate = new Date();
     var TimeStamps = '';
     if ($('#TimeStampToProjfwd').attr('type') === 'date') {
@@ -541,63 +538,58 @@ function SaveFwdTo(CurrentPslmId, generatedPdf, allAttachments) {
         }
         TimeStamps = dateValue.replace('T', ' '); // Format datetime-local to space-separated
     }
-
     var fromDate = new Date(TimeStampForcheckdate);
     var toDate = new Date(TimeStamps);
     console.log("FromDate: ", fromDate, "Todate: ", toDate);
-
-
-
     let fwdunitid = 0;
     if ($("#ddlfwdFwdTo").val() != 'More') {
         fwdunitid = $("#ddlfwdFwdTo").val()
     }
     else if ($("#ddlfwdFwdTo").val() == 'More') {
-
         fwdunitid = $("#searchBox").val()
-
     }
     var tocc = $("#ddlfwdCCTo").val();
-
     for (let i = 0; i < tocc.length; i++) {
-
         if (fwdunitid === tocc[i]) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "The 'To' Unit and 'CC' Unit must not be the same!",
-
             });
             return false;
         }
     }
 
-   
-  
+    // SECURITY ADDITION: Basic client-side filename sanitization (helps against reflected XSS via filename)
+    // This is defense-in-depth — server must still sanitize/ignore/rename filenames
+    function sanitizeFilename(name) {
+        if (!name) return "safe_file";
+        // Remove dangerous chars: < > " ' ; ( ) [ ] { } \ / .. etc.
+        return name
+            .replace(/[<>:"'|?*{}()[\]\\\/]/g, '_')     // most dangerous chars → _
+            .replace(/\.\./g, '_')                       // prevent path traversal patterns
+            .replace(/^\.+/, '')                         // no leading dots
+            .substring(0, 120);                          // limit length
+    }
+
     var formData = new FormData();
     var PsmId = $("#spanFwdCurrentPslmId").html()
     var ccidvalue = $("#ddlfwdCCTo").val();
     var userdata =
     {
         "ProjId": $("#spanFwdProjectId").html(),
-        
 
         "StatusActionsMappingId": $("#ddlfwdAction").val(),
         "Remarks": $("#txtRemarksfwd").val(),
         "ToUnitId": fwdunitid,
         "TimeStamp": TimeStamps,
-        
-        
-
     };
     for (var key in userdata) {
         formData.append(key, userdata[key]);
     }
 
-   
     var currentpsmid = CurrentPslmId;
     formData.append("currentpsmid", currentpsmid);
-
     if (Array.isArray(ccidvalue)) {
         ccidvalue.forEach((value, index) => {
             formData.append(`Ccid[${index}]`, value);
@@ -606,54 +598,89 @@ function SaveFwdTo(CurrentPslmId, generatedPdf, allAttachments) {
         formData.append("Ccid", ccidvalue);
     }
 
+    // SECURITY ADDITION: Give generated PDF a safe name (prevents XSS if filename is reflected somewhere)
     if (generatedPdf) {
-
-
-
-
+        let safePdfName = sanitizeFilename(generatedPdf.name || `generated_${get_substage || 'doc'}.pdf`);
         allAttachments.unshift({
             file: generatedPdf,
-            remarks: get_substage
+            remarks: get_substage,
+            safeName: safePdfName   // we'll use this below
         });
-
     }
+
+    // SECURITY ADDITION: Sanitize all attachment filenames before sending
     if (allAttachments != null) {
         allAttachments.forEach((attachment, index) => {
-            formData.append(`attachments[${index}].file`, attachment.file);  // Append file
-            formData.append(`attachments[${index}].remarks`, attachment.remarks);  // Append remarks
+            let originalFile = attachment.file;
+            let safeFileName = sanitizeFilename(originalFile.name || `attachment_${index + 1}`);
+
+            // Use the sanitized name when appending (important!)
+            formData.append(`attachments[${index}].file`, originalFile, safeFileName);
+            formData.append(`attachments[${index}].remarks`, attachment.remarks || "");
         });
     };
- 
+
+    // Optional SECURITY ADDITION: Add a small client-side size check (e.g. max 10MB per file)
+    // Helps UX + prevents very large files from even starting upload
+    const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
+    let sizeError = false;
+    if (allAttachments) {
+        allAttachments.forEach(att => {
+            if (att.file && att.file.size > MAX_FILE_SIZE) {
+                sizeError = true;
+            }
+        });
+    }
+    if (sizeError) {
+        Swal.fire({
+            icon: "error",
+            title: "File too large",
+            text: "Maximum file size is 10 MB per attachment."
+        });
+        return;
+    }
+
     $.ajax({
         url: '/Projects/FwdToProject',
         type: 'POST',
-        data: formData,// FormData is sent directly as the body of the request
-
-       
-        processData: false, // Don't process data as a query string
+        data: formData,
+        processData: false,
         contentType: false,
         headers: {
             'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
         },
+        // SECURITY ADDITION: Better error handling (inform user on 400/403 etc.)
+        error: function (xhr, status, error) {
+            let msg = "An error occurred while submitting.";
+            if (xhr.status === 400) {
+                msg = "Invalid request (validation failed). Please check inputs.";
+            } else if (xhr.status === 403) {
+                msg = "Session expired or unauthorized. Please login again.";
+            } else if (xhr.status === 413) {
+                msg = "File(s) too large – server rejected the upload.";
+            }
+            Swal.fire({
+                icon: "error",
+                title: "Submission failed",
+                text: msg
+            });
+        },
         success: function (response) {
             if (response != null) {
-
                 if (response == 9) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
                         text: "The 'To' Unit and 'CC' Unit must not be the same!",
-
                     });
                 } else if (response == 6) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
                         text: "Record Not Save!",
-
                     });
                 }
-              
+
                 if (response == -4) {
                     Swal.fire({
                         icon: "error",
@@ -666,37 +693,29 @@ function SaveFwdTo(CurrentPslmId, generatedPdf, allAttachments) {
                         }
                     });
                 }
-
                 if (response == -5) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
                         text: "You cannot WL Project Before (ACG)Remote Test",
-
                     });
-
                 } if (response == -6) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
                         text: "You cannot change the Stage before DDGIT Process ",
-
                     });
-
                 }
                 if (response == -7) {
                     Swal.fire({
                         icon: "error",
                         title: "Oops...",
                         text: "Please select Send to Unit",
-
                     });
                     return false;
-
                 }
-               else {
+                else {
                     $("#spanCurrentPslmId").html(response.psmId);
-
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
@@ -704,20 +723,15 @@ function SaveFwdTo(CurrentPslmId, generatedPdf, allAttachments) {
                         showConfirmButton: false,
                         timer: 1500
                     });
-
                     $('#ProjFwd').modal('hide');
-
-                    setTimeout(function(){
-
-                    window.location.reload();
-                    },1500)
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1500)
                 }
             }
-
         }
     });
 }
-
 function PullBAckProject(ProjId, PslmId, UndoRemarks, StageId) {
     var userdata =
     {
@@ -877,7 +891,7 @@ $(".btn-Fwd").on('click',function () {
 });
 
 function openForwardModal(btn, isFromMov) {
-    debugger;
+    
     let $btn = $(btn);
     let Isprocess = isFromMov
         ? $("#IsProcess").html().trim().toLowerCase() === "false"

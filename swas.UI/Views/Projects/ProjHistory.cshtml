@@ -21,7 +21,7 @@
 <link href="~/css/ProjectwiseReport.css" rel="stylesheet" />
 
 
-<div class="row mt-5">
+<div class="row d-flex justify-content-center mt-5">
     <span id="spnstageid" class="d-none">@ViewBag.stageid</span>
     <span id="spntabType" class="d-none">@ViewBag.Type</span>
     <span id="IsProcess" class="d-none">@ViewBag.Isprocess</span>
@@ -31,8 +31,11 @@
     <div class="card-body">
         <div class="card radius-10 w-100">
             <div class="card-body">
-                <table class="table table-striped table-bordered tblProjectWiseStatusByprojid">
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered tblProjectWiseStatusByprojid">
+                    </table>
+                </div>
+                
 
 
             </div>
@@ -41,9 +44,9 @@
     <div class="col-12 col-lg-12 col-xl-4 d-flex">
         
 
-        <div class="card radius-10 w-100">
-            <div class="card-body">
-                <div class="projectheading">
+        <div class="card-border cursor-box  help card radius-10 w-100">
+            <div class=" card-body">
+                <div class="mb-3 header-container text-center text-white">
                     Proj Details   
 
                 </div>
@@ -107,10 +110,10 @@
     <!--Sponsor Details-->
     <div class="col-12 col-lg-12 col-xl-4 d-flex">
 
-        <div class="card radius-10 w-100">
+        <div class="card-border cursor-box  help card radius-10 w-100">
             <div class="card-body">
 
-                <div class="projectheading">
+                <div class=" mb-3 header-container text-center text-white">
                     Tech Details
                 </div>
                 <div class="table-responsive">
@@ -127,7 +130,7 @@
 
                         </tr>
 
-                        <tr>
+                       @*  <tr>
                             <td class="new-proj-table">Usage</td>
                              
                             <td class="tooltip-container">
@@ -135,23 +138,41 @@
                                 <span class="tooltip tooltip-text">@Model[0].ProjectDetl[1].UsabilityofProposedAppln</span>
                             </td>
 
+						</tr> *@
                         <tr>
-                            <td class="new-proj-table">Type of SW</td>
-                            <td>@Model[0].ProjectDetl[1].TypeofSW</td>
-                        <tr>
+							<td class="new-proj-table">Type of SW</td>
+							<td>@Model[0].ProjectDetl[1].TypeofSW</td>
+						</tr>
+                        @* <tr>
                             <td class="new-proj-table">Bandwidth</td>
                             <td>@Model[0].ProjectDetl[1].NWBandWidthReqmt</td>
 
-                        </tr>
+                        </tr> *@
                         <tr>
                             <td class="new-proj-table">Hosted On</td>
                             <td>@Model[0].HostedOn</td>
 
                         </tr>
-                      
-                        
 
-                        
+                        <tr>
+                            <td class="new-proj-table">Envisaged(Rs)</td>
+                            <td>@Model[0].ProjectDetl[1].EnvisagedCost</td>
+
+                        </tr>
+
+                        <tr>
+                            <td class="new-proj-table">Dply Type</td>
+                            <td>@Model[0].AppDesc</td>
+
+                        </tr>
+                        <tr>
+                            <td class="new-proj-table">Devp</td>
+                            <td>@Model[0].ProjectDetl[1].BeingDevpInhouse</td>
+
+                        </tr>
+
+
+
 
                     </table>
 
@@ -162,38 +183,22 @@
     </div>
 
 
-    <!--Tech Details-->
+   @*  <!--Tech Details-->
     <div class="col-12 col-lg-12 col-xl-4 d-flex">
 
-        <div class="card radius-10 w-100">
+        <div class="card-border cursor-box  help card-border card radius-10 w-100">
             <div class="card-body">
 
-                <div class="projectheading">
+                <div class="mb-3 header-container text-center text-white">
                     Other Details
                 </div>
                 <table>
-                    <tr>
-                        <td class="new-proj-table">Envisaged(Rs)</td>
-                        <td>@Model[0].ProjectDetl[1].EnvisagedCost</td>
-
-                    </tr>
-
-                    <tr>
-                        <td class="new-proj-table">Dply Type</td>
-                        <td>@Model[0].AppDesc</td>
-
-                    </tr>
-                    <tr>
-                        <td class="new-proj-table">Devp</td>
-                        <td>@Model[0].ProjectDetl[1].BeingDevpInhouse</td>
-
-                    </tr>
-                    
+                
                 </table>
             </div>
         </div>
 
-    </div>
+    </div> *@
 
 
 </div>
@@ -228,6 +233,7 @@
         pmove.DataProjId = Model[0].ProjId;
         pmove.Atthistory = Model[0].Atthistory;
         pmove.tounitid = ViewBag.lasttounit;
+        
 
 
     }
@@ -235,7 +241,8 @@
             new ViewDataDictionary(ViewData)
     {
         ["DataProjId"] = pmove.DataProjId,
-        ["Tounitid"] = ViewBag.lasttounit
+        ["Tounitid"] = ViewBag.lasttounit,
+        ["Documenttype"] =ViewBag.documenttype
 
     }
             )
@@ -507,12 +514,12 @@
 
 <!-- PDF END -->
 @{
-    snoa = 0;
+    snoa = ViewBag.ProjMovementHist?.Count+1 ?? 0;
 }
 <div class="card bi-ui-radios-30 w-100" id="PopUpHide">
     <div class="card-body">
         <div class="projectheading ph-heading-center">
-            <h6 class="ph-heading-title">Project Movement</h6>
+            <h6 class="header-container text-white text-center">Project Movement</h6>
         </div>
 
         <table id="SoftwareType" class="table table-striped table-bordered ph-softtype-table">
@@ -535,7 +542,7 @@
                     <tr>
                         <td class="ph-td-w1">
                             @{
-                                snoa++;
+                                snoa--;
                             }
                             @snoa
                         </td>
@@ -670,7 +677,7 @@
     <div class="card-body">
         <div class="projectheading ph-heading-center">
             <span id="ipAdd" class="d-none">@TempData["ipadd"]</span>
-            <h6 class="ph-heading-title">Comment By Stakeholders</h6>
+            <h6 class="header-container text-center text-white">Comment By Stakeholders</h6>
         </div>
         <div class="add-comment-btn text-start mb-2 mt-2"></div>
         <div class="chat-messages ph-chat-mt3" id="ChatBox">

@@ -9,6 +9,7 @@ namespace swas.DAL.Models
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Diagnostics.CodeAnalysis;
 
     public class tbl_Projects
     {
@@ -18,9 +19,9 @@ namespace swas.DAL.Models
 
         [Column(TypeName = "varchar(200)")]
         [Display(Name = "Project Name")]
-        public string ProjName { get; set; }
+        public string? ProjName { get; set; }
         [Column(TypeName = "nvarchar(200)")]
-        public string Sponsor { get; set; }
+        public string? Sponsor { get; set; }
 
         [ForeignKey("tbl_mUnitBranch")]
         public int StakeHolderId { get; set; }
@@ -39,11 +40,11 @@ namespace swas.DAL.Models
         [Column(TypeName = "varchar(200)")]
 
         [Display(Name = "Whitelisted")]
-        public string IsWhitelisted { get; set; }
+        public string? IsWhitelisted { get; set; }
         [Column(TypeName = "varchar(200)")]
         [Display(Name = "Initial Remarks")]
-
-        public string InitialRemark { get; set; }
+      
+        public string? InitialRemark { get; set; }
 
         public bool IsDeleted { get; set; }
         public bool IsActive { get; set; }
@@ -159,6 +160,18 @@ namespace swas.DAL.Models
         //[MaxLength(500)]
         [Display(Name = "Ascon Number")]
         public int? AsconNo { get; set; }
+        
+        [Display(Name = "Security Classification")]
+        [MaxLength(100)]
+        public string? Security_Classification { get; set; } 
+        
+        [Display(Name = "Development Language")]
+        [MaxLength(100)]
+        public string? Devlopment_Language { get; set; }
+
+        [Display(Name = "operation system of hosting env")]
+        [MaxLength(100)]
+        public string? operation_system_hosting_env { get; set; }
 
 
         [NotMapped]

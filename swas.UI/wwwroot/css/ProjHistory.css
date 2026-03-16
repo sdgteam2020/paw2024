@@ -118,7 +118,7 @@ table {
 .ph-dflex-safe,
 .d-flex {
     position: relative;
-    z-index: 1;
+    /*z-index: 1;*/
 }
 
 .ph-tooltip-container,
@@ -268,4 +268,42 @@ table {
     display: grid;
     justify-content: center;
     align-content: center;
+}
+.card-border {
+    border-top-left-radius: 55px !important;
+    border-bottom-right-radius: 55px !important;
+    border: 2px solid transparent;
+    background: linear-gradient(white, white) padding-box, linear-gradient(90deg, #1e3a8a, #2563eb) border-box;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    overflow: hidden; /* important */
+}
+
+.cursor-box {
+    position: relative;
+    /*padding: 1rem;*/
+    width:98% !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .cursor-box::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient( 120deg, transparent, rgba(255,255,255,0.3), transparent );
+        transform: translateX(-150%) skewX(-25deg);
+        transition: transform 0.7s ease;
+        will-change: transform; /* performance boost */
+        pointer-events: none;
+    }
+
+    .cursor-box:hover::before {
+        transform: translateX(300%) skewX(-25deg);
+    }
+
+.help:hover {
+    transform: scale(1.05) translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 188, 212, 0.3);
 }

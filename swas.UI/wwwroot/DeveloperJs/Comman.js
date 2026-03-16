@@ -22,12 +22,13 @@
             $('input[type="date"]').attr('min', today);
             $('input[type="date"]').removeAttr('max');
             $("#InitiatedDate").val(today);
-            $('#InitiatedDate').attr('readonly', true);
+            $('#CompletionDate').val(today);
+            //$('#InitiatedDate').attr('readonly', true);
             $("#RequestRemarks").attr('disabled', true);
         } else {
             $('input[type="date"]').attr('max', today);
             $('input[type="date"]').removeAttr('min');
-            $('#InitiatedDate').attr('readonly', false);
+            //$('#InitiatedDate').attr('readonly', false);
             $("#RequestRemarks").removeAttr('disabled');
 
 
@@ -359,7 +360,7 @@ function breakLinesByWords(text, wordLimit) {
 }
 
 function fetchServerDate() {
-    debugger;
+    
     return $.ajax({
         type: "GET",
         url: "/Projects/GetDate",

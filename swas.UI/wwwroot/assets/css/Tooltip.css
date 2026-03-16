@@ -20,7 +20,7 @@
     position: absolute;
     z-index: 1;
     top: 100%;
-    left: 0;
+    /*left: 0;*/
     width: max-content;
 }
 
@@ -40,7 +40,7 @@
 .RefLetter {
     visibility: hidden;
     
-    width: 250px;
+    /*width: 250px;*/
     
     background-color: #5a8cd6;
     color: #fff;
@@ -80,8 +80,8 @@
     color: #fff;
     text-align: left;
     padding: 10px;
-    right: -190%;
-    left: 100%;
+    /*right: -190%;*/
+    /*left: 100%;*/
     opacity: 0;
     transition: opacity 0.3s;
     word-wrap: break-word;
@@ -117,4 +117,15 @@
     transition: opacity 0.3s;
     word-wrap: break-word;
     box-sizing: border-box;
+}
+.tooltip-text,
+.tooltip-text1 {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.tooltip-visible {
+    visibility: visible;
+    opacity: 1;
 }

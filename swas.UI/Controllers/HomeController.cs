@@ -52,6 +52,7 @@ using iText.Layout.Element;
 using iText.IO.Image;
 using iText.Layout.Borders;
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace swas.UI.Controllers
 {
@@ -588,57 +589,94 @@ s.IsDashboard,
 
         string filepathpdf = "";
 
-        public IActionResult WaterMark2(string id)
+       public IActionResult WaterMark2(string id)
+{
+    try
+    {
+        if (string.IsNullOrEmpty(id))
         {
-            try
-            {
-                var ip = _httpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
-                var filePath = System.IO.Path.Combine(_env.WebRootPath, "PDF\\" + id + "");
-                filepathpdf = generate2(filePath, ip);
-
-                aTimer = new System.Timers.Timer(60000);
-                aTimer.Elapsed += OnTimer;
-
-                aTimer.Enabled = true;
-                return Redirect("../../Download/" + filepathpdf + ".pdf");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Unhandled exception in HomeController WaterMark2 function.");
-
-                // Log generic context only
-                swas.BAL.Utility.Error.ExceptionHandle(
-                    "Unhandled exception occurred in HomeController.");
-
-                return StatusCode(500, new
-                {
-                    success = false,
-                    message = "Something went wrong. Please try again later."
-                });
-            }
-
+            return BadRequest("Invalid file request.");
         }
+
+        // Allow only safe file name
+        var safeFileName = Path.GetFileName(id);
+
+        var ip = _httpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
+
+        var filePath = Path.Combine(_env.WebRootPath, "PDF", safeFileName);
+
+        if (!System.IO.File.Exists(filePath))
+        {
+            return NotFound("File not found.");
+        }
+
+        filepathpdf = generate2(filePath, ip);
+
+        aTimer = new System.Timers.Timer(60000);
+        aTimer.Elapsed += OnTimer;
+        aTimer.Enabled = true;
+
+        var downloadPath = Path.GetFileName(filepathpdf);
+
+        return Redirect($"../../Download/{downloadPath}.pdf");
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "Unhandled exception in WaterMark2.");
+
+        swas.BAL.Utility.Error.ExceptionHandle(
+            "Unhandled exception occurred in HomeController.");
+
+        return StatusCode(500, new
+        {
+            success = false,
+            message = "Something went wrong. Please try again later."
+        });
+    }
+}
 
 
         public IActionResult WaterMark(string id)
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(id))
+                {
+                    return BadRequest("Invalid request.");
+                }
+
+                // Allow only safe file name
+                var safeFileName = Path.GetFileName(id);
+
+                // Optional strong validation
+                if (!Regex.IsMatch(safeFileName, @"^[a-zA-Z0-9_\-.]+$"))
+                {
+                    return BadRequest("Invalid file name.");
+                }
+
                 var ip = _httpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
-                var filePath = System.IO.Path.Combine(_env.WebRootPath, "PDFWhiteListed\\" + id + "");
+
+                var filePath = Path.Combine(_env.WebRootPath, "PDFWhiteListed", safeFileName);
+
+                if (!System.IO.File.Exists(filePath))
+                {
+                    return NotFound("File not found.");
+                }
+
                 filepathpdf = generate2(filePath, ip);
 
                 aTimer = new System.Timers.Timer(60000);
                 aTimer.Elapsed += OnTimer;
-
                 aTimer.Enabled = true;
-                return Redirect("../../Download/" + filepathpdf + ".pdf");
+
+                var downloadFile = Path.GetFileName(filepathpdf);
+
+                return Redirect($"../../Download/{downloadFile}.pdf");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unhandled exception in HomeController WaterMark function.");
+                _logger.LogError(ex, "Unhandled exception in WaterMark.");
 
-                // Log generic context only
                 swas.BAL.Utility.Error.ExceptionHandle(
                     "Unhandled exception occurred in HomeController.");
 
@@ -648,7 +686,6 @@ s.IsDashboard,
                     message = "Something went wrong. Please try again later."
                 });
             }
-
         }
 
 

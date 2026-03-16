@@ -33,8 +33,8 @@
 
 .card-body {
     height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
+   /* overflow-y: auto;
+    overflow-x: hidden;*/
     
 }
 
@@ -216,7 +216,7 @@
 .value {
     font-weight: 500;
     color: #212529;
-    font-size: 1rem;
+    font-size: 13px;
     line-height: 1.4;
     word-break: break-word;
 }

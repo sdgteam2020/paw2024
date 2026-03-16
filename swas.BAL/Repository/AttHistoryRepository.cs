@@ -31,9 +31,17 @@ namespace swas.BAL.Repository
         }
         public async Task<List<tbl_AttHistory>> GetAttHistoryByIdAsync(int? psmid)
         {
-            List<tbl_AttHistory> tblhis = new List<tbl_AttHistory>();
-            tblhis = await _dbContext.AttHistory.Where(a => a.PsmId == psmid).ToListAsync();
-            return tblhis;
+            try
+            {
+                List<tbl_AttHistory> tblhis = new List<tbl_AttHistory>();
+                tblhis = await _dbContext.AttHistory.Where(a => a.PsmId == psmid).ToListAsync();
+                return tblhis;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+           
         }
 
         public async Task<List<tbl_AttHistory>> GetAttHistDelIdAsync(int? psmid)

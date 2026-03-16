@@ -9,6 +9,8 @@
     Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor.HttpContext.Session, "User");
     int dataProjId = Convert.ToInt32(ViewData["DataProjId"]);
     int toUnitId = Convert.ToInt32(ViewData["Tounitid"]);
+    bool documenttype = ViewData["Documenttype"] != null
+                        && (bool)ViewData["Documenttype"];
 }
 
 @{
@@ -28,24 +30,42 @@
             <!-- CENTER CONTAINER -->
             <div class="d-flex justify-content-center align-items-center gap-2 flex-wrap">
 
-                <button class="btn btn-secondary RefLetter-container PrintDiv" type="button">
-                    <img src="/assets/images/icons/pdfimg.png"
-                         
-                         alt="Pdf Download"
-                         width="35"
-                         height="25">
-                    <div class="RefLetter">
-                        Generate Appx C
-                    </div>
-                </button>
+                @if (documenttype ==false)
+                {
+                    <button class="btn header-container text-center text-white RefLetter-container PrintDiv" type="button">
+                        <img src="/assets/images/icons/pdfimg.png"
+                        alt="Pdf Download"
+                        width="35"
+                        height="25">
+                        <div class="RefLetter">
+                            Generate Appx C
+                        </div>
+                    </button>
+                }
 
-                <button class="btn btn-secondary" id="btnAnalytics">
+                @if (documenttype == true)
+                {
+                    <button class="btn header-container text-center text-white open-doc" type="button" data-document-id="3" data-projid="@dataProjId">
+                        <img src="/assets/images/icons/pdfimg.png"
+                             alt="Pdf Download"
+                             width="35"
+                             height="25">
+                        <div class="RefLetter">
+                            Open Appx C
+                        </div>
+                    </button>
+
+
+                }
+
+                <button class="btn header-container text-center text-white" id="btnAnalytics">
                     Analytics
                 </button>
+              
+              
 
                 <button type="button" id="btnClose"
-                        class="btn btn-secondary text-white"
-                        >
+                        class="btn header-container text-center text-white ">
                     Close
                 </button>
 
@@ -53,7 +73,7 @@
                 && Model.ProjMov.IsComplete == false
                 && Model.DataProjId == dataProjId)
                 {
-                    <button class="btn btn-secondary btn-FwdFromMOv">
+                    <button class="btn header-container text-center text-white btn-FwdFromMOv">
                         Send
                     </button>
                 }
@@ -68,4 +88,4 @@
 
 <script src="~/developerjs/Tooltip.js"></script>
 <script src="~/developerjs/projectwisereport.js"></script>
-
+<script src="~/DeveloperJs/_projfwdupload.js"></script>

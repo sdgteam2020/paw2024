@@ -52,3 +52,29 @@ $('#account').on('submit', function (e) {
 
     this.submit();
 });
+
+
+    $('.char-limit').each(function () {
+        
+        var inputField = $(this);
+        var maxLength = $(this).data('maxlength');
+
+        var errorMsg = inputField.closest('div').find('.charErrorMsg');
+
+        inputField.on('input', function () {
+            
+
+            var value = inputField.val();
+
+            // Stop typing after max length
+            if (value.length > maxLength) {
+                inputField.val(value.substring(0, maxLength));
+                errorMsg.removeClass('d-none');
+            } else {
+                errorMsg.addClass('d-none');
+            }
+
+        });
+
+    });
+

@@ -53,3 +53,20 @@ $(document).on('click', '.flag-toggle-btn', function () {
 
 
    
+$('.delete-user').click(function (e) {
+    e.preventDefault();
+
+    var url = $(this).attr('href');
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: "User will be deleted permanently!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, Delete"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = url;
+        }
+    });
+});

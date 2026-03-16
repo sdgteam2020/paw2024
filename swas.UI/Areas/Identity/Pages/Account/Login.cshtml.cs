@@ -51,15 +51,17 @@ namespace swas.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [StringLength(100, ErrorMessage = "Username cannot exceed 100 characters.")]
+            
             public string UserName { get; set; }
+
             [Required]
             [DataType(DataType.Password)]
+            [StringLength(100, MinimumLength = 6, ErrorMessage = "Password must be between 6 and 100 characters.")]
             public string Password { get; set; }
+
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; } = true;
-
-
-
         }
         [AllowAnonymous]
         public async Task OnGetAsync(string returnUrl = null)
@@ -74,141 +76,140 @@ namespace swas.Areas.Identity.Pages.Account
 
         }
         [AllowAnonymous]
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)        
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             try
             {
                 returnUrl ??= Url.Content("~/");
-                var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-                var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
-                var watermarkText = $" {ipAddress}\n  {currentDatetime}";
 
+                var ipAddress = HttpContext.Connection.RemoteIpAddress?.MapToIPv4().ToString();
+                var currentDatetime = DateTime.UtcNow.ToString("dd-MM-yyyy HH:mm:ss");
+                var watermarkText = $" {ipAddress}\n {currentDatetime}";
 
-                Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
                 ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
-                    if (Logins.IsNotNull())
+                    return Page();
+                }
+
+                var cryptoKey = _configuration["CryptoSettings:LoginKey"];
+
+                if (!string.IsNullOrEmpty(cryptoKey))
+                {
+                    Input.UserName = CryptoHelper.SafeDecrypt(Input.UserName, cryptoKey)?.Trim();
+                    Input.Password = CryptoHelper.SafeDecrypt(Input.Password, cryptoKey)?.Trim();
+                }
+
+                // Try login with ASP.NET Identity
+                var result = await _signInManager.PasswordSignInAsync(
+                    Input.UserName,
+                    Input.Password,
+                    Input.RememberMe,
+                    lockoutOnFailure: true
+                );
+
+                if (result.Succeeded)
+                {
+                    ApplicationUser userdet = await _userManager.FindByNameAsync(Input.UserName);
+
+                    if (userdet != null)
                     {
-                    }
-                    else
-                    {
-                        ViewData["UserName"] = Input.UserName;
-                        var cryptoKey = _configuration["CryptoSettings:LoginKey"];
+                        var unitdetl = await _unitRepository.GetUnitDtl(userdet.unitid);
+                        int cla = await _unitRepository.GetIdCalendar();
 
-                        if (!string.IsNullOrEmpty(cryptoKey))
+                        if (unitdetl != null)
                         {
-                            Input.UserName = CryptoHelper.SafeDecrypt(Input.UserName, cryptoKey);
-                            Input.Password = CryptoHelper.SafeDecrypt(Input.Password, cryptoKey);
+                            Login Db = new Login();
+                            CommonHelper commonHelper = new CommonHelper(_context);
+                            var userRank = commonHelper.UserRankDetail(userdet);
 
-                        }
+                            Db.UserName = userdet.UserName;
+                            Db.Comdid = unitdetl.unitid;
+                            Db.Corpsid = unitdetl.CorpsId;
+                            Db.Iamuserid = userdet.UserName;
+                            Db.Unit = unitdetl.UnitName;
+                            Db.unitid = userdet.unitid;
+                            Db.Appontment = userdet.appointment;
+                            Db.UserIntId = userdet.unitid;
+                            Db.Rank_id = Convert.ToInt32(userdet.Rank);
+                            Db.Rank = userRank;
+                            Db.IcNo = userdet.Icno;
+                            Db.Offr_Name = userdet.Offr_Name;
+                            Db.IpAddress = watermarkText;
+                            Db.cla = cla;
 
+                            var roles = await _userManager.GetRolesAsync(userdet);
+                            Db.Role = roles.Any() ? roles[0] : "Unit";
 
-
-                        var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: true);
-
-                        if (result.Succeeded)  /// registered user
-                        {
-                            ApplicationUser userdet = await _userManager.FindByNameAsync(Input.UserName);
-
-                            if (userdet != null)
+                            if (Db.ActualUserName == null)
                             {
-                                var unitdetl = await _unitRepository.GetUnitDtl(userdet.unitid);
-                                int cla = await _unitRepository.GetIdCalendar();
-                                if (unitdetl != null)
-                                {
-                                    Login Db = new Login();
-                                    userdet.domain_iam = userdet.UserName;
-                                    CommonHelper commonHelper = new CommonHelper(_context);
-                                    var userRank = commonHelper.UserRankDetail(userdet);
-
-                                    if (userdet.domain_iam != null)   // domain_iam available after registration
-                                    {
-                                        Db.UserName = userdet.UserName;
-                                        Db.Comdid = unitdetl.unitid;
-                                        Db.Corpsid = unitdetl.CorpsId;
-                                        Db.Iamuserid = userdet.domain_iam;
-                                        Db.Unit = unitdetl.UnitName;        
-                                        Db.unitid = userdet.unitid;
-                                        Db.Appontment = userdet.appointment;
-                                        Db.UserIntId = userdet.unitid;
-                                        Db.Rank_id = Convert.ToInt32(userdet.Rank);
-                                        Db.Rank=userRank;
-                                        Db.IcNo = userdet.Icno;
-                                        Db.Offr_Name = userdet.Offr_Name;
-                                        var users = await _userManager.FindByNameAsync(userdet.UserName);
-                                        var usroles = await _userManager.GetRolesAsync(users);
-                                        Db.Role = usroles.Any() ? usroles[0] : "Unit";
-                                        Db.IpAddress = watermarkText;
-                                        Db.cla=cla;
-                                        if (Db.ActualUserName == null)
-                                        {
-                                            Db.ActualUserName = Input.UserName;
-                                        }
-                                    }
-                                    tbl_LoginLog logs = new tbl_LoginLog();
-                                    var Role = await _userManager.GetRolesAsync(userdet);
-                                    logs.UserId = userdet.UserIntId;
-                                    logs.IP = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-                                    logs.IsActive = true;
-                                    logs.Updatedby = userdet.unitid;
-                                    logs.UpdatedOn = DateTime.Now;
-                                    logs.logindate = DateTime.Now;
-                                    logs.userName = userdet.UserName;
-                                    logs.unitid = userdet.unitid;
-                                    await _userRepository.Add(logs);
-                                    SessionHelper.SetObjectAsJson(HttpContext.Session, "User", Db);
-                                    
-
-                                    if (Db.Role == "Dte")
-                                    {
-                                        HttpContext.Session.SetString("UserName", Input.UserName);
-                                        return RedirectToAction("NewProject", "Home");
-                                    }
-                                    else
-                                    {
-                                        return RedirectToAction("NewProject", "Home");
-                                    }
-                                }
+                                Db.ActualUserName = Input.UserName;
                             }
-                        }
-                        else // application identity failed but IAM login found correct ..  Allow as a StakeHolder
-                        {
-                            if (Input.UserName != null)
+
+                            // Login Log
+                            tbl_LoginLog logs = new tbl_LoginLog
                             {
-                                TempData["UserName"] = Input.UserName;
-                                HttpContext.Session.SetString("UserName", Input.UserName);
+                                UserId = userdet.UserIntId,
+                                IP = ipAddress,
+                                IsActive = true,
+                                Updatedby = userdet.unitid,
+                                UpdatedOn = DateTime.UtcNow,
+                                logindate = DateTime.UtcNow,
+                                userName = userdet.UserName,
+                                unitid = userdet.unitid
+                            };
 
-                                return RedirectToAction("NewProject", "Home");
-                            }
+                            await _userRepository.Add(logs);
+
+                            SessionHelper.SetObjectAsJson(HttpContext.Session, "User", Db);
+                            HttpContext.Session.SetString("UserName", Input.UserName);
+
+                            return RedirectToAction("NewProject", "Home");
                         }
-
-                        if (result.IsLockedOut)
-                        {
-                            ModelState.AddModelError("", "The account is locked out");
-                            return Page();
-                        }
-
-                        if (result.RequiresTwoFactor)
-                        {
-                            return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-                        }
-
-                        
-                        ModelState.AddModelError(string.Empty, "Invalid login attempt");
-                        return Page();
                     }
                 }
+
+                // Account locked
+                if (result.IsLockedOut)
+                {
+                    ModelState.AddModelError("", "The account is locked.");
+                    return Page();
+                }
+
+                // Two factor authentication
+                if (result.RequiresTwoFactor)
+                {
+                    return RedirectToPage("./LoginWith2fa", new
+                    {
+                        ReturnUrl = returnUrl,
+                        RememberMe = Input.RememberMe
+                    });
+                }
+
+                // Check if user exists
+                var existingUser = await _userManager.FindByNameAsync(Input.UserName);
+
+                if (existingUser == null)
+                {
+                    // User not registered → redirect to Register
+                    TempData["UserName"] = Input.UserName;
+                    HttpContext.Session.SetString("UserName", Input.UserName);
+
+                    return RedirectToAction("Register", "Account");
+                }
+
+                // Invalid password
+                ModelState.AddModelError("", "Invalid username or password.");
+                return Page();
             }
             catch (Exception ex)
             {
                 swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
+                ModelState.AddModelError("", "An unexpected error occurred.");
+                return Page();
             }
-
-            return Page();
         }
-
 
     }
 }

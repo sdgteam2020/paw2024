@@ -14,6 +14,7 @@ using swas.BAL.Interfaces;
 using swas.UI.Helpers;
 using iText.Kernel.Geom;
 using swas.DAL;
+using System.Reflection;
 
 namespace swas.UI.Models
 {
@@ -30,7 +31,7 @@ namespace swas.UI.Models
             this.context = context;
         }
 
-     
+        #region
         public byte[] BuildCertificate(
     CertificateDataDTO data,
     string ip,
@@ -48,25 +49,26 @@ namespace swas.UI.Models
 
                 PdfFont font = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
                 document.SetFont(font);
-                Table header = new Table(new float[] { 80, 20 }).UseAllAvailableWidth();
+                Table header = new Table(new float[] { 1, 4, 2 }).UseAllAvailableWidth();
+
                 DeviceRgb headerColor = new DeviceRgb(230, 230, 230);
-
-                ImageData img = ImageDataFactory.Create("wwwroot/assets/images/CertifiedCertificate.png");
-
+                ImageData img = ImageDataFactory.Create("wwwroot/assets/images/CertifiedSheild2.png");
+                Image logo = new Image(img).SetHeight(55).SetAutoScaleWidth(true); // Auto scale width
                 header.AddCell(new Cell()
-                    .Add(new Image(img).SetWidth(95).SetHeight(85))
+                    .Add(logo)
                     .SetBorder(Border.NO_BORDER)
-                    .SetBackgroundColor(headerColor)
-                    .SetVerticalAlignment(VerticalAlignment.MIDDLE));
+                    .SetVerticalAlignment(VerticalAlignment.MIDDLE)
+                    .SetTextAlignment(TextAlignment.CENTER));
 
                 header.AddCell(new Cell()
                     .Add(new Paragraph($"{data.CertificateName ?? string.Empty} Certificate")
                         .SetFontSize(25)
                         .SetBold())
                     .SetBorder(Border.NO_BORDER)
-                    .SetBackgroundColor(headerColor)
-                    .SetTextAlignment(TextAlignment.CENTER)
-                    .SetVerticalAlignment(VerticalAlignment.MIDDLE));
+                    .SetVerticalAlignment(VerticalAlignment.MIDDLE)
+                    .SetTextAlignment(TextAlignment.CENTER));
+
+                header.AddCell(new Cell().SetWidth(90).SetBorder(Border.NO_BORDER));
 
                 document.Add(header);
                 document.Add(new LineSeparator(new SolidLine(0.7f)));
@@ -81,11 +83,14 @@ namespace swas.UI.Models
                     .SetMarginBottom(15);
 
                 AddRow(table, "Project Name", data.ProjName ?? "N/A");
-                AddRow(table, "Approved Date (PAW)", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"));
-                AddRow(table, "Approved Remarks", remarks ?? "N/A");
+                AddRow(table, "Certificate Generated Date", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"));
+                AddRow(table, "Approver Remarks", remarks ?? "N/A");
+                AddRow(table, "Deploy Scenario", data.HostType ?? "N/A");
+                AddRow(table, "Security Cl of data", data.Security_Classification??"");
+                AddRow(table, "Details of Sponsor", data.Sponsor);
+               
 
-
-                if(substage==25)
+                if (substage==25)
                 {
                     substage = 27;
                 }
@@ -96,9 +101,19 @@ namespace swas.UI.Models
                     .ToList();
 
                 var mainContents = contents
-                    .Where(x => x.ContentId != 7 && x.ContentId != 1006)
+                    .Where(x => x.ContentId != 7 && x.ContentId != 8)
                     .ToList();
-
+                if(substage !=28 && substage !=26)
+                {
+                    table.AddCell(new Cell(1, 3)
+                   .Add(new Paragraph("Remarks from Issuing Authority")
+                       .SetFontSize(11)
+                       .SetBold())
+                   .SetPadding(6)
+                    .SetBorder(Border.NO_BORDER));
+                }
+               
+                AddRow(table, " Issuing/Authority", logins.Unit ?? "N/A");
 
                 foreach (var item in mainContents)
                 {
@@ -106,7 +121,7 @@ namespace swas.UI.Models
                         continue;
                     string text = item.ContentText?
                         .Replace("{ProjName}", data.ProjName)
-                        .Replace("{Sponsor}", data.Sponsor)
+                       
                         .Replace("{RemoteTestNext3Years}",
                             data.RemoteTestNext3Years != DateTime.MinValue
                                 ? data.RemoteTestNext3Years.Value.ToString("dd-MM-yyyy")
@@ -134,27 +149,15 @@ namespace swas.UI.Models
                             break;
                     }
                 }
-                AddRow(table, "Deploy Scenario", data.HostType ?? "N/A");
-                AddRow(table, "Security Cl of data", "Restricted");
-                AddRow(table, "Cert Generation Date", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"));
+
                 var stdRemarkLabel = contents.FirstOrDefault(x => x.ContentId == 3);
                 var stdRemarkText = contents.FirstOrDefault(x => x.ContentId == 7);
 
 
-                var archrevmarks = contents.FirstOrDefault(x => x.ContentId == 1006);
-                
+                var archrevmarks = contents.FirstOrDefault(x => x.ContentId == 8);
+
                 if (stdRemarkLabel != null || stdRemarkText != null)
                 {
-                    if (stdRemarkLabel != null)
-                    {
-                        table.AddCell(new Cell(1, 3)
-                            .Add(new Paragraph(stdRemarkLabel.ContentTitle ?? stdRemarkLabel.ContentText)
-                                .SetFontSize(11)
-                                .SetBold())
-                            .SetPadding(6)
-                             .SetBorder(Border.NO_BORDER));
-                           
-                    }
                     if (stdRemarkText != null)
                     {
                         string footerText = stdRemarkText.ContentText!
@@ -169,15 +172,15 @@ namespace swas.UI.Models
                 }
                 if (archrevmarks != null)
                 {
-                   
-                        string footerText = archrevmarks.ContentText!
-                            .Replace("{ProjName}", data.ProjName);
 
-                        table.AddCell(new Cell(1, 3)
-                            .Add(new Paragraph(footerText)
-                                .SetFontSize(11))
-                            .SetPadding(8)
-                            .SetBorder(Border.NO_BORDER));
+                    string footerText = archrevmarks.ContentText!
+                        .Replace("{ProjName}", data.ProjName);
+
+                    table.AddCell(new Cell(1, 3)
+                        .Add(new Paragraph(footerText)
+                            .SetFontSize(11))
+                        .SetPadding(8)
+                        .SetBorder(Border.NO_BORDER));
 
                 }
 
@@ -196,14 +199,14 @@ namespace swas.UI.Models
                     .SetFontSize(9)
                     .SetTextAlignment(TextAlignment.CENTER)
                     .SetOpacity(0.6f));
-                AddBackgroundShield(pdf);
+                //AddBackgroundShield(pdf);
 
                 document.Close();
                 return ms.ToArray();
             }
         }
 
-
+        
 
 
         public byte[] SignPdf(byte[] pdfBytes, Login logins)
@@ -282,32 +285,46 @@ namespace swas.UI.Models
             PdfPage page = pdf.GetPage(1);
             PdfCanvas canvas = new PdfCanvas(page.NewContentStreamBefore(), page.GetResources(), pdf);
 
+            // Get the page height to position near top
+            float pageHeight = page.GetPageSize().GetHeight();
+
+            // Y coordinate near the top of the page (adjust as needed)
+            float headerY = pageHeight - 70;
+
+            // Load and scale tick image
             ImageData tickData = ImageDataFactory.Create(tickImagePath);
             Image tick = new Image(tickData)
-                .ScaleToFit(100, 100)        // adjust size as needed
-                .SetFixedPosition(50, 100);  // X,Y from bottom-left, adjust for placement
+                .ScaleToFit(70, 70)                  // Adjust size to avoid overlap
+                .SetFixedPosition(490, headerY - 40); // Position tick near top-left (adjust X, Y)
 
+            // Add tick image to the canvas
             new Canvas(canvas, page.GetPageSize()).Add(tick);
-            float textX = 60;  // adjust horizontal position relative to tick
-            float textY = 150; // starting vertical position
+
+            // Position officer info text just right of the tick image with some padding (say 10 pts)
+            float textX = 415 + 50 + 10;  // 550
+            float textY = headerY +15+10;
+
             document.Add(new Paragraph("(" + logins.Offr_Name.Trim() + ")")
-              .SetFontSize(14)
-              .SetFixedPosition(textX, textY - 20, 200));
+                .SetFontSize(10)
+                .SetMargin(0)
+                .SetFixedPosition(textX, textY,150));
+
             document.Add(new Paragraph(logins.Rank.Trim())
-                .SetFontSize(14)
-                .SetFixedPosition(textX, textY, 200)); // width of text area
+                .SetFontSize(10)
+                .SetMargin(0)
+                .SetFixedPosition(textX, textY - 20, 150));
 
             document.Add(new Paragraph(logins.Appontment.Trim())
-                   .SetFontSize(14)
-                   .SetFixedPosition(textX, textY - 40, 200));
-
+                .SetFontSize(10)
+                .SetMargin(0)
+                .SetFixedPosition(textX, textY - 40, 150));
 
             document.Add(new Paragraph(logins.UserName.Trim())
-                .SetFontSize(14)
-                .SetFixedPosition(textX, textY - 60, 200));
+                .SetFontSize(10)
+                .SetMargin(0)
+                .SetFixedPosition(textX, textY - 60, 100));
         }
-
-
 
     }
 }
+#endregion

@@ -133,17 +133,24 @@ namespace swas.UI.Controllers
             return View(dto);
         }
 
-        public async Task<IActionResult> Details(int id)
-        {
+       [Authorize]
+[HttpGet]
+public async Task<IActionResult> Details(int id)
+{
+    if (id <= 0)
+    {
+        return BadRequest("Invalid project id");
+    }
 
-            var project = await _projectsRepository.GetProjectByIdAsync(id);
-            if (project == null)
-            {
-                return NotFound();
-            }
+    var project = await _projectsRepository.GetProjectByIdAsync(id);
 
-            return Json(new { success = true, project });
-        }
+    if (project == null)
+    {
+        return NotFound();
+    }
+
+    return Ok(new { success = true, project });
+}
 
 
 
@@ -268,9 +275,14 @@ namespace swas.UI.Controllers
 
 
                 var options = _configuration.GetSection("WhitelistStatusOptions").Get<List<SelectListItem>>();
-                options.Insert(0, new SelectListItem { Text = "--Select--", Value = "", Disabled = true, Selected = true });
+                options?.Insert(0, new SelectListItem { Text = "--Select--", Value = "", Disabled = true, Selected = true });
                 ViewBag.WhitelistOptions = options;
 
+
+                var securityclassification = _configuration.GetSection("SecurityClassification").Get<List<SelectListItem>>();
+                securityclassification?.Insert(0, new SelectListItem { Text = "--Select--", Value = "", Disabled = true, Selected = true });
+                ViewBag.SecurityClassifications = securityclassification;
+                    
 
                 var TypeofSW = _configuration.GetSection("TypeofSWOptions").Get<List<SelectListItem>>();
                 TypeofSW.Insert(0, new SelectListItem { Text = "--Select--", Value = "", Disabled = true, Selected = true });
@@ -332,7 +344,7 @@ namespace swas.UI.Controllers
         }
         [HttpPost]
         [RequestFormLimits(MultipartBodyLengthLimit = 83886080)]
-        public async Task<IActionResult> UploadMultiFile(IFormFile uploadfile, string Reamarks, int PsmId)
+        public async Task<IActionResult> UploadMultiFile(IFormFile uploadfile, string Reamarks, int PsmId,int DocumentTypeId)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
             if (uploadfile != null && uploadfile.Length <= 10 * 1024 * 1024)
@@ -355,7 +367,7 @@ namespace swas.UI.Controllers
                             tbl_AttHistory atthis = new tbl_AttHistory();
                             atthis.ActionId = 0;
                             atthis.AttPath = uniqueFileName;
-
+                            atthis.DocumentTypeId = DocumentTypeId;
                             atthis.Reamarks = Reamarks;
                             atthis.PsmId = PsmId;
                             atthis.UpdatedByUserId = Logins.unitid;
@@ -395,7 +407,7 @@ namespace swas.UI.Controllers
             {
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
                 int projid = 0;
-                Data.DateTimeOfUpdate = Data.InitiatedDate;
+               
                 Data.StakeHolderId = Logins.unitid ?? 0;
                 Data.IsActive = true;
                 Data.EditDeleteDate = DateTime.Now;
@@ -404,12 +416,20 @@ namespace swas.UI.Controllers
                 Data.IsSubmited = false;
                 Data.UpdatedByUserId = Logins.UserIntId;
                 Data.Comments = Data.InitialRemark;
-                Data.InitiatedDate = Data.InitiatedDate;
+               
                 Data.MobileNo = Data.MobileNo;
                 Data.AsconNo = Data.AsconNo;
+                if(Data.Date_type ==1)
+                {
+                    Data.InitiatedDate = Data.InitiatedDate;
+                    Data.DateTimeOfUpdate = Data.InitiatedDate;
+                }else
+                {
+                    Data.InitiatedDate = DateTime.Now;
+                    Data.DateTimeOfUpdate = DateTime.Now;
+                }
 
-
-                bool isEdit = Data.ProjId != 0;
+                    bool isEdit = Data.ProjId != 0;
 
                 if (!isEdit)
                 {
@@ -546,9 +566,39 @@ namespace swas.UI.Controllers
         {
             try
             {
+
                 var project = await _projectsRepository.GetProjectByIdAsync(projid);
+                // Get uploaded document types
+                // 1️⃣ Get required document type IDs from DB
+              
                 if (type == 1)
                 {
+                    var requiredDocIds = await _dbContext.DocumentTypes
+                  .Where(d => d.IsRequired && d.IsActive)
+                  .Select(d => d.Id)
+                  .ToListAsync();
+
+                    // 2️⃣ Get uploaded document type IDs for this project
+                    var uploadedDocIds = await _dbContext.AttHistory
+                        .Where(a => a.PsmId == project.CurrentPslmId)
+                        .Select(a => a.DocumentTypeId)
+                        .Distinct()
+                        .ToListAsync();
+
+
+
+                    var missingDocIds = requiredDocIds
+                        .Except(uploadedDocIds.Where(x => x.HasValue).Select(x => x.Value))
+                        .ToList();
+
+                    if (missingDocIds.Any())
+                    {
+                        return Json(new
+                        {
+                            type = 404,
+                            message = "Please upload all required documents."
+                        });
+                    }
                     project.IsSubmited = true;
                 }
                 else
@@ -789,80 +839,101 @@ namespace swas.UI.Controllers
         }
 
         #region Project Movment For PROcess For Comment
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ProcessMail(int ProjId, int unitid, DateTime FwdDateForComment)
         {
+            if (ProjId <= 0)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Invalid project id."
+                });
+            }
+
             try
             {
-                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-                if (Logins != null)
+                var login = SessionHelper.GetObjectFromJson<Login>(
+                    _httpContextAccessor.HttpContext.Session, "User");
+
+                if (login == null)
                 {
-                    if (ProjId != null)
+                    return Unauthorized(new
                     {
-                        var project = await _projectsRepository.GetProjectByIdAsync(ProjId);
-                        unitid = project.StakeHolderId;
-                        int[] stausid = { 26, 31, 37, 21, 21 };  //ajayupdate
-                        int[] unitids = { 4, 3, 5, 1, unitid }; //1,3,4,5
-                        int[] skipUnitIds = { 4, 3, 5, 1 };
-
-                        for (int i = 0; i < stausid.Length; i++)
-                        {
-                            if (i == 4)
-                            {
-                                if (skipUnitIds.Contains(unitid) && stausid[i] == 21)
-                                {
-                                    continue;
-                                }
-                            }
-                            tbl_ProjStakeHolderMov psmove = new tbl_ProjStakeHolderMov();
-
-                            psmove.ProjId = ProjId;
-                            psmove.StatusActionsMappingId = stausid[i];
-                            psmove.Remarks = "";
-                            psmove.FromUnitId = Logins.unitid ?? 0;
-                            psmove.UserDetails = Helper1.LoginDetails(Logins);
-
-                            psmove.UpdatedByUserId = Logins.unitid; // change with userid
-                            psmove.DateTimeOfUpdate = FwdDateForComment;
-                            psmove.IsActive = true;
-
-                            psmove.EditDeleteDate = System.DateTime.Now;
-                            psmove.EditDeleteBy = Logins.unitid;
-                            psmove.TimeStamp = FwdDateForComment;
-                            psmove.IsComplete = false;
-                            psmove.ToUnitId = unitids[i];
-                            psmove.IsComment = true;
-                            await _psmRepository.AddProjStakeHolderMovAsync(psmove);
-                        }
-                        return Json(1);
-                    }
-                    else
-                    {
-                        return Json(0);
-                    }
+                        success = false,
+                        message = "Session expired. Please login again."
+                    });
                 }
-                else
+
+                var project = await _projectsRepository.GetProjectByIdAsync(ProjId);
+
+                if (project == null)
                 {
-                    return Redirect("/Identity/Account/login");
+                    return NotFound(new
+                    {
+                        success = false,
+                        message = "Project not found."
+                    });
                 }
+
+                // 🔒 Prevent IDOR (Burp changing project id)
+                if (1 != login.unitid)
+                {
+                    return Forbid();
+                }
+
+                unitid = project.StakeHolderId;
+
+                int[] statusIds = { 26, 31, 37, 21, 21 };
+                int[] unitIds = { 4, 3, 5, 1, unitid };
+                int[] skipUnitIds = { 4, 3, 5, 1 };
+
+                for (int i = 0; i < statusIds.Length; i++)
+                {
+                    if (i == 4 && skipUnitIds.Contains(unitid) && statusIds[i] == 21)
+                        continue;
+
+                    var psmove = new tbl_ProjStakeHolderMov
+                    {
+                        ProjId = ProjId,
+                        StatusActionsMappingId = statusIds[i],
+                        Remarks = "",
+                        FromUnitId = login.unitid ?? 0,
+                        UserDetails = Helper1.LoginDetails(login),
+                        UpdatedByUserId = login.unitid,
+                        DateTimeOfUpdate = DateTime.UtcNow,
+                        IsActive = true,
+                        EditDeleteDate = DateTime.UtcNow,
+                        EditDeleteBy = login.unitid,
+                        TimeStamp = DateTime.UtcNow,
+                        IsComplete = false,
+                        ToUnitId = unitIds[i],
+                        IsComment = true
+                    };
+
+                    await _psmRepository.AddProjStakeHolderMovAsync(psmove);
+                }
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Process mail executed successfully."
+                });
             }
             catch (Exception ex)
             {
-                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
-                var eventId = new EventId(dynamicEventId, "ProcessMail");
+                var eventId = new EventId(DateTime.UtcNow.Ticks.GetHashCode(), "ProcessMail");
 
-                _logger.LogError(eventId, ex,
-                    "An error occurred while ProcessMail in ProjectsController.");
-
-                swas.BAL.Utility.Error.ExceptionHandle(
-                    "Process Mail failed in ProjectsController.");
+                _logger.LogError(eventId, ex, "Error occurred in ProjectsController.ProcessMail");
 
                 return StatusCode(500, new
                 {
                     success = false,
-                    message = "Something went wrong. Please try again later."
+                    message = "Internal server error."
                 });
             }
-
         }
 
 
@@ -871,50 +942,92 @@ namespace swas.UI.Controllers
             var Ret = await _psmRepository.CheckFwdCondition(ProjId, StatusId, Actionsname);
             return Json(Ret);
         }
-            
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> FwdToProject([FromForm] tbl_ProjStakeHolderMov psmove, [FromForm] string currentpsmid)
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-           
-            
+
+            // SECURITY: Early exit if session/user is missing
+            if (Logins == null)
+            {
+                return Json(-401); // or return Unauthorized();
+            }
+
+            // SECURITY: Basic parameter validation
+            if (string.IsNullOrWhiteSpace(currentpsmid) || !int.TryParse(currentpsmid, out int currentPsmId))
+            {
+                return Json(-999); // invalid currentpsmid format
+            }
+
             if (psmove.ToUnitId == 0)
             {
                 return Json(-7);
-            };
+            }
+            ;
+
+            // SECURITY: File upload restrictions (add these checks before processing attachments)
+            const long MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB – change as needed
+            var allowedExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+    {
+        ".pdf"
+        // ← add/remove types YOUR application really needs
+    };
+
+            if (psmove.Attachments != null && psmove.Attachments.Count > 0)
+            {
+                foreach (var attachment in psmove.Attachments)
+                {
+                    if (attachment.File == null || attachment.File.Length == 0) continue;
+
+                    // SECURITY: Size check
+                    if (attachment.File.Length > MAX_FILE_SIZE_BYTES)
+                    {
+                        return Json(-10); // file too large
+                    }
+
+                    // SECURITY: Extension check (server-side – client can be bypassed)
+                    var fileExt = Path.GetExtension(attachment.File.FileName)?.ToLowerInvariant();
+                    if (string.IsNullOrEmpty(fileExt) || !allowedExtensions.Contains(fileExt))
+                    {
+                        return Json(-11); // invalid file type
+                    }
+
+                    // SECURITY: Basic content/magic number check (very important)
+                    if (!await HasValidFileSignatureAsync(attachment.File, fileExt))
+                    {
+                        return Json(-12); // suspicious file content
+                    }
+                }
+            }
+
             if (psmove.StatusActionsMappingId == 88)
             {
                 var projname = _dbContext.Projects.Find(psmove.ProjId);
                 var Whitelist = _dbContext.trnWhiteListed
-      .FirstOrDefault(x => x.ProjName == projname.ProjName);
+                    .FirstOrDefault(x => x.ProjName == projname.ProjName);
                 if (Whitelist != null)
                 {
                     Whitelist.CertNo = Convert.ToString(DateTime.Now);
                     Whitelist.IsWhiteListed = true;
                     Whitelist.ValidUpto = DateTime.Now;
-
                     _dbContext.trnWhiteListed.UpdateRange(Whitelist);
                     _dbContext.SaveChanges();
                 }
-
             }
             else if (psmove.StatusActionsMappingId == 78)
             {
                 var projname = _dbContext.Projects.Find(psmove.ProjId);
                 var Whitelist = _dbContext.trnWhiteListed
-      .FirstOrDefault(x => x.ProjName == projname.ProjName);
-
+                    .FirstOrDefault(x => x.ProjName == projname.ProjName);
                 if (Whitelist != null)
                 {
                     Whitelist.Clearence = DateTime.Now;
                     _dbContext.trnWhiteListed.UpdateRange(Whitelist);
                     _dbContext.SaveChanges();
                 }
-
             }
-
-
             bool ret = false;
             if (psmove.CcId != null)
             {
@@ -922,37 +1035,30 @@ namespace swas.UI.Controllers
             }
             int psmid = Convert.ToInt32(currentpsmid);
             var getprojidbypsmid = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == psmid).ProjId;
-
             var latst = _dbContext.ProjStakeHolderMov.Where(r => r.PsmId == psmid && r.ToUnitId == Logins.unitid && r.IsComplete == false && r.IsComment == false).FirstOrDefault();
-
             if (latst == null)
             {
                 return Json(-4);
             }
-
-
             if (!ret)
             {
                 var legacy_approval = _dbContext.LegacyHistory.Where(x => x.ProjectId == getprojidbypsmid).OrderByDescending(x => x.HistoryId).FirstOrDefault();
-           psmove.ProjId = getprojidbypsmid; 
+                psmove.ProjId = getprojidbypsmid;
                 psmove.StatusActionsMappingId = psmove.StatusActionsMappingId;
                 psmove.Remarks = psmove.Remarks;
                 psmove.FromUnitId = Logins.unitid ?? 0;
-                psmove.ToUnitId = psmove.ToUnitId; //  
+                psmove.ToUnitId = psmove.ToUnitId; //
                 int oldpsmid = Convert.ToInt32(currentpsmid);
-               var  updateiscomplete = await _projectsRepository.GettXNByPsmIdAsync(oldpsmid);
-
+                var updateiscomplete = await _projectsRepository.GettXNByPsmIdAsync(oldpsmid);
                 updateiscomplete.IsComplete = true;
                 await _projectsRepository.UpdateTxnAsync(updateiscomplete);
                 psmove.UserDetails = Helper.LoginDetails(Logins);
                 psmove.UpdatedByUserId = Logins.UserIntId; // change with userid
-
-                if(legacy_approval != null && legacy_approval.ActionType == ActionTypeEnum.Approved)
+                if (legacy_approval != null && legacy_approval.ActionType == ActionTypeEnum.Approved)
                 {
-                psmove.DateTimeOfUpdate = psmove.TimeStamp;
-                psmove.EditDeleteDate = DateTime.Now;
-                psmove.TimeStamp = psmove.TimeStamp;
-
+                    psmove.DateTimeOfUpdate = psmove.TimeStamp;
+                    psmove.EditDeleteDate = DateTime.Now;
+                    psmove.TimeStamp = psmove.TimeStamp;
                 }
                 else
                 {
@@ -961,9 +1067,8 @@ namespace swas.UI.Controllers
                     psmove.TimeStamp = DateTime.Now;
                 }
                 psmove.IsActive = true;
-
                 psmove.EditDeleteBy = Logins.UserIntId;
-                
+
                 psmove.IsComplete = false;
                 psmove.IsComment = false;
                 psmove.IsPullBack = false;
@@ -977,44 +1082,29 @@ namespace swas.UI.Controllers
                 }
                 _dbContext.SaveChanges();
                 var remainders = await _dbContext.TrnRemainders
-               .Where(r => r.Projid == getprojidbypsmid && r.ReadDate == null && r.ToUserDetails == null && r.Tounitid == Logins.unitid)
-               .ToListAsync();
-
+                    .Where(r => r.Projid == getprojidbypsmid && r.ReadDate == null && r.ToUserDetails == null && r.Tounitid == Logins.unitid)
+                    .ToListAsync();
                 if (remainders.Count > 0)
                 {
-
                     await _Remainder.UpdateReaminderRead(getprojidbypsmid, 0);
-
                 }
-
-
                 var projectMovements = await _dbContext.ProjStakeHolderMov
                     .Where(x => x.ProjId == getprojidbypsmid && x.IsRead == true && x.IsComment == true)
                     .ToListAsync();
-
-
                 foreach (var item in projectMovements)
                 {
                     item.IsRead = false;
                 }
-
-
                 _dbContext.ProjStakeHolderMov.UpdateRange(projectMovements);
                 await _dbContext.SaveChangesAsync();
-
-
-
                 var Ret = await _psmRepository.AddWithReturn(psmove);
                 var latestpsmid = _projStakeHolderMovRepository.GetLastRecProjectMov(getprojidbypsmid);
-
-
-
                 var errors = new List<int>(); // List to collect errors
                 if (psmove.Attachments != null && psmove.Attachments.Count > 0)
                 {
                     foreach (var attachment in psmove.Attachments)
                     {
-                        var saveResult = await SaveAttachmentAsync(attachment.File, attachment.Remarks, latestpsmid, Logins,psmove.TimeStamp);
+                        var saveResult = await SaveAttachmentAsync(attachment.File, attachment.Remarks, latestpsmid, Logins, psmove.TimeStamp);
                         if (saveResult is JsonResult jsonResult)
                         {
                             var resultValue = jsonResult.Value as int?;
@@ -1029,7 +1119,6 @@ namespace swas.UI.Controllers
                 {
                     return Json(errors);
                 }
-
                 if (Ret != null)
                 {
                     if (psmove.CcId != null && psmove.CcId.Length > 0)
@@ -1045,28 +1134,42 @@ namespace swas.UI.Controllers
                             ccMov.IsRead = false;
                             ccMov.UserDetails = "";
                             ccMov.ReadDate = DateTime.Now;
-
                             var Retcc = await _projStakeHolderCcMovRepository.AddWithReturn(ccMov);
                         }
                     }
-
                     return Json(Ret);
                 }
-
                 else
                 {
                     return Json(nmum.NotSave);
                 }
-
             }
-
             else
             {
                 return Json(nmum.TounitEqualsCCUnitID);
             }
-
         }
+        // SECURITY: Basic file signature validation to detect fake extensions
+        private async Task<bool> HasValidFileSignatureAsync(IFormFile file, string extension)
+        {
+            if (file == null || file.Length == 0) return false;
 
+            var signatures = new Dictionary<string, byte[]>
+    {
+        { ".pdf",  new byte[] { 0x25, 0x50, 0x44, 0x46 } }           // %PDF
+        
+        // Add more types if needed
+    };
+
+            if (!signatures.TryGetValue(extension, out byte[] expected) || expected == null)
+                return true; // unknown type → allow (or return false if strict)
+
+            using var stream = file.OpenReadStream();
+            var header = new byte[expected.Length];
+            int bytesRead = await stream.ReadAsync(header, 0, expected.Length);
+
+            return bytesRead == expected.Length && header.SequenceEqual(expected);
+        }
         public async Task<IActionResult> SaveAttachmentAsync(IFormFile attdata, string remarks, int psmid, Login Logins, DateTime? TimeStamp)
         {
             var MaxFileSizeBytes = 10 * 1024 * 1024; // 10 MB
@@ -1607,7 +1710,10 @@ namespace swas.UI.Controllers
                 ViewBag.Isprocess = isprocess;
                 var latestpsmid = _projStakeHolderMovRepository.GetLastRecProjectMov(dataProjId);
                 ViewBag.lasttounit = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == latestpsmid)?.ToUnitId;
+                var getcurrentpsmid = _dbContext.Projects.Find(dataProjId).CurrentPslmId;
 
+                ViewBag.documenttype = _dbContext.AttHistory
+    .Any(x => x.PsmId == getcurrentpsmid && x.DocumentTypeId == 3);
                 ViewBag.PsmId = psmid ?? 0;
                 ViewBag.PjIR = Projpin;
 
@@ -2119,6 +2225,7 @@ namespace swas.UI.Controllers
             {
                 try
                 {
+                  ;
                     tbl_ProjStakeHolderMov inboxComments = await _projectsRepository.GettXNByPsmIdAsync(PsmId);
                     if (inboxComments != null)
                     {
@@ -2126,9 +2233,12 @@ namespace swas.UI.Controllers
                         {
                             inboxComments.IsRead = true;
                             await _projectsRepository.UpdateTxnAsync(inboxComments);
-                        }
+
+                           }
                     }
-                    return Json(ProjId);
+                    int getunreadComments=   _dbContext.ProjStakeHolderMov.Where(x => x.ToUnitId == Logins.unitid && x.IsRead == false && x.IsComment == true).Count();
+
+                    return Json(getunreadComments);
                 }
                 catch (Exception ex)
                 {
@@ -2564,9 +2674,45 @@ namespace swas.UI.Controllers
             }
 
         }
+        [HttpGet]
+        public async Task<IActionResult> GetDocumentTypes()
+        {
+            var docs = await _dbContext.DocumentTypes
+                .Where(x => x.IsActive)
+                .OrderBy(x => x.Id)
+                .Select(x => new
+                {
+                    id = x.Id,
+                    name = x.Name,
+                    isRequired = x.IsRequired
+                })
+                .ToListAsync();
 
+            return Json(docs);
+        }
 
+        [HttpGet]
+        public async Task<IActionResult> GetUploadedDocument(int projid, int DocumentTypeId)
+        {
+            var currentpsmid = _dbContext.Projects.Find(projid).CurrentPslmId;
 
+            var doc = await _dbContext.AttHistory
+                .Where(x => x.PsmId == currentpsmid &&
+                            x.DocumentTypeId == DocumentTypeId)
+                .OrderByDescending(x => x.TimeStamp)
+                .FirstOrDefaultAsync();
+
+            if (doc == null)
+            {
+                return Json(new { success = false });
+            }
+
+            return Json(new
+            {
+                success = true,
+                filePath = doc.AttPath
+            });
+        }
     }
 
 }

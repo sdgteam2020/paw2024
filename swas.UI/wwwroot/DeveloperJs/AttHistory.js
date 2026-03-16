@@ -105,7 +105,7 @@ function AttOnFWD() {
     $("#pdfFileInput").val("");
     $("#AttBody").append(listItem);
     $(".btnFwdConfirm").off().on("click", async function () {
-        debugger;
+        
        
         const urlParams = new URLSearchParams(window.location.search);
         let psmid;
@@ -137,8 +137,8 @@ function sendPDFToServer(pdfpath, thumbprint) {
         data: JSON.stringify([{
             Thumbprint: thumbprint,
             pdfpath: pdfpath,
-            XCoordinate: "20",
-            YCoordinate: "20",
+            XCoordinate: "470",
+            YCoordinate: "740",
             Page: "1",
             CustomText: "Digital Signature"
         }]),
@@ -253,12 +253,22 @@ $(document).on("click", ".att-btnDelete", function () {
 function UploadFiles() {
     var formData = new FormData();
     var totalFiles = document.getElementById("pdfFileInput").files.length;
+    // 🔥 Get DocumentTypeId from active tracker step
+    var documentTypeId = $(".stepsforatt .step.active").data("document-id");
+
+    if (!documentTypeId) {
+        alert("Invalid document step.");
+        return;
+    }
     for (var i = 0; i < totalFiles; i++) {
         var file = document.getElementById("pdfFileInput").files[i];
         formData.append("uploadfile", file);
         formData.append("Reamarks", $("#Reamarks").val());
         formData.append("PsmId", $("#spanCurrentPslmId").html());
+       
     }
+    // ✅ Send Foreign Key instead of Remarks
+    formData.append("DocumentTypeId", documentTypeId);
 
     $.ajax({
         type: "POST",
@@ -269,9 +279,16 @@ function UploadFiles() {
         success: function (response) {
             $('.uploadLoader').addClass('d-none');
             $('#uploadLoader').hide();
-        
+
             if (response == 1) {
+              
                 AttechHistory();
+                //setTimeout(function(){
+                //    trackerIndex();
+                   
+
+                //}, 1000)
+
                 $("#Reamarks").val("");
                 $("#pdfFileInput").val("");
                 Swal.fire({
@@ -324,6 +341,7 @@ function AttechHistory() {
         type: 'POST',
 
         success: function (response) {
+
             if (response != "null" && response != null) {
 
                 if (response == -1) {
@@ -334,7 +352,7 @@ function AttechHistory() {
                 else if (response == 0) {
 
                     listItem += "<tr><td class='text-center' colspan=5>No Record Found</td></tr>";
-
+                    syncTrackerWithResponse([]);
                     $("#DetailBody").html(listItem);
                     $("#lblTotal").html(0);
                 }
@@ -375,11 +393,9 @@ function AttechHistory() {
                     }
 
                     $("#DetailBody").html(listItem);
+                    syncTrackerWithResponse(response);
                     $("#lblTotal").html(response.length);
-
-
-
-                    var rows;
+                  
 
 
 
@@ -430,6 +446,7 @@ function Deleteattechment(AttechId) {
 
 
             if (response == 1) {
+             
                 Swal.fire({
                     position: 'top-end',
                     icon: 'success',

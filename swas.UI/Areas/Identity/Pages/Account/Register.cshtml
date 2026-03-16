@@ -44,15 +44,19 @@
                         <div class="col-md-12">
 
                             <table class="table table-striped table-bordered">
+
                                 @if (Logins != null)
                                 {
                                     <tr>
                                         <td>
                                             <label asp-for="Input.UserName" class="label control-label reg-label-m5">Regn Id (UserName)</label>
                                         </td>
-                                        <td class="reg-td-w65">
-                                            <input asp-for="Input.UserName" class="form-control" maxlength="20" aria-required="true"
+                                        <td colspan="2">
+                                            <input asp-for="Input.UserName" class="form-control char-limit" data-maxlength="20"
+                                                   required aria-required="true"
                                                    placeholder="Regn Id Reqd for Login & More Users Regn for this unit" />
+
+                                            <span class="charErrorMsg d-none paw-red-font">Cannot exceed more than 20 characters!</span>
                                             <span asp-validation-for="Input.UserName" class="text-danger"></span>
                                         </td>
                                     </tr>
@@ -63,10 +67,12 @@
                                         <td>
                                             <label asp-for="Input.UserName" class="label control-label reg-label-m5">Regn Id (UserName)</label>
                                         </td>
-                                        <td class="reg-td-w65">
-                                            <input asp-for="Input.UserName" class="form-control" maxlength="20"
-                                                   aria-required="true" readonly
+                                        <td colspan="2">
+                                            <input asp-for="Input.UserName" class="form-control char-limit" data-maxlength="20"
+                                                   required aria-required="true" readonly
                                                    placeholder="Regn Id Reqd for Login & More Users Regn for this unit" />
+
+                                            <span class="charErrorMsg d-none paw-red-font">Cannot exceed more than 20 characters!</span>
                                             <span asp-validation-for="Input.UserName" class="text-danger"></span>
                                         </td>
                                     </tr>
@@ -76,8 +82,8 @@
                                     <td>
                                         <label asp-for="Input.Rank" class="label control-label reg-label-m5">Rank</label>
                                     </td>
-                                    <td>
-                                        <select asp-for="Input.Rank" class="form-control dropdownsearch" aria-required="true">
+                                    <td colspan="2">
+                                        <select asp-for="Input.Rank" class="form-control dropdownsearch">
                                             <option value="">--- Select ---</option>
                                             @foreach (var rank in Rank)
                                             {
@@ -90,10 +96,12 @@
 
                                 <tr>
                                     <td>
-                                        <label asp-for="Input.OfficerName" class="label control-label reg-label-m5"> Name</label>
+                                        <label asp-for="Input.OfficerName" class="label control-label reg-label-m5">Name</label>
                                     </td>
-                                    <td>
-                                        <input asp-for="Input.OfficerName" class="form-control" maxlength="50" placeholder="Offrs Name" />
+                                    <td colspan="2">
+                                        <input asp-for="Input.OfficerName" class="form-control char-limit" data-maxlength="20"
+                                               required placeholder="Offrs Name" />
+                                        <span class="charErrorMsg d-none paw-red-font">Cannot exceed more than 20 characters!</span>
                                         <span asp-validation-for="Input.OfficerName" class="text-danger"></span>
                                     </td>
                                 </tr>
@@ -102,9 +110,10 @@
                                     <td>
                                         <label asp-for="Input.appointment" class="label control-label reg-label-m5">Appointment</label>
                                     </td>
-                                    <td>
-                                        <input asp-for="Input.appointment" class="form-control" maxlength="35"
-                                               aria-required="true" placeholder="Appointment" />
+                                    <td colspan="2">
+                                        <input asp-for="Input.appointment" class="form-control char-limit" data-maxlength="20"
+                                               required placeholder="Appointment" />
+                                        <span class="charErrorMsg d-none paw-red-font">Cannot exceed more than 20 characters!</span>
                                         <span asp-validation-for="Input.appointment" class="text-danger"></span>
                                     </td>
                                 </tr>
@@ -113,9 +122,10 @@
                                     <td>
                                         <label asp-for="Input.Tele_Army" class="label control-label reg-label-m5">Tele No (Army)</label>
                                     </td>
-                                    <td>
-                                        <input asp-for="Input.Tele_Army" class="form-control" maxlength="35"
-                                               aria-required="true" placeholder="Tele No (Army)" />
+                                    <td colspan="2">
+                                        <input asp-for="Input.Tele_Army" class="form-control char-limit" data-maxlength="20"
+                                               required placeholder="Tele No (Army)" />
+                                        <span class="charErrorMsg d-none paw-red-font">Cannot exceed more than 20 characters!</span>
                                         <span asp-validation-for="Input.Tele_Army" class="text-danger"></span>
                                     </td>
                                 </tr>
@@ -134,7 +144,8 @@
                                         </select>
                                         <span asp-validation-for="Input.unitId" class="text-danger"></span>
                                     </td>
-                                    <td>
+
+                                    <td style="width:50px">
                                         <div class="plus reg-plus-circle" id="UnitRegister">+</div>
                                     </td>
                                 </tr>
@@ -143,8 +154,8 @@
                                     <td>
                                         <label asp-for="Input.RoleName" class="label control-label">Select Role</label>
                                     </td>
-                                    <td>
-                                        <select asp-for="Input.RoleName" class="ms form-control inputs dropdownsearch"
+                                    <td colspan="2">
+                                        <select asp-for="Input.RoleName" class="form-control dropdownsearch"
                                                 asp-items='new SelectList(roles,"Id","Name")'>
                                             <option value="">----- Select Role ------</option>
                                         </select>
@@ -214,5 +225,6 @@
         </div>
     </div>
 </div>
+
 
 <script src="~/developerjs/register.js"></script>

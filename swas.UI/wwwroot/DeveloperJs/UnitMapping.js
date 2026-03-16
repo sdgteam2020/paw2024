@@ -50,8 +50,8 @@
     }
   
 
-    $("#btn-Mapping").on('click', function () {
-       
+    $(".btn-Mapping").on('click', function () {
+    
         $("#SpnmodalStageid").html($(this).closest("tr").find("#CurrentStageId").html());
         $("#SpnmodalStatusId").html($(this).closest("tr").find("#CurrentStatusId").html());
 

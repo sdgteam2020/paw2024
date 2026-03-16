@@ -242,7 +242,7 @@ function GetProjectMovHistory(ProjId) {
         type: 'POST',
         data: { "ProjectId": ProjId },
         success: function (response) {
-            debugger;
+            
             if (response.dtoProjectMovHistorypsmlst.length) {
 
                 listitem += '<div class="timeline-month">';

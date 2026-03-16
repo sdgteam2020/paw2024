@@ -60,7 +60,7 @@ function GetAllDashbaordCount() {
                         if (dtoDashboardHeaderlst[i].stageId === 2) stage = "(Parallel Processing)";
                         if (dtoDashboardHeaderlst[i].stageId === 3) stage = "(Serial Processing)";
 
-                        listitem += '<div class="newprojectheading text-center"> ' + dtoDashboardHeaderlst[i].stages + " " + stage + ' </div>';
+                        listitem += '<div class="header-container text-center text-white shadow-container"> ' + dtoDashboardHeaderlst[i].stages + " " + stage + ' </div>';
                         listitem += '<div class="r-1 row g-3 mt-2 db-stage-row">';
                     }
                     listitem += '<div class="cd-1 col-12 col-sm-6 col-md-4 col-lg-1 db-card-box">';
@@ -407,11 +407,11 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                         listItem += "<td class='align-middle dp-w-3'>" + count + "</td>";
                         if (unitId == 1 || unitId == 2 || unitId == 3 || unitId == 4 || unitId == 5 || unitId == 7) {
                             listItem += "<td class='align-middle nowrap'>" +
-                                "<a class='ProjName' title='" + shortProjName + "' data-proj-id='" + response[i].projId + "' data-proj-name='" + shortProjName + "' " +
+                                "<a class='ProjName' title='" + projName + "' data-proj-id='" + response[i].projId + "' data-proj-name='" + shortProjName + "' " +
                                 "href='/Projects/ProjHistory?EncyID=" + response[i].encyID + "&Type=XRDC'>" +
-                                shortProjName + "</a></td>";
+                                shortProjName + "</a><span class='d-none'>'" + projName +"'</span></td>";
                         } else {
-                            listItem += "<td class='align-middle nowrap'><span id='ProjName'>" + shortProjName + "</span></td>";
+                            listItem += "<td class='align-middle nowrap'><span id='ProjName' title='" + projName + "'>" + shortProjName + "</span></td>";
                         }
 
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
@@ -629,7 +629,7 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                             listItem += "<td class='align-middle'>" +
                                 "<a class='ProjName' title='" + projName + "' data-proj-id='" + response[i].projId + "' data-proj-name='" + projName + "' " +
                                 "href='/Projects/ProjHistory?EncyID=" + response[i].encyID + "&Type=XRDC'>" +
-                                shortProjName + "</a></td>";
+                                shortProjName + "</a><span class='d-none'>" + projName +"</span></td>";
                         }
                         else {
                             listItem += "<td class='align-middle'><span id='ProjName' title='" + projName + "'>" + shortProjName + "</span></td>";

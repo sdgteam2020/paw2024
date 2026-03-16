@@ -61,6 +61,7 @@ namespace swas.DAL
         public virtual DbSet<trnRemainder> TrnRemainders { get; set; } = null!;
         public DbSet<tbl_mCertificate> tbl_mCertificate { get; set; }
         public DbSet<tbl_mCertificateContent>tbl_mCertificateContent { get; set; }
+        public DbSet<DocumentType> DocumentTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

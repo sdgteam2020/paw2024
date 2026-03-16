@@ -20,7 +20,7 @@ $(function() {
 
 
 	$(".toggle-icon").click(function () {
-		debugger;
+		
 		$(".wrapper").hasClass("toggled") ? ($(".wrapper").removeClass("toggled"), $(".sidebar-wrapper").unbind("hover")) : ($(".wrapper").addClass("toggled"), $(".sidebar-wrapper").hover(function() {
 			$(".wrapper").addClass("sidebar-hovered")
 		}, function() {
@@ -75,17 +75,7 @@ $(function() {
 
 
 
-  $(".dark-mode-icon").on("click", function() {
-
-    if($(".mode-icon ion-icon").attr("name") == 'sunny-sharp') {
-        $(".mode-icon ion-icon").attr("name", "moon-sharp");
-        $("html").attr("class", "light-theme")
-    } else {
-        $(".mode-icon ion-icon").attr("name", "sunny-sharp");
-        $("html").attr("class", "dark-theme")
-    }
-
-  }), 
+ 
 
 $("#LightTheme").on("click", function() {
   $("html").attr("class", "light-theme")

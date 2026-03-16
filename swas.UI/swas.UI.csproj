@@ -39,6 +39,7 @@
 	  <PackageReference Include="itext.bouncy-castle-adapter" Version="8.0.2" />
 	  <PackageReference Include="itext7" Version="8.0.2" />
 	  <PackageReference Include="itext7.bouncy-castle-adapter" Version="8.0.2" />
+	  <PackageReference Include="Microsoft.AspNetCore.Antiforgery" Version="2.3.9" />
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 
 	  <!-- Entity Framework Core 9 -->

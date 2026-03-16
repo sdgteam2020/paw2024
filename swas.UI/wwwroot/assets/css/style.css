@@ -1999,23 +1999,12 @@ ul.categories-list li {
 }
 
 #msform input, #msform textarea {
-    /* padding: 8px 15px 8px 15px;
-    border: 1px solid #ccc;
-    border-radius: 0px;
-    margin-bottom: 10px;
-    margin-top: 2px;
-    width: 250px;
-    box-sizing: border-box;
-    font-family: Arial;
-    color: #2C3E50;
-    background-color: #ECEFF1;
-    font-size: 14px;
-    letter-spacing: 1px;*/
+   
     padding: 10px;
     border: 1px solid #919ca9;
     border-radius: 5px;
     margin-bottom: 15px;
-    width: 250px;
+   /* width: 250px;*/
     margin-right: 20px;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
@@ -2040,8 +2029,11 @@ ul.categories-list li {
 
 
 #msform .action-button {
+    background: linear-gradient(90deg, #1e3a8a, #2563eb);
+    padding: 12px 20px;
+    border-radius: 8px;
     width: 190px;
-    background: #044c92;
+    /*background: #044c92;*/
     font-weight: bold;
     color: white;
     border: 0 none;
@@ -2049,7 +2041,6 @@ ul.categories-list li {
     cursor: pointer;
     /*padding: 10px 5px;
     margin: 10px 0px 10px 5px;*/
-    
 }
 
     #msform .action-button:hover, #msform .action-button:focus {

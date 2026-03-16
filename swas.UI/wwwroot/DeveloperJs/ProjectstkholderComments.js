@@ -73,6 +73,23 @@ function IsUnReadInbox(psmId) {
         }
     });
 }
+
+
+function GetCommentBadgeCount(id) {
+    $.ajax({
+        url: '/Projects/GetProjectUnreadCound',
+        type: 'POST',
+        data: { StatusId: Id },
+        success: function (response) {
+            console.log(response); // handle response here
+        },
+        error: function (error) {
+            console.error(error);
+        }
+    });
+}
+
+
 function GetProjCommentsByUnitId(Id) {
     var listItem = "";
 
@@ -184,14 +201,10 @@ function GetProjCommentsByUnitId(Id) {
                         count++;
 
                     }
-                    $("#ProjectCommentCount").text(commentFalseCount);
+                   /* $("#ProjectCommentCount").text(commentFalseCount);*/
 
-                    if (commentFalseCount > 0) {
-                        $("#ProjectCommentCount").removeClass("d-none");
-                    }
-                    else {
-                        $("#ProjectCommentCount").addClass("d-none");
-                    }
+                    IsReadComment(0, 0);
+                   
 
                     if ($.fn.DataTable.isDataTable("#Comment")) {
                         $("#Comment").DataTable().clear().destroy();
@@ -203,13 +216,13 @@ function GetProjCommentsByUnitId(Id) {
                     
 
                     $("body").off("click").on("click", ".cls-btncomment", function () {
-                        debugger;
+                        
                         $(".custom-modal").addClass("custom-modal-size")
                         var self = this;
 
                             var action = $(self).closest("tr").find("#status").html();
                         fetchServerDate().then(function (S) {
-                            debugger;
+                            
                             let stkid = 0;
 
                             switch (action) {
@@ -280,9 +293,7 @@ function GetProjCommentsByUnitId(Id) {
                                 $('#CommentDateFwd').val(S.todayDateTime); // Set today's date
                                 $('#CommentDateFwd').prop('disabled', true); // Freeze input
                             }
-                            setTimeout(function () {
-                                GetProjCommentsByUnitId(stkid);
-                            }, 200);
+                           
                         });
                     });
 
@@ -388,16 +399,19 @@ function SendMsg() {
             }
             else if (response == 6) {
                 Swal.fire({
-                    position: 'top-end',
-                    icon: 'error', // lowercase 'error' is correct
-                    title: `<div class="swal-html-content">
-                <ol>
-                    <li>No Amdts Allowed as the Project is Already Accepted By You!</li>
-                    <li>However, only info is allowed after the project is accepted.</li>
-                </ol>
-            </div>`,
-                    showConfirmButton: true
-                });
+    position: 'top-end',
+    icon: 'error',
+    title: 'Action Not Allowed',
+    html: `
+        <div class="swal-html-content">
+            <ol style="text-align:left;">
+                <li>No Amdts Allowed as the Project is Already Accepted By You!</li>
+                <li>However, only info is allowed after the project is accepted.</li>
+            </ol>
+        </div>
+    `,
+    showConfirmButton: true
+});
 
             }
             else if (response == 8) {
@@ -493,6 +507,15 @@ function IsReadComment(ProjId, PsmId) {
         type: 'POST',
         data: { "ProjId": ProjId, "PsmId": PsmId },
         success: function (response) {
+            if (response > 0) {
+                $("#ProjectCommentCount").removeClass("d-none");
+                $("#ProjectCommentCount").text(response);
+            }
+            else {
+                $("#ProjectCommentCount").addClass("d-none");
+            }
+            
+
         }
     })
 }

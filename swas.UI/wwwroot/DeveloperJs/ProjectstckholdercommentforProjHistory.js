@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
-   
+
+
+
    
     initializeDataTable('#SoftwareType');
     sessionStorage.setItem("spntabType", $("#spntabType").html());
@@ -21,6 +23,23 @@
        
 
 
+});
+
+
+$('#uploadfile').on('change', function () {
+
+    const file = this.files[0];
+    if (!file) return;
+    if (file.type !== "application/pdf") {
+        Swal.fire({
+            title: 'Invalid File!',
+            text: 'Only PDF files are allowed.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+
+        $(this).val(''); // reset file input
+    }
 });
 
 function getProjWiseStatus() {
@@ -99,7 +118,7 @@ function GetAllComments2() {
                         var approval = $(this).attr("addminaproval");
 
                         fetchServerDate().then(function (S) {
-                            debugger;
+                            
                             var projId = $(".ProjectcommentprojId").html().trim();
                             $("#ProjectcommentForStackHolderprojId").html($(".ProjectcommentprojId").html())
                             $("#ProjectcommentForStackHolderPsmId").html($("#IsCommentPsmiId").html())
@@ -440,3 +459,4 @@ function PrintDiv() {
     var projectid = $(".ProjectcommentprojId").html();
   
 
+            

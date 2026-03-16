@@ -135,7 +135,7 @@ function ProjectWiseStatusByProjid(projid) {
                     var MovProjectlst = response.movProjectlst;
 
                     listItem += '<thead>';
-                    listItem += '<tr>';
+                    listItem += '<tr class="theadfontsize">';
                     listItem += '<th class="d-none noExport"></th>';
 
                     for (var i = 0; i < StatusProjectlst.length; i++) {
@@ -146,7 +146,7 @@ function ProjectWiseStatusByProjid(projid) {
 
                     listItem += '</tr>';
                     listItem += '</thead>';
-                    listItem += '<tbody id="bodyProjectWiseStatusByprojid">';
+                    listItem += '<tbody id="bodyProjectWiseStatusByprojid table-responsive">';
 
                     var count = 1;
                     var ProjId = 0;
@@ -166,9 +166,12 @@ function ProjectWiseStatusByProjid(projid) {
                                     });
 
                                     if (isstatus.length != 0) {
-                                        listItem += '<td class="align-middle text-center" data-toggle="tooltip" data-placement="top" title="'
+                                        listItem += '<td class="" data-toggle="tooltip" data-placement="top" title="'
                                             + DateFormateddMMyyyyhhmmss(isstatus[0].timeStamp)
-                                            + '"><div class="pws-ok-dot">✔</div></td>';
+                                            + '"><div class="d-flex d-flex justify-content-between"><span class="pws-ok-dot d-flex ">✔</span><span class="nowrap">'
+                                            + DateFormateddMMyyyyhhmmss(isstatus[0].timeStamp)
+                                            + '</span></div></td>';
+
                                     } else {
                                         listItem += '<td class="align-middle text-center"><img src="/assets/images/icons/Cross_red_circle.png" width="22" height="22" alt="Readed"></td>';
                                     }

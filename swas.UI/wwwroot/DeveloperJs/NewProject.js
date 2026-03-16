@@ -396,8 +396,9 @@ $(document).ready(function () {
 $(document).ready(function () {
     $("#CommentProject").autocomplete({
         source: function (request, response) {
-            var query = request.term;
-            if (query.length > 3) { // Only trigger search when length > 3
+            var query = request.term;   
+         
+            if (query.length > 2) { // Only trigger search when length > 3
                 $.ajax({
                     url: '/Projects/FindProjectForComment',
                     type: 'POST',
@@ -428,7 +429,7 @@ $(document).ready(function () {
                 });
             }
         },
-        minLength: 4, // Minimum characters before search is triggered
+        minLength: 3, // Minimum characters before search is triggered
         select: function (event, ui) {
             let selectedOption = ui.item;
 
