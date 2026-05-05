@@ -659,7 +659,7 @@ $(document).on("click", ".date-action", function (e) {
 
 $(document).on('click', '.btnRemainder', function () {
     let projid = $(this).data('projid');
-    alert(projid);
+   
     let projname = $(this).data('projname');
     Swal.fire({
         title: `Project:${projname}`,

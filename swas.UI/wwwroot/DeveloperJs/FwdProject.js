@@ -1080,6 +1080,8 @@ function openForwardModal(btn, isFromMov) {
     $("#searchBox").val('').hide();
     TimeStampForcheckdate = new Date($(".TimeStampForcheckdate").html());
     let projName = isFromMov ? $('#spnprojname').text() : $btn.data('proj-name');
+    let IsRevettedproject = isFromMov ? $('#spniswhite').text() : $btn.closest("tr").find("#SpnWhiteListed").html().trim()
+  
     let words = projName.split(" ");
 
     $('#fwdModal').text("Proj Name: " + projName);
@@ -1094,8 +1096,9 @@ function openForwardModal(btn, isFromMov) {
 
         mMsaterfwdStage(stageId, "ddlfwdStage", 5, 0, 1, 1);
     }
-    else if (words.includes("Re-Vetted")) {
-        mMsaterfwdStage(stageId, "ddlfwdStage", 5, 0, 1, "Re-Vetted");
+    else if (IsRevettedproject ==="Re-Vetted") {
+       
+        mMsaterfwdStage(stageId, "ddlfwdStage", 5, 0, 1, IsRevettedproject);
     }
     else {
         mMsaterfwdStage(stageId, "ddlfwdStage", 5, 0, 1);

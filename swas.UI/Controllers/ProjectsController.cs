@@ -406,16 +406,63 @@ public async Task<IActionResult> Details(int id)
             return Json(1);
 
         }
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddProject(tbl_Projects Data, string RequestRemarks)
+        public async Task<IActionResult> AddProject(tbl_Projects Data, string? RequestRemarks)
         {
-         
-          
             try
             {
-                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+                if (Data == null)
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Invalid project data."
+                    });
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Invalid submitted data.",
+                        errors = ModelState
+                            .Where(x => x.Value != null && x.Value.Errors.Count > 0)
+                            .ToDictionary(
+                                x => x.Key,
+                                x => x.Value!.Errors.Select(e => e.ErrorMessage).ToArray()
+                            )
+                    });
+                }
+
+                var httpContext = _httpContextAccessor.HttpContext;
+
+                if (httpContext == null)
+                {
+                    return Unauthorized(new
+                    {
+                        success = false,
+                        message = "Session expired. Please login again."
+                    });
+                }
+
+                Login? Logins = SessionHelper.GetObjectFromJson<Login>(
+                    httpContext.Session,
+                    "User"
+                );
+
+                if (Logins == null)
+                {
+                    return Unauthorized(new
+                    {
+                        success = false,
+                        message = "Session expired. Please login again."
+                    });
+                }
+
                 int projid = 0;
-               
+
                 Data.StakeHolderId = Logins.unitid ?? 0;
                 Data.IsActive = true;
                 Data.EditDeleteDate = DateTime.Now;
@@ -424,31 +471,32 @@ public async Task<IActionResult> Details(int id)
                 Data.IsSubmited = false;
                 Data.UpdatedByUserId = Logins.UserIntId;
                 Data.Comments = Data.InitialRemark;
-               
+
+                // Existing business logic preserved
                 Data.MobileNo = Data.MobileNo;
                 Data.AsconNo = Data.AsconNo;
-                if(Data.Date_type ==1)
+
+                if (Data.Date_type == 1)
                 {
                     Data.InitiatedDate = Data.InitiatedDate;
                     Data.DateTimeOfUpdate = Data.InitiatedDate;
-                }else
+                }
+                else
                 {
                     Data.InitiatedDate = DateTime.Now;
                     Data.DateTimeOfUpdate = DateTime.Now;
                 }
 
-                    bool isEdit = Data.ProjId != 0;
+                bool isEdit = Data.ProjId != 0;
 
                 if (!isEdit)
                 {
-
-
                     if (Data.IsWhitelisted == "Re-Vetted")
                     {
                         Data.ProjName = await GetReVettedProjectName(Data);
                     }
-                    bool projectExists = await _projectsRepository.ProjectNameExists(Data);
 
+                    bool projectExists = await _projectsRepository.ProjectNameExists(Data);
 
                     if (projectExists)
                     {
@@ -457,73 +505,115 @@ public async Task<IActionResult> Details(int id)
                 }
                 else
                 {
-
                     var existingProject = await _projectsRepository.GetProjectByIdAsync(Data.ProjId);
 
+                    if (existingProject == null)
+                    {
+                        return NotFound(new
+                        {
+                            success = false,
+                            message = "Project not found."
+                        });
+                    }
 
                     _dbContext.Entry(existingProject).State = EntityState.Detached;
 
-
-                    if (Data.IsWhitelisted == "Re-Vetted" && existingProject?.IsWhitelisted != "Re-Vetted")
+                    if (Data.IsWhitelisted == "Re-Vetted" &&
+                        existingProject.IsWhitelisted != "Re-Vetted")
                     {
                         Data.ProjName = await GetReVettedProjectName(Data);
 
-
                         bool projectExists = await _projectsRepository.ProjectNameExists(Data);
+
                         if (projectExists)
                         {
                             return Json(-3);
                         }
                     }
-                    else if (Data.IsWhitelisted == "Re-Vetted" && existingProject?.IsWhitelisted == "Re-Vetted" && !Data.ProjName.Contains("Re-Vetted"))
+                    else if (Data.IsWhitelisted == "Re-Vetted" &&
+                             existingProject.IsWhitelisted == "Re-Vetted" &&
+                             !string.IsNullOrWhiteSpace(Data.ProjName) &&
+                             !Data.ProjName.Contains("Re-Vetted"))
                     {
                         return Json(-5);
                     }
-
-
+                    else if (Data.IsWhitelisted == "Re-Vetted" &&
+                             existingProject.IsWhitelisted == "Re-Vetted" &&
+                             string.IsNullOrWhiteSpace(Data.ProjName))
+                    {
+                        return Json(-5);
+                    }
                 }
 
                 if (Data.ProjId == 0)
                 {
                     Data.CurrentPslmId = 0;
+
                     projid = await _projectsRepository.AddProjectAsync(Data, RequestRemarks);
+
                     Data = await _projectsRepository.GetProjectByIdAsync(projid);
+
+                    if (Data == null)
+                    {
+                        return StatusCode(500, new
+                        {
+                            success = false,
+                            message = "Project was saved but could not be retrieved."
+                        });
+                    }
                 }
                 else
                 {
                     Data.EditDeleteDate = DateTime.Now;
+
                     await _projectsRepository.UpdateProjectAsync(Data, RequestRemarks);
+
                     Data = await _projectsRepository.GetProjectByIdAsync(Data.ProjId);
+
+                    if (Data == null)
+                    {
+                        return StatusCode(500, new
+                        {
+                            success = false,
+                            message = "Project was updated but could not be retrieved."
+                        });
+                    }
                 }
 
                 if (Data.OldPsmid != 0)
                 {
-                    var oldAttachments = _dbContext.AttHistory
+                    var oldAttachments = await _dbContext.AttHistory
                         .Where(x => x.PsmId == Data.OldPsmid)
-                        .ToList();
+                        .AsNoTracking()
+                        .ToListAsync();
 
-                    foreach (var old in oldAttachments)
+                    if (oldAttachments.Any())
                     {
-                        var newAttachment = new tbl_AttHistory
+                        foreach (var old in oldAttachments)
                         {
-                            PsmId = Data.CurrentPslmId,
-                            ActionId = old.ActionId,
-                            TimeStamp = old.EditDeleteDate,
-                            IsDeleted = false,
-                            IsActive = true,
-                            EditDeleteBy = old.EditDeleteBy,
-                            AttPath = old.AttPath,
-                            EditDeleteDate = DateTime.Now,
-                            UpdatedByUserId = old.UpdatedByUserId,
-                            ActFileName = old.ActFileName,
-                            Reamarks = old.Reamarks,
-                            DateTimeOfUpdate = old.DateTimeOfUpdate
-                        };
-                        _dbContext.AttHistory.Add(newAttachment);
-                    }
+                            var newAttachment = new tbl_AttHistory
+                            {
+                                PsmId = Data.CurrentPslmId,
+                                ActionId = old.ActionId,
+                                TimeStamp = old.EditDeleteDate,
+                                IsDeleted = false,
+                                IsActive = true,
+                                EditDeleteBy = old.EditDeleteBy,
+                                AttPath = old.AttPath,
+                                EditDeleteDate = DateTime.Now,
+                                UpdatedByUserId = old.UpdatedByUserId,
+                                ActFileName = old.ActFileName,
+                                Reamarks = old.Reamarks,
+                                DateTimeOfUpdate = old.DateTimeOfUpdate
+                            };
 
-                    await _dbContext.SaveChangesAsync();
+                            await _dbContext.AttHistory.AddAsync(newAttachment);
+                        }
+
+                        await _dbContext.SaveChangesAsync();
+                    }
                 }
+
                 return Json(Data);
             }
             catch (Exception ex)
@@ -531,12 +621,15 @@ public async Task<IActionResult> Details(int id)
                 int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
                 var eventId = new EventId(dynamicEventId, "AddProjectError");
 
-                _logger.LogError(eventId, ex,
-                    "An error occurred while adding a project in ProjectsController.");
+                _logger.LogError(
+                    eventId,
+                    ex,
+                    "An error occurred while adding/updating a project in ProjectsController."
+                );
 
-                // Log internally only (no raw message exposed)
                 swas.BAL.Utility.Error.ExceptionHandle(
-                    "Add Project failed in ProjectsController.");
+                    "Add Project failed in ProjectsController."
+                );
 
                 return StatusCode(500, new
                 {
@@ -544,9 +637,7 @@ public async Task<IActionResult> Details(int id)
                     message = "Unable to add project at this time. Please try again later."
                 });
             }
-
         }
-
         public async Task<IActionResult> GetAtthHistoryByProjectId(int PslmId)
         {
             try

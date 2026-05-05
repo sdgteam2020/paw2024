@@ -523,150 +523,306 @@ $(document).ready(function () {
     });
 });
 function AddProject(thistag) {
-    
-    fetchServerDate().then(function (S) {
 
-        let token = $('input[name="__RequestVerificationToken"]').val();
-        
-        let initialDate = $('#InitiatedDate').val();
-        let completionDate = $('#CompletionDate').val();
-        let currentDate = new Date(S.todayDateTime);
-        let currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false });
+    const $btn = $(thistag);
 
-        
+    // Prevent double click / duplicate submit
+    if ($btn.data("submitting") === true) {
+        return;
+    }
 
-        let InitiatedDate = initialDate + ' ' + currentTime;
-        let CompletionDate = completionDate + ' ' + currentTime;
-        console.log("Inititated date:", initialDate + ", Complition Date: ", InitiatedDate)
-        $.ajax({
-            url: '/Projects/AddProject',
-            type: 'POST',
-            data: {
-                "ProjId": $("#ProjId").val(),
-                "ProjName": $("#ProjName").val(),
-                "Is_AI_ML": $("#Is_AI_ML").val(),
-                "InitiatedDate": InitiatedDate,
-                "CompletionDate": CompletionDate,
-                "IsWhitelisted": $("#IsWhitelisted").val(),
-                "Security_Classification": $("#Security_Classification").val(),
-                "AsconNo": $("#AsconNo").val(),
-                "InitialRemark": $("#InitialRemark").val(),
-                "StakeHolderId": $("#ddlStakeHolderId").val(),
-                "AimScope": $("#AimScope").val(),
-                "HQandITinfraReqd": $("#HQandITinfraReqd").val(),
-                "HostTypeID": $("#ddlHostTypeID").val(),
-                "ContentofSWApp": $("#ContentofSWApp").val(),
-                "ReqmtJustification": $("#ReqmtJustification").val(),
-                "UsabilityofProposedAppln": $("#UsabilityofProposedAppln").val(),
-                "Apptype": $("#ddlApptype").val(),
-                "DetlsofUserBase": $("#DetlsofUserBase").val(),
-                "EnvisagedCost": $("#EnvisagedCost").val(),
-                "NWBandWidthReqmt": $("#NWBandWidthReqmt").val(),
-                "MajTimeLines": $("#MajTimeLines").val(),
-                "TechStackProposed": $("#TechStackProposed").val(),
-                "DataSecurity_backup": $("#DataSecurity_backup").val(),
-                "TypeofSW": $("#TypeofSW").val(),
-                "BeingDevpInhouse": $("#BeingDevpInhouse").val(),
-                "EndorsmentbyHeadof": $("#EndorsmentbyHeadof").val(),
-                "CurrentPslmId": $("#CurrentPslmId").val(),
-                "ProjCode": $("#ProjCode").val(),
-                "Sponsor": $("#sponsorNameInput").val(),
+    $btn.data("submitting", true);
+    $btn.prop("disabled", true);
 
-                "Detlsof_OS": $("#Detlsof_OS").val(),
-                "ProposedDB_Engine": $("#ProposedDB_Engine").val(),
-                "DetlsofSw_Architecture": $("#DetlsofSw_Architecture").val(),
-                "DetlsofProposed_Architecture": $("#DetlsofProposed_Architecture").val(),
-                "DetlsPki_IAM": $("#DetlsPki_IAM").val(),
-                "Technology_dependencies": $("#Technology_dependencies").val(),
-                "Database_reqmts": $("#Database_reqmts").val(),
-                "Enhancement_upgradation": $("#Enhancement_upgradation").val(),
-                "Details_licensing": $("#Details_licensing").val(),
-                "OldPsmid": parseInt($("#spanOldPslmId").html()) || 0,
-                "Date_type": $('input[name="mcalender_dates"]:checked').val(),
-                "RequestRemarks": $("#RequestRemarks").val(),
-                 "MobileNo": $("#MobileNo").val(),
-                "Devlopment_Language": $("#Devlopment_Language").val(),
-                "operation_system_hosting_env": $("#operation_system_hosting_env").val()
-            },
-            headers: {
-                'RequestVerificationToken': token
-            },//get the search string
-            success: function (result) {
+    fetchServerDate()
+        .then(function (S) {
 
+            const token = $('input[name="__RequestVerificationToken"]').val();
 
-
-                if (result == -2) {
-
-
-                    Swal.fire({
-                        title: "success!",
-                        text: "User has been Updated!",
-                        icon: "success"
-                    });
-
-                }
-                else if (result == -3) {
-
-                    Swal.fire({
-                        title: "Error!",
-                        text: "Project Name Already Exists!",
-                        icon: "Error"
-                    });
-
-                }
-                else if (result == -4) {
-                    Swal.fire({
-                        title: "success!",
-                        text: "Incorrect Data!",
-                        icon: "Error"
-                    });
-
-
-                }
-                else if (result == -5) {
-                    Swal.fire({
-                        title: "Error!",
-                        text: "Incorrect Selection Click Again on Edit!",
-                        icon: "Error"
-                    });
-                }
-                else if (result != null) {
-
-                    let projid = result.projId;
-                    $("#spanProjectId").html(projid);
-                    $("#spanCurrentPslmId").html(result.currentPslmId);
-                    let creatid = "PROJECT ID :" + projid
-                    $("#projectId").html(creatid)
-
-
-
-
-                    AttechHistory();
-                   let current_fs = $(thistag).parent();
-                  let  next_fs = $(thistag).parent().next();
-                    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                    next_fs.show();
-                    current_fs.animate({ opacity: 0 }, {
-                        step: function (now) {
-                          let  opacity = 1 - now;
-
-                            current_fs.css({
-                                'display': 'none',
-                                'position': 'relative'
-                            });
-                            next_fs.css({ 'opacity': opacity });
-                        },
-                        duration: 600
-                    });
-
-
-
-
-
-                }
+            if (!token) {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Security token missing. Please refresh the page and try again.",
+                    icon: "error"
+                });
+                return;
             }
+
+            const initialDate = $.trim($('#InitiatedDate').val());
+            const completionDate = $.trim($('#CompletionDate').val());
+
+            if (!initialDate) {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Please select Initiated Date.",
+                    icon: "error"
+                });
+                return;
+            }
+
+            if (!completionDate) {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Please select Completion Date.",
+                    icon: "error"
+                });
+                return;
+            }
+
+            if (!S || !S.todayDateTime) {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Unable to fetch server date. Please try again.",
+                    icon: "error"
+                });
+                return;
+            }
+
+            const currentDate = new Date(S.todayDateTime);
+
+            if (isNaN(currentDate.getTime())) {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Invalid server date received. Please try again.",
+                    icon: "error"
+                });
+                return;
+            }
+
+            const currentTime = currentDate.toLocaleTimeString('en-US', {
+                hour12: false
+            });
+
+            const InitiatedDate = initialDate + ' ' + currentTime;
+            const CompletionDate = completionDate + ' ' + currentTime;
+
+            console.log("Initiated Date:", InitiatedDate, ", Completion Date:", CompletionDate);
+
+            $.ajax({
+                url: '/Projects/AddProject',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    "ProjId": $("#ProjId").val(),
+                    "ProjName": $("#ProjName").val(),
+                    "Is_AI_ML": $("#Is_AI_ML").val(),
+                    "InitiatedDate": InitiatedDate,
+                    "CompletionDate": CompletionDate,
+                    "IsWhitelisted": $("#IsWhitelisted").val(),
+                    "Security_Classification": $("#Security_Classification").val(),
+                    "AsconNo": $("#AsconNo").val(),
+                    "InitialRemark": $("#InitialRemark").val(),
+                    "StakeHolderId": $("#ddlStakeHolderId").val(),
+                    "AimScope": $("#AimScope").val(),
+                    "HQandITinfraReqd": $("#HQandITinfraReqd").val(),
+                    "HostTypeID": $("#ddlHostTypeID").val(),
+                    "ContentofSWApp": $("#ContentofSWApp").val(),
+                    "ReqmtJustification": $("#ReqmtJustification").val(),
+                    "UsabilityofProposedAppln": $("#UsabilityofProposedAppln").val(),
+                    "Apptype": $("#ddlApptype").val(),
+                    "DetlsofUserBase": $("#DetlsofUserBase").val(),
+                    "EnvisagedCost": $("#EnvisagedCost").val(),
+                    "NWBandWidthReqmt": $("#NWBandWidthReqmt").val(),
+                    "MajTimeLines": $("#MajTimeLines").val(),
+                    "TechStackProposed": $("#TechStackProposed").val(),
+                    "DataSecurity_backup": $("#DataSecurity_backup").val(),
+                    "TypeofSW": $("#TypeofSW").val(),
+                    "BeingDevpInhouse": $("#BeingDevpInhouse").val(),
+                    "EndorsmentbyHeadof": $("#EndorsmentbyHeadof").val(),
+                    "CurrentPslmId": $("#CurrentPslmId").val(),
+                    "ProjCode": $("#ProjCode").val(),
+                    "Sponsor": $("#sponsorNameInput").val(),
+
+                    "Detlsof_OS": $("#Detlsof_OS").val(),
+                    "ProposedDB_Engine": $("#ProposedDB_Engine").val(),
+                    "DetlsofSw_Architecture": $("#DetlsofSw_Architecture").val(),
+                    "DetlsofProposed_Architecture": $("#DetlsofProposed_Architecture").val(),
+                    "DetlsPki_IAM": $("#DetlsPki_IAM").val(),
+                    "Technology_dependencies": $("#Technology_dependencies").val(),
+                    "Database_reqmts": $("#Database_reqmts").val(),
+                    "Enhancement_upgradation": $("#Enhancement_upgradation").val(),
+                    "Details_licensing": $("#Details_licensing").val(),
+                    "OldPsmid": parseInt($("#spanOldPslmId").html(), 10) || 0,
+                    "Date_type": $('input[name="mcalender_dates"]:checked').val(),
+                    "RequestRemarks": $("#RequestRemarks").val(),
+                    "MobileNo": $("#MobileNo").val(),
+                    "Devlopment_Language": $("#Devlopment_Language").val(),
+                    "operation_system_hosting_env": $("#operation_system_hosting_env").val()
+                },
+                headers: {
+                    'RequestVerificationToken': token
+                },
+                success: function (result) {
+                   
+                    if (result === -2) {
+                        Swal.fire({
+                            title: "Success!",
+                            text: "User has been Updated!",
+                            icon: "success"
+                        });
+                        return;
+                    }
+
+                    if (result === -3) {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Project Name Already Exists!",
+                            icon: "error"
+                        });
+                        return;
+                    }
+
+                    if (result === -4) {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Incorrect Data!",
+                            icon: "error"
+                        });
+                        return;
+                    }
+
+                    if (result === -5) {
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Incorrect Selection. Click again on Edit!",
+                            icon: "error"
+                        });
+                        return;
+                    }
+
+                    if (result && result.projId) {
+
+                        const projid = result.projId;
+
+                        $("#spanProjectId").html(projid);
+                        $("#spanCurrentPslmId").html(result.currentPslmId || 0);
+
+                        const creatid = "PROJECT ID : " + projid;
+                        $("#projectId").html(creatid);
+
+                        if (typeof AttechHistory === "function") {
+                            AttechHistory();
+                        }
+
+                        const current_fs = $btn.closest("fieldset");
+                        const next_fs = current_fs.next("fieldset");
+
+                        if (next_fs.length === 0) {
+                            Swal.fire({
+                                title: "Success!",
+                                text: "Project saved successfully.",
+                                icon: "success"
+                            });
+                            return;
+                        }
+
+                        $("#progressbar li")
+                            .eq($("fieldset").index(next_fs))
+                            .addClass("active");
+
+                        next_fs.show();
+
+                        current_fs.animate(
+                            { opacity: 0 },
+                            {
+                                step: function (now) {
+                                    const opacity = 1 - now;
+
+                                    current_fs.css({
+                                        'display': 'none',
+                                        'position': 'relative'
+                                    });
+
+                                    next_fs.css({
+                                        'opacity': opacity
+                                    });
+                                },
+                                duration: 600
+                            }
+                        );
+
+                        return;
+                    }
+
+                    Swal.fire({
+                        title: "Error!",
+                        text: "Unexpected response received from server.",
+                        icon: "error"
+                    });
+                },
+                error: function (xhr) {
+
+                    let message = "Something went wrong. Please try again.";
+
+                    // ✅ Handle ModelState validation errors from ASP.NET Core
+                    if (xhr.status === 400 && xhr.responseJSON) {
+
+                        if (xhr.responseJSON.errors) {
+
+                            let validationMessages = [];
+
+                            $.each(xhr.responseJSON.errors, function (key, errors) {
+                                if (Array.isArray(errors)) {
+                                    errors.forEach(function (err) {
+                                        validationMessages.push(err);
+                                    });
+                                }
+                            });
+
+                            if (validationMessages.length > 0) {
+                                Swal.fire({
+                                    title: "Validation Error!",
+                                    html: validationMessages.join("<br>"),
+                                    icon: "error"
+                                });
+                                return;
+                            }
+                        }
+
+                        if (xhr.responseJSON.message) {
+                            message = xhr.responseJSON.message;
+                        } else {
+                            message = "Invalid submitted data. Please check required fields.";
+                        }
+                    }
+                    else if (xhr.status === 401) {
+                        message = "Session expired. Please login again.";
+                    }
+                    else if (xhr.status === 403) {
+                        message = "Request blocked. Please refresh the page and try again.";
+                    }
+                    else if (xhr.status === 404) {
+                        message = "Requested project was not found.";
+                    }
+                    else if (xhr.status === 500) {
+                        message = "Server error occurred. Please try again later.";
+                    }
+
+                    Swal.fire({
+                        title: "Error!",
+                        text: message,
+                        icon: "error"
+                    });
+                },
+                complete: function () {
+                    $btn.data("submitting", false);
+                    $btn.prop("disabled", false);
+                }
+            });
+        })
+        .catch(function (error) {
+
+            console.error("fetchServerDate error:", error);
+
+            Swal.fire({
+                title: "Error!",
+                text: "Unable to fetch server date. Please try again.",
+                icon: "error"
+            });
+
+            $btn.data("submitting", false);
+            $btn.prop("disabled", false);
         });
-    })
 }
 function FwdProjConfirm(thisdata) {
    

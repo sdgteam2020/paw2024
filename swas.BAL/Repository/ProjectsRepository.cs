@@ -781,6 +781,7 @@ namespace swas.BAL.Repository
                             ActionId = reader.GetInt32(reader.GetOrdinal("ActionId")),
                             Sponsor = reader["Sponsor"]?.ToString(),
                             Stage = reader["Stage"]?.ToString(),
+                            isWhitelisted = reader["IsWhiteListed"]?.ToString(),
                             StageId = reader.GetInt32(reader.GetOrdinal("StageId")),
                             IsRead = reader.GetBoolean(reader.GetOrdinal("IsRead")),
                             IsProcess = reader.GetBoolean(reader.GetOrdinal("IsProcess")),

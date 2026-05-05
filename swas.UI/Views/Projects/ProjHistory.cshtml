@@ -61,6 +61,7 @@
 
                             <td id="projectNameCell" class="long-text">
                                 <span id="spnprojname">@Model.FirstOrDefault()?.ProjName</span>
+                                <span id="spniswhite" class="d-none">@Model.FirstOrDefault()?.ProjectDetl[1].IsWhitelisted</span>
                                 <span class="ProjectcommentprojId d-none">
                                     @Model.FirstOrDefault()?.ProjId
                                 </span>

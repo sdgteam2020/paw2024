@@ -59,7 +59,7 @@
 }
 
 function mMsaterfwdStage(sectid = '', ddl, TableId, ParentId, type, projecttype) {
-
+   
     const userdata = {
         "id": TableId,
         "ParentId": ParentId,
@@ -112,25 +112,30 @@ function buildDefaultOption() {
 
 // 🔹 BUILD OPTIONS
 function buildOptions(response, projecttype) {
+    debugger;
     let html = '';
-
+    console.log(response);
     response.forEach(item => {
-        if (shouldSelect(item, projecttype)) {
-            html += `<option value="${item.id}" selected>${item.name}</option>`;
+        if (projecttype === "Re-Vetted") {
+            if (item.id == 3) {
+                html += '<option value="' + item.id + '"selected>' + item.name + '</option>';
+
+            }
+        }
+        else if (projecttype === 1) {
+            if (item.id == 1) {
+                html += '<option value="' + item.id + '" selected>' + item.name + '</option>';
+
+            }
         } else {
-            html += `<option value="${item.id}">${item.name}</option>`;
+
+            html += '<option value="' + item.id + '">' + item.name + '</option>';
         }
     });
 
     return html;
 }
 
-// 🔹 SELECTION LOGIC (UNCHANGED)
-function shouldSelect(item, projecttype) {
-    if (projecttype === "Re-Vetted" && item.id == 3) return true;
-    if (projecttype === 1 && item.id == 1) return true;
-    return false;
-}
 
 // 🔹 RENDER
 function renderDropdown(ddl, html) {
