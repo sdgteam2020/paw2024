@@ -294,17 +294,14 @@ namespace swas.Areas.Identity.Pages.Account
                 .Select(a => a)
                 .ToList();
 
-            if (!ModelState.IsValid)
-            {
-                TempData["FailureMessage"] = "Invalid input! Please check fields (max 20 chars).";
-                return Page();
-            }
+           
             returnUrl ??= Url.Content("~/Identity/Account/Register");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            var userName = _configuration["CommonUserNamePass:userName"];
+            //var userName = _configuration["CommonUserNamePass:userName"];
+            var userName = Environment.GetEnvironmentVariable("CommonUserNamePass__userName")??"";
           
-            var pass = _configuration["CommonUserNamePass:Pass"];
+            var pass = Environment.GetEnvironmentVariable("CommonUserNamePass__Pass") ?? "";
             if (Input.RoleName == null)
             {
                 Input.RoleName = userName;
@@ -373,7 +370,7 @@ namespace swas.Areas.Identity.Pages.Account
                     await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                     await _emailStore.SetEmailAsync(user, Input.UserName, CancellationToken.None);
 
-                    string pwd = "Dte@123";
+                    string pwd = pass;
                     var result = await _userManager.CreateAsync(user, pwd);
 
                     if (result.Succeeded)

@@ -50,7 +50,7 @@
                                         <form id="account" method="post" class="form-group row g-3" novalidate>
 
                                             @Html.AntiForgeryToken()
-
+                                            <input type="hidden" id="loginCryptoKey" value="@Model.LoginCryptoKey" />
                                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                                             <!-- Username -->

@@ -38,7 +38,7 @@ namespace swas.DAL.Models
 
 
 
-        public enum ActionTypeEnum
+        public enum ActionTypeEnum  
         {
             RequestSent = 1,
             Approved = 2,

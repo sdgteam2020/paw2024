@@ -247,7 +247,7 @@ $(document).ready(function () {
     });
     $(document).on('click', '#btnAttchMultiforpsmid', function () {
 
-       
+     
 
         requiredFields = $('#ProjFwd').find('.requiredFieldAttch');
 
@@ -340,11 +340,11 @@ function CheckFwdCondition(CurrentPslmId) {
         "StatusId": $("#ddlfwdSubStage").val(),
         "Actionsname": $("#ddlfwdAction option:selected").text(),
     };
-
+    let encrypted_payload = encryptData(userdata)
     $.ajax({
         url: '/Projects/CheckFwdCondition',
         type: 'POST',
-        data: userdata,
+        data: { encrypted_payload: encrypted_payload },
         success: handleFwdConditionSuccess
     });
 }
@@ -712,8 +712,9 @@ function buildFormData(CurrentPslmId, TimeStamps, fwdunitid, generatedPdf, allAt
     // ✅ Send ONLY encrypted data
     formData.append("encryptedData", encryptedData);
 
+    const encryptedCurrentPslmId = encryptData(CurrentPslmId);
 
-    formData.append("currentpsmid", CurrentPslmId);
+    formData.append("currentpsmid", encryptedCurrentPslmId);
 
     // 📎 Files (unchanged)
     appendGeneratedPdf(generatedPdf, allAttachments);
@@ -776,32 +777,58 @@ function validateFileSize(allAttachments) {
     return true;
 }
 
-// 🔹 AJAX
-function sendAjax(formData) {
-    debugger;
-    formData.forEach((value, key) => {
-        console.log(key, value);
-    });
-
-    $.ajax({
-        url: '/Projects/FwdToProject',
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        headers: {
-            'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
-        },
-        success: handleSuccess,
-        error: handleError
-    });
+ function sendAjax(formData) {
+$.ajax({
+    url: '/Projects/FwdToProject',
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    headers: {
+        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+    },
+    success: handleSuccess,
+    error: handleError
+});
 }
 
-// 🔹 SUCCESS
 function handleSuccess(response) {
 
-    if (!response) return;
+    console.log("Server Response:", response);
 
+    if (!response) {
+        return showError("No response received from server.");
+    }
+
+    // Validation error from ModelState
+    if (response.type === 400) {
+        let errorHtml = `<b>${response.message}</b><br><br>`;
+
+        if (response.errors) {
+            $.each(response.errors, function (field, messages) {
+                errorHtml += `<b>${field}</b>: ${messages.join(", ")}<br>`;
+            });
+        }
+
+        return Swal.fire({
+            icon: "error",
+            title: "Validation Error",
+            html: errorHtml
+        });
+    }
+
+    // Server exception object
+    if (response.type === 500) {
+        return showError(response.message || "Something went wrong.");
+    }
+
+    // Your numeric return codes
+    if (response == -500) return showError("Decryption failed. Please refresh the page and try again.");
+    if (response == -401) return showError("Session expired. Please login again.");
+    if (response == -999) return showError("Invalid request data.");
+    if (response == -12) return showError("Invalid PDF file. File signature does not match.");
+    if (response == -11) return showError("Only PDF file is allowed.");
+    if (response == -10) return showError("File size must be less than 10 MB.");
     if (response == 9) return showError("The 'To' Unit and 'CC' Unit must not be the same!");
     if (response == 6) return showError("Record Not Save!");
     if (response == -7) return showError("Please select Send to Unit");
@@ -815,10 +842,13 @@ function handleSuccess(response) {
         return;
     }
 
-    if (response == -5) return showError("You cannot WL Project Before (ACG)Remote Test");
-    if (response == -6) return showError("You cannot change the Stage before DDGIT Process ");
+    if (response == -5) return showError("You cannot WL Project Before (ACG) Remote Test");
+    if (response == -6) return showError("You cannot change the Stage before DDGIT Process");
 
-    $("#spanCurrentPslmId").html(response.psmId);
+    // Success object
+    if (response.psmId) {
+        $("#spanCurrentPslmId").html(response.psmId);
+    }
 
     Swal.fire({
         position: "top-end",
@@ -832,15 +862,27 @@ function handleSuccess(response) {
     setTimeout(() => location.reload(), 1500);
 }
 
-// 🔹 ERROR
 function handleError(xhr) {
-   
+
+    console.log("AJAX Error:", xhr);
+
     let msg = "An error occurred while submitting.";
 
-    if (xhr.status === 400) msg = "Invalid request.";
-    else if (xhr.status === 403) msg = "Unauthorized.";
-    else if (xhr.status === 413) msg = "File too large.";
-    else if (xhr.status === -500) msg = "decryption failed";
+    if (xhr.status === 400) {
+        msg = "Invalid request.";
+    }
+    else if (xhr.status === 401) {
+        msg = "Session expired. Please login again.";
+    }
+    else if (xhr.status === 403) {
+        msg = "Unauthorized request.";
+    }
+    else if (xhr.status === 413) {
+        msg = "File too large.";
+    }
+    else if (xhr.status === 500) {
+        msg = "Server error occurred.";
+    }
 
     Swal.fire({
         icon: "error",
@@ -849,7 +891,6 @@ function handleError(xhr) {
     });
 }
 
-// 🔹 COMMON ERROR
 function showError(msg) {
     Swal.fire({
         icon: "error",
@@ -857,6 +898,7 @@ function showError(msg) {
         text: msg
     });
 }
+
 function PullBAckProject(ProjId, PslmId, UndoRemarks, StageId) {
     let userdata =
     {
@@ -899,7 +941,7 @@ function reset() {
     $("#TimeStampToProjfwd").val('');
 }
 function IsReadInbox(psmId) {
-
+    
     $.ajax({
         url: '/Projects/IsReadInbox',
         type: 'POST',
@@ -1178,7 +1220,7 @@ $('#btnDigitalsign').on('click', function (e) {
 
 
 function SaveDocumentForTemp() {
-    debugger;
+   
     if (!generatedPdfBlob) {
         alert("PDF not generated");
         return;

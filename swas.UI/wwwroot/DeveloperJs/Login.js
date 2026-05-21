@@ -1,20 +1,7 @@
 ﻿$(document).ready(function () {
   
 
-    $.ajax({
-        url: '../../Home/CheckLogin',
-        type: 'POST',
-        data: { "RoleId": 1 }, //get the search string
-        success: function (result) {
-
-            if (result == 1) {
-                window.location.replace("../../Home/Index");
-
-            }
-
-
-        }
-    });
+   
 });
 (function () {
     "use strict";
@@ -36,17 +23,27 @@
     });
 
 })();
-function encryptData(text) {
-    const key = "DGIS-Login-AES-256-Key-Change-Me";
-    return CryptoJS.AES.encrypt(text, key).toString();
+function encryptData(text, cryptoKey) {
+    return CryptoJS.AES.encrypt(text, cryptoKey).toString();
 }
+
 $('#account').on('submit', function (e) {
     e.preventDefault();
-   
+
+    const cryptoKey = $('#loginCryptoKey').val();
+
     const username = $('#Input_UserName').val().trim();
     const password = $('input[name="Input.Password"]').val().trim();
 
-    // ❌ Validation
+    if (!cryptoKey) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Session Expired',
+            text: 'Login security key missing. Please refresh the page.'
+        });
+        return;
+    }
+
     if (!username || !password) {
         Swal.fire({
             icon: 'warning',
@@ -56,17 +53,14 @@ $('#account').on('submit', function (e) {
         return;
     }
 
-    // ✅ Encrypt only if valid
-    const encUser = encryptData(username);
-    const encPass = encryptData(password);
+    const encUser = encryptData(username, cryptoKey);
+    const encPass = encryptData(password, cryptoKey);
 
     $('#Input_UserName').val(encUser);
     $('input[name="Input.Password"]').val(encPass);
 
     this.submit();
 });
-
-
 $('.form-control').keypress(function (e) {
     let keyCode = e.which;
    

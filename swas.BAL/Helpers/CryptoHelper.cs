@@ -9,6 +9,7 @@ namespace swas.BAL.Helpers
 {
     public static class CryptoHelper
     {
+
         private const string CryptoJsPrefix = "U2FsdGVkX1"; // Base64 of "Salted__"
         public static bool IsCryptoJs(string value)
         {

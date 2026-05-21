@@ -1,4 +1,5 @@
 ﻿using ASPNetCoreIdentityCustomFields.Data;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using swas.BAL.DTO;
 using swas.DAL;
 using swas.DAL.Mapper;
@@ -71,8 +72,11 @@ namespace swas.BAL.Interfaces
         Task<List<AddNewProject>> GetMyProjects();
 
         Task<List<DTOProjectsFwd>> GetActParkedItemsAsync();
-		
-	}
+         Task<List<DTOForeClose>> GetForecloseitems();
+        Task<List<SelectListItem>> GetDropdown(string categoryName);
+
+
+    }
 
 
 

@@ -27,6 +27,7 @@ using System.Diagnostics;
 using swas.BAL.Utility;
 using static Grpc.Core.ChannelOption;
 using static swas.DAL.Models.LegacyHistory;
+using Dapper;
 
 
 namespace swas.BAL.Repository
@@ -204,74 +205,28 @@ namespace swas.BAL.Repository
             }
          
         }
-        public async Task<List<DTOProjectHold>> ProjectHolsTimeCalculate(int ProjectId)
+       public async Task<List<DTOProjectHold>> ProjectHolsTimeCalculate(int ProjectId)
         {
             try
             {
                 List<DTOProjectHold> lst = new List<DTOProjectHold>();
-				var databyprojectid = await (from mov in _dbContext.ProjStakeHolderMov
-											 join munit1 in _dbContext.tbl_mUnitBranch on mov.ToUnitId equals munit1.unitid
-											 join munit2 in _dbContext.tbl_mUnitBranch on mov.FromUnitId equals munit2.unitid
-											 join stsmap in _dbContext.TrnStatusActionsMapping on mov.StatusActionsMappingId equals stsmap.StatusActionsMappingId
-											 join act in _dbContext.mActions on stsmap.ActionsId equals act.ActionsId
-											 join sts in _dbContext.mStatus on stsmap.StatusId equals sts.StatusId
-											 let latestComment = _dbContext.StkComment
-				  .Where(c => c.PsmId == mov.PsmId)
-				  .OrderByDescending(c => c.DateTimeOfUpdate)
-				  .Select(c => new { c.StkStatusId, c.DateTimeOfUpdate })
-				  .FirstOrDefault()
 
-											 let Firstactiondt = _dbContext.StkComment
-										 .Where(c => c.PsmId == mov.PsmId)
-										 .OrderBy(c => c.DateTimeOfUpdate)
-										 .Select(c => new { c.StkStatusId, c.DateTimeOfUpdate })
-										 .FirstOrDefault()
-											 let hasApprovedStatus = _dbContext.StkComment
-	.Any(c => c.PsmId == mov.PsmId && c.StkStatusId == 1)
+                var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings") ?? "";
 
+                if (string.IsNullOrWhiteSpace(connectionString))
+                    throw new InvalidOperationException("Database connection string is missing.");
 
+                await using var connection = new SqlConnection(connectionString);
 
-											 let ApprovedDt = _dbContext.StkComment
-											 .FirstOrDefault(c => c.PsmId == mov.PsmId && c.StkStatusId == 1)
-											 let Reject = _dbContext.StkComment
-											 .FirstOrDefault(c => c.PsmId == mov.PsmId && c.StkStatusId == 3)
-											 where
-											 mov.ProjId == ProjectId
+                var parameters = new DynamicParameters();
+                parameters.Add("@ProjectId", ProjectId, DbType.Int32);
 
-											 orderby mov.PsmId
-                                             select new DTOProjectHold
-                                             {
-                                                 PsmId = mov.PsmId,
-                                                 TounitId = mov.ToUnitId,
-                                                 Tounit = munit1.UnitName,
-                                                 FromunitId = mov.FromUnitId,
-                                                 Fromunit = munit2.UnitName,
-                                                 TimeStamp = mov.TimeStamp,
-                                                 DateTimeOfUpdate = mov.DateTimeOfUpdate,
-                                                 Status = sts.Status,
-                                                 StatusId = sts.StatusId,
-                                                 Action = act.ActionDesc,
-                                                 IsComment = mov.IsComment,
-                                                 IsComplete = mov.IsComplete,
-                                                 UndoRemarks = mov.UndoRemarks,
-                                                 StkStauts = _dbContext.StkStatus
-                    .Where(s => s.StkStatusId == latestComment.StkStatusId)
-                    .Select(s => s.Status)
-                    .FirstOrDefault(),
-                                                 FirstActionDate = Firstactiondt.DateTimeOfUpdate,
-                                                 LatestCommentDate = latestComment.DateTimeOfUpdate,
-
-
-                                                 FirstStkStatus = _dbContext.StkStatus
-                    .Where(s => s.StkStatusId == Firstactiondt.StkStatusId)
-                    .Select(s => s.Status)
-                    .FirstOrDefault(),
-                                                 IsApproved = hasApprovedStatus.ToInt32(),
-                                                 Approveddate = ApprovedDt.DateTimeOfUpdate,
-                                                 RejectedDt = Reject.DateTimeOfUpdate
-
-                                             }).ToListAsync();
-
+                var databyprojectid = (await connection.QueryAsync<DTOProjectHold>(
+                    "dbo.ProjectHolsTimeCalculate_Dapper",
+                    parameters,
+                    commandType: CommandType.StoredProcedure,
+                    commandTimeout: 60
+                )).ToList();
 
                 for (int i = 0; i < databyprojectid.Count(); i++)
                 {
@@ -280,25 +235,18 @@ namespace swas.BAL.Repository
 
                     if (databyprojectid[i].IsComment == false)
                     {
-
-
-
                         if (i == 0)
                         {
                             db.FromunitId = databyprojectid[i].FromunitId;
                             db.Fromunit = databyprojectid[i].Fromunit;
                             db.TimeStampfrom = databyprojectid[i].TimeStamp;
                             db.IsComment = databyprojectid[i].IsComment;
-
                             db.IsComplete = databyprojectid[i].IsComplete;
-
 
                             if (databyprojectid.Count() == 1)
                             {
                                 db.TimeStampTo = DateTime.Now;
                             }
-                          
-
 
                             db.TounitId = databyprojectid[i].TounitId;
                             db.Tounit = databyprojectid[i].Tounit;
@@ -320,6 +268,7 @@ namespace swas.BAL.Repository
                             db.IsComplete = databyprojectid[i].IsComplete;
                             db.UndoRemarks = databyprojectid[i].UndoRemarks;
                             db.StatusId = databyprojectid[i].StatusId;
+
                             int j = i;
                             j++;
 
@@ -327,33 +276,32 @@ namespace swas.BAL.Repository
                             db.Tounit = databyprojectid[i].Tounit;
                             db.Status = databyprojectid[i].Status;
                             db.Action = databyprojectid[i].Action;
+
                             if (j < databyprojectid.Count())
                             {
-                                int @psmid1 = databyprojectid[j].PsmId;
+                                int psmid1 = databyprojectid[j].PsmId;
                                 db.TimeStampTo = databyprojectid[j].TimeStamp;
-
                             }
                         }
-
                     }
                     else
                     {
-
                         db.FromunitId = databyprojectid[i].FromunitId;
                         db.Fromunit = databyprojectid[i].Fromunit;
                         db.TimeStampfrom = databyprojectid[i].TimeStamp;
                         db.UndoRemarks = databyprojectid[i].UndoRemarks;
-                        if (databyprojectid[i].LatestCommentDate != null && databyprojectid[i].IsComment==true)
+
+                        if (databyprojectid[i].LatestCommentDate != null &&
+                            databyprojectid[i].IsComment == true)
                         {
                             db.FirstActionDate = databyprojectid[i].FirstActionDate;
                             db.TimeStampTo = databyprojectid[i].LatestCommentDate;
                         }
-
                         else
                         {
-
                             db.TimeStampTo = DateTime.Now;
                         }
+
                         db.IsComment = databyprojectid[i].IsComment;
                         db.FirstStkStatus = databyprojectid[i].FirstStkStatus;
                         db.IsComplete = databyprojectid[i].IsComplete;
@@ -366,17 +314,20 @@ namespace swas.BAL.Repository
                         db.Action = databyprojectid[i].Action;
                         db.StkStauts = databyprojectid[i].StkStauts;
                     }
+
                     lst.Add(db);
                 }
 
-
                 return lst.OrderByDescending(x => x.PsmId).ToList();
             }
-            catch (Exception ex)
+            catch (SqlException)
             {
                 throw;
             }
-
+            catch (Exception)
+            {
+                throw;
+            }
         }
         public int GetLastRecProjectMov(int? ProjectId)
         {
@@ -914,68 +865,44 @@ namespace swas.BAL.Repository
 
         }
 
-		public async Task<string> CheckPreviousApprovals(int statusId, int projId, int actionsId)
-		{
-			var trn = await _dbContext.TrnStatusActionsMapping
-				.FirstOrDefaultAsync(x => x.ActionsId == 2 && x.StatusActionsMappingId == actionsId);
+        public async Task<string> CheckPreviousApprovals(
+    int statusId,
+    int projId,
+    int actionsId)
+        {
+            try
+            {
+                var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings") ?? "";
 
-			try
-			{
-				var previousStatusIds = new List<int>
- {
-	 6, 7, 11, 20, 21, 24, 25, 26, 27, 28, 29
- };
-				if (trn == null || !previousStatusIds.Contains(statusId) || actionsId != trn.StatusActionsMappingId)
-					return "OK";
-				var requiredStatusIds = previousStatusIds
-										.Where(x => x < statusId)
-										.ToList();
-				var approvedStatuses = await (from act in _dbContext.TrnStatusActionsMapping
-											  join mov in _dbContext.ProjStakeHolderMov
-												  on act.StatusActionsMappingId equals mov.StatusActionsMappingId
-											  where previousStatusIds.Contains(act.StatusId)
-													&& requiredStatusIds.Contains(act.StatusId)
-													&& mov.ProjId == projId
-													&& mov.IsActive
-													&& act.ActionsId == 2
-											  select act.StatusId)
-											  .Distinct()
-											  .ToListAsync();
-				var commentStatuses = await (from act in _dbContext.TrnStatusActionsMapping
-											 join mov in _dbContext.ProjStakeHolderMov
-												 on act.StatusActionsMappingId equals mov.StatusActionsMappingId
-											 where previousStatusIds.Contains(act.StatusId)
-												   && mov.ProjId == projId
-												   && mov.IsActive
-												   && mov.IsComment
-												   && mov.IsComplete
-												   && act.ActionsId == 1
-											 select act.StatusId)
-											 .Distinct()
-											 .ToListAsync();
-				var notApprovedStatuses = requiredStatusIds
-										  .Except(approvedStatuses)
-										  .Except(commentStatuses)
-										  .ToList();
+                if (string.IsNullOrWhiteSpace(connectionString))
+                    throw new InvalidOperationException("Database connection string is missing.");
 
-				if (notApprovedStatuses.Any())
-				{
-					var missingNames = await _dbContext.mStatus
-						.Where(s => notApprovedStatuses.Contains(s.StatusId))
-						.Select(s => s.Status)
-						.ToListAsync();
+                await using var connection = new SqlConnection(connectionString);
 
-					return string.Join("<br>", missingNames);
-				}
+                var parameters = new DynamicParameters();
+                parameters.Add("@StatusId", statusId, DbType.Int32);
+                parameters.Add("@ProjId", projId, DbType.Int32);
+                parameters.Add("@ActionsId", actionsId, DbType.Int32);
 
-				return "OK";
-			}
-			catch (Exception ex)
-			{
-				throw;
-			}
-		}
+                var result = await connection.QueryFirstOrDefaultAsync<string>(
+                    "dbo.CheckPreviousApprovals_Dapper",
+                    parameters,
+                    commandType: CommandType.StoredProcedure,
+                    commandTimeout: 60
+                );
+
+                return string.IsNullOrWhiteSpace(result) ? "OK" : result;
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
 
-	}
+    }
 }

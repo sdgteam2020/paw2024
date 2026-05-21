@@ -612,25 +612,24 @@ $(document).on("click", ".date-action", function (e) {
             return remarks;
         }
     }).then((result) => {
-        ;
+        
         if (result.isConfirmed && result.value) {
             ;
             let remarks = result.value;
-
             $.ajax({
                 url: "/Projects/LogDateApprovalWithRemarks",
                 type: "POST",
                 data: {
-
                     ProjId: projId,
                     UserReq: userReq,
                     actiontype: actiontype,
-                    remarks: remarks,
-                    
-                }, headers: {
+                    remarks: remarks
+                },
+                headers: {
                     'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
                 },
                 success: function (response) {
+
                     Swal.fire({
                         title: response.success ? "Success!" : "Warning!",
                         text: response.message,
@@ -641,9 +640,28 @@ $(document).on("click", ".date-action", function (e) {
                         }
                     });
                 },
-                error: function (xhr, status, error) {
-                    ;
-                    Swal.fire("Error!", "Something went wrong: " + error, "error");
+                error: function (xhr) {
+
+                    let msg = "Something went wrong.";
+
+                    if (xhr.responseJSON) {
+
+                        msg = xhr.responseJSON.message || msg;
+
+                        if (xhr.responseJSON.errors) {
+                            msg += "\n\n";
+
+                            $.each(xhr.responseJSON.errors, function (field, messages) {
+                                msg += field + ": " + messages.join(", ") + "\n";
+                            });
+                        }
+                    }
+
+                    Swal.fire({
+                        title: "Validation Error!",
+                        text: msg,
+                        icon: "error"
+                    });
                 }
             });
         }
@@ -702,7 +720,7 @@ function SendRemainder(projid, remarks) {
         type: 'POST',
         data: {
             ProjId: projid,
-            Remarks: remarks // if you want to send remarks to backend
+            Remarks: encryptData(remarks) // if you want to send remarks to backend
         },
         success: function (response) {
             ;
@@ -841,7 +859,7 @@ function GetProjRemainderMov(ProjId) {
 $(document).on("click", "#ReadRemainderNoti", function (e) {
     e.preventDefault();
    
-    ;
+    
 
     let $this = $(this);
     let projId = parseInt($this.data("projid"));
@@ -893,7 +911,117 @@ $("#tabParked").click(function () {
 
     GetParkedProject();
 });
+$("#tabForeclose").click(function () {
 
+    GetCloseProjects();
+});
+function GetCloseProjects() {
+
+    $.ajax({
+        url: '/Projects/GetForecloseitems',
+        type: 'GET',    
+        success: function (response) {
+            debugger;
+            $("#Foreclosedata").html("");
+
+            if (response != null && response.length > 0) {
+
+                let listitem = "";
+                let count = 0;
+
+                response.forEach(function (project) {
+
+                    count++;
+
+                    listitem += '<tr>';
+
+                    // 1 - Ser No
+                    listitem += `<td><div class="d-flex">${count}</div></td>`;
+
+                    // 2 - Proj Name
+                    listitem += `
+            <td>
+                <span class="d-none noExport" id="SpnforcloseProjId">
+                    ${project.projid}
+                </span>
+
+                <a data-proj-name="${project.projName}" 
+                   data-proj-id="${project.projid}" 
+                   href="/Projects/ProjHistory?EncyID=${project.encyID}&Type=XR12">
+
+                    <div class="RefLetter-container" 
+                         data-tooltip="${project.projName}">
+
+                        <span>${trimByChars(project.projName, 20)}</span>
+
+                        <span class="RefLetter noExport">
+                            ${breakLinesByWords(project.projName, 4)}
+                        </span>
+
+                        <span class="noExport d-none" id="projNamecc">
+                            ${project.projName}
+                        </span>
+                    </div>
+                </a>
+            </td>`;
+
+                    // 3 - Sponsor
+                    listitem += `
+            <td class="RefLetter-container">
+                ${project.sponsor ?? ""}
+                <div class="RefLetter noExport">
+                    ${breakLinesByWords(project.sponsor ?? "", 3)}
+                </div>
+            </td>`;
+
+                    // 4 - ClosedBy
+                    listitem += `
+            <td class="RefLetter-container">
+                ${project.approved_By ?? ""}
+                <div class="RefLetter noExport">
+                    ${breakLinesByWords(project.approved_By ?? "", 4)}
+                </div>
+            </td>`;
+
+                    // 5 - Closed On (missing column fixed)
+                  listitem += `
+            <td>
+                ${project.timeStamp
+                      ? DateFormateddMMyyyyhhmmss(project.timeStamp)
+                            : ""}
+            </td>`;
+
+                    // 6 - Stage
+                    listitem += `<td>${project.stages ?? ""}</td>`;
+                    listitem += `<td>${project.status ?? ""}</td>`;
+
+                    // 7 - SubStage
+                    listitem += `<td>${project.actions ?? ""}</td>`;
+
+                    listitem += '</tr>';
+                });
+
+                $("#Foreclosedata").html(listitem);
+            }
+
+            initializeDataTable("#foreclosetable");
+          
+        },
+        error: function (xhr, status, error) {
+            console.error("Error fetching parked projects:", status, error);
+            if ($.fn.DataTable.isDataTable("#parkedtable")) {
+                $("#parkedtable").DataTable().destroy();
+            }
+            $("#parkedtblData").html("");
+            $("#parkedtable").DataTable({
+                language: {
+                    emptyTable: "Error loading data. Please try again later."
+                },
+                destroy: true
+            });
+        }
+    });
+}
 
 function GetParkedProject() {
     

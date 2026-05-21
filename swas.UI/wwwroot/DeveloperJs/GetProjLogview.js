@@ -1,9 +1,19 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
+
     const today = new Date();
 
     if (!$("#fromDate").val()) {
         $("#fromDate")[0].valueAsDate = today;
+    }
+
+    if (!$("#toDate").val()) {
         $("#toDate")[0].valueAsDate = today;
+    }
+
+    // Initialize DataTable only when table has data rows
+    if ($("#searchtableProj tr").length > 1) {
+        initializeDataTable('#SoftwareType');
     }
 
     $('#SearchData').click(function (event) {
@@ -34,4 +44,7 @@
 
         $('#searchFormProjName').submit();
     });
+
 });
+  
+

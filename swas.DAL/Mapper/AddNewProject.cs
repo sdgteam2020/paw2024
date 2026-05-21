@@ -13,6 +13,7 @@ namespace swas.DAL.Mapper
     {
         public int ProjId { get; set; }
         public string ProjName { get; set; }
+        public bool IsProcess { get; set; }
         public int StakeHolderId { get; set; }
         public DateTime? InitiatedDate { get; set; }
         public string HostType { get; set; }

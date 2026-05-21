@@ -122,7 +122,7 @@
     }
 
     $("#btnAttchMultiforpsmid").click(function () {
-
+     
         requiredFields = $('#ProjFwd').find('.requiredFieldAttch');
         let allFieldsComplete = true;
         requiredFields.each(function (index) {
@@ -163,6 +163,8 @@
 
 
 function UploadFiles() {
+
+    
     let formData = new FormData();
     let totalFiles = document.getElementById("pdfFileInput").files.length;
     for (let i = 0; i < totalFiles; i++) {

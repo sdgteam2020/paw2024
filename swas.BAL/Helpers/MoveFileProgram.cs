@@ -15,9 +15,9 @@ namespace swas.BAL.Helpers
 
         public MoveFileProgram(IConfiguration configuration)
         {
-            des = configuration.GetValue<string>("destinationFolder") ?? "";
-            source = configuration.GetValue<string>("sourceFolder") ?? "";
-            file = configuration.GetValue<string>("filePath") ?? "";
+            des =  Environment.GetEnvironmentVariable("destinationFolder")??"";
+            source = Environment.GetEnvironmentVariable("sourceFolder")??"";
+            file =  Environment.GetEnvironmentVariable("filePath") ?? "";
         }
         public  void MoveFile()
         {

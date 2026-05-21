@@ -6,11 +6,14 @@ function GetwhilteListProject(TypeId) {
     let userdata = {
         "TypeId": TypeId
     };
+
+    let encrypted_payload = encryptData(userdata);
     $.ajax({
         type: "POST",
         url: "/Home/GetWhiteListedActionProj",
         contentType: 'application/x-www-form-urlencoded',
-        data: userdata,
+        data: {encrypted_payload: encrypted_payload
+    },
         success: function (data) {
             if (data != null) {
                 let count = 1;

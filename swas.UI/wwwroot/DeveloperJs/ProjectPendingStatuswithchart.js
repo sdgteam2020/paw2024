@@ -1,16 +1,16 @@
 ﻿function GetProjHold(ProjId) {
 
-    var listItem = "";
-    var listItemc = "";
+    let listItem = "";
+    let listItemc = "";
 
-    var userdata = {
+    let userdata = {
         "ProjId": ProjId
     };
-
+    let encrypted_payload = encryptData(userdata)
     $.ajax({
         url: '/Home/GetProjHoldStatus',
         contentType: 'application/x-www-form-urlencoded',
-        data: userdata,
+        data: { encrypted_payload: encrypted_payload },
         type: 'POST',
         success: function (response) {
             if (response != "null" && response != null) {
@@ -20,8 +20,8 @@
                 } else if (response == 0) {
 
                 } else {
-                    var count = 1;
-                    var countc = 1;
+                    let count = 1;
+                    let countc = 1;
 
                     $('#tblprojhold').dataTable().fnClearTable();
                     $('#tblprojhold').dataTable().fnDestroy();
@@ -34,7 +34,7 @@
                     const totalsForlabelcmd = [];
                     let colorscmd = [];
 
-                    var cmtunit = [1, 3, 4, 5];
+                    let cmtunit = [1, 3, 4, 5];
 
                     let responseforchart = response
                         .filter(function (elements) {
@@ -55,7 +55,7 @@
                         totalsForlabel.push(convertMinutesToAgo(item.totalTimeSpent));
                     });
 
-                    for (var j = response.length - 1; j >= 0; j--) {
+                    for (let j = response.length - 1; j >= 0; j--) {
                         if (cmtunit.includes(response[j].tounitId)) {
                             if (response[j].isComment == true) {
 
@@ -95,7 +95,7 @@
                         }
                     }
 
-                    for (var j = 0; j < response.length; j++) {
+                    for (let j = 0; j < response.length; j++) {
                         if (response[j].isComment == false) {
 
                             if (response[j].isComplete == false) {
@@ -143,7 +143,7 @@
 
                         }
                         else {
-                            var commentRecdt = DateFormateddMMyyyyhhmmss(response[j].timeStampfrom);
+                            let commentRecdt = DateFormateddMMyyyyhhmmss(response[j].timeStampfrom);
                             $("#Recddt").html(" (Project is FWD by DDGIT On " + commentRecdt + ")");
 
                             if (response[j].stkStauts === "Accepted") {

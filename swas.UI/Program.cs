@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting.Internal;
 using swas.DAL;
 using swas.BAL;
-
+using DotNetEnv;
 using swas.BAL.Interfaces;
 using swas.Exceptions;
 using swas.UI.Controllers;
@@ -27,11 +27,13 @@ using swas.BAL.Helpers;
 using swas.DAL.Models;
 using swas.UI.Models;
 using System;
+using swas.UI.NewFolder;
+using swas.UI.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
+string connectionString = Environment.GetEnvironmentVariable("ConnectionStrings");
 
-
-var connectionString = builder.Configuration.GetConnectionString("DB");
+//var connectionString = builder.Configuration.GetConnectionString("DB");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddSingleton<IAuthorizationHandler, CustomAuthorizationHandler>();
@@ -79,196 +81,264 @@ builder.Services.AddScoped<ILegacyHistoryRepository, LegacyHistoryRepository>();
 builder.Services.AddScoped<IWatermarkRepository, WatermarkRepository>();
 builder.Services.AddScoped<ICertificateService, CertificateService>();
 builder.Services.AddScoped<PdfCertificateBuilder>();
+builder.Services.AddScoped<LoginCryptoKeyService>();
 
 
-
-builder.Services.AddAntiforgery(o => o.SuppressXFrameOptionsHeader = true);
-
-
-
-
-builder.Services.AddIdentity<ASPNetCoreIdentityCustomFields.Data.ApplicationUser, IdentityRole>(options =>
+// ===============================
+// KESTREL MAX REQUEST SIZE - 100 MB
+// ===============================
+builder.WebHost.ConfigureKestrel(options =>
 {
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(60);
-    options.Lockout.MaxFailedAccessAttempts = 3;
-    options.User.RequireUniqueEmail = false;
-    options.SignIn.RequireConfirmedAccount = true ;
-    options.SignIn.RequireConfirmedEmail = false;
-    options.Lockout.AllowedForNewUsers = true;
+    options.Limits.MaxRequestBodySize = 100 * 1024 * 1024;
+});
 
-})
+// ===============================
+// ANTIFORGERY
+// ===============================
+builder.Services.AddAntiforgery(options =>
+{
+    options.SuppressXFrameOptionsHeader = true;
+});
+
+// ===============================
+// IDENTITY
+// ===============================
+builder.Services
+    .AddIdentity<ApplicationUser, IdentityRole>(options =>
+    {
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(60);
+        options.Lockout.MaxFailedAccessAttempts = 3;
+        options.Lockout.AllowedForNewUsers = true;
+
+        options.User.RequireUniqueEmail = false;
+
+        options.SignIn.RequireConfirmedAccount = true;
+        options.SignIn.RequireConfirmedEmail = false;
+    })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.Configure<SecurityStampValidatorOptions>(options =>
+{
+    options.ValidationInterval = TimeSpan.FromSeconds(30);
+});
 
+// ===============================
+// FORM UPLOAD SIZE - 100 MB
+// ===============================
 builder.Services.Configure<FormOptions>(options =>
 {
     options.MultipartBodyLengthLimit = 100 * 1024 * 1024;
 });
 
-
+// ===============================
+// MVC + FILTERS
+// ===============================
 builder.Services.AddControllersWithViews(options =>
 {
     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+    options.Filters.Add<SanitizeActionFilter>();
 });
+
+// ===============================
+// RAZOR PAGES
+// ===============================
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizePage("/Identity/Account/Register");
-    options.Conventions.ConfigureFilter(new ValidateAntiForgeryTokenAttribute());
-
+    options.Conventions.ConfigureFilter(new AutoValidateAntiforgeryTokenAttribute());
 });
 
-builder.Services.AddRazorPages(options =>
-{
-    options.Conventions.ConfigureFilter(
-        new AutoValidateAntiforgeryTokenAttribute());
-});
-
-
-
-
+// ===============================
+// AUTHORIZATION POLICIES
+// ===============================
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("Admin",
-        builder => builder.RequireRole("Dte", "Dte"));
-    options.AddPolicy("Unit",
-       builder => builder.RequireRole("Unit", "Unit"));
-    options.AddPolicy("StakeHolders",
-      builder => builder.RequireRole("Unit", "Dte"));
+    options.AddPolicy("Admin", policy =>
+        policy.RequireRole("Dte"));
+
+    options.AddPolicy("Unit", policy =>
+        policy.RequireRole("Unit"));
+
+    options.AddPolicy("StakeHolders", policy =>
+        policy.RequireRole("Unit", "Dte"));
 });
 
-
-builder.Services.AddControllersWithViews();
-
-builder.Services.Configure<SecurityStampValidatorOptions>(options => options.ValidationInterval = TimeSpan.FromSeconds(30));
-
+// ===============================
+// DATA PROTECTION / SESSION
+// ===============================
 builder.Services.AddDataProtection();
+
 builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(60);
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
-
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.SameSite = SameSiteMode.None;
 });
 
-
-builder.Services.Configure<CookiePolicyOptions>(options =>
-{
-
-
-    options.CheckConsentNeeded = context => true;
-});
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowArmyApp",
-        builder =>
-        {
-            builder.WithOrigins("https://192.168.10.92", "https://dgisapp.army.mil:55102")
-                   .WithHeaders("Content-Type", "RequestVerificationToken") // allow your custom header
-                   .WithMethods("GET", "POST", "OPTIONS");
-        });
-});
-
-builder.Services.AddSignalR();
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddControllersWithViews(options =>
+// ===============================
+// COOKIE POLICY
+// ===============================
+builder.Services.Configure<CookiePolicyOptions>(options =>
 {
-    options.Filters.Add<SanitizeActionFilter>(); 
+    // If true, cookies may not work unless consent is implemented.
+    // For internal authenticated app, keep false.
+    options.CheckConsentNeeded = context => false;
+    options.Secure = CookieSecurePolicy.Always;
+    options.HttpOnly = HttpOnlyPolicy.Always;
+    options.MinimumSameSitePolicy = SameSiteMode.None;
 });
 
+// ===============================
+// CORS
+// ===============================
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowArmyApp", policy =>
+    {
+        var allowedOrigins = new[]
+        {
+            "https://192.168.10.92",
+            "https://dgisapp.army.mil:55102"
+        };
 
-builder.Logging.ClearProviders();
-builder.Logging.AddProvider(new DbLoggerProvider(builder.Services.BuildServiceProvider()));
-builder.Services.Configure<SiteSettings>(builder.Configuration.GetSection("SiteSettings"));
+        policy.SetIsOriginAllowed(origin =>
+        {
+            return allowedOrigins.Contains(origin, StringComparer.OrdinalIgnoreCase);
+        });
+
+        policy.WithMethods("GET", "POST", "HEAD", "OPTIONS");
+
+        policy.WithHeaders(
+            "Authorization",
+            "Content-Type",
+            "X-Requested-With",
+            "RequestVerificationToken"
+        );
+
+        policy.AllowCredentials();
+
+        policy.SetPreflightMaxAge(TimeSpan.FromMinutes(20));
+    });
+});
+
+// ===============================
+// SIGNALR
+// ===============================
+builder.Services.AddSignalR();
+
+// ===============================
+// SITE SETTINGS
+// ===============================
+builder.Services.Configure<SiteSettings>(
+    builder.Configuration.GetSection("SiteSettings")
+);
+
+// ===============================
+// HSTS
+// ===============================
 builder.Services.AddHsts(options =>
 {
     options.MaxAge = TimeSpan.FromDays(365);
     options.IncludeSubDomains = true;
+    options.Preload = true;
 });
 
+// ===============================
+// LOGGING
+// ===============================
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
+// Avoid BuildServiceProvider here if possible.
+// If DbLoggerProvider is mandatory, better inject dependencies properly.
+// builder.Logging.AddProvider(new DbLoggerProvider(...));
+
 var app = builder.Build();
+
+// ===============================
+// BLOCK DANGEROUS METHODS + REMOVE HEADERS
+// ===============================
 app.Use(async (ctx, next) =>
 {
-    string styleHashes =
-        "'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=' " +
-        "'sha256-nmbYH9QL932nGzG6pP3juQVw3fieOoiq7lDMU409Uyk=' " +
-        "'sha256-Kfztztcv/X/MB3GPFWC63/lmUeORVtnXht+HcmqoIKA=' " +
-        "'sha256-OPXav01Qif81Tq84iQ+sHdcLqfFebewGp3RzUL8vy00=' " +
-        "'sha256-7oERheaqPgauHfP5d4xw0v6p4MUYc+/Quwioe/4rjOI='";
+    var blockedMethods = new[] { "TRACE", "TRACK", "CONNECT" };
 
-    bool isDev = app.Environment.IsDevelopment();
-    string connectSrc = isDev
-        ? "connect-src 'self' https: wss:; "
-        : "connect-src 'self'; ";
+    if (blockedMethods.Contains(ctx.Request.Method, StringComparer.OrdinalIgnoreCase))
+    {
+        app.Logger.LogWarning(
+            "Security: Blocked {Method} request to {Path}",
+            ctx.Request.Method,
+            ctx.Request.Path
+        );
 
-    string csp =
-        "default-src 'self'; " +
-        "script-src 'self'; " +
-        "object-src 'self' blob:; " +   // ✅ keep this
-        $"style-src 'self' 'unsafe-hashes' {styleHashes}; " +
-        "img-src 'self' data: blob:; " +
-        "font-src 'self' data:; " +
-        "frame-src 'self' blob:; " +
-        // ❌ REMOVE THIS LINE
-        // "object-src 'none'; " 
-        "base-uri 'self'; " +
-        "form-action 'self'; " +
-        "frame-ancestors 'none'; " +
-        connectSrc;
+        ctx.Response.StatusCode = StatusCodes.Status405MethodNotAllowed;
+        ctx.Response.Headers["Allow"] = "GET, HEAD, POST, OPTIONS";
+        await ctx.Response.WriteAsync("Method Not Allowed");
+        return;
+    }
 
-    ctx.Response.Headers["Content-Security-Policy"] = csp;
+    ctx.Response.OnStarting(() =>
+    {
+        ctx.Response.Headers.Remove("Server");
+        ctx.Response.Headers.Remove("Expires");
+        ctx.Response.Headers.Remove("X-Powered-By");
+        ctx.Response.Headers.Remove("X-AspNet-Version");
 
-    ctx.Response.Headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()";
-    ctx.Response.Headers["X-Content-Type-Options"] = "nosniff";
-    ctx.Response.Headers["X-Frame-Options"] = "DENY";
-    ctx.Response.Headers["Referrer-Policy"] = "no-referrer";
+        return Task.CompletedTask;
+    });
 
     await next();
 });
 
-
-app.UseCookiePolicy(
-new CookiePolicyOptions
-{
-    Secure = CookieSecurePolicy.Always,
-    HttpOnly = HttpOnlyPolicy.Always,
-    MinimumSameSitePolicy = SameSiteMode.None
-
-});
-
-
+// ===============================
+// ERROR / HSTS
+// ===============================
 if (!app.Environment.IsDevelopment())
 {
+    app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
-app.UseHsts();
-app.UseHttpsRedirection();  
+// ===============================
+// HTTPS / STATIC FILES
+// ===============================
+app.UseHttpsRedirection();
+
+app.UseMiddleware<SecurityHeadersMiddleware>();
+
 app.UseStaticFiles();
 
-app.UseCors("AllowArmyApp");
+app.UseCookiePolicy();
+
 app.UseRouting();
+
+app.UseCors("AllowArmyApp");
+
+// IMPORTANT: Session before custom session middleware
 app.UseSession();
+
+// Add your custom session validation middleware here
+app.UseMiddleware<SessionValidationMiddleware>();
+
 app.UseAuthentication();
+
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
-
-    endpoints.MapRazorPages();
-});
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapHub<ChatHub>("/chatHub");
-});
+// ===============================
+// ENDPOINTS
+// ===============================
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapRazorPages();
-app.Run();
 
+app.MapHub<ChatHub>("/chatHub");
+
+app.Run();

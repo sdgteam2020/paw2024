@@ -83,7 +83,7 @@
     data-buttontext="@ButtonText"
     data-username="@username"
     data-ip="@ip">
-
+    <input id="Logincrypto" value="@Logins.CryptoKey"/>
     <header class="top-headers paw-top-headers">
         <div class="container">
             <div class="row align-items-center">
@@ -361,7 +361,7 @@
 
     <div class="modal fade" id="EditWhiteListedProjectModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
-            <div class="modal-content">
+            <div class="modal-content modal-content-align">
                 <form id="editWhiteListedForm">
                     <div class="modal-header">
                         <h5 class="modal-title">Edit Whitelisted Project</h5>
@@ -686,6 +686,14 @@
 	<script src="~/developerjs/promo.js"></script>
     <script src="~/developerjs/paw-whitelist-page.js"></script>
     
+
+
+    <script src="~/lib/cryptojs/core.js"></script>
+    <script src="~/lib/cryptojs/enc-base64.js"></script>
+    <script src="~/lib/cryptojs/md5.js"></script>
+    <script src="~/lib/cryptojs/evpkdf.js"></script>
+    <script src="~/lib/cryptojs/cipher-core.js"></script>
+    <script src="~/lib/cryptojs/aes.js"></script>
 </body>
 </html>
 

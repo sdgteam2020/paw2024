@@ -17,6 +17,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
 
 
@@ -35,13 +36,13 @@ namespace swas.UI.Controllers
         private readonly Microsoft.AspNetCore.Identity.IUserStore<ApplicationUser> _userStore;
         private readonly Microsoft.AspNetCore.Identity.IUserEmailStore<ApplicationUser> _emailStore;
         private readonly IRankRepository _rankRepository;
-
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUserRepository _userRepository;
         private readonly IConfiguration _configuration;
        
         public AccountController(Microsoft.AspNetCore.Identity.IUserStore<ApplicationUser> userStore, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, ApplicationDbContext context, IUnitRepository unitRepository, ILogger<LoginModel> logger, IRankRepository rankRepository, IUserRepository userRepository,
-        IConfiguration configuration)
+        IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
 
             this.userManager = userManager;
@@ -55,7 +56,8 @@ namespace swas.UI.Controllers
             _rankRepository = rankRepository;
                 _userRepository = userRepository;
                 _configuration = configuration;
-            
+            _httpContextAccessor = httpContextAccessor;
+
         }
 
 
@@ -220,9 +222,9 @@ namespace swas.UI.Controllers
                 var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
                 var watermarkText = $" {ipAddress}\n  {currentDatetime}";
                 if (!string.IsNullOrEmpty(EncryptedResponse))
-
                 {
-                    string psskey = _configuration.GetValue<string>("CertCredentials") ?? "";
+                    //string psskey = _configuration.GetValue<string>("CertCredentials") ?? "";
+                    string psskey = Environment.GetEnvironmentVariable("TestCredentials")??"";
 
                     string decryptedsamlresponse = DecryptSAmlResponseNew(EncryptedResponse, "C:\\Cert\\App Certificate\\applwhitelisting.army.mil.p12", psskey);
 
@@ -311,8 +313,7 @@ namespace swas.UI.Controllers
                                     Db.Role = "Guest";
 
                                 }
-                                int cla = await _unitRepository.GetIdCalendar();
-                                Db.cla = cla;
+                             
                                 SessionHelper.SetObjectAsJson(HttpContext.Session, "User", Db);
 
 
@@ -399,7 +400,7 @@ namespace swas.UI.Controllers
 
                     try
                     {
-                        string psskey = _configuration.GetValue<string>("CertCredentials") ?? "";
+                        string psskey = Environment.GetEnvironmentVariable("CertCredentials");
 
 
                         myCert2 = new X509Certificate2(@"C:\\Cert\\App Certificate\\acms.army.mil.pfx", psskey);
@@ -790,7 +791,10 @@ namespace swas.UI.Controllers
 
         public async Task<IActionResult> GetUserEditPartial(string payload)
          {
-            var cryptoKey = _configuration["CryptoSettings:LoginKey"];
+
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(
+                _httpContextAccessor.HttpContext.Session, "User");
+            var cryptoKey = Logins.CryptoKey;
             var UserName = "";
             int RankId = 0;
             var RoleName = "";
@@ -857,9 +861,10 @@ namespace swas.UI.Controllers
             input.OfficerName = input.OfficerName?.Trim();
             input.appointment = input.appointment?.Trim();
             input.Tele_Army = input.Tele_Army?.Trim();
-            var userName = _configuration["CommonUserNamePass:userName"];
-            var userName1 = _configuration["CommonUserNamePass:userName1"];
-            var pass = _configuration["CommonUserNamePass:Pass"];
+            
+            var userName = Environment.GetEnvironmentVariable("CommonUserNamePass__userName")??"";
+            var userName1 = Environment.GetEnvironmentVariable("CommonUserNamePass__userName1")??"";
+            var pass = Environment.GetEnvironmentVariable("CommonUserNamePass__Pass")??"";
             if (input.RoleName == "1")
             {
                 input.RoleName = userName1;
@@ -968,8 +973,56 @@ namespace swas.UI.Controllers
             }
         }
 
-        public async Task<IActionResult> UpdateFlag(string username, string rolename, bool flag)
+        public async Task<IActionResult> UpdateFlag(string encrypted_payload)
         {
+
+            if (string.IsNullOrWhiteSpace(encrypted_payload))
+            {
+
+                return BadRequest(new { success = false, message = "Invalid request." });
+            }
+
+        
+            string username ="";
+            bool flag = true;
+            string roleName = "";
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(
+                _httpContextAccessor.HttpContext.Session, "User");
+            var cryptoKey = Logins.CryptoKey;
+
+            if (string.IsNullOrWhiteSpace(cryptoKey))
+            {
+
+                return StatusCode(500, new { success = false, message = "Server configuration error." });
+            }
+            
+            try
+            {
+                string decrypted = CryptoHelper.SafeDecrypt(encrypted_payload, cryptoKey);
+
+                if (string.IsNullOrWhiteSpace(decrypted))
+                {
+
+                    return BadRequest(new { success = false, message = "Invalid request data." });
+                }
+
+                var obj = JsonConvert.DeserializeObject<dynamic>(decrypted.Trim('"'));
+
+                username = obj.userName?? string.Empty;
+                roleName = obj.roleName ?? string.Empty;
+                flag = obj.flag;
+
+            }
+            catch (CryptographicException ex)
+            {
+
+                return BadRequest(new { success = false, message = "Invalid encrypted data." });
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, new { success = false, message = "Internal server error." });
+            }
             ApplicationUser userToUpdate = await userManager.FindByNameAsync(username);
 
             if (userToUpdate != null)

@@ -3,7 +3,7 @@
 
 
    
-    initializeDataTable('#SoftwareType');
+   
     sessionStorage.setItem("spntabType", $("#spntabType").html());
 
     //GetAllComments2();
@@ -160,7 +160,7 @@ function GetAllComments2() {
            
         },
         error: function () {
-            alert('Error fetching comments.4');
+            alert('Error fetching comments.');
         }
     });
 }
@@ -436,8 +436,8 @@ function PrintDiv() {
         document.getElementById('projectNameCell')?.innerText.trim() || 'Print';
 
     const divToPrint = document.getElementById('widget-content');
-    const ipText = document.getElementById('IpAddress')?.innerText || '';
-
+    const ipText = $('.IpAddress').text() || '';
+   
     const popupWin = window.open('', '_blank', 'width=800,height=800');
     popupWin.document.open();
 

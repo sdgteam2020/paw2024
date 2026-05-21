@@ -44,6 +44,7 @@ using swas.Areas.Identity.Pages.Account;
 
 namespace swas.UI.Controllers
 {
+    [Authorize]
     public class DocumentsController : Controller
     {
         private readonly IProjectsRepository _projectsRepository;

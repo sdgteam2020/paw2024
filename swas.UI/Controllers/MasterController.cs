@@ -1,4 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Configuration;
+using System.Security.Cryptography;
+using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
+using Newtonsoft.Json;
+using Superpower.Model;
 using swas.BAL;
 using swas.BAL.DTO;
 using swas.BAL.Helpers;
@@ -7,6 +14,7 @@ using swas.DAL.Models;
 
 namespace swas.UI.Controllers
 {
+    [Authorize]
     public class MasterController : Controller
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -16,8 +24,9 @@ namespace swas.UI.Controllers
         private readonly IStatusRepository _statusRepository;
         private readonly IActionsRepository _actionsRepository;
         private readonly IUnitRepository _unitRepository;
+        private readonly IConfiguration _configuration;
         public MasterController(IHttpContextAccessor httpContextAccessor, IDdlRepository ddlRepository,
-            IStkStatusRepository stkStatusRepository, IStagesRepository stagesRepository, IStatusRepository statusRepository, IActionsRepository actionsRepository, IUnitRepository unitRepository)
+            IStkStatusRepository stkStatusRepository, IStagesRepository stagesRepository, IConfiguration configuration, IStatusRepository statusRepository, IActionsRepository actionsRepository, IUnitRepository unitRepository)
         {
             _httpContextAccessor = httpContextAccessor;
             _dlRepository = ddlRepository;
@@ -26,40 +35,194 @@ namespace swas.UI.Controllers
             _statusRepository = statusRepository;
             _actionsRepository = actionsRepository;
             _unitRepository = unitRepository;
+            _configuration = configuration;
         }
         public IActionResult Index()
         {
             return View();
         }
         #region Master Table For DDL
-        public async Task<IActionResult> GetStagebyStakeHolderId(int id, int ParentId,int StakeHolderId)
+        public async Task<IActionResult> GetStagebyStakeHolderId(string encrypted_Payload)
         {
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-            if(StakeHolderId==100)
+
+            if (string.IsNullOrWhiteSpace(encrypted_Payload))
             {
-                return Json(await _statusRepository.GetAllbyParentId(ParentId));
+
+                return BadRequest(new { success = false, message = "Invalid request." });
             }
-            else if(StakeHolderId==Logins.unitid)
-                return Json(await _statusRepository.GetAllByStages_takeHolder(ParentId, Convert.ToInt32(Logins.unitid),true));
-            else
-                return Json(await _statusRepository.GetAllByStages_takeHolder(ParentId, Convert.ToInt32(Logins.unitid),false));
+
+            int id = 0;
+            int ParentId = 0;
+            int StakeHolderId = 0;
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(
+                _httpContextAccessor.HttpContext.Session, "User");
+            var cryptoKey = Logins.CryptoKey;
+
+            if (string.IsNullOrWhiteSpace(cryptoKey))
+            {
+
+                return StatusCode(500, new { success = false, message = "Server configuration error." });
+            }
+
+            try
+            {
+                string decrypted = CryptoHelper.SafeDecrypt(encrypted_Payload, cryptoKey);
+
+                if (string.IsNullOrWhiteSpace(decrypted))
+                {
+
+                    return BadRequest(new { success = false, message = "Invalid request data." });
+                }
+
+                var obj = JsonConvert.DeserializeObject<dynamic>(decrypted.Trim('"'));
+                id = Convert.ToInt32(obj.id);
+                ParentId = Convert.ToInt32(obj.ParentId);
+                StakeHolderId = Convert.ToInt32(obj.StakeHolderId);
+
+               
+            }
+            catch (CryptographicException ex)
+            {
+
+                return BadRequest(new { success = false, message = "Invalid encrypted data." });
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, new { success = false, message = "Internal server error." });
+            }
+
+
+            try
+            {
+
+                if (StakeHolderId == 100)
+                {
+                    return Json(await _statusRepository.GetAllbyParentId(ParentId));
+                }
+                else if (StakeHolderId == Logins.unitid)
+                    return Json(await _statusRepository.GetAllByStages_takeHolder(ParentId, Convert.ToInt32(Logins.unitid), true));
+                else
+                    return Json(await _statusRepository.GetAllByStages_takeHolder(ParentId, Convert.ToInt32(Logins.unitid), false));
+            }
+            catch(Exception ex)
+            {
+                Error.ExceptionHandle("GetStagebyStakeHolderId Controller" +ex.Message);
+            }
+            return null;
+
             
         }
-        public async Task<IActionResult> GetFwdTo(int id, int ParentId, int StakeHolderId, string Value, int Type)
+        public async Task<IActionResult> GetFwdTo(string encrypted_payload)
         {
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            if (string.IsNullOrWhiteSpace(encrypted_payload))
+            {
+
+                return BadRequest(new { success = false, message = "Invalid request." });
+            }
+
+            int StakeHolderId = 0;
+            string Value ;
+            int Type = 0;
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(
+                _httpContextAccessor.HttpContext.Session, "User");
+            var cryptoKey = Logins.CryptoKey;
+
+            if (string.IsNullOrWhiteSpace(cryptoKey))
+            {
+
+                return StatusCode(500, new { success = false, message = "Server configuration error." });
+            }
+
+            try
+            {
+                string decrypted = CryptoHelper.SafeDecrypt(encrypted_payload, cryptoKey);
+
+                if (string.IsNullOrWhiteSpace(decrypted))
+                {
+
+                    return BadRequest(new { success = false, message = "Invalid request data." });
+                }
+
+                var obj = JsonConvert.DeserializeObject<dynamic>(decrypted.Trim('"'));
+                Value = obj.Value;
+                if (obj == null || !int.TryParse((string?)obj.id, out StakeHolderId))
+                {
+
+                    return BadRequest(new { success = false, message = "Invalid identifier." });
+                }
+            }
+            catch (CryptographicException ex)
+            {
+
+                return BadRequest(new { success = false, message = "Invalid encrypted data." });
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, new { success = false, message = "Internal server error." });
+            }
+
+
 
             return Json(await _dlRepository.GetFwdTo(StakeHolderId, (int)Logins.unitid, Value, Type));
 
 
         }
-
-        public async Task<IActionResult> GetAllMasterTableforddl(int id, int ParentId ,int unitId)
+       
+        public async Task<IActionResult> GetAllMasterTableforddl(string encrypte_data)
         {
+
+            if (string.IsNullOrWhiteSpace(encrypte_data))
+            {
+              
+                return BadRequest(new { success = false, message = "Invalid request." });
+            }
+
+            int id=0;
+            int ParentId=0;
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(
+                   _httpContextAccessor.HttpContext.Session, "User");
+            var cryptoKey = Logins.CryptoKey;
+
+            if (string.IsNullOrWhiteSpace(cryptoKey))
+            {
+                
+                return StatusCode(500, new { success = false, message = "Server configuration error." });
+            }
+
             try
             {
-                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+                string decrypted = CryptoHelper.SafeDecrypt(encrypte_data, cryptoKey);
+
+                if (string.IsNullOrWhiteSpace(decrypted))
+                {
+                   
+                    return BadRequest(new { success = false, message = "Invalid request data." });
+                }
+
+                var obj = JsonConvert.DeserializeObject<dynamic>(decrypted.Trim('"'));
+                if (obj == null ||!int.TryParse((string?)obj.id, out id) || !int.TryParse((string?)obj.ParentId, out ParentId))
+                {
+                  
+                    return BadRequest(new { success = false, message = "Invalid identifier." });
+                }
+            }
+            catch (CryptographicException ex)
+            {
+
+                return BadRequest(new { success = false, message = "Invalid encrypted data." });
+            }
+            catch (Exception ex)
+            {
+             
+                return StatusCode(500, new { success = false, message = "Internal server error." });
+            }
+          
+            try
+            {
                 List<DTODDLComman> lst = new List<DTODDLComman>();
+                
                 if (id == Mastertablenmumcs.Unit)
                 {
                     var ret = await _dlRepository.ddlLimitUnit(Logins.unitid, 0);
@@ -123,7 +286,7 @@ namespace swas.UI.Controllers
                 {
                     var ret = await _stagesRepository.GetAll();
 
-                    foreach (var cmd  in ret)
+                    foreach (var cmd in ret)
                     {
 
                         DTODDLComman db = new DTODDLComman();
@@ -136,11 +299,11 @@ namespace swas.UI.Controllers
                 }
                 else if (id == Mastertablenmumcs.mStatus)
                 {
-                    if(ParentId==0)
+                    if (ParentId == 0)
                     {
                         var ret = await _statusRepository.GetAll();
 
-                       
+
                         return Json(ret);
                     }
                     else
@@ -151,7 +314,7 @@ namespace swas.UI.Controllers
                         return Json(ret);
 
                     }
-                    
+
 
                 }
                 else if (id == Mastertablenmumcs.mActions)
@@ -179,8 +342,8 @@ namespace swas.UI.Controllers
                 }
                 return Json(null);
             }
-           
-            catch(Exception ex)
+
+            catch (Exception ex)
             {
                 return Json(nmum.Exception);
             }

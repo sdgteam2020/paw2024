@@ -345,11 +345,10 @@ ion-icon {
     .sidebar-wrapper .metismenu a:focus:not(.submenu a),
     .sidebar-wrapper .metismenu a:active:not(.submenu a),
     .sidebar-wrapper .metismenu .mm-active > a:not(.submenu a) {
-        
         color: white;
         text-decoration: none;
         background-color: rgb(146 62 185 / 10%);
-        background-color: #044c92;
+        background-color: #0d6efd;
     }
 
 

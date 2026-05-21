@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.DataProtection;
 namespace swas.UI.Controllers
 {
 
-
+    [Authorize]
     public class ProjStakeHolderMovController : Controller
     {
         private readonly IProjStakeHolderMovRepository _psmRepo;

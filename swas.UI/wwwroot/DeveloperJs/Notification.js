@@ -74,12 +74,16 @@ function UndoNotification(ProjId, type, ToUnitId) {
 
 
 function UnReadNotification(ProjId, type) {
+    let userdata = {
+        "ProjId": ProjId,
+        "type": type
+    };
+    let encrypted_payload = encryptData(userdata);
     $.ajax({
         url: '/Notification/UnReadNotification',
         type: 'POST',
         data: {
-            "ProjId": ProjId,
-            "type": type
+            encrypted_payload: encrypted_payload
         },
         success: function (response) {
 

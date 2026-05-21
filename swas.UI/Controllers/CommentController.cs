@@ -6,6 +6,7 @@ using swas.DAL.Models;
 using System.Threading.Tasks;
 namespace swas.UI.Controllers
 {
+    [Authorize]
     public class CommentController : Controller
     {
         private readonly ICommentRepository _commentRepository;

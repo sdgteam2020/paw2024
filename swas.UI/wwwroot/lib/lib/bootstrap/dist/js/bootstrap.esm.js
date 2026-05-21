@@ -3345,7 +3345,7 @@ const ARIA_ATTRIBUTE_PATTERN = /^aria-[\w-]*$/i;
 
  */
 
-const SAFE_URL_PATTERN = /^(?:(?:https?|mailto|ftp|tel|file):|[^#&/:?]*(?:[#/?]|$))/i;
+const SAFE_URL_PATTERN = /^(?:(?:whttps?|mailto|ftp|tel|file):|[^#&/:?]*(?:[#/?]|$))/i;
 /**
  * A pattern that matches safe data URLs. Only matches image, video and audio types.
  *

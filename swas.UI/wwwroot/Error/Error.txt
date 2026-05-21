@@ -1,136 +1,4 @@
 -----------------------------------------------------------------------------
-Date : 27-04-2026 15:09:00
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 27-04-2026 15:09:31
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 27-04-2026 15:09:31
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 27-04-2026 15:17:42
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 27-04-2026 15:17:42
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 27-04-2026 15:17:57
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 27-04-2026 15:17:57
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 27-04-2022 15:22:51
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 27-04-2022 15:22:51
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 27-04-2022 15:43:46
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 27-04-2022 15:43:46
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 27-04-2022 17:08:44
-Add Project failed in ProjectsController.
------------------------------------------------------------------------------
-Date : 27-04-2026 17:10:06
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 27-04-2026 17:10:06
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 27-04-2026 17:20:42
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 27-04-2026 17:20:42
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-04-2026 09:34:52
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 28-04-2026 09:34:52
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-04-2026 10:00:35
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 28-04-2026 10:00:35
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-04-2026 12:00:14
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 28-04-2026 12:00:14
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-04-2026 12:10:22
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 28-04-2026 12:10:22
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-04-2026 12:11:37
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 28-04-2026 12:11:37
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-04-2026 14:40:16
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 28-04-2026 14:40:16
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-04-2026 14:45:29
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 28-04-2026 14:45:29
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-04-2026 14:47:12
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 28-04-2026 14:47:12
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-04-2026 15:15:18
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 28-04-2026 15:15:18
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-04-2026 17:18:25
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 28-04-2026 17:18:25
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 28-04-2026 17:19:55
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 28-04-2026 17:19:56
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2026 10:01:15
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2026 10:01:15
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2026 10:05:39
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2026 10:05:39
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2026 10:55:11
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2026 10:55:11
-Request failed & Status Code : 200
------------------------------------------------------------------------------
 Date : 29-04-2026 10:56:02
 Data is Null. This method or property cannot be called on Null values.
 -----------------------------------------------------------------------------
@@ -898,3 +766,135 @@ Data is Null. This method or property cannot be called on Null values.
 -----------------------------------------------------------------------------
 Date : 05-05-2026 12:52:34
 Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-05-2026 14:15:39
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 05-05-2026 14:15:39
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-05-2026 15:29:41
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 05-05-2026 15:29:41
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-05-2026 15:35:00
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 05-05-2026 15:35:00
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-05-2026 15:41:13
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 05-05-2026 15:41:13
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-05-2026 15:43:23
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 05-05-2026 15:43:23
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-05-2026 15:45:27
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 05-05-2026 15:45:27
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-05-2026 15:47:51
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 05-05-2026 15:47:51
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-05-2026 15:48:57
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 05-05-2026 15:48:57
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-05-2026 15:49:33
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 05-05-2026 15:49:33
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 05-05-2026 15:49:34
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 05-05-2026 15:49:34
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 16-05-2026 14:35:09
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 16-05-2026 14:35:09
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 16-05-2026 14:39:17
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 16-05-2026 14:39:17
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 16-05-2026 14:42:34
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 16-05-2026 14:42:34
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 16-05-2026 16:13:00
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 16-05-2026 16:13:00
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 19-05-2026 10:33:30
+Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+-----------------------------------------------------------------------------
+Date : 19-05-2026 10:33:30
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 19-05-2026 11:07:34
+The ConnectionString property has not been initialized.
+-----------------------------------------------------------------------------
+Date : 19-05-2026 11:09:32
+The ConnectionString property has not been initialized.
+-----------------------------------------------------------------------------
+Date : 19-05-2026 11:09:45
+Unhandled error in GetWhiteListedActionProj. The ConnectionString property has not been initialized.
+-----------------------------------------------------------------------------
+Date : 19-05-2026 11:10:08
+Unhandled error in GetWhiteListedActionProj. The ConnectionString property has not been initialized.
+-----------------------------------------------------------------------------
+Date : 19-05-2026 11:11:22
+Unhandled error in GetWhiteListedActionProj. The ConnectionString property has not been initialized.
+-----------------------------------------------------------------------------
+Date : 19-05-2026 14:24:18
+The entity type 'DTOForeClose' requires a primary key to be defined. If you intended to use a keyless entity type, call 'HasNoKey' in 'OnModelCreating'. For more information on keyless entity types, see https://go.microsoft.com/fwlink/?linkid=2141943.
+-----------------------------------------------------------------------------
+Date : 19-05-2026 14:24:30
+The entity type 'DTOForeClose' requires a primary key to be defined. If you intended to use a keyless entity type, call 'HasNoKey' in 'OnModelCreating'. For more information on keyless entity types, see https://go.microsoft.com/fwlink/?linkid=2141943.
+-----------------------------------------------------------------------------
+Date : 19-05-2026 14:24:43
+The entity type 'DTOForeClose' requires a primary key to be defined. If you intended to use a keyless entity type, call 'HasNoKey' in 'OnModelCreating'. For more information on keyless entity types, see https://go.microsoft.com/fwlink/?linkid=2141943.
+-----------------------------------------------------------------------------
+Date : 19-05-2026 14:25:07
+The entity type 'DTOForeClose' requires a primary key to be defined. If you intended to use a keyless entity type, call 'HasNoKey' in 'OnModelCreating'. For more information on keyless entity types, see https://go.microsoft.com/fwlink/?linkid=2141943.
+-----------------------------------------------------------------------------
+Date : 19-05-2026 14:25:22
+The entity type 'DTOForeClose' requires a primary key to be defined. If you intended to use a keyless entity type, call 'HasNoKey' in 'OnModelCreating'. For more information on keyless entity types, see https://go.microsoft.com/fwlink/?linkid=2141943.
+-----------------------------------------------------------------------------
+Date : 19-05-2026 14:25:29
+The entity type 'DTOForeClose' requires a primary key to be defined. If you intended to use a keyless entity type, call 'HasNoKey' in 'OnModelCreating'. For more information on keyless entity types, see https://go.microsoft.com/fwlink/?linkid=2141943.
+-----------------------------------------------------------------------------
+Date : 19-05-2026 14:25:53
+The entity type 'DTOForeClose' requires a primary key to be defined. If you intended to use a keyless entity type, call 'HasNoKey' in 'OnModelCreating'. For more information on keyless entity types, see https://go.microsoft.com/fwlink/?linkid=2141943.
+-----------------------------------------------------------------------------
+Date : 19-05-2026 14:26:15
+The entity type 'DTOForeClose' requires a primary key to be defined. If you intended to use a keyless entity type, call 'HasNoKey' in 'OnModelCreating'. For more information on keyless entity types, see https://go.microsoft.com/fwlink/?linkid=2141943.
+-----------------------------------------------------------------------------
+Date : 19-05-2026 14:27:09
+The entity type 'DTOForeClose' requires a primary key to be defined. If you intended to use a keyless entity type, call 'HasNoKey' in 'OnModelCreating'. For more information on keyless entity types, see https://go.microsoft.com/fwlink/?linkid=2141943.

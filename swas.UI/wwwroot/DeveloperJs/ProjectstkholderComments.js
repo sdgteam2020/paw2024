@@ -68,12 +68,44 @@ function IsUnReadInbox(psmId) {
         url: '/Projects/IsUnReadInbox',
         type: 'POST',
         data: { "PsmId": psmId },
+        headers: {
+            'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+        },
         success: function (response) {
 
+            if (response.type === 400) {
+                return showError(response.message);
+            }
+
+            if (response.type === 401) {
+                return showError(response.message);
+            }
+
+            if (response.type === 404) {
+                return showError(response.message);
+            }
+
+            if (response === -1) {
+                return showError("Something went wrong.");
+            }
+
+            if (response > 0) {
+                console.log("Marked as unread successfully.");
+            }
+        },
+        error: function () {
+            showError("Server error occurred.");
         }
     });
 }
 
+function showError(msg) {
+    Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: msg
+    });
+}
 
 function GetCommentBadgeCount(id) {
     $.ajax({
@@ -216,7 +248,7 @@ function GetProjCommentsByUnitId(Id) {
                     
 
                     $("body").off("click").on("click", ".cls-btncomment", function () {
-                        debugger;
+                       
                         $(".custom-modal").addClass("custom-modal-size")
                         let self = this;
 
@@ -598,10 +630,13 @@ function GetAllComments(PsmId, projId) {
 
 
 function IsReadComment(ProjId, PsmId) {
+
+    let userdata = { "ProjId": ProjId, "PsmId": PsmId };
+    let encrypted_payload = encryptData(userdata);
     $.ajax({
         url: '/Projects/IsReadComment',
         type: 'POST',
-        data: { "ProjId": ProjId, "PsmId": PsmId },
+        data: { encrypted_payload: encrypted_payload },
         success: function (response) {
             if (response > 0) {
                 $("#ProjectCommentCount").removeClass("d-none");
@@ -630,6 +665,8 @@ function GetNotificationInbox(ProjId) {
 }
 
 function IsUnReadComment(ProjId, PsmId) {
+    
+
     $.ajax({
         url: '/Projects/IsUnReadComment',
         type: 'POST',

@@ -5,6 +5,7 @@ using swas.DAL.Models;
 
 namespace swas.UI.Controllers
 {
+    [Authorize]
     public class StakeHolderController : Controller
     {
 

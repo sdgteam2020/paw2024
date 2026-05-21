@@ -6,6 +6,7 @@ using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using swas.BAL.DTO;
@@ -16,6 +17,7 @@ using swas.UI.Models;
 
 namespace swas.UI.Controllers
 {
+    [Authorize]
     public class CertificateController : Controller
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -54,7 +56,9 @@ namespace swas.UI.Controllers
             int substage = 0;
             var ddlaction = "";
             var ddlRemarks = "";
-            string cryptoKey = _configuration["CryptoSettings:LoginKey"] ?? string.Empty;
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(
+                 _httpContextAccessor.HttpContext.Session, "User");
+            var cryptoKey = Logins.CryptoKey;
 
             try
             {

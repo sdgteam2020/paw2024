@@ -206,26 +206,6 @@ $(document).ready(function () {
 
 
 
-    $.ajax({
-        url: '/Home/indexToPieChart',
-        method: 'GET',
-        dataType: 'json',
-        success: function (data) {
-
-            if (data.error) {
-
-                console.error('Error fetching data:', data.error);
-                return;
-            }
-
-            updatePieChart(data);
-
-        },
-        error: function (error) {
-
-            console.error('Error fetching data:', error);
-        }
-    });
 
 
 })

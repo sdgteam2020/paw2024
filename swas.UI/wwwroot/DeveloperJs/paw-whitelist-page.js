@@ -60,6 +60,7 @@ $(document).ready(function () {
             .addClass("modal-blur");
     });
 
+    
     // Initialize DataTable
     if (typeof initializeDataTable === "function") {
         initializeDataTable("#HeldTable11");
@@ -146,4 +147,13 @@ $(document).ready(function () {
         }
     });
 
+});
+$(document).on('click', function () {
+    setTimeout(function () {
+        debugger;
+        if ($("#WhiteListModal").is(":hidden")) {
+            $("#WhiteListedProjectDetail .modal-content")
+                .removeClass("modal-blur");
+        }
+    }, 200);
 });

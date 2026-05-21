@@ -1,42 +1,171 @@
-﻿
-.search-row {
-    margin-top: 106px;
+﻿.page-header-box {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-left: 4px solid #0d6efd;
+    border-radius: 6px;
+    padding: 15px 18px;
+    margin-bottom: 15px;
 }
 
+    .page-header-box h4 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 600;
+        color: #212529;
+    }
 
-.table-container {
-    overflow: scroll;
+    .page-header-box p {
+        margin: 5px 0 0;
+        font-size: 14px;
+        color: #6c757d;
+    }
+
+.search-card {
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
 }
 
-
-.text-center {
-    text-align: center;
-}
-
-
-.table th, .table td {
-    padding: 8px;
-    text-align: center;
-    border: 1px solid #ddd;
-}
-
-.table th {
-    background-color: #f2f2f2;
-}
-
+    .search-card label {
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
 
 .datePicker {
-    padding: 5px;
-    font-size: 1rem;
+    height: 36px;
+    font-size: 14px;
 }
 
-.justify-content-center {
-    margin-top: 106px
+.btn-search-custom {
+    height: 36px;
+    min-width: 90px;
 }
-.col-md-auto {
-    text-align: center
+
+.table-card {
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+}
+
+.table-card-header {
+    padding: 12px 15px;
+    border-bottom: 1px solid #dee2e6;
+    background: #f8f9fa;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .table-card-header h5 {
+        margin: 0;
+        font-size: 17px;
+        font-weight: 600;
+        color: #212529;
+    }
+
+.record-count {
+    font-size: 13px;
+    font-weight: 600;
+    color: #0d6efd;
 }
 
 .tblprojcontainer {
-    overflow: scroll
+    padding: 15px;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+#SoftwareType {
+    width: 100% !important;
+    min-width: 1200px;
+    margin-bottom: 0;
+}
+
+    #SoftwareType thead th {
+        background: #0d6efd;
+        color: #ffffff;
+        font-size: 13px;
+        text-align: center;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    #SoftwareType tbody td {
+        font-size: 13px;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    #SoftwareType tbody tr:hover {
+        background-color: #f5f9ff;
+    }
+
+    #SoftwareType .remarks-cell {
+        min-width: 250px;
+        max-width: 350px;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+.empty-table-box {
+    text-align: center;
+    padding: 25px;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.dataTables_wrapper {
+    width: 100%;
+}
+
+.dataTables_length,
+.dataTables_filter,
+.dt-buttons {
+    margin-bottom: 10px;
+}
+
+    .dataTables_filter input {
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        padding: 4px 8px;
+    }
+
+    .dt-button,
+    .dt-buttons .btn {
+        border-radius: 4px !important;
+        margin-right: 4px;
+    }
+
+@media (max-width: 768px) {
+    .table-card-header {
+        display: block;
+    }
+
+    .record-count {
+        display: block;
+        margin-top: 6px;
+    }
+
+    .tblprojcontainer {
+        padding: 10px;
+    }
+
+    .dataTables_filter {
+        text-align: left;
+    }
+
+        .dataTables_filter input {
+            width: 100%;
+            margin-top: 5px;
+        }
+
+    .dt-buttons {
+        margin-top: 8px;
+    }
 }

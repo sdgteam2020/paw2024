@@ -75,7 +75,9 @@ div.dataTables_wrapper div.dataTables_filter {
     align-items: flex-start;
     margin-top: -7px;
 }
-
+.modal-content-align {
+    right: 75px;
+}
 
 .modal-content {
     margin-left: -20rem !important;

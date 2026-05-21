@@ -397,7 +397,7 @@ function getProjectDetails(projId, remarks) {
 
 // 🔹 SUCCESS HANDLER
 function handleProjectDetailsSuccess(response) {
-
+    debugger;
     if (response.success === false) {
         showError(response.message);
         return;

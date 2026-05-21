@@ -3,9 +3,11 @@ using ASPNetCoreIdentityCustomFields.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using swas.BAL.DTO;
 using swas.DAL.Logger;
 using swas.DAL.Mapper;
 using swas.DAL.Models;
+
 
 namespace swas.DAL
 {
@@ -55,6 +57,9 @@ namespace swas.DAL
 
         public DbSet<LogEntry> Errors { get; set; }
         public DbSet<AddNewProject> AddNewProjects   { get; set; }
+        public DbSet<DTOForeClose> dTOForeCloses   { get; set; }
+
+       
         public DbSet<DToWhiteListeds> WhiteListedProjects { get; set; }
         public DbSet<DateApproval> DateApproval { get; set; }
         public DbSet<LegacyHistory> LegacyHistory { get; set; }
@@ -102,7 +107,8 @@ namespace swas.DAL
             modelBuilder.Entity<tbl_mCertificateContent>().ToTable("tbl_mCertificateContent");
 
             modelBuilder.Entity<AddNewProject>().HasNoKey(); // Mark as keyless entity
-
+            modelBuilder.Entity<DTOForeClose>().HasNoKey(); // Mark as keyless entity
+                                                         
         }
 
     }

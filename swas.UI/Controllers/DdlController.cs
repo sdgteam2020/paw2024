@@ -8,6 +8,7 @@ using swas.DAL.Models;
 
 namespace swas.UI.Controllers
 {
+    [Authorize]
     public class DdlController : ControllerBase
     {
         private readonly IDdlRepository _ddlRepository;

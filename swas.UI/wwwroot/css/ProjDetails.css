@@ -376,7 +376,7 @@
 
 .tabs__content__item, .content {
     height: auto !important;
-    min-height: 800px;
+    min-height: 750px;
 }
 
 .card {

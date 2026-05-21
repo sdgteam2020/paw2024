@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace swas.UI.Controllers
 {
+    [Authorize]
     public class AttHistoryController : Controller
     {
         private readonly IAttHistoryRepository _attHistoryRepository;

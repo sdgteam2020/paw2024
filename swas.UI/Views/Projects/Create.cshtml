@@ -87,11 +87,12 @@
                                 @Html.AntiForgeryToken()
 
                                 <!-- Progress Bar -->
-                              
-
-                                <input hidden asp-for="ProjId" />
-                                <input hidden asp-for="CurrentPslmId" />
+                                @if (Model.ProjId > 0)
+                                {
+                                    <input hidden asp-for="ProjId" />
+                                    <input hidden asp-for="CurrentPslmId" />
                                 <input hidden asp-for="ProjCode" />
+                                }
 
                                 <!-- ==================== FIELDSET 1: Basic Details ==================== -->
                                 <fieldset id="1">
@@ -121,8 +122,8 @@
                                                                    class="form-control text-center RequestRemarks "
                                                                    id="RequestRemarks"
                                                                    data-maxlength="200"
-                                                                   placeholder=" ">
-                                                            <label>Legacy Remarks</label>
+                                                                   placeholder="Max 200 Char ">
+                                                            <label>Remarks to Justify Legacy Project Ingestion</label>
 
                                                         <span class="charErrorMsg text-start d-none paw-red-font mt-1">
                                                             Cannot exceed 200 characters!
@@ -222,7 +223,7 @@
 
                                                         <label for="@Html.IdFor(model => model.InitiatedDate)">
                                                             <span>
-                                                                Start Date
+                                                                Project Start Date
                                                             </span><font class="paw-red-font">
                                                                 <b>*</b>
                                                             </font>
@@ -241,7 +242,7 @@
 
                                                         @Html.TextBoxFor(model => model.CompletionDate, "{0:yyyy-MM-dd}",
                                                                  new { @class = "form-control requiredField w-100p", type = "date", required = "required" })
-                                                        <label for="@Html.IdFor(model => model.CompletionDate)">Completion Date<font class="paw-red-font"><b>*</b></font></label>
+                                                        <label for="@Html.IdFor(model => model.CompletionDate)">Project Completion Date<font class="paw-red-font"><b>*</b></font></label>
 
                                                     </div>
                                                     <div class="invalid-feedback">Completion Date Required</div>
@@ -593,7 +594,7 @@
                         {
                             <tr>
                                 <td>
-                                    @if (project.IsSubmited == true)
+                                    @if (project.IsSubmited == true && project.IsProcess == true)
                                     {
                                         <img src="~/assets/images/icons/accept.png" width="18" height="18" alt="Readed">
                                     }
@@ -621,7 +622,7 @@
                                 <td>@project.BeingDevpInhouse</td>
                                 <td>@project.InitiatedDate</td>
                                 <td>
-                                    @if (project.IsSubmited == false)
+                                    @if ( project.IsProcess == false)
                                     {
                                         <center>
                                             <a href="@Url.Action("Create", "Projects", new { id = project.EncyID })">
@@ -649,7 +650,7 @@
     }
 }
 
-<script src="~/DeveloperJs/CreateProjects.js?v1"></script>
+<script src="~/DeveloperJs/CreateProjects.js"></script>
 <script src="~/developerjs/atthistory.js?v1"></script>
 <script src="~/developerjs/mtable.js?v1"></script>
 <script src="~/DeveloperJs/Comman.js?v1"></script>

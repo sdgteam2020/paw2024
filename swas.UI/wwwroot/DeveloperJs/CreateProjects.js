@@ -73,7 +73,7 @@ $(document).ready(function () {
         ProjectSaveAsDraft($(this));
     });
     $("#submitUpload").click(function () {
-        debugger;
+        
 
         let requiredFields = $('#tablebasic').find('.requiredField');
         let allFieldsComplete = true;
@@ -87,40 +87,7 @@ $(document).ready(function () {
             }
         });
 
-        //const required = [
-        //    "#ProjName",
-        //    "#InitiatedDate",
-        //    "#CompletionDate",
-        //    "#IsWhitelisted",
-
-        //    "#AimScope",
-
-
-
-
-
-        //];
-
-
-
-        //required.forEach(function (selector) {
-        //    let inputField = $(selector);
-        //    let maxLength = inputField.data('maxlength'); // Get max length from data-maxlength attribute
-        //    let len = inputField.val();
-        //    let currentLength = len.length;
-        //    let errorMsg = inputField.closest('div').find('.charErrorMsg');
-
-        //    if (currentLength > maxLength) {
-        //        debugger;
-        //        inputField.addClass('is-invalid');
-        //        errorMsg.removeClass('d-none');  // Show error message
-        //        allFieldsComplete = false; // Mark form as invalid
-        //    } else {
-        //        inputField.removeClass('is-invalid');
-        //        errorMsg.addClass('d-none');  // Hide error message if within limit
-        //    }
-        //});
-
+       
 
         let lengtherr = true;
         $('.char-limit').each(function () {
@@ -134,7 +101,7 @@ $(document).ready(function () {
 
                 // Stop typing after max length
                 if (value.length > maxLength) {
-                    inputField.val(value.substring(0, maxLength + 1));
+                    //inputField.val(value.substring(0, maxLength + 1));
                     errorMsg.removeClass('d-none');
                     lengtherr = false;
                 } else {
@@ -289,7 +256,7 @@ $(document).ready(function () {
             let errorMsg = inputField.closest('td').find('.charErrorMsg');
 
             if (currentLength > maxLength) {
-                debugger;
+                
                 inputField.addClass('is-invalid');
                 errorMsg.removeClass('d-none');  // Show error message
                 allFieldsComplete = false; // Mark form as invalid
@@ -461,7 +428,7 @@ $(document).ready(function () {
 
 
     $("#IsWhitelisted").change(function () {
-        debugger;
+        
         let selectedStatus = $(this).val();
         if (selectedStatus === "Re-Vetted") {
             
@@ -596,8 +563,7 @@ function AddProject(thistag) {
             const InitiatedDate = initialDate + ' ' + currentTime;
             const CompletionDate = completionDate + ' ' + currentTime;
 
-            console.log("Initiated Date:", InitiatedDate, ", Completion Date:", CompletionDate);
-
+          
             $.ajax({
                 url: '/Projects/AddProject',
                 type: 'POST',
@@ -926,7 +892,26 @@ function ProjectSaveAsDraft(thisdata) {
         type: 'POST',
         data: { "projid": $("#spanProjectId").html(), "type": 2, "Remarks": "" },
         success: function (response) {
-            console.log(response);
+
+
+            if (response.type == 400) {
+
+                let errorHtml = `<b>${response.message}</b><br><br>`;
+
+                if (response.errors) {
+                    $.each(response.errors, function (field, messages) {
+                        errorHtml += `<b>${field}</b>: ${messages.join(", ")}<br>`;
+                    });
+                }
+
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Validation Error",
+                    html: errorHtml,
+                    showConfirmButton: true
+                });
+            }
             if (response.type == 404) {
                 Swal.fire({
                     position: "center",
@@ -1021,45 +1006,48 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
  
-        document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('btn-Initiation').addEventListener('click', function () {
-                Swal.fire({
-                    title: 'Initiation Date Details',
-                    text: 'Date of Initiation of Project for Whitelisting (To DDGIT)',
-                    icon: 'info',
-                    confirmButtonText: 'OK',
-                    customClass: {
-                        title: 'swal2-title', 
-                        htmlContainer: 'swal2-html-container' 
-                    }
-                });
-            });
-            document.getElementById('btn-complition').addEventListener('click', function () {
-                Swal.fire({
-                    title: 'Completion Date  Details',
-                    text: 'The Completion date is likely to be assumed',
-                    icon: 'info',
-                    confirmButtonText: 'OK',
-                    customClass: {
-                        title: 'swal2-title', 
-                        htmlContainer: 'swal2-html-container' 
-                    }
-                });
-            });
-            document.getElementById('btn-Sponsor').addEventListener('click', function () {
-                Swal.fire({
-                    title: 'Sponsor Details',
-                    text: 'Contact Admin to Update Name',
-                    icon: 'info',
-                    confirmButtonText: 'OK',
-                    customClass: {
-                        title: 'swal2-title', 
-                        htmlContainer: 'swal2-html-container' 
-                    }
-                });
-            });
+$(document).ready(function () {
+
+    $(document).on('click', '#btn-Initiation', function () {
+        Swal.fire({
+            title: 'Initiation Date Details',
+            text: 'Date of Initiation of Project for Whitelisting (To DDGIT)',
+            icon: 'info',
+            confirmButtonText: 'OK',
+            customClass: {
+                title: 'swal2-title',
+                htmlContainer: 'swal2-html-container'
+            }
         });
-  
+    });
+
+    $(document).on('click', '#btn-complition', function () {
+        Swal.fire({
+            title: 'Completion Date Details',
+            text: 'The Completion date is likely to be assumed',
+            icon: 'info',
+            confirmButtonText: 'OK',
+            customClass: {
+                title: 'swal2-title',
+                htmlContainer: 'swal2-html-container'
+            }
+        });
+    });
+
+    $(document).on('click', '#btn-Sponsor', function () {
+        Swal.fire({
+            title: 'Sponsor Details',
+            text: 'Contact Admin to Update Name',
+            icon: 'info',
+            confirmButtonText: 'OK',
+            customClass: {
+                title: 'swal2-title',
+                htmlContainer: 'swal2-html-container'
+            }
+        });
+    });
+
+});
  
         //$(document).ready(function () {
         //    $('.char-limit').each(function () {

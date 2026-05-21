@@ -28,9 +28,9 @@ namespace swas.Areas.Identity.Pages.Account
 
         private readonly IUserRepository _userRepository;
         public readonly ApplicationDbContext _context;
-       
+        private readonly LoginCryptoKeyService _loginCryptoKeyService;
         private readonly IConfiguration _configuration;
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IUnitRepository unitRepository, IUserRepository userRepository, ApplicationDbContext context, IConfiguration configuration)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, LoginCryptoKeyService loginCryptoKeyService, ILogger<LoginModel> logger, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IUnitRepository unitRepository, IUserRepository userRepository, ApplicationDbContext context, IConfiguration configuration)
         {
             _signInManager = signInManager;
             _logger = logger;
@@ -40,6 +40,7 @@ namespace swas.Areas.Identity.Pages.Account
             _userRepository = userRepository;
             _context = context;
             _configuration = configuration;
+            _loginCryptoKeyService = loginCryptoKeyService;
 
         }
         [BindProperty]
@@ -48,6 +49,8 @@ namespace swas.Areas.Identity.Pages.Account
         public string ReturnUrl { get; set; }
         [TempData]
         public string ErrorMessage { get; set; }
+
+        public string LoginCryptoKey { get; private set; } = string.Empty;
         public class InputModel
         {
             [Required]
@@ -66,6 +69,11 @@ namespace swas.Areas.Identity.Pages.Account
         [AllowAnonymous]
         public async Task OnGetAsync(string returnUrl = null)
         {
+
+
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+            LoginCryptoKey = _loginCryptoKeyService.EnsureLoginCryptoKey(HttpContext);
 
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
@@ -93,7 +101,20 @@ namespace swas.Areas.Identity.Pages.Account
                     return Page();
                 }
 
-                var cryptoKey = _configuration["CryptoSettings:LoginKey"];
+                var cryptoKey = _loginCryptoKeyService.GetLoginCryptoKey(HttpContext);
+
+                if (string.IsNullOrWhiteSpace(cryptoKey))
+                {
+                    Input.UserName = string.Empty;
+                    Input.Password = string.Empty;
+
+                    ModelState.Clear();
+                    ModelState.AddModelError("", "Login session expired. Please refresh the page and try again.");
+
+                    LoginCryptoKey = _loginCryptoKeyService.EnsureLoginCryptoKey(HttpContext);
+
+                    return Page();
+                }
                 if (string.IsNullOrWhiteSpace(Input?.UserName) || string.IsNullOrWhiteSpace(Input?.Password))
                 {
                     ModelState.AddModelError("", "Username and Password are required.");
@@ -107,10 +128,13 @@ namespace swas.Areas.Identity.Pages.Account
 
                 // ❗ Validate again after decrypt
                 if (string.IsNullOrWhiteSpace(Input?.UserName) || string.IsNullOrWhiteSpace(Input?.Password))
-                {
-                    ModelState.AddModelError("", "Invalid credentials format.");
-                    return Page();
-                }
+{
+    Input.UserName = string.Empty;
+    Input.Password = string.Empty;
+
+    ModelState.AddModelError("", "Invalid credentials format.");
+    return Page();
+}
 
                 // Try login with ASP.NET Identity
                 var result = await _signInManager.PasswordSignInAsync(
@@ -148,6 +172,7 @@ namespace swas.Areas.Identity.Pages.Account
                             Db.IcNo = userdet.Icno;
                             Db.Offr_Name = userdet.Offr_Name;
                             Db.IpAddress = watermarkText;
+                            Db.CryptoKey = cryptoKey;
                             Db.cla = cla;
 
                             var roles = await _userManager.GetRolesAsync(userdet);
@@ -174,6 +199,10 @@ namespace swas.Areas.Identity.Pages.Account
                             await _userRepository.Add(logs);
 
                             SessionHelper.SetObjectAsJson(HttpContext.Session, "User", Db);
+                            HttpContext.Session.SetString(
+    "SessionLastActivity",
+    DateTime.UtcNow.ToString("O")
+);
                             HttpContext.Session.SetString("UserName", Input.UserName);
 
                             return RedirectToAction("Promo", "Home");
@@ -184,6 +213,9 @@ namespace swas.Areas.Identity.Pages.Account
                 // Account locked
                 if (result.IsLockedOut)
                 {
+                    Input.UserName = string.Empty;
+                    Input.Password = string.Empty;
+
                     ModelState.AddModelError("", "The account is locked.");
                     return Page();
                 }
@@ -211,7 +243,12 @@ namespace swas.Areas.Identity.Pages.Account
                 }
 
                 // Invalid password
-                ModelState.AddModelError("", "Invalid login attempt.");
+                Input.UserName = Input.UserName;
+                Input.Password = string.Empty;
+
+                ModelState.Clear();
+                ModelState.AddModelError(string.Empty, "Invalid username or password.");
+
                 return Page();
             }
             catch (Exception ex)

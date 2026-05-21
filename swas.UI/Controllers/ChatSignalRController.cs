@@ -1,4 +1,5 @@
 ﻿using ASPNetCoreIdentityCustomFields.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -12,6 +13,7 @@ using System.Security.Claims;
 
 namespace swas.UI.Controllers
 {
+    [Authorize]
     public class ChatSignalRController : Controller
     {
 

@@ -31,14 +31,18 @@ $(document).ready(function () {
 
     $('#WhitelistedTable tbody').on('click', '.EditWhiteListedProj', function (e) {
         e.preventDefault();
+        debugger;
         let id = $(this).data('id');
+        let encrypteid = encryptData(id);
+      
         $('#WhiteListedProjectDetail').modal('hide');
 
         $.ajax({
             url: '/Home/GetWhiteListedProjectById',
             type: 'GET',
-            data: { id: id },
-            success: function (data) {
+            data: { ids: encrypteid },
+            success: function (response) {
+                var data = response.data;
                 if (data) {
                     $('#edit_Id').val(data.id);
                     $('#edit_ProjName').val(data.projName);
@@ -79,11 +83,13 @@ $(document).ready(function () {
         });
     })
     $('#editWhiteListedForm').submit(function (e) {
-        e.preventDefault();       
+        e.preventDefault();         
+        var plainData = $('#editWhiteListedForm').serialize();
+        
         $.ajax({
             url: '/Home/UpdateWhiteListedProject', 
             type: 'POST',
-            data: encryptData(('#editWhiteListedForm').serialize()),
+            data: plainData,
             success: function (data) {
                 if (data == 1) {
                     

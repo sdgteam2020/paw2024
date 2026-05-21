@@ -46,20 +46,22 @@ using static swas.DAL.Models.LegacyHistory;
 using swas.UI.Helpers;
 using iText.Kernel.XMP.Impl;
 using System.Security.Cryptography.X509Certificates;
-using iText.Kernel.Colors;
+using iText.Kernel.Colors;  
 using iText.Kernel.Pdf.Canvas.Draw;
 using iText.Layout.Element;
 using iText.IO.Image;
-using iText.Layout.Borders;
+using iText.Layout.Borders; 
 using System.Net;
 using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
 using System.Xml.Linq;
 using System.Configuration;
+using System.Security.Cryptography;
+using swas.BAL;
 
 namespace swas.UI.Controllers
 {
-
+   
     public class HomeController : Controller
     {
         private readonly IProjectsRepository _projectsRepository;
@@ -137,9 +139,58 @@ namespace swas.UI.Controllers
             return View();
         }
 
-        public async Task<IActionResult> GetDashboardStatusDetails(int StatusId, bool IsDuplicate)
+        public async Task<IActionResult> GetDashboardStatusDetails(string encrypted_payload)
         {
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
+            if (string.IsNullOrWhiteSpace(encrypted_payload))
+            {
+
+                return BadRequest(new { success = false, message = "Invalid request." });
+            }
+
+          
+            int StatusId = 0;
+            bool IsDuplicate=true;
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(
+                _httpContextAccessor.HttpContext.Session, "User");
+            var cryptoKey = Logins.CryptoKey;
+
+            if (string.IsNullOrWhiteSpace(cryptoKey))
+            {
+
+                return StatusCode(500, new { success = false, message = "Server configuration error." });
+            }
+
+            try
+            {
+                string decrypted = CryptoHelper.SafeDecrypt(encrypted_payload, cryptoKey);
+
+                if (string.IsNullOrWhiteSpace(decrypted))
+                {
+
+                    return BadRequest(new { success = false, message = "Invalid request data." });
+                }
+
+                var obj = JsonConvert.DeserializeObject<dynamic>(decrypted.Trim('"'));
+                if (obj == null || !int.TryParse((string?)obj.StatusId, out StatusId) || !bool.TryParse((string?)obj.IsDuplicate, out IsDuplicate))
+                {
+
+                    return BadRequest(new { success = false, message = "Invalid identifier." });
+                }
+            }
+            catch (CryptographicException ex)
+            {
+
+                return BadRequest(new { success = false, message = "Invalid encrypted data." });
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, new { success = false, message = "Internal server error." });
+            }
+
+
+
+
             var ss = await _projectsRepository.GetDashboardStatusDetails(StatusId, Convert.ToInt32(Logins.unitid), IsDuplicate);
 
             return Json(ss);
@@ -148,7 +199,9 @@ namespace swas.UI.Controllers
 
         public async Task<IActionResult> GetDashboardApproved(string StatusId, string statusActionsMappingId)
         {
-            var cryptoKey = _configuration["CryptoSettings:LoginKey"];
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(
+                _httpContextAccessor.HttpContext.Session, "User");
+            var cryptoKey = Logins.CryptoKey;
 
             try
             {
@@ -170,25 +223,136 @@ namespace swas.UI.Controllers
                 return Json(-400); // bad request
             }
            
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
             var ss = await _projectsRepository.GetDashboardApproved(statusId, StatusActionsMappingId);
 
             return Json(ss);
 
         }
         [HttpPost]
-        public async Task<IActionResult> GetProjectWiseStatus(int Projid)
+        public async Task<IActionResult> GetProjectWiseStatus(string encrypted_Payload)
         {
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
-            var ss = await _projectsRepository.GetProjectWiseStatus(Projid);
 
-            return Json(ss);
+            if (string.IsNullOrWhiteSpace(encrypted_Payload))
+            {
+
+                return BadRequest(new { success = false, message = "Invalid request." });
+            }
+
+           
+            int Projid = 0;
+
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(
+                _httpContextAccessor.HttpContext.Session, "User");
+            var cryptoKey = Logins.CryptoKey;
+
+            if (string.IsNullOrWhiteSpace(cryptoKey))
+            {
+
+                return StatusCode(500, new { success = false, message = "Server configuration error." });
+            }
+
+            try
+            {
+                string decrypted = CryptoHelper.SafeDecrypt(encrypted_Payload, cryptoKey);
+
+                if (string.IsNullOrWhiteSpace(decrypted))
+                {
+
+                    return BadRequest(new { success = false, message = "Invalid request data." });
+                }
+
+                var obj = JsonConvert.DeserializeObject<dynamic>(decrypted.Trim('"'));
+                if (!int.TryParse((string?)obj.Projid, out Projid) )
+                {
+
+                    return BadRequest(new { success = false, message = "Invalid identifier." });
+                }
+            }
+            catch (CryptographicException ex)
+            {
+
+                return BadRequest(new { success = false, message = "Invalid encrypted data." });
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, new { success = false, message = "Internal server error." });
+            }
+            try
+            {
+                var ss = await _projectsRepository.GetProjectWiseStatus(Projid);
+
+                return Json(ss);
+            }
+            catch(Exception ex)
+            {
+                swas.BAL.Utility.Error.ExceptionHandle("Unhandled error in GetProjectWiseStatus. " +ex.Message); // or ExceptionHandle(ex) if overload exists
+
+            }
+            return null;
 
         }
-        public async Task<IActionResult> GetProjHoldStatus(int ProjId)
+       
+        public async Task<IActionResult> GetProjHoldStatus(string encrypted_payload)
         {
-            var ss = await _stkholdmove.ProjectHolsTimeCalculate(ProjId);
-            return Json(ss);
+            if (string.IsNullOrWhiteSpace(encrypted_payload))
+            {
+
+                return BadRequest(new { success = false, message = "Invalid request." });
+            }
+
+            
+            int ProjId = 0;
+
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(
+                _httpContextAccessor.HttpContext.Session, "User");
+            var cryptoKey = Logins.CryptoKey;
+
+            if (string.IsNullOrWhiteSpace(cryptoKey))
+            {
+
+                return StatusCode(500, new { success = false, message = "Server configuration error." });
+            }
+
+            try
+            {
+                string decrypted = CryptoHelper.SafeDecrypt(encrypted_payload, cryptoKey);
+
+                if (string.IsNullOrWhiteSpace(decrypted))
+                {
+
+                    return BadRequest(new { success = false, message = "Invalid request data." });
+                }
+
+                var obj = JsonConvert.DeserializeObject<dynamic>(decrypted.Trim('"'));
+                if (obj == null || !int.TryParse((string?)obj.ProjId, out ProjId))
+                {
+
+                    return BadRequest(new { success = false, message = "Invalid identifier." });
+                }
+            }
+            catch (CryptographicException ex)
+            {
+
+                return BadRequest(new { success = false, message = "Invalid encrypted data." });
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, new { success = false, message = "Internal server error." });
+            }
+
+            try
+            {
+                var ss = await _stkholdmove.ProjectHolsTimeCalculate(ProjId);
+                return Json(ss);
+            }
+            catch(Exception ex)
+            {
+                swas.BAL.Utility.Error.ExceptionHandle("Unhandled error in GetProjHoldStatus. " + ex.Message); // or ExceptionHandle(ex) if overload exists
+
+            }
+            return null;
         }
         public async Task<IActionResult> ProjectWiseReport()
         {
@@ -586,22 +750,7 @@ s.IsDashboard,
             ViewBag.ty = ty.ToList();
 
         }
-        [AllowAnonymous]
-        public IActionResult CheckLogin(int r)
-        {
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
-            if (Logins.IsNotNull())
-            {
-                return Json("1");
-            }
-            else
-            {
-                return Json("0");
-
-            }
-
-        }
-
+       
         public IActionResult LogOut()
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
@@ -917,62 +1066,70 @@ s.IsDashboard,
         }
 
 
-        public async Task<IActionResult> GetWhiteListedActionProj(int TypeId)
+        public async Task<IActionResult> GetWhiteListedActionProj(string encrypted_Payload)
         {
-            var ret = await _projectsRepository.GetWhiteListedActionProj(TypeId);
-            return Json(ret);
-        }
+            if (string.IsNullOrWhiteSpace(encrypted_Payload))
+            {
 
+                return BadRequest(new { success = false, message = "Invalid request." });
+            }
 
-        public async Task<IActionResult> ProjUnitComments()
-        {
+            int TypeId = 0;
+
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(
+                _httpContextAccessor.HttpContext.Session, "User");
+            var cryptoKey = Logins.CryptoKey;
+
+            if (string.IsNullOrWhiteSpace(cryptoKey))
+            {
+
+                return StatusCode(500, new { success = false, message = "Server configuration error." });
+            }
+
             try
             {
-                Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
+                string decrypted = CryptoHelper.SafeDecrypt(encrypted_Payload, cryptoKey);
 
-                var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-                var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
-                var watermarkText = $" {ipAddress}\n  {currentDatetime}";
-                TempData["ipadd"] = watermarkText;
-                var projects = await _projectsRepository.GetProjforCommentsAsync();
-                ViewBag.projects = projects;
-                var dateTime = DateTime.Now;
-                var stakeholders = await _context.tbl_mUnitBranch.Where(a => a.commentreqdid == true || a.unitid == Logins.unitid).ToListAsync();
-                ViewBag.stakeholders = stakeholders;
-                var Stk_Status = _context.StkStatus.FirstOrDefault(status => status.StkStatusId == 4);
-                ViewBag.Stk_Status = Stk_Status;
+                if (string.IsNullOrWhiteSpace(decrypted))
+                {
 
-                var queryes = (from comment in _context.StkComment
-                               join stakeholder in _context.tbl_mUnitBranch on comment.StakeHolderId equals stakeholder.unitid
-                               join status in _context.StkStatus on comment.StkStatusId equals status.StkStatusId into statusGroup
-                               from status in statusGroup.DefaultIfEmpty() // Left Join
-                               join project in _context.Projects on comment.ProjId equals project.ProjId // Assuming 'ProjId' is in the 'Stk_Comments' table
-                               select new
-                               {
-                                   StakeholderName = stakeholder.UnitName,
-                                   StatusName = status != null ? status.Status : null,
-                                   Comments = comment.Comments,
-                                   ProjId = comment.ProjId, // Include ProjId
-                                   PsmId = project.CurrentPslmId,
-                                   Date = comment.DateTimeOfUpdate,
-                                   CommentId = comment.StkCommentId,
-                                   StakeholderId = comment.StakeHolderId
-                               }).ToList();
+                    return BadRequest(new { success = false, message = "Invalid request data." });
+                }
 
+                var obj = JsonConvert.DeserializeObject<dynamic>(decrypted.Trim('"'));
+                if (obj == null || !int.TryParse((string?)obj.TypeId, out TypeId))
+                {
 
-                ViewBag.queryes = queryes;
+                    return BadRequest(new { success = false, message = "Invalid identifier." });
+                }
+            }
+            catch (CryptographicException ex)
+            {
 
-
-                return View("ProjUnitComments");
+                return BadRequest(new { success = false, message = "Invalid encrypted data." });
             }
             catch (Exception ex)
             {
-                swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
-                return Redirect("/Home/Error");
+
+                return StatusCode(500, new { success = false, message = "Internal server error." });
             }
 
+            try
+            {
+                var ret = await _projectsRepository.GetWhiteListedActionProj(TypeId);
+                return Json(ret);
+            }
+            catch(Exception ex)
+            {
+                swas.BAL.Utility.Error.ExceptionHandle("Unhandled error in GetWhiteListedActionProj. " + ex.Message ); // or ExceptionHandle(ex) if overload exists
+
+            }
+
+            return null;
         }
 
+
+     
 
         public async Task<IActionResult> GetUnitComments(int psmId, int stakeholderId, int projId)
         {
@@ -1534,10 +1691,103 @@ s.IsDashboard,
 
 
         [HttpGet]
-        public IActionResult GetWhiteListedProjectById(int id)
+        public IActionResult GetWhiteListedProjectById(string ids)
         {
-            var record = _context.trnWhiteListed.FirstOrDefault(x => x.Id == id);
-            return Json(record);
+            if (string.IsNullOrWhiteSpace(ids))
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Invalid request."
+                });
+            }
+
+            Login? logins = SessionHelper.GetObjectFromJson<Login>(
+                _httpContextAccessor.HttpContext?.Session,
+                "User"
+            );
+
+            if (logins == null)
+            {
+                return Unauthorized(new
+                {
+                    success = false,
+                    message = "Session expired. Please login again."
+                });
+            }
+
+            string? cryptoKey = logins.CryptoKey;
+
+            if (string.IsNullOrWhiteSpace(cryptoKey))
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Server configuration error."
+                });
+            }
+
+            int id;
+
+            try
+            {
+                string decrypted = CryptoHelper.SafeDecrypt(ids, cryptoKey);
+
+                if (string.IsNullOrWhiteSpace(decrypted))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Invalid request data."
+                    });
+                }
+
+                decrypted = decrypted.Trim().Trim('"');
+
+                if (!int.TryParse(decrypted, out id))
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Invalid identifier."
+                    });
+                }
+            }
+            catch (CryptographicException)
+            {
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Invalid encrypted data."
+                });
+            }
+            catch
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Internal server error."
+                });
+            }
+
+            var record = _context.trnWhiteListed
+                .AsNoTracking()
+                .FirstOrDefault(x => x.Id == id);
+
+            if (record == null)
+            {
+                return NotFound(new
+                {
+                    success = false,
+                    message = "Record not found."
+                });
+            }
+
+            return Json(new
+            {
+                success = true,
+                data = record
+            });
         }
 
         [HttpPost]

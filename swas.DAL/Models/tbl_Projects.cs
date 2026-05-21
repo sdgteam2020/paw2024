@@ -1,185 +1,314 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+
 
 namespace swas.DAL.Models
 {
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Diagnostics.CodeAnalysis;
 
     public class tbl_Projects
     {
+        // ─── Primary Key ─────────────────────────────────────────────────────────────
 
         [Key]
+        
         public int ProjId { get; set; }
 
+        // ─── Core Identity ────────────────────────────────────────────────────────────
+
+        // Form: data_maxlength="200", required
+        [Required(ErrorMessage = "Project Name is required.")]
         [Column(TypeName = "varchar(200)")]
+        [StringLength(201, ErrorMessage = "Project Name cannot exceed 200 characters.")]
         [Display(Name = "Project Name")]
         public string? ProjName { get; set; }
+
+        // Form: readonly input, populated by sponsor lookup — no regex, just length
         [Column(TypeName = "nvarchar(200)")]
+        [StringLength(201, ErrorMessage = "Sponsor name cannot exceed 200 characters.")]
         public string? Sponsor { get; set; }
 
+        // System-assigned from Logins.unitid — no user input, no validation needed
         [ForeignKey("tbl_mUnitBranch")]
         public int StakeHolderId { get; set; }
 
-        [ForeignKey("tbl_ProjStakeHolderMov")]
+        // System-managed — no user input
+       
         public int CurrentPslmId { get; set; }
 
-        [Display(Name = "Start Date")]
-        public DateTime? InitiatedDate { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Completed On")]
-        public DateTime? CompletionDate { get; set; }
-
-
-        [Column(TypeName = "varchar(200)")]
-
-        [Display(Name = "Whitelisted")]
-        public string? IsWhitelisted { get; set; }
-        [Column(TypeName = "varchar(200)")]
-        [Display(Name = "Initial Remarks")]
-      
-        public string? InitialRemark { get; set; }
-
-        public bool IsDeleted { get; set; }
-        public bool IsActive { get; set; }
-        [Display(Name = "Edit/Delete By")]
-        public int? EditDeleteBy { get; set; }
-        [Display(Name = "Edit/Delete Date")]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-
-        public DateTime? EditDeleteDate { get; set; }
-        [Display(Name = "Updated by")]
-        public int? UpdatedByUserId { get; set; }
-        [Display(Name = "Date of Update")]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-
-        public DateTime? DateTimeOfUpdate { get; set; }
-        [Display(Name = "Aim & Scope")]
-
-        public string? AimScope { get; set; }
-        [Display(Name = "IT infra reqd")]
-
-        public string? HQandITinfraReqd { get; set; }
-        [Display(Name = "Hosted On (ADN/Internet)")]
-
-        public string? Hostedon { get; set; }
-        [Display(Name = "Brief details of content of the proposed SW appl")]
-
-        public string? ContentofSWApp { get; set; }
-        [Display(Name = "Brief justification")]
-
-        public string? ReqmtJustification { get; set; }
-        [Display(Name = "Usability of proposed appl by others arms/services/org/est ")]
-
-        public string? UsabilityofProposedAppln { get; set; }
-        [Display(Name = "Details of user base")]
-
-        public string? DetlsofUserBase { get; set; }
-        [Display(Name = "Envisage cost of entire proj incl license fees and maint (Rupees)")]
-
-        public string EnvisagedCost { get; set; }
-        [Display(Name = "Brief details of proposed network and bandwidth reqmts")]
-
-        public string? NWBandWidthReqmt { get; set; }
-        [Display(Name = "Projected dt of completion incl broad timelines")]
-
-        public string? MajTimeLines { get; set; }
-        [Display(Name = "Brief details of SW platform and tech stack proposed for devp of  appl incl op sys dependencies (if any)")]
-
-        public string? TechStackProposed { get; set; }
-        [Display(Name = "Brief details of proposed data security measures incl backup of data")]
-
-        public string? DataSecurity_backup { get; set; }
-        [Display(Name = "Type of Software")]
-
-        public string? TypeofSW { get; set; }
-        [Display(Name = "Being devp in house or through Outsourced")]
-
-        public string? BeingDevpInhouse { get; set; }
-        [Display(Name = "Endorsement by Head of Dept")]
-
-        public string? EndorsmentbyHeadof { get; set; }
-
+        // Not present in form as editable field — optional, light format check only
+        [StringLength(51, ErrorMessage = "Project Code cannot exceed 50 characters.")]
+        [RegularExpression(@"^[A-Za-z0-9\-_/]*$",
+            ErrorMessage = "Project Code may only contain letters, digits, hyphens, underscores, and forward slashes.")]
         public string? ProjCode { get; set; }
 
-        [Display(Name = "Application Type")]
-        [ForeignKey("mAppType")]
+        // ─── Dates ───────────────────────────────────────────────────────────────────
 
-        public int Apptype { get; set; }
+        // Form: type="date", required
+        [Required(ErrorMessage = "Project Start Date is required.")]
+        [Display(Name = "Project Start Date")]
+        [DataType(DataType.Date)]
+        public DateTime? InitiatedDate { get; set; }
 
-        public bool IsProcess { get; set; }
-        [Display(Name = "Deployment Mode")]
+        // Form: type="date", required
+        [Required(ErrorMessage = "Project Completion Date is required.")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Project Completion Date")]
+        [DataType(DataType.Date)]
+        public DateTime? CompletionDate { get; set; }
 
-        public string? Deplytype { get; set; }
-        public bool IsSubmited { get; set; }
+        // System-set (DateTime.Now) — no user input
+        [Display(Name = "Edit/Delete Date")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
+        public DateTime? EditDeleteDate { get; set; }
 
-        [Display(Name = "Hosted On")]
-        [ForeignKey("mHostType")]
+        // System-set — no user input
+        [Display(Name = "Date of Update")]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
+        public DateTime? DateTimeOfUpdate { get; set; }
 
-        public int HostTypeID { get; set; }
-        [Display(Name = "Brief details of OS & Sys software reqmts")]
-
-        public string? Detlsof_OS { get; set; }
-        [Display(Name = "Brief details of proposed DB Engine to be Used in the Appl.")]
-
-        public string? ProposedDB_Engine { get; set; }
-        [Display(Name = "Detls of Sw Architecture and COTS Sw proposed to be utilised")]
-
-        public string? DetlsofSw_Architecture { get; set; }
-        [Display(Name = "Detls of proposed architecture")]
-
-        public string? DetlsofProposed_Architecture { get; set; }
-        [Display(Name = "Brief details of proposed utilisation of Public Key Infra(PKI) and Iden and Access Mgt(IAM)")]
-
-        public string? DetlsPki_IAM { get; set; }
-        [Display(Name = "Technology dependencies(if any)")]
-
-        public string? Technology_dependencies { get; set; }
-        [Display(Name = "Database reqmts")]
-
-        public string? Database_reqmts { get; set; }
-        [Display(Name = "Enhancement/upgradation(incl patch mgt/Sw updt procedure and mechanism")]
-
-        public string? Enhancement_upgradation { get; set; }
-        [Display(Name = "Details of licensing(if any)")]
-
-        public string? Details_licensing { get; set; }
-
+        // Radio button: value="1" (On) or value="0" (Off)
         public int Date_type { get; set; }
 
-        [MaxLength(70)]
+        // ─── Status / Flags ───────────────────────────────────────────────────────────
 
-        [Display(Name = "Mobile Number")]
+        // Form: DropDownListFor from ViewBag.WhitelistOptions, required
+        // "Re-Vetted" must be included — business logic branches on it
+        [Required(ErrorMessage = "Whitelisted status is required.")]
+        [Column(TypeName = "varchar(200)")]
+        [Display(Name = "Already Whitelisted")]
+        [RegularExpression(@"^(Yes|No|Re-Vetted)$",
+            ErrorMessage = "Whitelisted must be one of: Yes, No, Re-Vetted.")]
+        public string? IsWhitelisted { get; set; }
+
+        // System-set — no user input
+        public bool IsDeleted { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsProcess { get; set; }
+        public bool IsSubmited { get; set; }
+
+        // Form: DropDownListFor from ViewBag.IsAI_ML, required
+        [Required(ErrorMessage = "Please indicate whether this is an AI/ML project.")]
+        [Display(Name = "AI/ML Project?")]
+        public bool? Is_AI_ML { get; set; }
+
+        // ─── Contact Info ─────────────────────────────────────────────────────────────
+
+        // Form: type="number", data_maxlength="10", required
+        // Digits only, max 10 digits — matches form data_maxlength="10"
+        [Required(ErrorMessage = "Mobile Number is required.")]
+        [MaxLength(10)]
+        [Display(Name = "Mobile Number (Tele No)")]
+        [RegularExpression(@"^\d{1,10}$",
+            ErrorMessage = "Mobile Number must be numeric and cannot exceed 10 digits.")]
         public string? MobileNo { get; set; }
-        //[MaxLength(500)]
-        [Display(Name = "Ascon Number")]
+
+        // Form: type="number", data_maxlength="5", required
+        [Required(ErrorMessage = "Ascon Number is required.")]
+        [Display(Name = "Ascon No")]
+        [Range(1, 99999, ErrorMessage = "Ascon Number must be a positive number up to 5 digits.")]
         public int? AsconNo { get; set; }
-        
-        [Display(Name = "Security Classification")]
+
+        // ─── Classification & Type ────────────────────────────────────────────────────
+
+        // Form: DropDownListFor from ViewBag.SecurityClassifications, required
+        [Required(ErrorMessage = "Security Classification is required.")]
         [MaxLength(100)]
-        public string? Security_Classification { get; set; } 
-        
-        [Display(Name = "Development Language")]
+        [Display(Name = "Security Classification")]
+       
+        public string? Security_Classification { get; set; }
+
+        // Form: DropDownListFor from ViewBag.TypeofSWOption, required
+        [Required(ErrorMessage = "Type of Software is required.")]
+        [Display(Name = "Type of Software")]
+        public string? TypeofSW { get; set; }
+
+        // Form: DropDownListFor from ViewBag.BeingDevpInhouseOption, required
+        [Required(ErrorMessage = "Development Approach is required.")]
+        [Display(Name = "Development Approach (In-house / Outsourced)")]
+        public string? BeingDevpInhouse { get; set; }
+
+        // Not an editable form field in this view — no required, no regex
+        [Display(Name = "Deployment Mode")]
+        public string? Deplytype { get; set; }
+
+        // Not an editable form field in this view — no required, no regex
+        [Display(Name = "Hosted On (ADN/Internet)")]
+        public string? Hostedon { get; set; }
+
+        // Not present in this form view
+        [Display(Name = "Endorsement by Head of Dept")]
+        public string? EndorsmentbyHeadof { get; set; }
+
+        // ─── Foreign Keys ─────────────────────────────────────────────────────────────
+
+        // Form: ddlApptype select, required
+        [Required(ErrorMessage = "Application Type is required.")]
+        [Display(Name = "Application Type")]
+        [ForeignKey("mAppType")]
+        [Range(1, int.MaxValue, ErrorMessage = "A valid Application Type must be selected.")]
+        public int? Apptype { get; set; }
+
+        // Form: ddlHostTypeID select, required
+        [Required(ErrorMessage = "Host Type is required.")]
+        [Display(Name = "Hosted On")]
+        [ForeignKey("mHostType")]
+        [Range(1, int.MaxValue, ErrorMessage = "A valid Host Type must be selected.")]
+        public int? HostTypeID { get; set; }
+
+        // ─── Audit Fields ─────────────────────────────────────────────────────────────
+
+        // System-set — no user input
+        [Display(Name = "Edit/Delete By")]
+        public int? EditDeleteBy { get; set; }
+
+        // System-set — no user input
+        [Display(Name = "Updated by")]
+        public int? UpdatedByUserId { get; set; }
+
+        // ─── Financial ────────────────────────────────────────────────────────────────
+
+        // Form: data_maxlength="50", required
+        // Allows numeric with optional decimals, up to 50 chars as shown in form
+        [Required(ErrorMessage = "Likely Cost is required.")]
+        [Display(Name = "Likely Cost (₹)")]
+        [StringLength(51, ErrorMessage = "Envisaged Cost cannot exceed 50 characters.")]
+        [RegularExpression(@"^\d{1,47}(\.\d{1,2})?$",
+            ErrorMessage = "Envisaged Cost must be a valid numeric amount (e.g. 150000 or 150000.50).")]
+        public string EnvisagedCost { get; set; } = string.Empty;
+
+        // ─── Technical Details ────────────────────────────────────────────────────────
+
+        // Form: TextAreaFor, data_maxlength="500", required
+        [Required(ErrorMessage = "Aim and Scope is required.")]
+        [Display(Name = "Aim & Scope")]
+        [StringLength(501, ErrorMessage = "Aim & Scope cannot exceed 500 characters.")]
+        public string? AimScope { get; set; }
+
+        // Not present in this form view as required — optional
+        [Display(Name = "IT infra required")]
+        [StringLength(201, ErrorMessage = "IT Infra details cannot exceed 200 characters.")]
+        public string? HQandITinfraReqd { get; set; }
+
+        // Not present in this form view as required — optional
+        [Display(Name = "Brief details of content of the proposed SW application")]
+        [StringLength(501, ErrorMessage = "Content of SW Application cannot exceed 501 characters.")]
+        public string? ContentofSWApp { get; set; }
+
+        // Not present in this form view as required — optional
+        [Display(Name = "Brief justification")]
+        [StringLength(501, ErrorMessage = "Justification cannot exceed 501 characters.")]
+        public string? ReqmtJustification { get; set; }
+
+        // Not present in this form view as required — optional
+        [Display(Name = "Usability of proposed application by other arms/services/org/est")]
+        [StringLength(501, ErrorMessage = "Usability details cannot exceed 501 characters.")]
+        public string? UsabilityofProposedAppln { get; set; }
+
+        // Not present in this form view as required — optional
+        [Display(Name = "Details of user base")]
+        [StringLength(501, ErrorMessage = "User base details cannot exceed 501 characters.")]
+        public string? DetlsofUserBase { get; set; }
+
+        // Not present in this form view as required — optional
+        [Display(Name = "Brief details of proposed network and bandwidth requirements")]
+        [StringLength(501, ErrorMessage = "Network/Bandwidth details cannot exceed 501 characters.")]
+        public string? NWBandWidthReqmt { get; set; }
+
+        // Not present in this form view as required — optional
+        [Display(Name = "Projected date of completion incl. broad timelines")]
+        [StringLength(501, ErrorMessage = "Timeline details cannot exceed 501 characters.")]
+        public string? MajTimeLines { get; set; }
+
+        // Form: TextAreaFor, data_maxlength="500", required
+        [Required(ErrorMessage = "Software Platform & Tech Stack is required.")]
+        [Display(Name = "Software Platform & Tech Stack (incl. OS Dependencies)")]
+        [StringLength(501, ErrorMessage = "Tech Stack details cannot exceed 500 characters.")]
+        public string? TechStackProposed { get; set; }
+
+        // Not present in this form view as required — optional
+        [Display(Name = "Brief details of proposed data security measures incl. backup")]
+        [StringLength(501, ErrorMessage = "Data Security details cannot exceed 501 characters.")]
+        public string? DataSecurity_backup { get; set; }
+
+        // Form: data_maxlength="200", required
+        [Required(ErrorMessage = "Initial Remark is required.")]
+        [Column(TypeName = "varchar(200)")]
+        [Display(Name = "Initial Remarks")]
+        [StringLength(201, ErrorMessage = "Initial Remark cannot exceed 200 characters.")]
+        public string? InitialRemark { get; set; }
+
+        // Form: TextAreaFor, data_maxlength="500", required
+        [Required(ErrorMessage = "OS & System Software Requirements is required.")]
+        [Display(Name = "OS & System Software Requirements")]
+        [StringLength(501, ErrorMessage = "OS details cannot exceed 500 characters.")]
+        public string? Detlsof_OS { get; set; }
+
+        // Form: TextBoxFor, data_maxlength="50", required
+        [Required(ErrorMessage = "Proposed Database Engine is required.")]
+        [Display(Name = "Proposed Database Engine")]
+        [StringLength(51, ErrorMessage = "DB Engine cannot exceed 50 characters.")]
+        public string? ProposedDB_Engine { get; set; }
+
+        // Form: TextAreaFor, data_maxlength="200", required
+        // Note: form binds to DetlsofSw_Architecture but label says "Detls of proposed architecture"
+        [Required(ErrorMessage = "Details of proposed architecture is required.")]
+        [Display(Name = "Details of SW Architecture and COTS SW proposed")]
+        [StringLength(201, ErrorMessage = "SW Architecture details cannot exceed 200 characters.")]
+        public string? DetlsofSw_Architecture { get; set; }
+
+        // Not present in this form view as required — optional
+        [Display(Name = "Details of proposed architecture")]
+        [StringLength(501, ErrorMessage = "Proposed Architecture details cannot exceed 500 characters.")]
+        public string? DetlsofProposed_Architecture { get; set; }
+
+        // Not present in this form view as required — optional
+        [Display(Name = "Brief details of proposed utilisation of PKI and IAM")]
+        [StringLength(501, ErrorMessage = "PKI/IAM details cannot exceed 501 characters.")]
+        public string? DetlsPki_IAM { get; set; }
+
+        // Not present in this form view as required — optional
+        [Display(Name = "Technology dependencies (if any)")]
+        [StringLength(501, ErrorMessage = "Technology dependencies cannot exceed 501 characters.")]
+        public string? Technology_dependencies { get; set; }
+
+        // Not present in this form view as required — optional
+        [Display(Name = "Database requirements")]
+        [StringLength(501, ErrorMessage = "Database requirements cannot exceed 501 characters.")]
+        public string? Database_reqmts { get; set; }
+
+        // Not present in this form view as required — optional
+        [Display(Name = "Enhancement/upgradation incl. patch management and SW update procedure")]
+        [StringLength(2000, ErrorMessage = "Enhancement/Upgradation details cannot exceed 2000 characters.")]
+        public string? Enhancement_upgradation { get; set; }
+
+        // Not present in this form view as required — optional
+        [Display(Name = "Details of licensing (if any)")]
+        [StringLength(1000, ErrorMessage = "Licensing details cannot exceed 1000 characters.")]
+        public string? Details_licensing { get; set; }
+
+        // Form: TextAreaFor, data_maxlength="200", required
+        [Required(ErrorMessage = "Development Language is required.")]
         [MaxLength(201)]
+        [Display(Name = "Development Language")]
+        [StringLength(201, ErrorMessage = "Development Language cannot exceed 200 characters.")]
+        [RegularExpression(@"^[A-Za-z0-9,\.\+\#\s/\-]{1,200}$",
+            ErrorMessage = "Development Language contains invalid characters.")]
         public string? Devlopment_Language { get; set; }
 
-        [Display(Name = "Operation system of hosting env")]
+        // Form: TextAreaFor, data_maxlength="200", required
+        [Required(ErrorMessage = "Operation system of hosting environment is required.")]
         [MaxLength(201)]
+        [Display(Name = "Operation system of hosting environment")]
+        [StringLength(201, ErrorMessage = "OS of hosting environment cannot exceed 200 characters.")]
         public string? operation_system_hosting_env { get; set; }
-        
-        [Display(Name = "Is AI/ML Project")]
-        [Required]
-        public bool Is_AI_ML { get; set; }
 
+        // ─── [NotMapped] — view/DTO helpers ──────────────────────────────────────────
 
         [NotMapped]
-        public int CurrentStakeHolderId { get; set; }
+        public int? CurrentStakeHolderId { get; set; }
 
         [NotMapped]
         public string? StakeHolder { get; set; }
@@ -253,11 +382,9 @@ namespace swas.DAL.Models
         public int? PsmIds { get; set; }
 
         [NotMapped]
-        public int StageId { get; set; }
+        public int? StageId { get; set; }
 
         [NotMapped]
-        public int OldPsmid { get; set; }
+        public int? OldPsmid { get; set; }
     }
-
-
 }

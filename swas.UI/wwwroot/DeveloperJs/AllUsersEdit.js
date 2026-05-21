@@ -5,7 +5,8 @@
         $('.dropdownsearch').select2();
         let isRestricted = '@isRestricted' === 'True';
 
-        if (isRestricted) {
+    if (isRestricted) {
+
             $('a[href="/Account/GetsAllUsers"]').closest('button').hide();
         }
 

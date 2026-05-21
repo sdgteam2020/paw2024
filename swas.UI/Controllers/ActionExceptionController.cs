@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using swas.BAL.DTO;
 using swas.BAL.Helpers;
 using swas.BAL.Interfaces;
@@ -8,6 +9,7 @@ using swas.UI.Helpers;
 
 namespace swas.UI.Controllers
 {
+    [Authorize]
     public class ActionExceptionController : Controller
     {
         private readonly IActionExceptionRepository _actionsException ;

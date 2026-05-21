@@ -117,7 +117,7 @@ function DateFormateyyy_mm_dd(date) {
     }
 }
 function DateFormateddMMyyyyhhmmss(date) {
-
+    debugger;
     let todaysDate = new Date();
     let datef1 = new Date(date);
     let datef2 = date ? new Date(date) : new Date();
@@ -414,19 +414,21 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('.char-limit').each(function () {
-
+        
         let inputField = $(this);
         let maxLength = parseInt(inputField.data('maxlength'));
         let errorMsg = inputField.closest('div').find('.charErrorMsg');
 
         inputField.on('input', function () {
-            debugger;
+           
             let value = inputField.val();
 
             // Stop typing after max length
             if (value.length > maxLength) {
+              
                 inputField.val(value.substring(0, maxLength+1));
                 errorMsg.removeClass('d-none');
+              
             } else {
                 errorMsg.addClass('d-none');
             }
@@ -438,12 +440,12 @@ $(document).ready(function () {
 });
 
 function encryptData(data) {
-    const key = "DGIS-Login-AES-256-Key-Change-Me";
-
+    const cryptoKey = $('#Logincrypto').val();
+   
     // 🔥 Convert object → string
     const text = JSON.stringify(data);
 
-    return CryptoJS.AES.encrypt(text, key).toString();
+    return CryptoJS.AES.encrypt(text, cryptoKey).toString();
 }
 
 

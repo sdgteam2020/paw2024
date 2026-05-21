@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace swas.UI.Controllers
 {
-
+    [Authorize]
     public class StatusController : Controller
     {
         private readonly IStatusRepository _statusRepository;

@@ -110,13 +110,16 @@
     <script language="JavaScript" type="text/javascript" src="~/js/sweetalert2.all.min.js"></script>
 
     <script src="~/DeveloperJs/ddlSanal.js"></script>
-    <script src="~/DeveloperJs/Comman.js?v1"></script>
+    
     <script src="~/developerjs/notification.js"></script>
-
+<script src="~/DeveloperJs/Comman.js?v1"></script>
 
 
 <body class="sidebar-collapsed sidebar-hover">
 
+    <input id="Logincrypto" value="@Logins.CryptoKey"/>
+
+    <span id="IpAddress" class="da-hidden"> @TempData["ipadd"]</span>
     <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content paw-edituser-modal-content">
@@ -681,7 +684,10 @@
                                                     <div>
                                                         <div>
                                                             <label id="Comm"><b>Comment</b> <span class="required-indicator">*</span></label>
-                                                            <textarea id="Comments" class="requiredField paw-comments-textarea" rows="4"></textarea>
+                                                            <textarea id="Comments" class="char-limit form-control requiredField paw-comments-textarea" data-maxlength="1000" rows="4"></textarea>
+                                                            <span class="charErrorMsg text-start d-none paw-red-font mt-1">
+                                                                Cannot exceed 1000 characters!
+                                                            </span>
                                                             <div class="invalid-feedback">Please provide the Comments</div>
                                                         </div>
 
@@ -765,9 +771,11 @@
     <!-- Central JS for handling alerts -->
 	<script src="~/developerjs/centralerrororsuccess.js"></script>
 
+
     @RenderSection("Scripts", required: false)
     <script src="~/developerjs/whitelistedpartialview.js"></script>
     <script src="~/DeveloperJs/ProjectstkholderComments.js"></script>
+
     <script src="~/DeveloperJs/layout.js"></script>
     <script src="~/developerjs/ProjectstckholdercommentforProjHistory.js"></script>
 	<script src="~/developerjs/promo.js"></script>

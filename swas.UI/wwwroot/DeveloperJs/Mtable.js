@@ -11,10 +11,15 @@
     if (ddl == 'ddlAction1' || ddl =='ddlSubStage1') {
         userdata.unitId = 1;
     }
+
+    let encrypte_data = encryptData(userdata)
+  
     $.ajax({
         url: '/Master/GetAllMasterTableforddl',
         contentType: 'application/x-www-form-urlencoded',
-        data: userdata,
+        data: {
+            encrypte_data: encrypte_data
+        },
         type: 'POST',
 
         success: function (response) {
@@ -64,11 +69,13 @@ function mMsaterfwdStage(sectid = '', ddl, TableId, ParentId, type, projecttype)
         "id": TableId,
         "ParentId": ParentId,
     };
-
+    let encrypte_data = encryptData(userdata)
+    
     $.ajax({
         url: '/Master/GetAllMasterTableforddl',
         contentType: 'application/x-www-form-urlencoded',
-        data: userdata,
+        data: {encrypte_data: encrypte_data
+    },
         type: 'POST',
         success: function (response) {
             handleDropdownResponse(response, ddl, sectid, type, projecttype);
@@ -112,9 +119,9 @@ function buildDefaultOption() {
 
 // 🔹 BUILD OPTIONS
 function buildOptions(response, projecttype) {
-    debugger;
+  
     let html = '';
-    console.log(response);
+   
     response.forEach(item => {
         if (projecttype === "Re-Vetted") {
             if (item.id == 3) {
@@ -178,11 +185,14 @@ function mMsaterStage(sectid = '', ddl, TableId, ParentId, StakeHolderId) {
         "ParentId": ParentId,
         "StakeHolderId": StakeHolderId,
     };
+    let encrypted_Payload = encryptData(userdata)
 
     $.ajax({
         url: '/Master/GetStagebyStakeHolderId',
         contentType: 'application/x-www-form-urlencoded',
-        data: userdata,
+        data: {
+            encrypted_Payload: encrypted_Payload
+    },
         type: 'POST',
         success: function (response) {
             handleStageResponse(response, ddl, sectid);
@@ -257,10 +267,13 @@ function mMsaterFwdTo(sectid = '', ddl, TableId, ParentId, StakeHolderId, type, 
         "Value": value
 
     };
+
+    let encrypted_payload = encryptData(userdata)
     $.ajax({
         url: '/Master/GetFwdTo',
         contentType: 'application/x-www-form-urlencoded',
-        data: userdata,
+        data: {encrypted_payload: encrypted_payload
+    },
         type: 'POST',
 
         success: function (response) {

@@ -35,7 +35,7 @@ namespace swas.DAL.Models
         public int? ActionsId { get; set; }
 
         [Required(ErrorMessage = "Comments are required")]
-        [StringLength(1500, MinimumLength = 3)]
+        [StringLength(501, MinimumLength = 3)]
         [RegularExpression(@"^[a-zA-Z0-9\s.,!@#()_\-]*$", ErrorMessage = "Invalid characters in comments")]
         public string? Comments { get; set; }
 

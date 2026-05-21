@@ -339,23 +339,7 @@ function GetAllDashbaordCount() {
                 $('#chartTitle').text('Bar Chart Title');
             }
         });
-        $.ajax({
-            url: '/Home/indexToPieChart',
-            method: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                if (data.error) {
-                    console.error('Error fetching data:', data.error);
-                    return;
-                }
-
-                updatePieChart(data);
-                $('#chart1Title').text('Pie Chart Title');
-            },
-            error: function (error) {
-                console.error('Error fetching data:', error);
-            }
-        });
+       
     }
    
 
@@ -596,10 +580,12 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
         "IsDuplicate": IsDuplicate
     };
 
+    let encrypted_payload = encryptData(userdata);
+
     $.ajax({
         url: '/Home/GetDashboardStatusDetails',
         contentType: 'application/x-www-form-urlencoded',
-        data: userdata,
+        data: { encrypted_payload: encrypted_payload },
         type: 'POST',
         success: function (response) {
            
@@ -1254,4 +1240,7 @@ $(document).ready(function () {
     });
 
 });
+
+
+
 

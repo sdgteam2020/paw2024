@@ -70,46 +70,69 @@ namespace swas.BAL.Repository
         {
             try
             {
-                
-              
-                var data = (from da in _context.DateApproval
-                            where da.RequestType == 2
-                            join p in _context.Projects on da.ProjId equals p.ProjId
-                            join u in _context.tbl_mUnitBranch on da.UnitId equals u.unitid
-                            join lh in _context.LegacyHistory
-                            .Where(lh => lh.ActionType == ActionTypeEnum.RequestSent)
-                            on da.ProjId equals lh.ProjectId into lhJoin
-                            from LH in lhJoin.DefaultIfEmpty()
-                            select new { da, p, u, LH })
-              .AsEnumerable() // Move to client-side evaluation
-              .GroupBy(x => x.da.ProjId)
-              .Select(grouped => new DateApproval
-              {
-                  Id = grouped.OrderByDescending(x => x.da.Request_Date).FirstOrDefault().da.Id,
-                  ProjId = grouped.Key,
-                  UnitId = grouped.OrderByDescending(x => x.da.Request_Date).FirstOrDefault().da.UnitId,
-                  Request_Date = grouped.OrderByDescending(x => x.da.Request_Date).FirstOrDefault().da.Request_Date,
-                  DDGIT_Approval_dat = grouped.OrderByDescending(x => x.da.Request_Date).FirstOrDefault().da.DDGIT_Approval_dat,
-                  DDGIT_approval = grouped.OrderByDescending(x => x.da.Request_Date).FirstOrDefault().da.DDGIT_approval,
-                  ProjName = grouped.OrderByDescending(x => x.da.Request_Date).FirstOrDefault().p.ProjName,
-                  UnitName = grouped.OrderByDescending(x => x.da.Request_Date).FirstOrDefault().u.UnitName,
-                  User = grouped.OrderByDescending(x => x.da.Request_Date).FirstOrDefault().da.User,
-                  IsRead = grouped.OrderByDescending(x => x.da.Request_Date).FirstOrDefault().da.IsRead,
-                  EncyID = _dataProtector.Protect(grouped.Key.ToString()),
+                var query =
+                    from da in _context.DateApproval.AsNoTracking()
+                    where da.RequestType == 2
+                    join p in _context.Projects.AsNoTracking()
+                        on da.ProjId equals p.ProjId
+                    join u in _context.tbl_mUnitBranch.AsNoTracking()
+                        on da.UnitId equals u.unitid
+                    join lh in _context.LegacyHistory
+                            .AsNoTracking()
+                            .Where(x => x.ActionType == ActionTypeEnum.RequestSent)
+                        on da.ProjId equals lh.ProjectId into lhJoin
+                    from LH in lhJoin.DefaultIfEmpty()
+                    select new
+                    {
+                        da.Id,
+                        da.ProjId,
+                        da.UnitId,
+                        da.Request_Date,
+                        da.DDGIT_Approval_dat,
+                        da.DDGIT_approval,
+                        da.User,
+                        da.IsRead,
 
-                  Remarks = grouped.OrderByDescending(x => x.da.Request_Date).FirstOrDefault().LH != null ? grouped.OrderByDescending(x => x.da.Request_Date).FirstOrDefault().LH.Remarks : null
-              })
-              .OrderByDescending(x => x.Request_Date).ToList();
+                        ProjectName = p.ProjName,
+                        UnitName = u.UnitName,
 
+                        Remarks = LH != null ? LH.Remarks : null
+                    };
 
+                var data = query
+                    .AsEnumerable()
+                    .GroupBy(x => x.ProjId)
+                    .Select(g =>
+                    {
+                        var latest = g
+                            .OrderByDescending(x => x.Request_Date)
+                            .FirstOrDefault();
 
+                        return new DateApproval
+                        {
+                            Id = latest.Id,
+                            ProjId = latest.ProjId,
+                            UnitId = latest.UnitId,
+                            Request_Date = latest.Request_Date,
+                            DDGIT_Approval_dat = latest.DDGIT_Approval_dat,
+                            DDGIT_approval = latest.DDGIT_approval,
+                            ProjName = latest.ProjectName ?? "",
+                            UnitName = latest.UnitName ?? "",
+                            User = latest.User ?? "",
+                            IsRead = latest.IsRead,
+                            EncyID = _dataProtector.Protect(latest.ProjId.ToString()),
+                            Remarks = latest.Remarks ?? "No Remarks"
+                        };
+                    })
+                    .OrderByDescending(x => x.Request_Date)
+                    .ToList();
 
                 return data;
             }
             catch (Exception ex)
             {
-
-                return null;
+                //_logger.LogError(ex, "Error occurred in GetDateApprovalListForAdmin.");
+                return new List<DateApproval>();
             }
         }
     }

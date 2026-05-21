@@ -1,4 +1,5 @@
 ﻿using ASPNetCoreIdentityCustomFields.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ using System.Security.Cryptography;
 
 namespace swas.UI.Controllers
 {
+    [Authorize]
     public class ChatController : Controller
     {
 
@@ -124,8 +126,9 @@ namespace swas.UI.Controllers
         {
             if (string.IsNullOrWhiteSpace(encrypted_data))
                 return BadRequest(new { message = "Encrypted data is required." });
-
-            var cryptoKey = _configuration["CryptoSettings:LoginKey"];
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(
+                _httpContextAccessor.HttpContext.Session, "User");
+            var cryptoKey = Logins.CryptoKey;
 
             if (string.IsNullOrWhiteSpace(cryptoKey))
                 return StatusCode(500, new { message = "Encryption key not configured." });

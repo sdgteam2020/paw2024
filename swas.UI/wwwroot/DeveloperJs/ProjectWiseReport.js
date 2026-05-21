@@ -6,12 +6,13 @@ $(function () {
 
 function ProjectWiseStatus() {
 
-    const userdata = { "Id": 0 };
-
+    const userdata = { "Projid": 0 };
+    let encrypted_payload = encryptData(userdata);
     $.ajax({
         url: '/Home/GetProjectWiseStatus',
         contentType: 'application/x-www-form-urlencoded',
-        data: userdata,
+        data: {encrypted_payload: encrypted_payload
+    },
         type: 'POST',
 
         success: function (response) {
@@ -190,11 +191,11 @@ function bindProjectClick() {
 function ProjectWiseStatusByProjid(projid) {
 
     const userdata = { "Projid": projid };
-
+    let encrypted_payload = encryptData(userdata);
     $.ajax({
         url: '/Home/GetProjectWiseStatus',
         contentType: 'application/x-www-form-urlencoded',
-        data: userdata,
+        data: { encrypted_payload : encrypted_payload },
         type: 'POST',
 
         success: function (response) {
@@ -218,11 +219,11 @@ function ProjectWiseStatusByProjid(projid) {
 function ProjectWiseStatusByProjid(projid) {
 
     const userdata = { "Projid": projid };
-
+    let encrypted_payload = encryptData(userdata);
     $.ajax({
         url: '/Home/GetProjectWiseStatus',
         contentType: 'application/x-www-form-urlencoded',
-        data: userdata,
+        data: { encrypted_payload: encrypted_payload },
         type: 'POST',
 
         success: function (response) {

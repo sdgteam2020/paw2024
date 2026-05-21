@@ -32,13 +32,21 @@ $(document).on('click', '.flag-toggle-btn', function () {
         $(this).html('<span class="flag-pill flag-off">OFF</span>');
     }
     $(this).data('flag', flag);
+
+    let userdetails =
+    {
+        userName: username,
+        roleName: rolename,
+        flag: flag
+    }
+
+    let encrypted_payload = encryptData(userdetails)
     $.ajax({
         type: 'POST',
         url: '/Account/UpdateFlag',
         data: {
-            userName: username,
-            roleName: rolename,
-            flag: flag
+            encrypted_payload: encrypted_payload
+        
         },
         success: function () {
             console.log('Flag updated successfully');

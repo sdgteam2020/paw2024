@@ -26,6 +26,8 @@ using ASPNetCoreIdentityCustomFields.Data;
 using Microsoft.Data.SqlClient;
 using swas.DAL.Mapper;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Dapper;
 
 namespace swas.BAL.Repository
 {
@@ -202,261 +204,335 @@ namespace swas.BAL.Repository
 
             #endregion
         }
-        public async Task<List<DTOProjectsFwd>> GetDashboardStatusDetails(int StatuId, int UnitId, bool IsDuplicate)
+        public async Task<List<DTOProjectsFwd>> GetDashboardStatusDetails(
+     int StatuId,
+     int UnitId,
+     bool IsDuplicate)
         {
-            try {
-                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            Login? logins = SessionHelper.GetObjectFromJson<Login>(
+                _httpContextAccessor.HttpContext?.Session,
+                "User"
+            );
 
-                List<DTOProjectsFwd> lst = new List<DTOProjectsFwd>();
+            if (logins == null)
+                return new List<DTOProjectsFwd>();
 
-                if (Logins != null)
-                {
-                    #region GetDashboardStatusDetialsWithLinq
-                    int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
-
-                    string username = Logins.UserName;
-
-                    if (StatuId == 2 || StatuId == 3 || StatuId == 22 || StatuId == 31 || StatuId == 37)
-                    {
-                        int[] StatusActionsMappingId = null;
-                        if (StatuId == 2)
-                            StatusActionsMappingId = new int[] { 4 };
-                        else if (StatuId == 3)
-                            StatusActionsMappingId = new int[] { 118 };
-                        else if (StatuId == 22)
-                            StatusActionsMappingId = new int[] { 49, 54 };
-                        else if (StatuId == 31)
-                            StatusActionsMappingId = new int[] { 64, 69, 74, 79, 84, 89 };
-                        else if (StatuId == 37)
-                            StatusActionsMappingId = new int[] { 3 };
-
-                        var query = await (from a in _dbContext.Projects
-                                           join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
-                                           join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
-                                           from stackcs in cs1.DefaultIfEmpty()
-                                           join actm in _dbContext.TrnStatusActionsMapping
-                                           on
-                                           b.StatusActionsMappingId equals actm.StatusActionsMappingId
-                                           join d in _dbContext.mStatus on actm.StatusId equals d.StatusId
-
-                                           join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId
-
-                                           join c in _dbContext.tbl_mUnitBranch on b.ToUnitId equals c.unitid into cs
-                                           from toUnit in cs.DefaultIfEmpty()
-
-                                           join g in _dbContext.tbl_mUnitBranch on b.FromUnitId equals g.unitid into cg
-                                           from fromUnits in cg.DefaultIfEmpty()
-
-                                           join j in _dbContext.mStages on d.StageId equals j.StagesId
-
-                                           join f in _dbContext.Comment on b.PsmId equals f.PsmId into fs
-                                           from eWithComment in fs.DefaultIfEmpty()
-
-                                           let StkStatusId =
-                                          (from cr1 in _dbContext.StkComment
-                                           join Stdkst in _dbContext.StkStatus on cr1.StkStatusId equals Stdkst.StkStatusId
-                                           where cr1.StakeHolderId == b.ToUnitId && cr1.PsmId == b.PsmId
-                                           orderby cr1.StkCommentId descending
-                                           select cr1.StkStatusId
-                                          ).FirstOrDefault()
-
-                                           where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true
-
-                                           && StatusActionsMappingId.Contains(b.StatusActionsMappingId)
-
-                                           orderby a.ProjName, b.DateTimeOfUpdate descending
-
-                                           select new DTOProjectsFwd
-                                           {
-                                               ProjId = a.ProjId,
-                                               PsmIds = b.PsmId,
-                                               ProjName = a.ProjName,
-                                               StakeHolderId = a.StakeHolderId,
-                                               StakeHolder = stackcs.UnitName,
-
-                                               Status = d.Status,
-                                               Stage = j.Stages,
-                                               FromUnitId = b.FromUnitId,
-                                               FromUnitName = fromUnits.UnitName,
-                                               ToUnitId = b.ToUnitId,
-                                               ToUnitName = toUnit.UnitName,
-                                               Action = k.Actions,
-                                               TotalDays = 0,
-                                               StageId = j.StagesId,
-                                               EncyID = _dataProtector.Protect(a.ProjId.ToString()),
-                                               EncyPsmID = _dataProtector.Protect(b.PsmId.ToString()),
-                                               IsProcess = a.IsProcess,
-                                               IsRead = b.IsRead,
-                                               IsComplete = b.IsComplete,
-                                               StkStatusId = Convert.ToInt32(StkStatusId),
-                                               DateTimeOfUpdate = b.DateTimeOfUpdate,
-                                               InitiatedDate = a.InitiatedDate
-
-                                           }).ToListAsync();
-
-                        lst = query;
-                    }
-                    else
-                    {
-                        if (IsDuplicate == false)
-                        {
-                            var query = await (from a in _dbContext.Projects
-                                               join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
-                                               join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
-                                               from stackcs in cs1.DefaultIfEmpty()
-                                               join actm in _dbContext.TrnStatusActionsMapping on b.StatusActionsMappingId equals actm.StatusActionsMappingId
-                                               join d in _dbContext.mStatus on actm.StatusId equals d.StatusId
-                                               join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId
-
-                                               join c in _dbContext.tbl_mUnitBranch on b.ToUnitId equals c.unitid into cs
-                                               from toUnit in cs.DefaultIfEmpty()
-
-                                               join g in _dbContext.tbl_mUnitBranch on b.FromUnitId equals g.unitid into cg
-                                               from fromUnits in cg.DefaultIfEmpty()
-
-                                               join j in _dbContext.mStages on d.StageId equals j.StagesId
+            string connectionString = Environment.GetEnvironmentVariable("ConnectionStrings")??"";
 
 
-                                               join f in _dbContext.Comment on b.PsmId equals f.PsmId into fs
-                                               from eWithComment in fs.DefaultIfEmpty()
+            if (string.IsNullOrWhiteSpace(connectionString))
+                throw new InvalidOperationException("Database connection string is missing.");
 
-                                               let StkStatusId =
-                                              (from cr1 in _dbContext.StkComment
-                                               join Stdkst in _dbContext.StkStatus on cr1.StkStatusId equals Stdkst.StkStatusId
-                                               where cr1.StakeHolderId == b.ToUnitId && cr1.PsmId == b.PsmId
-                                               orderby cr1.StkCommentId descending
-                                               select cr1.StkStatusId
-                                              ).FirstOrDefault()
+            await using var connection = new SqlConnection(connectionString);
 
-                                               let psmiis = (from mov1 in _dbContext.ProjStakeHolderMov
-                                                             join stst1 in _dbContext.TrnStatusActionsMapping on mov1.StatusActionsMappingId equals stst1.StatusActionsMappingId
-                                                             where mov1.ProjId == a.ProjId && stst1.StatusId == StatuId
-                                                             orderby mov1.PsmId descending
-                                                             select mov1.PsmId).FirstOrDefault()
+            var parameters = new DynamicParameters();
+            parameters.Add("@StatuId", StatuId, DbType.Int32);
+            parameters.Add("@UnitId", UnitId, DbType.Int32);
+            parameters.Add("@IsDuplicate", IsDuplicate, DbType.Boolean);
 
-                                               where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true
+            var result = await connection.QueryAsync<DTOProjectsFwd>(
+                "dbo.GetDashboardStatusDetails_Dapper",
+                parameters,
+                commandType: CommandType.StoredProcedure,
+                commandTimeout: 60
+            );
 
-                                                && actm.StatusId == StatuId
-                                                && b.PsmId == psmiis
-                                               orderby a.ProjName, b.DateTimeOfUpdate descending
+            var list = result.ToList();
 
-                                               select new DTOProjectsFwd
-                                               {
-                                                   ProjId = a.ProjId,
-                                                   PsmIds = b.PsmId,
-                                                   ProjName = a.ProjName,
-                                                   StakeHolderId = a.StakeHolderId,
-                                                   StakeHolder = stackcs.UnitName,
-
-                                                   Status = d.Status,
-                                                   Stage = j.Stages,
-                                                   FromUnitId = b.FromUnitId,
-                                                   FromUnitName = fromUnits.UnitName,
-                                                   ToUnitId = b.ToUnitId,
-                                                   ToUnitName = toUnit.UnitName,
-                                                   Action = k.Actions,
-                                                   TotalDays = 0,
-                                                   StageId = j.StagesId,
-                                                   EncyID = _dataProtector.Protect(a.ProjId.ToString()),
-                                                   EncyPsmID = _dataProtector.Protect(b.PsmId.ToString()),
-                                                   IsProcess = a.IsProcess,
-                                                   IsRead = b.IsRead,
-                                                   IsComplete = b.IsComplete,
-                                                   //StkStatusId = Convert.ToInt32(StkStatusId),
-                                                   DateTimeOfUpdate = b.DateTimeOfUpdate,
-                                                   InitiatedDate = a.InitiatedDate
-
-                                               }).ToListAsync();
-
-                            lst = query;
-                        }
-                        else
-                        {
-                            var query = await (from a in _dbContext.Projects
-                                               join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
-                                               join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
-                                               from stackcs in cs1.DefaultIfEmpty()
-                                               join actm in _dbContext.TrnStatusActionsMapping on b.StatusActionsMappingId equals actm.StatusActionsMappingId
-                                               join d in _dbContext.mStatus on actm.StatusId equals d.StatusId
-                                               join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId
-
-                                               join c in _dbContext.tbl_mUnitBranch on b.ToUnitId equals c.unitid into cs
-                                               from toUnit in cs.DefaultIfEmpty()
-
-                                               join g in _dbContext.tbl_mUnitBranch on b.FromUnitId equals g.unitid into cg
-                                               from fromUnits in cg.DefaultIfEmpty()
-
-                                               join j in _dbContext.mStages on d.StageId equals j.StagesId
-
-
-                                               join f in _dbContext.Comment on b.PsmId equals f.PsmId into fs
-                                               from eWithComment in fs.DefaultIfEmpty()
-
-                                               let StkStatusId =
-                                              (from cr1 in _dbContext.StkComment
-                                               join Stdkst in _dbContext.StkStatus on cr1.StkStatusId equals Stdkst.StkStatusId
-                                               where cr1.StakeHolderId == b.ToUnitId && cr1.PsmId == b.PsmId
-                                               orderby cr1.StkCommentId descending
-                                               select cr1.StkStatusId
-                                              ).FirstOrDefault()
-
-                                               where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true //&& b.IsComplete == false
-                                                        && b.StatusActionsMappingId != 118 && b.StatusActionsMappingId != 4                                                                                        //&& b.ToUnitId == Logins.unitid 
-                                                && actm.StatusId == StatuId
-
-                                               orderby a.ProjName, b.DateTimeOfUpdate descending
-
-                                               select new DTOProjectsFwd
-                                               {
-                                                   ProjId = a.ProjId,
-                                                   PsmIds = b.PsmId,
-                                                   ProjName = a.ProjName,
-                                                   StakeHolderId = a.StakeHolderId,
-                                                   StakeHolder = stackcs.UnitName,
-
-                                                   Status = d.Status,
-                                                   Stage = j.Stages,
-                                                   FromUnitId = b.FromUnitId,
-                                                   FromUnitName = fromUnits.UnitName,
-                                                   ToUnitId = b.ToUnitId,
-                                                   ToUnitName = toUnit.UnitName,
-                                                   Action = k.Actions,
-                                                   TotalDays = 0,
-                                                   StageId = j.StagesId,
-                                                   EncyID = _dataProtector.Protect(a.ProjId.ToString()),
-                                                   EncyPsmID = _dataProtector.Protect(b.PsmId.ToString()),
-                                                   IsProcess = a.IsProcess,
-                                                   IsRead = b.IsRead,
-                                                   IsComplete = b.IsComplete,
-                                                   //StkStatusId = Convert.ToInt32(StkStatusId),
-                                                   DateTimeOfUpdate = b.DateTimeOfUpdate,
-                                                   InitiatedDate = a.InitiatedDate
-
-                                               }).ToListAsync();
-
-
-                            lst = query;
-                        }
-                    }
-                    var RETT = lst.OrderByDescending(i => i.DateTimeOfUpdate).ToList();
-
-                    return RETT;
-                    #endregion
-
-
-
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch(Exception ex)
+            foreach (var item in list)
             {
-                throw ex;
+                item.EncyID = _dataProtector.Protect(item.ProjId.ToString());
+                item.EncyPsmID = _dataProtector.Protect(item.PsmIds.ToString());
             }
-        
+
+            return list
+                .OrderByDescending(x => x.DateTimeOfUpdate)
+                .ToList();
         }
+        //        public async Task<List<DTOProjectsFwd>> GetDashboardStatusDetails(int StatuId, int UnitId, bool IsDuplicate)
+        //        {
+        //            try {
+        //                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+
+        //                List<DTOProjectsFwd> lst = new List<DTOProjectsFwd>();
+
+        //                if (Logins != null)
+        //                {
+        //                    #region GetDashboardStatusDetialsWithLinq
+        //                    int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
+
+        //                    string username = Logins.UserName;
+
+        //                    if (StatuId == 2 || StatuId == 3 || StatuId == 22 || StatuId == 31 || StatuId == 37)
+        //                    {
+        //                        int[] StatusActionsMappingId = null;
+        //                        if (StatuId == 2)
+        //                            StatusActionsMappingId = new int[] { 4 };
+        //                        else if (StatuId == 3)
+        //                            StatusActionsMappingId = new int[] { 118 };
+        //                        else if (StatuId == 22)
+        //                            StatusActionsMappingId = new int[] { 49, 54 };
+        //                        else if (StatuId == 31)
+        //                            StatusActionsMappingId = new int[] { 64, 69, 74, 79, 84, 89 };
+        //                        else if (StatuId == 37)
+        //                            StatusActionsMappingId = new int[] { 3 };
+
+        //                        var query = await (
+        //    from a in _dbContext.Projects
+
+        //    join b in _dbContext.ProjStakeHolderMov
+        //        on a.ProjId equals b.ProjId
+
+        //    join stackc in _dbContext.tbl_mUnitBranch
+        //        on a.StakeHolderId equals stackc.unitid into cs1
+        //    from stackcs in cs1.DefaultIfEmpty()
+
+        //    join actm in _dbContext.TrnStatusActionsMapping
+        //        on b.StatusActionsMappingId equals actm.StatusActionsMappingId
+
+        //    join d in _dbContext.mStatus
+        //        on actm.StatusId equals d.StatusId
+
+        //    join k in _dbContext.mActions
+        //        on actm.ActionsId equals k.ActionsId
+
+        //    join c in _dbContext.tbl_mUnitBranch
+        //        on b.ToUnitId equals c.unitid into cs
+        //    from toUnit in cs.DefaultIfEmpty()
+
+        //    join g in _dbContext.tbl_mUnitBranch
+        //        on b.FromUnitId equals g.unitid into cg
+        //    from fromUnits in cg.DefaultIfEmpty()
+
+        //    join j in _dbContext.mStages
+        //        on d.StageId equals j.StagesId
+
+        //    join f in _dbContext.Comment
+        //        on b.PsmId equals f.PsmId into fs
+        //    from eWithComment in fs.DefaultIfEmpty()
+
+        //    let StkStatusId =
+        //    (
+        //        from cr1 in _dbContext.StkComment
+        //        join Stdkst in _dbContext.StkStatus
+        //            on cr1.StkStatusId equals Stdkst.StkStatusId
+        //        where cr1.StakeHolderId == b.ToUnitId
+        //              && cr1.PsmId == b.PsmId
+        //        orderby cr1.StkCommentId descending
+        //        select (int?)cr1.StkStatusId
+        //    ).FirstOrDefault()
+
+        //    where a.IsActive
+        //          && !a.IsDeleted
+        //          && b.IsActive
+        //          && !b.IsDeleted
+        //          && a.IsSubmited == true
+        //          && StatusActionsMappingId.Contains(b.StatusActionsMappingId)
+
+        //    orderby a.ProjName, b.DateTimeOfUpdate descending
+
+        //    select new DTOProjectsFwd
+        //    {
+        //        ProjId = a.ProjId,
+        //        PsmIds = b.PsmId,
+        //        ProjName = a.ProjName,
+
+        //        StakeHolderId = a.StakeHolderId,
+        //        StakeHolder = stackcs != null ? stackcs.UnitName : "",
+
+        //        Status = d.Status,
+        //        Stage = j.Stages,
+
+        //        FromUnitId = b.FromUnitId,
+        //        FromUnitName = fromUnits != null ? fromUnits.UnitName : "",
+
+        //        ToUnitId = b.ToUnitId,
+        //        ToUnitName = toUnit != null ? toUnit.UnitName : "",
+
+        //        Action = k.Actions,
+        //        TotalDays = 0,
+
+        //        StageId = j.StagesId,
+
+        //        EncyID = _dataProtector.Protect(a.ProjId.ToString()),
+        //        EncyPsmID = _dataProtector.Protect(b.PsmId.ToString()),
+
+        //        IsProcess = a.IsProcess,
+        //        IsRead = b.IsRead,
+        //        IsComplete = b.IsComplete,
+
+        //        // Fixed nullable issue
+        //        StkStatusId = StkStatusId ?? 0,
+
+        //        DateTimeOfUpdate = b.DateTimeOfUpdate,
+        //        InitiatedDate = a.InitiatedDate
+        //    }
+        //).ToListAsync();
+
+        //                        lst = query;
+        //                    }
+        //                    else
+        //                    {
+        //                        if (IsDuplicate == false)
+        //                        {
+        //                            var query = await (from a in _dbContext.Projects
+        //                                               join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
+        //                                               join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
+        //                                               from stackcs in cs1.DefaultIfEmpty()
+        //                                               join actm in _dbContext.TrnStatusActionsMapping on b.StatusActionsMappingId equals actm.StatusActionsMappingId
+        //                                               join d in _dbContext.mStatus on actm.StatusId equals d.StatusId
+        //                                               join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId
+
+        //                                               join c in _dbContext.tbl_mUnitBranch on b.ToUnitId equals c.unitid into cs
+        //                                               from toUnit in cs.DefaultIfEmpty()
+
+        //                                               join g in _dbContext.tbl_mUnitBranch on b.FromUnitId equals g.unitid into cg
+        //                                               from fromUnits in cg.DefaultIfEmpty()
+
+        //                                               join j in _dbContext.mStages on d.StageId equals j.StagesId
+
+
+        //                                               join f in _dbContext.Comment on b.PsmId equals f.PsmId into fs
+        //                                               from eWithComment in fs.DefaultIfEmpty()
+
+        //                                               let StkStatusId =
+        //                                              (from cr1 in _dbContext.StkComment
+        //                                               join Stdkst in _dbContext.StkStatus on cr1.StkStatusId equals Stdkst.StkStatusId
+        //                                               where cr1.StakeHolderId == b.ToUnitId && cr1.PsmId == b.PsmId
+        //                                               orderby cr1.StkCommentId descending
+        //                                               select cr1.StkStatusId
+        //                                              ).FirstOrDefault()
+
+        //                                               let psmiis = (from mov1 in _dbContext.ProjStakeHolderMov
+        //                                                             join stst1 in _dbContext.TrnStatusActionsMapping on mov1.StatusActionsMappingId equals stst1.StatusActionsMappingId
+        //                                                             where mov1.ProjId == a.ProjId && stst1.StatusId == StatuId
+        //                                                             orderby mov1.PsmId descending
+        //                                                             select mov1.PsmId).FirstOrDefault()
+
+        //                                               where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true
+
+        //                                                && actm.StatusId == StatuId
+        //                                                && b.PsmId == psmiis
+        //                                               orderby a.ProjName, b.DateTimeOfUpdate descending
+
+        //                                               select new DTOProjectsFwd
+        //                                               {
+        //                                                   ProjId = a.ProjId,
+        //                                                   PsmIds = b.PsmId,
+        //                                                   ProjName = a.ProjName,
+        //                                                   StakeHolderId = a.StakeHolderId,
+        //                                                   StakeHolder = stackcs.UnitName,
+
+        //                                                   Status = d.Status,
+        //                                                   Stage = j.Stages,
+        //                                                   FromUnitId = b.FromUnitId,
+        //                                                   FromUnitName = fromUnits.UnitName,
+        //                                                   ToUnitId = b.ToUnitId,
+        //                                                   ToUnitName = toUnit.UnitName,
+        //                                                   Action = k.Actions,
+        //                                                   TotalDays = 0,
+        //                                                   StageId = j.StagesId,
+        //                                                   EncyID = _dataProtector.Protect(a.ProjId.ToString()),
+        //                                                   EncyPsmID = _dataProtector.Protect(b.PsmId.ToString()),
+        //                                                   IsProcess = a.IsProcess,
+        //                                                   IsRead = b.IsRead,
+        //                                                   IsComplete = b.IsComplete,
+        //                                                   //StkStatusId = Convert.ToInt32(StkStatusId),
+        //                                                   DateTimeOfUpdate = b.DateTimeOfUpdate,
+        //                                                   InitiatedDate = a.InitiatedDate
+
+        //                                               }).ToListAsync();
+
+        //                            lst = query;
+        //                        }
+        //                        else
+        //                        {
+        //                            var query = await (from a in _dbContext.Projects
+        //                                               join b in _dbContext.ProjStakeHolderMov on a.ProjId equals b.ProjId
+        //                                               join stackc in _dbContext.tbl_mUnitBranch on a.StakeHolderId equals stackc.unitid into cs1
+        //                                               from stackcs in cs1.DefaultIfEmpty()
+        //                                               join actm in _dbContext.TrnStatusActionsMapping on b.StatusActionsMappingId equals actm.StatusActionsMappingId
+        //                                               join d in _dbContext.mStatus on actm.StatusId equals d.StatusId
+        //                                               join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId
+
+        //                                               join c in _dbContext.tbl_mUnitBranch on b.ToUnitId equals c.unitid into cs
+        //                                               from toUnit in cs.DefaultIfEmpty()
+
+        //                                               join g in _dbContext.tbl_mUnitBranch on b.FromUnitId equals g.unitid into cg
+        //                                               from fromUnits in cg.DefaultIfEmpty()
+
+        //                                               join j in _dbContext.mStages on d.StageId equals j.StagesId
+
+
+        //                                               join f in _dbContext.Comment on b.PsmId equals f.PsmId into fs
+        //                                               from eWithComment in fs.DefaultIfEmpty()
+
+        //                                               let StkStatusId =
+        //                                              (from cr1 in _dbContext.StkComment
+        //                                               join Stdkst in _dbContext.StkStatus on cr1.StkStatusId equals Stdkst.StkStatusId
+        //                                               where cr1.StakeHolderId == b.ToUnitId && cr1.PsmId == b.PsmId
+        //                                               orderby cr1.StkCommentId descending
+        //                                               select cr1.StkStatusId
+        //                                              ).FirstOrDefault()
+
+        //                                               where a.IsActive && !a.IsDeleted && b.IsActive && !b.IsDeleted && a.IsSubmited == true //&& b.IsComplete == false
+        //                                                        && b.StatusActionsMappingId != 118 && b.StatusActionsMappingId != 4                                                                                        //&& b.ToUnitId == Logins.unitid 
+        //                                                && actm.StatusId == StatuId
+
+        //                                               orderby a.ProjName, b.DateTimeOfUpdate descending
+
+        //                                               select new DTOProjectsFwd
+        //                                               {
+        //                                                   ProjId = a.ProjId,
+        //                                                   PsmIds = b.PsmId,
+        //                                                   ProjName = a.ProjName,
+        //                                                   StakeHolderId = a.StakeHolderId,
+        //                                                   StakeHolder = stackcs.UnitName,
+
+        //                                                   Status = d.Status,
+        //                                                   Stage = j.Stages,
+        //                                                   FromUnitId = b.FromUnitId,
+        //                                                   FromUnitName = fromUnits.UnitName,
+        //                                                   ToUnitId = b.ToUnitId,
+        //                                                   ToUnitName = toUnit.UnitName,
+        //                                                   Action = k.Actions,
+        //                                                   TotalDays = 0,
+        //                                                   StageId = j.StagesId,
+        //                                                   EncyID = _dataProtector.Protect(a.ProjId.ToString()),
+        //                                                   EncyPsmID = _dataProtector.Protect(b.PsmId.ToString()),
+        //                                                   IsProcess = a.IsProcess,
+        //                                                   IsRead = b.IsRead,
+        //                                                   IsComplete = b.IsComplete,
+        //                                                   //StkStatusId = Convert.ToInt32(StkStatusId),
+        //                                                   DateTimeOfUpdate = b.DateTimeOfUpdate,
+        //                                                   InitiatedDate = a.InitiatedDate
+
+        //                                               }).ToListAsync();
+
+
+        //                            lst = query;
+        //                        }
+        //                    }
+        //                    var RETT = lst.OrderByDescending(i => i.DateTimeOfUpdate).ToList();
+
+        //                    return RETT;
+        //                    #endregion
+
+
+
+        //                }
+        //                else
+        //                {
+        //                    return null;
+        //                }
+        //            }
+        //            catch(Exception ex)
+        //            {
+        //                Console.WriteLine(ex.Message);
+        //                throw ex;
+        //            }
+
+        //        }
         public async Task<bool> ProjectNameExists(tbl_Projects project)
         {
             var ret = await _dbContext.Projects.AnyAsync(i => i.ProjName.Trim().ToUpper() == project.ProjName.Trim().ToUpper() && i.ProjId != project.ProjId);
@@ -1014,85 +1090,120 @@ try
             return await _dbContext.Projects.ToListAsync();
         }
 
-
         public async Task<List<tbl_Projects>> GetMyProjectsAsync()
         {
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+            Login? logins = SessionHelper.GetObjectFromJson<Login>(
+                _httpContextAccessor.HttpContext?.Session,
+                "User"
+            );
 
-            if (Logins != null)
+            if (logins == null)
+                return new List<tbl_Projects>();
+
+            int stkholder = logins.unitid.HasValue ? logins.unitid.Value : 0;
+
+            var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings") ?? "";
+
+            if (string.IsNullOrWhiteSpace(connectionString))
+                throw new InvalidOperationException("Database connection string is missing.");
+
+            await using var connection = new SqlConnection(connectionString);
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@StakeHolderId", stkholder, DbType.Int32);
+
+            var projects = (await connection.QueryAsync<tbl_Projects>(
+                "dbo.GetMyProjects_Dapper",
+                parameters,
+                commandType: CommandType.StoredProcedure,
+                commandTimeout: 60
+            )).ToList();
+
+            foreach (var item in projects)
             {
-
-                int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
-
-                string username = Logins.UserName;
-
-                var querys = from a in _dbContext.ProjStakeHolderMov
-                             join b in _dbContext.Projects on a.PsmId equals b.CurrentPslmId
-                             join c in _dbContext.tbl_mUnitBranch on a.ToUnitId equals c.unitid into currentStakeHolder
-                             from current in currentStakeHolder.DefaultIfEmpty()
-                             join m in _DBContext.tbl_mUnitBranch on b.StakeHolderId equals m.unitid into stakehold
-                             from stk in stakehold.DefaultIfEmpty()
-                             join d in _dbContext.tbl_mUnitBranch on a.ToUnitId equals d.unitid into toStakeHolder
-                             from to in toStakeHolder.DefaultIfEmpty()
-                             join e in _dbContext.tbl_mUnitBranch on a.FromUnitId equals e.unitid into fromStakeHolder
-                             from fromStake in fromStakeHolder.DefaultIfEmpty()
-                             join f in _dbContext.Comment on a.PsmId equals f.PsmId into fs
-                             from eWithComment in fs.DefaultIfEmpty()
-                             join actm in _dbContext.TrnStatusActionsMapping on a.StatusActionsMappingId equals actm.StatusActionsMappingId
-                             join h in _dbContext.mStatus on actm.StatusId equals h.StatusId into hs
-                             from eWithStatus in hs.DefaultIfEmpty()
-                             join j in _dbContext.mStages on eWithStatus.StageId equals j.StagesId into js
-                             from eWithStages in js.DefaultIfEmpty()
-                             join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId into ks
-                             from eWithAction in ks.DefaultIfEmpty()
-                             where b.StakeHolderId == Logins.unitid
-                           
-                             select new tbl_Projects
-
-                             {
-                                 ProjId = b.ProjId,
-                                 ProjName = b.ProjName,
-                                 StakeHolderId = b.StakeHolderId,
-
-                                 CurrentPslmId = b.CurrentPslmId,
-                                 InitiatedDate = b.InitiatedDate,
-                                 CompletionDate = b.CompletionDate,
-                                 IsWhitelisted = b.IsWhitelisted,
-                                 InitialRemark = b.InitialRemark,
-                                 EditDeleteBy = a.EditDeleteBy,
-                                 EditDeleteDate = a.EditDeleteDate,
-                                 UpdatedByUserId = a.UpdatedByUserId,
-                                 DateTimeOfUpdate = a.DateTimeOfUpdate,
-                                 ProjCode = b.ProjCode,
-                                 RecdFmUser = fromStake != null ? fromStake.UnitName : null,
-                                 FwdtoUser = current != null ? current.UnitName : null,
-
-                                 FwdBy = fromStake != null ? fromStake.UnitName : null,
-
-                                 AdRemarks = a.Remarks,
-                                 Comments = eWithComment.Comment,
-                                 FwdtoDate = a.TimeStamp,
-                                 Status = eWithStatus.Status,
-                                 Stages = eWithStages.Stages,
-                                 StakeHolder = stk.UnitName,
-                                 Action = eWithAction.Actions,
-                                 TotalDays = EF.Functions.DateDiffDay(a.EditDeleteDate, a.TimeStamp) ?? 0,
-                                 
-                                 AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == b.CurrentPslmId),
-                                 HostTypeID = b.HostTypeID,
-                                 EncyID = _dataProtector.Protect(b.CurrentPslmId.ToString()),
-                                 ActionId = actm.ActionsId
-                             };
-
-                var projectsWithDetails = await querys.ToListAsync();
-
-                return projectsWithDetails;
+                item.EncyID = _dataProtector.Protect(item.CurrentPslmId.ToString());
             }
-            else
-            {
-                return null;
-            }
+
+            return projects;
         }
+        //public async Task<List<tbl_Projects>> GetMyProjectsAsync()
+        //{
+        //    Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+
+        //    if (Logins != null)
+        //    {
+
+        //        int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
+
+        //        string username = Logins.UserName;
+
+        //        var querys = from a in _dbContext.ProjStakeHolderMov
+        //                     join b in _dbContext.Projects on a.PsmId equals b.CurrentPslmId
+        //                     join c in _dbContext.tbl_mUnitBranch on a.ToUnitId equals c.unitid into currentStakeHolder
+        //                     from current in currentStakeHolder.DefaultIfEmpty()
+        //                     join m in _DBContext.tbl_mUnitBranch on b.StakeHolderId equals m.unitid into stakehold
+        //                     from stk in stakehold.DefaultIfEmpty()
+        //                     join d in _dbContext.tbl_mUnitBranch on a.ToUnitId equals d.unitid into toStakeHolder
+        //                     from to in toStakeHolder.DefaultIfEmpty()
+        //                     join e in _dbContext.tbl_mUnitBranch on a.FromUnitId equals e.unitid into fromStakeHolder
+        //                     from fromStake in fromStakeHolder.DefaultIfEmpty()
+        //                     join f in _dbContext.Comment on a.PsmId equals f.PsmId into fs
+        //                     from eWithComment in fs.DefaultIfEmpty()
+        //                     join actm in _dbContext.TrnStatusActionsMapping on a.StatusActionsMappingId equals actm.StatusActionsMappingId
+        //                     join h in _dbContext.mStatus on actm.StatusId equals h.StatusId into hs
+        //                     from eWithStatus in hs.DefaultIfEmpty()
+        //                     join j in _dbContext.mStages on eWithStatus.StageId equals j.StagesId into js
+        //                     from eWithStages in js.DefaultIfEmpty()
+        //                     join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId into ks
+        //                     from eWithAction in ks.DefaultIfEmpty()
+        //                     where b.StakeHolderId == Logins.unitid
+
+        //                     select new tbl_Projects
+
+        //                     {
+        //                         ProjId = b.ProjId,
+        //                         ProjName = b.ProjName,
+        //                         StakeHolderId = b.StakeHolderId,
+
+        //                         CurrentPslmId = b.CurrentPslmId,
+        //                         InitiatedDate = b.InitiatedDate,
+        //                         CompletionDate = b.CompletionDate,
+        //                         IsWhitelisted = b.IsWhitelisted,
+        //                         InitialRemark = b.InitialRemark,
+        //                         EditDeleteBy = a.EditDeleteBy,
+        //                         EditDeleteDate = a.EditDeleteDate,
+        //                         UpdatedByUserId = a.UpdatedByUserId,
+        //                         DateTimeOfUpdate = a.DateTimeOfUpdate,
+        //                         ProjCode = b.ProjCode,
+        //                         RecdFmUser = fromStake != null ? fromStake.UnitName : null,
+        //                         FwdtoUser = current != null ? current.UnitName : null,
+
+        //                         FwdBy = fromStake != null ? fromStake.UnitName : null,
+
+        //                         AdRemarks = a.Remarks,
+        //                         Comments = eWithComment.Comment,
+        //                         FwdtoDate = a.TimeStamp,
+        //                         Status = eWithStatus.Status,
+        //                         Stages = eWithStages.Stages,
+        //                         StakeHolder = stk.UnitName,
+        //                         Action = eWithAction.Actions,
+        //                         TotalDays = EF.Functions.DateDiffDay(a.EditDeleteDate, a.TimeStamp) ?? 0,
+
+        //                         AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == b.CurrentPslmId),
+        //                         HostTypeID = b.HostTypeID,
+        //                         EncyID = _dataProtector.Protect(b.CurrentPslmId.ToString()),
+        //                         ActionId = actm.ActionsId
+        //                     };
+
+        //        var projectsWithDetails = await querys.ToListAsync();
+
+        //        return projectsWithDetails;
+        //    }
+        //    else
+        //    {
+        //        return null;
+        //    }
+        //}
 
 
         public async Task<List<AddNewProject>> GetMyProjects()
@@ -1119,6 +1230,36 @@ try
         }
 
 
+        public async Task<List<DTOForeClose>> GetForecloseitems()
+        {
+            try
+            {
+                Login logins = SessionHelper.GetObjectFromJson<Login>(
+                               _httpContextAccessor.HttpContext.Session,
+                               "User");
+
+                if (logins == null)
+                    return new List<DTOForeClose>();
+
+                int stkholder = logins.unitid ?? 0;
+
+                var projects = await _dbContext.dTOForeCloses
+                    .FromSqlRaw(
+                        "EXEC GetForeCloseitems @StakeHolderId",
+                        new SqlParameter("@StakeHolderId", stkholder))
+                    .AsNoTracking()
+                    .ToListAsync();
+                foreach (var project in projects)
+                {
+                    project.EncyID = _dataProtector.Protect(project.projid.ToString());
+                }
+                return projects;
+            }catch(Exception ex)
+            {
+                throw ex;
+            }
+           
+        }
 
         public async Task<tbl_Projects> GetProjectByIdAsync(int projectId)
         {
@@ -1211,79 +1352,55 @@ try
 
         public async Task<List<ProjHistory>> GetProjectHistorybyID(int? dtaProjID)
         {
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
-            int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
-
-            if (Logins != null || stkholder != 0)
+            try
             {
-                try
-                {
-                    var query = from p in _dbContext.ProjStakeHolderMov
-                                join actm in _dbContext.TrnStatusActionsMapping on p.StatusActionsMappingId equals actm.StatusActionsMappingId
-                                join c in _dbContext.mStatus on actm.StatusId equals c.StatusId into statusJoin
-                                from c in statusJoin.DefaultIfEmpty()
-                                join b in _dbContext.mStages on c.StageId equals b.StagesId into stageJoin
-                                from b in stageJoin.DefaultIfEmpty()
-                                join l in _dbContext.mActions on actm.ActionsId equals l.ActionsId into ActionJoin
-                                from l in ActionJoin.DefaultIfEmpty()
-                                join d in _dbContext.Comment on p.PsmId equals d.PsmId into commentJoin
-                                from d in commentJoin.DefaultIfEmpty()
-                                join proj in _dbContext.Projects on p.ProjId equals proj.ProjId into projectJoin
-                                from proj in projectJoin.DefaultIfEmpty()
-                                join fromSH in _dbContext.tbl_mUnitBranch on p.FromUnitId equals fromSH.unitid into fromStakeHolderJoin
-                                from fromSH in fromStakeHolderJoin.DefaultIfEmpty()
+                Login? logins = SessionHelper.GetObjectFromJson<Login>(
+                    _httpContextAccessor.HttpContext?.Session,
+                    "User"
+                );
 
-                                join h in _DBContext.mHostType on proj.HostTypeID equals h.HostTypeID into hs
-                                from hostType in hs.DefaultIfEmpty()
-
-                                join i in _DBContext.mAppType on proj.Apptype equals i.Apptype into ms
-                                from eWithAppType in ms.DefaultIfEmpty()
-
-                                join toSH in _dbContext.tbl_mUnitBranch on p.ToUnitId equals toSH.unitid into toStakeHolderJoin
-                                from toSH in toStakeHolderJoin.DefaultIfEmpty()
-                                join curSH in _dbContext.tbl_mUnitBranch on proj.StakeHolderId equals curSH.unitid into currentStakeHolderJoin
-                                from curSH in currentStakeHolderJoin.DefaultIfEmpty()
-
-                                  
-                                where proj.ProjName.Length > 1 && proj.ProjId == dtaProjID
-                                orderby p.ProjId, p.PsmId
-                                select new ProjHistory
-                                {
-                                    ProjId = proj.ProjId,
-                                    PsmId = p.PsmId,
-                                    ProjName = proj.ProjName,
-                                    Stages = b.Stages,
-                                    Status = c.Status,
-                                    Comment = d.Comment,
-                                    FromStakeHolder = fromSH.UnitName,
-                                    ToStakeHolder = toSH.UnitName,
-                                  
-                                    InitiatedBy = curSH.UnitName,
-                                    TimeStamp = p.TimeStamp.HasValue ? p.TimeStamp.Value.ToString("dd-MM-yyyy") : "",
-                                    InitialRemarks = proj.AdRemarks,
-                                    Remarks = p.Remarks,  //  work
-                                    AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == p.PsmId),
-                                    ActionName = l.Actions,
-                                    AppDesc = eWithAppType.AppDesc,
-                                    HostedOn = hostType.HostingDesc
-                                };
-
-
-                    var result = await query.ToListAsync();
-
-                    return result;
-                }
-
-                catch (Exception ex)
-                {
+                if (logins == null)
                     return null;
-                }
 
+                int stkholder = logins.unitid.HasValue ? logins.unitid.Value : 0;
+
+                if (stkholder == 0)
+                    return null;
+
+                if (!dtaProjID.HasValue)
+                    return new List<ProjHistory>();
+
+                var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings") ?? "";
+
+                if (string.IsNullOrWhiteSpace(connectionString))
+                    throw new InvalidOperationException("Database connection string is missing.");
+
+                await using var connection = new SqlConnection(connectionString);
+
+                var parameters = new DynamicParameters();
+                parameters.Add("@ProjId", dtaProjID.Value, DbType.Int32);
+
+                var result = await connection.QueryAsync<ProjHistory>(
+                    "dbo.GetProjectHistoryByID_Dapper",
+                    parameters,
+                    commandType: CommandType.StoredProcedure,
+                    commandTimeout: 60
+                );
+
+                return result.ToList();
             }
-            else
+            catch (SqlException ex)
             {
-                return null;
+                // Log database error here
+                // _logger.LogError(ex, "SQL error in GetProjectHistorybyID for ProjId: {ProjId}", dtaProjID);
+                swas.BAL.Utility.Error.ExceptionHandle(ex +  " SQL error in GetProjectHistorybyID for ProjId: {ProjId} "+ dtaProjID);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                // Log general error here
+                swas.BAL.Utility.Error.ExceptionHandle(ex + "Error in GetProjectHistorybyID for ProjId: {ProjId}"  + dtaProjID);
+                throw;
             }
         }
         public async Task<tbl_Projects> GetProjectByPsmIdAsync(int psmId)
@@ -1439,126 +1556,67 @@ try
 
         public async Task<List<tbl_Projects>> GetActProjectsAsync()
         {
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
-            if (Logins != null && Logins.Role == "Unit")
+            try
             {
-                string username = Logins.UserName;
+                Login? logins = SessionHelper.GetObjectFromJson<Login>(
+                    _httpContextAccessor.HttpContext?.Session,
+                    "User"
+                );
 
-                int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
+                if (logins == null)
+                    return null;
 
-                var projects = await (from a in _DBContext.Projects
-                                      join b in _DBContext.ProjStakeHolderMov on a.CurrentPslmId equals b.PsmId into bs
-                                      from e in bs.DefaultIfEmpty()
-                                      join actm in _dbContext.TrnStatusActionsMapping on e.StatusActionsMappingId equals actm.StatusActionsMappingId
-                                      join d in _DBContext.mStatus on actm.StatusId equals d.StatusId into ds
-                                      from eWithStatus in ds.DefaultIfEmpty()
-                                      join c in _DBContext.tbl_mUnitBranch on a.StakeHolderId equals c.unitid into cs
-                                      from eWithUnit in cs.DefaultIfEmpty()
+                if (logins.Role != "Unit" && logins.Role != "Dte")
+                    return null;
 
-                                      join g in _DBContext.tbl_mUnitBranch on e.ToUnitId equals g.unitid into csh
-                                      from curstk in csh.DefaultIfEmpty()
+                int stkholder = logins.unitid.HasValue ? logins.unitid.Value : 0;
 
-                                      join f in _DBContext.Comment on a.CurrentPslmId equals f.PsmId into fs
-                                      from eWithComment in fs.DefaultIfEmpty()
-                                      where a.IsActive && !a.IsDeleted && (a.StakeHolderId == stkholder || e.ToUnitId == stkholder || e.ToUnitId == stkholder || e.ToUnitId == stkholder)
-                                      && actm.ActionsId > 4
-                                      orderby e.TimeStamp descending
-                                      select new tbl_Projects
-                                      {
-                                          ProjId = a.ProjId,
-                                          ProjName = a.ProjName,
-                                          StakeHolderId = a.StakeHolderId,
-                                          CurrentPslmId = a.CurrentPslmId,
-                                          InitiatedDate = a.InitiatedDate,
-                                          CompletionDate = a.CompletionDate,
-                                          IsWhitelisted = a.IsWhitelisted,
-                                          InitialRemark = a.InitialRemark,
-                                          IsDeleted = a.IsDeleted,
-                                          IsActive = a.IsActive,
-                                          EditDeleteBy = a.EditDeleteBy,
-                                          EditDeleteDate = a.EditDeleteDate,
-                                          UpdatedByUserId = a.UpdatedByUserId,
-                                          DateTimeOfUpdate = e.DateTimeOfUpdate,
-                                         
-                                          StakeHolder = eWithUnit.UnitName,
-                                          FwdtoUser = curstk.UnitName,
-                                          Status = eWithStatus.Status,
-                                          Comments = eWithComment.Comment,
-                                       
-                                          AimScope = a.AimScope,
-                                          EncyID = _dataProtector.Protect(a.CurrentPslmId.ToString()),
+                var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings") ?? "";
 
-                                          AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == a.CurrentPslmId)
-                                      }).ToListAsync();
-                return projects;
-            }
-            else if (Logins != null && Logins.Role == "Dte")
-            {
-                string username = Logins.UserName;
+                if (string.IsNullOrWhiteSpace(connectionString))
+                    throw new InvalidOperationException("Database connection string is missing.");
 
-                int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
+                await using var connection = new SqlConnection(connectionString);
 
-                var projects = await (from a in _DBContext.Projects
-                                      join b in _DBContext.ProjStakeHolderMov on a.CurrentPslmId equals b.PsmId into bs
-                                      from e in bs.DefaultIfEmpty()
-                                      join actm in _dbContext.TrnStatusActionsMapping on e.StatusActionsMappingId equals actm.StatusActionsMappingId
-                                      join d in _DBContext.mStatus on actm.StatusId equals d.StatusId into ds
-                                      from eWithStatus in ds.DefaultIfEmpty()
-                                      join c in _DBContext.tbl_mUnitBranch on a.StakeHolderId equals c.unitid into cs
-                                      from eWithUnit in cs.DefaultIfEmpty()
+                var parameters = new DynamicParameters();
+                parameters.Add("@Role", logins.Role, DbType.String);
+                parameters.Add("@StakeHolderId", stkholder, DbType.Int32);
 
-                                      join g in _DBContext.tbl_mUnitBranch on e.ToUnitId equals g.unitid into csh
-                                      from curstk in csh.DefaultIfEmpty()
+                var projects = (await connection.QueryAsync<tbl_Projects>(
+                    "dbo.GetActProjects_Dapper",
+                    parameters,
+                    commandType: CommandType.StoredProcedure,
+                    commandTimeout: 60
+                )).ToList();
 
-                                      join f in _DBContext.Comment on a.CurrentPslmId equals f.PsmId into fs
-                                      from eWithComment in fs.DefaultIfEmpty()
-                                      where a.IsActive && !a.IsDeleted
-                                      orderby e.TimeStamp descending
-                                      select new tbl_Projects
-                                      {
-                                          ProjId = a.ProjId,
-                                          ProjName = a.ProjName,
-                                          StakeHolderId = a.StakeHolderId,
-                                          CurrentPslmId = a.CurrentPslmId,
-                                          InitiatedDate = a.InitiatedDate,
-                                          CompletionDate = a.CompletionDate,
-                                          IsWhitelisted = a.IsWhitelisted,
-                                          InitialRemark = a.InitialRemark,
-                                          IsDeleted = a.IsDeleted,
-                                          IsActive = a.IsActive,
-                                          EditDeleteBy = a.EditDeleteBy,
-                                          EditDeleteDate = a.EditDeleteDate,
-                                          UpdatedByUserId = a.UpdatedByUserId,
-                                          DateTimeOfUpdate = e.DateTimeOfUpdate,
-                                        
-                                          StakeHolder = eWithUnit.UnitName,
-                                          FwdtoUser = curstk.UnitName,
-                                          Status = eWithStatus.Status,
-                                          Comments = eWithComment.Comment,
-                                          
-                                          AimScope = a.AimScope,
-                                          EncyID = _dataProtector.Protect(a.CurrentPslmId.ToString()),
-                                          AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == a.CurrentPslmId)
-                                      }).ToListAsync();
+                foreach (var item in projects)
+                {
+                    item.EncyID = _dataProtector.Protect(item.CurrentPslmId.ToString());
+                }
 
                 return projects;
             }
-            else
+            catch (SqlException ex)
             {
-
-                return null;
+                swas.BAL.Utility.Error.ExceptionHandle(ex + "SQL Error in GetActProjectsAsync");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                swas.BAL.Utility.Error.ExceptionHandle(ex + "Error in GetActProjectsAsync");
+                throw;
             }
         }
         public async Task<List<DToWhiteListeds>> GetWhiteListedActionProj(int TypeId)
         {
             try
             {
-                
-                var isAllow = _configuration.GetSection("AllowWhiteListedProjSync");
-                if (isAllow.Value == "1")
+
+                var isAllow = Environment.GetEnvironmentVariable("AllowWhiteListedProjSync");
+                if (isAllow == "1")
                 {
-                    var connectionString = _configuration.GetConnectionString("DB");
+                    string connectionString = Environment.GetEnvironmentVariable("ConnectionStrings")??"";
+                    //var connectionString = _configuration.GetConnectionString("DB");
                     using (SqlConnection conn = new SqlConnection(connectionString))
                     {
                         using (SqlCommand cmd = new SqlCommand("InsertWhiteListedProjects", conn))
@@ -1582,203 +1640,71 @@ try
         }
         public async Task<List<tbl_Projects>> GetProcProjAsync()
         {
-            bool? cmtreqd = false;
-
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-            if (Logins != null)
+            try
             {
+                bool? cmtreqd = false;
 
-                cmtreqd = await _DBContext.tbl_mUnitBranch
-                 .Where(a => a.unitid == Logins.unitid)
-                 .Select(b => b.commentreqdid)
-                 .FirstOrDefaultAsync();
+                Login? logins = SessionHelper.GetObjectFromJson<Login>(
+                    _httpContextAccessor.HttpContext?.Session,
+                    "User"
+                );
 
-            }
+                if (logins != null)
+                {
+                    var connectionStringForCmt = Environment.GetEnvironmentVariable("ConnectionStrings") ?? "";
 
-            if (Logins != null && Logins.Role == "Unit")
-            {
-                string username = Logins.UserName;
+                    if (string.IsNullOrWhiteSpace(connectionStringForCmt))
+                        throw new InvalidOperationException("Database connection string is missing.");
 
-                int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
+                    await using var cmtConnection = new SqlConnection(connectionStringForCmt);
 
-                var projects = await (from a in _DBContext.Projects
-                                      join b in _DBContext.ProjStakeHolderMov on a.CurrentPslmId equals b.PsmId into bs
-                                      from e in bs.DefaultIfEmpty()
-                                      join actm in _dbContext.TrnStatusActionsMapping on e.StatusActionsMappingId equals actm.StatusActionsMappingId
-                                      join d in _DBContext.mStatus on actm.StatusId equals d.StatusId into ds
-                                      from eWithStatus in ds.DefaultIfEmpty()
-                                      join c in _DBContext.tbl_mUnitBranch on a.StakeHolderId equals c.unitid into cs
-                                      from eWithUnit in cs.DefaultIfEmpty()
-                                      join h in _DBContext.mHostType on a.HostTypeID equals h.HostTypeID into hs
-                                      from hostType in hs.DefaultIfEmpty()
-                                      join i in _DBContext.mAppType on a.Apptype equals i.Apptype into ms
-                                      from eWithAppType in ms.DefaultIfEmpty()
-                                      join g in _DBContext.tbl_mUnitBranch on e.ToUnitId equals g.unitid into csh
-                                      from curstk in csh.DefaultIfEmpty()
+                    cmtreqd = await cmtConnection.QueryFirstOrDefaultAsync<bool?>(
+                        @"SELECT commentreqdid 
+                  FROM tbl_mUnitBranch 
+                  WHERE unitid = @UnitId",
+                        new { UnitId = logins.unitid }
+                    );
+                }
 
-                                      join f in _DBContext.Comment on a.CurrentPslmId equals f.PsmId into fs
-                                      from eWithComment in fs.DefaultIfEmpty()
-                                      where a.IsActive && !a.IsDeleted && (a.StakeHolderId == stkholder || e.FromUnitId == stkholder || e.ToUnitId == stkholder || e.ToUnitId == stkholder)
-                                     && actm.StatusId == 4
-                                      orderby e.TimeStamp descending
-                                      select new tbl_Projects
-                                      {
-                                          ProjId = a.ProjId,
-                                          ProjName = a.ProjName,
-                                          StakeHolderId = a.StakeHolderId,
-                                          CurrentPslmId = a.CurrentPslmId,
-                                          InitiatedDate = a.InitiatedDate,
-                                          CompletionDate = a.CompletionDate,
-                                          IsWhitelisted = a.IsWhitelisted,
-                                          InitialRemark = a.InitialRemark,
-                                          IsDeleted = a.IsDeleted,
-                                          IsActive = a.IsActive,
-                                          EditDeleteBy = a.EditDeleteBy,
-                                          EditDeleteDate = a.EditDeleteDate,
-                                          UpdatedByUserId = a.UpdatedByUserId,
-                                          DateTimeOfUpdate = e.DateTimeOfUpdate,
-                                         
-                                          StakeHolder = eWithUnit.UnitName,
-                                          FwdtoUser = curstk.UnitName,
-                                          Status = eWithStatus.Status,
-                                          Comments = eWithComment.Comment,
-                                       
-                                          AimScope = a.AimScope,
-                                          ReqmtJustification = a.ReqmtJustification,
-                                          Deplytype = eWithAppType.AppDesc,
-                                          Hostedon = hostType.HostingDesc,
-                                          EncyID = _dataProtector.Protect(a.CurrentPslmId.ToString()),
+                if (logins == null)
+                    return null;
 
-                                          AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == a.CurrentPslmId)
-                                      }).ToListAsync();
+                int stkholder = logins.unitid.HasValue ? logins.unitid.Value : 0;
 
-                return projects;
+                var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings") ?? "";
 
-            }
+                if (string.IsNullOrWhiteSpace(connectionString))
+                    throw new InvalidOperationException("Database connection string is missing.");
 
-            else if (Logins != null && Logins.Role == "Dte" && cmtreqd == true)
+                await using var connection = new SqlConnection(connectionString);
 
-            {
-                string username = Logins.UserName;
+                var parameters = new DynamicParameters();
+                parameters.Add("@Role", logins.Role, DbType.String);
+                parameters.Add("@StakeHolderId", stkholder, DbType.Int32);
+                parameters.Add("@CmtReqd", cmtreqd ?? false, DbType.Boolean);
 
-                int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
+                var projects = (await connection.QueryAsync<tbl_Projects>(
+                    "dbo.GetProcProj_Dapper",
+                    parameters,
+                    commandType: CommandType.StoredProcedure,
+                    commandTimeout: 60
+                )).ToList();
 
-                var projects = await (from a in _DBContext.Projects
-                                      join b in _DBContext.ProjStakeHolderMov on a.CurrentPslmId equals b.PsmId into bs
-                                      from e in bs.DefaultIfEmpty()
-                                      join actm in _dbContext.TrnStatusActionsMapping on e.StatusActionsMappingId equals actm.StatusActionsMappingId
-                                      join d in _DBContext.mStatus on actm.StatusId equals d.StatusId into ds
-                                      from eWithStatus in ds.DefaultIfEmpty()
-                                      join c in _DBContext.tbl_mUnitBranch on a.StakeHolderId equals c.unitid into cs
-                                      from eWithUnit in cs.DefaultIfEmpty()
-                                      join h in _DBContext.mHostType on a.HostTypeID equals h.HostTypeID into hs
-                                      from hostType in hs.DefaultIfEmpty()
-
-                                      join i in _DBContext.mAppType on a.Apptype equals i.Apptype into ms
-                                      from eWithAppType in ms.DefaultIfEmpty()
-
-
-                                      join g in _DBContext.tbl_mUnitBranch on e.ToUnitId equals g.unitid into csh
-                                      from curstk in csh.DefaultIfEmpty()
-
-                                      join f in _DBContext.Comment on a.CurrentPslmId equals f.PsmId into fs
-                                      from eWithComment in fs.DefaultIfEmpty()
-                                      where a.IsActive && !a.IsDeleted
-                                      && actm.StatusId == 4
-                                      orderby e.TimeStamp descending
-                                      select new tbl_Projects
-                                      {
-                                          ProjId = a.ProjId,
-                                          ProjName = a.ProjName,
-                                          StakeHolderId = a.StakeHolderId,
-                                          CurrentPslmId = a.CurrentPslmId,
-                                          InitiatedDate = a.InitiatedDate,
-                                          CompletionDate = a.CompletionDate,
-                                          IsWhitelisted = a.IsWhitelisted,
-                                          InitialRemark = a.InitialRemark,
-                                          IsDeleted = a.IsDeleted,
-                                          IsActive = a.IsActive,
-                                          EditDeleteBy = a.EditDeleteBy,
-                                          EditDeleteDate = a.EditDeleteDate,
-                                          UpdatedByUserId = a.UpdatedByUserId,
-                                          DateTimeOfUpdate = e.DateTimeOfUpdate,
-                                         
-                                          StakeHolder = eWithUnit.UnitName,
-                                          FwdtoUser = curstk.UnitName,
-                                          Status = eWithStatus.Status,
-                                          Comments = eWithComment.Comment,
-                                          
-                                          AimScope = a.AimScope,
-                                          ReqmtJustification = a.ReqmtJustification,
-                                          Deplytype = eWithAppType.AppDesc,
-                                          Hostedon = hostType.HostingDesc,
-                                          EncyID = _dataProtector.Protect(a.CurrentPslmId.ToString()),
-
-                                          AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == a.CurrentPslmId)
-                                      }).ToListAsync();
-
-                return projects;
-
-            }
-            else
-            {
-                var projects = await (from a in _DBContext.Projects
-                                      join b in _DBContext.ProjStakeHolderMov on a.CurrentPslmId equals b.PsmId into bs
-                                      from e in bs.DefaultIfEmpty()
-                                      join actm in _dbContext.TrnStatusActionsMapping on e.StatusActionsMappingId equals actm.StatusActionsMappingId
-                                      join d in _DBContext.mStatus on actm.StatusId equals d.StatusId into ds
-                                      from eWithStatus in ds.DefaultIfEmpty()
-                                      join c in _DBContext.tbl_mUnitBranch on a.StakeHolderId equals c.unitid into cs
-                                      from eWithUnit in cs.DefaultIfEmpty()
-                                      join h in _DBContext.mHostType on a.HostTypeID equals h.HostTypeID into hs
-                                      from hostType in hs.DefaultIfEmpty()
-                                      join g in _DBContext.tbl_mUnitBranch on e.ToUnitId equals g.unitid into csh
-                                      from curstk in csh.DefaultIfEmpty()
-
-                                      join i in _DBContext.mAppType on a.Apptype equals i.Apptype into ms
-                                      from eWithAppType in ms.DefaultIfEmpty()
-
-
-                                      join f in _DBContext.Comment on a.CurrentPslmId equals f.PsmId into fs
-                                      from eWithComment in fs.DefaultIfEmpty()
-                                      where a.IsActive && !a.IsDeleted
-                                     
-                                      && actm.StatusId == 9999999
-                                      orderby e.TimeStamp descending
-                                      select new tbl_Projects
-                                      {
-                                          ProjId = a.ProjId,
-                                          ProjName = a.ProjName,
-                                          StakeHolderId = a.StakeHolderId,
-                                          CurrentPslmId = a.CurrentPslmId,
-                                          InitiatedDate = a.InitiatedDate,
-                                          CompletionDate = a.CompletionDate,
-                                          IsWhitelisted = a.IsWhitelisted,
-                                          InitialRemark = a.InitialRemark,
-                                          IsDeleted = a.IsDeleted,
-                                          IsActive = a.IsActive,
-                                          EditDeleteBy = a.EditDeleteBy,
-                                          EditDeleteDate = a.EditDeleteDate,
-                                          UpdatedByUserId = a.UpdatedByUserId,
-                                          DateTimeOfUpdate = e.DateTimeOfUpdate,
-                                     
-                                          StakeHolder = eWithUnit.UnitName,
-                                          FwdtoUser = curstk.UnitName,
-                                          Status = eWithStatus.Status,
-                                          Comments = eWithComment.Comment,
-                                         
-                                          AimScope = a.AimScope,
-                                          ReqmtJustification = a.ReqmtJustification,
-                                          Deplytype = eWithAppType.AppDesc,
-                                          Hostedon = hostType.HostingDesc,
-                                          EncyID = _dataProtector.Protect(a.CurrentPslmId.ToString()),
-
-                                          AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == a.CurrentPslmId)
-                                      }).ToListAsync();
+                foreach (var item in projects)
+                {
+                    item.EncyID = _dataProtector.Protect(item.CurrentPslmId.ToString());
+                }
 
                 return projects;
             }
-
+            catch (SqlException)
+            {
+                throw;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<List<tbl_Projects>> GetProjforCommentsAsync()
@@ -1850,67 +1776,7 @@ try
 
 
 
-        public async Task<List<tbl_Projects>> GetProjforCommentsAsync1()
-        {
-
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-
-          
-            string username = Logins.UserName;
-
-            int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
-
-            var projects = await (from a in _DBContext.Projects
-                                  join b in _DBContext.ProjStakeHolderMov on a.CurrentPslmId equals b.PsmId into bs
-                                  from e in bs.DefaultIfEmpty()
-                                  join actm in _dbContext.TrnStatusActionsMapping on e.StatusActionsMappingId equals actm.StatusActionsMappingId
-                                  join d in _DBContext.mStatus on actm.StatusId equals d.StatusId into ds
-                                  from eWithStatus in ds.DefaultIfEmpty()
-                                  join c in _DBContext.tbl_mUnitBranch on a.StakeHolderId equals c.unitid into cs
-                                  from eWithUnit in cs.DefaultIfEmpty()
-                                  join g in _DBContext.tbl_mUnitBranch on e.ToUnitId equals g.unitid into csh
-                                  from curstk in csh.DefaultIfEmpty()
-
-                                  join f in _DBContext.Comment on a.CurrentPslmId equals f.PsmId into fs
-                                  from eWithComment in fs.DefaultIfEmpty()
-                                  where a.IsActive && !a.IsDeleted && a.StakeHolderId == Logins.unitid
-                                
-                                  orderby e.TimeStamp descending
-                                  select new tbl_Projects
-                                  {
-                                      ProjId = a.ProjId,
-                                      ProjName = a.ProjName,
-                                      StakeHolderId = a.StakeHolderId,
-                                      CurrentPslmId = a.CurrentPslmId,
-                                      InitiatedDate = a.InitiatedDate,
-                                      CompletionDate = a.CompletionDate,
-                                      IsWhitelisted = a.IsWhitelisted,
-                                      InitialRemark = a.InitialRemark,
-                                      IsDeleted = a.IsDeleted,
-                                      IsActive = a.IsActive,
-                                      EditDeleteBy = a.EditDeleteBy,
-                                      EditDeleteDate = a.EditDeleteDate,
-                                      UpdatedByUserId = a.UpdatedByUserId,
-                                      DateTimeOfUpdate = e.DateTimeOfUpdate,
-                                     
-                                      StakeHolder = eWithUnit.UnitName,
-                                      FwdtoUser = curstk.UnitName,
-                                      Status = eWithStatus.Status,
-                                      Comments = eWithComment.Comment,
-                                    
-                                      AimScope = a.AimScope,
-                                      ReqmtJustification = a.ReqmtJustification,
-                                      EncyID = _dataProtector.Protect(a.CurrentPslmId.ToString()),
-
-                                      AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == a.CurrentPslmId)
-                                  }).ToListAsync();
-
-
-            return projects;
-          
-
-        }
-
+      
         public async Task<List<DTOUnderProcessProj>> GetHoldActionProj()
         {
             var query = await (from a in _dbContext.Projects
@@ -2228,11 +2094,37 @@ try
 			{
 				throw;
 			}
-			#endregion
 
-		}
-	
+           
+        #endregion
 
-	}
+    }
+
+        public async Task<List<SelectListItem>> GetDropdown(string categoryName)
+        {
+            string connectionString =
+                Environment.GetEnvironmentVariable("ConnectionStrings");
+
+            using SqlConnection con = new SqlConnection(connectionString);
+
+            // Ensure Dapper's QueryAsync method is used correctly.
+            var data = await con.QueryAsync<SelectListItem>(
+                "GetDropdownOptions",
+                new { CategoryName = categoryName },
+                commandType: CommandType.StoredProcedure);
+
+            var result = data.ToList();
+
+            result.Insert(0, new SelectListItem
+            {
+                Text = "--Select--",
+                Value = "",
+                Disabled = true,
+                Selected = true
+            });
+
+            return result;
+        }
+    }
 
 }

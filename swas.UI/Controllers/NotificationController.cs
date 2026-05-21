@@ -1,16 +1,21 @@
 ﻿using iText.Commons.Actions.Contexts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using swas.BAL.DTO;
 using swas.BAL.Helpers;
 using swas.BAL.Interfaces;
 using swas.BAL.Repository;
 using swas.DAL;
 using swas.DAL.Models;
+using System.Configuration;
 using System.Security.Claims;
+using System.Security.Cryptography;
 
 namespace swas.UI.Controllers
 {
+    [Authorize]
     public class NotificationController : Controller
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -19,9 +24,9 @@ namespace swas.UI.Controllers
         private readonly ITrnChatMsgRepository _trnChatMsg;
         private readonly ILogger<NotificationController> _logger;
         private readonly ApplicationDbContext _dbContext;
-
+        private readonly IConfiguration _configuration;
         public NotificationController(IHttpContextAccessor httpContextAccessor, INotificationRepository notificationRepository, IProjectsRepository projectsRepository,
-              ITrnChatMsgRepository trnChatMsg, ILogger<NotificationController> logger, ApplicationDbContext dbContext)
+              ITrnChatMsgRepository trnChatMsg, ILogger<NotificationController> logger, IConfiguration configuration, ApplicationDbContext dbContext)
         {
             _httpContextAccessor = httpContextAccessor;
             _notificationRepository = notificationRepository;
@@ -29,6 +34,7 @@ namespace swas.UI.Controllers
             _trnChatMsg = trnChatMsg;
             _logger = logger;
             _dbContext = dbContext;
+            _configuration = configuration;
         }
         public IActionResult Index()
         {
@@ -217,8 +223,61 @@ namespace swas.UI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UnReadNotification(int type, int ProjId)
+        public async Task<IActionResult> UnReadNotification(string encrypted_payload)
+
         {
+
+
+
+
+            if (string.IsNullOrWhiteSpace(encrypted_payload))
+            {
+
+                return BadRequest(new { success = false, message = "Invalid request." });
+            }
+
+            
+            int ProjId = 0;
+            int type = 0;
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(
+                _httpContextAccessor.HttpContext.Session, "User");
+            var cryptoKey = Logins.CryptoKey;
+
+            if (string.IsNullOrWhiteSpace(cryptoKey))
+            {
+
+                return StatusCode(500, new { success = false, message = "Server configuration error." });
+            }
+
+            try
+            {
+                string decrypted = CryptoHelper.SafeDecrypt(encrypted_payload, cryptoKey);
+
+                if (string.IsNullOrWhiteSpace(decrypted))
+                {
+
+                    return BadRequest(new { success = false, message = "Invalid request data." });
+                }
+
+                var obj = JsonConvert.DeserializeObject<dynamic>(decrypted.Trim('"'));
+                if (obj == null || !int.TryParse((string?)obj.ProjId, out ProjId) || !int.TryParse((string?)obj.type, out type))
+                {
+
+                    return BadRequest(new { success = false, message = "Invalid identifier." });
+                }
+            }
+            catch (CryptographicException ex)
+            {
+
+                return BadRequest(new { success = false, message = "Invalid encrypted data." });
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, new { success = false, message = "Internal server error." });
+            }
+
+
             var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
             if (loginUser != null)
             {
@@ -295,6 +354,8 @@ namespace swas.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> UndoNotification(int ProjId, int type, int ToUnitId)
         {
+
+
             var loginUser = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
             if (loginUser != null)
             {
