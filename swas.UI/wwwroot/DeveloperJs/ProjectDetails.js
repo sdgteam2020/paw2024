@@ -570,7 +570,7 @@ function truncateText(text, maxWords) {
 
 $(document).on("click", ".date-action", function (e) {
     e.preventDefault();
-    ;
+    
    
     const action = $(this).data("action");
    

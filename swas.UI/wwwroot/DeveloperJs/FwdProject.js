@@ -635,6 +635,7 @@ function SaveFwdTo(CurrentPslmId, generatedPdf, allAttachments) {
    
     if (!validateFileSize(allAttachments)) return;
 
+  
     sendAjax(formData);
 }
 
@@ -715,11 +716,11 @@ function buildFormData(CurrentPslmId, TimeStamps, fwdunitid, generatedPdf, allAt
     const encryptedCurrentPslmId = encryptData(CurrentPslmId);
 
     formData.append("currentpsmid", encryptedCurrentPslmId);
-
+   
     // 📎 Files (unchanged)
     appendGeneratedPdf(generatedPdf, allAttachments);
     appendAttachments(formData, allAttachments);
-
+    appendCC(formData);
     return formData;
 }
 

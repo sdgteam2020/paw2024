@@ -1329,7 +1329,7 @@ public async Task<IActionResult> Details(int id)
                     psmove.Remarks = decryptedModel.Remarks;
                     psmove.ToUnitId = decryptedModel.ToUnitId;
                     psmove.TimeStamp = decryptedModel.TimeStamp;
-                    psmove.CcId = decryptedModel.CcId;
+                    psmove.CcId = psmove.CcId;
                 }
                 catch
                 {
@@ -3090,22 +3090,8 @@ public async Task<IActionResult> Details(int id)
                     RequestType = 1
                 };
 
-                ModelState.Clear();
-
-                if (!TryValidateModel(dateApproval))
-                {
-                    return BadRequest(new
-                    {
-                        success = false,
-                        message = "Date approval validation failed.",
-                        errors = ModelState
-                            .Where(x => x.Value.Errors.Count > 0)
-                            .ToDictionary(
-                                x => x.Key,
-                                x => x.Value.Errors.Select(e => e.ErrorMessage).ToList()
-                            )
-                    });
-                }
+                
+                
 
                 _dbContext.DateApproval.Add(dateApproval);
                 await _dbContext.SaveChangesAsync();
@@ -3122,22 +3108,7 @@ public async Task<IActionResult> Details(int id)
                     Userdetails = Helper1.LoginDetails(user)
                 };
 
-                ModelState.Clear();
-
-                if (!TryValidateModel(legacyLog))
-                {
-                    return BadRequest(new
-                    {
-                        success = false,
-                        message = "Legacy history validation failed.",
-                        errors = ModelState
-                            .Where(x => x.Value.Errors.Count > 0)
-                            .ToDictionary(
-                                x => x.Key,
-                               x=> x.Value?.Errors.Select(e => e.ErrorMessage).ToList()
-                            )
-                    });
-                }
+               
 
                 await _legacyHistoryRepository.AddHistoryAsync(legacyLog);
 
@@ -3402,8 +3373,8 @@ public async Task<IActionResult> Details(int id)
         {
             try
             {
-              
-                int dataProjId = int.Parse(ProjectId);
+              var projid=   _dataProtector.Unprotect(ProjectId);
+                int dataProjId = int.Parse(projid);
                 _logger.LogInformation("Fetching history for ProjectId: {ProjectId}", ProjectId);
                 if (dataProjId <= 0)
                     return BadRequest(new { success = false, message = "Invalid project ID." });
