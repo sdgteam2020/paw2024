@@ -1,0 +1,85 @@
+﻿@model swas.BAL.DTO.PermissionControlDTO
+
+<div class="card border-0 shadow-sm">
+
+    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+
+        <div>
+            <strong>
+                Permissions For:
+            </strong>
+            @Model.PermissionFor
+
+            <span class="mx-2">|</span>
+
+            <strong>
+                Name:
+            </strong>
+            @Model.TargetName
+        </div>
+
+        <div>
+            <button type="button"
+                    class="btn btn-sm btn-success"
+                    onclick="savePermissionControl()">
+                Save Permissions
+            </button>
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="mb-3">
+            <button type="button"
+                    class="btn btn-sm btn-outline-primary"
+                    onclick="checkAllPermissions(true)">
+                Select All
+            </button>
+
+            <button type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    onclick="checkAllPermissions(false)">
+                Unselect All
+            </button>
+        </div>
+
+        <div class="row">
+
+            @foreach (var item in Model.Permissions)
+            {
+                <div class="col-md-4 mb-2">
+                    <div class="form-check border rounded p-2 ps-5 bg-white">
+
+                        <input type="checkbox"
+                               class="form-check-input permission-control-checkbox"
+                               id="perm_@item.PermissionId"
+                               data-permission-id="@item.PermissionId"
+                               data-permission-key="@item.PermissionKey"
+                               data-display-name="@item.DisplayName"
+                        @(item.IsSelected ? "checked" : "") />
+
+                        <label class="form-check-label fw-semibold"
+                               for="perm_@item.PermissionId">
+                            @item.DisplayName
+                        </label>
+
+                        <div class="small text-muted">
+                            @item.PermissionKey
+                        </div>
+
+                    </div>
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    function checkAllPermissions(status) {
+        $('.permission-control-checkbox').prop('checked', status);
+    }
+</script>

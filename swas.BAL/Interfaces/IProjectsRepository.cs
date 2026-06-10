@@ -72,9 +72,10 @@ namespace swas.BAL.Interfaces
         Task<List<AddNewProject>> GetMyProjects();
 
         Task<List<DTOProjectsFwd>> GetActParkedItemsAsync();
-         Task<List<DTOForeClose>> GetForecloseitems();
+        Task<List<DTOForeClose>> GetForecloseitems(int closetype);
         Task<List<SelectListItem>> GetDropdown(string categoryName);
-
+        Task<bool> SendForecloseToInbox(int psmId);
+        Task<bool> CloseProjectAgain(int psmId);
 
     }
 

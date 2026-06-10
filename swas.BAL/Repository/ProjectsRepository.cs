@@ -1230,37 +1230,7 @@ try
         }
 
 
-        public async Task<List<DTOForeClose>> GetForecloseitems()
-        {
-            try
-            {
-                Login logins = SessionHelper.GetObjectFromJson<Login>(
-                               _httpContextAccessor.HttpContext.Session,
-                               "User");
-
-                if (logins == null)
-                    return new List<DTOForeClose>();
-
-                int stkholder = logins.unitid ?? 0;
-
-                var projects = await _dbContext.dTOForeCloses
-                    .FromSqlRaw(
-                        "EXEC GetForeCloseitems @StakeHolderId",
-                        new SqlParameter("@StakeHolderId", stkholder))
-                    .AsNoTracking()
-                    .ToListAsync();
-                foreach (var project in projects)
-                {
-                    project.EncyID = _dataProtector.Protect(project.projid.ToString());
-                }
-                return projects;
-            }catch(Exception ex)
-            {
-                throw ex;
-            }
-           
-        }
-
+    
         public async Task<tbl_Projects> GetProjectByIdAsync(int projectId)
         {
             try
@@ -1760,7 +1730,7 @@ try
                                       Comments = eWithComment.Comment,
                                       Deplytype = eWithAppType.AppDesc,
                                  
-                                      AimScope = a.AimScope,
+                                      Aim = a.Aim,
                                       ReqmtJustification = a.ReqmtJustification,
                                       EncyID = _dataProtector.Protect(a.CurrentPslmId.ToString()),
 
@@ -2124,6 +2094,112 @@ try
             });
 
             return result;
+        }
+        public async Task<List<DTOForeClose>> GetForecloseitems(int closetype)
+        {
+            try
+            {
+                Login logins = SessionHelper.GetObjectFromJson<Login>(
+                    _httpContextAccessor.HttpContext.Session,
+                    "User");
+
+                if (logins == null)
+                    return new List<DTOForeClose>();
+
+                int stkholder = logins.unitid ?? 0;
+
+                var projects = await _dbContext.dTOForeCloses
+                    .FromSqlRaw(
+                        "EXEC GetForeCloseitems @StakeHolderId, @CloseType",
+                        new SqlParameter("@StakeHolderId", stkholder),
+                        new SqlParameter("@CloseType", closetype)
+                    )
+                    .AsNoTracking()
+                    .ToListAsync();
+
+                foreach (var project in projects)
+                {
+                    project.EncyID = _dataProtector.Protect(project.projid.ToString());
+                }
+
+                return projects;
+            }
+            catch (Exception ex)
+            {
+                swas.BAL.Error.ExceptionHandle(
+                    "Error while Fetching Closeitems : " + ex.Message);
+
+                return new List<DTOForeClose>();
+            }
+        }
+
+        public async Task<bool> SendForecloseToInbox(int Psmid)
+        {
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+
+            try
+            {
+                var movement = await _dbContext.ProjStakeHolderMov
+                    .Where(x => x.PsmId == Psmid && x.ForeClosed == true)
+                    .OrderByDescending(x => x.PsmId)
+                    .FirstOrDefaultAsync();
+
+                if (movement == null)
+                    return false;
+
+                movement.ForeClosed = false;
+
+                var foreclose = await _dbContext.ProjectForecloses
+                    .Where(x => x.Psmid == Psmid && x.IsOpened == false)
+                    .OrderByDescending(x => x.ForecloseId)
+                    .FirstOrDefaultAsync();
+
+                 if (foreclose != null)
+                {
+                    foreclose.IsPresentClosed = false;
+                    foreclose.IsOpened = true;
+                    foreclose.OpenedDate = DateTime.Now;
+                }
+
+                await _dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return true;
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
+        public async Task<bool> CloseProjectAgain(int psmId)
+        {
+            var movement = await _dbContext.ProjStakeHolderMov
+                .FirstOrDefaultAsync(x => x.PsmId == psmId);
+
+            if (movement == null)
+                return false;
+
+            movement.ForeClosed = true;
+
+            var foreclose = await _dbContext.ProjectForecloses
+                .Where(x => x.Psmid == movement.PsmId)
+                .OrderByDescending(x => x.ForecloseId)
+                .FirstOrDefaultAsync();
+
+            if (foreclose != null)
+            {
+                foreclose.IsPresentClosed = true;
+                foreclose.IsOpened = false;
+                foreclose.OpenedDate = null;
+                foreclose.OpenedByUserId = null;
+                foreclose.OpenRemarks = null;
+                foreclose.ClosedDate = DateTime.Now;
+            }
+
+            await _dbContext.SaveChangesAsync();
+
+            return true;
         }
     }
 

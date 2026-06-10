@@ -1,0 +1,59 @@
+﻿@model swas.BAL.DTO.UserPermissionDTO
+
+<input type="hidden"
+       id="UserId"
+       value="@Model.UserId" />
+
+<div class="card">
+
+    <div class="card-header">
+
+        <h5>
+            User :
+            @Model.UserName
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            @foreach (var item
+            in Model.Permissions)
+            {
+                <div class="col-md-4 mb-2">
+
+                    <div class="form-check">
+
+                        <input class="form-check-input permission-checkbox"
+                               type="checkbox"
+                               value="@item.PermissionKey"
+                        @(item.IsSelected
+                            ? "checked"
+                            : "") />
+
+                        <label class="form-check-label">
+
+                            @item.DisplayName
+
+                        </label>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+        <button type="button"
+                class="btn btn-success mt-3"
+                onclick="SaveUserPermissions()">
+
+            Save Permissions
+
+        </button>
+
+    </div>
+
+</div>

@@ -402,7 +402,7 @@ namespace swas.Areas.Identity.Pages.Account
                 TempData["FailureMessage"] = "One of the important input missing!";
                 return LocalRedirect("~/Identity/Account/Register");
             }
-            return Page();
+            
         }
         [AllowAnonymous]
         private ApplicationUser CreateUser()
@@ -430,7 +430,7 @@ namespace swas.Areas.Identity.Pages.Account
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+
 
         public async Task<IActionResult> OnPostAddOrEdit(UnitDtl UnitData)
         {
@@ -450,17 +450,8 @@ namespace swas.Areas.Identity.Pages.Account
                 UnitData.UpdatedDate = DateTime.Now;
 
 
-                using (SHA256 sha256Hash = SHA256.Create())
-                {
-                    byte[] hashedBytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(UnitData.UnitSusNo));
-                    StringBuilder builder = new StringBuilder();
-                    for (int i = 0; i < hashedBytes.Length; i++)
-                    {
-                        builder.Append(hashedBytes[i].ToString("x2"));
-                    }
-                    UnitData.UnitSusNo = builder.ToString();
-                }
-
+             
+                UnitData.UnitSusNo = UnitData.UnitSusNo;
                 int result = await _unitRepository.Save(UnitData);
 
 
@@ -505,16 +496,7 @@ namespace swas.Areas.Identity.Pages.Account
                 UnitData.UpdatedBy = HttpContext.Session.GetString("UserName");
                 UnitData.UpdatedDate = DateTime.Now;
 
-                using (SHA256 sha256Hash = SHA256.Create())
-                {
-                    byte[] hashedBytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(UnitData.UnitSusNo));
-                    StringBuilder builder = new StringBuilder();
-                    for (int i = 0; i < hashedBytes.Length; i++)
-                    {
-                        builder.Append(hashedBytes[i].ToString("x2"));
-                    }
-                    UnitData.UnitSusNo = builder.ToString();
-                }
+                UnitData.UnitSusNo = UnitData.UnitSusNo;
 
                 int result = await _unitRepository.Save(UnitData);
 

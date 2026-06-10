@@ -44,7 +44,7 @@ namespace swas.UI.Middleware
         path.StartsWith("/home/logout") ||
         path.StartsWith("/identity/account/login") ||
         path.StartsWith("/identity/account/logout") ||
-        path.StartsWith("/identity/account/accessdenied"))
+        path.StartsWith("/Identity/Pages/Account/AccessDenied"))
     {
         await _next(context);
         return;

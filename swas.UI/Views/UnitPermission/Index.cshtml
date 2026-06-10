@@ -1,0 +1,61 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Unit Permission";
+}
+
+<link href="~/css/select2.min.css"
+      rel="stylesheet" />
+
+<div class="container-fluid">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+            <h4>
+                Unit Permission Mapping
+            </h4>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-5">
+
+                    <label>
+                        Select Unit
+                    </label>
+
+                    <select id="ddlUnit"
+                            class="form-control select2">
+
+                        <option value="">
+                            Select Unit
+                        </option>
+
+                        @foreach (var item in ViewBag.Units)
+                        {
+                            <option value="@item.Value">
+
+                                @item.Text
+                            </option>
+                        }
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <hr />
+
+            <div id="permissionContainer">
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="~/developerjs/unitpermission.js"></script>

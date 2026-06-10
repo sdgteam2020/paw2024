@@ -12,7 +12,7 @@ namespace swas.UI.Controllers
     using swas.BAL.Repository;
     using swas.DAL.Models;
     using System.Threading.Tasks;
-    [Authorize]
+    
     public class ActionsController : Controller
     {
         private readonly IActionsRepository _actionsRepository;

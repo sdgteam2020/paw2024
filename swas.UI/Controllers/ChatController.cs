@@ -8,6 +8,7 @@ using swas.BAL.DTO;
 using swas.BAL.Helpers;
 using swas.BAL.Interfaces;
 using swas.DAL.Models;
+using swas.UI.Helpers;
 using System.Configuration;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -40,6 +41,7 @@ namespace swas.UI.Controllers
             _logger = logger;
             _configuration = configuration;
         }
+        [AuthorizePermission("ChatPermission")]
         public async Task<IActionResult> Index()
         {
             return View();

@@ -385,11 +385,11 @@ function SendMsg() {
         commentDateTime = dateValue.replace('T', ' '); // Format datetime-local to space-separated
     }
 
-
+    //alert($("#ProjectcommentForStackHolderprojId").text().trim());
 
     formData.append("Comments", encryptData($("#Comments").val()));
     formData.append("StkStatusId", encryptData($("#ddlStatus").val()));
-    formData.append("ProjectId", encryptData($("#ProjectcommentForStackHolderprojId").html()));
+    formData.append("ProjectId", encryptData($("#ProjectcommentForStackHolderprojId").text().trim()));
     formData.append("psmid", encryptData($("#ProjectcommentForStackHolderPsmId").html()));
     formData.append("CommentDate", encryptData(commentDateTime));
 

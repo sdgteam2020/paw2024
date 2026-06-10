@@ -3,7 +3,7 @@
 @using swas.BAL.Helpers
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Options
-
+@using System.Security.Claims
 @inject IOptions<SiteSettings> SiteSettings
 @inject IHttpContextAccessor HttpContextAccessor
 
@@ -14,6 +14,12 @@
 
 @{
     bool isAdmin = User.Identity.IsAuthenticated && User.IsInRole("Dte");
+
+    bool HasPermission(string permission)
+    {
+        return User.HasClaim("Permission", permission);
+    }
+
 }
 
 <!DOCTYPE html>
@@ -30,38 +36,38 @@
 
 <link href="~/font-awesome/css/all.min.css" rel="stylesheet" />
 
- 
 
 
 
-    <!-- CSS Files -->
-    <link href="~/css/select2.min.css" rel="stylesheet" />
+
+<!-- CSS Files -->
+<link href="~/css/select2.min.css" rel="stylesheet" />
 
 <link href="~/css/layout.css" rel="stylesheet" />
-    @* <link href="~/assets/css/icons.css" rel="stylesheet"> *@
-  
-
-    <!--data Table-->
-    <link rel="stylesheet" href="~/assets/dataTable/css/bootstrap.css">
-      <link href="~/assets/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="~/assets/dataTable/css/dataTables.bootstrap4.min.css">
+@* <link href="~/assets/css/icons.css" rel="stylesheet"> *@
 
 
-    <link rel="stylesheet" href="~/assets/dataTable/css/buttons.bootstrap4.min.css">
-    <link href="~/css/animated.css" rel="stylesheet" />
+<!--data Table-->
+<link rel="stylesheet" href="~/assets/dataTable/css/bootstrap.css">
+<link href="~/assets/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="~/assets/dataTable/css/dataTables.bootstrap4.min.css">
 
-    <link href="~/assets/dataTable/css/searchbuilder.datatables.min.css" rel="stylesheet" />
 
-     
-    @* <link href="~/assets/dataTable/css/jquery.datatables.min.css" rel="stylesheet" /> *@
-   
-    <link href="~/assets/dataTable/css/datatables.datetime.min.css" rel="stylesheet" />
- 
-    @* <link href="~/font-awesome/css/fontawesome.min.css" rel="stylesheet" /> *@
-  
-    <link href="~/assets/css/bootstrap-extended.css" rel="stylesheet">
-    <link href="~/assets/css/style.css" rel="stylesheet">
-    <link href="~/css/main.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/assets/dataTable/css/buttons.bootstrap4.min.css">
+<link href="~/css/animated.css" rel="stylesheet" />
+
+<link href="~/assets/dataTable/css/searchbuilder.datatables.min.css" rel="stylesheet" />
+
+
+@* <link href="~/assets/dataTable/css/jquery.datatables.min.css" rel="stylesheet" /> *@
+
+<link href="~/assets/dataTable/css/datatables.datetime.min.css" rel="stylesheet" />
+
+@* <link href="~/font-awesome/css/fontawesome.min.css" rel="stylesheet" /> *@
+
+<link href="~/assets/css/bootstrap-extended.css" rel="stylesheet">
+<link href="~/assets/css/style.css" rel="stylesheet">
+<link href="~/css/main.css" rel="stylesheet" />
 
 
 <script src="~/assets/js/jquery.min.js"></script>
@@ -74,44 +80,44 @@
 <!-- Bootstrap Icons (Add this in your layout if not already included) -->
 
 
-    <script language="JavaScript" type="text/javascript" src="~/assets/js/bootstrap.bundle.min.js"></script>
-        
-    <!--plugins-->
-    @* <link href="~/assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" /> *@
-    <script language="JavaScript" type="text/javascript" src="~/assets/plugins/chartjs/chart.min.js"></script>
-    @* <script language="JavaScript" type="text/javascript" src="~/assets/plugins/metismenu/js/metisMenu.min.js"></script> *@
+<script language="JavaScript" type="text/javascript" src="~/assets/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Main JS-->
-    <script language="JavaScript" type="text/javascript" src="~/assets/js/main.js"></script>
+<!--plugins-->
+@* <link href="~/assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" /> *@
+<script language="JavaScript" type="text/javascript" src="~/assets/plugins/chartjs/chart.min.js"></script>
+@* <script language="JavaScript" type="text/javascript" src="~/assets/plugins/metismenu/js/metisMenu.min.js"></script> *@
 
-    <!-- dataTable-->
-    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/jquery.dataTables.min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/dataTables.bootstrap4.min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/dataTables.buttons.min.js"></script>
-   
-    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/jszip.min.js"></script>
-  
-    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/vfs_fonts.js"></script>
-    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/buttons.html5.min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/buttons.print.min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/buttons.colVis.min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/dataTables.responsive.min.js"></script>
-    <script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/responsive.bootstrap4.min.js"></script>
-    <script src="~/assets/dataTable/js/buttons.bootstrap4.min.js"></script>
-    @* <script src="~/assets/dataTable/js/pdfmake.min.js"></script> *@
-    <script src="~/assets/dataTable/js/datatables.datetime.min.js"></script>
-    <script src="~/assets/dataTable/js/datatables.searchbuilder.min.js"></script>
-    <script src="~/assets/dataTable/js/fnmultifilter.js"></script>
+<!-- Main JS-->
+<script language="JavaScript" type="text/javascript" src="~/assets/js/main.js"></script>
 
-    <link href="~/css/sweetalert2.min.css" rel="stylesheet">
-    <script src="~/assets/datatable/js/select2.min.js"></script>
-     
-     
-    <script language="JavaScript" type="text/javascript" src="~/js/sweetalert2.all.min.js"></script>
+<!-- dataTable-->
+<script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/jquery.dataTables.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/dataTables.bootstrap4.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/dataTables.buttons.min.js"></script>
 
-    <script src="~/DeveloperJs/ddlSanal.js"></script>
-    
-    <script src="~/developerjs/notification.js"></script>
+<script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/jszip.min.js"></script>
+
+<script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/vfs_fonts.js"></script>
+<script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/buttons.html5.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/buttons.print.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/buttons.colVis.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/dataTables.responsive.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="~/assets/dataTable/js/responsive.bootstrap4.min.js"></script>
+<script src="~/assets/dataTable/js/buttons.bootstrap4.min.js"></script>
+@* <script src="~/assets/dataTable/js/pdfmake.min.js"></script> *@
+<script src="~/assets/dataTable/js/datatables.datetime.min.js"></script>
+<script src="~/assets/dataTable/js/datatables.searchbuilder.min.js"></script>
+<script src="~/assets/dataTable/js/fnmultifilter.js"></script>
+
+<link href="~/css/sweetalert2.min.css" rel="stylesheet">
+<script src="~/assets/datatable/js/select2.min.js"></script>
+
+
+<script language="JavaScript" type="text/javascript" src="~/js/sweetalert2.all.min.js"></script>
+
+<script src="~/DeveloperJs/ddlSanal.js"></script>
+
+<script src="~/developerjs/notification.js"></script>
 <script src="~/DeveloperJs/Comman.js?v1"></script>
 
 
@@ -137,7 +143,7 @@
     <div class="wrapper">
         <div id="loading1" class="loader d-none">
             <div class="loader-container">
-                 
+
                 <img src="/assets/images/loadsss.gif">
                 <div>
                     <h4 class="paw-loading-title">Loading...</h4>
@@ -153,11 +159,11 @@
             @Html.AntiForgeryToken()
         </form>
 
+
         <div class="text-capitalize d-none divRank_id">@Logins.Rank_id</div>
         <div class="text-capitalize d-none divRole_name">@Logins.Role</div>
 
-        @if (Logins != null && Logins?.Role == "Dte")
-        {
+       
             <!--start sidebar -->
             <aside class=" sidebar-wrapper" data-simplebar="true">
                 <div class="particles"></div>
@@ -176,83 +182,102 @@
 
                 <!--navigation-->
                 <ul class="metismenu  sidebar-menu paw-sidebar-bold menu">
-                   
 
-                    <li>
-                        <div class="parent-icon">
-                            <ion-icon name="home-sharp" id="iconname"></ion-icon>
-                        </div>
-                        <a href="/Home/Index">
-                            <div class="menu-title icon-name paw-menu-title-left0">
-                                Dashboard :  @Logins.Unit
+                    @if (HasPermission("Dashboard"))
+                    {
+                        <li>
+                            <div class="parent-icon">
+                                <ion-icon name="home-sharp" id="iconname"></ion-icon>
                             </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/Projects/Create">
-                            <div class="icon-container">
-                                <ion-icon name="ellipse-outline"></ion-icon>
-                                <span class="icon-name">Add New Project</span>
-                            </div>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="/Projects/ProjDetails">
-                            <div class="inbox-container paw-inbox-ml-46">
-                                <div class="icon-container paw-inbox-ml--43">
-                                    <ion-icon name="ellipse-outline"></ion-icon>
-                                    <span class="icon-name">Inbox</span>
-                                    <span id="InboxCount" class="badge3 d-none InboxCount">0</span>
+                            <a href="/Home/Index">
+                                <div class="menu-title icon-name paw-menu-title-left0">
+                                    Dashboard :  @Logins.Unit
                                 </div>
-                            </div>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="/Projects/ProjComments"  >
-                            <div class="icon-container">
-                                <ion-icon name="ellipse-outline"></ion-icon>
-                                <span class="icon-name">Stakeholder Comments</span>
-                                <span id="ProjectCommentCount" class="badge5 d-none ProjectCommentCount">0</span>
-                            </div>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="/Search/GetProjLogview">
-                            <div class="icon-container">
-                                <ion-icon name="ellipse-outline"></ion-icon>
-                                <span class="icon-name">Track Project</span>
-                            </div>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="/Home/ProjectWiseReport">
-                            <div class="icon-container">
-                                <ion-icon name="ellipse-outline"></ion-icon>
-                                <span class="icon-name">Analysis</span>
-                            </div>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="/Chat/Index">
-                            <div class="inbox-container paw-inbox-ml-46">
-                                <div class="icon-container paw-inbox-ml--43">
+                            </a>
+                        </li>
+                    }
+                    @if (HasPermission("AddNewProject"))
+                    {
+                        <li>
+                            <a href="/Projects/Create">
+                                <div class="icon-container">
                                     <ion-icon name="ellipse-outline"></ion-icon>
-                                    <span class="icon-name mr-3">Chat</span>
-                                    <span id="InterUserMsgCount" class="badge3 d-none InterUserMsgCount mt-1">
-                                        <ion-icon name="ellipse" class="new-badge-icon"></ion-icon>
-                                        <span class="new-text">new</span>
-                                    </span>
+                                    <span class="icon-name">Add New Project</span>
                                 </div>
-                            </div>
-                        </a>
-                    </li>
+                            </a>
+                        </li>
+                    }
+                @if (HasPermission("InboxPermission"))
+                    {
+                        <li>
+                            <a href="/Projects/ProjDetails">
+                                <div class="inbox-container paw-inbox-ml-46">
+                                    <div class="icon-container paw-inbox-ml--43">
+                                        <ion-icon name="ellipse-outline"></ion-icon>
+                                        <span class="icon-name">Inbox</span>
+                                        <span id="InboxCount" class="badge3 d-none InboxCount">0</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>}
+                    @if (HasPermission("StakeholderComments"))
+                    {
+                        <li>
+                            <a href="/Projects/ProjComments"  >
+                                <div class="icon-container">
+                                    <ion-icon name="ellipse-outline"></ion-icon>
+                                    <span class="icon-name">Stakeholder Comments</span>
+                                    <span id="ProjectCommentCount" class="badge5 d-none ProjectCommentCount">0</span>
+                                </div>
+                            </a>
+                        </li>
+                    }
+                    @if (HasPermission("TrackProject"))
+                    {
+                        <li>
+                            <a href="/Search/GetProjLogview">
+                                <div class="icon-container">
+                                    <ion-icon name="ellipse-outline"></ion-icon>
+                                    <span class="icon-name">Track Project</span>
+                                </div>
+                            </a>
+                        </li>
+                    }
 
-                    @if (Logins != null && Logins?.UserName == "gso1semg_asdc_ihqa" && Logins?.unitid == 4)
+                    @if (HasPermission("Analysis"))
+                    {
+                        <li>
+                            <a href="/Home/ProjectWiseReport">
+                                <div class="icon-container">
+                                    <ion-icon name="ellipse-outline"></ion-icon>
+                                    <span class="icon-name">Analysis</span>
+                                </div>
+                            </a>
+                        </li>
+                    }
+
+                @if (HasPermission("ChatPermission"))
+                    {
+                        <li>
+                            <a href="/Chat/Index">
+                                <div class="inbox-container paw-inbox-ml-46">
+                                    <div class="icon-container paw-inbox-ml--43">
+                                        <ion-icon name="ellipse-outline"></ion-icon>
+                                        <span class="icon-name mr-3">Chat</span>
+                                        <span id="InterUserMsgCount" class="badge3 d-none InterUserMsgCount mt-1">
+                                            <ion-icon name="ellipse" class="new-badge-icon"></ion-icon>
+                                            <span class="new-text">new</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    }
+                
+
+                @if (User.HasClaim(
+                "Permission",
+                "ApproveLegacyProject"))
                     {
                         <li>
                             <a href="/Home/DateApproval">
@@ -264,26 +289,73 @@
                             </a>
                         </li>
                     }
-
-                    @if (Logins != null && Logins.Role == "Dte" && Logins.unitid == 1)
+               
+                    @if (HasPermission("UserSetting"))
                     {
                         <li class="menu-items">
                             <a href="#"><span class="icon-name">User Setting</span></a>
-                            
+
                             <div class="submenu">
-                                <a href="/Actions/Index">View Actions</a>
-                                <a href="/UnitDtls/AddOrEdit">Actions by Stage</a>
-                                <a href="/Stages/Create">View Stage</a>
-                                <a href="/ActionException/Index">Approving Auth</a>
-                                <a href="/Identity/Account/Register" target="_new">Register New User</a>
-                                <a href="/Account/GetsAllUsers">View Users</a>
+                                @if (HasPermission("ViewActions"))
+                                {
+                                    <a href="/Actions/Index">View Actions</a>
+                                }
+                                @if (HasPermission("ActionsByStage"))
+                                {
+                                    <a href="/UnitDtls/AddOrEdit">
+                                        Actions by Stage
+                                    </a>
+                                }
+                                @if (HasPermission("ViewStage"))
+                                {
+                                    <a href="/Stages/Create">
+                                        View Stage
+                                    </a>
+                                }
+                                @if (HasPermission("ApprovingAuth"))
+                                {
+                                    <a href="/ActionException/Index">
+                                        Approving Auth
+                                    </a>
+                                }
+                                @if (HasPermission("RegisterNewUser"))
+                                {
+                                    <a href="/Identity/Account/Register"
+                                    target="_new">
+                                        Register New User
+                                    </a>
+                                }
+                                @if (HasPermission("ViewUsers"))
+                                {
+                                    <a href="/Account/GetsAllUsers">
+                                        View Users
+                                    </a>
+                                }
+                                @if (HasPermission("PermissionMaster"))
+                                {
+                                    <a href="/PermissionMaster/Index">
+                                        Permission Master
+                                    </a>
+                                }
+                               
                             </div>
                         </li>
                         <li></li>
                         <li></li>
                     }
 
-                    @if (Logins != null && Logins?.UserName == "gso1semg_asdc_ihqa" && Logins?.unitid == 4)
+                @if(HasPermission("UserSetting"))
+                {
+                     <li>
+                    <a href="/PermissionControl/Index">
+                            <span class="icon-name">   Centralized Permission Control</span>
+                    </a>
+                    </li>
+                }
+
+                    @if (User.HasClaim(
+                "Permission",
+                "EditProjectMovement"))  
                     {
                         <li>
                             <a href="/Projects/ProjectMovement">
@@ -295,16 +367,51 @@
                         </li>
                     }
 
-                    <li class="menu-items ">
+                    @if (HasPermission("PolicyCorner"))
+                    {
+                        <li class="menu-items">
 
-                        <a href="#"><span class="icon-name">Policy Corner</span></a>
-                        <div class="submenu">
-                            <a href="#" id="WLProjList">Whitelisted Appl</a>
-                            <a href="#">Minutes of Mtgs</a>
-                            <a href="/Home/SOPDownload" target="\'_blank\'">SOP on Whitelisting</a>
-                            <a href="javascript:void(0);" id="FlowPng">Help File</a>
-                        </div>
-                    </li>
+                            <a href="#">
+                                <span class="icon-name">
+                                    Policy Corner
+                                </span>
+                            </a>
+
+                            <div class="submenu">
+
+                                @if (HasPermission("WhitelistedAppl"))
+                                {
+                                    <a href="#" id="WLProjList">
+                                        Whitelisted Appl
+                                    </a>
+                                }
+
+                                @if (HasPermission("MinutesOfMtgs"))
+                                {
+                                    <a href="#">
+                                        Minutes of Mtgs
+                                    </a>
+                                }
+
+                                @if (HasPermission("SOPOnWhitelisting"))
+                                {
+                                    <a href="/Home/SOPDownload"
+                                    target="_blank">
+                                        SOP on Whitelisting
+                                    </a>
+                                }
+
+                                @if (HasPermission("HelpFile"))
+                                {
+                                    <a href="javascript:void(0);"
+                                    id="FlowPng">
+                                        Help File
+                                    </a>
+                                }
+
+                            </div>
+                        </li>
+                    }
 
                 </ul>
 
@@ -333,10 +440,10 @@
                     </a>
 
                     <a href="javascript:void(0);"
-                       class="mr-2 edit-user-btn paw-edituser-link-white"
-                       data-username="@Logins.UserName"
-                       data-rankid="@Logins.Rank_id"
-                       data-rolename="@Logins.Role">
+                    class="mr-2 edit-user-btn paw-edituser-link-white"
+                    data-username="@Logins.UserName"
+                    data-rankid="@Logins.Rank_id"
+                    data-rolename="@Logins.Role">
                         <i class="fa-solid fa-user-pen paw-userpen-icon" title="Edit user"></i>
 
                     </a>
@@ -350,17 +457,17 @@
                             <span class="d-none SpnCurrentUserStackholderID" >@Logins.unitid</span>
                             <span class="spnOffr_Name d-none">@Logins.Offr_Name</span>
                         </div>
-                            
+
                         <div class="user-setting ms-md-3 mt-2 mt-md-0">
                             <a href="/Account/Logout">
-                            <ul class="action-list">
-                                <li class="action-btn logout-btn">
-                                    <i class="fa-solid fa-right-from-bracket"></i>
-                                    <span class="title">Logout</span>
-                                </li>
-                            </ul>
+                                <ul class="action-list">
+                                    <li class="action-btn logout-btn">
+                                        <i class="fa-solid fa-right-from-bracket"></i>
+                                        <span class="title">Logout</span>
+                                    </li>
+                                </ul>
                             </a>
-                           @*  <a href="/Account/Logout">
+                            @*  <a href="/Account/Logout">
                                 <img src="~/assets/images/icons/logout.png" class="user-img paw-logout-img" alt="Logout">
                             </a> *@
                         </div>
@@ -376,201 +483,10 @@
                     </span>
                 </div>
             </header>
-        }
+       
 
         <!-- unit level users menu start  -->
-        @if (Logins != null && Logins?.Role == "Unit")
-        {
-            <aside class="sidebar-wrapper" data-simplebar="true">
-                <div class="sidebar-header">
-                    <div>
-                        <img src="~/assets/images/icons/armylogo.png" class="logo-icon" alt="logo icon">
-                    </div>
-                    <div>
-                        <h4 class="logo-text">PAW</h4>
-                    </div>
-                    <div class="toggle-icon ms-auto menusharp" >
-                        <ion-icon name="menu-sharp"></ion-icon>
-                        <img src="~/assets/images/menu-sharp.256x172.png" class="paw-menu-icon" />
-                    </div>
-                </div>
-                <div class="particles"></div>
-                <ul class="metismenu sidebar-menu menu" >
-
-                    <li>
-                        <div class="parent-icon">
-                            <ion-icon name="home-sharp"></ion-icon>
-                        </div>
-                        <a href="/Home/Index">
-                            <div class="menu-title icon-name paw-menu-title-left0">
-                                Dashboard : @Logins.Unit
-                            </div>
-                        </a>
-                    </li>
-
-                    @if (isAdmin)
-                    {
-                        <li>
-                            <a href="/Home/StkHDashbard">
-                                <div class="icon-container paw-admin-iconcontainer">
-                                    <img src="/assets/images/icons/admin.jpg" alt="Icon">
-                                    <ion-icon name="ellipse-outline"></ion-icon>
-                                    <span class="icon-name">Stakeholder DashBoard</span>
-                                </div>
-                            </a>
-                        </li>
-                    }
-
-                    @if (Logins?.Iamuserid != null)
-                    {
-                        <li>
-                            <a href="/Projects/Create">
-                                <div class="icon-container">
-                                    <ion-icon name="ellipse-outlinProj Commentse"></ion-icon>
-                                    <span class="icon-name">Add New Project</span>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="/Projects/ProjDetails">
-                                <div class="inbox-container paw-inbox-ml-46">
-                                    <div class="icon-container paw-inbox-ml--43">
-                                        <ion-icon name="ellipse-outline"></ion-icon>
-                                        <span class="icon-name">Inbox</span>
-                                        <span id="InboxCount" class="badge3 d-none InboxCount">0</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="/Projects/ProjComments"  >
-                                <div class="icon-container">
-                                    <ion-icon name="ellipse-outline"></ion-icon>
-                                    <span class="icon-name">Stakeholder Comments</span>
-                                    <span id="ProjectCommentCount1" class="badge5 d-none ProjectCommentCount">0</span>
-                                </div>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="/Actions/ActionSeqView">
-                                <div class="icon-container">
-                                    <ion-icon name="ellipse-outline"></ion-icon>
-                                    <span class="icon-name"> How to Move Proj</span>
-                                </div>
-                            </a>
-                        </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="/Identity/Account/Register" target="_new">
-                                <div class="icon-container">
-                                    <ion-icon name="ellipse-outline"></ion-icon>
-                                    <span class="icon-name">Register New User</span>
-                                </div>
-                            </a>
-                        </li>
-                    }
-
-                    <li>
-                        <a href="/Home/ProjectWiseReport">
-                            <div class="icon-container">
-                                <ion-icon name="ellipse-outline"></ion-icon>
-                                <span class="icon-name">Analysis</span>
-                            </div>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="/Chat/Index">
-                            <div class="inbox-container paw-inbox-ml-46">
-                                <div class="icon-container paw-inbox-ml--43">
-                                    <ion-icon name="ellipse-outline"></ion-icon>
-                                    <span class="icon-name mr-3">Chat</span>
-                                    <span id="InterUserMsgCount1" class="badge3 d-none InterUserMsgCount mt-1">
-                                        <ion-icon name="ellipse" class="new-badge-icon"></ion-icon>
-                                        <span class="new-text">new</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-
-                <div class="sidebar-footer"></div>
-            </aside>
-
-            <header class="top-header py-2 mb-5 header-container  paw-topheader-noinline">
-                <div class="toggle-icon ms-auto d-none menusharp1" >
-                    <ion-icon name="menu-sharp"></ion-icon>
-                    <img src="~/assets/images/menu-sharp.256x172.png" class="paw-menu-icon" />
-                </div>
-
-                <nav class="navbar navbar-expand-lg navbar-dark px-3">
-                    <div class="mobile-menu-button">
-                        <ion-icon name="menu-sharp"></ion-icon>
-                    </div>
-
-                    <div class="flex-grow-1 text-center">
-                        <h1 class="h2 h4-sm h3-md text-white mb-0 nowrap mainheading" >
-                            Portal for Application Whitelisting (PAW)
-                        </h1>
-                    </div>
-                    <a href="/Home/Promo" class="mr-2 paw-edituser-link-white">
-                        <i class="fa-solid fa-house paw-home-icon" title="Sleep"></i>
-                    </a>
-
-                    <a href="javascript:void(0);"
-                       class="mr-2 edit-user-btn paw-edituser-link-white"
-                       data-username="@Logins.UserName"
-                       data-rankid="@Logins.Rank_id"
-                       data-rolename="@Logins.Role">
-                        <i class="fa-solid fa-user-pen paw-userpen-icon" title="Edit user"></i>
-                    </a>
-                    <div class="top-navbar-right ms-auto">
-                        <ul class="navbar-nav align-items-center">
-                            <li class="nav-item dropdown paw-font-small">
-                                <span class="d-none IpAddress" >@Logins.IpAddress</span>
-                                <span class="d-none SpnCurrentUserStackholderID">@Logins.unitid</span>
-                                <div class="text-white mr-2">
-                                    Welcome : <span class="spnUsername"> @Logins.UserName.ToLower()</span>
-                                    <div class="text-white mr-2 text-capitalize">@Logins.Rank @Logins.Offr_Name</div>
-                                    <span class="spnOffr_Name d-none">@Logins.Offr_Name</span>
-                                    <span class="spnuserid d-none">@Logins.Iamuserid</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="user-setting paw-user-setting-mr-100">
-                        <a href="/Account/Logout">
-                        <ul class="action-list">
-                            <li class="action-btn logout-btn">
-                                <i class="fa-solid fa-right-from-bracket"></i>
-                                <span class="title">Logout</span>
-                            </li>
-                        </ul>
-                        </a>
-                       @*  <a href="/Account/Logout">
-                            <img src="~/assets/images/icons/logout.png" class="user-img" alt="">
-                        </a> *@
-                    </div>
-                </nav>
-
-                <div class="bar bg-white paw-bar-mt-62"></div>
-                <div class="bar py-1 px-3 header-container paw-bar-mt-70">
-                    <span class="bar_content">
-                        @SiteSettings.Value.BannerMessage
-                        <span class="bar_space"></span>
-                        @SiteSettings.Value.BannerMessage2
-                    </span>
-                </div>
-            </header>
-        }
-
+      
         <div class="page-content-wrapper">
             @if (Logins != null)
             {

@@ -1,0 +1,273 @@
+﻿@{
+    ViewData["Title"] = "Permission Control";
+}
+
+@Html.AntiForgeryToken()
+
+<div class="container-fluid mt-3">
+
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">
+                Centralized Permission Control
+            </h5>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row mb-3">
+
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">
+                        Permission For
+                    </label>
+
+                    <select id="PermissionFor"
+                            class="form-control select2">
+                        <option value="">
+                            -- Select --
+                        </option>
+                        <option value="Role">
+                            Role
+                        </option>
+                        <option value="User">
+                            User
+                        </option>
+                        <option value="Unit">
+                            Unit
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-5">
+                    <label class="form-label fw-bold">
+                        Select Role / User / Unit
+                    </label>
+
+                    <select id="TargetId"
+                            class="form-control select2">
+                        <option value="">
+                            -- Select --
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-3 d-flex align-items-end">
+                    <button type="button"
+                            id="btnLoadPermissions"
+                            class="btn btn-primary w-100">
+                        Load Permissions
+                    </button>
+                </div>
+
+            </div>
+
+            <hr />
+
+            <div id="permissionContainer">
+                <div class="alert alert-info mb-0">
+                    Please select permission type and target.
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+
+            $('.select2').select2({
+                width: '100%'
+            });
+
+            $('#PermissionFor').on('change', function () {
+                loadTargets();
+            });
+
+            $('#btnLoadPermissions').on('click', function () {
+                loadPermissions();
+            });
+
+        });
+
+        function loadTargets() {
+
+            let permissionFor = $('#PermissionFor').val();
+
+            $('#TargetId').empty();
+            $('#TargetId').append('<option value="">-- Select --</option>');
+            $('#permissionContainer').html(
+                '<div class="alert alert-info mb-0">Please select target and load permissions.</div>'
+            );
+
+            if (!permissionFor) {
+                return;
+            }
+
+            $.ajax({
+                url: '/PermissionControl/GetTargets',
+                type: 'GET',
+                data: {
+                    permissionFor: permissionFor
+                },
+                success: function (response) {
+
+                    if (response.success) {
+
+                        $.each(response.data, function (index, item) {
+                            $('#TargetId').append(
+                                '<option value="' + item.value + '">' +
+                                item.text +
+                                '</option>'
+                            );
+                        });
+
+                        $('#TargetId').trigger('change');
+                    }
+                    else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: response.message
+                        });
+                    }
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Unable to load records.'
+                    });
+                }
+            });
+        }
+
+        function loadPermissions() {
+
+            let permissionFor = $('#PermissionFor').val();
+            let targetId = $('#TargetId').val();
+
+            if (!permissionFor) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Required',
+                    text: 'Please select permission type.'
+                });
+                return;
+            }
+
+            if (!targetId) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Required',
+                    text: 'Please select role/user/unit.'
+                });
+                return;
+            }
+
+            $('#permissionContainer').html(
+                '<div class="text-center p-4">Loading permissions...</div>'
+            );
+
+            $.ajax({
+                url: '/PermissionControl/GetPermissions',
+                type: 'GET',
+                data: {
+                    permissionFor: permissionFor,
+                    targetId: targetId
+                },
+                success: function (html) {
+                    $('#permissionContainer').html(html);
+                },
+                error: function (xhr) {
+
+                    let msg = 'Unable to load permissions.';
+
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        msg = xhr.responseJSON.message;
+                    }
+
+                    $('#permissionContainer').html(
+                        '<div class="alert alert-danger mb-0">' + msg + '</div>'
+                    );
+                }
+            });
+        }
+
+        function savePermissionControl() {
+
+            let permissionFor = $('#PermissionFor').val();
+            let targetId = $('#TargetId').val();
+
+            let permissions = [];
+
+            $('.permission-control-checkbox').each(function () {
+
+                permissions.push({
+                    permissionId: parseInt($(this).data('permission-id')),
+                    permissionKey: $(this).data('permission-key'),
+                    displayName: $(this).data('display-name'),
+                    isSelected: $(this).is(':checked')
+                });
+
+            });
+
+            let model = {
+                permissionFor: permissionFor,
+                targetId: targetId,
+                permissions: permissions
+            };
+
+            $.ajax({
+                url: '/PermissionControl/SavePermissions',
+                type: 'POST',
+                contentType: 'application/json',
+                headers: {
+                    'RequestVerificationToken':
+                        $('input[name="__RequestVerificationToken"]').val()
+                },
+                data: JSON.stringify(model),
+                success: function (response) {
+
+                    if (response.success) {
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: response.message,
+                            timer: 1800,
+                            showConfirmButton: false
+                        });
+
+                    }
+                    else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: response.message
+                        });
+                    }
+                },
+                error: function (xhr) {
+
+                    let msg = 'Unable to save permissions.';
+
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        msg = xhr.responseJSON.message;
+                    }
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: msg
+                    });
+                }
+            });
+        }
+    </script>
+
+}

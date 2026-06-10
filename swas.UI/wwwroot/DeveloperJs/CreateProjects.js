@@ -490,7 +490,7 @@ $(document).ready(function () {
     });
 });
 function AddProject(thistag) {
-
+   
     const $btn = $(thistag);
 
     // Prevent double click / duplicate submit
@@ -563,6 +563,16 @@ function AddProject(thistag) {
             const InitiatedDate = initialDate + ' ' + currentTime;
             const CompletionDate = completionDate + ' ' + currentTime;
 
+            if (InitiatedDate > CompletionDate) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    text: 'Completion Date must be greater than Initiation Date',
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
           
             $.ajax({
                 url: '/Projects/AddProject',
@@ -579,7 +589,7 @@ function AddProject(thistag) {
                     "AsconNo": $("#AsconNo").val(),
                     "InitialRemark": $("#InitialRemark").val(),
                     "StakeHolderId": $("#ddlStakeHolderId").val(),
-                    "AimScope": $("#AimScope").val(),
+                   
                     "HQandITinfraReqd": $("#HQandITinfraReqd").val(),
                     "HostTypeID": $("#ddlHostTypeID").val(),
                     "ContentofSWApp": $("#ContentofSWApp").val(),
@@ -613,7 +623,16 @@ function AddProject(thistag) {
                     "RequestRemarks": $("#RequestRemarks").val(),
                     "MobileNo": $("#MobileNo").val(),
                     "Devlopment_Language": $("#Devlopment_Language").val(),
-                    "operation_system_hosting_env": $("#operation_system_hosting_env").val()
+                    "operation_system_hosting_env": $("#operation_system_hosting_env").val(),
+
+                    "Additional_Ports": $("#Additional_Ports").val(),
+                    "Concurrent_users": $("#Concurrent_users").val(),
+                    "API_Initegration": $("#API_Initegration").val(),
+                    "Mission_Critical_appl_justif": $("#Mission_Critical_appl_justif").val(),
+
+                    "Aim": $("#Aim").val(),
+                    "Scope": $("#Scope").val(),
+                    "Puropose": $("#Puropose").val()
                 },
                 headers: {
                     'RequestVerificationToken': token

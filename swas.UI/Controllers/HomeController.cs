@@ -61,7 +61,7 @@ using swas.BAL;
 
 namespace swas.UI.Controllers
 {
-   
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IProjectsRepository _projectsRepository;
@@ -113,6 +113,7 @@ namespace swas.UI.Controllers
         }
 
         [HttpGet]
+        [AuthorizePermission("Dashboard")]
         public async Task<IActionResult> Index()
         {
             try
@@ -354,6 +355,7 @@ namespace swas.UI.Controllers
             }
             return null;
         }
+        [AuthorizePermission("Analysis")]
         public async Task<IActionResult> ProjectWiseReport()
         {
             return View();
@@ -1821,7 +1823,7 @@ s.IsDashboard,
             }
         }
 
-
+        [AuthorizePermission("ApproveLegacyProject")]
         public async Task<IActionResult> DateApproval()
         {
             return View();

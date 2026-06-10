@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] =
+    "Role Permission Mapping";
+}
+
+@Html.AntiForgeryToken()
+
+<div class="card">
+
+    <div class="card-header">
+        <h4>
+            Role Permission Mapping
+        </h4>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <label>
+                    Select Role
+                </label>
+
+                <select id="ddlRole"
+                        class="form-control">
+
+                    <option value="">
+                        Select Role
+                    </option>
+
+                    @foreach (var role
+                    in ViewBag.Roles)
+                    {
+                        <option value="@role.Value">
+
+                            @role.Text
+
+                        </option>
+                    }
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <hr />
+
+        <div id="permissionDiv">
+        </div>
+
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/DeveloperJs/RolePermission.js">
+    </script>
+}

@@ -1,6 +1,15 @@
 ﻿$(document).ready(function () {
 
+    let  stakeholderId = parseInt($('#spnStakeholderid').text()) || 0;
+    let  unitId = parseInt($('#hdnUnitId').val()) || 0;
 
+  
+    if ([1, 3, 4, 5,2].includes(unitId) || unitId === stakeholderId) {
+        $('#commentDiv').show();
+    }
+
+        
+       
 
    
    
@@ -164,6 +173,7 @@ function GetAllComments2() {
         }
     });
 }
+
 
 function GetAllComments1() {
     let user_ids =

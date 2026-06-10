@@ -67,6 +67,10 @@ namespace swas.DAL
         public DbSet<tbl_mCertificate> tbl_mCertificate { get; set; }
         public DbSet<tbl_mCertificateContent>tbl_mCertificateContent { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
+        public DbSet<PermissionMaster> PermissionMaster { get; set; }
+
+        public DbSet<UnitClaims> UnitClaims { get; set; }
+        public DbSet<ProjectForeclose> ProjectForecloses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -108,7 +112,13 @@ namespace swas.DAL
 
             modelBuilder.Entity<AddNewProject>().HasNoKey(); // Mark as keyless entity
             modelBuilder.Entity<DTOForeClose>().HasNoKey(); // Mark as keyless entity
-                                                         
+
+            modelBuilder.Entity<UnitClaims>()
+      .HasOne(x => x.PermissionMaster)
+      .WithMany(x => x.UnitClaims)
+      .HasForeignKey(x => x.PermissionId)
+      .OnDelete(DeleteBehavior.Restrict);
+
         }
 
     }

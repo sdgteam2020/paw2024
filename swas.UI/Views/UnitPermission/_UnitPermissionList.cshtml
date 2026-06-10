@@ -1,0 +1,63 @@
+﻿@model swas.BAL.DTO.UnitPermissionDTO
+
+@Html.AntiForgeryToken()
+
+<input type="hidden"
+       id="UnitId"
+       value="@Model.UnitId" />
+
+<div class="card">
+
+    <div class="card-header">
+
+        <h5>
+            Permissions :
+            @Model.UnitName
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            @foreach (var item
+            in Model.Permissions)
+            {
+                <div class="col-md-4 mb-3">
+
+                    <div class="form-check">
+
+                        <input type="checkbox"
+                               class="form-check-input permissionCheckbox"
+                               value="@item.PermissionId"
+                               id="perm_@item.PermissionId"
+                        @(item.IsSelected
+                            ? "checked"
+                            : "") />
+
+                        <label class="form-check-label"
+                               for="perm_@item.PermissionId">
+
+                            @item.DisplayName
+
+                        </label>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+        <hr />
+
+        <button type="button" class="btn btn-success" id="btnSaveUnitPermission" onclick="saveUnitPermission()">
+    Save Permissions
+</button>
+
+    </div>
+
+</div>
+
+<script src="~/developerjs/unitpermission.js"></script>

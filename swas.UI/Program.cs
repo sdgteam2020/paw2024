@@ -29,6 +29,9 @@ using swas.UI.Models;
 using System;
 using swas.UI.NewFolder;
 using swas.UI.Middleware;
+using Microsoft.AspNetCore.Authentication;
+using swas.UI.Services;
+using swas.UI.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 string connectionString = Environment.GetEnvironmentVariable("ConnectionStrings");
@@ -84,6 +87,16 @@ builder.Services.AddScoped<PdfCertificateBuilder>();
 builder.Services.AddScoped<LoginCryptoKeyService>();
 
 
+builder.Services.AddMemoryCache();
+builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+builder.Services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();
+builder.Services.AddTransient<IClaimsTransformation,UnitClaimsTransformation>();
+builder.Services.AddScoped<IPermissionMasterRepository,PermissionMasterRepository>();
+builder.Services.AddScoped<IRolePermissionRepository,RolePermissionRepository>();
+builder.Services.AddScoped<IUserPermissionRepository,UserPermissionRepository>();
+builder.Services.AddScoped<IUnitPermissionRepository,UnitPermissionRepository>();
+builder.Services.AddScoped<IPermissionControlRepository, PermissionControlRepository>();
+
 // ===============================
 // KESTREL MAX REQUEST SIZE - 100 MB
 // ===============================
@@ -117,7 +130,11 @@ builder.Services
     })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
-
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Identity/Account/Login";
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+});
 builder.Services.Configure<SecurityStampValidatorOptions>(options =>
 {
     options.ValidationInterval = TimeSpan.FromSeconds(30);
@@ -130,6 +147,7 @@ builder.Services.Configure<FormOptions>(options =>
 {
     options.MultipartBodyLengthLimit = 100 * 1024 * 1024;
 });
+
 
 // ===============================
 // MVC + FILTERS
@@ -325,9 +343,7 @@ app.UseSession();
 
 // Add your custom session validation middleware here
 app.UseMiddleware<SessionValidationMiddleware>();
-
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 // ===============================

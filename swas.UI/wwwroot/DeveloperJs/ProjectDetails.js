@@ -760,19 +760,19 @@ $(document).on('click', '#btnRemMove', function () {
     $('#RemProjName').text(finalTitle);
 
 
-    GetProjRemainderMov(ProjId); // <-- fixed this line
+    GetProjRemainderMov(ProjId,true); // <-- fixed this line
 });
 
 
 
-function GetProjRemainderMov(ProjId) {
+function GetProjRemainderMov(ProjId,enc) {
     
     $('#ProjRemainderMov').modal('show');
 
     $.ajax({
         url: '/Projects/GetProjectRemainderHistory',
         type: 'GET',
-        data: { ProjectId: ProjId },
+        data: { ProjectId: ProjId,Encrypted:enc},
         success: function (response) {
             console.log(response); // Debugging
             ;
@@ -881,7 +881,7 @@ function updateReadDateForRemainder(ProjId) {
            
             if (response.success) {
                 setTimeout(function () {
-                    GetProjRemainderMov(ProjId);
+                    GetProjRemainderMov(ProjId,false);
                     InboxNotificationCount();
                 }, 200);
             }
@@ -911,117 +911,6 @@ $("#tabParked").click(function () {
 
     GetParkedProject();
 });
-$("#tabForeclose").click(function () {
-
-    GetCloseProjects();
-});
-function GetCloseProjects() {
-
-    $.ajax({
-        url: '/Projects/GetForecloseitems',
-        type: 'GET',    
-        success: function (response) {
-            debugger;
-            $("#Foreclosedata").html("");
-
-            if (response != null && response.length > 0) {
-
-                let listitem = "";
-                let count = 0;
-
-                response.forEach(function (project) {
-
-                    count++;
-
-                    listitem += '<tr>';
-
-                    // 1 - Ser No
-                    listitem += `<td><div class="d-flex">${count}</div></td>`;
-
-                    // 2 - Proj Name
-                    listitem += `
-            <td>
-                <span class="d-none noExport" id="SpnforcloseProjId">
-                    ${project.projid}
-                </span>
-
-                <a data-proj-name="${project.projName}" 
-                   data-proj-id="${project.projid}" 
-                   href="/Projects/ProjHistory?EncyID=${project.encyID}&Type=XR12">
-
-                    <div class="RefLetter-container" 
-                         data-tooltip="${project.projName}">
-
-                        <span>${trimByChars(project.projName, 20)}</span>
-
-                        <span class="RefLetter noExport">
-                            ${breakLinesByWords(project.projName, 4)}
-                        </span>
-
-                        <span class="noExport d-none" id="projNamecc">
-                            ${project.projName}
-                        </span>
-                    </div>
-                </a>
-            </td>`;
-
-                    // 3 - Sponsor
-                    listitem += `
-            <td class="RefLetter-container">
-                ${project.sponsor ?? ""}
-                <div class="RefLetter noExport">
-                    ${breakLinesByWords(project.sponsor ?? "", 3)}
-                </div>
-            </td>`;
-
-                    // 4 - ClosedBy
-                    listitem += `
-            <td class="RefLetter-container">
-                ${project.approved_By ?? ""}
-                <div class="RefLetter noExport">
-                    ${breakLinesByWords(project.approved_By ?? "", 4)}
-                </div>
-            </td>`;
-
-                    // 5 - Closed On (missing column fixed)
-                  listitem += `
-            <td>
-                ${project.timeStamp
-                      ? DateFormateddMMyyyyhhmmss(project.timeStamp)
-                            : ""}
-            </td>`;
-
-                    // 6 - Stage
-                    listitem += `<td>${project.stages ?? ""}</td>`;
-                    listitem += `<td>${project.status ?? ""}</td>`;
-
-                    // 7 - SubStage
-                    listitem += `<td>${project.actions ?? ""}</td>`;
-
-                    listitem += '</tr>';
-                });
-
-                $("#Foreclosedata").html(listitem);
-            }
-
-            initializeDataTable("#foreclosetable");
-          
-        },
-        error: function (xhr, status, error) {
-            console.error("Error fetching parked projects:", status, error);
-            if ($.fn.DataTable.isDataTable("#parkedtable")) {
-                $("#parkedtable").DataTable().destroy();
-            }
-            $("#parkedtblData").html("");
-            $("#parkedtable").DataTable({
-                language: {
-                    emptyTable: "Error loading data. Please try again later."
-                },
-                destroy: true
-            });
-        }
-    });
-}
 
 function GetParkedProject() {
     
@@ -1244,6 +1133,241 @@ $(".parkedProj").on('click', function () {
 	containerTabs.addEventListener("click", handleTabClick);
 
 
+    //FORECLOSED TAB
+
+$(".btnPresentClosed").click(function () {
+    let ClosedType = 1;
+
+    GetCloseProjects(ClosedType);
+});
+$("#btnPastClosed").click(function () {
+    let ClosedType = 2;
+    GetCloseProjects(ClosedType);
+});
+function GetCloseProjects(Type) {
+    let type = encryptData(Type)
+    $.ajax({
+        url: '/Projects/GetForecloseitems',
+        type: 'GET',
+        data: { Type: type },
+
+        success: function (data) {
+
+            let response = data.data || [];
+            console.log(response);
+            if ($.fn.DataTable.isDataTable("#foreclosetable")) {
+                $("#foreclosetable").DataTable().destroy();
+            }
+
+            $("#Foreclosedata").html("");
+
+            if (response.length > 0) {
+
+                let listitem = "";
+                let count = 0;
+
+                response.forEach(function (project) {
+
+                    count++;
+
+                    listitem += `<tr>`;
+
+                    listitem += `<td><div class="d-flex">${count}</div></td>`;
+
+                    listitem += `
+                        <td>
+                            <span class="d-none noExport" id="SpnforcloseProjId">
+                                ${project.projid}
+                            </span>
+
+                            <a data-proj-name="${project.projName}" 
+                               data-proj-id="${project.projid}" 
+                               href="/Projects/ProjHistory?EncyID=${project.encyID}&Type=XR12">
+
+                                <div class="RefLetter-container" 
+                                     data-tooltip="${project.projName ?? ""}">
+
+                                    <span>${trimByChars(project.projName ?? "", 20)}</span>
+
+                                    <span class="RefLetter noExport">
+                                        ${breakLinesByWords(project.projName ?? "", 4)}
+                                    </span>
+
+                                    <span class="noExport d-none" id="projNamecc">
+                                        ${project.projName ?? ""}
+                                    </span>
+                                </div>
+                            </a>
+                        </td>`;
+
+                    listitem += `
+                        <td class="RefLetter-container">
+                            ${project.sponsor ?? ""}
+                            <div class="RefLetter noExport">
+                                ${breakLinesByWords(project.sponsor ?? "", 3)}
+                            </div>
+                        </td>`;
+
+                    listitem += `
+                        <td class="RefLetter-container">
+                            ${project.approved_By ?? ""}
+                            <div class="RefLetter noExport">
+                                ${breakLinesByWords(project.approved_By ?? "", 4)}
+                            </div>
+                        </td>`;
+
+                    listitem += `
+                        <td>
+                            ${project.timeStamp
+                            ? DateFormateddMMyyyyhhmmss(project.timeStamp)
+                            : ""}
+                        </td>`;
+
+                    listitem += `<td>${project.stages ?? ""}</td>`;
+                    listitem += `<td>${project.status ?? ""}</td>`;
+                    if (Type == 1) {
+                        actionButton = `
+        <button type="button"
+                class="btn btn-sm btn-primary btnSendToInbox"
+                data-psmid="${project.psmId}">
+            Send to Inbox
+        </button>`;
+                    } else {
+                        actionButton = `
+    <button type="button"
+            class="btn btn-sm btn-danger btnCloseAgain"
+            data-psmid="${project.psmId}">
+        Close Again
+    </button>`;
+                    }
+
+                    listitem += `<td>${actionButton}</td>`;
+
+                    listitem += `</tr>`;
+                });
+
+                $("#Foreclosedata").html(listitem);
+            }
+
+            initializeDataTable("#foreclosetable");
+        },
+
+        error: function (xhr, status, error) {
+
+            console.error("Error fetching foreclosed projects:", status, error);
+
+            if ($.fn.DataTable.isDataTable("#foreclosetable")) {
+                $("#foreclosetable").DataTable().destroy();
+            }
+
+            $("#Foreclosedata").html("");
+
+            $("#foreclosetable").DataTable({
+                language: {
+                    emptyTable: "Error loading data. Please try again later."
+                },
+                destroy: true
+            });
+        }
+    });
+}
+$(document).on("click", ".btnSendToInbox", function () {
+   
+    let psmId = $(this).data("psmid");
+    alert(psmId);
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to send this project back to Inbox?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Yes, send",
+        cancelButtonText: "Cancel"
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+            SendForecloseToInbox(psmId);
+        }
+
+    });
+});
 
 
+$(document).on("click", ".btnCloseAgain", function () {
 
+    let psmId = $(this).data("psmid");
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to close this project again?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Yes, close",
+        cancelButtonText: "Cancel"
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+            CloseProjectAgain(psmId);
+        }
+
+    });
+});
+
+function CloseProjectAgain(psmId) {
+
+    $.ajax({
+        url: '/Projects/CloseProjectAgain',
+        type: 'POST',
+        data: { psmId: psmId },
+
+        success: function (response) {
+
+            if (response.success) {
+                Swal.fire("Success", response.message, "success");
+                GetCloseProjects(2); // reload past closed tab
+            } else {
+                Swal.fire("Error", response.message, "error");
+            }
+        },
+
+        error: function () {
+            Swal.fire("Error", "Something went wrong.", "error");
+        }
+    });
+}
+function SendForecloseToInbox(psmId) {
+ 
+    $.ajax({
+        url: '/Projects/SendForecloseToInbox',
+        type: 'POST',
+        data: { Psmid: psmId },
+
+        success: function (response) {
+
+            if (response.success) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Success",
+                    text: response.message
+                });
+
+                GetCloseProjects(1);
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: response.message
+                });
+            }
+        },
+
+        error: function () {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Something went wrong."
+            });
+        }
+    });
+}
+
+//FORECLOSED TAB

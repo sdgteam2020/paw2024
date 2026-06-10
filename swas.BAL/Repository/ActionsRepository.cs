@@ -31,7 +31,7 @@ namespace swas.BAL.Repository
 
         public async Task<tbl_mActions> getActionByName(string name)
         {
-            return _dbContext.mActions.FirstOrDefault(a => a.Actions == name);
+            return _dbContext?.mActions?.FirstOrDefault(a => a.Actions == name);
         }
 
 

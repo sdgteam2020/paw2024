@@ -9,7 +9,7 @@ using swas.UI.Helpers;
 
 namespace swas.UI.Controllers
 {
-    [Authorize]
+    [Authorize (Roles ="Dte")]
     public class ActionExceptionController : Controller
     {
         private readonly IActionExceptionRepository _actionsException ;

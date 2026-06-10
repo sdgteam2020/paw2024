@@ -1,4 +1,5 @@
 ﻿@model InputModel
+
 @using Microsoft.AspNetCore.Identity;
 @using Newtonsoft.Json;
 @using swas.BAL.Helpers
@@ -96,6 +97,15 @@
                                 <td>
                                     <input asp-for="Tele_Army" class="form-control" maxlength="35" aria-required="true" placeholder="Tele No (Army)" />
                                     <span asp-validation-for="Tele_Army" class="text-danger"></span>
+                                </td>
+                            </tr> 
+                            <tr>
+                                <td>
+                                    <label asp-for="unitsusno" class="label control-label up-label-m5">Unit Sus No</label>
+                                </td>
+                                <td>
+                                    <input asp-for="unitsusno" class="form-control" maxlength="35" aria-required="true" placeholder="Unit SUS NO" />
+                                    <span asp-validation-for="unitsusno" class="text-danger"></span>
                                 </td>
                             </tr>
 

@@ -762,6 +762,7 @@ namespace swas.UI.Controllers
             udtl = await _unitRepository.GetAllUnitAsync();
 
             var userunit = udtl.FirstOrDefault(d => d.unitid == user?.unitid);
+            var unitsus = udtl.FirstOrDefault(x => x.unitid == user.unitid).UnitSusNo;
 
             var userunitname = userunit?.UnitName;
 
@@ -777,8 +778,8 @@ namespace swas.UI.Controllers
                 Tele_Army = user.Tele_Army,
                 RankId = RankId,
                 unitId = user.unitid,
-                RankName = UserUnitRank
-
+                RankName = UserUnitRank,
+                unitsusno= unitsus
             };
             users.UserName = user.UserName.Trim();
             users.OfficerName = user.Offr_Name.Trim();

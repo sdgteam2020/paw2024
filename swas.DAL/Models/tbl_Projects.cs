@@ -182,10 +182,18 @@ namespace swas.DAL.Models
         // ─── Technical Details ────────────────────────────────────────────────────────
 
         // Form: TextAreaFor, data_maxlength="500", required
-        [Required(ErrorMessage = "Aim and Scope is required.")]
-        [Display(Name = "Aim & Scope")]
-        [StringLength(501, ErrorMessage = "Aim & Scope cannot exceed 500 characters.")]
-        public string? AimScope { get; set; }
+        [Required(ErrorMessage = "Aim is required.")]
+        [Display(Name = "Aim")]
+        [StringLength(501, ErrorMessage = "Aim cannot exceed 500 characters.")]
+        public string? Aim { get; set; } 
+        [Required(ErrorMessage = "Aim is required.")]
+        [Display(Name = "Puropose")]
+        [StringLength(501, ErrorMessage = "Puropose cannot exceed 500 characters.")]
+        public string? Puropose { get; set; } 
+        [Required(ErrorMessage = "Aim is required.")]
+        [Display(Name = "Scope")]
+        [StringLength(501, ErrorMessage = "Scope cannot exceed 500 characters.")]
+        public string? Scope { get; set; }
 
         // Not present in this form view as required — optional
         [Display(Name = "IT infra required")]
@@ -215,7 +223,29 @@ namespace swas.DAL.Models
         // Not present in this form view as required — optional
         [Display(Name = "Brief details of proposed network and bandwidth requirements")]
         [StringLength(501, ErrorMessage = "Network/Bandwidth details cannot exceed 501 characters.")]
-        public string? NWBandWidthReqmt { get; set; }
+        public string? NWBandWidthReqmt { get; set; } 
+
+
+
+
+         [Display(Name = "Additional_Ports")]
+        [StringLength(501, ErrorMessage = "Additional_Ports details cannot exceed 501 characters.")]
+        public string? Additional_Ports { get; set; } 
+
+         [Display(Name = "Concurrent_users")]
+        [StringLength(501, ErrorMessage = "Concurrent_users details cannot exceed 501 characters.")]
+        public string? Concurrent_users { get; set; } 
+         [Display(Name = "API_Initegration")]
+        [StringLength(501, ErrorMessage = "API_Initegrationdetails cannot exceed 501 characters.")]
+        public string? API_Initegration { get; set; } 
+
+
+         [Display(Name = "Mission_Critical_appl_justif")]
+        [StringLength(501, ErrorMessage = "Mission_Critical_appl_justif details cannot exceed 501 characters.")]
+        public string? Mission_Critical_appl_justif { get; set; } 
+        
+        
+     
 
         // Not present in this form view as required — optional
         [Display(Name = "Projected date of completion incl. broad timelines")]
@@ -290,13 +320,8 @@ namespace swas.DAL.Models
         public string? Details_licensing { get; set; }
 
         // Form: TextAreaFor, data_maxlength="200", required
-        [Required(ErrorMessage = "Development Language is required.")]
-        [MaxLength(201)]
-        [Display(Name = "Development Language")]
-        [StringLength(201, ErrorMessage = "Development Language cannot exceed 200 characters.")]
-        [RegularExpression(@"^[A-Za-z0-9,\.\+\#\s/\-]{1,200}$",
-            ErrorMessage = "Development Language contains invalid characters.")]
-        public string? Devlopment_Language { get; set; }
+       
+       
 
         // Form: TextAreaFor, data_maxlength="200", required
         [Required(ErrorMessage = "Operation system of hosting environment is required.")]

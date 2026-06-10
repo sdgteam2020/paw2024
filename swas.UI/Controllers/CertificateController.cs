@@ -85,12 +85,12 @@ namespace swas.UI.Controllers
             catch (Exception ex)
             {
  
-                return StatusCode(500, new { success = false, message = "Error processing request." });
+                return StatusCode(500, new { success = false, message = ex.Message });
             }
 
             var data = _certificateService.GetCertificateData(projid, substage);
 
-            string ip = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+            string ip =  HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
             string watermark = $"{ip} {DateTime.Now:dd-MM-yyyy HH:mm:ss}";
             Login login = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
             byte[] pdfBytes = _pdfBuilder.BuildCertificate(data, ip, ddlRemarks, watermark, login, substage);

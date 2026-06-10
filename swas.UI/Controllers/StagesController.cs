@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace swas.UI.Controllers
 {
-    [Authorize]
     public class StagesController : Controller
     {
         private readonly IStagesRepository _stagesRepository;

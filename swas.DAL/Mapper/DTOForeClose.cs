@@ -10,6 +10,9 @@ namespace swas.BAL.DTO
     public class DTOForeClose
     {
         public int projid { get; set; }
+        public int PsmId { get; set; }
+
+
         [NotMapped]
         public string? EncyID { get; set; }
         public string? ProjName { get; set; }

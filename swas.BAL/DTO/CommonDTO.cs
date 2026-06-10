@@ -410,6 +410,9 @@ namespace swas.BAL.DTO
        [Display(Name = "Tele No (Army)")]
         public string? Tele_Army { get; set; }
 
+        [Display(Name = "Unit Sus No")]
+        public string? unitsusno { get; set; }
+
     }
 
 

@@ -1,184 +1,4 @@
 -----------------------------------------------------------------------------
-Date : 29-04-2026 10:56:02
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2026 10:56:02
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:03:22
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:03:22
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:11:28
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:11:28
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:12:00
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:12:00
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:12:07
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:12:07
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:13:33
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:13:33
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:13:47
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:13:47
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:13:59
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:13:59
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:14:08
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:14:08
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:14:20
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:14:20
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:14:28
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:14:28
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:14:34
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:14:34
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:15:05
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:15:06
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:15:59
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:15:59
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:16:31
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:16:31
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:17:25
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:17:25
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:17:49
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:17:49
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:19:16
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:19:16
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:20:14
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:20:14
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:20:41
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:20:41
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:21:09
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:21:09
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:21:42
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:21:42
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:21:52
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:21:52
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:22:28
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:22:28
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:23:00
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:23:00
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:23:40
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:23:40
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:34:06
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:34:06
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:40:33
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:40:33
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:41:18
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:41:18
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:46:23
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:46:23
-Request failed & Status Code : 200
------------------------------------------------------------------------------
 Date : 29-04-2022 11:47:24
 Data is Null. This method or property cannot be called on Null values.
 -----------------------------------------------------------------------------
@@ -898,3 +718,183 @@ The entity type 'DTOForeClose' requires a primary key to be defined. If you inte
 -----------------------------------------------------------------------------
 Date : 19-05-2026 14:27:09
 The entity type 'DTOForeClose' requires a primary key to be defined. If you intended to use a keyless entity type, call 'HasNoKey' in 'OnModelCreating'. For more information on keyless entity types, see https://go.microsoft.com/fwlink/?linkid=2141943.
+-----------------------------------------------------------------------------
+Date : 25-05-2026 14:40:48
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 01-06-2026 10:09:07
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 01-06-2026 10:09:07
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 02-06-2026 11:50:33
+Error while Fetching Closeitems : Invalid column name 'ProjId'.
+-----------------------------------------------------------------------------
+Date : 02-06-2026 15:46:59
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 02-06-2026 15:46:59
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 02-06-2026 16:27:27
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 02-06-2026 16:27:27
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 02-06-2026 16:27:27
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 02-06-2026 16:27:31
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 02-06-2026 16:27:32
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 02-06-2026 16:27:32
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 02-06-2026 16:32:36
+Unhandled error in IsReadComment.
+-----------------------------------------------------------------------------
+Date : 02-06-2026 16:33:52
+Unhandled error in IsReadComment.
+-----------------------------------------------------------------------------
+Date : 02-06-2026 16:36:17
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 02-06-2026 16:36:17
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 02-06-2026 16:36:17
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 02-06-2026 16:36:21
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 02-06-2026 16:36:22
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 02-06-2026 16:36:22
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 02-06-2026 16:36:30
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 02-06-2026 16:57:17
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 02-06-2026 16:57:18
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 02-06-2026 17:01:54
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 02-06-2026 17:01:54
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 03-06-2026 11:24:17
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 03-06-2026 11:24:17
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 04-06-2026 15:26:02
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 04-06-2026 15:26:02
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 04-06-2026 16:56:25
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 04-06-2026 16:56:25
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 04-06-2026 16:56:29
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 04-06-2026 16:56:29
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 04-06-2026 16:56:31
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 04-06-2026 16:56:35
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 04-06-2026 16:56:35
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:22:58
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:22:58
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:23:03
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:23:03
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:23:08
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:23:08
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:23:17
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:23:17
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:24:14
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:24:14
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:26:10
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:26:10
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:26:28
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:26:28
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:27:09
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:27:12
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:29:50
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:29:50
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:30:14
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:30:14
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:35:56
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:35:56
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:36:51
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 09-06-2026 15:37:11
+Request failed & Status Code : 200

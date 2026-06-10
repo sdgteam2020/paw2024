@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] =
+    "User Permission Mapping";
+}
+
+@Html.AntiForgeryToken()
+
+<div class="card shadow-sm">
+
+    <div class="card-header">
+        <h4>
+            User Permission Mapping
+        </h4>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-5">
+
+                <label>
+                    Select User
+                </label>
+
+                <select id="ddlUser"
+                        class="form-control select2">
+
+                    <option value="">
+                        Select User
+                    </option>
+
+                    @foreach (var item
+                    in ViewBag.Users)
+                    {
+                        <option value="@item.Value">
+
+                            @item.Text
+
+                        </option>
+                    }
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <hr />
+
+        <div id="userPermissionDiv">
+        </div>
+
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/DeveloperJs/UserPermission.js">
+    </script>
+
+    <script>
+        $(document)
+        .ready(function () {
+
+            $('.select2')
+            .select2();
+        });
+    </script>
+}

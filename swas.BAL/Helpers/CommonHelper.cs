@@ -1,4 +1,5 @@
 ﻿using ASPNetCoreIdentityCustomFields.Data;
+using Microsoft.AspNetCore.Http.Connections;
 using swas.BAL.DTO;
 using swas.BAL.Utility;
 using swas.DAL;
@@ -34,6 +35,7 @@ namespace swas.BAL.Helpers
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Error on UserRankDetail " + ex.Message);
                 return string.Empty;
             }
         }
@@ -52,6 +54,7 @@ namespace swas.BAL.Helpers
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Error On GetRankByRankid " + ex.Message);
                 return string.Empty;
             }
         }

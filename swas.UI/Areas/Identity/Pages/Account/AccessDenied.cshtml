@@ -1,11 +1,44 @@
 ﻿@page
 @using swas.Areas.Identity.Pages.Account
 @model AccessDeniedModel
-@{
-    ViewData["Title"] = "********** Access denied *************";
-}
 
-<header>
-    <h1 class="text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">You do not have rights to access this resource. Contact Administrator....</p>
-</header>
+@{
+    
+    ViewData["Title"] = "Access Denied";
+}
+<link href="~/css/accessdenied.css" rel="stylesheet" />
+<link href="~/assets/css/bootstrap.min.css" rel="stylesheet">
+<link href="~/font-awesome/css/all.min.css" rel="stylesheet" />
+<div class="access-denied-wrapper">
+    <div class="access-denied-card">
+
+        <div class="access-denied-icon">
+            <i class="fas fa-lock"></i>
+        </div>
+
+        <h2>Access Denied</h2>
+
+        <p>
+            You do not have permission to access this resource.
+            Please contact the administrator for access rights.
+        </p>
+
+        <div class="access-denied-reason">
+            <strong>Reason:</strong> Your current role or permissions do not allow access to this page.
+        </div>
+
+        <div class="access-denied-actions">
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="btn btn-primary">
+                <i class="fas fa-home"></i> Go to Home
+            </a>
+
+            <a href="javascript:history.back()"
+               class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Go Back
+            </a>
+        </div>
+
+    </div>
+</div>

@@ -87,10 +87,10 @@
                                 @Html.AntiForgeryToken()
 
                                 <!-- Progress Bar -->
-                                @if (Model.ProjId > 0)
+                                @if (Model?.ProjId > 0)
                                 {
-                                    <input hidden asp-for="ProjId" />
-                                    <input hidden asp-for="CurrentPslmId" />
+                                <input hidden asp-for="ProjId" />
+                                <input hidden asp-for="CurrentPslmId" />
                                 <input hidden asp-for="ProjCode" />
                                 }
 
@@ -98,107 +98,101 @@
                                 <fieldset id="1">
                                     <div class="form-card">
                                      
-
                                         <div class="new-table tablebasic" id="tablebasic">
                                             <!-- Your existing Basic Details form fields go here -->
                                             <!-- (Keeping your original fields as they are) -->
-                                            <div class="row g-3 mb-3">
-                                                <div class="col-md-3">
-                                                    <label class="me-2 fw-bold">Request Admin To Ingest-Legacy Proj / Old Proj</label>
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <div class="btn-group mb-2" role="group">
-                                                        <input type="radio" class="btn-check" name="mcalender_dates" id="autoDate" value="1" @(selectedvalue == 1 ? "checked" : "")>
-                                                        <label class="btn btn-outline-primary" for="autoDate">On</label>
-                                                        <input type="radio" class="btn-check" name="mcalender_dates" id="Manualdate" value="0" @(selectedvalue == 0 ? "checked" : "")>
-                                                        <label class="btn btn-outline-primary" for="Manualdate">Off</label>
-                                                    </div>
-                                                </div>
-                                              
-                                                <div class="col-md-4">
-                                                    <div class="flex-grow-1 mb-2 d-flex flex-column">
-                                                        <div class="input-container">
-                                                            <input type="text"
-                                                                   class="form-control text-center RequestRemarks "
-                                                                   id="RequestRemarks"
-                                                                   data-maxlength="200"
-                                                                   placeholder="Max 200 Char ">
-                                                            <label>Remarks to Justify Legacy Project Ingestion</label>
+											<div class="row g-3 mb-3">
+												<div class="col-md-3">
+													<label class="me-2 fw-bold">Request Admin To Ingest-Legacy Proj / Old Proj</label>
+												</div>
+												<div class="col-md-1">
+													<div class="btn-group mb-2" role="group">
+														<input type="radio" class="btn-check" name="mcalender_dates" id="autoDate" value="1" @(selectedvalue == 1 ? "checked" : "")>
+														<label class="btn btn-outline-primary" for="autoDate">On</label>
+														<input type="radio" class="btn-check" name="mcalender_dates" id="Manualdate" value="0" @(selectedvalue == 0 ? "checked" : "")>
+														<label class="btn btn-outline-primary" for="Manualdate">Off</label>
+													</div>
+												</div>
 
-                                                        <span class="charErrorMsg text-start d-none paw-red-font mt-1">
-                                                            Cannot exceed 200 characters!
-                                                        </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
+												<div class="col-md-4">
+													<div class="flex-grow-1 mb-2 d-flex flex-column">
+														<div class="input-container">
+															<input type="text"
+																   class="form-control text-center RequestRemarks "
+																   id="RequestRemarks"
+																   data-maxlength="200"
+																   placeholder="Max 200 Char ">
+															<label>Remarks to Justify Legacy Project Ingestion</label>
 
-                                                <div class="col-md-4">
-                                                    <div class="input-container">
+															<span class="charErrorMsg text-start d-none paw-red-font mt-1">
+																Cannot exceed 200 characters!
+															</span>
+														</div>
+													</div>
+												</div>
 
-                                                        <div id="ApptypeDiv">
-                                                            <input hidden asp-for="Apptype" />
-                                                            <select id="ddlApptype" class="form-select requiredField ddl-apptype" data-toggle="tooltip" title="Select" required></select>
-                                                            <label for="@Html.IdFor(model => model.Apptype)">Application Type<font class="paw-red-font"><b>*</b></font></label>
-
-                                                            <div class="invalid-feedback">Stakeholder Required</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- ... rest of your Basic Details fields (Project Name, Start Date, etc.) ... -->
-                                            </div>
-
-
-
-
-
-
-                                            <div class="row g-3 mb-3">
-
-
-                                                <div class="col-md-4">
-                                                    <div class="input-container">
-                                                        @Html.DropDownListFor(model => model.Is_AI_ML,
-                                                                 (IEnumerable<SelectListItem>)ViewBag.IsAI_ML,
-                                                                 new { @class = "form-select requiredField", required = "required" })
-                                                        <label for="@Html.IdFor(model => model.Is_AI_ML)">AI/ML Project?<font class="paw-red-font"><b>*</b></font></label>
-
-                                                        <div class="invalid-feedback">AI/ML Project Required</div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="input-container">
-                                                        @Html.DropDownListFor(model => model.IsWhitelisted,
-                                                                 (IEnumerable<SelectListItem>)ViewBag.WhitelistOptions,
-                                                                 new { @class = "form-select requiredField", required = "required" })
-                                                        <label for="@Html.IdFor(model => model.IsWhitelisted)">Already Whitelisted<font class="paw-red-font"><b>*</b></font></label>
-
-                                                    <div class="invalid-feedback">Whitelist Status Required</div>
-                                                    </div>
-                                                </div>
-
-
-
-                                                <div class="col-md-4">
+												<div class="col-md-4">
 													<div class="input-container">
-                                                        <div class="d-flex">
-                                                            @Html.EditorFor(model => model.ProjName,
-                                                                     new
-                                                                     {
-                                                                         htmlAttributes = new
-                                                                         {
-                                                                             @class = "form-control requiredField char-limit mergeprojnamewithrevet",
-                                                                             @data_maxlength = "200",
-                                                                             required = "required",
 
-                                                                             @placeholder = "Max 200 Char"
-                                                                         }
-                                                                     })
+														<div id="ApptypeDiv">
+															<input hidden asp-for="Apptype" />
+															<select id="ddlApptype" class="form-select requiredField ddl-apptype" data-toggle="tooltip" title="Select" required></select>
+															<label for="@Html.IdFor(model => model.Apptype)">Application Type<font class="paw-red-font"><b>*</b></font></label>
 
-                                                            <label for="@Html.IdFor(model => model.ProjName)">Project Name<font class="paw-red-font"><b>*</b></font></label>
-                                                            <span class="input-group-text d-none" id="reVettedTag">Re-Vetting</span>
-                                                        </div>
+															<div class="invalid-feedback">Stakeholder Required</div>
+														</div>
+													</div>
+												</div>
+												<!-- ... rest of your Basic Details fields (Project Name, Start Date, etc.) ... -->
+											</div>
+
+											<div class="row g-3 mb-3">
+
+
+												<div class="col-md-4">
+													<div class="input-container">
+														@Html.DropDownListFor(model => model.Is_AI_ML,
+																										(IEnumerable<SelectListItem>)ViewBag.IsAI_ML,
+																										new { @class = "form-select requiredField", required = "required" })
+														<label for="@Html.IdFor(model => model.Is_AI_ML)">AI/ML Project?<font class="paw-red-font"><b>*</b></font></label>
+
+														<div class="invalid-feedback">AI/ML Project Required</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="input-container">
+														@Html.DropDownListFor(model => model.IsWhitelisted,
+																										(IEnumerable<SelectListItem>)ViewBag.WhitelistOptions,
+																										new { @class = "form-select requiredField", required = "required" })
+														<label for="@Html.IdFor(model => model.IsWhitelisted)">Already Whitelisted<font class="paw-red-font"><b>*</b></font></label>
+
+														<div class="invalid-feedback">Whitelist Status Required</div>
+													</div>
+												</div>
+
+
+
+												<div class="col-md-4">
+													<div class="input-container">
+														<div class="d-flex">
+															@Html.EditorFor(model => model.ProjName,
+																														new
+																														{
+																															htmlAttributes = new
+																															{
+																																@class = "form-control requiredField char-limit mergeprojnamewithrevet",
+																																@data_maxlength = "200",
+																																required = "required",
+
+																																@placeholder = "Max 200 Word"
+																															}
+																														})
+
+															<label for="@Html.IdFor(model => model.ProjName)">Name Of Project<font class="paw-red-font"><b>*</b></font></label>
+															<span class="input-group-text d-none" id="reVettedTag">Re-Vetting</span>
+														</div>
 														<span class="charErrorMsg d-none paw-red-font">Cannot exceed 200 characters!</span>
-													
+
 														<div class="invalid-feedback">Project Name Required</div>
 													</div>
 													<ul id="projectNameDropdown" class="dropdown-list ">
@@ -208,67 +202,48 @@
 
 												</div>
 
-										
-                                                
-                                            </div>
-
-                                            <div class="row g-3 mb-3">
 
 
-                                                <div class="col-md-4">
-                                                    <div class="input-container">
-
-                                                        @Html.TextBoxFor(model => model.InitiatedDate, "{0:yyyy-MM-dd}",
-                                                                 new { @class = "form-control requiredField w-100p", type = "date", required = "required" })
-
-                                                        <label for="@Html.IdFor(model => model.InitiatedDate)">
-                                                            <span>
-                                                                Project Start Date
-                                                            </span><font class="paw-red-font">
-                                                                <b>*</b>
-                                                            </font>
-
-                                                        </label>
-
-                                                        <div class="invalid-feedback">Initiation Date Required</div>
-
-                                                    </div>
-                                                </div>
-
-
-
-                                                <div class="col-md-4">
-                                                    <div class="input-container">
-
-                                                        @Html.TextBoxFor(model => model.CompletionDate, "{0:yyyy-MM-dd}",
-                                                                 new { @class = "form-control requiredField w-100p", type = "date", required = "required" })
-                                                        <label for="@Html.IdFor(model => model.CompletionDate)">Project Completion Date<font class="paw-red-font"><b>*</b></font></label>
-
-                                                    </div>
-                                                    <div class="invalid-feedback">Completion Date Required</div>
-                                                </div>
-
-
-                                                <div class="col-md-4">
-                                                    <div class="input-container">
-
-                                                        @Html.EditorFor(model => model.InitialRemark,
-                                                                 new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", required = "required", @placeholder = "Max Char 200 " } })
-                                                        <label for="@Html.IdFor(model => model.InitialRemark)">InitialRemark<font class="paw-red-font"><b>*</b></font></label>
-
-                                                        <span class="charErrorMsg  d-none  paw-red-font">Cannot exceed 200 characters!</span>
-                                                        <div class="invalid-feedback">Initial Remark Required</div>
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-
-
-
-
+											</div>
 
 											<div class="row g-3 mb-3">
+
+
+												<div class="col-md-4">
+													<div class="input-container">
+
+														@Html.TextBoxFor(model => model.InitiatedDate, "{0:yyyy-MM-dd}",
+																										new { @class = "form-control requiredField w-100p", type = "date", required = "required" })
+
+														<label for="@Html.IdFor(model => model.InitiatedDate)">
+															<span>
+																Project Start Date
+															</span><font class="paw-red-font">
+																<b>*</b>
+															</font>
+
+														</label>
+
+														<div class="invalid-feedback">Initiation Date Required</div>
+
+													</div>
+												</div>
+
+
+
+												<div class="col-md-4">
+													<div class="input-container">
+
+														@Html.TextBoxFor(model => model.CompletionDate, "{0:yyyy-MM-dd}",
+																										new { @class = "form-control requiredField w-100p", type = "date", required = "required" })
+														<label for="@Html.IdFor(model => model.CompletionDate)">Probable Date/Time of Completion (months or DDMMYY)<font class="paw-red-font"><b>*</b></font></label>
+
+													</div>
+													<div class="invalid-feedback">Completion Date Required</div>
+												</div>
+
+
+
 
 												<div class="col-md-4">
 													<div class="input-container">
@@ -280,6 +255,12 @@
 														<div class="invalid-feedback">Sponsor Required</div>
 													</div>
 												</div>
+
+											</div>
+
+											<div class="row g-3 mb-3">
+
+
 												<div class="col-md-4">
 													<div class="input-container">
 
@@ -306,39 +287,21 @@
 
 												</div>
 
-												
-                                            </div>
-
-											<div class="row g-3 mb-3">
-
-
-												<div class="col-md-4">
-													<div id="HostTypeDiv">
-														<div class="input-container">
-
-															<input hidden asp-for="HostTypeID" />
-															<select id="ddlHostTypeID" class="form-select requiredField" data-toggle="tooltip" title="Select  " required></select>
-															<label for="@Html.IdFor(model => model.HostTypeID)">Hosted On<font class="paw-red-font"><b>*</b></font></label>
-
-															<div class="invalid-feedback">Hosted on Required</div>
-														</div>
-													</div>
-												</div>
-
-
 												<div class="col-md-4">
 													<div class="input-container">
+														@Html.TextBoxFor(model => model.EnvisagedCost,
 
-														@Html.TextAreaFor(model => model.AimScope, new { @class = "form-control requiredField char-limit", @data_maxlength = "500", required = "required", @placeholder = "Max 500 Char" })
-														<label for="@Html.IdFor(model => model.AimScope)">Aim and Scope<font class="paw-red-font"><b>*</b></font></label>
+																										new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "50", required = "required", @placeholder = "Max Char 50 " })
+														<label for="@Html.IdFor(model => model.EnvisagedCost)">Likely Total Cost including AMC/Licences of In-house<font class="paw-red-font"><b>*</b></font></label>
+														<span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 characters!</span>
+														<div class="invalid-feedback">Likely Cose(Rs) Required</div>
 
-
-														<span class="charErrorMsg d-none paw-red-font">Cannot exceed 500 characters!</span>
-
-														<div class="invalid-feedback">Aim and Scope Required</div>
 													</div>
 
 												</div>
+											</div>
+
+											<div class="row g-3 mb-3">
 
 												<div class="col-md-4">
 													<div class="input-container">
@@ -351,150 +314,277 @@
 																											required = "required",
 																											id = "Security_Classification"   // ✅ ID here
 																										})
-														<label for="@Html.IdFor(model => model.Security_Classification)">Security Classification<font class="paw-red-font"><b>*</b></font></label>
+														<label for="@Html.IdFor(model => model.Security_Classification)">Type of Data/Content<font class="paw-red-font"><b>*</b></font></label>
 
 														<div class="invalid-feedback">Security Classification Required</div>
 													</div>
 												</div>
+												<div class="col-md-4">
+													<div id="HostTypeDiv">
+														<div class="input-container">
+
+															<input hidden asp-for="HostTypeID" />
+															<select id="ddlHostTypeID" class="form-select requiredField" data-toggle="tooltip" title="Select  " required></select>
+															<label for="@Html.IdFor(model => model.HostTypeID)">Deployment Architecture<font class="paw-red-font"><b>*</b></font></label>
+
+															<div class="invalid-feedback">Deployment Architecture Required</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="input-container">
+														@Html.DropDownListFor(model => model.TypeofSW,
+																										(IEnumerable<SelectListItem>)ViewBag.TypeofSWOption,
+																										new { @class = "form-select requiredField w-100p", required = "required" })
+														<label for="@Html.IdFor(model => model.TypeofSW)">Development Methodology<font class="paw-red-font"><b>*</b></font></label>
+
+														<div class="invalid-feedback">Type of Software Required</div>
+													</div>
+												</div>
+
+
+
+
 											</div>
 
-                                           
-
-                                            <div class="form-card">
-                                               
-
-                                                <div class="new-table tablebasic" id="tablebasic2">
-                                                    <div class="row g-3 mb-3">
-
-                                                       
-                                                        <div class="col-md-4">
-                                                            <div class="input-container">
-                                                                @Html.TextBoxFor(model => model.EnvisagedCost,
-
-                                                                         new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "50", required = "required", @placeholder = "Max Char 50 " })
-                                                                <label for="@Html.IdFor(model => model.EnvisagedCost)">Likely Cost(₹)<font class="paw-red-font"><b>*</b></font></label>
-                                                                <span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 characters!</span>
-                                                                <div class="invalid-feedback">Likely Cose(Rs) Required</div>
-
-                                                            </div>
-                                                         
-                                                        </div>
-                                                   
-                                                        <div class="col-md-4">
-                                                            <div class="input-container">
-                                                                @Html.TextAreaFor(model => model.TechStackProposed,
-                                                                         new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "500", required = "required", @placeholder = "Max Char 500 " })
-                                                                <label for="@Html.IdFor(model => model.TechStackProposed)"><span class="font-13">Software Platform & Tech Stack (incl. OS Dependencies)</span><font class="paw-red-font"><b>*</b></font></label>
-                                                                <span class="charErrorMsg d-none paw-red-font">Cannot exceed 500 characters!</span>
-                                                                <div class="invalid-feedback">TechStackProposed Required</div>
-                                                                
-                                                            </div>
-                                                            
-                                                        </div>
-                                                   
-                                                        <div class="col-md-4">
-                                                            <div class="input-container">
-                                                                @Html.DropDownListFor(model => model.TypeofSW,
-                                                                         (IEnumerable<SelectListItem>)ViewBag.TypeofSWOption,
-                                                                         new { @class = "form-select requiredField w-100p", required = "required" })
-                                                                <label for="@Html.IdFor(model => model.TypeofSW)">Type of Software<font class="paw-red-font"><b>*</b></font></label>
-
-                                                            <div class="invalid-feedback">Type of Software Required</div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
+											<div class="form-card">
 
 
-                                                    <div class="row g-3 mb-3">
-
-
-
-                                                        <div class="col-md-4">
-                                                            <div class="input-container">
-                                                                @Html.DropDownListFor(model => model.BeingDevpInhouse,
-                                                                         (IEnumerable<SelectListItem>)ViewBag.BeingDevpInhouseOption,
-                                                                         new { @class = "form-select requiredField w-100p", required = "required" })
-                                                                <label for="@Html.IdFor(model => model.BeingDevpInhouse)"><span class="font-13">Development Approach (In-house / Outsourced)</span><font class="paw-red-font"><b>*</b></font></label>
-
-                                                            <div class="invalid-feedback">Being devp in house or through Outsourced Required</div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-4">
-                                                            <div class="input-container">
-                                                                @Html.TextAreaFor(model => model.Detlsof_OS,
-                                                                         new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "500", required = "required", @placeholder = "Max Char 500 " })
-
-                                                                <label for="@Html.IdFor(model => model.Detlsof_OS)"><span class="font-13">OS & System Software Requirements</span><font class="paw-red-font"><b>*</b></font></label>
-                                                                <span class="charErrorMsg d-none paw-red-font">Cannot exceed 500 characters!</span>
-                                                                <div class="invalid-feedback">OS & System Software Required</div>
-                                                            </div>
-                                                          
-                                                        </div>
+												<div class="new-table tablebasic" id="tablebasic2">
+													<div class="row g-3 mb-3">
 														<div class="col-md-4">
 															<div class="input-container">
-																@Html.TextBoxFor(model => model.ProposedDB_Engine,
-																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "50", required = "required", @placeholder = "Max Char 50 " })
-																<label for="@Html.IdFor(model => model.ProposedDB_Engine)"><span class="font-13">Proposed Database Engine</span><font class="paw-red-font"><b>*</b></font></label>
-																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 characters!</span>
-																<div class="invalid-feedback">Proposed Database Engine Required</div>
+
+																@Html.EditorFor(model => model.DetlsofUserBase,
+																															new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", required = "required", @placeholder = "Max Char 200 " } })
+																<label for="@Html.IdFor(model => model.DetlsofUserBase)">Details of User Base (pan IA users/xxx Directorate etc)<font class="paw-red-font"><b>*</b></font></label>
+
+																<span class="charErrorMsg  d-none  paw-red-font">Cannot exceed 200 characters!</span>
+																<div class="invalid-feedback">Detls of UserBase Required</div>
+															</div>
+														</div>
+
+														<div class="col-md-4">
+															<div class="input-container">
+
+																@Html.TextAreaFor(model => model.Aim, new { @class = "form-control requiredField char-limit", @data_maxlength = "500", required = "required", @placeholder = "Max 500 Char" })
+																<label for="@Html.IdFor(model => model.Aim)">Aim of Appln/Project<font class="paw-red-font"><b>*</b></font></label>
+
+
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 500 characters!</span>
+
+																<div class="invalid-feedback">Aim is Required</div>
+															</div>
+
+														</div>
+														<div class="col-md-4">
+															<div class="input-container">
+
+																@Html.TextAreaFor(model => model.Scope, new { @class = "form-control requiredField char-limit", @data_maxlength = "500", required = "required", @placeholder = "Max 500 Char" })
+																<label for="@Html.IdFor(model => model.Scope)">Scope of Appln/Project<font class="paw-red-font"><b>*</b></font></label>
+
+
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 500 characters!</span>
+
+																<div class="invalid-feedback">Scope is Required</div>
+															</div>
+
+														</div>
+
+														<div class="col-md-4">
+															<div class="input-container">
+
+																@Html.TextAreaFor(model => model.Puropose, new { @class = "form-control requiredField char-limit", @data_maxlength = "500", required = "required", @placeholder = "Max 500 Char" })
+																<label for="@Html.IdFor(model => model.Puropose)">Puropose of Appln/Project<font class="paw-red-font"><b>*</b></font></label>
+
+
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 500 characters!</span>
+
+																<div class="invalid-feedback">Puropose is Required</div>
+															</div>
+
+														</div>
+														<div class="col-md-4">
+															<div class="input-container">
+
+																@Html.EditorFor(model => model.InitialRemark,
+																															new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", required = "required", @placeholder = "Max Char 200 " } })
+																<label for="@Html.IdFor(model => model.InitialRemark)">Bref Justification<font class="paw-red-font"><b>*</b></font></label>
+
+																<span class="charErrorMsg  d-none  paw-red-font">Cannot exceed 200 characters!</span>
+																<div class="invalid-feedback">Bref Justification Required</div>
+															</div>
+														</div>
+														<div class="col-md-4">
+															<div class="input-container">
+
+																@Html.EditorFor(model => model.ReqmtJustification,
+																															new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", required = "required", @placeholder = "Max Char 200 " } })
+																<label for="@Html.IdFor(model => model.ReqmtJustification)">Detailed Justification<font class="paw-red-font"><b>*</b></font></label>
+
+																<span class="charErrorMsg  d-none  paw-red-font">Cannot exceed 200 characters!</span>
+																<div class="invalid-feedback">Details Justification Required</div>
+															</div>
+														</div>
+														<div class="col-md-4">
+															<div class="input-container">
+																@Html.TextAreaFor(model => model.Detlsof_OS,
+																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "500", required = "required", @placeholder = "Max 50 Words" })
+
+																<label for="@Html.IdFor(model => model.Detlsof_OS)"><span class="font-13">No of (VM) Required at Data Centre for hosting (incl RAM,CPUs,GPUs,storage)</span><font class="paw-red-font"><b>*</b></font></label>
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 500 characters!</span>
+																<div class="invalid-feedback">OS & System Software Required</div>
 															</div>
 
 														</div>
 
 
-                                                    </div>
-
-                                                    <div class="row g-3 mb-3">
-
-                                                        <div class="col-md-4">
-                                                            <div class="input-container">
-                                                                @Html.TextAreaFor(model => model.DetlsofSw_Architecture,
-                                                                         new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "200", required = "required", @placeholder = "Max 200 Char " })
-                                                                <label for="@Html.IdFor(model => model.DetlsofProposed_Architecture)"><span class="font-13">Detls of proposed architecture</span><font class="paw-red-font"><b>*</b></font></label>
-                                                                <span class="charErrorMsg d-none paw-red-font">Cannot exceed 200 characters!</span>
-                                                                <div class="invalid-feedback">Detls of proposed architecture Required</div>
-
-                                                            </div>
-                                                         
-                                                        </div>
 
 
-                                                        <div class="col-md-4">
-                                                            <div class="input-container">
-                                                                @Html.TextAreaFor(model => model.Devlopment_Language,
-                                                                         new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "200", required = "required", @placeholder = "Max 200 Char " })
-                                                                <label for="@Html.IdFor(model => model.Devlopment_Language)"><span class="font-13">Development Language</span><font class="paw-red-font"><b>*</b></font></label>
-                                                                <span class="charErrorMsg d-none paw-red-font">Cannot exceed 200 characters!</span>
-                                                                <div class="invalid-feedback">Development Language Required</div>
+														<div class="col-md-4">
+															<div class="input-container">
+																@Html.TextAreaFor(model => model.TechStackProposed,
+																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "500", required = "required", @placeholder = "Max Char 500 " })
+																<label for="@Html.IdFor(model => model.TechStackProposed)"><span class="font-13">Technical Stack with ver (java,.Net,Django,Node.js etc)</span><font class="paw-red-font"><b>*</b></font></label>
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 500 characters!</span>
+																<div class="invalid-feedback">TechStackProposed Required</div>
 
-                                                            </div>
-                                                            
-                                                        </div>
+															</div>
 
-                                                     
-                                                        <div class="col-md-4">
-                                                            <div class="input-container">
-                                                                @Html.TextAreaFor(model => model.operation_system_hosting_env,
-                                                                         new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "200", required = "required", @placeholder = "Max 200 Char " })
-                                                                <label for="@Html.IdFor(model => model.operation_system_hosting_env)"><span class="font-13">Operation system of hosting env</span><font class="paw-red-font"><b>*</b></font></label>
-                                                                <span class="charErrorMsg d-none paw-red-font">Cannot exceed 200 characters!</span>
-                                                                <div class="invalid-feedback">Operation system of hosting env Required</div>
+														</div>
 
-                                                            </div>
-                                                           
-                                                        </div>
 
-                                                    </div>
 
-                                                    <div class="row g-3 mb-3">
-                                                    </div>
 
-                                                    <div class="row g-3 mb-3">
-                                                    </div>
-                                                </div>
-                                            </div>
+														<div class="col-md-4">
+															<div class="input-container">
+
+																@Html.TextAreaFor(model => model.NWBandWidthReqmt, new { @class = "form-control requiredField char-limit", @data_maxlength = "500", required = "required", @placeholder = "Max 50 Words" })
+																<label for="@Html.IdFor(model => model.NWBandWidthReqmt)">BandWidth Reqmts (e.g &lt; 2Mbps etc)<font class="paw-red-font"><b>*</b></font></label>
+
+
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 Words!</span>
+
+																<div class="invalid-feedback">BandWidth Reqmts Required</div>
+															</div>
+
+														</div>
+
+														<div class="col-md-4">
+															<div class="input-container">
+																@Html.TextAreaFor(model => model.operation_system_hosting_env,
+																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "200", required = "required", @placeholder = "Max 20 Words " })
+																<label for="@Html.IdFor(model => model.operation_system_hosting_env)"><span class="font-13">Operating System of hosting enct (e.g MS Server/Ubunto)</span><font class="paw-red-font"><b>*</b></font></label>
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 200 characters!</span>
+																<div class="invalid-feedback">Operation system of hosting env Required</div>
+
+															</div>
+
+														</div>
+
+														<div class="col-md-4">
+															<div class="input-container">
+																@Html.TextAreaFor(model => model.ProposedDB_Engine,
+																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "200", required = "required", @placeholder = "Max 20 Words " })
+																<label for="@Html.IdFor(model => model.ProposedDB_Engine)"><span class="font-13">Database (RDBMS/No SQl etc)</span><font class="paw-red-font"><b>*</b></font></label>
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 200 characters!</span>
+																<div class="invalid-feedback">ProposedDB_Engine Required</div>
+
+															</div>
+
+														</div>
+
+														<div class="col-md-4">
+															<div class="input-container">
+
+																@Html.EditorFor(model => model.Additional_Ports,
+																															new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", required = "required", @placeholder = "Max Char 200 " } })
+																<label for="@Html.IdFor(model => model.Additional_Ports)">Any additional port used (Other than 443) with valid justificaiton<font class="paw-red-font"><b>*</b></font></label>
+
+																<span class="charErrorMsg  d-none  paw-red-font">Cannot exceed 200 characters!</span>
+																<div class="invalid-feedback">Any additional port Required</div>
+															</div>
+														</div>
+														<div class="col-md-4">
+															<div class="input-container">
+																@Html.TextAreaFor(model => model.DetlsofSw_Architecture,
+																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "200", required = "required", @placeholder = "Max 200 Char " })
+																<label for="@Html.IdFor(model => model.DetlsofProposed_Architecture)"><span class="font-13">Proposed Architecture (Centralised/Federated,Hybrid)</span><font class="paw-red-font"><b>*</b></font></label>
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 200 characters!</span>
+																<div class="invalid-feedback">Detls of proposed architecture Required</div>
+
+															</div>
+
+														</div>
+														<div class="col-md-4">
+															<div class="input-container">
+																@Html.DropDownListFor(model => model.BeingDevpInhouse,
+																															(IEnumerable<SelectListItem>)ViewBag.BeingDevpInhouseOption,
+																															new { @class = "form-select requiredField w-100p", required = "required" })
+																<label for="@Html.IdFor(model => model.BeingDevpInhouse)"><span class="font-13">Development Approach (In-house / Outsourced)</span><font class="paw-red-font"><b>*</b></font></label>
+
+																<div class="invalid-feedback">Being devp in house or through Outsourced Required</div>
+															</div>
+														</div>
+														<div class="col-md-4">
+															<div class="input-container">
+																@Html.TextBoxFor(model => model.Concurrent_users,
+																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "50", required = "required", @placeholder = "Max 20 Words " })
+																<label for="@Html.IdFor(model => model.Concurrent_users)"><span class="font-13">No of Expected Concurrent users</span><font class="paw-red-font"><b>*</b></font></label>
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 characters!</span>
+																<div class="invalid-feedback">Expected Concurrent users Required</div>
+															</div>
+
+														</div>
+
+														<div class="col-md-4">
+															<div class="input-container">
+																@Html.TextBoxFor(model => model.API_Initegration,
+																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "50", required = "required", @placeholder = "Max 20 Words " })
+																<label for="@Html.IdFor(model => model.API_Initegration)"><span class="font-13">Details of fields required from other application for API Integration (if any)</span><font class="paw-red-font"><b>*</b></font></label>
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 characters!</span>
+																<div class="invalid-feedback">Details of fields required from other application Required</div>
+															</div>
+
+														</div>
+														<div class="col-md-4">
+															<div class="input-container">
+																@Html.TextBoxFor(model => model.Mission_Critical_appl_justif,
+																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "50", required = "required", @placeholder = "Max 20 Words " })
+																<label for="@Html.IdFor(model => model.Mission_Critical_appl_justif)"><span class="font-13">Is this a Mission Critical applicaiton with Justification?</span><font class="paw-red-font"><b>*</b></font></label>
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 characters!</span>
+																<div class="invalid-feedback">Critical applicaiton with Justification Required</div>
+															</div>
+
+														</div>
+
+														<div class="col-md-4">
+															<div class="input-container">
+
+																@Html.EditorFor(model => model.Technology_dependencies,
+																															new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", required = "required", @placeholder = "Max Char 200 " } })
+																<label for="@Html.IdFor(model => model.Technology_dependencies)">Misc if any (Technology Dependencies COTS/Licensing etc)<font class="paw-red-font"><b>*</b></font></label>
+
+																<span class="charErrorMsg  d-none  paw-red-font">Cannot exceed 200 characters!</span>
+																<div class="invalid-feedback">Technology Dependencies Required</div>
+															</div>
+														</div>
+
+													</div>
+
+
+													<div class="row g-3 mb-3">
+													</div>
+
+
+
+													<div class="row g-3 mb-3">
+													</div>
+
+													<div class="row g-3 mb-3">
+													</div>
+												</div>
+											</div>
                                       
                                         </div>
                                     </div>
@@ -502,25 +592,25 @@
                                  
                                 </fieldset>
 
-                               
 
-                                <fieldset id="2">
-                                    <div class="form-card">
-                                        <div class="row">
-                                            <div class="col-7">
-                                                <h2 class="fs-title">Upload</h2>
-                                            </div>
-                                            <div class="col-5">
-                                                <div class="steps">Step 3 of 4</div>
-                                            </div>
-                                        </div>
-                                        @Html.Partial("_newprojfwdupload")
-                                    </div>
+								<fieldset id="2">
+									<div class="form-card">
+										<div class="row">
+											<div class="col-7">
+												<h2 class="fs-title">Upload</h2>
+											</div>
+											<div class="col-5">
+												<div class="steps">Step 3 of 4</div>
+											</div>
+										</div>
+										@Html.Partial("_newprojfwdupload")
+									</div>
 
-                                    <input type="button" id="draftUpload" class="draftUpload next header-container text-center text-white enabled-button" value="Save Draft" />
-                                    <input type="button" id="finalupload" class="next header-container text-center text-white @(ProjEncryId != null ? "enabled-button" : "disabled-button")"
-                                           value="Submit to DDGIT" @(ProjEncryId == null ? "disabled" : "") />
-                                </fieldset>
+									<input type="button" id="draftUpload" class="draftUpload next header-container text-center text-white enabled-button" value="Save Draft" />
+									<input type="button" id="finalupload" class="next header-container text-center text-white @(ProjEncryId != null ? "enabled-button" : "disabled-button")"
+										   value="Submit to DDGIT" @(ProjEncryId == null ? "disabled" : "") />
+								</fieldset>
+                                
                                 <fieldset id="3">
                                     <div class="form-card">
                                         <div class="row">

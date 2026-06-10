@@ -280,7 +280,10 @@ input[type="checkbox"] {
     box-sizing: border-box;
     padding: 0;
 }
-
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+}
 input[type="date"],
 input[type="time"],
 input[type="datetime-local"],

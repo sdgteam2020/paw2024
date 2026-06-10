@@ -58,6 +58,7 @@ namespace swas.DAL.Models
         public List<AttachmentModel> Attachments { get; set; }
 
 		public bool IsParked { get; set; }
+		public bool ForeClosed { get; set; }
 
 	}
 

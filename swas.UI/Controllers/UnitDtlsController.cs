@@ -15,7 +15,7 @@ using System.Text;
 
 namespace swas.UI.Controllers
 {
-    [Authorize]
+    
     public class UnitDtlsController : Controller
     {
 

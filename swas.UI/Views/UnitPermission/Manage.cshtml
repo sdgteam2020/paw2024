@@ -1,0 +1,52 @@
+﻿@model swas.BAL.DTO.UnitPermissionDTO
+
+<input type="hidden" id="UnitId" value="@Model.UnitId" />
+
+<div class="card mt-3">
+
+    <div class="card-header">
+        <h5>
+            Permissions for:
+            <strong>@Model.UnitName</strong>
+        </h5>
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th style="width:80px;">Select</th>
+                    @* <th>Module</th> *@
+                    <th>Permission</th>
+                    <th>Key</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.Permissions)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox"
+                                   class="permission-checkbox"
+                                   value="@item.PermissionId"
+                            @(item.IsSelected ? "checked" : "") />
+                        </td>
+                     
+                        <td>@item.DisplayName</td>
+                        <td>@item.PermissionKey</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <button type="button"
+                class="btn btn-success"
+                onclick="SaveUnitPermissions()">
+            Save Permissions
+        </button>
+
+    </div>
+</div>
+<script src="~/developerjs/unitpermission.js"></script>

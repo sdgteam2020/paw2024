@@ -13,6 +13,7 @@
         data: { encrypted_payload: encrypted_payload },
         type: 'POST',
         success: function (response) {
+          
             if (response != "null" && response != null) {
 
                 if (response == -1) {
@@ -34,7 +35,7 @@
                     const totalsForlabelcmd = [];
                     let colorscmd = [];
 
-                    let cmtunit = [1, 3, 4, 5];
+                    let cmtunit = [1, 3, 4, 5,2,4105,4106];
 
                     let responseforchart = response
                         .filter(function (elements) {
@@ -225,6 +226,7 @@
                     ];
 
                     bindProjHoldChart(labels, totals, totalsForlabel, colors);
+                   
                     bindProjHoldCommentsChart(labelscmd, totalscmd, totalsForlabelcmd, colorscmd);
                 }
             }

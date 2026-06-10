@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using swas.BAL.Helpers
 @using Microsoft.AspNetCore.Authorization
-
+@inject IHttpContextAccessor HttpContextAccessor
 @using swas.BAL.DTO
 @model List<ProjHistory>
 @{
@@ -12,6 +12,7 @@
 }
 @{
     int projIdFromViewBag = Convert.ToInt32(ViewBag.Projid);
+    Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor?.HttpContext?.Session, "User");
 }
 
 
@@ -68,7 +69,7 @@
                             </td>
 
                         </tr>
-                       
+
                         <tr>
                             <td class="new-proj-table">Name of Sponsor</td>
                             <td>@Model.FirstOrDefault()?.InitiatedBy</td>
@@ -153,7 +154,7 @@
                             <td>@Model[0].AppDesc</td>
 
                         </tr>
-                     
+
 
 
 
@@ -180,7 +181,7 @@
                     <table>
                         <tr>
                             <td class="new-proj-table">Aim & Scope</td>
-                            <td class="long-text">@Model[0].ProjectDetl[1].AimScope</td>
+                            <td class="long-text">@Model[0].ProjectDetl[1].Aim</td>
 
                         </tr>
                         <tr>
@@ -199,12 +200,8 @@
 
                         </tr>
 
-                        <tr>
-                            <td class="new-proj-table">Development Language</td>
-                            <td class="long-text">@Model[0].ProjectDetl[1].Devlopment_Language</td>
+                       
 
-                        </tr>
-                     
 
                     </table>
 
@@ -249,14 +246,14 @@
 
     }
     @Html.Partial("_projfwdupload", pmove,
-            new ViewDataDictionary(ViewData)
+                            new ViewDataDictionary(ViewData)
     {
         ["DataProjId"] = pmove.DataProjId,
         ["Tounitid"] = ViewBag.lasttounit,
         ["Documenttype"] = ViewBag.documenttype
 
     }
-            )
+                            )
 </div>
 <div class="container" hidden="hidden">
     <div id="myPDF" data-page-number="1" role="region" aria-label="Page 1" data-loaded="true">
@@ -290,7 +287,7 @@
                                 <tr class="ph-pdf-tr">
                                     <td class="ph-pdf-td-center-5">2.</td>
                                     <td class="ph-pdf-td-left-30">Name of Sponsor</td>
-                                    <td class="ph-pdf-td-left">@Model.FirstOrDefault()?.InitiatedBy</td>
+                                    <td class="ph-pdf-td-left Sponsoroftheproject">@Model.FirstOrDefault()?.InitiatedBy</td>
                                 </tr>
 
                                 <tr class="ph-pdf-tr">
@@ -308,7 +305,7 @@
                                 <tr class="ph-pdf-tr">
                                     <td class="ph-pdf-td-center-5">5.</td>
                                     <td class="ph-pdf-td-left-30">Aim & Scope (Purpose incl utility,beneficiaries and tgt users):</td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].AimScope</td>
+                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].Aim</td>
                                 </tr>
 
                                 <tr class="ph-pdf-tr">
@@ -477,12 +474,7 @@
                                                 snoa++;
                                             }
                                             @snoa
-                                            <span class="d-none" id="SpnStatusid">@history.StatusId</span>
-                                            <span class="d-none" id="SpnActionsid">@history.ActionsId</span>
-                                            <span class="d-none" id="SpnStagesid">@history.StageId</span>
-                                            <span class="d-none" id="SpnFromUnitid">@history.FromUnitId</span>
-                                            <span class="d-none" id="spnStakeholderid">@history.StakeHolderId</span>
-                                            <span class="d-none" id="spnLatestActiontype">@history.LatestActionType</span>
+                                          
                                         </td>
 
                                         <td class="ph-pdf-th">@history.Date</td>
@@ -552,6 +544,12 @@
                             @{
                                 snoa--;
                             }
+                            <span class="d-none noExport" id="SpnStatusid">@history.StatusId</span>
+                            <span class="d-none noExport" id="SpnActionsid">@history.ActionsId</span>
+                            <span class="d-none noExport" id="SpnStagesid">@history.StageId</span>
+                            <span class="d-none noExport" id="SpnFromUnitid">@history.FromUnitId</span>
+                            <span class="d-none noExport" id="spnStakeholderid">@history.StakeHolderId</span>
+                            <span class="d-none noExport" id="spnLatestActiontype">@history.LatestActionType</span>
                             @snoa
                         </td>
 
@@ -687,7 +685,12 @@
             <span id="ipAdd" class="d-none">@TempData["ipadd"]</span>
             <h6 class="header-container text-center text-white">Comment By Stakeholders</h6>
         </div>
-        <div class="add-comment-btn text-start mb-2 mt-2"></div>
+       
+
+        <div id="commentDiv" class="add-comment-btn text-start mb-2 mt-2" style="display:none;"></div>
+
+        <input type="hidden" id="hdnUnitId" value="@(Logins.unitid ?? 0)" />
+        
         <div class="chat-messages ph-chat-mt3" id="ChatBox">
             <!-- Your chat messages go here -->
         </div>
@@ -696,7 +699,7 @@
 
 @await Html.PartialAsync("_ProjectPendingStatus")
 <script src="~/developerjs/mtable.js"></script>
-@* <script src="~/developerjs/FwdProject.js"> </script> *@
+
 @functions {
     public string truncateText(string text, int maxWords)
     {
