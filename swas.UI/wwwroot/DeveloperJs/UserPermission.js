@@ -1,5 +1,8 @@
 ﻿$(document).ready(function () {
-
+  
+            $('.select2')
+                .select2();
+      
     $('#ddlUser').change(function () {
 
         let userId = $(this).val();

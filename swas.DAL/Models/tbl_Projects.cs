@@ -19,7 +19,7 @@ namespace swas.DAL.Models
         // Form: data_maxlength="200", required
         [Required(ErrorMessage = "Project Name is required.")]
         [Column(TypeName = "varchar(200)")]
-        [StringLength(201, ErrorMessage = "Project Name cannot exceed 200 characters.")]
+        [StringLength(1201, ErrorMessage = "Project Name cannot exceed 200 Words.")]
         [Display(Name = "Project Name")]
         public string? ProjName { get; set; }
 
@@ -174,9 +174,9 @@ namespace swas.DAL.Models
         // Allows numeric with optional decimals, up to 50 chars as shown in form
         [Required(ErrorMessage = "Likely Cost is required.")]
         [Display(Name = "Likely Cost (₹)")]
-        [StringLength(51, ErrorMessage = "Envisaged Cost cannot exceed 50 characters.")]
-        [RegularExpression(@"^\d{1,47}(\.\d{1,2})?$",
-            ErrorMessage = "Envisaged Cost must be a valid numeric amount (e.g. 150000 or 150000.50).")]
+        [StringLength(301, ErrorMessage = "Envisaged Cost cannot exceed 50 words.")]
+        //[RegularExpression(@"^\d{1,47}(\.\d{1,2})?$",
+        //    ErrorMessage = "Envisaged Cost must be a valid numeric amount (e.g. 150000 or 150000.50).")]
         public string EnvisagedCost { get; set; } = string.Empty;
 
         // ─── Technical Details ────────────────────────────────────────────────────────
@@ -184,15 +184,15 @@ namespace swas.DAL.Models
         // Form: TextAreaFor, data_maxlength="500", required
         [Required(ErrorMessage = "Aim is required.")]
         [Display(Name = "Aim")]
-        [StringLength(501, ErrorMessage = "Aim cannot exceed 500 characters.")]
+        [StringLength(3001, ErrorMessage = "Aim cannot exceed 500 Words.")]
         public string? Aim { get; set; } 
-        [Required(ErrorMessage = "Aim is required.")]
+        [Required(ErrorMessage = "Puropose is required.")]
         [Display(Name = "Puropose")]
-        [StringLength(501, ErrorMessage = "Puropose cannot exceed 500 characters.")]
+        [StringLength(601, ErrorMessage = "Puropose cannot exceed 100 Words.")]
         public string? Puropose { get; set; } 
-        [Required(ErrorMessage = "Aim is required.")]
+        [Required(ErrorMessage = "Scope is required.")]
         [Display(Name = "Scope")]
-        [StringLength(501, ErrorMessage = "Scope cannot exceed 500 characters.")]
+        [StringLength(601, ErrorMessage = "Scope cannot exceed 100 Words.")]
         public string? Scope { get; set; }
 
         // Not present in this form view as required — optional
@@ -206,8 +206,8 @@ namespace swas.DAL.Models
         public string? ContentofSWApp { get; set; }
 
         // Not present in this form view as required — optional
-        [Display(Name = "Brief justification")]
-        [StringLength(501, ErrorMessage = "Justification cannot exceed 501 characters.")]
+        [Display(Name = "Detailed justification")]
+        [StringLength(1801, ErrorMessage = "Justification cannot exceed 100 Words.")]
         public string? ReqmtJustification { get; set; }
 
         // Not present in this form view as required — optional
@@ -217,31 +217,31 @@ namespace swas.DAL.Models
 
         // Not present in this form view as required — optional
         [Display(Name = "Details of user base")]
-        [StringLength(501, ErrorMessage = "User base details cannot exceed 501 characters.")]
+        [StringLength(501, ErrorMessage = "User base details cannot exceed 501 Words.")]
         public string? DetlsofUserBase { get; set; }
 
         // Not present in this form view as required — optional
         [Display(Name = "Brief details of proposed network and bandwidth requirements")]
-        [StringLength(501, ErrorMessage = "Network/Bandwidth details cannot exceed 501 characters.")]
+        [StringLength(601, ErrorMessage = "Network/Bandwidth details cannot exceed 50 Words.")]
         public string? NWBandWidthReqmt { get; set; } 
 
 
 
 
          [Display(Name = "Additional_Ports")]
-        [StringLength(501, ErrorMessage = "Additional_Ports details cannot exceed 501 characters.")]
+        [StringLength(601, ErrorMessage = "Additional_Ports details cannot exceed 501 characters.")]
         public string? Additional_Ports { get; set; } 
 
          [Display(Name = "Concurrent_users")]
-        [StringLength(501, ErrorMessage = "Concurrent_users details cannot exceed 501 characters.")]
+        [StringLength(301, ErrorMessage = "Concurrent_users details cannot exceed 50 Words.")]
         public string? Concurrent_users { get; set; } 
          [Display(Name = "API_Initegration")]
-        [StringLength(501, ErrorMessage = "API_Initegrationdetails cannot exceed 501 characters.")]
+        [StringLength(301, ErrorMessage = "API_Initegrationdetails cannot exceed 50 characters.")]
         public string? API_Initegration { get; set; } 
 
 
          [Display(Name = "Mission_Critical_appl_justif")]
-        [StringLength(501, ErrorMessage = "Mission_Critical_appl_justif details cannot exceed 501 characters.")]
+        [StringLength(301, ErrorMessage = "Mission_Critical_appl_justif details cannot exceed 50 Words.")]
         public string? Mission_Critical_appl_justif { get; set; } 
         
         
@@ -255,7 +255,7 @@ namespace swas.DAL.Models
         // Form: TextAreaFor, data_maxlength="500", required
         [Required(ErrorMessage = "Software Platform & Tech Stack is required.")]
         [Display(Name = "Software Platform & Tech Stack (incl. OS Dependencies)")]
-        [StringLength(501, ErrorMessage = "Tech Stack details cannot exceed 500 characters.")]
+        [StringLength(601, ErrorMessage = "Tech Stack details cannot exceed 50 words.")]
         public string? TechStackProposed { get; set; }
 
         // Not present in this form view as required — optional
@@ -264,22 +264,22 @@ namespace swas.DAL.Models
         public string? DataSecurity_backup { get; set; }
 
         // Form: data_maxlength="200", required
-        [Required(ErrorMessage = "Initial Remark is required.")]
+        [Required(ErrorMessage = "Detailed justification is required.")]
         [Column(TypeName = "varchar(200)")]
-        [Display(Name = "Initial Remarks")]
-        [StringLength(201, ErrorMessage = "Initial Remark cannot exceed 200 characters.")]
+        [Display(Name = "Detailed justification")]
+        [StringLength(601, ErrorMessage = "Initial Remark cannot exceed 100 Words.")]
         public string? InitialRemark { get; set; }
 
         // Form: TextAreaFor, data_maxlength="500", required
-        [Required(ErrorMessage = "OS & System Software Requirements is required.")]
-        [Display(Name = "OS & System Software Requirements")]
-        [StringLength(501, ErrorMessage = "OS details cannot exceed 500 characters.")]
+        [Required(ErrorMessage = "No of Virtaul Machines required at data centre for hosting is required.")]
+        [Display(Name = "No of Virtaul Machines required at data centre for hosting")]
+        [StringLength(301, ErrorMessage = "OS details cannot exceed 50 Words.")]
         public string? Detlsof_OS { get; set; }
 
         // Form: TextBoxFor, data_maxlength="50", required
         [Required(ErrorMessage = "Proposed Database Engine is required.")]
         [Display(Name = "Proposed Database Engine")]
-        [StringLength(51, ErrorMessage = "DB Engine cannot exceed 50 characters.")]
+        [StringLength(121, ErrorMessage = "DB Engine cannot exceed 20 Words.")]
         public string? ProposedDB_Engine { get; set; }
 
         // Form: TextAreaFor, data_maxlength="200", required
@@ -325,9 +325,9 @@ namespace swas.DAL.Models
 
         // Form: TextAreaFor, data_maxlength="200", required
         [Required(ErrorMessage = "Operation system of hosting environment is required.")]
-        [MaxLength(201)]
+        [MaxLength(301)]
         [Display(Name = "Operation system of hosting environment")]
-        [StringLength(201, ErrorMessage = "OS of hosting environment cannot exceed 200 characters.")]
+        [StringLength(301, ErrorMessage = "OS of hosting environment cannot exceed 50 Words.")]
         public string? operation_system_hosting_env { get; set; }
 
         // ─── [NotMapped] — view/DTO helpers ──────────────────────────────────────────

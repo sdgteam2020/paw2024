@@ -34,7 +34,7 @@ namespace swas.UI.Controllers
         [Authorize(Policy = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Index()
-        {
+       {
 
             var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
             var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
@@ -42,7 +42,7 @@ namespace swas.UI.Controllers
 
             TempData["ipadd"] = watermarkText;
 
-            var status = await _statusRepository.GetAll();
+            var status = await _statusRepository.GetAllStatusAsync();
             return View(status);
         }
 

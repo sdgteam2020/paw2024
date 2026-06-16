@@ -278,6 +278,3 @@
 })();
 
 
-$(document).ready(function () {
-    initializeDataTable("#SoftwareType");
-})

@@ -37,6 +37,7 @@ using static swas.UI.Helpers.Helper;
 using swas.UI.Models;
 using swas.UI.Services;
 using Superpower.Model;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace swas.UI.Controllers
 {
@@ -285,6 +286,7 @@ namespace swas.UI.Controllers
                 ViewBag.TypeofSWOption = await _projectsRepository.GetDropdown("TypeofSWOptions");
                 ViewBag.BeingDevpInhouseOption = await _projectsRepository.GetDropdown("BeingDevpInhouseOptions");
                 ViewBag.EndorsmentbyHeadofOption = await _projectsRepository.GetDropdown("EndorsmentbyHeadofOptions");
+                ViewBag.ProposedArchitecture = await _projectsRepository.GetDropdown("Proposed_Architecture");
 
                 ViewBag.NotificationContent = _configuration
                     .GetSection("NotificationContent")
@@ -996,6 +998,7 @@ namespace swas.UI.Controllers
 
             int ProjId = 0, StatusId = 0;
             string Actionsname = "";
+             DateTime timestamp ;
 
             var Logins = GetSessionLogin();
             if (Logins == null)
@@ -1013,7 +1016,8 @@ namespace swas.UI.Controllers
 
                 var obj = JsonConvert.DeserializeObject<dynamic>(decrypted.Trim('"'));
                 Actionsname = obj?.Actionsname;
-
+             
+          
                 if (obj == null
                     || !int.TryParse((string?)obj.ProjId, out ProjId)
                     || !int.TryParse((string?)obj.StatusId, out StatusId))
@@ -1028,7 +1032,7 @@ namespace swas.UI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error in CheckFwdCondition");
-                return StatusCode(500, new { success = false, message = "Internal server error." });
+                return StatusCode(500, new { success = false, message = "Internal server error."});
             }
 
             var Ret = await _psmRepository.CheckFwdCondition(ProjId, StatusId, Actionsname);
@@ -1090,6 +1094,17 @@ namespace swas.UI.Controllers
                     var decryptedModel = JsonConvert.DeserializeObject<tbl_ProjStakeHolderMov>(decryptedJson);
                     if (decryptedModel == null)
                         return Json(-500);
+
+                    var project = await _projectsRepository.GetProjectByIdAsync(decryptedModel.ProjId);
+
+                    if (project != null && decryptedModel.TimeStamp < project.InitiatedDate)
+                    {
+                        return Json(new
+                        {
+                            status = false,
+                            message = "You cannot select a forward date earlier than the initiated date."
+                        });
+                    }
 
                     // Only override fields that should come from encrypted payload
                     psmove.ProjId = decryptedModel.ProjId;
@@ -3187,6 +3202,93 @@ namespace swas.UI.Controllers
                 message = result
                     ? "Project closed again successfully."
                     : "Unable to close project again."
+            });
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> CheckFordatevalidation(string timestamp, string projid)
+        {
+            var logins = GetSessionLogin();
+            var cryptoKey = logins?.CryptoKey;
+
+            if (string.IsNullOrWhiteSpace(cryptoKey))
+            {
+                _logger.LogError("Crypto key not configured");
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Server configuration error."
+                });
+            }
+
+            int projectId;
+            DateTime timeStamp;
+
+            try
+            {
+                // Decrypt
+                string decryptedTimestamp = CryptoHelper.SafeDecrypt(timestamp, cryptoKey).Trim('"');
+                string decryptedProjId = CryptoHelper.SafeDecrypt(projid, cryptoKey).Trim('"');
+
+                // Validate decrypted values
+                if (string.IsNullOrWhiteSpace(decryptedTimestamp) ||
+                    string.IsNullOrWhiteSpace(decryptedProjId))
+                {
+                    _logger.LogWarning("Decryption returned empty result");
+
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Invalid request data."
+                    });
+                }
+
+                // Convert
+                timeStamp = DateTime.Parse(decryptedTimestamp);
+                projectId = Convert.ToInt32(decryptedProjId);
+            }
+            catch (FormatException ex)
+            {
+                _logger.LogError(ex, "Date or number conversion failed");
+
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Invalid data format."
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Decryption failed");
+
+                return BadRequest(new
+                {
+                    success = false,
+                    message = "Invalid request."
+                });
+            }
+
+            var project = await _projectsRepository.GetProjectByIdAsync(projectId);
+
+            if (project == null)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Project not found."
+                });
+            }
+
+            // Compare DateTime with DateTime
+            bool isValid = timeStamp >= project.InitiatedDate;
+
+            return Json(new
+            {
+                success = isValid,
+                message = isValid
+                    ? "Date is valid."
+                    : "You cannot select a forward date earlier than the initiated date."
             });
         }
         #endregion

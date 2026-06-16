@@ -416,12 +416,16 @@ $(document).ready(function () {
     $('.char-limit').each(function () {
         
         let inputField = $(this);
+        
         let maxLength = parseInt(inputField.data('maxlength'));
         let errorMsg = inputField.closest('div').find('.charErrorMsg');
+        let countSpan = inputField.closest('div').find('#inputcount');
 
         inputField.on('input', function () {
-           
             let value = inputField.val();
+            let remaining = maxLength - value.length;
+            
+            countSpan.text(" (Remaining Char: " + remaining + ")");
 
             // Stop typing after max length
             if (value.length > maxLength) {

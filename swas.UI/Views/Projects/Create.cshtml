@@ -120,12 +120,12 @@
 															<input type="text"
 																   class="form-control text-center RequestRemarks "
 																   id="RequestRemarks"
-																   data-maxlength="200"
-																   placeholder="Max 200 Char ">
+																   data-maxlength="600"
+																   placeholder="Max 200 Words ">
 															<label>Remarks to Justify Legacy Project Ingestion</label>
 
 															<span class="charErrorMsg text-start d-none paw-red-font mt-1">
-																Cannot exceed 200 characters!
+																Cannot exceed 100 Words!
 															</span>
 														</div>
 													</div>
@@ -181,17 +181,17 @@
 																															htmlAttributes = new
 																															{
 																																@class = "form-control requiredField char-limit mergeprojnamewithrevet",
-																																@data_maxlength = "200",
+																																@data_maxlength = "1200",
 																																required = "required",
 
 																																@placeholder = "Max 200 Word"
 																															}
 																														})
 
-															<label for="@Html.IdFor(model => model.ProjName)">Name Of Project<font class="paw-red-font"><b>*</b></font></label>
+															<label for="@Html.IdFor(model => model.ProjName)">Name Of Project<span id="inputcount"></span><font class="paw-red-font"><b>*</b></font></label>
 															<span class="input-group-text d-none" id="reVettedTag">Re-Vetting</span>
 														</div>
-														<span class="charErrorMsg d-none paw-red-font">Cannot exceed 200 characters!</span>
+														<span class="charErrorMsg d-none paw-red-font">Cannot exceed 200 words!</span>
 
 														<div class="invalid-feedback">Project Name Required</div>
 													</div>
@@ -266,7 +266,7 @@
 
 														@Html.EditorFor(model => model.MobileNo,
 																										new { htmlAttributes = new { @class = "form-control requiredField char-limit", type = "number", @data_maxlength = "10", required = "required", @placeholder = "Max Char 10 " } })
-														<label for="@Html.IdFor(model => model.MobileNo)">MobileNo (Tele No)<font class="paw-red-font"><b>*</b></font></label>
+														<label for="@Html.IdFor(model => model.MobileNo)">MobileNo (Tele No)<span id="inputcount"></span><font class="paw-red-font"><b>*</b></font></label>
 
 														<span class="charErrorMsg d-none paw-red-font">Cannot exceed 10 characters!</span>
 														<div class="invalid-feedback">Mobile Number Required</div>
@@ -280,7 +280,7 @@
 
 														@Html.EditorFor(model => model.AsconNo,
 																										new { htmlAttributes = new { @class = "form-control requiredField char-limit", type = "number", @data_maxlength = "5", required = "required", @placeholder = "Max Char 5 " } })
-														<label for="@Html.IdFor(model => model.AsconNo)">Ascon No<font class="paw-red-font"><b>*</b></font></label>
+														<label for="@Html.IdFor(model => model.AsconNo)">Ascon No<span id="inputcount"></span><font class="paw-red-font"><b>*</b></font></label>
 														<span class="charErrorMsg d-none paw-red-font">Cannot exceed 5 characters!</span>
 														<div class="invalid-feedback">Army Number Required</div>
 													</div>
@@ -291,9 +291,9 @@
 													<div class="input-container">
 														@Html.TextBoxFor(model => model.EnvisagedCost,
 
-																										new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "50", required = "required", @placeholder = "Max Char 50 " })
-														<label for="@Html.IdFor(model => model.EnvisagedCost)">Likely Total Cost including AMC/Licences of In-house<font class="paw-red-font"><b>*</b></font></label>
-														<span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 characters!</span>
+																										new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "300", required = "required", @placeholder = "Max 50 Words " })
+														<label for="@Html.IdFor(model => model.EnvisagedCost)">Likely Total Cost including AMC/Licences of In-house<span id="inputcount"></span><font class="paw-red-font"><b>*</b></font></label>
+														<span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 words!</span>
 														<div class="invalid-feedback">Likely Cose(Rs) Required</div>
 
 													</div>
@@ -356,10 +356,10 @@
 															<div class="input-container">
 
 																@Html.EditorFor(model => model.DetlsofUserBase,
-																															new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", required = "required", @placeholder = "Max Char 200 " } })
-																<label for="@Html.IdFor(model => model.DetlsofUserBase)">Details of User Base (pan IA users/xxx Directorate etc)<font class="paw-red-font"><b>*</b></font></label>
+																															new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "300", required = "required", @placeholder = "Max 50 Words " } })
+																<label for="@Html.IdFor(model => model.DetlsofUserBase)">Details of User Base (pan IA users/xxx Directorate etc)<span id="inputcount"></span><font class="paw-red-font"><b>*</b></font></label>
 
-																<span class="charErrorMsg  d-none  paw-red-font">Cannot exceed 200 characters!</span>
+																<span class="charErrorMsg  d-none  paw-red-font">Cannot exceed 50 words!</span>
 																<div class="invalid-feedback">Detls of UserBase Required</div>
 															</div>
 														</div>
@@ -367,11 +367,11 @@
 														<div class="col-md-4">
 															<div class="input-container">
 
-																@Html.TextAreaFor(model => model.Aim, new { @class = "form-control requiredField char-limit", @data_maxlength = "500", required = "required", @placeholder = "Max 500 Char" })
-																<label for="@Html.IdFor(model => model.Aim)">Aim of Appln/Project<font class="paw-red-font"><b>*</b></font></label>
+																@Html.TextAreaFor(model => model.Aim, new { @class = "form-control requiredField char-limit", @data_maxlength = "3000", required = "required", @placeholder = "Max 500 words" })
+																<label for="@Html.IdFor(model => model.Aim)">Aim of Appln/Project<span id="inputcount"></span><font class="paw-red-font"><b>*</b></font></label>
 
 
-																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 500 characters!</span>
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 500 words!</span>
 
 																<div class="invalid-feedback">Aim is Required</div>
 															</div>
@@ -380,11 +380,11 @@
 														<div class="col-md-4">
 															<div class="input-container">
 
-																@Html.TextAreaFor(model => model.Scope, new { @class = "form-control requiredField char-limit", @data_maxlength = "500", required = "required", @placeholder = "Max 500 Char" })
-																<label for="@Html.IdFor(model => model.Scope)">Scope of Appln/Project<font class="paw-red-font"><b>*</b></font></label>
+																@Html.TextAreaFor(model => model.Scope, new { @class = "form-control requiredField char-limit", @data_maxlength = "600", required = "required", @placeholder = "Max 100 Words" })
+																<label for="@Html.IdFor(model => model.Scope)">Scope of Appln/Project<span id="inputcount"></span><font class="paw-red-font"><b>*</b></font></label>
 
 
-																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 500 characters!</span>
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 100 Words!</span>
 
 																<div class="invalid-feedback">Scope is Required</div>
 															</div>
@@ -394,11 +394,11 @@
 														<div class="col-md-4">
 															<div class="input-container">
 
-																@Html.TextAreaFor(model => model.Puropose, new { @class = "form-control requiredField char-limit", @data_maxlength = "500", required = "required", @placeholder = "Max 500 Char" })
-																<label for="@Html.IdFor(model => model.Puropose)">Puropose of Appln/Project<font class="paw-red-font"><b>*</b></font></label>
+																@Html.TextAreaFor(model => model.Puropose, new { @class = "form-control requiredField char-limit", @data_maxlength = "600", required = "required", @placeholder = "Max 100 Words" })
+																<label for="@Html.IdFor(model => model.Puropose)">Puropose of Appln/Project<span id="inputcount"></span><font class="paw-red-font"><b>*</b></font></label>
 
 
-																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 500 characters!</span>
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 100 Words!</span>
 
 																<div class="invalid-feedback">Puropose is Required</div>
 															</div>
@@ -408,31 +408,31 @@
 															<div class="input-container">
 
 																@Html.EditorFor(model => model.InitialRemark,
-																															new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", required = "required", @placeholder = "Max Char 200 " } })
-																<label for="@Html.IdFor(model => model.InitialRemark)">Bref Justification<font class="paw-red-font"><b>*</b></font></label>
+																															new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "600", required = "required", @placeholder = "Max 100 Words" } })
+																<label for="@Html.IdFor(model => model.InitialRemark)">Breif Justification<span id="inputcount"></span><font class="paw-red-font"><b>*</b></font></label>
 
-																<span class="charErrorMsg  d-none  paw-red-font">Cannot exceed 200 characters!</span>
-																<div class="invalid-feedback">Bref Justification Required</div>
+																<span class="charErrorMsg  d-none  paw-red-font">Cannot exceed 100 Words!</span>
+																<div class="invalid-feedback">Breif Justification Required</div>
 															</div>
 														</div>
 														<div class="col-md-4">
 															<div class="input-container">
 
 																@Html.EditorFor(model => model.ReqmtJustification,
-																															new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", required = "required", @placeholder = "Max Char 200 " } })
-																<label for="@Html.IdFor(model => model.ReqmtJustification)">Detailed Justification<font class="paw-red-font"><b>*</b></font></label>
+																															new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "1800", required = "required", @placeholder = "Max 300 Words" } })
+																<label for="@Html.IdFor(model => model.ReqmtJustification)">Detailed Justification<span id="inputcount"></span><font class="paw-red-font"><b>*</b></font></label>
 
-																<span class="charErrorMsg  d-none  paw-red-font">Cannot exceed 200 characters!</span>
+																<span class="charErrorMsg  d-none  paw-red-font">Cannot exceed 300 Words!</span>
 																<div class="invalid-feedback">Details Justification Required</div>
 															</div>
 														</div>
 														<div class="col-md-4">
 															<div class="input-container">
 																@Html.TextAreaFor(model => model.Detlsof_OS,
-																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "500", required = "required", @placeholder = "Max 50 Words" })
+																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "300", required = "required", @placeholder = "Max 50 Words" })
 
-																<label for="@Html.IdFor(model => model.Detlsof_OS)"><span class="font-13">No of (VM) Required at Data Centre for hosting (incl RAM,CPUs,GPUs,storage)</span><font class="paw-red-font"><b>*</b></font></label>
-																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 500 characters!</span>
+																<label for="@Html.IdFor(model => model.Detlsof_OS)"><span class="font-13">No of (VM) Required at Data Centre for hosting (incl RAM,CPUs,GPUs,storage)<span id="inputcount"></span></span><font class="paw-red-font"><b>*</b></font></label>
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 Words!</span>
 																<div class="invalid-feedback">OS & System Software Required</div>
 															</div>
 
@@ -444,9 +444,9 @@
 														<div class="col-md-4">
 															<div class="input-container">
 																@Html.TextAreaFor(model => model.TechStackProposed,
-																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "500", required = "required", @placeholder = "Max Char 500 " })
-																<label for="@Html.IdFor(model => model.TechStackProposed)"><span class="font-13">Technical Stack with ver (java,.Net,Django,Node.js etc)</span><font class="paw-red-font"><b>*</b></font></label>
-																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 500 characters!</span>
+																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "600", required = "required", @placeholder = "Max 50 Words" })
+																<label for="@Html.IdFor(model => model.TechStackProposed)"><span class="font-13">Technical Stack with ver (java,.Net,Django,Node.js etc)<span id="inputcount"></span></span><font class="paw-red-font"><b>*</b></font></label>
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 Words!</span>
 																<div class="invalid-feedback">TechStackProposed Required</div>
 
 															</div>
@@ -459,8 +459,8 @@
 														<div class="col-md-4">
 															<div class="input-container">
 
-																@Html.TextAreaFor(model => model.NWBandWidthReqmt, new { @class = "form-control requiredField char-limit", @data_maxlength = "500", required = "required", @placeholder = "Max 50 Words" })
-																<label for="@Html.IdFor(model => model.NWBandWidthReqmt)">BandWidth Reqmts (e.g &lt; 2Mbps etc)<font class="paw-red-font"><b>*</b></font></label>
+																@Html.TextAreaFor(model => model.NWBandWidthReqmt, new { @class = "form-control requiredField char-limit", @data_maxlength = "600", required = "required", @placeholder = "Max 50 Words" })
+																<label for="@Html.IdFor(model => model.NWBandWidthReqmt)">BandWidth Reqmts (e.g &lt; 2Mbps etc)<span id="inputcount"></span><font class="paw-red-font"><b>*</b></font></label>
 
 
 																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 Words!</span>
@@ -473,9 +473,9 @@
 														<div class="col-md-4">
 															<div class="input-container">
 																@Html.TextAreaFor(model => model.operation_system_hosting_env,
-																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "200", required = "required", @placeholder = "Max 20 Words " })
-																<label for="@Html.IdFor(model => model.operation_system_hosting_env)"><span class="font-13">Operating System of hosting enct (e.g MS Server/Ubunto)</span><font class="paw-red-font"><b>*</b></font></label>
-																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 200 characters!</span>
+																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "300", required = "required", @placeholder = "Max 20 Words " })
+																<label for="@Html.IdFor(model => model.operation_system_hosting_env)"><span class="font-13">Operating System of hosting enct (e.g MS Server/Ubunto)<span id="inputcount"></span></span><font class="paw-red-font"><b>*</b></font></label>
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 Words!</span>
 																<div class="invalid-feedback">Operation system of hosting env Required</div>
 
 															</div>
@@ -485,9 +485,9 @@
 														<div class="col-md-4">
 															<div class="input-container">
 																@Html.TextAreaFor(model => model.ProposedDB_Engine,
-																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "200", required = "required", @placeholder = "Max 20 Words " })
-																<label for="@Html.IdFor(model => model.ProposedDB_Engine)"><span class="font-13">Database (RDBMS/No SQl etc)</span><font class="paw-red-font"><b>*</b></font></label>
-																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 200 characters!</span>
+																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "120", required = "required", @placeholder = "Max 20 Words " })
+																<label for="@Html.IdFor(model => model.ProposedDB_Engine)"><span class="font-13">Database (RDBMS/No SQl etc)<span id="inputcount"></span></span><font class="paw-red-font"><b>*</b></font></label>
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 20 Words!</span>
 																<div class="invalid-feedback">ProposedDB_Engine Required</div>
 
 															</div>
@@ -498,24 +498,26 @@
 															<div class="input-container">
 
 																@Html.EditorFor(model => model.Additional_Ports,
-																															new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", required = "required", @placeholder = "Max Char 200 " } })
-																<label for="@Html.IdFor(model => model.Additional_Ports)">Any additional port used (Other than 443) with valid justificaiton<font class="paw-red-font"><b>*</b></font></label>
+																															new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "600", required = "required", @placeholder = "Max 100 Words" } })
+																<label for="@Html.IdFor(model => model.Additional_Ports)">Any additional port used (Other than 443) with valid justificaiton<span id="inputcount"></span><font class="paw-red-font"><b>*</b></font></label>
 
-																<span class="charErrorMsg  d-none  paw-red-font">Cannot exceed 200 characters!</span>
+																<span class="charErrorMsg  d-none  paw-red-font">Cannot exceed 100 Words!</span>
 																<div class="invalid-feedback">Any additional port Required</div>
 															</div>
 														</div>
-														<div class="col-md-4">
-															<div class="input-container">
-																@Html.TextAreaFor(model => model.DetlsofSw_Architecture,
-																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "200", required = "required", @placeholder = "Max 200 Char " })
-																<label for="@Html.IdFor(model => model.DetlsofProposed_Architecture)"><span class="font-13">Proposed Architecture (Centralised/Federated,Hybrid)</span><font class="paw-red-font"><b>*</b></font></label>
-																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 200 characters!</span>
-																<div class="invalid-feedback">Detls of proposed architecture Required</div>
+														
+															<div class="col-md-4">
+																<div class="input-container">
+																	@Html.DropDownListFor(model => model.DetlsofSw_Architecture,
+																																(IEnumerable<SelectListItem>)ViewBag.ProposedArchitecture,
+																																new { @class = "form-select requiredField", required = "required" })
+																	<label for="@Html.IdFor(model => model.DetlsofSw_Architecture)">Proposed Architecture<font class="paw-red-font"><b>*</b></font></label>
 
+																	<div class="invalid-feedback">Detls of proposed architecture Required</div>
+																</div>
 															</div>
+															
 
-														</div>
 														<div class="col-md-4">
 															<div class="input-container">
 																@Html.DropDownListFor(model => model.BeingDevpInhouse,
@@ -529,9 +531,9 @@
 														<div class="col-md-4">
 															<div class="input-container">
 																@Html.TextBoxFor(model => model.Concurrent_users,
-																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "50", required = "required", @placeholder = "Max 20 Words " })
-																<label for="@Html.IdFor(model => model.Concurrent_users)"><span class="font-13">No of Expected Concurrent users</span><font class="paw-red-font"><b>*</b></font></label>
-																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 characters!</span>
+																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "300", required = "required", @placeholder = "Max 20 Words " })
+																<label for="@Html.IdFor(model => model.Concurrent_users)"><span class="font-13">No of Expected Concurrent users<span id="inputcount"></span></span><font class="paw-red-font"><b>*</b></font></label>
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 Words!</span>
 																<div class="invalid-feedback">Expected Concurrent users Required</div>
 															</div>
 
@@ -540,9 +542,9 @@
 														<div class="col-md-4">
 															<div class="input-container">
 																@Html.TextBoxFor(model => model.API_Initegration,
-																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "50", required = "required", @placeholder = "Max 20 Words " })
-																<label for="@Html.IdFor(model => model.API_Initegration)"><span class="font-13">Details of fields required from other application for API Integration (if any)</span><font class="paw-red-font"><b>*</b></font></label>
-																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 characters!</span>
+																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "300", required = "required", @placeholder = "Max 20 Words " })
+																<label for="@Html.IdFor(model => model.API_Initegration)"><span class="font-13">Detls of fields required from other Appl for API Integration<span id="inputcount"></span></span><font class="paw-red-font"><b>*</b></font></label>
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 Words!</span>
 																<div class="invalid-feedback">Details of fields required from other application Required</div>
 															</div>
 
@@ -550,9 +552,9 @@
 														<div class="col-md-4">
 															<div class="input-container">
 																@Html.TextBoxFor(model => model.Mission_Critical_appl_justif,
-																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "50", required = "required", @placeholder = "Max 20 Words " })
-																<label for="@Html.IdFor(model => model.Mission_Critical_appl_justif)"><span class="font-13">Is this a Mission Critical applicaiton with Justification?</span><font class="paw-red-font"><b>*</b></font></label>
-																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 characters!</span>
+																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "300", required = "required", @placeholder = "Max 20 Words " })
+																<label for="@Html.IdFor(model => model.Mission_Critical_appl_justif)"><span class="font-13">Is this a Mission Critical applicaiton with Justification?<span id="inputcount"></span></span><font class="paw-red-font"><b>*</b></font></label>
+																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 Words!</span>
 																<div class="invalid-feedback">Critical applicaiton with Justification Required</div>
 															</div>
 
@@ -562,10 +564,10 @@
 															<div class="input-container">
 
 																@Html.EditorFor(model => model.Technology_dependencies,
-																															new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "200", required = "required", @placeholder = "Max Char 200 " } })
-																<label for="@Html.IdFor(model => model.Technology_dependencies)">Misc if any (Technology Dependencies COTS/Licensing etc)<font class="paw-red-font"><b>*</b></font></label>
+																															new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "300", required = "required", @placeholder = "Max 50 Words" } })
+																<label for="@Html.IdFor(model => model.Technology_dependencies)">Misc if any (Technology Dependencies COTS/Licensing etc)<span id="inputcount"></span><font class="paw-red-font"><b>*</b></font></label>
 
-																<span class="charErrorMsg  d-none  paw-red-font">Cannot exceed 200 characters!</span>
+																<span class="charErrorMsg  d-none  paw-red-font">Cannot exceed 50 Words!</span>
 																<div class="invalid-feedback">Technology Dependencies Required</div>
 															</div>
 														</div>
@@ -743,6 +745,6 @@
 <script src="~/DeveloperJs/CreateProjects.js"></script>
 <script src="~/developerjs/atthistory.js?v1"></script>
 <script src="~/developerjs/mtable.js?v1"></script>
-<script src="~/DeveloperJs/Comman.js?v1"></script>
+@* <script src="~/DeveloperJs/Comman.js?v1"></script> *@
 <script src="~/developerjs/Tooltip.js"></script>
 

@@ -339,6 +339,7 @@ function CheckFwdCondition(CurrentPslmId) {
         "ProjId": $("#spanFwdProjectId").html(),
         "StatusId": $("#ddlfwdSubStage").val(),
         "Actionsname": $("#ddlfwdAction option:selected").text(),
+     
     };
     let encrypted_payload = encryptData(userdata)
     $.ajax({
@@ -795,8 +796,14 @@ $.ajax({
 
 function handleSuccess(response) {
 
-    console.log("Server Response:", response);
-
+    if (response.status == false) {
+        return Swal.fire({
+            icon: "error",
+            title: "Validation Error",
+            html: response.message
+        });
+        return false;
+    }
     if (!response) {
         return showError("No response received from server.");
     }
@@ -1319,3 +1326,39 @@ $(document).ready(function () {
 
 });
 
+$('#TimeStampToProjfwd').on('input', function () {
+    let input = $(this);
+    let timestamp = getTimeStamp();
+    let projid = $('#spanFwdProjectId').text();
+   
+    $.ajax({
+        url: '/Projects/CheckFordatevalidation',
+        type: 'POST',
+        data: {
+            timestamp: encryptData(timestamp),
+            projId: encryptData(projid)
+        },
+        success: function (response) {
+
+            if (!response.success) {
+                Swal.fire("Warning", response.message, "warning");
+
+                // Set current date/time
+                let now = new Date();
+
+                let formattedDate =
+                    now.getFullYear() + '-' +
+                    String(now.getMonth() + 1).padStart(2, '0') + '-' +
+                    String(now.getDate()).padStart(2, '0') + 'T' +
+                    String(now.getHours()).padStart(2, '0') + ':' +
+                    String(now.getMinutes()).padStart(2, '0');
+
+                input.val(formattedDate);
+            }
+        },
+        error: function () {
+            Swal.fire("Error", "Something went wrong!", "error");
+        }
+    });
+  
+});

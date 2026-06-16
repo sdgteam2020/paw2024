@@ -26,6 +26,8 @@
 });
 $(document).ready(function () {
 
+    initializeDataTable('#SoftwareType');
+
     GetAllComments2();
 
     GetAllComments1();

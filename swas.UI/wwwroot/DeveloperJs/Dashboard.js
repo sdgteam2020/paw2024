@@ -394,6 +394,7 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
 
                         listItem += "<tr>";
                         listItem += "<td class='align-middle dp-w-3'>" + count + "</td>";
+                        listItem += "<td class='align-middle dp-w-3'>" + response[i].projId + "</td>";
                         if (unitId == 1 || unitId == 2 || unitId == 3 || unitId == 4 || unitId == 5 || unitId == 7) {
                             listItem += "<td class='align-middle nowrap'>" +
                                 "<a class='ProjName' title='" + projName + "' data-proj-id='" + response[i].projId + "' data-proj-name='" + shortProjName + "' " +
@@ -571,7 +572,7 @@ document.addEventListener("click", function (e) {
 });
 
 function getProjGetsummay(spnstatusId, IsDuplicate) {
-   
+ 
     var listItem = "";
    
     $("#spndashboardstatusId").html(spnstatusId);
