@@ -1,11 +1,11 @@
 ﻿(function () {
     try {
-        var isReload = false;
+        let isReload = false;
 
         if (performance && performance.navigation) {
             isReload = (performance.navigation.type === 1);
         } else {
-            var navEntries = performance.getEntriesByType && performance.getEntriesByType("navigation");
+            let navEntries = performance.getEntriesByType && performance.getEntriesByType("navigation");
             if (navEntries && navEntries.length) {
                 isReload = (navEntries[0].type === "reload");
             }
@@ -32,7 +32,7 @@
  * Keep global because you might be calling it from HTML: oninput="ValInData(this)"
  */
 window.ValInData = function (input) {
-    var regex = /[^a-zA-Z0-9/ ]/g;
+    let regex = /[^a-zA-Z0-9/ ]/g;
     input.value = input.value.replace(regex, "");
 };
 

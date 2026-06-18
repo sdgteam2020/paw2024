@@ -38,7 +38,7 @@ namespace swas.BAL.Repository
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IDataProtector _dataProtector;
 
-        public ProjStakeHolderMovRepository(ApplicationDbContext dbContext, IDataProtectionProvider DataProtector, IHttpContextAccessor httpContextAccessor):base(dbContext)
+        public ProjStakeHolderMovRepository(ApplicationDbContext dbContext, IDataProtectionProvider DataProtector, IHttpContextAccessor httpContextAccessor) : base(dbContext)
         {
             _dbContext = dbContext;
             _httpContextAccessor = httpContextAccessor;
@@ -58,7 +58,7 @@ namespace swas.BAL.Repository
                                join stge in _dbContext.mStages on ststus.StageId equals stge.StagesId
                                join act in _dbContext.mActions on actmap.ActionsId equals act.ActionsId
 
-                               where b.ProjId == ProjectId 
+                               where b.ProjId == ProjectId
                                orderby b.TimeStamp descending
                                select new DTOProjectsFwd
                                {
@@ -87,8 +87,6 @@ namespace swas.BAL.Repository
 
             return query;
         }
-
-
         public async Task<DTOProjectMovHistory> ProjectMovHistory(int? ProjectId)
         {
             try
@@ -127,7 +125,7 @@ namespace swas.BAL.Repository
                                    {
                                        PsmId = b.PsmId,
                                        Stages = stge.Stages,
-                                      
+
                                        Status = ststus.Status,
                                        StatusId = ststus.StatusId,
                                        Actions = act.Actions,
@@ -164,7 +162,7 @@ namespace swas.BAL.Repository
                     lst.DTOProjectMovHistorypsmlst = query.Where(i => i.PsmId != queryforstackholderself[1].PsmId).ToList();
                 else
                     lst.DTOProjectMovHistorypsmlst = query;
-                 var blank = "____";
+                var blank = "____";
                 var comments = await (from mov in _dbContext.ProjStakeHolderMov
                                       join stk in _dbContext.StkComment on mov.PsmId equals stk.PsmId
                                       join stksts in _dbContext.StkStatus on stk.StkStatusId equals stksts.StkStatusId
@@ -180,7 +178,7 @@ namespace swas.BAL.Repository
 
 
                                       }).ToListAsync();
-             
+
                 lst.DTOProjectMovHistorycmdlst = comments;
 
                 var retcc = await (from a in _dbContext.Projects
@@ -198,14 +196,14 @@ namespace swas.BAL.Repository
                 lst.DTOProjectCCHistorylst = retcc;
                 return lst;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
 
             }
-         
+
         }
-       public async Task<List<DTOProjectHold>> ProjectHolsTimeCalculate(int ProjectId)
+        public async Task<List<DTOProjectHold>> ProjectHolsTimeCalculate(int ProjectId)
         {
             try
             {
@@ -333,7 +331,7 @@ namespace swas.BAL.Repository
         {
             try
             {
-              
+
                 var maxPsmIdParameter = new SqlParameter("@MaxPsmId", SqlDbType.Int)
                 {
                     Direction = ParameterDirection.Output
@@ -347,13 +345,13 @@ namespace swas.BAL.Repository
 
             }
             catch (Exception ex) { return 0; }
-          
+
         }
         public async Task<int> GetLastRecProjectMovForUnod(int ProjectId, int? TounitId)
         {
             try
             {
-               var query =await _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.IsActive == true && i.IsComment == false && i.ToUnitId== TounitId).OrderByDescending(i=>i.PsmId).Take(1).Select(i=>i.PsmId).SingleOrDefaultAsync();
+                var query = await _context.ProjStakeHolderMov.Where(i => i.ProjId == ProjectId && i.IsActive == true && i.IsComment == false && i.ToUnitId == TounitId).OrderByDescending(i => i.PsmId).Take(1).Select(i => i.PsmId).SingleOrDefaultAsync();
                 return query;
 
             }
@@ -552,9 +550,6 @@ namespace swas.BAL.Repository
 
             return db;
         }
-
-
-
         public async Task<DTOChartSummarylist> CreateChartSummary(int UserId)
         {
             try
@@ -580,7 +575,7 @@ namespace swas.BAL.Repository
                                 db.Total = Convert.ToInt32(reader["Total"]);
                                 lstdb.Add(db);
                             }
-                            lst.ProjectStatus=lstdb;
+                            lst.ProjectStatus = lstdb;
                             if (await reader.NextResultAsync())
                             {
                                 List<DTOChartSummary> lstdbApproved = new List<DTOChartSummary>();
@@ -590,7 +585,7 @@ namespace swas.BAL.Repository
                                     db.Name = Convert.ToString(reader["Status"]);
                                     db.Total = Convert.ToInt32(reader["Total"]);
                                     lstdbApproved.Add(db);
-                                    
+
                                 }
                                 lst.ApprovedProjectsPre = lstdbApproved;
                             }
@@ -607,7 +602,7 @@ namespace swas.BAL.Repository
                                 }
                                 lst.ApprovedProjectsPost = lstdbApproved;
                             }
-                           
+
                             if (await reader.NextResultAsync())
                             {
                                 List<DTOChartSummary> lstdbWhitelisted = new List<DTOChartSummary>();
@@ -621,7 +616,7 @@ namespace swas.BAL.Repository
                                 lst.WhitelistedProjects = lstdbWhitelisted;
                             }
 
-                           
+
                         }
                     }
 
@@ -637,15 +632,14 @@ namespace swas.BAL.Repository
                 throw;
             }
         }
-
         public async Task<bool> CheckFwdCondition(int ProjId, int StatusId, string Actionsname)
         {
-            
+
             if (Actionsname != "Info")
             {
                 if (StatusId != 1)
                 {
-                   
+
                     var ret = await (from act in _dbContext.TrnStatusActionsMapping
                                      join sts in _dbContext.mStatus on act.StatusId equals sts.StatusId
                                      join mov in _dbContext.ProjStakeHolderMov on act.StatusActionsMappingId equals mov.StatusActionsMappingId
@@ -680,7 +674,7 @@ namespace swas.BAL.Repository
                 }
             }
             return false;
-          
+
         }
         public async Task<tbl_ProjStakeHolderMov> GetProjStakeHolderMovByIdAsync(int psmId)
         {
@@ -712,43 +706,36 @@ namespace swas.BAL.Repository
     .Where(p => p.ProjId == ProjId)
     .Select(p => (int?)p.StatusActionsMappingId)
     .Max();
-           
+
             int result = maxStatusId ?? 0;
 
             return result;
         }
-
         public async Task<int> AddProjStakeHolderMovAsync(tbl_ProjStakeHolderMov projmove)
         {
-             _dbContext.ProjStakeHolderMov.Add(projmove);
-             return   await _dbContext.SaveChangesAsync();
+            _dbContext.ProjStakeHolderMov.Add(projmove);
+            return await _dbContext.SaveChangesAsync();
 
         }
-
-
-
         public Task<int> CountinboxAsync(int stkhol)
         {
             throw new NotImplementedException();
         }
-
         public Task<int> AddProStkMovBlogAsync(Projmove psmove)
         {
             throw new NotImplementedException();
         }
-
         public async Task<int> GetlaststageId(int? ProjId)
         {
             int? maxStatusId = _dbContext.ProjStakeHolderMov
-           .Where(p => p.ProjId == ProjId )
+           .Where(p => p.ProjId == ProjId)
             .Select(p => (int?)p.StatusActionsMappingId)
            .Max();
 
             int result = maxStatusId ?? 0;
-                
+
             return result;
         }
-
         public Task<int> ReturnDuplProjMovAsync(Projmove psmove)
         {
             throw new NotImplementedException();
@@ -765,7 +752,7 @@ namespace swas.BAL.Repository
 
             try
             {
-             
+
 
                 #region GetProjLogviewAsyncWithProc
                 List<ProjLogView> resultList = new List<ProjLogView>();
@@ -820,6 +807,7 @@ namespace swas.BAL.Repository
             return plvew;
 
         }
+
         public Task<int> UpdateUndoProjectMov(int ProjectId, int PsmId)
         {
             throw new NotImplementedException();
@@ -846,8 +834,8 @@ namespace swas.BAL.Repository
 
         public async Task<int> GetProjectId(string? ProjName)
         {
-        
-            int? ProjId  = _dbContext.Projects
+
+            int? ProjId = _dbContext.Projects
            .Where(p => p.ProjName == ProjName)
             .Select(p => (int?)p.ProjId)
            .Max();
@@ -858,7 +846,7 @@ namespace swas.BAL.Repository
 
 
 
-        public async Task<int> AddNotificationCommentAsync (Notification notifications )
+        public async Task<int> AddNotificationCommentAsync(Notification notifications)
         {
             _dbContext.Notification.Add(notifications);
             return await _dbContext.SaveChangesAsync();

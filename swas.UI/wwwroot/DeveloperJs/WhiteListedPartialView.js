@@ -15,6 +15,7 @@ function GetwhilteListProject(TypeId) {
         data: {encrypted_payload: encrypted_payload
     },
         success: function (data) {
+          
             if (data != null) {
                 let count = 1;
                 let listItem = '';
@@ -23,7 +24,7 @@ function GetwhilteListProject(TypeId) {
                     listItem += '<tr>';
                     listItem += '<td class="s-no-column">' + count++ + '</td>';
 
-                    var shortName = item.projName || "";
+                    let shortName = item.projName || "";
                     if (shortName.length > 10) {
                         shortName = item.projName.slice(0, 10) + "....";
                     }
@@ -41,12 +42,12 @@ function GetwhilteListProject(TypeId) {
 
                     if (item.clearence != null) {
                         let clearenceDate = new Date(item.clearence);
-                        var afterThreeYears = new Date(clearenceDate.setFullYear(clearenceDate.getFullYear() + 3));
+                        let afterThreeYears = new Date(clearenceDate.setFullYear(clearenceDate.getFullYear() + 3));
+                    listItem += '<td class="col-width6">' + DateFormated(afterThreeYears) + '</td>';
                     }
 
-                    listItem += '<td class="col-width6">' + DateFormated(afterThreeYears) + '</td>';
 
-                    var shortRemarks = item.remarks || "";
+                    let shortRemarks = item.remarks || "";
                     if (shortRemarks.length > 10) {
                         shortRemarks = item.remarks.slice(0, 10) + "....";
                     }

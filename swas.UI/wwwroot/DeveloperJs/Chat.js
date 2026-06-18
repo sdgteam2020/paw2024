@@ -46,11 +46,11 @@
 
 function SaveChat(Msg) {
 
-    var userdata = {
+    let userdata = {
         UserMapChatId: $("#spnUserMapChatId").html(),
         Msg: Msg
     }
-    var encrypted_data = encryptData(userdata);
+    let encrypted_data = encryptData(userdata);
   
     $.ajax({
         url: '/Chat/SaveChat',

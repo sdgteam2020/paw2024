@@ -1286,7 +1286,7 @@ function GetThumbprint() {
         type: 'GET',
         skipAntiForgery: true // this tells prefilter to skip adding the token
     }).then(function (response) {
-        console.log(response);
+        console.log("Thumbprint ",response);
         if (response && response.length > 0 && response[0].Thumbprint) {
             return response[0].Thumbprint;
         } else {

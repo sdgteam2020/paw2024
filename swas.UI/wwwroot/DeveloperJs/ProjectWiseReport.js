@@ -483,8 +483,8 @@ if (pdfFileInput != null) {
     $(document).ready(function () {
 
         function checkConditions() {
-            var remarksLength = $('#AttHisAdd_Reamarks').val().length;
-            var pdfFileInput = $('#pdfFileInput')[0].files.length;
+            let remarksLength = $('#AttHisAdd_Reamarks').val().length;
+            let pdfFileInput = $('#pdfFileInput')[0].files.length;
 
             if (remarksLength > 1 && pdfFileInput > 0) {
                 $('#uploadButton').prop('disabled', false);
@@ -494,7 +494,7 @@ if (pdfFileInput != null) {
         }
 
         $('#upload').click(function () {
-            var documentDescription = $('#pdfFileInput').val();
+            let documentDescription = $('#pdfFileInput').val();
             if (documentDescription.trim() === "") {
                 Swal.fire({
                     title: 'Missing Upload File  ....!',
