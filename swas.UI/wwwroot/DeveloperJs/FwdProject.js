@@ -1278,7 +1278,7 @@ function DigitalSignByAPI(pdfpath) {
     });
 }
 function GetThumbprint() {
-   
+    debugger;
     $('.uploadLoader').addClass('d-none');
 
     return $.ajax({

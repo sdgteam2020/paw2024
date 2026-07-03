@@ -40,7 +40,6 @@ namespace swas.UI.Controllers
         }
 
 
-
         public async Task<IActionResult> Index()
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");

@@ -42,8 +42,8 @@ namespace swas.UI.NewFolder
 
                 headers["Content-Security-Policy"] =
                     "default-src 'self'; " +
-                    "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
-                    "style-src 'self' 'unsafe-inline'; " +
+                    "script-src 'self'; " +
+                    "style-src 'self'; " +
                     "img-src 'self' data: blob:; " +
                     "font-src 'self' data:; " +
                     connectSrc + "; " +

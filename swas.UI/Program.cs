@@ -96,6 +96,7 @@ builder.Services.AddScoped<IRolePermissionRepository,RolePermissionRepository>()
 builder.Services.AddScoped<IUserPermissionRepository,UserPermissionRepository>();
 builder.Services.AddScoped<IUnitPermissionRepository,UnitPermissionRepository>();
 builder.Services.AddScoped<IPermissionControlRepository, PermissionControlRepository>();
+builder.Services.AddScoped<IAuditlogRepository, AuditlogRepository>();
 
 // ===============================
 // KESTREL MAX REQUEST SIZE - 100 MB
@@ -195,7 +196,8 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-    options.Cookie.SameSite = SameSiteMode.None;
+    //options.Cookie.SameSite = SameSiteMode.None;
+    options.Cookie.SameSite = SameSiteMode.Strict;
 });
 
 builder.Services.AddHttpContextAccessor();

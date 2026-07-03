@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using swas.BAL.Interfaces;
-using swas.DAL.Models;
-using swas.BAL.DTO;
-using swas.BAL.Helpers;
-using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.Authorization;
-using Newtonsoft.Json;
-
+﻿using System.Security.Cryptography;
+using System.Text.Json;
+using System.Text.RegularExpressions;
+using System.Timers;
+using ASPNetCoreIdentityCustomFields.Data;
+using iText.Commons.Actions.Contexts;
 using iText.IO.Font;
 using iText.IO.Font.Constants;
+using iText.Kernel.Events;
 using iText.Kernel.Font;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas;
@@ -16,28 +14,31 @@ using iText.Kernel.Pdf.Extgstate;
 using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
-using System.Timers;
-
-using swas.BAL.Repository;
-using Microsoft.EntityFrameworkCore;
-using swas.UI.Helpers;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
-using ASPNetCoreIdentityCustomFields.Data;
-using Microsoft.Extensions.Options;
-using swas.DAL;
-using Document = iText.Layout.Document;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using iText.Kernel.Events;
-using static swas.DAL.Models.LegacyHistory;
-using swas.BAL.Utility;
-using Path = System.IO.Path;
-using System.Security.Cryptography;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using static swas.UI.Helpers.Helper;
+using Superpower.Model;
+using swas.BAL.DTO;
+using swas.BAL.Helpers;
+using swas.BAL.Interfaces;
+using swas.BAL.Repository;
+using swas.BAL.Utility;
+using swas.DAL;
+using swas.DAL.Models;
+using swas.UI.Helpers;
 using swas.UI.Models;
 using swas.UI.Services;
-using Superpower.Model;
 using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
+using static swas.DAL.Models.LegacyHistory;
+using static swas.UI.Helpers.Helper;
+using Document = iText.Layout.Document;
+using Path = System.IO.Path;
 
 namespace swas.UI.Controllers
 {
@@ -2346,6 +2347,17 @@ namespace swas.UI.Controllers
             var Logins = GetSessionLogin();
 
             var data = await _projectsRepository.GettXNByPsmIdAsync(psmove.PsmId);
+            var Entry = new tbl_ProjStakeHolderMov
+            {
+                ProjId = data.ProjId,
+                StatusActionsMappingId = data.StatusActionsMappingId,
+                Remarks = data.Remarks,
+                ToUnitId = data.ToUnitId,
+                EditDeleteBy = data.EditDeleteBy,
+                TimeStamp = data.TimeStamp
+                
+            };
+            
             data.ProjId = psmove.ProjId;
             data.StatusActionsMappingId = psmove.StatusActionsMappingId;
             data.Remarks = psmove.Remarks;
@@ -2356,10 +2368,10 @@ namespace swas.UI.Controllers
             data.EditDeleteDate = psmove.TimeStamp;
             data.EditDeleteBy = Logins?.UserIntId;
             data.TimeStamp = psmove.TimeStamp;
-
+           
             var Ret = await _psmRepository.UpdateWithReturn(data);
             if (Ret == null) return Json(nmum.NotSave);
-
+            await CreateAuditLogAsync(psmove, Entry);
             var nextPsmMove = await _projectsRepository.GetNextPsmMoveAsync(psmove.ProjId, psmove.PsmId);
 
             if (nextPsmMove != null)
@@ -2383,6 +2395,60 @@ namespace swas.UI.Controllers
             return Json(Ret);
         }
 
+        public async Task CreateAuditLogAsync(tbl_ProjStakeHolderMov entity, tbl_ProjStakeHolderMov entry)
+        {
+            var login = GetSessionLogin();
+
+            var oldData = new Dictionary<string, object?>();
+            var newData = new Dictionary<string, object?>();
+
+            if (entry.StatusActionsMappingId != entity.StatusActionsMappingId)
+            {
+                oldData["StatusActionsMappingId"] = entry.StatusActionsMappingId;
+                newData["StatusActionsMappingId"] = entity.StatusActionsMappingId;
+
+                //var mapdata=await _dbContext.TrnStatusActionsMapping.Where(x=>x.StatusActionsMappingId== entry.StatusActionsMappingId).ToListAsync();
+
+            }
+            string oldRemarks = CleanText(entry.Remarks);
+            string newRemarks = CleanText(entity.Remarks);
+            if (oldRemarks != newRemarks)
+            {
+                oldData["Remarks"] = oldRemarks;
+                newData["Remarks"] = newRemarks;
+            }
+            if (entry.TimeStamp != entity.TimeStamp)
+            {
+                oldData["TimeStamp"] = entry.TimeStamp?.ToString("yyyy-MM-dd HH:mm:ss.fffffff");
+                newData["TimeStamp"] = entity.TimeStamp?.ToString("yyyy-MM-dd HH:mm:ss.fffffff");
+            }
+
+            if (entry.ToUnitId != entity.ToUnitId)
+            {
+                oldData["ToUnitId"] = entry.ToUnitId;
+                newData["ToUnitId"] = entity.ToUnitId;
+            }
+
+            if (!oldData.Any())
+                return;
+            _dbContext.AuditLog.Add(new AuditLog
+            {
+                ProjId = entity.ProjId,
+                OldData = System.Text.Json.JsonSerializer.Serialize(oldData),
+                NewData = System.Text.Json.JsonSerializer.Serialize(newData),
+                ChangedBy = login.UserName,
+                ChangedAt = DateTime.UtcNow
+            });
+
+            await _dbContext.SaveChangesAsync();
+        }
+        string CleanText(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+                return string.Empty;
+
+            return Regex.Replace(input, @"\s+", " ").Trim();
+        }
         // ═════════════════════════════════════════════════════════════════════════
         // SEARCH
         // ═════════════════════════════════════════════════════════════════════════
@@ -3058,7 +3124,7 @@ namespace swas.UI.Controllers
 
         // ═════════════════════════════════════════════════════════════════════════
         // DOCUMENT TYPES
-        // ═════════════════════════════════════════════════════════════════════════
+        // ═════════════════════════════════════════════════════════════════════════ 
 
         [HttpGet]
         public async Task<IActionResult> GetDocumentTypes()

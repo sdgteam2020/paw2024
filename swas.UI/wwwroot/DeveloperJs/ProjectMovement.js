@@ -50,6 +50,7 @@
         select: function (e, i) {
             e.preventDefault();
             $("#txtProjectName").val(i.item.label);
+            $("#btnAuditlog").attr("data-projid", i.item.value);
             GetProjectMovement(i.item.value);
         },
         appendTo: '#suggesstion-box'
@@ -314,7 +315,7 @@ function Deleteattechment(AttechId) {
     });
 }
 function GetProjectMovement(ProjectId) {
-
+    debugger;
     $.ajax({
         url: '/Projects/GetProjectMov',
         type: 'POST',
@@ -332,7 +333,7 @@ function GetProjectMovement(ProjectId) {
                 renderNoRecord();
                 return;
             }
-
+           
             renderProjectMovement(response);
             initializeMovementTable();
             bindMovementEvents(response[0].projName);
@@ -340,15 +341,17 @@ function GetProjectMovement(ProjectId) {
     });
 }
 function isValidResponse(response) {
+    $("#btnAuditlog").addClass('d-none');
     return response !== "null" && response !== null;
 }
 function renderNoRecord() {
+    $("#btnAuditlog").addClass('d-none');
     $("#DetailBody").html("<tr><td class='text-center' colspan=5>No Record Found</td></tr>");
     $("#lblTotal").html(0);
 }
 
 function renderProjectMovement(response) {
-
+    $("#btnAuditlog").removeClass('d-none');
     let count = 1;
 
     const html = response.map(item => {

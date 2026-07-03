@@ -71,6 +71,7 @@ namespace swas.DAL
 
         public DbSet<UnitClaims> UnitClaims { get; set; }
         public DbSet<ProjectForeclose> ProjectForecloses { get; set; }
+        public DbSet<AuditLog> AuditLog { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
