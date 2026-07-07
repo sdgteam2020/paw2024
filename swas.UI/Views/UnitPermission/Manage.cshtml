@@ -1,5 +1,10 @@
 ﻿@model swas.BAL.DTO.UnitPermissionDTO
 
+<style>
+    .th-select{
+       width:80px;
+    }
+</style>
 <input type="hidden" id="UnitId" value="@Model.UnitId" />
 
 <div class="card mt-3">
@@ -16,7 +21,7 @@
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th style="width:80px;">Select</th>
+                    <th class="th-select" >Select</th>
                     @* <th>Module</th> *@
                     <th>Permission</th>
                     <th>Key</th>
