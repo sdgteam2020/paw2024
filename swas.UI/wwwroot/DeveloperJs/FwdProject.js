@@ -1258,18 +1258,27 @@ function SaveDocumentForTemp() {
 function DigitalSignByAPI(pdfpath) {
     
     GetThumbprint().then(function (tprint) {
-
+        debugger;
         if (tprint == null) {
             $('.uploadLoader').addClass('d-none')
             Swal.fire({
                 icon: 'warning',
                 title: 'Token Required !',
-                html: 'Thumbprint not found in response',
+                html: 'Hastakshar SEWA App not running/ not Installed !',
                 confirmButtonText: 'OK'
             });
             return false;
         }
-
+        else if (tprint == "404") {
+            $('.uploadLoader').addClass('d-none')
+            Swal.fire({
+                icon: 'warning',
+                title: 'Token Required !',
+                html: 'Thumbprint not found, Please insert valid token !',
+                confirmButtonText: 'OK'
+            });
+            return false;
+        }
         let URL = '';
         sendPDFToServer(pdfpath, tprint);
        
@@ -1286,12 +1295,13 @@ function GetThumbprint() {
         type: 'GET',
         skipAntiForgery: true // this tells prefilter to skip adding the token
     }).then(function (response) {
-        console.log("Thumbprint ",response);
+        debugger;
+        console.log(response);
         if (response && response.length > 0 && response[0].Thumbprint) {
             return response[0].Thumbprint;
         } else {
-            throw new Error('Thumbprint not found in response');
-        }
+            return "404";
+;        }
     }).catch(function (error) {
         console.error('Error fetching thumbprint:', error);
         return null;

@@ -126,4 +126,7 @@ body{
 .nowrap {
     white-space: nowrap;
 }
- 
+
+.swalmessage {
+    display: none;
+}

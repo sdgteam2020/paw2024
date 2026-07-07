@@ -18,13 +18,13 @@ namespace swas.DAL.Models
 
         // Form: data_maxlength="200", required
         [Required(ErrorMessage = "Project Name is required.")]
-        [Column(TypeName = "varchar(200)")]
+        [Column(TypeName = "varchar(1201)")]
         [StringLength(1201, ErrorMessage = "Project Name cannot exceed 200 Words.")]
         [Display(Name = "Project Name")]
         public string? ProjName { get; set; }
 
         // Form: readonly input, populated by sponsor lookup — no regex, just length
-        [Column(TypeName = "nvarchar(200)")]
+        [Column(TypeName = "nvarchar(201)")]
         [StringLength(201, ErrorMessage = "Sponsor name cannot exceed 200 characters.")]
         public string? Sponsor { get; set; }
 
@@ -265,7 +265,7 @@ namespace swas.DAL.Models
 
         // Form: data_maxlength="200", required
         [Required(ErrorMessage = "Detailed justification is required.")]
-        [Column(TypeName = "varchar(200)")]
+        [Column(TypeName = "varchar(601)")]
         [Display(Name = "Detailed justification")]
         [StringLength(601, ErrorMessage = "Initial Remark cannot exceed 100 Words.")]
         public string? InitialRemark { get; set; }

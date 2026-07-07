@@ -126,6 +126,7 @@
 									<thead>
 										<tr>
 											<th class="s-no-column">Ser No</th>
+											<th class="s-no-column">Project Id</th>
 											<th class="col-w-20">Proj Name</th>
 											<th>Sponsor</th>
 											<th class="col-w-9">From</th>
@@ -219,7 +220,7 @@
 
 												</td>
 
-
+												<td class="col-w-150">@project.ProjId</td>
 												<td class="f-12">
 
 													<span class="d-none noExport SpnCurrentProjId" >@project.ProjId</span>
@@ -239,6 +240,7 @@
 													<span class="d-none noExport" id="SpnTimeFromUnitId">@project.FromUnitId</span>
 													<span class="d-none noExport" id="SpnDate_type">@project.Date_type</span>
 													<span class="d-none noExport" id="SpnApprove">@project.AdminApprovalStatus</span>
+
 													<a data-proj-name="@project.ProjName" id="ProjectName" class="ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XRDC&psmid=@project.PsmIds">
 														<div class="tooltip-container" data-tooltip="@project.ProjName">
 															<span class="short-text noExport">
@@ -250,7 +252,7 @@
 												</td>
 
 
-
+												
 												<td class="RefLetter-container">
 													<div class="tooltip-container" data-tooltip="@project.Sponsor">
 														<span class="short-text noExport">@truncateText(project.UnitName, 2)</span>
@@ -467,6 +469,7 @@
 									<thead>
 										<tr>
 											<th class="s-no-column">Ser No</th>
+											<th class="s-no-column">Project Id</th>
 											<th class="col-w-20">Proj Name</th>
 											<th>Sponsor</th>
 
@@ -534,7 +537,7 @@
 
 
 												</td>
-
+												<td>@project.ProjId</td>
 												<td class="f-12">
 													<span class="d-none noExport SpnCurrentProjId" >@project.ProjId</span>
 													<span class="d-none noExport SpnEncProjId" >@project.EncyID</span>
@@ -685,6 +688,7 @@
 									<thead>
 										<tr>
 											<th class="s-no-column">Ser No</th>
+											<th>Project Id</th>
 											<th>Proj Name</th>
 											<th>Sponsor Dte</th>
 											<th>Completed By</th>
@@ -707,6 +711,7 @@
 													@snocompleted
 												</td>
 												<span class="d-none SpnCurrentProjId" id="">@project.ProjId</span>
+												<td>@project.ProjId</td>
 												<td>
 													<a data-proj-name="@project.ProjName" data-proj-id="@project.ProjId" href="/Projects/ProjHistory?EncyID=@project.EncyID&Type=XR">
 														<div class="tooltip-container" data-tooltip="@project.ProjName">

@@ -131,9 +131,128 @@ function AttOnFWD() {
 
 }
 
-function sendPDFToServer(pdfpath, thumbprint) {
-   
+//function sendPDFToServer(pdfpath, thumbprint) {
+//    debugger;
 
+//    $.ajax({
+//        url: 'https://dgisapp.army.mil:55102/Temporary_Listen_Addresses/ByteDigitalSignAsync',
+//        type: 'POST',
+//        contentType: 'application/json',
+//        dataType: 'json',
+//        data: JSON.stringify([{
+//            Thumbprint: thumbprint,
+//            pdfpath: pdfpath,
+//            XCoordinate: "470",
+//            YCoordinate: "740",
+//            Page: "1",
+//            CustomText: "Digital Signature"
+//        }]),
+//        skipAntiForgery: true,
+//        success: function (response) {
+//            debugger;
+//            $('.uploadLoader').addClass('d-none')
+//            if (response.Message != '') {
+//                Swal.fire({
+//                    title: "Application Approved",
+//                    text: "Application has been digitally signed successfully.",
+//                    icon: "success",
+//                    confirmButtonText: "OK",
+//                    customClass: {
+//                        popup: 'swal-success-theme',
+//                        confirmButton: 'swal-confirm-green'
+//                    },
+//                    buttonsStyling: false
+//                }).then(async () => {  // <-- async here 
+
+//                    if (response.Message == "Token Expired !") {
+//                        Swal.fire({
+//                            title: "Application Not Approved",
+//                            text: response.Message,
+//                            icon: "warning",
+//                            confirmButtonText: "OK",
+//                            customClass: {
+//                                popup: 'swal-danger-theme',
+//                                confirmButton: 'swal-confirm-danger'
+//                            },
+
+//                        });
+//                    }
+               
+//                    if (!response) {
+//                        Swal.fire({ icon: "error", title: "Oops...", text: "Certificate not Generated" });
+//                        return;
+//                    }
+
+//                    try {
+
+
+//                        const base64String = response.Message.replace(/\s/g, '').replace(/-/g, '+').replace(/_/g, '/');
+                      
+
+
+
+//                        const byteCharacters = atob(base64String);
+//                        const byteNumbers = new Uint8Array(byteCharacters.length);
+
+//                        for (let i = 0; i < byteCharacters.length; i++) {
+//                            byteNumbers[i] = byteCharacters.charCodeAt(i);
+//                        }
+
+//                        //const pdfBlob = new Blob([byteNumbers], { type: "application/pdf" });
+//                        generatedPdfBlob = new Blob([byteNumbers], { type: "application/pdf" });
+//                        window._currentPdfBlobUrl = URL.createObjectURL(generatedPdfBlob);
+
+//                        // ✅ Ensure container exists before rendering
+//                        if (!$('#Certificatepreview').length) {
+//                            console.error("Container not found");
+//                            return;
+//                        }
+
+//                        renderPdfToCanvases(byteNumbers.buffer);
+
+//                    } catch (err) {
+//                        console.error("PDF render error:", err);
+//                        Swal.fire({ icon: "error", title: "Error", text: "Failed to render PDF" });
+//                    }
+
+//                    $('#btnLogSign').attr('disabled', true);
+//                    $('#btnDigitalsign').attr('disabled', true);
+                 
+//                    const urlParams = new URLSearchParams(window.location.search);
+//                    let psmid;
+                   
+//                    if (urlParams.get('Type') === 'XRDC') {
+//                        psmid = urlParams.get('psmid');
+//                    } else {
+//                        psmid = $("#spanFwdCurrentPslmId").html();
+//                    }
+
+//                    let ddlaction = $("#ddlfwdAction option:selected").text();
+//                    let generatedPdf = null;
+
+//                    if (ddlaction === "Approved / Completed" && $('#ddlfwdStage').val() == 3) {
+//                        generatedPdf = await getGeneratedPdfFromPreview(); // now works
+//                    }
+                 
+//                    SaveFwdTo(psmid, generatedPdf, allAttachments);
+//                });
+//            } else {
+//                Swal.fire({
+//                    title: "Error!",
+//                    text: "Failed to sign PDF.",
+//                    icon: "error"
+//                });
+//            }
+//        },
+//        error: function (error) {
+//            console.error('Error sending PDF:', error);
+//        }
+//    });
+
+//}
+function sendPDFToServer(pdfpath, thumbprint) {
+
+    debugger;
     $.ajax({
         url: 'https://dgisapp.army.mil:55102/Temporary_Listen_Addresses/ByteDigitalSignAsync',
         type: 'POST',
@@ -149,9 +268,13 @@ function sendPDFToServer(pdfpath, thumbprint) {
         }]),
         skipAntiForgery: true,
         success: function (response) {
-          
+            debugger;
             $('.uploadLoader').addClass('d-none')
-            if (response.Message != '') {
+            if (!response) {
+                Swal.fire({ icon: "error", title: "Oops...", text: "Certificate not Generated" });
+                return;
+            }
+            if (response.Valid == true) {
                 Swal.fire({
                     title: "Application Approved",
                     text: "Application has been digitally signed successfully.",
@@ -162,34 +285,10 @@ function sendPDFToServer(pdfpath, thumbprint) {
                         confirmButton: 'swal-confirm-green'
                     },
                     buttonsStyling: false
-                }).then(async () => {  // <-- async here 
-
-                    if (response.Message == "Token Expired !") {
-                        Swal.fire({
-                            title: "Application Not Approved",
-                            text: response.Message,
-                            icon: "warning",
-                            confirmButtonText: "OK",
-                            customClass: {
-                                popup: 'swal-danger-theme',
-                                confirmButton: 'swal-confirm-danger'
-                            },
-
-                        });
-                    }
-               
-                    if (!response) {
-                        Swal.fire({ icon: "error", title: "Oops...", text: "Certificate not Generated" });
-                        return;
-                    }
-
+                }).then(async () => {  
                     try {
 
-
                         const base64String = response.Message.replace(/\s/g, '').replace(/-/g, '+').replace(/_/g, '/');
-                      
-
-
 
                         const byteCharacters = atob(base64String);
                         const byteNumbers = new Uint8Array(byteCharacters.length);
@@ -217,10 +316,10 @@ function sendPDFToServer(pdfpath, thumbprint) {
 
                     $('#btnLogSign').attr('disabled', true);
                     $('#btnDigitalsign').attr('disabled', true);
-                 
+
                     const urlParams = new URLSearchParams(window.location.search);
                     let psmid;
-                   
+
                     if (urlParams.get('Type') === 'XRDC') {
                         psmid = urlParams.get('psmid');
                     } else {
@@ -233,16 +332,23 @@ function sendPDFToServer(pdfpath, thumbprint) {
                     if (ddlaction === "Approved / Completed" && $('#ddlfwdStage').val() == 3) {
                         generatedPdf = await getGeneratedPdfFromPreview(); // now works
                     }
-                 
+
                     SaveFwdTo(psmid, generatedPdf, allAttachments);
                 });
-            } else {
+            } else if (response.Message == "Token Expired !" || response.Valid == false) {
                 Swal.fire({
-                    title: "Error!",
-                    text: "Failed to sign PDF.",
-                    icon: "error"
+                    title: "Application Not Approved",
+                    text: response.Message,
+                    icon: "warning",
+                    confirmButtonText: "OK",
+                    customClass: {
+                        popup: 'swal-danger-theme',
+                        confirmButton: 'swal-confirm-danger'
+                    },
+
                 });
             }
+           
         },
         error: function (error) {
             console.error('Error sending PDF:', error);
@@ -250,7 +356,6 @@ function sendPDFToServer(pdfpath, thumbprint) {
     });
 
 }
-
 
 $(document).on("click", ".att-btnDelete", function () {
 

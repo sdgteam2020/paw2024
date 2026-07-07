@@ -307,3 +307,7 @@ table {
     transform: scale(1.05) translateY(-5px);
     box-shadow: 0 15px 35px rgba(0, 188, 212, 0.3);
 }
+
+.add-comment-btn {
+   display:none;
+}

@@ -431,7 +431,7 @@
 																@Html.TextAreaFor(model => model.Detlsof_OS,
 																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "300", required = "required", @placeholder = "Max 50 Words" })
 
-																<label for="@Html.IdFor(model => model.Detlsof_OS)"><span class="font-13">No of (VM) Required at Data Centre for hosting (incl RAM,CPUs,GPUs,storage)<span id="inputcount"></span></span><font class="paw-red-font"><b>*</b></font></label>
+																<label for="@Html.IdFor(model => model.Detlsof_OS)"><span class="font-13">No of (VM) Reqd for hosting (incl RAM,CPUs,storage)<span id="inputcount"></span></span><font class="paw-red-font"><b>*</b></font></label>
 																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 Words!</span>
 																<div class="invalid-feedback">OS & System Software Required</div>
 															</div>
@@ -474,7 +474,7 @@
 															<div class="input-container">
 																@Html.TextAreaFor(model => model.operation_system_hosting_env,
 																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "300", required = "required", @placeholder = "Max 20 Words " })
-																<label for="@Html.IdFor(model => model.operation_system_hosting_env)"><span class="font-13">Operating System of hosting enct (e.g MS Server/Ubunto)<span id="inputcount"></span></span><font class="paw-red-font"><b>*</b></font></label>
+																<label for="@Html.IdFor(model => model.operation_system_hosting_env)"><span class="font-13">Operating Sys of hosting enct (e.g MS Server/Ubunto)<span id="inputcount"></span></span><font class="paw-red-font"><b>*</b></font></label>
 																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 Words!</span>
 																<div class="invalid-feedback">Operation system of hosting env Required</div>
 
@@ -499,7 +499,7 @@
 
 																@Html.EditorFor(model => model.Additional_Ports,
 																															new { htmlAttributes = new { @class = "form-control requiredField char-limit", @data_maxlength = "600", required = "required", @placeholder = "Max 100 Words" } })
-																<label for="@Html.IdFor(model => model.Additional_Ports)">Any additional port used (Other than 443) with valid justificaiton<span id="inputcount"></span><font class="paw-red-font"><b>*</b></font></label>
+																<label for="@Html.IdFor(model => model.Additional_Ports)">Any addnl port used (Other than 443) with valid justify<span id="inputcount"></span><font class="paw-red-font"><b>*</b></font></label>
 
 																<span class="charErrorMsg  d-none  paw-red-font">Cannot exceed 100 Words!</span>
 																<div class="invalid-feedback">Any additional port Required</div>
@@ -543,7 +543,7 @@
 															<div class="input-container">
 																@Html.TextBoxFor(model => model.API_Initegration,
 																															new { @class = "form-control requiredField char-limit w-100p", @data_maxlength = "300", required = "required", @placeholder = "Max 20 Words " })
-																<label for="@Html.IdFor(model => model.API_Initegration)"><span class="font-13">Detls of fields required from other Appl for API Integration<span id="inputcount"></span></span><font class="paw-red-font"><b>*</b></font></label>
+																<label for="@Html.IdFor(model => model.API_Initegration)"><span class="font-13">Detls of fields reqd from other Appl for API Integration<span id="inputcount"></span></span><font class="paw-red-font"><b>*</b></font></label>
 																<span class="charErrorMsg d-none paw-red-font">Cannot exceed 50 Words!</span>
 																<div class="invalid-feedback">Details of fields required from other application Required</div>
 															</div>
