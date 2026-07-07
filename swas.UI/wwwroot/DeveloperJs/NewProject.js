@@ -42,7 +42,7 @@ $(document).ready(function () {
             type: 'GET',
             data: { ids: encrypteid },
             success: function (response) {
-                var data = response.data;
+                let data = response.data;
                 if (data) {
                     $('#edit_Id').val(data.id);
                     $('#edit_ProjName').val(data.projName);
@@ -84,7 +84,7 @@ $(document).ready(function () {
     })
     $('#editWhiteListedForm').submit(function (e) {
         e.preventDefault();         
-        var plainData = $('#editWhiteListedForm').serialize();
+        let plainData = $('#editWhiteListedForm').serialize();
         
         $.ajax({
             url: '/Home/UpdateWhiteListedProject', 

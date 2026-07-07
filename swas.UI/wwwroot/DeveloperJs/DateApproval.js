@@ -7,7 +7,7 @@ $(document).ready(function () {
         $('.tabs__head a').removeClass('active-link');
         $(this).addClass('active-link');
         $('.tab-content').hide();
-        var tabId = $(this).data('tab');
+        let tabId = $(this).data('tab');
         $('#' + tabId).show();
     });
 });
@@ -119,7 +119,7 @@ $(document).on('click', '.LegacyHistory', function () {
     
     $('#ProjFwdHistory').modal('show');
     
-    var ProjId = parseInt($(this).data("ids"));
+    let ProjId = parseInt($(this).data("ids"));
     
     GetProjectLegacyHistory(ProjId); // <-- fixed this line
 });
@@ -283,9 +283,9 @@ function loadDateApprovalTable() {
                     listItem += "<tr>";
                 }
 
-                var projName = item.projName;
-                var words = projName.split(" ");
-                var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
+                let projName = item.projName;
+                let words = projName.split(" ");
+                let shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
 
                 listItem += "<td class='align-middle '>" + (i + 1) + "</td>";
 

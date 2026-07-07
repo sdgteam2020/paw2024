@@ -1580,7 +1580,7 @@ try
         public async Task<List<DToWhiteListeds>> GetWhiteListedActionProj(int TypeId)
         {
             try
-            {
+            {   
 
                 var isAllow = Environment.GetEnvironmentVariable("AllowWhiteListedProjSync");
                 if (isAllow == "1")

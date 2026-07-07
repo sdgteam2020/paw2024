@@ -26,16 +26,16 @@
                                     timer: 1500
                                 });
 
-                                var form = document.createElement('form');
+                                let form = document.createElement('form');
                                 form.method = 'POST';
                                 form.action = '/Projects/Create';
 
-                                var idInput = document.createElement('input');
+                                let idInput = document.createElement('input');
                                 idInput.type = 'hidden';
                                 idInput.name = 'id';
                                 idInput.value = response;
 
-                                var tokenInput = document.createElement('input');
+                                let tokenInput = document.createElement('input');
                                 tokenInput.type = 'hidden';
                                 tokenInput.name = '__RequestVerificationToken';
                                 tokenInput.value = $('input[name="__RequestVerificationToken"]').val();
@@ -66,7 +66,7 @@
 
 
 
-            var table = $('#SoftwareTypes').DataTable();
+            let table = $('#SoftwareTypes').DataTable();
     table.destroy();
 
     $('#SoftwareTypes').DataTable({

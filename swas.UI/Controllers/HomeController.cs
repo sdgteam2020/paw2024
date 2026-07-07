@@ -46,11 +46,11 @@ using static swas.DAL.Models.LegacyHistory;
 using swas.UI.Helpers;
 using iText.Kernel.XMP.Impl;
 using System.Security.Cryptography.X509Certificates;
-using iText.Kernel.Colors;  
+using iText.Kernel.Colors;
 using iText.Kernel.Pdf.Canvas.Draw;
 using iText.Layout.Element;
 using iText.IO.Image;
-using iText.Layout.Borders; 
+using iText.Layout.Borders;
 using System.Net;
 using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
@@ -109,7 +109,7 @@ namespace swas.UI.Controllers
             _logger = logger;
             _repo = repo;
             _legacyHistoryRepository = legacyHistoryRepository;
-			_watermarkRepo = watermark;
+            _watermarkRepo = watermark;
         }
 
         [HttpGet]
@@ -133,7 +133,6 @@ namespace swas.UI.Controllers
             }
         }
 
-
         [HttpGet]
         public async Task<IActionResult> Promo()
         {
@@ -148,9 +147,9 @@ namespace swas.UI.Controllers
                 return BadRequest(new { success = false, message = "Invalid request." });
             }
 
-          
+
             int StatusId = 0;
-            bool IsDuplicate=true;
+            bool IsDuplicate = true;
             Login Logins = SessionHelper.GetObjectFromJson<Login>(
                 _httpContextAccessor.HttpContext.Session, "User");
             var cryptoKey = Logins.CryptoKey;
@@ -209,7 +208,7 @@ namespace swas.UI.Controllers
                 // 🔐 SAFE DECRYPTION
                 StatusId = string.IsNullOrEmpty(StatusId) ? "" : CryptoHelper.SafeDecrypt(StatusId, cryptoKey);
                 statusActionsMappingId = string.IsNullOrEmpty(StatusId) ? "" : CryptoHelper.SafeDecrypt(statusActionsMappingId, cryptoKey);
-             
+
             }
             catch (Exception ex)
             {
@@ -218,12 +217,12 @@ namespace swas.UI.Controllers
             }
             // 🔄 SAFE CONVERSION
             if (!int.TryParse(StatusId.Trim('"'), out int statusId) ||
-                !int.TryParse(statusActionsMappingId.Trim('"'), out int StatusActionsMappingId) )
+                !int.TryParse(statusActionsMappingId.Trim('"'), out int StatusActionsMappingId))
             {
                 _logger.LogWarning("Invalid decrypted input values in SendCommentonProject");
                 return Json(-400); // bad request
             }
-           
+
             var ss = await _projectsRepository.GetDashboardApproved(statusId, StatusActionsMappingId);
 
             return Json(ss);
@@ -239,7 +238,7 @@ namespace swas.UI.Controllers
                 return BadRequest(new { success = false, message = "Invalid request." });
             }
 
-           
+
             int Projid = 0;
 
             Login Logins = SessionHelper.GetObjectFromJson<Login>(
@@ -263,7 +262,7 @@ namespace swas.UI.Controllers
                 }
 
                 var obj = JsonConvert.DeserializeObject<dynamic>(decrypted.Trim('"'));
-                if (!int.TryParse((string?)obj.Projid, out Projid) )
+                if (!int.TryParse((string?)obj.Projid, out Projid))
                 {
 
                     return BadRequest(new { success = false, message = "Invalid identifier." });
@@ -285,15 +284,15 @@ namespace swas.UI.Controllers
 
                 return Json(ss);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                swas.BAL.Utility.Error.ExceptionHandle("Unhandled error in GetProjectWiseStatus. " +ex.Message); // or ExceptionHandle(ex) if overload exists
+                swas.BAL.Utility.Error.ExceptionHandle("Unhandled error in GetProjectWiseStatus. " + ex.Message); // or ExceptionHandle(ex) if overload exists
 
             }
             return null;
 
         }
-       
+
         public async Task<IActionResult> GetProjHoldStatus(string encrypted_payload)
         {
             if (string.IsNullOrWhiteSpace(encrypted_payload))
@@ -302,7 +301,7 @@ namespace swas.UI.Controllers
                 return BadRequest(new { success = false, message = "Invalid request." });
             }
 
-            
+
             int ProjId = 0;
 
             Login Logins = SessionHelper.GetObjectFromJson<Login>(
@@ -348,7 +347,7 @@ namespace swas.UI.Controllers
                 var ss = await _stkholdmove.ProjectHolsTimeCalculate(ProjId);
                 return Json(ss);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 swas.BAL.Utility.Error.ExceptionHandle("Unhandled error in GetProjHoldStatus. " + ex.Message); // or ExceptionHandle(ex) if overload exists
 
@@ -360,7 +359,7 @@ namespace swas.UI.Controllers
         {
             return View();
         }
-        
+
         public async Task<IActionResult> GetDashboardCount(int Id)
         {
             try
@@ -368,14 +367,14 @@ namespace swas.UI.Controllers
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
 
 
-                    return Json(await _stkholdmove.DashboardCount(Convert.ToInt32(Logins.unitid)));
+                return Json(await _stkholdmove.DashboardCount(Convert.ToInt32(Logins.unitid)));
             }
             catch (Exception ex)
             {
                 return Json(nmum.Exception);
             }
         }
-        
+
         public async Task<IActionResult> CreateChartSummary(int Id)
         {
             try
@@ -390,7 +389,7 @@ namespace swas.UI.Controllers
                 return Json(nmum.Exception);
             }
         }
-       
+
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> ProjComments()
         {
@@ -546,13 +545,13 @@ s.IsDashboard,
         }
 
         [HttpGet]
-        
+
         public async Task<IActionResult> NewProject()
         {
             try
             {
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
-              
+
                 string userName = TempData["UserName"]?.ToString();
                 var ipAddress = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
                 var currentDatetime = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
@@ -572,15 +571,15 @@ s.IsDashboard,
                     }
                     else
                     {
-                            
+
                         ViewBag.ProcessButtonColor = "red";
                         ViewBag.ButtonText = "Sign Up";
                     }
 
 
 
-                                ViewBag.LoggedInUserName = Logins.UserName;
-                               ViewBag.Units = await _unitRepository.GetAllUnitAsync();
+                    ViewBag.LoggedInUserName = Logins.UserName;
+                    ViewBag.Units = await _unitRepository.GetAllUnitAsync();
                     var typeo = _context.mHostType.Select(x => new { x.HostTypeID, x.HostingDesc }).ToList();
                     ViewBag.hosttype = typeo;
 
@@ -752,7 +751,7 @@ s.IsDashboard,
             ViewBag.ty = ty.ToList();
 
         }
-       
+
         public IActionResult LogOut()
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContext.Session, "User");
@@ -770,51 +769,51 @@ s.IsDashboard,
 
         string filepathpdf = "";
 
-       public IActionResult WaterMark2(string id)
-{
-    try
-    {
-        if (string.IsNullOrEmpty(id))
+        public IActionResult WaterMark2(string id)
         {
-            return BadRequest("Invalid file request.");
+            try
+            {
+                if (string.IsNullOrEmpty(id))
+                {
+                    return BadRequest("Invalid file request.");
+                }
+
+                // Allow only safe file name
+                var safeFileName = Path.GetFileName(id);
+
+                var ip = _httpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
+
+                var filePath = Path.Combine(_env.WebRootPath, "PDF", safeFileName);
+
+                if (!System.IO.File.Exists(filePath))
+                {
+                    return NotFound("File not found.");
+                }
+
+                filepathpdf = generate2(filePath, ip);
+
+                aTimer = new System.Timers.Timer(60000);
+                aTimer.Elapsed += OnTimer;
+                aTimer.Enabled = true;
+
+                var downloadPath = Path.GetFileName(filepathpdf);
+
+                return Redirect($"../../Download/{downloadPath}.pdf");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Unhandled exception in WaterMark2.");
+
+                swas.BAL.Utility.Error.ExceptionHandle(
+                    "Unhandled exception occurred in HomeController.");
+
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "Something went wrong. Please try again later."
+                });
+            }
         }
-
-        // Allow only safe file name
-        var safeFileName = Path.GetFileName(id);
-
-        var ip = _httpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
-
-        var filePath = Path.Combine(_env.WebRootPath, "PDF", safeFileName);
-
-        if (!System.IO.File.Exists(filePath))
-        {
-            return NotFound("File not found.");
-        }
-
-        filepathpdf = generate2(filePath, ip);
-
-        aTimer = new System.Timers.Timer(60000);
-        aTimer.Elapsed += OnTimer;
-        aTimer.Enabled = true;
-
-        var downloadPath = Path.GetFileName(filepathpdf);
-
-        return Redirect($"../../Download/{downloadPath}.pdf");
-    }
-    catch (Exception ex)
-    {
-        _logger.LogError(ex, "Unhandled exception in WaterMark2.");
-
-        swas.BAL.Utility.Error.ExceptionHandle(
-            "Unhandled exception occurred in HomeController.");
-
-        return StatusCode(500, new
-        {
-            success = false,
-            message = "Something went wrong. Please try again later."
-        });
-    }
-}
 
 
         public IActionResult WaterMark(string id)
@@ -932,7 +931,7 @@ s.IsDashboard,
         }
 
         [Authorize(Policy = "Admin")]
-        
+
         public async Task<IActionResult> indexToBarChartS()
         {
             try
@@ -1121,9 +1120,9 @@ s.IsDashboard,
                 var ret = await _projectsRepository.GetWhiteListedActionProj(TypeId);
                 return Json(ret);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                swas.BAL.Utility.Error.ExceptionHandle("Unhandled error in GetWhiteListedActionProj. " + ex.Message ); // or ExceptionHandle(ex) if overload exists
+                swas.BAL.Utility.Error.ExceptionHandle("Unhandled error in GetWhiteListedActionProj. " + ex.Message); // or ExceptionHandle(ex) if overload exists
 
             }
 
@@ -1131,7 +1130,7 @@ s.IsDashboard,
         }
 
 
-     
+
 
         public async Task<IActionResult> GetUnitComments(int psmId, int stakeholderId, int projId)
         {
@@ -1290,19 +1289,19 @@ s.IsDashboard,
             {
                 var ip = _httpContextAccessor.HttpContext?.Connection?.RemoteIpAddress?.ToString();
                 var filePath = System.IO.Path.Combine(_env.WebRootPath, "Uploads\\" + id + "");
-                
+
                 if (System.IO.File.Exists(filePath))
                 {
                     Random rnd = new Random();
                     string Dfilename = rnd.Next(1, 1000).ToString() + ".pdf";
-                    var pdfBytes = GeneratePdfInMemory(filePath, ip);                    
+                    var pdfBytes = GeneratePdfInMemory(filePath, ip);
                     Response.Headers["Content-Disposition"] = $"inline; filename={Dfilename}";
                     return File(pdfBytes, "application/pdf");
                 }
                 else
                 {
                     return Content("PDF IS NOT IN FOLDER");
-                }  
+                }
             }
             catch (Exception ex)
             {
@@ -1457,6 +1456,7 @@ s.IsDashboard,
                 swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
                 return Redirect("/Home/Error");
             }
+
         }
         [Authorize(Policy = "Admin")]
         public async Task<IActionResult> UnitDashbard()
@@ -1647,9 +1647,6 @@ s.IsDashboard,
 
             return Ok(counter);
         }
-
-
-
         public IActionResult SOPDownload(string pdftype)
         {
             try
@@ -1834,7 +1831,7 @@ s.IsDashboard,
 
 
         [HttpGet]
-        public async Task<JsonResult> GetDateApprovalList([FromQuery] int projId, [FromQuery] int requestType,string remarks)
+        public async Task<JsonResult> GetDateApprovalList([FromQuery] int projId, [FromQuery] int requestType, string remarks)
         {
             var user = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext?.Session!, "User");
             var ipAddress = HttpContext.Connection?.RemoteIpAddress?.MapToIPv4().ToString() ?? string.Empty;
@@ -1874,7 +1871,7 @@ s.IsDashboard,
                     FromUnit = user?.unitid, // Optional: update if needed
                     ActionBy = (user?.Rank ?? "") + " " + (user?.Offr_Name ?? ""),
                     ActionType = (ActionTypeEnum)1,
-                    Remarks = remarks?? "No Remarks",
+                    Remarks = remarks ?? "No Remarks",
                     ActionDate = DateTime.Now,
                     Userdetails = Helper1.LoginDetails(user!)
                 };
@@ -1914,7 +1911,7 @@ s.IsDashboard,
 
 
                 whitelist.date = DateTime.Now;
-                whitelist.IsWhiteListed=true;
+                whitelist.IsWhiteListed = true;
                 _context.trnWhiteListed.Add(whitelist);
                 await _context.SaveChangesAsync();  // Ensure the changes are saved asynchronously
                 message = "Whitelisted entry saved successfully!";
@@ -1977,7 +1974,7 @@ s.IsDashboard,
                         .SetTextAlignment(TextAlignment.CENTER)
                         .SetMarginBottom(25)
                         .SetFontColor(ColorConstants.BLACK));
-                    Table table = new Table(UnitValue.CreatePercentArray(new float[] { 40, 5,55 }))
+                    Table table = new Table(UnitValue.CreatePercentArray(new float[] { 40, 5, 55 }))
                         .UseAllAvailableWidth()
                         .SetMarginBottom(25)
                         .SetBorder(new iText.Layout.Borders.SolidBorder(ColorConstants.LIGHT_GRAY, 0.5f))
@@ -2049,7 +2046,7 @@ s.IsDashboard,
                 .SetPadding(6);
         }
 
-     
+
 
     }
 }

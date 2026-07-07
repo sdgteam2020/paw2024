@@ -1,13 +1,13 @@
 ﻿
     $(document).ready(function () {
 
-        var TeamDetailPostBackURL = '/Projects/AttDetails';
+        let TeamDetailPostBackURL = '/Projects/AttDetails';
     $(function () {
         $(".anchorDetail").click(function () {
 
-            var $buttonClicked = $(this);
-            var id = $buttonClicked.attr('data-id');
-            var options = { "backdrop": "static", keyboard: true };
+            let $buttonClicked = $(this);
+            let id = $buttonClicked.attr('data-id');
+            let options = { "backdrop": "static", keyboard: true };
             $.ajax({
                 type: "GET",
                 url: TeamDetailPostBackURL,
@@ -168,11 +168,11 @@
 
 function PrintDiv() {
  
-        var divToPrint = document.getElementById('widget-content');
-    var popupWin = window.open('', '_blank', 'width=800,height=800,location=Center,Center=20px');
+        let divToPrint = document.getElementById('widget-content');
+    let popupWin = window.open('', '_blank', 'width=800,height=800,location=Center,Center=20px');
     popupWin.document.open();
 
-    var table_style = document.getElementById("table_style").innerHTML;
+    let table_style = document.getElementById("table_style").innerHTML;
     popupWin.document.write('<style type="text/css">');
         popupWin.document.write(table_style);
         popupWin.document.write('</style>')

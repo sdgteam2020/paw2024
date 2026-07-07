@@ -1,5 +1,5 @@
 ﻿function validateForm() {
-    var form = document.querySelector('form.needs-validation');
+    let form = document.querySelector('form.needs-validation');
     if (form.checkValidity() === false) {
         event.preventDefault();
         event.stopPropagation();

@@ -1,5 +1,5 @@
-﻿var tittle = "";
-var Status = "";
+﻿let tittle = "";
+let Status = "";
 
 
 
@@ -12,7 +12,7 @@ $(document).ready(function () {
     $("#IsNotduplicate").change(function () {
 
 
-        var ischecked = $(this).is(':checked');
+        let ischecked = $(this).is(':checked');
         if (ischecked)
             getProjGetsummay($("#spndashboardstatusId").html(), false);
         else
@@ -268,15 +268,15 @@ function GetAllDashbaordCount() {
                     return;
                 }
 
-                var monthNames = [...new Set(data.map(item => item.MonthNameYr))];
-                var unitNames = [...new Set(data.map(item => item.unitname))];
+                let monthNames = [...new Set(data.map(item => item.MonthNameYr))];
+                let unitNames = [...new Set(data.map(item => item.unitname))];
 
-                var datasets = unitNames.map(unitName => {
-                    var totalInData = [];
-                    var totalOutData = [];
+                let datasets = unitNames.map(unitName => {
+                    let totalInData = [];
+                    let totalOutData = [];
 
                     monthNames.forEach(month => {
-                        var monthData = data.find(item => item.MonthNameYr === month && item.unitname === unitName);
+                        let monthData = data.find(item => item.MonthNameYr === month && item.unitname === unitName);
                         if (monthData) {
                             totalInData.push(monthData.TotalIn);
                             totalOutData.push(monthData.TotalOut);
@@ -286,8 +286,8 @@ function GetAllDashbaordCount() {
                         }
                     });
 
-                    var totalInColor = getRandomColor();
-                    var totalOutColor = getRandomColor();
+                    let totalInColor = getRandomColor();
+                    let totalOutColor = getRandomColor();
 
                     return [{
                         label: unitName + ' Proj In',
@@ -311,7 +311,7 @@ function GetAllDashbaordCount() {
                 }
 
                 const ctx = canvas.getContext("2d");
-                var myChart = new Chart(ctx, {
+                let myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
                         labels: monthNames, 
@@ -573,10 +573,10 @@ document.addEventListener("click", function (e) {
 
 function getProjGetsummay(spnstatusId, IsDuplicate) {
  
-    var listItem = "";
+    let listItem = "";
    
     $("#spndashboardstatusId").html(spnstatusId);
-    var userdata = {
+    let userdata = {
         "StatusId": spnstatusId,
         "IsDuplicate": IsDuplicate
     };
@@ -604,17 +604,17 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
 
 
                 } else {
-                    var count = 1;
+                    let count = 1;
                     $('#dashboardDeatils').dataTable().fnClearTable();
                     $('#dashboardDeatils').dataTable().fnDestroy();
 
-                    var unitId = $('#spndashboardUnitId').text().trim();
+                    let unitId = $('#spndashboardUnitId').text().trim();
                  
-                    for (var i = 0; i < response.length; i++) {
+                    for (let i = 0; i < response.length; i++) {
                         
-                        var projName = response[i].projName;
-                        var words = projName.split(" ");
-                        var shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
+                        let projName = response[i].projName;
+                        let words = projName.split(" ");
+                        let shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
 
                         listItem += "<tr>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + count + "</span></td>";
@@ -676,7 +676,7 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                     $("#DetailBodysummary1").html(listItem);
 
 
-                    var table = $('#dashboardDeatils').DataTable({
+                    let table = $('#dashboardDeatils').DataTable({
                         lengthChange: true,
                         retrieve: true,
                         bDestroy: true,
@@ -699,7 +699,7 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                                     'MultipleOf': {
                                         conditionName: 'Multiple Of',
                                         init: function (that, fn, preDefined = null) {
-                                            var el = $('<input/>').on('input', function () { fn(that, this) });
+                                            let el = $('<input/>').on('input', function () { fn(that, this) });
 
                                             if (preDefined !== null) {
                                                 $(el).val(preDefined[0]);
@@ -741,8 +741,8 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
 }
 
 function updatePieChart(data) {
-    var titles = data.map(item => item.Status);
-    var chartData = data.map(item => item.TotalProj);
+    let titles = data.map(item => item.Status);
+    let chartData = data.map(item => item.TotalProj);
 
   
     const canvas = document.getElementById("myChart1");
@@ -754,11 +754,11 @@ function updatePieChart(data) {
 
    
 
-    var backgroundColors = generateRandomColors(titles.length);
+    let backgroundColors = generateRandomColors(titles.length);
 
-    var ctx = canvas.getContext('2d');
+    let ctx = canvas.getContext('2d');
 
-    var myChart1 = new Chart(ctx, {
+    let myChart1 = new Chart(ctx, {
         type: 'pie',
         data: {
             labels: titles,
@@ -846,24 +846,24 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 function DateFormateddMMyyyyhhmmss(date) {
 
-    var todaysDate = new Date();
-    var datef1 = new Date(date);
-    var datef2 = new Date(date);
-    var months = "" + `${(datef2.getMonth() + 1)}`;
-    var days = "" + `${(datef2.getDate())}`;
-    var pad = "00"
-    var monthsans = pad.substring(0, pad.length - months.length) + months
-    var dayans = pad.substring(0, pad.length - days.length) + days
-    var year = `${datef2.getFullYear()}`;
-    var hh = `${datef2.getHours()}`;
-    var mm = `${datef2.getMinutes()}`;
-    var ss = `${datef2.getSeconds()}`;
+    let todaysDate = new Date();
+    let datef1 = new Date(date);
+    let datef2 = new Date(date);
+    let months = "" + `${(datef2.getMonth() + 1)}`;
+    let days = "" + `${(datef2.getDate())}`;
+    let pad = "00"
+    let monthsans = pad.substring(0, pad.length - months.length) + months
+    let dayans = pad.substring(0, pad.length - days.length) + days
+    let year = `${datef2.getFullYear()}`;
+    let hh = `${datef2.getHours()}`;
+    let mm = `${datef2.getMinutes()}`;
+    let ss = `${datef2.getSeconds()}`;
     if (hh < 10) hh = "0" + hh;
     if (mm < 10) mm = "0" + mm;
     if (ss < 10) ss = "0" + ss;
     if (year > 1902) {
 
-        var datemmddyyyy = dayans + `/` + monthsans + `/` + year + ` ` + hh + `:` + mm + `:` + ss
+        let datemmddyyyy = dayans + `/` + monthsans + `/` + year + ` ` + hh + `:` + mm + `:` + ss
         return datemmddyyyy;
     }
     else {
@@ -873,11 +873,11 @@ function DateFormateddMMyyyyhhmmss(date) {
 
 
 function getProjBisagN(spnstatusId, spnstatusActionsMappingId) {
-    var listItem = "";
-    var table = $('#dashboardApprovedBisagN').DataTable(); // Initialize DataTable
+    let listItem = "";
+    let table = $('#dashboardApprovedBisagN').DataTable(); // Initialize DataTable
     table.clear().destroy(); // Destroy the existing table instance
 
-    var userdata = {
+    let userdata = {
         "StatusId": spnstatusId,
         "statusActionsMappingId": spnstatusActionsMappingId,
     };
@@ -900,10 +900,10 @@ function getProjBisagN(spnstatusId, spnstatusActionsMappingId) {
                     $("#lblTotal").html(0);
 
                 } else {
-                    var count = 1;
+                    let count = 1;
 
                     $('#DetailBodyBisagN').empty();
-                    for (var i = 0; i < response.length; i++) {
+                    for (let i = 0; i < response.length; i++) {
                         listItem += "<tr>";
                         listItem += "<td class='align-middle'>" + count + "</td>";
                         listItem += "<td class='align-middle nowrap'><span id='ProjName'>" + response[i].projName + "</span></td>";
@@ -914,7 +914,7 @@ function getProjBisagN(spnstatusId, spnstatusActionsMappingId) {
                     }
 
                     $("#DetailBodyBisagN").html(listItem);
-                    var table = $('#dashboardApprovedBisagN').DataTable({
+                    let table = $('#dashboardApprovedBisagN').DataTable({
                         lengthChange: true,
                         retrieve: true,
                         bDestroy: true,
@@ -935,7 +935,7 @@ function getProjBisagN(spnstatusId, spnstatusActionsMappingId) {
                                     'MultipleOf': {
                                         conditionName: 'Multiple Of',
                                         init: function (that, fn, preDefined = null) {
-                                            var el = $('<input/>').on('input', function () { fn(that, this) });
+                                            let el = $('<input/>').on('input', function () { fn(that, this) });
 
                                             if (preDefined !== null) {
                                                 $(el).val(preDefined[0]);
@@ -1210,13 +1210,13 @@ document.addEventListener('keydown', function (event) {
 
 $(document).ready(function () {
 
-    var TeamDetailPostBackURL = '/Projects/AttDetails';
+    let TeamDetailPostBackURL = '/Projects/AttDetails';
     $(document).on("click", ".anchorDetail", function (e) {
       
         e.preventDefault(); // prevent default anchor behavior
        
         
-        var id = $(this).data('id'); // better than attr()
+        let id = $(this).data('id'); // better than attr()
 
         $.ajax({
             type: "GET",

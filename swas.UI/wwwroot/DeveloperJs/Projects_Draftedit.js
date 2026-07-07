@@ -4,36 +4,36 @@
     });
 
 
-    var initiatedDateInput = $("#ProjEdit_InitiatedDate");
-    var completionDateInput = $("#ProjEdit_CompletionDate");
+    let initiatedDateInput = $("#ProjEdit_InitiatedDate");
+    let completionDateInput = $("#ProjEdit_CompletionDate");
 
-    var today = new Date();
+    let today = new Date();
 
 
-    var formattedDate = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
+    let formattedDate = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
 
 
     $("#ProjEdit_InitiatedDate").val(formattedDate);
 
-    var completionDateInput = document.getElementById("ProjEdit_CompletionDate");
+    let completionDateInput = document.getElementById("ProjEdit_CompletionDate");
 
     document.addEventListener('DOMContentLoaded', function () {
 
-        var form = document.getElementById('msform');
-        var submitButton = document.getElementById('submitUpload');
+        let form = document.getElementById('msform');
+        let submitButton = document.getElementById('submitUpload');
         submitButton.addEventListener('click', function (event) {
             event.preventDefault();
             form.submit();
         });
     });
 
-    var initiatedDateInput = $("#ProjEdit_InitiatedDate");
-    var completionDateInput = $("#ProjEdit_CompletionDate");
+    let initiatedDateInput = $("#ProjEdit_InitiatedDate");
+    let completionDateInput = $("#ProjEdit_CompletionDate");
 
     completionDateInput.on("change", function () {
 
-        var initiatedDateVal = initiatedDateInput.val();
-        var completionDateVal = completionDateInput.val();
+        let initiatedDateVal = initiatedDateInput.val();
+        let completionDateVal = completionDateInput.val();
 
         if (!initiatedDateVal) {
 
@@ -49,8 +49,8 @@
             return;
         }
 
-        var initiatedDate = new Date(initiatedDateVal);
-        var completionDate = new Date(completionDateVal);
+        let initiatedDate = new Date(initiatedDateVal);
+        let completionDate = new Date(completionDateVal);
 
 
         if (completionDate <= initiatedDate) {
@@ -79,9 +79,9 @@
 
 
 
-                var fdset = "fieldset#" + "uploaded";
+                let fdset = "fieldset#" + "uploaded";
                 $(fdset).hide();
-                var fdset = "fieldset#" + "5";
+                let fdset = "fieldset#" + "5";
 
                 editFormContainer.style.display = 'block';
                 addFormContainer.style.display = 'none';
@@ -260,12 +260,12 @@
             }
         }
 
-        var fdsetid = '@tabshift';
-        var current_fs, next_fs, previous_fs;
-        var opacity;
-        var steps = $("fieldset").length;
+        let fdsetid = '@tabshift';
+        let current_fs, next_fs, previous_fs;
+        let opacity;
+        let steps = $("fieldset").length;
         if (fdsetid == 3) {
-            var fdset = "fieldset#" + "upload";
+            let fdset = "fieldset#" + "upload";
             editFormContainer.style.display = 'none';
             addFormContainer.style.display = 'block';
             $("#1").hide();
@@ -274,7 +274,7 @@
 
         }
         else if (fdsetid == 12) {
-            var fdset = "fieldset#" + "uploaded";
+            let fdset = "fieldset#" + "uploaded";
             editFormContainer.style.display = 'block';
             addFormContainer.style.display = 'none';
             $("#5").hide();
@@ -282,7 +282,7 @@
             $(fdset).show();
         }
         else {
-            var fdset = "fieldset#" + fdsetid + "";
+            let fdset = "fieldset#" + fdsetid + "";
 
         }
 
@@ -329,7 +329,7 @@
             } else if (fdsetid == 8) {
                 $("#confirmed").addClass("active");
             }
-            var isValid = true;
+            let isValid = true;
             current_fs.find("input[required]").each(function () {
                 if ($(this).val() === "") {
                     isValid = false;
@@ -343,11 +343,11 @@
 
 
 
-            var selectedValueX = $("#ProjEdit_Apptype").val();
-            var ProjEdit_HostTypeX = $("#ProjEdit_HostTypeID").val();
+            let selectedValueX = $("#ProjEdit_Apptype").val();
+            let ProjEdit_HostTypeX = $("#ProjEdit_HostTypeID").val();
 
-            var ProjEdit_HostTypeXE = $("#Hostedtype").val();
-            var ddlAppTypeEditXE = $("#ddlAppTypeEdit").val();
+            let ProjEdit_HostTypeXE = $("#Hostedtype").val();
+            let ddlAppTypeEditXE = $("#ddlAppTypeEdit").val();
 
 
 
@@ -462,7 +462,7 @@
 
         $("#finaluploaded").click(function () {
 
-            var fdset = "fieldset#" + "9";
+            let fdset = "fieldset#" + "9";
             editFormContainer.style.display = 'block';
             addFormContainer.style.display = 'none';
             $("fieldset#6").hide();
@@ -477,7 +477,7 @@
         });
 
         function setProgressBar(curStep) {
-            var percent = parseFloat(100 / steps) * curStep;
+            let percent = parseFloat(100 / steps) * curStep;
             percent = percent.toFixed();
             $(".progress-bar")
                 .css("width", percent + "%")
@@ -490,19 +490,19 @@
 
         $('#CurrentPslmId').val('0');
         $('#IsActive').val('True');
-        var today = new Date();
-        var year = today.getFullYear();
-        var month = String(today.getMonth() + 1).padStart(2, '0');
-        var day = String(today.getDate()).padStart(2, '0');
-        var defaultCompletionDate = year + '-' + month + '-' + day;
+        let today = new Date();
+        let year = today.getFullYear();
+        let month = String(today.getMonth() + 1).padStart(2, '0');
+        let day = String(today.getDate()).padStart(2, '0');
+        let defaultCompletionDate = year + '-' + month + '-' + day;
         $('#DateTimeOfUpdate').val(defaultCompletionDate);
         $('#InitialRemark').val('New Project');
         $('#InitiatedDate').val(defaultCompletionDate);
         $('#IsWhitelisted').val('No');
 
         $("#next").click(function (e) {
-            var selectedValuess = $("#ProjEdit_Apptype").val();
-            var ProjEdit_HostTypess = $("#ProjEdit_HostTypeID").val();
+            let selectedValuess = $("#ProjEdit_Apptype").val();
+            let ProjEdit_HostTypess = $("#ProjEdit_HostTypeID").val();
 
 
             if (selectedValuess === "0" || ProjEdit_HostTypess === "0") {
@@ -523,7 +523,7 @@
             function submitFormnew() {
 
 
-                var curPSMid = 0;
+                let curPSMid = 0;
 
                 if (@(Model.ProjEdit != null ? "true" : "false")) {
                     curPSMid = @(Model.ProjEdit?.CurrentPslmId ?? 0);
@@ -550,7 +550,7 @@
 
         $("#finalupload").click(function () {
             submitFormnew();
-        var fdset = "fieldset#" + "4";
+        let fdset = "fieldset#" + "4";
         editFormContainer.style.display = 'none';
         addFormContainer.style.display = 'block';
         $(fdset).show();

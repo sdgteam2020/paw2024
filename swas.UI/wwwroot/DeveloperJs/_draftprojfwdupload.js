@@ -15,7 +15,7 @@
 
                     if (response) {
                         if (response >= 1) {
-                            var rowToRemove = $('#SoftwareTypes tbody').find('a[data-id="' + ProjectId + '"]').closest('tr');
+                            let rowToRemove = $('#SoftwareTypes tbody').find('a[data-id="' + ProjectId + '"]').closest('tr');
                             rowToRemove.remove();
 
                             Swal.fire({
@@ -47,7 +47,7 @@ $(document).ready(function () {
 
     $('#ddlStages').on('change', function () {
 
-        var stageIds = $(this).val();
+        let stageIds = $(this).val();
 
         if (stageIds > 0) {
             $('#ddlStatus').empty();
@@ -61,8 +61,8 @@ $(document).ready(function () {
     });
 
     $('#ddlStatus').on('change', function () {
-        var selectedStatusId = $(this).val();
-        var selectedStageIds = $('#ddlStages').val();
+        let selectedStatusId = $(this).val();
+        let selectedStageIds = $('#ddlStages').val();
         if (selectedStatusId > 0) {
             $('#ddlActions').empty();
             EditActionsByStatus(selectedStatusId, selectedStageIds);
@@ -79,7 +79,7 @@ $(document).ready(function () {
 
 
 
-    var table = $('#SoftwareTypes').DataTable();
+    let table = $('#SoftwareTypes').DataTable();
     table.destroy();
 
     $('#SoftwareTypes').DataTable({
@@ -95,10 +95,10 @@ $(document).ready(function () {
 
 
     $('#ddlActions').on('change', function () {
-        var ddlActions = $(this).val();
-        var ddlStages = $('#ddlStatus').val();
-        var psmId = '@Model.ProjMov.PsmId';
-        var projId = psmId == 0 ? '@Model.DataProjId' : 0;
+        let ddlActions = $(this).val();
+        let ddlStages = $('#ddlStatus').val();
+        let psmId = '@Model.ProjMov.PsmId';
+        let projId = psmId == 0 ? '@Model.DataProjId' : 0;
 
 
         $.ajax({
@@ -228,7 +228,7 @@ $(document).ready(function () {
     function submitFormnew(PsmId, event) {
 
         event.preventDefault();
-        var curPSMid = 0;
+        let curPSMid = 0;
 
         $.ajax({
             type: 'POST',
@@ -259,7 +259,7 @@ $(document).ready(function () {
         submitFormnew(@Model.ProjMov.PsmId, event);
 
         event.preventDefault();
-        var fdset = "fieldset#" + "4";
+        let fdset = "fieldset#" + "4";
 
         $(fdset).show();
         $("fieldset#upload").hide();
@@ -273,8 +273,8 @@ $(document).ready(function () {
 $(document).ready(function () {
 
     function checkConditions() {
-        var remarksLength = $('#AttHisAdd_Reamarks').val().length;
-        var pdfFileInput = $('#pdfFileInput')[0].files.length;
+        let remarksLength = $('#AttHisAdd_Reamarks').val().length;
+        let pdfFileInput = $('#pdfFileInput')[0].files.length;
 
         if (remarksLength > 1 && pdfFileInput > 0) {
             $('#uploadButton').show();
