@@ -452,6 +452,7 @@ function generateCertificate(substage, ddlaction, ddlRemarks, Projid) {
 
 // 🔹 CERTIFICATE RESPONSEE:
 // 🔹 CERTIFICATE RESPONSE
+
 pdfjsLib.GlobalWorkerOptions.workerSrc = "/lib/pdfjs/pdf.worker.js";
 function handleCertificateResponse(response) {
     $('.uploadLoader').addClass('d-none');

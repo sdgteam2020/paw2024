@@ -1,5 +1,9 @@
 ﻿let isSavingUnitPermission = false;
 
+$('#btnSaveUnitPermissions').on('click', function () {
+
+    saveUnitPermission();
+})
 function saveUnitPermission() {
 
     if (isSavingUnitPermission) {

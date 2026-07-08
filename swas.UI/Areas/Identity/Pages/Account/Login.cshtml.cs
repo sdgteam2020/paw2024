@@ -152,7 +152,7 @@ namespace swas.Areas.Identity.Pages.Account
                     {
                         var unitdetl = await _unitRepository.GetUnitDtl(userdet.unitid);
                         int cla = await _unitRepository.GetIdCalendar();
-
+                     //await   _userManager.UpdateSecurityStampAsync(userdet);
                         if (unitdetl != null)
                         {
                             Login Db = new Login();

@@ -14,8 +14,7 @@
             Permission Master
         </h5>
 
-        <button class="btn btn-primary"
-                onclick="OpenAddEdit(0)">
+        <button id="btnAddPermission" class="btn btn-primary">
             Add Permission
         </button>
 
@@ -93,13 +92,13 @@
 
                         <td>
 
-                            <button class="btn btn-warning btn-sm"
-                                    onclick="OpenAddEdit(@item.Id)">
+                            <button class="btn btn-warning btn-sm btnEditPermission"
+                                    data-id="@item.Id">
                                 Edit
                             </button>
 
-                            <button class="btn btn-danger btn-sm"
-                                    onclick="DeletePermission(@item.Id)">
+                            <button class="btn btn-danger btn-sm btnDeletePermission"
+                                    data-id="@item.Id">
                                 Delete
                             </button>
 

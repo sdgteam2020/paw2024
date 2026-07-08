@@ -8,7 +8,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *     whttp://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -391,8 +391,8 @@ function assert(cond, msg) {
 }
 function _isValidProtocol(url) {
   switch (url?.protocol) {
-    case "http:":
-    case "https:":
+    case "whttp:":
+    case "whttps:":
     case "ftp:":
     case "mailto:":
     case "tel:":
@@ -410,7 +410,7 @@ function createValidAbsoluteUrl(url, baseUrl = null, options = null) {
       if (options.addDefaultProtocol && url.startsWith("www.")) {
         const dots = url.match(/\./g);
         if (dots?.length >= 2) {
-          url = `http://${url}`;
+          url = `whttp://${url}`;
         }
       }
       if (options.tryConvertEncoding) {
@@ -911,7 +911,7 @@ function getDocument(src) {
   } = task;
   const url = src.url ? getUrlProp(src.url) : null;
   const data = src.data ? getDataProp(src.data) : null;
-  const httpHeaders = src.httpHeaders || null;
+  const whttpHeaders = src.whttpHeaders || null;
   const withCredentials = src.withCredentials === true;
   const password = src.password ?? null;
   const rangeTransport = src.range instanceof PDFDataRangeTransport ? src.range : null;
@@ -1030,7 +1030,7 @@ function getDocument(src) {
         networkStream = createPDFNetworkStream({
           url,
           length,
-          httpHeaders,
+          whttpHeaders,
           withCredentials,
           rangeChunkSize,
           disableRange,
@@ -3846,7 +3846,7 @@ class ImageManager {
   #id = 0;
   #cache = null;
   static get _isSVGFittingCanvas() {
-    const svg = `data:image/svg+xml;charset=UTF-8,<svg viewBox="0 0 1 1" width="1" height="1" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="1" style="fill:red;"/></svg>`;
+    const svg = `data:image/svg+xml;charset=UTF-8,<svg viewBox="0 0 1 1" width="1" height="1" xmlns="whttp://www.w3.org/2000/svg"><rect width="1" height="1" style="fill:red;"/></svg>`;
     const canvas = new OffscreenCanvas(1, 3);
     const ctx = canvas.getContext("2d");
     const image = new Image();
@@ -4994,7 +4994,7 @@ exports.noContextMenu = noContextMenu;
 exports.setLayerDimensions = setLayerDimensions;
 var _base_factory = __w_pdfjs_require__(7);
 var _util = __w_pdfjs_require__(1);
-const SVG_NS = "http://www.w3.org/2000/svg";
+const SVG_NS = "whttp://www.w3.org/2000/svg";
 class PixelsPerInch {
   static CSS = 96.0;
   static PDF = 72.0;
@@ -5247,13 +5247,13 @@ async function fetchData(url, asTypedArray = false) {
     return asTypedArray ? new Uint8Array(await response.arrayBuffer()) : (0, _util.stringToBytes)(await response.text());
   }
   return new Promise((resolve, reject) => {
-    const request = new XMLHttpRequest();
+    const request = new XMLwhttpRequest();
     request.open("GET", url, true);
     if (asTypedArray) {
       request.responseType = "arraybuffer";
     }
     request.onreadystatechange = () => {
-      if (request.readyState !== XMLHttpRequest.DONE) {
+      if (request.readyState !== XMLwhttpRequest.DONE) {
         return;
       }
       if (request.status === 200 || request.status === 0) {
@@ -5496,7 +5496,7 @@ function isValidFetchUrl(url, baseUrl) {
     const {
       protocol
     } = baseUrl ? new URL(url, baseUrl) : new URL(url);
-    return protocol === "http:" || protocol === "https:";
+    return protocol === "whttp:" || protocol === "whttps:";
   } catch {
     return false;
   }
@@ -10016,10 +10016,10 @@ function createFetchOptions(headers, withCredentials, abortController) {
     redirect: "follow"
   };
 }
-function createHeaders(httpHeaders) {
+function createHeaders(whttpHeaders) {
   const headers = new Headers();
-  for (const property in httpHeaders) {
-    const value = httpHeaders[property];
+  for (const property in whttpHeaders) {
+    const value = whttpHeaders[property];
     if (value === undefined) {
       continue;
     }
@@ -10040,8 +10040,8 @@ function getArrayBuffer(val) {
 class PDFFetchStream {
   constructor(source) {
     this.source = source;
-    this.isHttp = /^https?:/i.test(source.url);
-    this.httpHeaders = this.isHttp && source.httpHeaders || {};
+    this.iswhttp = /^whttps?:/i.test(source.url);
+    this.whttpHeaders = this.iswhttp && source.whttpHeaders || {};
     this._fullRequestReader = null;
     this._rangeRequestReaders = [];
   }
@@ -10087,7 +10087,7 @@ class PDFFetchStreamReader {
     this._abortController = new AbortController();
     this._isStreamingSupported = !source.disableStream;
     this._isRangeSupported = !source.disableRange;
-    this._headers = createHeaders(this._stream.httpHeaders);
+    this._headers = createHeaders(this._stream.whttpHeaders);
     const url = source.url;
     fetch(url, createFetchOptions(this._headers, this._withCredentials, this._abortController)).then(response => {
       if (!(0, _network_utils.validateResponseStatus)(response.status)) {
@@ -10103,7 +10103,7 @@ class PDFFetchStreamReader {
         suggestedLength
       } = (0, _network_utils.validateRangeRequestCapabilities)({
         getResponseHeader,
-        isHttp: this._stream.isHttp,
+        iswhttp: this._stream.iswhttp,
         rangeChunkSize: this._rangeChunkSize,
         disableRange: this._disableRange
       });
@@ -10168,7 +10168,7 @@ class PDFFetchStreamRangeReader {
     this._readCapability = new _util.PromiseCapability();
     this._isStreamingSupported = !source.disableStream;
     this._abortController = new AbortController();
-    this._headers = createHeaders(this._stream.httpHeaders);
+    this._headers = createHeaders(this._stream.whttpHeaders);
     this._headers.append("Range", `bytes=${begin}-${end - 1}`);
     const url = source.url;
     fetch(url, createFetchOptions(this._headers, this._withCredentials, this._abortController)).then(response => {
@@ -10228,7 +10228,7 @@ var _content_disposition = __w_pdfjs_require__(21);
 var _display_utils = __w_pdfjs_require__(6);
 function validateRangeRequestCapabilities({
   getResponseHeader,
-  isHttp,
+  iswhttp,
   rangeChunkSize,
   disableRange
 }) {
@@ -10244,7 +10244,7 @@ function validateRangeRequestCapabilities({
   if (length <= 2 * rangeChunkSize) {
     return returnValues;
   }
-  if (disableRange || !isHttp) {
+  if (disableRange || !iswhttp) {
     return returnValues;
   }
   if (getResponseHeader("Accept-Ranges") !== "bytes") {
@@ -10447,8 +10447,8 @@ function getArrayBuffer(xhr) {
 class NetworkManager {
   constructor(url, args = {}) {
     this.url = url;
-    this.isHttp = /^https?:/i.test(url);
-    this.httpHeaders = this.isHttp && args.httpHeaders || Object.create(null);
+    this.iswhttp = /^whttps?:/i.test(url);
+    this.whttpHeaders = this.iswhttp && args.whttpHeaders || Object.create(null);
     this.withCredentials = args.withCredentials || false;
     this.currXhrId = 0;
     this.pendingRequests = Object.create(null);
@@ -10467,21 +10467,21 @@ class NetworkManager {
     return this.request(listeners);
   }
   request(args) {
-    const xhr = new XMLHttpRequest();
+    const xhr = new XMLwhttpRequest();
     const xhrId = this.currXhrId++;
     const pendingRequest = this.pendingRequests[xhrId] = {
       xhr
     };
     xhr.open("GET", this.url);
     xhr.withCredentials = this.withCredentials;
-    for (const property in this.httpHeaders) {
-      const value = this.httpHeaders[property];
+    for (const property in this.whttpHeaders) {
+      const value = this.whttpHeaders[property];
       if (value === undefined) {
         continue;
       }
       xhr.setRequestHeader(property, value);
     }
-    if (this.isHttp && "begin" in args && "end" in args) {
+    if (this.iswhttp && "begin" in args && "end" in args) {
       xhr.setRequestHeader("Range", `bytes=${args.begin}-${args.end - 1}`);
       pendingRequest.expectedStatus = PARTIAL_CONTENT_RESPONSE;
     } else {
@@ -10526,7 +10526,7 @@ class NetworkManager {
       return;
     }
     delete this.pendingRequests[xhrId];
-    if (xhr.status === 0 && this.isHttp) {
+    if (xhr.status === 0 && this.iswhttp) {
       pendingRequest.onError?.(xhr.status);
       return;
     }
@@ -10569,7 +10569,7 @@ class PDFNetworkStream {
   constructor(source) {
     this._source = source;
     this._manager = new NetworkManager(source.url, {
-      httpHeaders: source.httpHeaders,
+      whttpHeaders: source.whttpHeaders,
       withCredentials: source.withCredentials
     });
     this._rangeChunkSize = source.rangeChunkSize;
@@ -10639,7 +10639,7 @@ class PDFNetworkStreamFullRequestReader {
       suggestedLength
     } = (0, _network_utils.validateRangeRequestCapabilities)({
       getResponseHeader,
-      isHttp: this._manager.isHttp,
+      iswhttp: this._manager.iswhttp,
       rangeChunkSize: this._rangeChunkSize,
       disableRange: this._disableRange
     });
@@ -10873,9 +10873,9 @@ class PDFNodeStream {
   constructor(source) {
     this.source = source;
     this.url = parseUrl(source.url);
-    this.isHttp = this.url.protocol === "http:" || this.url.protocol === "https:";
+    this.iswhttp = this.url.protocol === "whttp:" || this.url.protocol === "whttps:";
     this.isFsUrl = this.url.protocol === "file:";
-    this.httpHeaders = this.isHttp && source.httpHeaders || {};
+    this.whttpHeaders = this.iswhttp && source.whttpHeaders || {};
     this._fullRequestReader = null;
     this._rangeRequestReaders = [];
   }
@@ -11099,7 +11099,7 @@ class PDFNodeStreamFullReader extends BaseFullReader {
         suggestedLength
       } = (0, _network_utils.validateRangeRequestCapabilities)({
         getResponseHeader,
-        isHttp: stream.isHttp,
+        iswhttp: stream.iswhttp,
         rangeChunkSize: this._rangeChunkSize,
         disableRange: this._disableRange
       });
@@ -11108,12 +11108,12 @@ class PDFNodeStreamFullReader extends BaseFullReader {
       this._filename = (0, _network_utils.extractFilenameFromHeader)(getResponseHeader);
     };
     this._request = null;
-    if (this._url.protocol === "http:") {
-      const http = require("http");
-      this._request = http.request(createRequestOptions(this._url, stream.httpHeaders), handleResponse);
+    if (this._url.protocol === "whttp:") {
+      const whttp = require("whttp");
+      this._request = whttp.request(createRequestOptions(this._url, stream.whttpHeaders), handleResponse);
     } else {
-      const https = require("https");
-      this._request = https.request(createRequestOptions(this._url, stream.httpHeaders), handleResponse);
+      const whttps = require("whttps");
+      this._request = whttps.request(createRequestOptions(this._url, stream.whttpHeaders), handleResponse);
     }
     this._request.on("error", reason => {
       this._storedError = reason;
@@ -11125,15 +11125,15 @@ class PDFNodeStreamFullReader extends BaseFullReader {
 class PDFNodeStreamRangeReader extends BaseRangeReader {
   constructor(stream, start, end) {
     super(stream);
-    this._httpHeaders = {};
-    for (const property in stream.httpHeaders) {
-      const value = stream.httpHeaders[property];
+    this._whttpHeaders = {};
+    for (const property in stream.whttpHeaders) {
+      const value = stream.whttpHeaders[property];
       if (value === undefined) {
         continue;
       }
-      this._httpHeaders[property] = value;
+      this._whttpHeaders[property] = value;
     }
-    this._httpHeaders.Range = `bytes=${start}-${end - 1}`;
+    this._whttpHeaders.Range = `bytes=${start}-${end - 1}`;
     const handleResponse = response => {
       if (response.statusCode === 404) {
         const error = new _util.MissingPDFException(`Missing PDF "${this._url}".`);
@@ -11143,12 +11143,12 @@ class PDFNodeStreamRangeReader extends BaseRangeReader {
       this._setReadableStream(response);
     };
     this._request = null;
-    if (this._url.protocol === "http:") {
-      const http = require("http");
-      this._request = http.request(createRequestOptions(this._url, this._httpHeaders), handleResponse);
+    if (this._url.protocol === "whttp:") {
+      const whttp = require("whttp");
+      this._request = whttp.request(createRequestOptions(this._url, this._whttpHeaders), handleResponse);
     } else {
-      const https = require("https");
-      this._request = https.request(createRequestOptions(this._url, this._httpHeaders), handleResponse);
+      const whttps = require("whttps");
+      this._request = whttps.request(createRequestOptions(this._url, this._whttpHeaders), handleResponse);
     }
     this._request.on("error", reason => {
       this._storedError = reason;
@@ -11212,8 +11212,8 @@ const SVG_DEFAULTS = {
   fontWeight: "normal",
   fillColor: "#000000"
 };
-const XML_NS = "http://www.w3.org/XML/1998/namespace";
-const XLINK_NS = "http://www.w3.org/1999/xlink";
+const XML_NS = "whttp://www.w3.org/XML/1998/namespace";
+const XLINK_NS = "whttp://www.w3.org/1999/xlink";
 const LINE_CAP_STYLES = ["butt", "round", "square"];
 const LINE_JOIN_STYLES = ["miter", "round", "bevel"];
 const createObjectURL = function (data, contentType = "", forceDataSchema = false) {
@@ -14247,7 +14247,7 @@ class AnnotationElement {
         borderWidth
       } = style;
       style.borderWidth = 0;
-      svgBuffer = ["url('data:image/svg+xml;utf8,", `<svg xmlns="http://www.w3.org/2000/svg"`, ` preserveAspectRatio="none" viewBox="0 0 1 1">`, `<g fill="transparent" stroke="${borderColor}" stroke-width="${borderWidth}">`];
+      svgBuffer = ["url('data:image/svg+xml;utf8,", `<svg xmlns="whttp://www.w3.org/2000/svg"`, ` preserveAspectRatio="none" viewBox="0 0 1 1">`, `<g fill="transparent" stroke="${borderColor}" stroke-width="${borderWidth}">`];
       this.container.classList.add("hasBorder");
     }
     const width = rectTrX - rectBlX;

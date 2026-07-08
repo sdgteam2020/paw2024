@@ -48,6 +48,11 @@
     });
 });
 
+
+$(document).on('click', '#btnSaveUserPermissions', function () {
+    SaveUserPermissions();
+})
+
 function SaveUserPermissions() {
 
     let userId = $('#UserId').val();

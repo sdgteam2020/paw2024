@@ -49,9 +49,18 @@ function initializeDataTable(tableSelector) {
             });
 
             wrapper.find('input[type="search"]').off('keypress.DT_SAFE').on('keypress.DT_SAFE', function (e) {
-                const char = String.fromCharCode(e.which);
+                //const char = String.fromCharCode(e.which);
 
-                if (!/^[a-zA-Z0-9 _.,]$/.test(char)) {
+                const char = String.fromCharCode(e.which || e.keyCode);
+
+                // Allow only letters, numbers, and space
+                if (!/[a-zA-Z0-9 ]/.test(char)) {
+                    e.preventDefault();
+                    return;
+                }
+
+                // Prevent consecutive spaces
+                if (char === ' ' && e.target.value.endsWith(' ')) {
                     e.preventDefault();
                 }
             });
@@ -227,7 +236,7 @@ function PdfDiv(tableSelector, watermarkSelector = ".IpAddress") {
     tableHTML += '</tbody></table>';
 
     const watermarkText = escapeHtml($(watermarkSelector).text() || '');
-
+  
     const popupWin = window.open('', '_blank', 'top=100,width=900,height=500,location=no');
 
     popupWin.document.open();

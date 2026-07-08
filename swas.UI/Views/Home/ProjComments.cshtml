@@ -108,7 +108,7 @@
                                                         <label asp-for="StkStatusId" class="control-label">
                                                             <b>Status</b> <span class="text-danger"><font class="pc-required-star"><b>*</b></font></span>
                                                         </label>
-                                                        <select asp-for="StkStatusId" class="form-control" id="ddlStatus" onchange="handleStatusChange()">
+                                                        <select asp-for="StkStatusId" class="form-control" id="ddlStatus" >
                                                             <option value="">Select a Status</option>
                                                             @foreach (var status in ViewBag.Stk_StatusForDte)
                                                             {
@@ -121,7 +121,7 @@
                                                         <label asp-for="StkStatusId" class="control-label">
                                                             <b>Status</b> <span class="text-danger"><font class="pc-required-star"><b>*</b></font></span>
                                                         </label>
-                                                            <select asp-for="StkStatusId" class="form-control" id="ddlStatus" onchange="handleStatusChange()">
+                                                        <select asp-for="StkStatusId" class="form-control handleStatusChange" id="ddlStatus" >
                                                             <option value="">Select a Status</option>
                                                             @foreach (var status in ViewBag.Stk_Status)
                                                             {
@@ -253,7 +253,7 @@
                                                     <label asp-for="StkStatusId" class="control-label">
                                                         <b>Status</b> <span class="text-danger"><font class="pc-required-star"><b>*</b></font></span>
                                                     </label>
-                                                    <select asp-for="StkStatusId" class="form-control" id="ddlStatus" onchange="handleStatusChange()">
+                                                    <select asp-for="StkStatusId" class="form-control  handleStatusChange" id="ddlStatus">
                                                         <option value="">Select a Status</option>
                                                         @if (Logins.unitid == 1)
                                                         {

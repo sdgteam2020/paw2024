@@ -20,8 +20,8 @@
 
         <div>
             <button type="button"
-                    class="btn btn-sm btn-success"
-                    onclick="savePermissionControl()">
+                    class="btn btn-sm btn-success" id="btnSavePermissions"
+                    >
                 Save Permissions
             </button>
         </div>
@@ -32,14 +32,14 @@
 
         <div class="mb-3">
             <button type="button"
-                    class="btn btn-sm btn-outline-primary"
-                    onclick="checkAllPermissions(true)">
+                    class="btn btn-sm btn-outline-primary" id="btnSelectAll"
+                    >
                 Select All
             </button>
 
             <button type="button"
-                    class="btn btn-sm btn-outline-secondary"
-                    onclick="checkAllPermissions(false)">
+                    class="btn btn-sm btn-outline-secondary" id="btnUnselectAll"
+                   >
                 Unselect All
             </button>
         </div>
@@ -77,5 +77,4 @@
     </div>
 
 </div>
-
 <script src="~/developerjs/permissionmaster.js"></script>

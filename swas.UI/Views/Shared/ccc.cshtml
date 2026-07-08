@@ -44,7 +44,7 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Command, new { @class = "control-label" })
-                @Html.DropDownListFor(model => model.Command, new SelectList(ViewBag.cl, "comdid", "Command_Name"), new { id = "Command", @class = "form-control", onchange = "populateCorpsDropdown(this)" })
+                @Html.DropDownListFor(model => model.Command, new SelectList(ViewBag.cl, "comdid", "Command_Name"), new { id = "Command", @class = "form-control", })
                 @Html.ValidationMessageFor(model => model.Command, "", new { @class = "text-danger" })
             </div>
         </div>

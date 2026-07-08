@@ -260,6 +260,11 @@ builder.Services.Configure<SiteSettings>(
     builder.Configuration.GetSection("SiteSettings")
 );
 
+
+builder.Services.AddResponseCompression(options =>
+{
+    options.EnableForHttps = true;
+});
 // ===============================
 // HSTS
 // ===============================

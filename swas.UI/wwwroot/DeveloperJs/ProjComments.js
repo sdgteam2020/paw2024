@@ -242,7 +242,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
+$('.handleStatusChange').on('click', function () {
+    handleStatusChange();
+})
 
 
     function handleStatusChange() {
