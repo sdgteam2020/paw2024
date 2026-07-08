@@ -23,7 +23,7 @@ namespace swas.BAL.Repository
          .SqlQuery<AuditLogDTO>(
              $"EXEC USP_GetAuditLogHistory @ProjId={ProjId}")
          .ToListAsync();
-
+           
             var result = auditDtos.Select(x =>
             {
                 var vm = new AuditLogViewModel
@@ -32,7 +32,7 @@ namespace swas.BAL.Repository
                     ProjectId = x.ProjId,
                     ProjectName = x.ProjName,
                     ChangedBy = x.ChangedBy,
-                    ChangedAt = x.ChangedAt
+                    ChangedAt = TimeZoneInfo.ConvertTimeFromUtc(x.ChangedAt,TimeZoneInfo.FindSystemTimeZoneById("India Standard Time"))
                 };
                 if (x.IsStageChanged)
                 {
