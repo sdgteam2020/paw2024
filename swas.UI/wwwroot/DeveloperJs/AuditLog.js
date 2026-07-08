@@ -1,4 +1,9 @@
-﻿function OpenAuditHistory(btn) {
+﻿$(document).ready(function () {
+    $("#btnAuditlog").on("click", function () {
+        OpenAuditHistory(this);
+    });
+});
+function OpenAuditHistory(btn) {
     var ProjectId = btn.dataset.projid;
     $("#auditHistoryContainer").html(
         "<div class='text-center'>Loading...</div>"

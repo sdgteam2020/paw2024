@@ -1,74 +1,6 @@
 ﻿@using swas.BAL.DTO
 @model List<AuditLogViewModel>
 
-<style>
-    .audit-card {
-        border-left: 4px solid #0d6efd;
-        border-radius: 10px;
-        background: #fff;
-        margin-bottom: 15px;
-        box-shadow: 0 2px 8px rgba(0,0,0,.08);
-    }
-
-    .audit-header {
-        padding: 12px 15px;
-        background: #f8f9fa;
-        border-bottom: 1px solid #eee;
-    }
-
-    .audit-project {
-        font-size: 16px;
-        font-weight: 600;
-    }
-
-    .audit-meta {
-        color: #6c757d;
-        font-size: 13px;
-    }
-
-    .audit-body {
-        padding: 15px;
-    }
-
-    .change-row {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-        flex-wrap: wrap;
-    }
-
-    .change-label {
-        width: 100px;
-        font-weight: 600;
-        color: #495057;
-    }
-
-    .change-values {
-        flex: 1;
-    }
-
-    .old-badge {
-        background: #fde2e2;
-        color: #b42318;
-        padding: 5px 10px;
-        border-radius: 20px;
-        font-size: 13px;
-    }
-
-    .new-badge {
-        background: #d1fadf;
-        color: #027a48;
-        padding: 5px 10px;
-        border-radius: 20px;
-        font-size: 13px;
-    }
-
-    .arrow {
-        margin: 0 10px;
-        font-weight: bold;
-        color: #6c757d;
-    }
-</style>
 @if (Model == null || !Model.Any())
 {
     <div class="alert alert-warning text-center">
@@ -127,3 +59,5 @@ else
         </div>
     }
 }
+
+<link href="~/css/auditlog.css" rel="stylesheet" />
