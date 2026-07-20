@@ -1,13 +1,4 @@
 -----------------------------------------------------------------------------
-Date : 29-04-2022 11:47:28
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:47:30
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2022 11:47:30
-Request failed & Status Code : 200
------------------------------------------------------------------------------
 Date : 29-04-2022 11:47:47
 Data is Null. This method or property cannot be called on Null values.
 -----------------------------------------------------------------------------
@@ -898,3 +889,12 @@ Keyword not supported: 'integrated_security'.
 -----------------------------------------------------------------------------
 Date : 2026-06-24 09:38:58
 An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+-----------------------------------------------------------------------------
+Date : 2026-07-17 11:30:34
+Could not find a part of the path 'D:\SushilWork\PAW_Project\swas.UI\wwwroot\Download\285.pdf'.
+-----------------------------------------------------------------------------
+Date : 2026-07-17 11:33:24
+Could not find a part of the path 'D:\SushilWork\PAW_Project\swas.UI\wwwroot\Download\991.pdf'.
+-----------------------------------------------------------------------------
+Date : 2026-07-17 11:34:56
+Could not find a part of the path 'D:\SushilWork\PAW_Project\swas.UI\wwwroot\Download\773.pdf'.

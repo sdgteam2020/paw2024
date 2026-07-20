@@ -74,6 +74,7 @@
     <Folder Include="wwwroot\DownloadFile\" />
     <Folder Include="wwwroot\lib\lib\NewFolder\" />
     <Folder Include="wwwroot\lib\pdfjs\" />
+    <Folder Include="wwwroot\Download\" />
     <Folder Include="wwwroot\sweetalert2\" />
     <Folder Include="wwwroot\Uploads\" />
   </ItemGroup>
