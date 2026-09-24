@@ -58,3 +58,94 @@ function enter() {
     if (intro) intro.style.display = "none";
     if (login) login.style.display = "flex";
 }
+
+
+  $(document).ready(function () {
+
+    const $element = $("#paw-typewriter");
+
+    if (!$element.length) {
+        return;
+    }
+
+    const brandingWords = [
+        "WHITELISTING",
+        "SECURITY",
+        "CONTROL",
+        "PROTECTION",
+        "COMPLIANCE"
+    ];
+
+    const config = {
+        typingSpeed: 90,
+        deletingSpeed: 55,
+        pauseAfterTyping: 1800,
+        pauseBeforeTyping: 400
+    };
+
+    let wordIndex = 0;
+    let characterIndex = 0;
+    let deleting = false;
+
+    function typeWriter() {
+
+        const currentWord = brandingWords[wordIndex];
+
+        if (!deleting) {
+
+            characterIndex++;
+
+            $element.text(
+                currentWord.substring(0, characterIndex)
+            );
+
+            if (characterIndex >= currentWord.length) {
+
+                deleting = true;
+
+                setTimeout(
+                    typeWriter,
+                    config.pauseAfterTyping
+                );
+
+                return;
+            }
+
+            setTimeout(
+                typeWriter,
+                config.typingSpeed
+            );
+
+        } else {
+
+            characterIndex--;
+
+            $element.text(
+                currentWord.substring(0, characterIndex)
+            );
+
+            if (characterIndex <= 0) {
+
+                characterIndex = 0;
+                deleting = false;
+
+                wordIndex =
+                    (wordIndex + 1) % brandingWords.length;
+
+                setTimeout(
+                    typeWriter,
+                    config.pauseBeforeTyping
+                );
+
+                return;
+            }
+
+            setTimeout(
+                typeWriter,
+                config.deletingSpeed
+            );
+        }
+    }
+
+    typeWriter();
+});

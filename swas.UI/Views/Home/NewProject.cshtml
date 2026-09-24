@@ -290,68 +290,88 @@
                             </tr>
                         </thead>
 
-                        <tbody>
-                            @if (WhiteListed != null)
-                            {
-                                int count = 1;
-                                foreach (var unitx in WhiteListed)
-                                {
-                                    <tr>
-                                        <td class="s-no-column">@count</td>
+                      <tbody>
+    @if (WhiteListed != null)
+    {
+        int count = 1;
 
-                                        <td class="RefLetter-container paw-w-6">
-                                            <span class="noExport">
-                                                @(string.IsNullOrEmpty(unitx.ProjName) ? "" : (unitx.ProjName.Length > 25) ? unitx.ProjName.Substring(0, 25) + "...." : unitx.ProjName)
-                                            </span>
-                                            <div class="RefLetter">@unitx.ProjName</div>
-                                        </td>
+        foreach (var unitx in WhiteListed)
+        {
+            DateTime? clearenceDate = unitx.Clearence;
+            DateTime? afterThreeYears = clearenceDate?.AddYears(3);
 
-                                        <td class="col-width9">@unitx.HostedOn</td>
-                                        <td>@unitx.Appt</td>
-                                        <td>@unitx.Fmn</td>
-                                        <td class="col-width6">@unitx.ContactNo</td>
-                                        <td class="col-width6">@(unitx.Clearence != null ? unitx.Clearence.ToString("dd-MM-yyyy") : "")</td>
+            // Expired if Clearance Date + 3 years is today or earlier
+            bool isExpired = afterThreeYears.HasValue &&
+                             DateTime.Today >= afterThreeYears.Value.Date;
 
-                                        @{
-                                            DateTime? clearenceDate = unitx.Clearence;
-                                            DateTime? afterThreeYears = null;
-                                            if (clearenceDate.HasValue) { afterThreeYears = clearenceDate.Value.AddYears(3); }
-                                        }
+            <tr class="@(isExpired ? "table-danger" : "")">
+                <td class="s-no-column">@count</td>
 
-                                        <td>@unitx.CertNo</td>
+                <td class="RefLetter-container paw-w-6">
+                    <span class="noExport">
+                        @(string.IsNullOrEmpty(unitx.ProjName)
+                            ? ""
+                            : (unitx.ProjName.Length > 25
+                                ? unitx.ProjName.Substring(0, 25) + "...."
+                                : unitx.ProjName))
+                    </span>
+                    <div class="RefLetter">@unitx.ProjName</div>
+                </td>
 
-                                        <td class="col-width6">
-                                            @(afterThreeYears.HasValue ? afterThreeYears.Value.ToString("dd-MM-yyyy") : "")
-                                        </td>
+                <td class="col-width9">@unitx.HostedOn</td>
+                <td>@unitx.Appt</td>
+                <td>@unitx.Fmn</td>
+                <td class="col-width6">@unitx.ContactNo</td>
 
-                                        <td class="RefLetter-container">
-                                            <span class="noExport">
-                                                @(string.IsNullOrEmpty(unitx.Remarks) ? "" : (unitx.Remarks.Length > 25) ? unitx.Remarks.Substring(0, 25) + "...." : unitx.Remarks)
-                                            </span>
+                <td class="col-width6">
+                    @(clearenceDate.HasValue
+                        ? clearenceDate.Value.ToString("dd-MM-yyyy")
+                        : "")
+                </td>
 
-                                            @if (!string.IsNullOrEmpty(unitx.Remarks) && (unitx.Remarks.Length > 25))
-                                            {
-                                                <div class="RefLetter">@unitx.Remarks</div>
-                                            }
-                                        </td>
+                <td>@unitx.CertNo</td>
 
-                                        @if (Logins?.unitid == 1)
-                                        {
-                                            <td>
-                                                <center>
-                                                    <a class="EditWhiteListedProj" href="#" data-id="@unitx.Id">
-                                                        <div>
-                                                            <img src="/assets/images/icons/edit.png" alt="Icon" class="paw-edit-icon">
-                                                        </div>
-                                                    </a>
-                                                </center>
-                                            </td>
-                                        }
-                                    </tr>
-                                    count++;
-                                }
-                            }
-                        </tbody>
+                <td class="col-width6">
+                    @(afterThreeYears.HasValue
+                        ? afterThreeYears.Value.ToString("dd-MM-yyyy")
+                        : "")
+                </td>
+
+                <td class="RefLetter-container">
+                    <span class="noExport">
+                        @(string.IsNullOrEmpty(unitx.Remarks)
+                            ? ""
+                            : (unitx.Remarks.Length > 25
+                                ? unitx.Remarks.Substring(0, 25) + "...."
+                                : unitx.Remarks))
+                    </span>
+
+                    @if (!string.IsNullOrEmpty(unitx.Remarks) && unitx.Remarks.Length > 25)
+                    {
+                        <div class="RefLetter">@unitx.Remarks</div>
+                    }
+                </td>
+
+                @if (Logins?.unitid == 1)
+                {
+                    <td>
+                        <center>
+                            <a class="EditWhiteListedProj" href="#" data-id="@unitx.Id">
+                                <div>
+                                    <img src="/assets/images/icons/edit.png"
+                                         alt="Icon"
+                                         class="paw-edit-icon">
+                                </div>
+                            </a>
+                        </center>
+                    </td>
+                }
+            </tr>
+
+            count++;
+        }
+    }
+</tbody>
                     </table>
                 </div>
 

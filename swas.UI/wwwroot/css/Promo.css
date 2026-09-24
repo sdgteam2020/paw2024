@@ -239,4 +239,108 @@ input {
 {
     height:140px
 }
+.paw-branding {
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: #ffffff;
+    line-height: 1.5;
+}
 
+/* Animated word */
+#paw-typewriter {
+    display: inline-block;
+    position: relative;
+
+    min-width: 15ch;
+
+    color: #ffd54a;
+    font-weight: 700;
+
+    letter-spacing: 1.8px;
+
+    text-shadow:
+        0 0 8px rgba(255, 213, 74, 0.25);
+
+    transition:
+        color 0.3s ease,
+        text-shadow 0.3s ease;
+}
+
+/* Cursor */
+#paw-typewriter::before {
+    content: "|";
+
+    display: inline-block;
+
+    margin-left: 5px;
+
+    color: #ffd54a;
+
+    font-weight: 400;
+
+    animation: pawCursor 0.75s step-end infinite;
+}
+
+/* Animated underline */
+#paw-typewriter::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -5px;
+
+    width: 100%;
+    height: 2px;
+
+    border-radius: 10px;
+
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        #ffd54a 20%,
+        #fff0a3 50%,
+        #ffd54a 80%,
+        transparent 100%
+    );
+
+    transform-origin: center;
+
+    animation: pawUnderline 1.8s ease-in-out infinite;
+}
+
+/* Cursor blinking */
+@keyframes pawCursor {
+
+    0%,
+    45% {
+        opacity: 1;
+    }
+
+    46%,
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Underline animation */
+@keyframes pawUnderline {
+
+    0% {
+        opacity: 0.35;
+        transform: scaleX(0.65);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+
+    100% {
+        opacity: 0.35;
+        transform: scaleX(0.65);
+    }
+}
+
+/* PAW version */

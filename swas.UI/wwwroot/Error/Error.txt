@@ -1,10 +1,4 @@
 -----------------------------------------------------------------------------
-Date : 29-04-2022 11:47:28
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2022 11:47:30
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
 Date : 29-04-2022 11:47:30
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
@@ -898,3 +892,9 @@ Keyword not supported: 'integrated_security'.
 -----------------------------------------------------------------------------
 Date : 2026-06-24 09:38:58
 An exception has been raised that is likely due to a transient failure. Consider enabling transient error resiliency by adding 'EnableRetryOnFailure' to the 'UseSqlServer' call.
+-----------------------------------------------------------------------------
+Date : 21-07-2026 17:11:38
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 21-07-2026 17:11:41
+Request failed & Status Code : 200
