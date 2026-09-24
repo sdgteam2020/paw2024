@@ -94,9 +94,7 @@ ion-icon {
         bottom: 0;
         padding: 0 15px;
         z-index: 5;
-        background-color: #ffffff;
-        
-        
+       
         transition: all .2s;
         background: #044c92;
        
@@ -788,7 +786,6 @@ ion-icon {
     color: #1c1b1b;
     border-top: 1px solid #ededed;
     background-clip: border-box;
-    background: 0% 0;
     font-size: 14px;
     font-weight: 500;
 }
@@ -910,7 +907,6 @@ ion-icon {
     bottom: 0;
     padding: 0.7rem;
     color: white;
-    background-color: #fff;
     border-top: 1px solid #e9ecef;
     text-align: center;
     transition: .3s all;

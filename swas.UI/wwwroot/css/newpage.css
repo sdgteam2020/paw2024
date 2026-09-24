@@ -99,12 +99,12 @@ body {
     padding: 3rem;
     padding: 0 1.5rem;
     justify-content: center;
-    background-clip: border-box;
+    
     z-index: 5;
     text-align: center;
     transition: 0.3s all;
     box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 50%);
-    background: #044c92;
+    
     background: linear-gradient(90deg,#044c92 100%, #044c92 77%, #044c92 0% );
 }
 
@@ -114,11 +114,11 @@ body {
     bottom: 0;
     padding: 0.7rem;
     color: white;
-    background-color: #fff;
+   
     border-top: 1px solid #e9ecef;
     text-align: center;
     transition: .3s all;
-    background: #007bff;
+    
     background: linear-gradient(90deg,#044c92 100%, #044c92 77%, #044c92 0% );
 }
 

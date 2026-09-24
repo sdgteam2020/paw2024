@@ -89,10 +89,10 @@ ion-icon {
         bottom: 0;
         padding: 0 15px;
         z-index: 5;
-        background-color: #ffffff;
+      
        
         transition: all .2s;
-        background: #007bff;
+       
         background: linear-gradient(90deg,#007bff 100%, #32bfff 77%, rgba(236,37,124,1) 0% );
         color: white;
         box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 50%);
@@ -425,7 +425,7 @@ color:white;
     right: 0;
     height: 65px;
     padding: 0 1.5rem;
-    background-clip: border-box;
+  
     z-index: 5;
     transition: 0.3s all;
     box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 50%);
@@ -715,7 +715,7 @@ color:white;
 	padding: .8rem 1rem;
 	color: #1c1b1b;
 	border-top: 1px solid #ededed;
-	background-clip: border-box;
+	
 	background: 0% 0;
 	font-size: 14px;
 	font-weight: 500;
@@ -840,11 +840,11 @@ color:white;
     bottom: 0;
     padding: 0.7rem;
     color: white;
-    background-color: #fff;
+    
     border-top: 1px solid #e9ecef;
     text-align: center;
     transition: .3s all;
-    background: #007bff;
+    
     background: linear-gradient(90deg,#007bff 100%, rgba(128,0,128,1) 77%, rgba(236,37,124,1) 0% );
 }
 
@@ -2136,7 +2136,7 @@ ul.categories-list li {
 }
 
     #progressbar .active {
-        color: 044c92;
+        color: #044c92;
     }
 
     #progressbar li {

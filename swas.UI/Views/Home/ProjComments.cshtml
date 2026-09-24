@@ -103,34 +103,34 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    @if (Logins.unitid == 1)
-                                                    {
-                                                        <label asp-for="StkStatusId" class="control-label">
-                                                            <b>Status</b> <span class="text-danger"><font class="pc-required-star"><b>*</b></font></span>
-                                                        </label>
-                                                        <select asp-for="StkStatusId" class="form-control" id="ddlStatus" >
-                                                            <option value="">Select a Status</option>
-                                                            @foreach (var status in ViewBag.Stk_StatusForDte)
-                                                            {
-                                                                <option value="@status.StkStatusId">@status.Status</option>
-                                                            }
-                                                        </select>
-                                                    }
-                                                    else
-                                                    {
-                                                        <label asp-for="StkStatusId" class="control-label">
-                                                            <b>Status</b> <span class="text-danger"><font class="pc-required-star"><b>*</b></font></span>
-                                                        </label>
-                                                        <select asp-for="StkStatusId" class="form-control handleStatusChange" id="ddlStatus" >
-                                                            <option value="">Select a Status</option>
-                                                            @foreach (var status in ViewBag.Stk_Status)
-                                                            {
-                                                                <option value="@status.StkStatusId">@status.Status</option>
-                                                            }
-                                                        </select>
+                                                    @{
+                                                        var statusList = Logins.unitid == 1
+                                                        ? ViewBag.Stk_StatusForDte
+                                                        : ViewBag.Stk_Status;
+
+                                                        var cssClass = Logins.unitid == 1
+                                                        ? "form-control"
+                                                        : "form-control handleStatusChange";
                                                     }
 
-                                                    <div class="invalid-feedback">Please select a Status.</div>
+                                                    <label asp-for="StkStatusId" class="control-label">
+                                                        <b>Status</b>
+                                                        <span class="text-danger">
+                                                            <span class="pc-required-star"><b>*</b></span>
+                                                        </span>
+                                                    </label>
+
+                                                    <select asp-for="StkStatusId" class="@cssClass" id="ddlStatus">
+                                                        <option value="">Select a Status</option>
+                                                        @foreach (var status in statusList)
+                                                        {
+                                                            <option value="@status.StkStatusId">@status.Status</option>
+                                                        }
+                                                    </select>
+
+                                                    <div class="invalid-feedback">
+                                                        Please select a Status.
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -276,7 +276,7 @@
 
                                             <div class="form-group">
                                                 <label for="pdfFile"><b>Upload PDF</b></label>
-                                                <input type="file" id="uploadfile" name="uploadfile" accept=".pdf" class="form-control" readonly />
+                                                <input type="file" id="uploadfile1" name="uploadfile" accept=".pdf" class="form-control" readonly />
                                                 <div class="invalid-feedback">Please upload a PDF file.</div>
                                             </div>
 

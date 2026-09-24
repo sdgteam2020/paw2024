@@ -65,7 +65,7 @@
     right: 0;
     height: 65px;
     padding: 0 1.5rem;
-    background-clip: border-box;
+    
     z-index: 5;
     transition: 0.3s all;
     box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 50%);
@@ -114,7 +114,7 @@
     bottom: 0;
     padding: 0.7rem;
     color: white;
-    background-color: #fff;
+    
     border-top: 1px solid #e9ecef;
     text-align: center;
     transition: .3s all;

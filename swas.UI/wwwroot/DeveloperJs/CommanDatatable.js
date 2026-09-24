@@ -1,8 +1,15 @@
-﻿function cleanDataTableInput(value) {
-    // Allow only letters, numbers, space, underscore, comma and dot
-    return value.replace(/[^a-zA-Z0-9 _.,]/g, '');
-}
+﻿//function cleanDataTableInput(value) {
+//    // Allow only letters, numbers, space, underscore, comma and dot
+//    return value.replace(/[^a-zA-Z0-9 _.,]/g, '');
+//}
+function cleanDataTableInput(value) {
+    if (!value) return "";
 
+    return value
+        .replace(/[^a-zA-Z0-9 ]/g, "") // Allow only letters, numbers and space
+        .replace(/\s{2,}/g, " ")       // Remove multiple spaces
+        .trimStart();                  // Prevent leading spaces
+}
 function escapeHtml(value) {
     if (value === null || value === undefined) return '';
 
@@ -38,40 +45,63 @@ function initializeDataTable(tableSelector) {
 
             const wrapper = $(table.table().container());
 
-            wrapper.find('input[type="search"]').off('input.DT_SAFE').on('input.DT_SAFE', function () {
-                const cleanValue = cleanDataTableInput(this.value);
+            const searchBox = wrapper.find('input[type="search"]');
+
+            // Sanitize while typing
+            searchBox.off('input.DT_SAFE').on('input.DT_SAFE', function () {
+
+                const cursorPos = this.selectionStart;
+
+                let cleanValue = cleanDataTableInput(this.value);
 
                 if (this.value !== cleanValue) {
                     this.value = cleanValue;
+                    this.setSelectionRange(cursorPos - 1, cursorPos - 1);
                 }
 
                 table.search(cleanValue).draw();
             });
 
-            wrapper.find('input[type="search"]').off('keypress.DT_SAFE').on('keypress.DT_SAFE', function (e) {
-                //const char = String.fromCharCode(e.which);
+            // Prevent invalid keys
+            searchBox.off('keydown.DT_SAFE').on('keydown.DT_SAFE', function (e) {
 
-                const char = String.fromCharCode(e.which || e.keyCode);
+                const allowedKeys = [
+                    "Backspace",
+                    "Delete",
+                    "ArrowLeft",
+                    "ArrowRight",
+                    "ArrowUp",
+                    "ArrowDown",
+                    "Tab",
+                    "Home",
+                    "End"
+                ];
 
-                // Allow only letters, numbers, and space
-                if (!/[a-zA-Z0-9 ]/.test(char)) {
-                    e.preventDefault();
+                if (allowedKeys.includes(e.key) || e.ctrlKey || e.metaKey) {
                     return;
                 }
 
+                // Allow only letters, numbers and space
+                if (!/^[a-zA-Z0-9 ]$/.test(e.key)) {
+                    e.preventDefault();
+                }
+
                 // Prevent consecutive spaces
-                if (char === ' ' && e.target.value.endsWith(' ')) {
+                if (e.key === " " && this.value.endsWith(" ")) {
                     e.preventDefault();
                 }
             });
 
-            wrapper.find('input[type="search"]').off('paste.DT_SAFE').on('paste.DT_SAFE', function (e) {
+            // Handle paste
+            searchBox.off('paste.DT_SAFE').on('paste.DT_SAFE', function (e) {
+
                 e.preventDefault();
 
-                const pastedText = (e.originalEvent || e).clipboardData.getData('text');
-                const cleanValue = cleanDataTableInput(pastedText);
+                let pasted = (e.originalEvent || e).clipboardData.getData('text');
 
-                document.execCommand('insertText', false, cleanValue);
+                pasted = cleanDataTableInput(pasted);
+
+                document.execCommand("insertText", false, pasted);
             });
         },
 

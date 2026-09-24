@@ -416,24 +416,29 @@ $(document).ready(function () {
     $('.char-limit').each(function () {
         
         let inputField = $(this);
-        
+
         let maxLength = parseInt(inputField.data('maxlength'));
-        let errorMsg = inputField.closest('div').find('.charErrorMsg');
-        let countSpan = inputField.closest('div').find('#inputcount');
+
+        let errorMsg = inputField.closest('.input-container').find('.charErrorMsg');
+
+        let countSpan = inputField.siblings('label').find('.inputcount');
 
         inputField.on('input', function () {
-            let value = inputField.val();
-            let remaining = maxLength - value.length;
-            
-            countSpan.text(" (Remaining Char: " + remaining + ")");
 
-            // Stop typing after max length
+            let value = $(this).val();
+
+            let remaining = maxLength - value.length;
+
+            countSpan.text(" (Remaining: " + remaining + ")");
+
             if (value.length > maxLength) {
-              
-                inputField.val(value.substring(0, maxLength+1));
+
+                $(this).val(value.substring(0, maxLength));
+
                 errorMsg.removeClass('d-none');
-              
+
             } else {
+
                 errorMsg.addClass('d-none');
             }
 
