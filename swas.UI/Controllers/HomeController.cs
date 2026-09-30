@@ -123,6 +123,27 @@ namespace swas.UI.Controllers
                 {
                     return Redirect("/Identity/Account/Login");
                 }
+
+                var projectTypes = await _projectsRepository.GetProjectSearchTypesAsync();
+
+                var Projoptions = projectTypes
+ .Select(x => new SelectListItem
+ {
+     Text = x.ProjectSearchTypeName,
+     Value = x.ProjectSearchTypeId.ToString(),
+     Selected = x.ProjectSearchTypeCode == "ALL"
+ })
+ .ToList();
+
+                Projoptions.Insert(0, new SelectListItem
+                {
+                    Text = "--Select--",
+                    Value = "",
+                    Disabled = true,
+                    Selected = false
+                });
+
+                ViewBag.ProjectTypeOptions = Projoptions;
                 ViewBag.UnitId = Logins?.unitid;
                 return View();
             }
@@ -149,7 +170,7 @@ namespace swas.UI.Controllers
 
 
             int StatusId = 0;
-            bool IsDuplicate = true;
+            int IsDuplicate = 0;
             Login Logins = SessionHelper.GetObjectFromJson<Login>(
                 _httpContextAccessor.HttpContext.Session, "User");
             var cryptoKey = Logins.CryptoKey;
@@ -171,7 +192,7 @@ namespace swas.UI.Controllers
                 }
 
                 var obj = JsonConvert.DeserializeObject<dynamic>(decrypted.Trim('"'));
-                if (obj == null || !int.TryParse((string?)obj.StatusId, out StatusId) || !bool.TryParse((string?)obj.IsDuplicate, out IsDuplicate))
+                if (obj == null || !int.TryParse((string?)obj.StatusId, out StatusId) || !int.TryParse((string?)obj.IsDuplicate, out IsDuplicate))
                 {
 
                     return BadRequest(new { success = false, message = "Invalid identifier." });
@@ -197,37 +218,35 @@ namespace swas.UI.Controllers
 
         }
 
-        public async Task<IActionResult> GetDashboardApproved(string StatusId, string statusActionsMappingId)
+        public async Task<IActionResult> GetDashboardApproved(string StatusId, string statusActionsMappingId, string projecttype)
         {
-            Login Logins = SessionHelper.GetObjectFromJson<Login>(
-                _httpContextAccessor.HttpContext.Session, "User");
-            var cryptoKey = Logins.CryptoKey;
+            var logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext?.Session, "User");
+            if (logins == null) { _logger.LogWarning("User session not found in GetDashboardApproved"); return Json(-401); }
+            var cryptoKey = logins.CryptoKey;
 
             try
             {
-                // 🔐 SAFE DECRYPTION
                 StatusId = string.IsNullOrEmpty(StatusId) ? "" : CryptoHelper.SafeDecrypt(StatusId, cryptoKey);
-                statusActionsMappingId = string.IsNullOrEmpty(StatusId) ? "" : CryptoHelper.SafeDecrypt(statusActionsMappingId, cryptoKey);
-
+                statusActionsMappingId = string.IsNullOrEmpty(statusActionsMappingId) ? "" : CryptoHelper.SafeDecrypt(statusActionsMappingId, cryptoKey);
+                projecttype = string.IsNullOrEmpty(projecttype) ? "" : CryptoHelper.SafeDecrypt(projecttype, cryptoKey);
             }
-            catch (Exception ex)
+            catch (Exception ex) { _logger.LogError(ex, "Decryption failed in GetDashboardApproved"); return Json(-500); }
+
+            if (!int.TryParse(StatusId?.Trim('"'), out int statusId) || !int.TryParse(statusActionsMappingId?.Trim('"'), out int statusActionsMappingIdValue) || !int.TryParse(projecttype?.Trim('"'), out int projectTypeValue))
             {
-                _logger.LogError(ex, "Decryption failed in SendCommentonProject");
-                return Json(-500);
+                _logger.LogWarning("Invalid decrypted input values in GetDashboardApproved. StatusId: {StatusId}, StatusActionsMappingId: {StatusActionsMappingId}, ProjectType: {ProjectType}", StatusId, statusActionsMappingId, projecttype);
+                return Json(-400);
             }
-            // 🔄 SAFE CONVERSION
-            if (!int.TryParse(StatusId.Trim('"'), out int statusId) ||
-                !int.TryParse(statusActionsMappingId.Trim('"'), out int StatusActionsMappingId))
+
+            try
             {
-                _logger.LogWarning("Invalid decrypted input values in SendCommentonProject");
-                return Json(-400); // bad request
+                var result = await _projectsRepository.GetDashboardApproved(statusId, statusActionsMappingIdValue, projectTypeValue);
+                return Json(result);
             }
-
-            var ss = await _projectsRepository.GetDashboardApproved(statusId, StatusActionsMappingId);
-
-            return Json(ss);
-
+            catch (Exception ex) { _logger.LogError(ex, "Error while getting dashboard approved projects. StatusId: {StatusId}, StatusActionsMappingId: {StatusActionsMappingId}, ProjectType: {ProjectType}", statusId, statusActionsMappingIdValue, projectTypeValue); return Json(-500); }
         }
+
+
         [HttpPost]
         public async Task<IActionResult> GetProjectWiseStatus(string encrypted_Payload)
         {

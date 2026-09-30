@@ -142,7 +142,7 @@ $(document).ready(function () {
         $('body').removeClass('modal-open');
     });
 
-    $(".btn-Obsn").click(function () {
+    $(document).on("click", ".btn-Obsn",function () {
 
         let projNameDetail = $(this).data('proj-name') + " " + "Move Details"
         let projName = $(this).data('proj-name');
@@ -1066,7 +1066,7 @@ function CheckforPreviousapprovals() {
 
 
 
-$(".btn-Fwd").on('click',function () {
+$(document).on('click', ".btn-Fwd",function () {
     openForwardModal(this, false);
 });
 

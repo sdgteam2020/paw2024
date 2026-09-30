@@ -745,4 +745,6 @@ body {
     white-space: normal !important;
 }
 
-
+.project-type-filter {
+    width: 320px;
+}

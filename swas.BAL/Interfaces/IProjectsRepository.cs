@@ -1,4 +1,5 @@
 ﻿using ASPNetCoreIdentityCustomFields.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using swas.BAL.DTO;
 using swas.DAL;
@@ -22,10 +23,10 @@ namespace swas.BAL.Interfaces
 		Task<bool> UpdateProjectAsync(tbl_Projects project, string Remarks);
 		Task<List<tbl_Projects>> GetAllProjectsAsync();
         Task<bool> DeleteProjectAsync(int projectId);
-        Task<List<DTOProjectsFwd>> GetActInboxAsync();
-        Task<List<DTOProjectsFwd>> GetDashboardStatusDetails(int StatuId,int UnitId, bool IsDuplicate);
-        Task<List<DTOProjectsFwd>> GetDashboardApproved(int StatuId,int statusActionsMappingId);
+        Task<List<DTOProjectsFwd>> GetDashboardStatusDetails(int StatuId,int UnitId, int IsDuplicate);
+        Task<List<DTOProjectsFwd>> GetDashboardApproved(int StatuId,int statusActionsMappingId,int projecttype);
         Task<DTOProjectWiseStatus> GetProjectWiseStatus(int? id);
+        Task<List<DTOProjectsFwd>> GetActInboxAsync();
         Task<List<DTOProjectsFwd>> GetActSendItemsAsync();
         Task<List<DTOProjectsFwd>> GetActCcItemsAsync();
         Task<List<tbl_Projects>> GetActComplettemsAsync();
@@ -77,6 +78,10 @@ namespace swas.BAL.Interfaces
         Task<bool> SendForecloseToInbox(int psmId);
         Task<bool> CloseProjectAgain(int psmId);
 
+        Task<bool> UpdateFieldInSTCAsync(int projId, bool fieldInSTC);
+
+        Task<List<MstProjectSearchType>> GetProjectSearchTypesAsync();
+        Task<object> ProcessProjectCommentAsync(IFormFile? uploadfile, string Comments, int StkStatusId, int ProjectId, int psmid, DateTime CommentDate, string helper);
     }
 
 

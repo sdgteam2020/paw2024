@@ -72,6 +72,7 @@ namespace swas.DAL
         public DbSet<UnitClaims> UnitClaims { get; set; }
         public DbSet<ProjectForeclose> ProjectForecloses { get; set; }
         public DbSet<AuditLog> AuditLog { get; set; }
+        public DbSet<MstProjectSearchType> MstProjectSearchTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -109,6 +110,8 @@ namespace swas.DAL
             modelBuilder.Entity<DateApproval>().ToTable("DateApproval");
             modelBuilder.Entity<LegacyHistory>().ToTable("LegacyHistory");
             modelBuilder.Entity<trnRemainder>().ToTable("trnRemainder");
+            modelBuilder.Entity<MstProjectSearchType>().ToTable("MstProjectSearchType");
+            modelBuilder.Entity<mProposal>().ToTable("mProposal");
             modelBuilder.Entity<tbl_mCertificateContent>().ToTable("tbl_mCertificateContent");
 
             modelBuilder.Entity<AddNewProject>().HasNoKey(); // Mark as keyless entity

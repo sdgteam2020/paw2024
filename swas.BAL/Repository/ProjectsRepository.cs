@@ -1,33 +1,36 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ASPNetCoreIdentityCustomFields.Data;
+using Dapper;
+using Grpc.Core;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using swas.BAL.DTO;
 using swas.BAL.Helpers;
 using swas.BAL.Interfaces;
-using swas.DAL;
-using swas.DAL.Models;
-using System.Net.Mail;
-using System.Data;
-using System.Linq;
-using Microsoft.AspNetCore.DataProtection;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using Microsoft.AspNetCore.Identity;
-using System.Xml.Linq;
-using System;
-using Microsoft.AspNetCore.Mvc;
 using swas.BAL.Utility;
-using static Grpc.Core.Metadata;
-using Grpc.Core;
-using System.Diagnostics;
-using System.Threading;
-using swas.UI.Helpers;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using ASPNetCoreIdentityCustomFields.Data;
-using Microsoft.Data.SqlClient;
+using swas.DAL;
 using swas.DAL.Mapper;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Dapper;
+using swas.DAL.Models;
+using swas.UI.Helpers;
+using System;
+using System.Data;
+using System.Diagnostics;
+using System.Linq;
+using System.Net.Mail;
+using System.Threading;
+using System.Xml.Linq;
+using static Grpc.Core.Metadata;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static swas.DAL.Models.LegacyHistory;
 
 namespace swas.BAL.Repository
 {
@@ -39,8 +42,10 @@ namespace swas.BAL.Repository
         private readonly IDataProtector _dataProtector;
         private readonly IProjStakeHolderMovRepository _psmRepository;
         private readonly IConfiguration _configuration;
-        public ProjectsRepository(ApplicationDbContext dbContext, IHttpContextAccessor httpContextAccessor,
-            ApplicationDbContext DBContext, IDataProtectionProvider dataProtector, IProjStakeHolderMovRepository psmRepository, IConfiguration configuration)
+        private readonly IStkCommentRepository _stkCommentRepository;
+        private readonly IWebHostEnvironment _environment;
+        public ProjectsRepository(ApplicationDbContext dbContext, IWebHostEnvironment environment, IHttpContextAccessor httpContextAccessor,
+            ApplicationDbContext DBContext, IDataProtectionProvider dataProtector, IProjStakeHolderMovRepository psmRepository, IConfiguration configuration, IStkCommentRepository stkCommentRepository)
         {
             _dbContext = dbContext;
             _httpContextAccessor = httpContextAccessor;
@@ -48,6 +53,7 @@ namespace swas.BAL.Repository
             _dataProtector = dataProtector.CreateProtector("swas.UI.Controllers.ProjectsController");
             _psmRepository = psmRepository;
             _configuration = configuration;
+            _stkCommentRepository = stkCommentRepository;
         }
         public async Task<DTOProjectWiseStatus> GetProjectWiseStatus(int? Projid)
         {
@@ -107,24 +113,22 @@ namespace swas.BAL.Repository
             return result;
             #endregion
         }
-        public async Task<List<DTOProjectsFwd>> GetDashboardApproved(int StatuId, int statusActionsMappingId)
+        public async Task<List<DTOProjectsFwd>> GetDashboardApproved(int StatuId, int statusActionsMappingId,int projecttype)
         {
-         
+
 
             #region GetDashBoardApprovedWithProc
 
             try
             {
-          
+
 
                 var lst = new List<DTOProjectsFwd>();
-				Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+                Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
-				using (var conn = _dbContext.Database.GetDbConnection())
+                using (var conn = _dbContext.Database.GetDbConnection())
                 {
                     await conn.OpenAsync();
-
-
 
                     using (var cmd = conn.CreateCommand())
                     {
@@ -141,14 +145,14 @@ namespace swas.BAL.Repository
                         paramStatusActionId.Value = statusActionsMappingId;
                         cmd.Parameters.Add(paramStatusActionId);
 
-                        DataTable dt = new DataTable();
+                        var paramIdAiMl = cmd.CreateParameter();
+                        paramIdAiMl.ParameterName = "@Is_ai_ml";
+                        paramIdAiMl.Value = projecttype;
+                        cmd.Parameters.Add(paramIdAiMl);
 
-                        using (var da = new SqlDataAdapter((SqlCommand)cmd))
+
+                        using (var reader = await cmd.ExecuteReaderAsync())
                         {
-                            da.Fill(dt);
-                        }
-                        using ( var reader = await cmd.ExecuteReaderAsync())
-                        {   
                             while (await reader.ReadAsync())
                             {
                                 int stakeHolderId = reader.GetInt32(reader.GetOrdinal("StakeHolderId"));
@@ -156,13 +160,13 @@ namespace swas.BAL.Repository
                                 var item = new DTOProjectsFwd
                                 {
                                     ProjId = reader.GetInt32(reader.GetOrdinal("ProjId")),
-                                  
+                                    FieldInSTC = reader.GetBoolean(reader.GetOrdinal("Field_In_STC")),
                                     PsmIds = reader.GetInt32(reader.GetOrdinal("PsmId")),
                                     ProjName = reader.IsDBNull(reader.GetOrdinal("ProjName")) ? null : reader.GetString(reader.GetOrdinal("ProjName")),
                                     StakeHolder = reader.IsDBNull(reader.GetOrdinal("StakeHolder")) ? null : reader.GetString(reader.GetOrdinal("StakeHolder")),
                                     TimeStamp = reader.IsDBNull(reader.GetOrdinal("TimeStamp")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("TimeStamp")),
-                                    StatusactionMappingid = reader.IsDBNull(reader.GetOrdinal("StatusActionsMappingId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("StatusActionsMappingId")),
-                                   
+                                    StatusactionMappingid = reader.IsDBNull(reader.GetOrdinal("StatusActionsMappingId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("StatusActionsMappingId"))
+
                                 };
                                 bool isAllowedUnit =
                Logins.unitid == 1 ||
@@ -178,7 +182,7 @@ namespace swas.BAL.Repository
                                 {
                                     item.StakeHolderId = reader.GetInt32(reader.GetOrdinal("StakeHolderId"));
                                     if (isAllowedUnit)
-                                    item.ApprovedDt = reader.IsDBNull(reader.GetOrdinal("approveddt")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("approveddt"));
+                                        item.ApprovedDt = reader.IsDBNull(reader.GetOrdinal("approveddt")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("approveddt"));
                                     item.ApprovedRemarks = reader.IsDBNull(reader.GetOrdinal("ApprovedRemarks")) ? null : reader.GetString(reader.GetOrdinal("ApprovedRemarks"));
                                 }
                                 else
@@ -205,49 +209,60 @@ namespace swas.BAL.Repository
             #endregion
         }
         public async Task<List<DTOProjectsFwd>> GetDashboardStatusDetails(
-     int StatuId,
-     int UnitId,
-     bool IsDuplicate)
+      int StatuId,
+      int UnitId,
+      int listtype)
         {
-            Login? logins = SessionHelper.GetObjectFromJson<Login>(
-                _httpContextAccessor.HttpContext?.Session,
-                "User"
-            );
-
-            if (logins == null)
-                return new List<DTOProjectsFwd>();
-
-            string connectionString = Environment.GetEnvironmentVariable("ConnectionStrings")??"";
-
-
-            if (string.IsNullOrWhiteSpace(connectionString))
-                throw new InvalidOperationException("Database connection string is missing.");
-
-            await using var connection = new SqlConnection(connectionString);
-
-            var parameters = new DynamicParameters();
-            parameters.Add("@StatuId", StatuId, DbType.Int32);
-            parameters.Add("@UnitId", UnitId, DbType.Int32);
-            parameters.Add("@IsDuplicate", IsDuplicate, DbType.Boolean);
-
-            var result = await connection.QueryAsync<DTOProjectsFwd>(
-                "dbo.GetDashboardStatusDetails_Dapper",
-                parameters,
-                commandType: CommandType.StoredProcedure,
-                commandTimeout: 60
-            );
-
-            var list = result.ToList();
-
-            foreach (var item in list)
+            try
             {
-                item.EncyID = _dataProtector.Protect(item.ProjId.ToString());
-                item.EncyPsmID = _dataProtector.Protect(item.PsmIds.ToString());
-            }
+                var login = SessionHelper.GetObjectFromJson<Login>(
+                    _httpContextAccessor.HttpContext?.Session,
+                    "User");
 
-            return list
-                .OrderByDescending(x => x.DateTimeOfUpdate)
-                .ToList();
+                if (login == null)
+                    return new List<DTOProjectsFwd>();
+
+                if (listtype < 1 || listtype > 4)
+                    return new List<DTOProjectsFwd>();
+
+                var connectionString = _dbContext.Database.GetConnectionString();
+
+                if (string.IsNullOrWhiteSpace(connectionString))
+                    throw new InvalidOperationException("Database connection string is missing.");
+
+                await using var connection = new SqlConnection(connectionString);
+
+                var parameters = new DynamicParameters();
+                parameters.Add("StatuId", StatuId, DbType.Int32);
+                parameters.Add("UnitId", UnitId, DbType.Int32);
+                parameters.Add("ListType", listtype, DbType.Int32);
+
+                var result = await connection.QueryAsync<DTOProjectsFwd>(
+                    "dbo.usp_GetDashboardStatusDetails",
+                    parameters,
+                    commandType: CommandType.StoredProcedure,
+                    commandTimeout: 60);
+
+                var list = result.AsList();
+
+                foreach (var item in list)
+                {
+                    item.EncyID = _dataProtector.Protect(item.ProjId.ToString());
+                    item.EncyPsmID = _dataProtector.Protect(item.PsmIds.ToString());
+                }
+
+                return list;
+            }
+            catch (SqlException ex)
+            {
+                swas.BAL.Error.ExceptionHandle($"SQL error in GetDashboardStatusDetails. StatuId={StatuId}, UnitId={UnitId}, ListType={listtype}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                swas.BAL.Error.ExceptionHandle($"Error in GetDashboardStatusDetails. StatuId={StatuId}, UnitId={UnitId}, ListType={listtype}");
+                throw;
+            }
         }
         //        public async Task<List<DTOProjectsFwd>> GetDashboardStatusDetails(int StatuId, int UnitId, bool IsDuplicate)
         //        {
@@ -665,7 +680,7 @@ namespace swas.BAL.Repository
         public async Task<List<tbl_Projects>> GetActComplettemsAsync()
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-         
+
 
             #region GetActComplettemsAsyncWithProc
 
@@ -680,6 +695,7 @@ namespace swas.BAL.Repository
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@UnitId", Logins.unitid ?? 0);
+
 
                         using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                         {
@@ -806,7 +822,7 @@ namespace swas.BAL.Repository
 
         public async Task<List<DTOProjectsFwd>> GetActInboxAsync()
         {
-        
+
 
             #region GetActInboxAsyncWithProc
             var result = new List<DTOProjectsFwd>();
@@ -853,11 +869,11 @@ namespace swas.BAL.Repository
                             ToUnitId = reader.GetInt32(reader.GetOrdinal("ToUnitId")),
                             ToUnitName = reader["ToUnitName"]?.ToString(),
                             Action = reader["Action"]?.ToString(),
+                            isWhitelisted = reader["IsWhiteListed"]?.ToString(),
                             TotalDays = 0,
                             ActionId = reader.GetInt32(reader.GetOrdinal("ActionId")),
                             Sponsor = reader["Sponsor"]?.ToString(),
                             Stage = reader["Stage"]?.ToString(),
-                            isWhitelisted = reader["IsWhiteListed"]?.ToString(),
                             StageId = reader.GetInt32(reader.GetOrdinal("StageId")),
                             IsRead = reader.GetBoolean(reader.GetOrdinal("IsRead")),
                             IsProcess = reader.GetBoolean(reader.GetOrdinal("IsProcess")),
@@ -870,8 +886,9 @@ namespace swas.BAL.Repository
         : $"{unitName} ({userDetails})",
                             EncyID = _dataProtector.Protect(projId.ToString()),
                             EncyPsmID = _dataProtector.Protect(psmId.ToString()),
-
-                            Date_type = (int)reader["Date_type"],
+                            Date_type = reader["Date_type"] == DBNull.Value
+            ? 0
+            : Convert.ToInt32(reader["Date_type"]),
                             AdminApprovalStatus = reader.GetInt32(reader.GetOrdinal("AdminApprovalStatus")) == 1,
                             UserRequest = reader.GetInt32(reader.GetOrdinal("UserRequest")) == 1,
                             //reader.GetBoolean(reader.GetOrdinal("UserRequest")),
@@ -879,10 +896,11 @@ namespace swas.BAL.Repository
 
 
                             RequestUnitId = reader.IsDBNull(reader.GetOrdinal("RequestUnitId")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("RequestUnitId")),
-                            IsCc = (bool)reader["IsCc"],
-                            IssentCC = (bool)reader["IssentCC"],
-                            CCUnitName = reader["CCUnitName"]?.ToString(),
+                            IsCc = reader["IsCc"] != DBNull.Value && Convert.ToBoolean(reader["IsCc"]),
 
+                            IssentCC = reader["IssentCC"] != DBNull.Value && Convert.ToBoolean(reader["IssentCC"]),
+                            CCUnitName = reader["CCUnitName"]?.ToString(),
+                            AIML = (bool)reader["Is_AI_ML"],
                             // ✅ New fields
                             LatestRemarks = reader["LatestRemarks"]?.ToString(),
                             HasRemainder1 = reader.GetInt32(reader.GetOrdinal("HasRemainder1")) == 1,
@@ -907,10 +925,10 @@ namespace swas.BAL.Repository
 
         public async Task<List<DTOProjectsFwd>> GetActSendItemsAsync()
         {
-          
+
 
             #region GetActSendItemsWithProc
-try
+            try
             {
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
                 if (Logins == null) return null;
@@ -925,6 +943,7 @@ try
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@UnitId", unitId);
+                        //cmd.Parameters.AddWithValue("@selecttype", projectSearchTypeId);
 
 
                         await conn.OpenAsync();
@@ -957,7 +976,7 @@ try
     : $"{reader["FromUnitUserDetail"]} ({reader["UserDetails"]})",
 
                                     ToUnitId = reader.GetInt32(reader.GetOrdinal("ToUnitId")),
-                                 
+
                                     ToUnitName = reader["ToUnitName"]?.ToString(),
                                     Action = reader["Actions"]?.ToString(),
                                     ActionId = reader.GetInt32(reader.GetOrdinal("ActionId")),
@@ -993,7 +1012,7 @@ try
             {
                 throw ex;
             }
-        
+
             #endregion
 
         }
@@ -1016,6 +1035,7 @@ try
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@UnitId", unitId);
+                       
 
 
                         await conn.OpenAsync();
@@ -1046,7 +1066,7 @@ try
                                     FromUnitName = string.IsNullOrWhiteSpace(reader["FromUnitUserDetail"]?.ToString())
     ? reader["UserDetails"]?.ToString()
     : $"{reader["FromUnitUserDetail"]} ({reader["UserDetails"]})",
-                                  
+
                                     ToUnitId = reader.GetInt32(reader.GetOrdinal("ToUnitId")),
                                     ToUnitName = reader["ToUnitName"]?.ToString(),
                                     Action = reader["Actions"]?.ToString(),
@@ -1059,6 +1079,7 @@ try
                                     EncyID = _dataProtector.Protect(reader["ProjId"].ToString()),
                                     EncyPsmID = _dataProtector.Protect(reader["PsmIds"].ToString()),
                                     IsHosted = Convert.ToInt32(reader["IsHosted"] != DBNull.Value ? Convert.ToInt32(reader["IsHosted"]) : 0),
+                                    AIML = (bool)reader["Is_AI_ML"],
                                     IsCc = (bool)reader["IsCc"],
                                     CCUnitName = reader["CCUnitName"]?.ToString(),
                                     ReadDate = reader["ReadDate"] != DBNull.Value ? Convert.ToDateTime(reader["ReadDate"]) : DateTime.MinValue,
@@ -2200,6 +2221,251 @@ try
             await _dbContext.SaveChangesAsync();
 
             return true;
+        }
+
+        /// <summary>
+        /// Provides data for the UpdateFieldInSTCAsync operation.
+        /// <param name="projId">The value used by the operation.</param>
+        /// <param name="fieldInSTC">The value used by the operation.</param>
+        /// <returns>The result produced by the operation.</returns>
+        /// </summary>
+        public async Task<bool> UpdateFieldInSTCAsync(int projId, bool fieldInSTC)
+        {
+            var project = new tbl_Projects
+            {
+                ProjId = projId,
+                Field_In_STC = fieldInSTC
+            };
+
+            _dbContext.Projects.Attach(project);
+
+            _dbContext.Entry(project)
+                .Property(x => x.Field_In_STC)
+                .IsModified = true;
+
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+        }
+        /// <summary>
+        /// Provides data for the GetProjectSearchTypesAsync operation.
+        /// <returns>The result produced by the operation.</returns>
+        /// </summary>
+        public async Task<List<MstProjectSearchType>> GetProjectSearchTypesAsync()
+        {
+            try
+            {
+
+                var types = await _dbContext.MstProjectSearchTypes
+               .AsNoTracking()
+               .Where(x => x.IsActive)
+               .OrderBy(x => x.DisplayOrder)
+               .ToListAsync();
+                return types;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        /// <summary>
+        /// Provides data for the ProcessProjectCommentAsync operation.
+        /// <param name="uploadfile">The value used by the operation.</param>
+        /// <param name="Comments">The value used by the operation.</param>
+        /// <param name="StkStatusId">The value used by the operation.</param>
+        /// <param name="ProjectId">The value used by the operation.</param>
+        /// <param name="psmid">The value used by the operation.</param>
+        /// <param name="CommentDate">The value used by the operation.</param>
+        /// <param name="helper">The value used by the operation.</param>
+        /// <returns>The result produced by the operation.</returns>
+        /// </summary>
+        public async Task<object> ProcessProjectCommentAsync(IFormFile? uploadfile, string Comments, int StkStatusId, int ProjectId, int psmid, DateTime CommentDate, string helper)
+        {
+            try
+            {
+                var processdate = await _dbContext.ProjStakeHolderMov
+                    .Where(x => x.ProjId == ProjectId && x.IsComment == true)
+                    .FirstOrDefaultAsync();
+
+                if (processdate != null && processdate.TimeStamp > CommentDate)
+                {
+                    return new
+                    {
+                        status = 404,
+                        message = "You Cannot take date before Processed date"
+                    };
+                }
+
+                var login = SessionHelper.GetObjectFromJson<Login>(
+                    _httpContextAccessor.HttpContext!.Session,
+                    "User");
+
+                if (login == null)
+                {
+                    return new
+                    {
+                        status = 401,
+                        message = "User session expired."
+                    };
+                }
+
+                int psmove =
+                    await _stkCommentRepository.GetCommentStatusByPsmiId(psmid);
+
+                int allowForInfo =
+                    _stkCommentRepository.IsAllowForCommentByStkStatusId(StkStatusId);
+
+                if (psmove == 1 && allowForInfo != 1)
+                {
+                    return new
+                    {
+                        status = nmum.NotSave,
+                        message = "This project has already been Accepted. Only 'Info' comments are allowed at this stage."
+                    };
+                }
+
+                string uniqueFileName = string.Empty;
+
+                var comment = new StkComment();
+
+                // Handle uploaded file only when provided
+                if (uploadfile != null && uploadfile.Length > 0)
+                {
+                    const long maxFileSize = 10 * 1024 * 1024; // 10 MB
+
+                    if (uploadfile.Length > maxFileSize)
+                    {
+                        return nmum.PdfSizeEx;
+                    }
+
+                    string extension =
+                        Path.GetExtension(uploadfile.FileName);
+
+                    uniqueFileName =
+                        $"Swas_{Guid.NewGuid()}{extension}";
+
+                    string uploadFolder = Path.Combine(
+                        _environment.ContentRootPath,
+                        "wwwroot",
+                        "Uploads");
+
+                    if (!Directory.Exists(uploadFolder))
+                    {
+                        Directory.CreateDirectory(uploadFolder);
+                    }
+
+                    string filePath = Path.Combine(
+                        uploadFolder,
+                        uniqueFileName);
+
+                    await using var stream = new FileStream(
+                        filePath,
+                        FileMode.Create);
+
+                    await uploadfile.CopyToAsync(stream);
+
+                    comment.ActFileName = uploadfile.FileName;
+                }
+
+                var approvalLegacy = await _dbContext.LegacyHistory
+                    .Where(x => x.ProjectId == ProjectId)
+                    .OrderByDescending(x => x.HistoryId)
+                    .FirstOrDefaultAsync();
+
+                comment.Attpath = uniqueFileName;
+                comment.Comments = Comments;
+                comment.PsmId = psmid;
+                comment.ProjId = ProjectId;
+                comment.UpdatedByUserId = login.UserIntId;
+
+                if (approvalLegacy != null &&
+                    approvalLegacy.ActionType == ActionTypeEnum.Approved)
+                {
+                    comment.DateTimeOfUpdate = CommentDate;
+                }
+                else
+                {
+                    comment.DateTimeOfUpdate = DateTime.Now;
+                }
+
+                comment.EditDeleteDate = DateTime.Now;
+                comment.IsDeleted = false;
+                comment.IsActive = true;
+                comment.EditDeleteBy = login.unitid;
+                comment.StkStatusId = StkStatusId;
+                comment.UserDetails = helper;
+                comment.StakeHolderId = login.unitid;
+
+                var projectStkHolderMovementData =
+                    await GetProjStkHolderMovmentByPsmiId(comment.PsmId);
+
+                if (projectStkHolderMovementData == null)
+                {
+                    return 0;
+                }
+
+                var projectMovements =
+                    await _dbContext.ProjStakeHolderMov
+                        .Where(x =>
+                            x.ProjId == projectStkHolderMovementData.ProjId &&
+                            x.PsmId != psmid &&
+                            x.IsComment == true)
+                        .ToListAsync();
+
+                foreach (var item in projectMovements)
+                {
+                    item.IsRead = false;
+
+                    if (item.PsmId == 5434)
+                    {
+                        break;
+                    }
+                }
+
+                var latestMovement =
+                    await _dbContext.ProjStakeHolderMov
+                        .Where(x =>
+                            x.ProjId == projectStkHolderMovementData.ProjId &&
+                            x.IsComplete == false)
+                        .OrderByDescending(x => x.PsmId)
+                        .FirstOrDefaultAsync();
+
+                if (latestMovement != null)
+                {
+                    latestMovement.IsRead = false;
+                }
+
+                if (projectMovements?.Count > 0)
+                {
+                    _dbContext.ProjStakeHolderMov.UpdateRange(projectMovements);
+                }
+
+                await _dbContext.SaveChangesAsync();
+
+                projectStkHolderMovementData.DateTimeOfUpdate = CommentDate;
+
+                var movementResult =
+                    await UpdateProjectStkMovementAsync(
+                            projectStkHolderMovementData);
+
+                if (movementResult == null)
+                {
+                    return 0;
+                }
+
+                var result =
+                    await _stkCommentRepository.AddWithReturn(comment);
+
+                return result != null
+                    ? nmum.Save
+                    : (object)0;
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 

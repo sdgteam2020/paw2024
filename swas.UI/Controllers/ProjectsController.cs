@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -220,10 +221,7 @@ namespace swas.UI.Controllers
                 ViewBag.SubmitCde = "0";
                 ViewBag.tbl_mUnitBranch = _dbContext.tbl_mUnitBranch.ToList();
 
-                MailBox mbx = new MailBox
-                {
-                    Remainder = await _Remainder.GetAllAsync()
-                };
+            
 
                 var notificationContent = _configuration
                     .GetSection("NotificationContent")
@@ -233,14 +231,9 @@ namespace swas.UI.Controllers
                 if (Logins.unitid != null)
                     ViewBag.unitid = Logins.unitid;
 
-                ViewBag.remainder = _dbContext.TrnRemainders.ToList();
+                
 
-                mbx.InBox = await _projectsRepository.GetActInboxAsync();
-                mbx.Draft = await _projectsRepository.GetActDraftItemsAsync();
-                mbx.SendItems = await _projectsRepository.GetActSendItemsAsync();
-                mbx.CompletedItems = await _projectsRepository.GetActComplettemsAsync();
-
-                return View(mbx);
+                return View();
             }
             catch (Exception ex)
             {
@@ -1651,7 +1644,32 @@ namespace swas.UI.Controllers
 
         #region ProjComments
         [AuthorizePermission("StakeholderComments")]
-        public async Task<IActionResult> ProjComments() => View();
+        public async Task<IActionResult> ProjComments()
+
+        {
+
+            var projectTypes = await _projectsRepository.GetProjectSearchTypesAsync();
+
+            var Projoptions = projectTypes
+.Select(x => new SelectListItem
+{
+    Text = x.ProjectSearchTypeName,
+    Value = x.ProjectSearchTypeId.ToString(),
+    Selected = x.ProjectSearchTypeCode == "ALL"
+})
+.ToList();
+
+            Projoptions.Insert(0, new SelectListItem
+            {
+                Text = "--Select--",
+                Value = "",
+                Disabled = true,
+                Selected = false
+            });
+
+            ViewBag.ProjectTypeOptions = Projoptions;
+            return View();
+        } 
 
         public async Task<IActionResult> GetProjCommentsByUnitId(int StatusId)
         {
@@ -1712,118 +1730,9 @@ namespace swas.UI.Controllers
 
             try
             {
-                StkComment cmmets = new StkComment();
-                string uniqueFileName = "";
-
-                var proj = _dbContext.ProjStakeHolderMov
-                    .Where(x => x.ProjId == projectId && x.IsComment == true)
-                    .OrderByDescending(x => x.TimeStamp)
-                    .FirstOrDefault();
-
-                var initateddate = _dbContext.Projects.Find(projectId)?.InitiatedDate;
-
-                if (proj == null)
-                    return Json(new { success = false, message = "Project comment record not found." });
-
-                if (commentDateTime < proj.TimeStamp || commentDateTime < initateddate)
-                    return Json(new { success = false, message = "Comment date/time cannot be Less than project ProcessDate." });
-
-                int psmove = await _stkCommentRepository.GetCommentStatusByPsmiId(psmIdInt);
-                int allowForInfo = _stkCommentRepository.IsAllowForCommentByStkStatusId(stkStatusId);
-
-                if (psmove != 1 || allowForInfo == 1)
-                {
-                    if (uploadfile != null)
-                    {
-                        if (uploadfile.Length <= 10_485_760)
-                        {
-                            uniqueFileName = $"Swas_{Guid.NewGuid()}{Path.GetExtension(uploadfile.FileName)}";
-                            string filePath = Path.Combine(
-                                _environment.ContentRootPath, "wwwroot/Uploads/", uniqueFileName);
-
-                            using (var stream = new FileStream(filePath, FileMode.Create))
-                                await uploadfile.CopyToAsync(stream);
-
-                            cmmets.ActFileName = uploadfile.FileName;
-                        }
-                        else
-                        {
-                            return Json(nmum.PdfSizeEx);
-                        }
-                    }
-
-                    var approval_legacy = _dbContext.LegacyHistory
-                        .Where(x => x.ProjectId == projectId)
-                        .OrderByDescending(x => x.HistoryId)
-                        .FirstOrDefault();
-
-                    cmmets.Attpath = uniqueFileName;
-                    cmmets.Comments = Comments.Trim('"');
-                    cmmets.PsmId = psmIdInt;
-                    cmmets.ProjId = projectId;
-                    cmmets.UpdatedByUserId = Logins.UserIntId;
-                    cmmets.DateTimeOfUpdate = (approval_legacy?.ActionType == ActionTypeEnum.Approved)
-                                             ? commentDateTime
-                                             : DateTime.Now;
-                    cmmets.EditDeleteDate = DateTime.Now;
-                    cmmets.IsDeleted = false;
-                    cmmets.IsActive = true;
-                    cmmets.EditDeleteBy = Logins.unitid;
-                    cmmets.StkStatusId = stkStatusId;
-                    cmmets.UserDetails = Helper.LoginDetails(Logins);
-                    cmmets.StakeHolderId = Logins.unitid;
-
-                    var projectStkHolderMovementData =
-                        await _projectsRepository.GetProjStkHolderMovmentByPsmiId(cmmets.PsmId);
-
-                    if (projectStkHolderMovementData != null)
-                    {
-                        var projectMovements = await _dbContext.ProjStakeHolderMov
-                            .Where(x => x.ProjId == projectStkHolderMovementData.ProjId
-                                     && x.PsmId != psmIdInt
-                                     && x.IsComment == true)
-                            .ToListAsync();
-
-                        foreach (var item in projectMovements)
-                            item.IsRead = false;
-
-                        var latestPsmId = await _dbContext.ProjStakeHolderMov
-                            .Where(x => x.ProjId == projectStkHolderMovementData.ProjId
-                                     && x.IsComplete == false)
-                            .OrderByDescending(x => x.PsmId)
-                            .Select(x => x.PsmId)
-                            .FirstOrDefaultAsync();
-
-                        if (latestPsmId != 0)
-                        {
-                            var latestMovement = await _dbContext.ProjStakeHolderMov
-                                .FirstOrDefaultAsync(x => x.PsmId == latestPsmId);
-
-                            if (latestMovement != null)
-                                latestMovement.IsRead = false;
-                        }
-
-                        _dbContext.ProjStakeHolderMov.UpdateRange(projectMovements);
-                        await _dbContext.SaveChangesAsync();
-
-                        projectStkHolderMovementData.DateTimeOfUpdate = commentDateTime;
-                        var rets = await _projectsRepository.UpdateProjectStkMovementAsync(projectStkHolderMovementData);
-
-                        if (rets != null)
-                        {
-                            var ret = await _stkCommentRepository.AddWithReturn(cmmets);
-                            return ret != null ? Json(nmum.Save) : Json(0);
-                        }
-
-                        return Json(0);
-                    }
-
-                    return Json(0);
-                }
-                else
-                {
-                    return Json(nmum.NotSave);
-                }
+                
+                var result = await _projectsRepository.ProcessProjectCommentAsync(uploadfile, Comments, stkStatusId, projectId, psmIdInt, commentDateTime, Helper.LoginDetails(Logins));
+                return Json(result);
             }
             catch (Exception ex)
             {
@@ -3358,6 +3267,107 @@ namespace swas.UI.Controllers
             });
         }
         #endregion
+
+
+
+        /// <summary>
+        /// Provides data for the UpdateFieldInSTC operation.
+        /// <param name="projId">The value used by the operation.</param>
+        /// <param name="fieldInSTC">The value used by the operation.</param>
+        /// <returns>The result produced by the operation.</returns>
+        /// </summary>
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateFieldInSTC(string projId, bool fieldInSTC)
+        {
+            string decryptedValue = _dataProtector.Unprotect(projId);
+            int proji = int.Parse(decryptedValue);
+
+            var result = await _projectsRepository.UpdateFieldInSTCAsync(proji, fieldInSTC);
+
+            return Json(new
+            {
+                success = result,
+                message = result ? "Updated successfully." : "Unable to update."
+            });
+        }
+
+
+        // NEW: Bulk "Not Applicable" endpoint
+        [HttpPost]
+        //[Authorize(Policy = "StakeHolders")]
+        /// <summary>
+        /// Provides data for the SendBulkNotApplicable operation.
+        /// <param name="items">The value used by the operation.</param>
+        /// <returns>The result produced by the operation.</returns>
+        /// </summary>
+        public async Task<IActionResult> SendBulkNotApplicable([FromBody] List<NotApplicableItemDto> items)
+        {
+            if (items == null || items.Count == 0)
+                return Json(new { status = 400, message = "No projects selected." });
+
+            var results = new List<object>();
+            Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+
+            foreach (var item in items)
+            {
+                try
+                {
+                    var result = await _projectsRepository.ProcessProjectCommentAsync(
+                        uploadfile: null,
+                        Comments: "Not Applicable",
+                        StkStatusId: 6,
+                        ProjectId: item.ProjectId,
+                        psmid: item.PsmId,
+                        CommentDate: DateTime.Now, Helper.LoginDetails(Logins)
+                    );
+
+                    results.Add(new { projectId = item.ProjectId, response = result });
+                }
+                catch (Exception ex)
+                {
+                    int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+                    var eventId = new EventId(dynamicEventId, "SendBulkNotApplicable");
+                    _logger.Log(LogLevel.Error, eventId, "Error marking project as Not Applicable.", ex, (s, e) => $"{s} - {e?.Message}");
+
+                    results.Add(new { projectId = item.ProjectId, response = new { status = 500, message = "Failed" } });
+                }
+            }
+
+            return Json(results);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetTabData(string type)
+        {
+            switch (type)
+            {
+                case "tabinbox":
+                    var inbox = await _projectsRepository.GetActInboxAsync();
+                    return Json(new { response = inbox });
+
+                case "tabsent":
+                    var sent = await _projectsRepository.GetActSendItemsAsync();
+
+                    return Json(new { response = sent });
+
+                case "tabcompleted":
+                    var completed = await _projectsRepository.GetActComplettemsAsync();
+
+                    return Json(new { response = completed });
+
+                case "tabRemainder":
+                    var reminder = await _Remainder.GetAllAsync();
+                    return Json(new { response = reminder });
+
+                case "tabCc":
+                    var CarbonCopy = await _projectsRepository.GetActCcItemsAsync();
+                    return Json(CarbonCopy);
+                default:
+                    return BadRequest();
+            }
+        }
 
     }
 }

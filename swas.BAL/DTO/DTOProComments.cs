@@ -10,6 +10,7 @@ namespace swas.BAL.DTO
     {
         public int StkCommentId { get; set; }
         public int? ProjId { get; set; }
+        public bool aiml { get; set; }
         public string? ProjectName { get; set; }
         public int? PsmId { get; set; }
         public string? Stakeholder { get; set; }

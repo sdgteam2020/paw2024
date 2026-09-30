@@ -721,3 +721,76 @@ body {
     transition-delay: 0.15s;
 }
 
+
+/* =========================================================
+   DataTables Custom Toolbar
+   ========================================================= */
+
+.dataTables_wrapper .dt-toolbar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    margin-bottom: 10px;
+}
+
+/* LEFT: Show entries + Excel/CSV/PDF */
+.dataTables_wrapper .dt-left {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 5px;
+}
+
+/* RIGHT: Search */
+.dataTables_wrapper .dt-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+/* Show entries */
+.dataTables_wrapper .dt-left .dataTables_length {
+    display: flex;
+    align-items: center;
+    margin: 0 !important;
+    float: none !important;
+    white-space: nowrap;
+}
+
+/* Buttons */
+.dataTables_wrapper .dt-left .dt-buttons {
+    display: flex;
+    align-items: center;
+    margin: 0 !important;
+    float: none !important;
+    white-space: nowrap;
+}
+
+/* Search */
+.dataTables_wrapper .dt-right .dataTables_filter {
+    display: flex;
+    align-items: center;
+    margin: 0 !important;
+    float: none !important;
+    white-space: nowrap;
+}
+
+    /* Search input */
+    .dataTables_wrapper .dt-right .dataTables_filter input {
+        margin-left: 5px;
+    }
+
+/* Remove unwanted width rules from DataTables */
+.dataTables_wrapper .dt-left,
+.dataTables_wrapper .dt-right {
+    width: auto !important;
+}
+
+/* Keep toolbar above table */
+.dataTables_wrapper .dt-toolbar::after {
+    display: none;
+}

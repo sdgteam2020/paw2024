@@ -477,3 +477,48 @@ function encryptPayloadData(plainText) {
     return encrypted.toString();
 }
 
+
+
+function animateCount($element) {
+   
+    if ($element.data('count-started') === true) {
+        return;
+    }
+
+    $element.data('count-started', true);
+
+    var target = Number(
+        String($element.attr('data-count')).replace(/,/g, '')
+    );
+
+    if (!Number.isFinite(target)) {
+        return;
+    }
+
+    var duration = 1100;
+    var start = performance.now();
+
+    function update(now) {
+
+        var progress = Math.min((now - start) / duration, 1);
+
+        var easedProgress =
+            1 - Math.pow(1 - progress, 3);
+
+        var currentValue =
+            Math.round(target * easedProgress);
+
+        $element.text(
+            new Intl.NumberFormat().format(currentValue)
+        );
+
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        }
+    }
+
+    $element.text('0');
+
+    requestAnimationFrame(update);
+}
+

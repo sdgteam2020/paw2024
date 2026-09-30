@@ -1,35 +1,118 @@
-﻿//let memberTable = "";
+﻿
+let currentCommentStatusId = 0;
 
+// Cache data separately for every status
+let commentDataCache = {
+    0: [],
+    1: [],
+    2: [],
+    3: [],
+    5: [],
+    6: []
+};
+
+function filterProjectCommentsByType(statusId, selectedType) {
+
+    let allData = commentDataCache[statusId] || [];
+    let filteredData = allData;
+
+    if (selectedType === 2) {
+
+        // STC Auto
+        filteredData = allData.filter(function (project) {
+
+            return project.aiml === false ||
+                project.aiml === 0 ||
+                project.aiml === "0";
+        });
+
+    }
+    else if (selectedType === 3) {
+
+        // STC AI/ML
+        filteredData = allData.filter(function (project) {
+
+            return project.aiml === true ||
+                project.aiml === 1 ||
+                project.aiml === "1";
+        });
+    }
+
+    bindProjectComments(filteredData);
+}
 $(document).ready(function () {
 
      
     InboxNotificationCount()
   
     GetProjCommentsByUnitId(0);
-    $("#btnPending").addClass("border border-dark bold-border btn-small-large");
+    $("#btnPending")
+        .addClass(
+            "border border-dark bold-border btn-small-large"
+        );
 
-    $(".cmtbtn").unbind().click(function () {
-        $(".cmtbtn").removeClass("border border-dark bold-border btn-small-large");
-        $(this).addClass("border border-dark bold-border btn-small-large");
-        let unitId = 0;
-        switch ($(this).attr('id')) {
-            case 'btnAccepted':
-                unitId = 1;
-                break;
-            case 'btnObsn':
-                unitId = 2;
-                break;
-            case 'btnRejected':
-                unitId = 3;
-                break;
-            case 'btnInfo':
-                unitId = 5;
-                break;
-            default:
-                unitId = 0; // For btnPending
-        }
-        GetProjCommentsByUnitId(unitId);
-    });
+   
+    $(document)
+        .off("click", ".cmtbtn")
+        .on("click", ".cmtbtn", function () {
+
+            $(".cmtbtn")
+                .removeClass(
+                    "border border-dark bold-border btn-small-large"
+                );
+
+            $(this)
+                .addClass(
+                    "border border-dark bold-border btn-small-large"
+                );
+
+
+            switch ($(this).attr("id")) {
+
+                case "btnAccepted":
+                    currentCommentStatusId = 1;
+                    break;
+
+                case "btnObsn":
+                    currentCommentStatusId = 2;
+                    break;
+
+                case "btnRejected":
+                    currentCommentStatusId = 3;
+                    break;
+
+                case "btnInfo":
+                    currentCommentStatusId = 5;
+                    break;
+
+                case "btnNA":
+                    currentCommentStatusId = 6;
+                    break;
+
+                default:
+                    currentCommentStatusId = 0;
+                    break;
+            }
+
+
+            // Fetch ALL project types for this status
+            GetProjCommentsByUnitId(
+                currentCommentStatusId
+            );
+        });
+
+        $(document)
+        .off("change", "#ddlProjectType")
+        .on("change", "#ddlProjectType", function () {
+            debugger;
+            const selectedType =
+                Number($(this).val()) || 1;
+
+            filterProjectCommentsByType(
+                currentCommentStatusId,
+                selectedType
+            );
+        });
    
 
     $("#btnStatusUpdate").unbind().click(function () {
@@ -106,12 +189,16 @@ function showError(msg) {
         text: msg
     });
 }
-
+$(document).on('change', '#selectAll', function () {
+    $('.rowCheck').prop('checked', this.checked);
+   
+    updateSelectionState();
+});
 function GetCommentBadgeCount(id) {
     $.ajax({
         url: '/Projects/GetProjectUnreadCound',
         type: 'POST',
-        data: { StatusId: Id },
+       data: { StatusId: id },
         success: function (response) {
             console.log(response); // handle response here
         },
@@ -122,7 +209,7 @@ function GetCommentBadgeCount(id) {
 }
 
 
-function GetProjCommentsByUnitId(Id) {
+function GetProjCommentsByUnitId(statusId) {
     let listItem = "";
 
     $("#DetailBody").html(listItem);
@@ -130,224 +217,49 @@ function GetProjCommentsByUnitId(Id) {
     $.ajax({
         url: '/Projects/GetProjCommentsByUnitId',
         type: 'POST',
-        data: { "StatusId": Id },
+        data: { "StatusId": statusId },
         success: function (response) {
             
+            if (response == null || response === "null") {
 
+                commentDataCache[statusId] = [];
 
+                bindProjectComments([]);
+                return;
+            }
 
+            if (response === -1) {
 
-
-            if (response != "null" && response != null) {
-
-
-
-                if (response == -1) {
                     Swal.fire({
                         text: ""
                     });
-                }
-              else if (response == 0) {
-                    listItem += "<tr><td class='text-center' colspan=6>No Record Found</td></tr>";
 
-                    $("#DetailBody").html(listItem);
-
-                }
-
-            else {
-
-                    let count = 0;
-                    let commentFalseCount = 0;
-                    for (let i = 0; i < response.length; i++) {
-                        let date = new Date(response[i].timeStamp);
-                        let TimeStamp =
-                            ("0" + date.getDate()).slice(-2) + '-' +
-                            ("0" + (date.getMonth() + 1)).slice(-2) + '-' +
-                            date.getFullYear() + ' ' +
-                            ("0" + date.getHours()).slice(-2) + ':' +
-                            ("0" + date.getMinutes()).slice(-2) + ':' +
-                            ("0" + date.getSeconds()).slice(-2);
-
-
-                        if (response[i].isComment == false) {
-                            listItem += "<tr class='bold-text'>";
-                            commentFalseCount++;
-                            
-                        } else {
-                            listItem += "<tr>";
-                        }
-                        listItem += "<td class='noExport d-none'><span class='noExport d-none' id='spnProjId'>" + response[i].projId + "</span><span class='noExport d-none' id='spnpsmId'>" + response[i].psmId + "</span><span class='noExport d-none' id='DateType'>" + response[i].adminApprovalStatus + "</span></td>";
-                        listItem += "<td class='align-middle sorting'>" + (count + 1) + "</td>";
-                        
-
-                        listItem += "<td class='align-middle RefLetter-container nowrap'>";
-
-                        listItem += "<a href='/Projects/ProjHistory?EncyID=" +
-                            encodeURIComponent(response[i].encyID) + "'>";
-
-                        listItem += "<div class='tooltip-container ' data-tooltip='" +
-                            response[i].projectName + "'>";
-
-                        listItem += "<span class='projNameDetail short-text noExport'>" +
-                            trimByChars(response[i].projectName, 40) +
-                            "</span>";
-
-                        listItem += "<span class='tooltip tooltip-text' id='projectNameforcomment'>" +
-                            response[i].projectName +
-                            "</span>";
-
-                        listItem += "</div>"; // tooltip-container
-                        listItem += "</a>";
-
-                        listItem += "<div class='RefLetter'>" +
-                            breakLinesByWords(response[i].projectName, 3) +
-                            "</div>";
-
-                        listItem += "</td>";
-
-                        listItem += "<td class='align-middle'><span id='stakeholder'>" + response[i].stakeholder + "</span></td>";
-                        listItem += "<td class='align-middle'><span id='TimeStamp'>" + TimeStamp + "</span></td>";
-                        if (response[i].stkStatusId == 1) {
-                            listItem += "<td class='align-middle'><span id='status'>Accepted</span></td>";
-                            listItem += "<td class='align-middle '><span id='btnedit'><button type='button'  class='cls-btncomment btn-icon btn-round btn-success mr-1'><i class='fas fa-comment'></i></button></td>";
-
-                        }
-                        else if (response[i].stkStatusId == 5) {
-                            listItem += "<td class='align-middle'><span id='status'>Info</span></td>";
-                            listItem += "<td class='align-middle'><span id='btnedit'><button type='button'  class='cls-btncomment btn-icon btn-round btn-success mr-1'><i class='fas fa-comment'></i></button></td>";
-                        }
-                        else if (response[i].stkStatusId == 2) {
-                            listItem += "<td class='align-middle'><span id='status'>Obsn</span></td>";
-                            listItem += "<td class='align-middle'><span id='btnedit'><button type='button'  class='cls-btncomment btn-icon btn-round  btn-warning mr-1'><i class='fas fa-comment'></i></button></td>";
-
-                        }
-                        else if (response[i].stkStatusId == 3) {
-                            listItem += "<td class='align-middle'><span id='status'>Rejected</span></td>";
-                            listItem += "<td class='align-middle'><span id='btnedit'><button type='button' class='cls-btncomment btn-icon btn-round btn-danger mr-1'><i class='fas fa-comment'></i></button></td>";
-                        }
-                        else {
-                            listItem += "<td class='align-middle'><span id='status'>Pending</span></td>";
-                            listItem += "<td class='align-middle'><span id='btnedit'><button type='button'  class='cls-btncomment btn-icon btn-round btn-danger mr-1'><i class='fas fa-comment'></i></button></td>";
-                        }
-                        listItem += "</tr>";
-                        count++;
-
-                    }
-                   /* $("#ProjectCommentCount").text(commentFalseCount);*/
-
-                    IsReadComment(0, 0);
-                   
-
-                    if ($.fn.DataTable.isDataTable("#Comment")) {
-                        $("#Comment").DataTable().clear().destroy();
-                    }
-                    $("#DetailBody").html(listItem);
-
-                    initializeDataTable('#Comment');
-
-                    
-
-                    $("body").off("click").on("click", ".cls-btncomment", function () {
-                       
-                        $(".custom-modal").addClass("custom-modal-size")
-                        let self = this;
-
-                            let action = $(self).closest("tr").find("#status").html();
-                        fetchServerDate().then(function (S) {
-                            
-                            let stkid = 0;
-
-                            switch (action) {
-                                case 'Accepted':
-                                    stkid = 1;
-                                    break;
-                                case 'Obsn':
-                                    stkid = 2;
-                                    break;
-                                case 'Rejected':
-                                    stkid = 3;
-                                    break;
-                                case 'Info':
-                                    stkid = 5;
-                                    break;
-                                default:
-                                    stkid = 0; // For btnPending
-                            }
-
-                            if (stkid === 0) {
-                                $(".cmtbtn").removeClass("border border-dark bold-border btn-small-large");
-                                $("#btnPending").addClass("border border-dark bold-border btn-small-large");
-                            }
-                            $("#ProjectcommentForStackHolderprojId").html($(self).closest("tr").find("#spnProjId").html());
-                            $("#ProjectcommentForStackHolderPsmId").html($(self).closest("tr").find("#spnpsmId").html());
-                            $("#ProjectcommentForStackHolderDate_type").html($(self).closest("tr").find("#DateType").html());
-                            IsReadComment($(self).closest("tr").find("#spnProjId").html(), $(self).closest("tr").find("#spnpsmId").html());
-                            $(self).closest("tr").removeClass("bold-text");
-
-                            reset();
-                            mMsater(0, "ddlStatus", 4, 0);
-                            $("#ProjCommentModal").modal('show');
-                            GetAllComments($("#ProjectcommentForStackHolderPsmId").html(), $("#ProjectcommentForStackHolderprojId").html());
-                            let projName = $(self).closest("tr").find("#projectNameforcomment").html();
-                            let words = projName.split(" ");
-                            let shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
-                            let finalTitle = "Project Name: " + projName;
-                            $('#addComment').text(finalTitle);
-
-                            const dateTypeText = $(self).closest("tr").find("#DateType").text().trim().toLowerCase();
-                            const dateType = (dateTypeText === "true");
-
-                            $("#ProjectcommentForStackHolderDate_type").text(dateType);
-                            let pad = "00";
-                            let datef2 = new Date();
-                            let months = "" + (datef2.getMonth() + 1);
-                            let days = "" + datef2.getDate();
-                            let monthsans = pad.substring(0, pad.length - months.length) + months;
-                            let dayans = pad.substring(0, pad.length - days.length) + days;
-                            let year = datef2.getFullYear();
-                            let hh = pad.substring(0, pad.length - `${datef2.getHours()}`.length) + `${datef2.getHours()}`;
-                            let mm = pad.substring(0, pad.length - `${datef2.getMinutes()}`.length) + `${datef2.getMinutes()}`;
-                            let ss = `${datef2.getSeconds()}`;
-
-                            let todayDate = `${year}-${monthsans}-${dayans}`;
-                            let todayDateTime = `${year}-${monthsans}-${dayans}T${hh}:${mm}`;
-
-                            const formattedDateTime = new Date(S.todayDateTime).toISOString().slice(0, 16);  // Convert to YYYY-MM-DDTHH:MM
-                            if (dateType) {
-                               
-                                $('#CommentDateFwd').attr('type', 'datetime-local');
-                                $('#CommentDateFwd').attr('max', formattedDateTime);
-                                $('#CommentDateFwd').prop('disabled', false); // Allow user input
-                                $('#CommentDateFwd').val(formattedDateTime);
-                            } else {
-                               
-                                $('#CommentDateFwd').attr('type', 'datetime-local');
-                                $('#CommentDateFwd').val(S.todayDateTime); // Set today's date
-                                $('#CommentDateFwd').prop('disabled', true); // Freeze input
-                            }
-                           
-                        });
-                    });
-
-
-
-                    $("body").on("click", ".projNameDetail", function () {
-
-                        IsReadComment($(this).closest("tr").find("#spnProjId").html(), $(this).closest("tr").find("#spnpsmId").html());
-
-                    });
-
-
-                }
+                return;
             }
-            else {
-                listItem += "<tr><td class='text-center' colspan=6>No Record Found</td></tr>";
 
-                $("#DetailBody").html(listItem);
+            if (response === 0) {
 
+                commentDataCache[statusId] = [];
+
+                bindProjectComments([]);
+                return;
             }
+
+            // Save full data for this status
+            commentDataCache[statusId] = response || [];
+
+            const selectedType =
+                Number($("#ddlProjectType").val()) || 1;
+
+            // Filter cached data
+            filterProjectCommentsByType(
+                statusId,
+                selectedType
+            );
         },
-        error: function (result) {
+
+        error: function () {
+
             Swal.fire({
                 text: ""
             });
@@ -355,7 +267,437 @@ function GetProjCommentsByUnitId(Id) {
     });
 }
 
+function bindProjectComments(response) {
 
+    let listItem = "";
+
+    // Destroy existing DataTable FIRST
+    if (!response || response.length === 0) {
+
+        if ($.fn.DataTable.isDataTable("#Comment")) {
+            $("#Comment").DataTable().clear().destroy();
+        }
+
+        $("#DetailBody").empty();
+
+        initializeDataTable("#Comment");
+
+        return;
+    }
+    $('.hdnotapp').addClass('d-none');
+    let count = 0;
+    let commentFalseCount = 0;
+
+    for (let i = 0; i < response.length; i++) {
+
+        const item = response[i];
+
+        let date = new Date(item.timeStamp);
+
+        let TimeStamp =
+            ("0" + date.getDate()).slice(-2) + "-" +
+            ("0" + (date.getMonth() + 1)).slice(-2) + "-" +
+            date.getFullYear() + " " +
+            ("0" + date.getHours()).slice(-2) + ":" +
+            ("0" + date.getMinutes()).slice(-2) + ":" +
+            ("0" + date.getSeconds()).slice(-2);
+
+
+        if (item.isComment === false) {
+
+            listItem += "<tr class='bold-text'>";
+            commentFalseCount++;
+
+        } else {
+
+            listItem += "<tr>";
+        }
+
+
+        listItem +=
+            "<td class='noExport d-none'>" +
+
+            "<span class='noExport d-none spnProjId'>" +
+            item.projId +
+            "</span>" +
+
+            "<span class='noExport d-none spnpsmId'>" +
+            item.psmId +
+            "</span>" +
+
+            "<span class='noExport d-none DateType'>" +
+            item.adminApprovalStatus +
+            "</span>" +
+
+            "</td>";
+
+
+        listItem += `<td class='noExport'>`;
+        if (item.stkStatusId != 1) {
+          
+            listItem +=
+                
+                "<input type='checkbox' " +
+                "class='rowCheck' " +
+                "value='" + item.projId + "' " +
+                "data-psmid='" + item.psmId + "' " +
+                "data-projname='" + item.projectName + "'>";
+        }
+        listItem += `</td>`
+        listItem += 
+            "<td class='align-middle sorting'>" +
+            (count + 1) +
+            "</td>";
+
+
+        listItem +=
+            "<td class='align-middle sorting'>" +
+            "<span>" +
+            item.projId +
+            "</span>" +
+            "</td>";
+
+
+        listItem +=
+            "<td class='align-middle RefLetter-container'>";
+
+        listItem +=
+            "<a href='/Projects/ProjHistory?EncyID=" +
+            encodeURIComponent(item.encyID) +
+            "' target='_blank'>";
+
+        listItem +=
+            "<span class='projNameDetail noExport'>" +
+            trimByChars(item.projectName, 35) +
+            "</span>";
+
+        listItem += "</a>";
+
+        listItem +=
+            "<div class='projectName RefLetter'>" +
+            breakLinesByWords(item.projectName,5) +
+            "</div>";
+
+        listItem += "</td>";
+
+
+        listItem +=
+            "<td class='align-middle'>" +
+            "<span class='stakeholder'>" +
+            item.stakeholder +
+            "</span>" +
+            "</td>";
+
+
+        listItem +=
+            "<td class='align-middle'>" +
+            "<span class='TimeStamp'>" +
+            TimeStamp +
+            "</span>" +
+            "</td>";
+
+
+        if (item.stkStatusId === 1) {
+
+            listItem +=
+                "<td class='align-middle'>" +
+                "<span class='status'>Accepted</span>" +
+                "</td>";
+
+            listItem +=
+                "<td class='align-middle'>" +
+                "<button type='button' " +
+                "class='cls-btncomment btn-icon btn-round btn-success mr-1'>" +
+                "<i class='fas fa-comment'></i>" +
+                "</button>" +
+                "</td>";
+        }
+
+        else if (item.stkStatusId === 5) {
+
+            listItem +=
+                "<td class='align-middle'>" +
+                "<span class='status'>Info</span>" +
+                "</td>";
+
+            listItem +=
+                "<td class='align-middle'>" +
+                "<button type='button' " +
+                "class='cls-btncomment btn-icon btn-round btn-success mr-1'>" +
+                "<i class='fas fa-comment'></i>" +
+                "</button>" +
+                "</td>";
+        }
+
+        else if (item.stkStatusId === 2) {
+
+            listItem +=
+                "<td class='align-middle'>" +
+                "<span class='status'>Obsn</span>" +
+                "</td>";
+
+            listItem +=
+                "<td class='align-middle'>" +
+                "<button type='button' " +
+                "class='cls-btncomment btn-icon btn-round btn-warning mr-1'>" +
+                "<i class='fas fa-comment'></i>" +
+                "</button>" +
+                "</td>";
+        }
+
+        else if (item.stkStatusId === 3) {
+
+            listItem +=
+                "<td class='align-middle'>" +
+                "<span class='status'>Rejected</span>" +
+                "</td>";
+
+            listItem +=
+                "<td class='align-middle'>" +
+                "<button type='button' " +
+                "class='cls-btncomment btn-icon btn-round btn-danger mr-1'>" +
+                "<i class='fas fa-comment'></i>" +
+                "</button>" +
+                "</td>";
+        }
+
+        else if (item.stkStatusId === 6) {
+
+            listItem +=
+                "<td class='align-middle'>" +
+                "<span class='status'>Not Applicable</span>" +
+                "</td>";
+
+            listItem +=
+                "<td class='align-middle'>" +
+                "<button type='button' " +
+                "class='cls-btncomment btn-icon btn-round btn-secondary mr-1'>" +
+                "<i class='fas fa-comment'></i>" +
+                "</button>" +
+                "</td>";
+        }
+
+        else {
+
+            listItem +=
+                "<td class='align-middle'>" +
+                "<span class='status'>Pending</span>" +
+                "</td>";
+
+            listItem +=
+                "<td class='align-middle'>" +
+                "<button type='button' " +
+                "class='cls-btncomment btn-icon btn-round btn-danger mr-1'>" +
+                "<i class='fas fa-comment'></i>" +
+                "</button>" +
+                "</td>";
+        }
+
+
+        listItem += "</tr>";
+
+        count++;
+    }
+
+    if ($.fn.DataTable.isDataTable("#Comment")) {
+        $("#Comment").DataTable().clear().destroy();
+    }
+    $("#DetailBody").html(listItem);
+
+    initializeDataTable("#Comment");
+
+    const hasselectedtablerow = response.some(item => item.stkStatusId !== 1);
+        
+    const table = $("#Comment").DataTable();
+
+    table.column("#notapplicableHeader").visible(hasselectedtablerow);
+
+    IsReadComment(0, 0);
+
+    bindProjectCommentEvents();
+}
+
+function bindProjectCommentEvents() {
+
+    $("body")
+        .off("click", ".cls-btncomment")
+        .on("click", ".cls-btncomment", function () {
+
+            $(".custom-modal")
+                .addClass("custom-modal-size");
+
+            const self = this;
+
+            const action =
+                $(self)
+                    .closest("tr")
+                    .find(".status")
+                    .html();
+
+            fetchServerDate().then(function (S) {
+
+                let stkid = 0;
+
+                switch (action) {
+
+                    case "Accepted":
+                        stkid = 1;
+                        break;
+
+                    case "Obsn":
+                        stkid = 2;
+                        break;
+
+                    case "Rejected":
+                        stkid = 3;
+                        break;
+
+                    case "Info":
+                        stkid = 5;
+                        break;
+
+                    case "Not Applicable":
+                        stkid = 6;
+                        break;
+
+                    default:
+                        stkid = 0;
+                        break;
+                }
+
+
+                const row =
+                    $(self).closest("tr");
+
+
+                $("#ProjectcommentForStackHolderprojId")
+                    .html(
+                        row.find(".spnProjId").html()
+                    );
+
+
+                $("#ProjectcommentForStackHolderPsmId")
+                    .html(
+                        row.find(".spnpsmId").html()
+                    );
+
+
+                $("#ProjectcommentForStackHolderDate_type")
+                    .html(
+                        row.find(".DateType").html()
+                    );
+
+
+                IsReadComment(
+                    row.find(".spnProjId").html(),
+                    row.find(".spnpsmId").html()
+                );
+
+
+                row.removeClass("bold-text");
+
+
+                reset();
+
+                mMsater(
+                    0,
+                    "ddlStatus",
+                    4,
+                    0
+                );
+
+
+                $("#ProjCommentModal")
+                    .modal("show");
+
+
+                GetAllComments(
+                    $("#ProjectcommentForStackHolderPsmId").html(),
+                    $("#ProjectcommentForStackHolderprojId").html()
+                );
+
+
+                const projName =
+                    row.find(".projectName").html();
+
+
+                $("#addComment")
+                    .text(
+                        "Project Name: " + projName
+                    );
+
+
+                const dateTypeText =
+                    row.find(".DateType")
+                        .text()
+                        .trim()
+                        .toLowerCase();
+
+
+                const dateType =
+                    dateTypeText === "true";
+
+
+                $("#ProjectcommentForStackHolderDate_type")
+                    .text(dateType);
+
+
+                const formattedDateTime =
+                    new Date(S.todayDateTime)
+                        .toISOString()
+                        .slice(0, 16);
+
+
+                $("#CommentDateFwd")
+                    .attr(
+                        "type",
+                        "datetime-local"
+                    );
+
+
+                if (dateType) {
+
+                    $("#CommentDateFwd")
+                        .attr(
+                            "max",
+                            formattedDateTime
+                        )
+                        .prop(
+                            "disabled",
+                            false
+                        )
+                        .val(
+                            formattedDateTime
+                        );
+
+                } else {
+
+                    $("#CommentDateFwd")
+                        .prop(
+                            "disabled",
+                            true
+                        )
+                        .val(
+                            S.todayDateTime
+                        );
+                }
+            });
+        });
+
+
+    $("body")
+        .off("click", ".projNameDetail")
+        .on("click", ".projNameDetail", function () {
+
+            const row =
+                $(this).closest("tr");
+
+            IsReadComment(
+                row.find(".spnProjId").html(),
+                row.find(".spnpsmId").html()
+            );
+        });
+}
 
 function SendMsg() {
 
@@ -405,19 +747,36 @@ function SendMsg() {
             $('#uploadLoader').show();
         },
 
-        success: function (response) {
+        success: function(response) {
             $('#uploadLoader').hide();
 
             try {
-                if (response == 0) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Something went wrong!',
-                        text: 'Unable to save comment.',
-                    });
+                
+                console.log("SendCommentonProject response:", response);
+
+                // -----------------------------------------
+                // Normalize backend response
+                // -----------------------------------------
+                let status = null;
+                let message = null;
+
+                if (typeof response === "object" && response !== null) {
+                    status = response.status;
+                    message = response.message;
+                }
+                else {
+                    status = response;
                 }
 
-                else if (response == 1) {
+                // In case status comes as string
+                status = Number(status);
+
+
+                // -----------------------------------------
+                // SUCCESS
+                // -----------------------------------------
+                if (status === 1) {
+
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
@@ -427,7 +786,9 @@ function SendMsg() {
                     }).then(() => {
 
                         if ($("#ddlStatus").val() == 1) {
-                            FwdProjConfirm($("#ProjectcommentForStackHolderPsmId").html());
+                            FwdProjConfirm(
+                                $("#ProjectcommentForStackHolderPsmId").html()
+                            );
                         }
 
                         GetAllComments(
@@ -435,95 +796,176 @@ function SendMsg() {
                             $("#ProjectcommentForStackHolderprojId").html()
                         );
 
-                        UnReadNotification($("#ProjectcommentForStackHolderprojId").html(), 2);
+                        UnReadNotification(
+                            $("#ProjectcommentForStackHolderprojId").html(),
+                            2
+                        );
 
                         IsUnReadComment(
                             $("#ProjectcommentForStackHolderprojId").html(),
                             $("#ProjectcommentForStackHolderPsmId").html()
                         );
 
+                        // Refresh ONLY the currently opened tab
+                        if (typeof currentCommentStatusId !== "undefined") {
+                            GetProjCommentsByUnitId(currentCommentStatusId);
+                        }
+
                         reset();
                     });
+
+                    return;
                 }
 
-                else if (response == 6) {
+
+                // -----------------------------------------
+                // NOT SAVED / ACTION NOT ALLOWED
+                // -----------------------------------------
+                if (status === 6) {
+
                     Swal.fire({
                         position: 'top-end',
                         icon: 'error',
                         title: 'Action Not Allowed',
-                        html: `
-                        <div style="text-align:left;">
-                            <ol>
-                                <li>No Amdts Allowed as the Project is Already Accepted By You!</li>
-                                <li>Only info is allowed after acceptance.</li>
-                            </ol>
-                        </div>
-                    `,
-                        showConfirmButton: true
+                        text: message ||
+                            "This project has already been accepted. Only Info comments are allowed."
                     });
+
+                    return;
                 }
 
-                else if (response == 8) {
+
+                // -----------------------------------------
+                // FILE TOO LARGE
+                // -----------------------------------------
+                if (status === 8) {
+
                     Swal.fire({
                         position: 'top-end',
                         icon: 'error',
                         title: 'File too large',
-                        text: 'PDF size must be less than 10 MB',
+                        text: message ||
+                            'PDF size must be less than 10 MB',
                         showConfirmButton: true
                     });
+
+                    return;
                 }
 
-                // 🔥 HANDLE CUSTOM BACKEND ERRORS
-                else if (response == -400) {
+
+                // -----------------------------------------
+                // INVALID DATE
+                // -----------------------------------------
+                if (status === 404) {
+
                     Swal.fire({
-                        icon: 'error',
-                        title: 'Invalid Data',
-                        text: 'Bad request or invalid input.'
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Invalid Comment Date',
+                        text: message ||
+                            'You cannot select a date before the processed date.',
+                        showConfirmButton: true
                     });
+
+                    return;
                 }
 
-                else if (response == -401) {
+
+                // -----------------------------------------
+                // SESSION EXPIRED
+                // -----------------------------------------
+                if (status === 401 || status === -401) {
+
                     Swal.fire({
                         icon: 'warning',
                         title: 'Session Expired',
-                        text: 'Please login again.'
+                        text: message ||
+                            'Your session has expired. Please login again.'
                     }).then(() => {
                         window.location.reload();
                     });
+
+                    return;
                 }
 
-                else if (response == -500) {
+
+                // -----------------------------------------
+                // BAD REQUEST
+                // -----------------------------------------
+                if (status === -400) {
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Invalid Data',
+                        text: message ||
+                            'Invalid data was submitted. Please check your input.'
+                    });
+
+                    return;
+                }
+
+
+                // -----------------------------------------
+                // DECRYPTION / SECURITY ERROR
+                // -----------------------------------------
+                if (status === -500) {
+
                     Swal.fire({
                         icon: 'error',
                         title: 'Security Error',
-                        text: 'Decryption failed or data tampered.'
+                        text: message ||
+                            'Unable to process the request. The submitted data may be invalid or tampered with.'
                     });
+
+                    return;
                 }
 
-                else {
-                    // 🔥 UNKNOWN RESPONSE
+
+                // -----------------------------------------
+                // GENERAL SERVER EXCEPTION
+                // -----------------------------------------
+                if (status === -1 || status === 500) {
+
                     Swal.fire({
                         icon: 'error',
-                        title: 'Unexpected Error',
-                        text: 'Unknown response from server.'
+                        title: 'Server Error',
+                        text: message ||
+                            'Something went wrong on the server. Please try again.'
                     });
+
+                    return;
                 }
 
-            } catch (e) {
-                console.error("UI handling error:", e);
+
+                // -----------------------------------------
+                // UNKNOWN RESPONSE
+                // -----------------------------------------
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Unexpected Response',
+                    text: message ||
+                        'An unexpected response was received from the server.'
+                });
+
+            }
+            catch (e) {
+
+                console.error("UI response handling error:", e);
 
                 Swal.fire({
                     icon: 'error',
                     title: 'UI Error',
-                    text: 'Something went wrong while processing response.'
+                    text: 'Something went wrong while processing the server response.'
                 });
             }
         },
 
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
+
             $('#uploadLoader').hide();
 
             console.error("AJAX ERROR:", {
+                httpStatus: xhr.status,
                 status: status,
                 error: error,
                 responseText: xhr.responseText
@@ -532,16 +974,66 @@ function SendMsg() {
             let message = "Something went wrong. Please try again.";
 
             if (xhr.status === 0) {
-                message = "Network error. Check your internet connection.";
+
+                message = "Network error. Please check your internet connection.";
+
+            }
+            else if (xhr.status === 400) {
+
+                message = "Bad request. Please check the submitted data.";
+
+            }
+            else if (xhr.status === 401) {
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Session Expired',
+                    text: 'Please login again.'
+                }).then(() => {
+                    window.location.reload();
+                });
+
+                return;
+            }
+            else if (xhr.status === 403) {
+
+                message = "You are not authorized to perform this action.";
+
             }
             else if (xhr.status === 404) {
-                message = "API not found (404).";
+
+                message = "The requested API was not found.";
+
+            }
+            else if (xhr.status === 413) {
+
+                message = "The uploaded file or request is too large.";
+
             }
             else if (xhr.status === 500) {
-                message = "Server error (500). Please contact admin.";
+
+                message = "Server error. Please contact the administrator.";
+
             }
             else if (xhr.responseText) {
-                message = xhr.responseText;
+
+                try {
+
+                    const response = JSON.parse(xhr.responseText);
+
+                    message =
+                        response.message ||
+                        response.Message ||
+                        message;
+
+                }
+                catch (e) {
+
+                    console.warn(
+                        "Could not parse server error response:",
+                        e
+                    );
+                }
             }
 
             Swal.fire({
@@ -772,3 +1264,133 @@ $('#ProjCommentModal').on('hidden.bs.modal', function (e) {
 });
 
             
+        
+$(document).on('change', '.rowCheck', function () {
+    // uncheck "select all" if any row is unchecked
+    if (!this.checked) {
+        $('#selectAll').prop('checked', false);
+    } else if ($('.rowCheck:checked').length === $('.rowCheck').length) {
+        $('#selectAll').prop('checked', true);
+    }
+    updateSelectionState();
+});
+
+function updateSelectionState() {
+    const count = $('.rowCheck:checked').length;
+    $('#btnMarkNA').prop('disabled', count === 0);
+
+    const $count = $('#selCount');
+    if (count > 0) {
+        $count.text(count).addClass('show');
+    } else {
+        $count.text('').removeClass('show');
+    }
+}
+
+// --- Bulk "Mark as N/A" action ---
+
+$(document).off("click", "#btnMarkNA")
+    .on("click", "#btnMarkNA", function () {
+
+        const items = $('.rowCheck:checked').map(function () {
+            return {
+                ProjectId: parseInt($(this).val()),
+                PsmId: parseInt($(this).data('psmid'))
+            };
+        }).get();
+
+        if (items.length === 0) return;
+        if (!confirm(`Mark ${items.length} project(s) as Not Applicable?`)) return;
+
+        // Keep a reference to the checked rows BEFORE disabling anything
+        const $rowsToRemove = $('.rowCheck:checked').closest('tr');
+
+        $('#btnMarkNA').prop('disabled', true).text('Submitting...');
+
+        $.ajax({
+            url: '/Projects/SendBulkNotApplicable',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(items),
+            success: function (response) {
+                // response is an array: [{ projectId, response: {...} }, ...]
+                const blocked = [];
+                const succeeded = [];
+
+                response.forEach(function (item) {
+                    const res = item.response;
+                    // nmum.Save is presumably an object/value distinct from the 403 case
+                    if (res && res.status === 6) {
+                        blocked.push(item.projectId);
+                    } else if (res === 0 || (res && res.status && res.status !== 200)) {
+                        // treat as a generic failure if you want to separate 0/false results too
+                        blocked.push(item.projectId);
+                    } else {
+                        succeeded.push(item.projectId);
+                    }
+                });
+
+                // Remove only the rows that actually succeeded
+                if (succeeded.length > 0) {
+                    if ($.fn.DataTable && $.fn.DataTable.isDataTable('#Comment')) {
+                        var table = $('#Comment').DataTable();
+                        $rowsToRemove.each(function () {
+                            var $row = $(this);
+                            var rowProjId = parseInt($row.find('.rowCheck').val());
+                            if (succeeded.includes(rowProjId)) {
+                                table.row($row).remove();
+                            }
+                        });
+                        table.draw(false);
+                    } else {
+                        $rowsToRemove.each(function () {
+                            var $row = $(this);
+                            var rowProjId = parseInt($row.find('.rowCheck').val());
+                            if (succeeded.includes(rowProjId)) {
+                                $row.remove();
+                            }
+                        });
+                    }
+                }
+
+                // Show the blocked/error message if any project was rejected
+                if (blocked.length > 0) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: '<div style="text-align: left;">' +
+                            '<ol style="margin: 0; padding-left: 20px; text-align: left;">' +
+                            '<li>No Amdts Allowed as the Project is Already Accepted By You!</li>' +
+                            '<li>However, only info is allowed after the project is accepted.</li>' +
+                            (blocked.length > 1 || succeeded.length > 0
+                                ? `<li>Affected Proj ID(s): ${blocked.join(', ')}</li>`
+                                : '') +
+                            '</ol>' +
+                            '</div>',
+                        showConfirmButton: true,
+                    });
+                }
+
+                $('#btnMarkNA').prop('disabled', true).text('Mark Selected as N/A');
+                $('#selCount').text('');
+                $('#selectAll').prop('checked', false);
+            },
+            error: function () {
+                alert('Something went wrong while submitting.');
+                $('#btnMarkNA').prop('disabled', false).text('Mark Selected as N/A');
+            }
+        });
+    });
+
+function finishBulkAction(failed) {
+    $('#btnMarkNA').text('Mark Selected as N/A');
+    if (failed.length > 0) {
+        alert('Failed to update project(s): ' + failed.join(', '));
+    } else {
+        alert('Selected projects marked as Not Applicable.');
+    }
+    // Reload/refresh table data (DataTable, ajax reload, etc.)
+    $('#Comment').DataTable().ajax.reload(); // if using DataTables server-side
+    $('#selectAll').prop('checked', false);
+    updateSelectionState();
+}

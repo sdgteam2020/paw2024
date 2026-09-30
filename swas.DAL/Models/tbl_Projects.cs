@@ -70,7 +70,7 @@ namespace swas.DAL.Models
         public DateTime? DateTimeOfUpdate { get; set; }
 
         // Radio button: value="1" (On) or value="0" (Off)
-        public int Date_type { get; set; }
+        public int? Date_type { get; set; }
 
         // ─── Status / Flags ───────────────────────────────────────────────────────────
 
@@ -103,7 +103,7 @@ namespace swas.DAL.Models
         [Display(Name = "Mobile Number (Tele No)")]
         [RegularExpression(@"^\d{1,10}$",
             ErrorMessage = "Mobile Number must be numeric and cannot exceed 10 digits.")]
-        public string? MobileNo { get; set; }
+        public int? MobileNo { get; set; }
 
         // Form: type="number", data_maxlength="5", required
         [Required(ErrorMessage = "Ascon Number is required.")]
@@ -329,6 +329,11 @@ namespace swas.DAL.Models
         [Display(Name = "Operation system of hosting environment")]
         [StringLength(301, ErrorMessage = "OS of hosting environment cannot exceed 50 Words.")]
         public string? operation_system_hosting_env { get; set; }
+
+
+        [Display(Name = "Field in STC")]
+
+        public bool? Field_In_STC { get; set; }
 
         // ─── [NotMapped] — view/DTO helpers ──────────────────────────────────────────
 
