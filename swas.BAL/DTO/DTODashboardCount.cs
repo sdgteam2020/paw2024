@@ -23,7 +23,15 @@ namespace swas.BAL.DTO
         public string? Status { get; set; }
         public int Tot { get; set; }
         public bool IsComplete { get; set; }
-       
+
+
+        public int PendingTot { get; set; }
+        public int SentTot { get; set; }
+        public int PendingCommentTot { get; set; }
+        public int SentCommentTot { get; set; }
+        public int Iscomment { get; set; }
+
+
     }
     public class DTODashboardHeader
     {
@@ -47,6 +55,7 @@ namespace swas.BAL.DTO
         public int StatusActionsMappingId { get; set; }
         public int StatusId { get; set; }
         public string Status { get; set; }
+        public bool Is_AI_ML { get; set; }
         public int Total { get; set; }
     }
 }

@@ -122,7 +122,9 @@
 
 
 <body class="sidebar-collapsed sidebar-hover">
-
+    <input type="hidden"
+           id="hdnInboxUnitId"
+           value="@(Logins.unitid ?? 0)" />
     <input id="Logincrypto" value="@Logins.CryptoKey"/>
 
     <span id="IpAddress" class="da-hidden"> @TempData["ipadd"]</span>

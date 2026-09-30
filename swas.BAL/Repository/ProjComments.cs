@@ -28,7 +28,7 @@ namespace swas.BAL
         }
         public async Task<List<DTOProComments>> GetAllStkForComment(int UnitId, int StatusId)
         {
-           
+
 
             #region GetAllStkForCommentWithProc
             try
@@ -52,6 +52,7 @@ namespace swas.BAL
                                 {
                                     ProjId = Convert.ToInt32(reader["ProjId"]),
                                     PsmId = Convert.ToInt32(reader["PsmId"]),
+                                    aiml = (bool)reader["Is_AI_ML"],
                                     ProjectName = reader["ProjectName"].ToString(),
                                     Stakeholder = reader["Stakeholder"].ToString(),
                                     Status = reader["Status"].ToString(),
@@ -70,14 +71,14 @@ namespace swas.BAL
                 }
                 return results.OrderByDescending(i => i.TimeStamp).ToList();
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw;
             }
 
             #endregion
         }
-
 
         public async Task<DTOProComments> GetCommentStatus(int UnitId)
         {

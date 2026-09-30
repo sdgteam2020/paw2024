@@ -362,191 +362,190 @@ namespace swas.BAL.Repository
         {
             DTODashboard db = new DTODashboard();
 
+
+
+            #region DashboardWithStoredProcedure
+
             try
             {
                 using (var conn = _dbContext.Database.GetDbConnection())
                 {
-                    if (conn.State != ConnectionState.Open)
-                        await conn.OpenAsync();
+                    await conn.OpenAsync();
 
                     using (var cmd = conn.CreateCommand())
                     {
                         cmd.CommandText = "dbo.usp_DashboardCount";
                         cmd.CommandType = CommandType.StoredProcedure;
 
+                        // Add parameter
                         var param = cmd.CreateParameter();
                         param.ParameterName = "@UserId";
                         param.Value = UserId;
                         cmd.Parameters.Add(param);
 
+                        //SqlDataAdapter obj = new SqlDataAdapter((SqlCommand)cmd);
+                        //DataTable dt = new DataTable();
+                        //obj.Fill(dt);
+                        //var date = dt;
+
                         using (var reader = await cmd.ExecuteReaderAsync())
                         {
-                            try
+                            // 1st result set => DTODashboardCountlst (incomplete & active)
+                            db.DTODashboardCountlst = new List<DTODashboardCount>();
+                            while (await reader.ReadAsync())
                             {
-                                // ✅ 1st result set
-                                db.DTODashboardCountlst = new List<DTODashboardCount>();
-                                while (await reader.ReadAsync())
+                                db.DTODashboardCountlst.Add(new DTODashboardCount
                                 {
-                                    db.DTODashboardCountlst.Add(new DTODashboardCount
-                                    {
-                                        StatusId = reader["StatusId"] != DBNull.Value ? Convert.ToInt32(reader["StatusId"]) : 0,
-                                        Stages = reader["Stages"]?.ToString() ?? "",
-                                        StagesId = reader["StagesId"] != DBNull.Value ? Convert.ToInt32(reader["StagesId"]) : 0,
-                                        Status = reader["Status"]?.ToString() ?? "",
-                                        IsComplete = reader["IsComplete"] != DBNull.Value && Convert.ToBoolean(reader["IsComplete"]),
-                                        Tot = reader["Tot"] != DBNull.Value ? Convert.ToInt32(reader["Tot"]) : 0,
-                                        ActionId = 0
-                                    });
-                                }
+                                    StatusId = reader.GetInt32(reader.GetOrdinal("StatusId")),
+                                    Stages = reader.GetString(reader.GetOrdinal("Stages")),
+                                    StagesId = reader.GetInt32(reader.GetOrdinal("StagesId")),
+                                    Status = reader.GetString(reader.GetOrdinal("Status")),
 
-                                // ✅ 2nd result set
-                                await reader.NextResultAsync();
-                                while (await reader.ReadAsync())
-                                {
-                                    db.DTODashboardCountlst.Add(new DTODashboardCount
-                                    {
-                                        StatusId = reader["StatusId"] != DBNull.Value ? Convert.ToInt32(reader["StatusId"]) : 0,
-                                        Stages = reader["Stages"]?.ToString() ?? "",
-                                        StagesId = reader["StagesId"] != DBNull.Value ? Convert.ToInt32(reader["StagesId"]) : 0,
-                                        Status = reader["Status"]?.ToString() ?? "",
-                                        IsComplete = reader["IsComplete"] != DBNull.Value && Convert.ToBoolean(reader["IsComplete"]),
-                                        Tot = reader["Tot"] != DBNull.Value ? Convert.ToInt32(reader["Tot"]) : 0,
-                                        ActionId = 0
-                                    });
-                                }
-
-                                // ✅ 3rd result set
-                                await reader.NextResultAsync();
-                                db.DTODashboardCountlstForAction = new List<DTODashboardCount>();
-                                while (await reader.ReadAsync())
-                                {
-                                    db.DTODashboardCountlstForAction.Add(new DTODashboardCount
-                                    {
-                                        StatusId = reader["StatusId"] != DBNull.Value ? Convert.ToInt32(reader["StatusId"]) : 0,
-                                        Stages = reader["Stages"]?.ToString() ?? "",
-                                        StagesId = reader["StagesId"] != DBNull.Value ? Convert.ToInt32(reader["StagesId"]) : 0,
-                                        Status = reader["Status"]?.ToString() ?? "",
-                                        IsComplete = reader["IsComplete"] != DBNull.Value && Convert.ToBoolean(reader["IsComplete"]),
-                                        Tot = reader["Tot"] != DBNull.Value ? Convert.ToInt32(reader["Tot"]) : 0,
-                                        ActionId = reader["ActionId"] != DBNull.Value ? Convert.ToInt32(reader["ActionId"]) : 0
-                                    });
-                                }
-
-                                // ✅ 4th result set
-                                await reader.NextResultAsync();
-                                db.DTODashboardHeaderlst = new List<DTODashboardHeader>();
-                                while (await reader.ReadAsync())
-                                {
-                                    db.DTODashboardHeaderlst.Add(new DTODashboardHeader
-                                    {
-                                        StageId = reader["StageId"] != DBNull.Value ? Convert.ToInt32(reader["StageId"]) : 0,
-                                        StatusId = reader["StatusId"] != DBNull.Value ? Convert.ToInt32(reader["StatusId"]) : 0,
-                                        Status = reader["Status"]?.ToString() ?? "",
-                                        Stages = reader["Stages"]?.ToString() ?? "",
-                                        Icons = reader["Icons"] == DBNull.Value ? null : reader["Icons"].ToString(),
-                                        Statseq = reader["Statseq"] != DBNull.Value ? Convert.ToInt32(reader["Statseq"]) : 0
-                                    });
-                                }
-
-                                // ✅ 5th result set
-                                await reader.NextResultAsync();
-                                var approvedList = new List<DTOApprovedCount>();
-
-                                while (await reader.ReadAsync())
-                                {
-                                    approvedList.Add(new DTOApprovedCount
-                                    {
-                                        ProjId = reader["ProjId"] != DBNull.Value ? Convert.ToInt32(reader["ProjId"]) : 0,
-                                        StatusId = reader["StatusId"] != DBNull.Value ? Convert.ToInt32(reader["StatusId"]) : 0,
-                                        StatusActionsMappingId = reader["StatusActionsMappingId"] != DBNull.Value ? Convert.ToInt32(reader["StatusActionsMappingId"]) : 0,
-                                        Total = reader["Total"] != DBNull.Value ? Convert.ToInt32(reader["Total"]) : 0
-                                    });
-                                }
-
-                                db.DTOApprovedCountlst = approvedList
-                                    .GroupBy(p => new { p.StatusId, p.StatusActionsMappingId })
-                                    .Select(g => new DTOApprovedCount
-                                    {
-                                        StatusId = g.Key.StatusId,
-                                        StatusActionsMappingId = g.Key.StatusActionsMappingId,
-                                        Total = g.Sum(x => x.Total)
-                                    }).ToList();
-
-                                // ✅ 6th result set
-                                await reader.NextResultAsync();
-                                while (await reader.ReadAsync())
-                                {
-                                    db.DTOApprovedCountlst.Add(new DTOApprovedCount
-                                    {
-                                        StatusId = reader["StatusId"] != DBNull.Value ? Convert.ToInt32(reader["StatusId"]) : 0,
-                                        Status = reader["Status"]?.ToString() ?? "",
-                                        StatusActionsMappingId = reader["StatusActionsMappingId"] != DBNull.Value ? Convert.ToInt32(reader["StatusActionsMappingId"]) : 0,
-                                        Total = reader["Total"] != DBNull.Value ? Convert.ToInt32(reader["Total"]) : 0,
-                                        ProjId = 0
-                                    });
-                                }
-
-                                // ✅ 7th result set
-                                await reader.NextResultAsync();
-                                while (await reader.ReadAsync())
-                                {
-                                    db.DTOApprovedCountlst.Add(new DTOApprovedCount
-                                    {
-                                        StatusId = reader["StatusId"] != DBNull.Value ? Convert.ToInt32(reader["StatusId"]) : 0,
-                                        Status = reader["Status"]?.ToString() ?? "",
-                                        StatusActionsMappingId = reader["StatusActionsMappingId"] != DBNull.Value ? Convert.ToInt32(reader["StatusActionsMappingId"]) : 0,
-                                        Total = reader["Total"] != DBNull.Value ? Convert.ToInt32(reader["Total"]) : 0,
-                                        ProjId = 0
-                                    });
-                                }
-
-                                // ✅ 8th result set (AI/ML)
-                                if (await reader.NextResultAsync())
-                                {
-                                    while (await reader.ReadAsync())
-                                    {
-                                        db.DTOApprovedCountlst.Add(new DTOApprovedCount
-                                        {
-                                            StatusId = reader["StatusId"] != DBNull.Value ? Convert.ToInt32(reader["StatusId"]) : 0,
-                                            Status = reader["Status"]?.ToString() ?? "",
-                                            StatusActionsMappingId = reader["StatusActionsMappingId"] != DBNull.Value ? Convert.ToInt32(reader["StatusActionsMappingId"]) : 0,
-                                            Total = reader["Total"] != DBNull.Value ? Convert.ToInt32(reader["Total"]) : 0,
-                                            ProjId = 0
-                                        });
-                                    }
-                                }
+                                    PendingTot = reader.GetInt32(reader.GetOrdinal("PendingTot")),
+                                    SentTot = reader.GetInt32(reader.GetOrdinal("SentTot")),
+                                    PendingCommentTot = reader.GetInt32(reader.GetOrdinal("PendingCommentTot")),
+                                    SentCommentTot = reader.GetInt32(reader.GetOrdinal("SentCommentTot")),
+                                    Iscomment = reader.GetInt32(reader.GetOrdinal("IsComment"))
+                                });
                             }
-                            catch (Exception exReader)
+
+
+                            // Move to 3rd result set => counts with ActionId
+                            await reader.NextResultAsync();
+                            db.DTODashboardCountlstForAction = new List<DTODashboardCount>();
+                            while (await reader.ReadAsync())
                             {
-                                throw new Exception("Error while reading dashboard data from database", exReader);
+                                db.DTODashboardCountlstForAction.Add(new DTODashboardCount
+                                {
+                                    StatusId = reader.GetInt32(reader.GetOrdinal("StatusId")),
+                                    Stages = reader.GetString(reader.GetOrdinal("Stages")),
+                                    StagesId = reader.GetInt32(reader.GetOrdinal("StagesId")),
+                                    Status = reader.GetString(reader.GetOrdinal("Status")),
+                                    IsComplete = reader.GetBoolean(reader.GetOrdinal("IsComplete")),
+                                    Tot = reader.GetInt32(reader.GetOrdinal("Tot")),
+                                    ActionId = reader.GetInt32(reader.GetOrdinal("ActionId"))
+                                });
                             }
+
+                            // Move to 4th result set => Dashboard headers
+                            await reader.NextResultAsync();
+                            db.DTODashboardHeaderlst = new List<DTODashboardHeader>();
+                            while (await reader.ReadAsync())
+                            {
+                                db.DTODashboardHeaderlst.Add(new DTODashboardHeader
+                                {
+                                    StageId = reader.GetInt32(reader.GetOrdinal("StageId")),
+                                    StatusId = reader.GetInt32(reader.GetOrdinal("StatusId")),
+                                    Status = reader.GetString(reader.GetOrdinal("Status")),
+                                    Stages = reader.GetString(reader.GetOrdinal("Stages")),
+                                    Icons = reader.IsDBNull(reader.GetOrdinal("Icons")) ? null : reader.GetString(reader.GetOrdinal("Icons")),
+                                    Statseq = reader.GetInt32(reader.GetOrdinal("Statseq"))
+                                });
+                            }
+
+                            // Move to 5th result set => Approved counts
+                            await reader.NextResultAsync();
+                            var approvedList = new List<DTOApprovedCount>();
+                            while (await reader.ReadAsync())
+                            {
+                                approvedList.Add(new DTOApprovedCount
+                                {
+                                    ProjId = reader.GetInt32(reader.GetOrdinal("ProjId")),
+                                    StatusId = reader.GetInt32(reader.GetOrdinal("StatusId")),
+                                    Is_AI_ML = reader.GetBoolean(reader.GetOrdinal("Is_AI_ML")),
+                                    StatusActionsMappingId = reader.GetInt32(reader.GetOrdinal("StatusActionsMappingId")),
+                                    Total = reader.GetInt32(reader.GetOrdinal("Total"))
+                                });
+                            }
+
+                            // Group approved counts by StatusId and StatusActionsMappingId as in your original logic
+                            //                       db.DTOApprovedCountlst = approvedList
+                            //.GroupBy(p => new
+                            //{
+                            //    p.StatusId,
+                            //    p.StatusActionsMappingId,
+                            //    p.Is_AI_ML
+                            //})
+                            //.Select(g => new DTOApprovedCount
+                            //{
+                            //    StatusId = g.Key.StatusId,
+                            //    StatusActionsMappingId = g.Key.StatusActionsMappingId,
+                            //    Is_AI_ML = g.Key.Is_AI_ML,
+                            //    Total = g.Sum(x => x.Total)
+                            //}).ToList();
+                            db.DTOApprovedCountlst = approvedList;
+                            // Move to 6th result set => BISAG-N count
+                            await reader.NextResultAsync();
+                            while (await reader.ReadAsync())
+                            {
+                                db.DTOApprovedCountlst.Add(new DTOApprovedCount
+                                {
+                                    StatusId = reader.GetInt32(reader.GetOrdinal("StatusId")),
+                                    Status = reader.GetString(reader.GetOrdinal("Status")),
+                                    StatusActionsMappingId = reader.GetInt32(reader.GetOrdinal("StatusActionsMappingId")),
+                                    Total = reader.GetInt32(reader.GetOrdinal("Total")),
+                                    ProjId = 0
+                                });
+                            }
+
+                            // Move to 7th result set => Re-Vetting count
+                            await reader.NextResultAsync();
+                            while (await reader.ReadAsync())
+                            {
+                                db.DTOApprovedCountlst.Add(new DTOApprovedCount
+                                {
+                                    StatusId = reader.GetInt32(reader.GetOrdinal("StatusId")),
+                                    Status = reader.GetString(reader.GetOrdinal("Status")),
+                                    StatusActionsMappingId = reader.GetInt32(reader.GetOrdinal("StatusActionsMappingId")),
+                                    Total = reader.GetInt32(reader.GetOrdinal("Total")),
+                                    ProjId = 0
+                                });
+                            }
+
+                            // Move to 8th result set => AI/ML count
+                            await reader.NextResultAsync();
+                            while (await reader.ReadAsync())
+                            {
+                                db.DTOApprovedCountlst.Add(new DTOApprovedCount
+                                {
+                                    StatusId = reader.GetInt32(reader.GetOrdinal("StatusId")),
+                                    Status = reader.GetString(reader.GetOrdinal("Status")),
+                                    StatusActionsMappingId = reader.GetInt32(reader.GetOrdinal("StatusActionsMappingId")),
+                                    Total = reader.GetInt32(reader.GetOrdinal("Total")),
+                                    ProjId = 0
+                                });
+                            }
+                            // Move to 8th result set => AI/ML count
+                            await reader.NextResultAsync();
+                            while (await reader.ReadAsync())
+                            {
+                                db.DTOApprovedCountlst.Add(new DTOApprovedCount
+                                {
+                                    StatusId = reader.GetInt32(reader.GetOrdinal("StatusId")),
+                                    Status = reader.GetString(reader.GetOrdinal("Status")),
+                                    StatusActionsMappingId = reader.GetInt32(reader.GetOrdinal("StatusActionsMappingId")),
+                                    Total = reader.GetInt32(reader.GetOrdinal("Total")),
+                                    ProjId = 0
+                                });
+                            }
+
+
                         }
                     }
                 }
 
-                // ✅ Sorting
-                db.DTODashboardCountlst = db.DTODashboardCountlst
-                    .OrderBy(x => x.StagesId)
-                    .ThenBy(x => x.StatusId)
-                    .ToList();
-
-                db.DTODashboardHeaderlst = db.DTODashboardHeaderlst
-                    .OrderBy(x => x.Statseq)
-                    .ThenBy(x => x.StageId)
-                    .ToList();
-            }
-            catch (SqlException sqlEx)
-            {
-                throw new Exception("Database error occurred while fetching dashboard data", sqlEx);
-            }
-            catch (InvalidOperationException invOpEx)
-            {
-                throw new Exception("Connection or command execution error", invOpEx);
+                db.DTODashboardCountlst = db.DTODashboardCountlst.OrderBy(x => x.StagesId).ThenBy(x => x.StatusId).ToList();
+                db.DTODashboardHeaderlst = db.DTODashboardHeaderlst.OrderBy(x => x.Statseq).ThenBy(x => x.StageId).ToList();
             }
             catch (Exception ex)
             {
-                throw new Exception("Unexpected error in DashboardCount method", ex);
+
+                throw;
             }
+
+
+            #endregion
+
 
             return db;
         }

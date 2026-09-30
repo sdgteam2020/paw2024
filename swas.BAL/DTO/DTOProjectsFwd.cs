@@ -30,6 +30,7 @@ namespace swas.BAL.DTO
         public string? EncyPsmID { get; set; }
         public bool IsProcess { get; set; } 
         public bool IsRead { get; set; }            
+        public bool AIML { get; set; }            
         public int undopsmId { get; set; }
         public string? isWhitelisted { get; set; }
         public  bool IsComplete { get; set; }
@@ -84,7 +85,9 @@ namespace swas.BAL.DTO
 
         public bool isSponsor { get; set; }
         public string AttachmentPath { get; set; }
-        public bool HasAttachment { get; set; }
+        public bool HasAttachment { get; set; } 
+
+        public bool? FieldInSTC { get; set; }
 
     }
 }

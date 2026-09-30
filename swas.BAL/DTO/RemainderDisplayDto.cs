@@ -14,6 +14,7 @@ namespace swas.BAL.DTO
         [JsonPropertyName("projectId")]
         public int projid { get; set; }
         public int Psmid { get; set; }
+        public bool aiml { get; set; }
         public string ProjName { get; set; }
         public string Sponsor { get; set; }
         public string Domain { get; set; }

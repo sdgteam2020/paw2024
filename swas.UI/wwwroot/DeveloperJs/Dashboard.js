@@ -29,230 +29,1066 @@ $(document).ready(function () {
 
 
 function GetAllDashbaordCount() {
+
     $.ajax({
+
         type: "POST",
         url: '/Home/GetDashboardCount',
-        data: { "Id": 0 },
-        success: function (data) {
 
-            const dtoDashboardHeaderlst = data.dtoDashboardHeaderlst;
-            const dTOApprovedCountlst = data.dtoApprovedCountlst;
-            const dTODashboardCountlstForAction = data.dtoDashboardCountlstForAction;
+        data: {
+            "Id": 0
+        },
 
-            let listitem = '';
-            let stageId = 0;
-            let tot = 0;
-            let peding = 0;
-            let sent = 0;
+        success: function(data) {
 
-            if (data != null) {
-                dtoDashboardHeaderlst.sort((a, b) => a.stageId - b.stageId || a.statseq - b.statseq);
-                 let cd = 1;
-                for (let i = 0; i < dtoDashboardHeaderlst.length; i++) {
 
-                    if (stageId != dtoDashboardHeaderlst[i].stageId) {
-                        if (stageId != 0) {
-                            listitem += '</div>';
-                        }
+            if (data == null) {
+                return;
+            }
 
-                        let stage = "";
-                        if (dtoDashboardHeaderlst[i].stageId === 1) stage = "(Sponsor & DDGIT)";
-                        if (dtoDashboardHeaderlst[i].stageId === 2) stage = "(Parallel Processing)";
-                        if (dtoDashboardHeaderlst[i].stageId === 3) stage = "(Serial Processing)";
 
-                        listitem += '<div class="header-container text-center text-white shadow-container"> ' + dtoDashboardHeaderlst[i].stages + " " + stage + ' </div>';
-                        listitem += '<div class="r-1 row g-3 mt-2 db-stage-row">';
-                    }
-                   
-                    listitem += `<div class="cd-${cd} col-12 col-sm-6 col-md-4 col-lg-1 db-card-box">`;
-                    cd = cd === 1 ? 2 : 1;
-                    tot = 0;
-                    peding = 0;
-                    sent = 0;
+            var dtoDashboardHeaderlst =
+                data.dtoDashboardHeaderlst || [];
 
-                    const DTODashboardCount = data.dtoDashboardCountlst.filter(function (element) {
-                        return element.stagesId == dtoDashboardHeaderlst[i].stageId && element.statusId == dtoDashboardHeaderlst[i].statusId;
-                    });
 
-                    if (parseInt(dtoDashboardHeaderlst[i].statusId) == 2 || parseInt(dtoDashboardHeaderlst[i].statusId) == 3
-                        || parseInt(dtoDashboardHeaderlst[i].statusId) == 22 || parseInt(dtoDashboardHeaderlst[i].statusId) == 31
-                        || parseInt(dtoDashboardHeaderlst[i].statusId) == 37) {
+            var dTOApprovedCountlst =
+                data.dtoApprovedCountlst || [];
 
-                        let ForAction;
-                        if (parseInt(dtoDashboardHeaderlst[i].statusId) == 2)
-                            ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 10; });
-                        else if (parseInt(dtoDashboardHeaderlst[i].statusId) == 3)
-                            ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 11; });
-                        else if (parseInt(dtoDashboardHeaderlst[i].statusId) == 22)
-                            ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 3 && e.stagesId == 2; });
-                        else if (parseInt(dtoDashboardHeaderlst[i].statusId) == 31)
-                            ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 3 && e.stagesId == 3; });
-                        else if (parseInt(dtoDashboardHeaderlst[i].statusId) == 37)
-                            ForAction = dTODashboardCountlstForAction.filter(function (e) { return e.actionId == 3 && e.stagesId == 1; });
 
-                        for (let j = 0; j < ForAction.length; j++) {
-                            tot += ForAction[j].tot;
+            var dTODashboardCountlstForAction =
+                data.dtoDashboardCountlstForAction || [];
 
-                            if (ForAction[j].isComplete == false) peding += ForAction[j].tot;
-                            if (ForAction[j].isComplete == true) sent += ForAction[j].tot;
-                        }
 
-                    } else {
-                        for (let j = 0; j < DTODashboardCount.length; j++) {
-                            tot += DTODashboardCount[j].tot;
+            var dtoDashboardCountlst =
+                data.dtoDashboardCountlst || [];
 
-                            if (DTODashboardCount[j].isComplete == false) peding += DTODashboardCount[j].tot;
-                            if (DTODashboardCount[j].isComplete == true) sent += DTODashboardCount[j].tot;
-                        }
-                    }
 
-                    listitem += '<div class="icon-container ApprovedProj cursorpointer"><span class="d-none" id="spnstatusId">' + dtoDashboardHeaderlst[i].statusId + '</span>';
-                    if (dtoDashboardHeaderlst[i].statusId == 2 || dtoDashboardHeaderlst[i].statusId == 3 || dtoDashboardHeaderlst[i].statusId == 22 || dtoDashboardHeaderlst[i].statusId == 31 || dtoDashboardHeaderlst[i].statusId == 37) {
-                        if (dtoDashboardHeaderlst[i].statusId == 3)
-                            listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" class="db-icon-25" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">';
-                        else
-                            listitem += '<img src="/assets/images/icons/rejec.png" alt="Icon" class="db-icon-25">';
 
-                        listitem += '<h5 class="db-h5-mt25"> </h5>';
+            var listitem = '';
 
-                    } else {
-                        listitem += '<img src="/assets/images/icons/prog.png" alt="Icon" class="db-icon-25" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">';
+            var stageId = 0;
 
-                        const approvedcount = dTOApprovedCountlst.filter(function (element) { return element.statusId == dtoDashboardHeaderlst[i].statusId; });
+            var cd = 1;
 
-                        if (approvedcount.length > 0)
-                            if (dtoDashboardHeaderlst[i].status.includes("BISAG-N")) {
-                                listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span>' +
-                                    '<h5 class="db-h5-mt8-pt10" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">' + approvedcount[0].total + ' </h5>';
-                            }
-                            else if (dtoDashboardHeaderlst[i].status.includes("Re-Vetting")) {
-                                listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span>' +
-                                    '<h5 class="db-h5-mt8-pt10" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">' + approvedcount[0].total + ' </h5>';
-                            }
-                            else if (dtoDashboardHeaderlst[i].status.includes("AI/ML")) {
-                                listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span>' +
-                                    '<h5 class="db-h5-mt8-pt10" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">' + approvedcount[0].total + ' </h5>';
-                            }
-                            else {
-                                listitem += '<span class="d-none" id="spnstatusActionsMappingId">' + approvedcount[0].statusActionsMappingId + '</span>' +
-                                    '<h5 class="db-h5-mt8" data-toggle="tooltip" data-placement="top" title="Total No of proj approved at this stage">' + approvedcount[0].total + ' </h5>';
-                            }
-                        else
-                            listitem += '<span class="d-none" id="spnstatusActionsMappingId">0</span><h5 class="db-h5-mt8">0 </h5>';
-                    }
 
-                    listitem += '<div class="t-1 statusprojsummry d-none">' + dtoDashboardHeaderlst[i].status + '</div> ';
-                    listitem += '</div>';
-                    listitem += '<div class="cursorpointer btnGetsummay "><span class="d-none" id="spnstatusId">' + dtoDashboardHeaderlst[i].statusId + '</span>';
-                    listitem += '<div class="">';
-                    if (dtoDashboardHeaderlst[i].status.includes("BISAG-N") || dtoDashboardHeaderlst[i].status.includes("Re-Vetting") || dtoDashboardHeaderlst[i].status.includes("AI/ML")) {
-                        listitem += '<div class="t-1 statusprojsummry db-status-pt7">' + dtoDashboardHeaderlst[i].status + '</div> ';
-                    }
-                    else {
-                        listitem += '<div class="t-1 statusprojsummry">' + dtoDashboardHeaderlst[i].status + '</div> ';
-                    }
-                    if (dtoDashboardHeaderlst[i].status.includes("BISAG-N") || dtoDashboardHeaderlst[i].status.includes("Re-Vetting") || dtoDashboardHeaderlst[i].status.includes("AI/ML")) {
 
-                        listitem += '<span class="badge badge-light text-black d-none db-badge-18" data-toggle="tooltip" data-placement="top"><span class="badge bg-danger">' + peding + '</span> / <span class="badge bg-success">' + sent + '</span></span>';
+            dtoDashboardHeaderlst.sort(function(a, b) {
 
-                        listitem += ' </div>';
-                        listitem += ' <div class="mb-2">';
-                        listitem += '<span class="badge badge-primary mr-2 d-none db-badge-14" data-toggle="tooltip" data-placement="top" title="Total No of transaction at this stage">' + tot + '</span>';
+                return (a.stageId - b.stageId) ||
+                    (a.statseq - b.statseq);
+
+            });
+
+
+
+            for (var i = 0; i < dtoDashboardHeaderlst.length; i++) {
+
+
+
+                var header = dtoDashboardHeaderlst[i];
+
+
+
+                if (stageId != header.stageId) {
+
+
+                    if (stageId != 0) {
+
+                        listitem += '</div>';
 
                     }
-                    else {
-                        listitem += '<span class="badge badge-light text-black db-badge-18" data-toggle="tooltip" data-placement="top"><span class="badge bg-danger">' + peding + '</span> / <span class="badge bg-success">' + sent + '</span></span>';
 
-                        listitem += ' </div>';
-                        listitem += ' <div class="mb-2">';
-                        listitem += '<span class="badge badge-primary mr-2 db-badge-14" data-toggle="tooltip" data-placement="top" title="Total No of transaction at this stage">' + tot + '</span>';
+
+
+                    var stage = "";
+
+
+
+                    if (header.stageId === 1) {
+
+                        stage =
+                            "(Sponsor & DDGIT)";
+
                     }
 
-                    listitem += ' </div>';
-                    listitem += ' </div>';
-                    listitem += ' </div>';
+                    else if (header.stageId === 2) {
 
-                    stageId = dtoDashboardHeaderlst[i].stageId;
+                        stage =
+                            "(Parallel Processing)";
+
+                    }
+
+                    else if (header.stageId === 3) {
+
+                        stage =
+                            "(Serial Processing)";
+
+                    }
+
+
+
+
+                    listitem +=
+
+                        '<div class="header-container text-center text-white shadow-container">' +
+                        header.stages +
+                        " " +
+                        stage +
+                        '</div>';
+
+
+
+                    listitem +=
+
+                        '<div class="r-1 row g-3 mt-2 db-stage-row">';
+
+
                 }
 
-                $("#carddashboardcount").html(listitem);
 
-                $(document).on("click", ".ApprovedProj", function () {
-                    let spnstatusId = $(this).closest("div").find("#spnstatusId").html();
-                   
-                    let spnstatusActionsMappingId = $(this).closest("div").find("#spnstatusActionsMappingId").html();
 
-                    tittle = "Approved: " + $(this).closest("div").find(".statusprojsummry").html();
-                    tittleIPA = "Approved by:  " + $(this).closest("div").find(".statusprojsummry").html() + " (Parallel Processing)";
 
-                    if (parseInt(spnstatusActionsMappingId) == 1) Status = 'Accepted';
-                    else if (parseInt(spnstatusActionsMappingId) == 9) Status = 'obsn Raised';
-                    else if (parseInt(spnstatusActionsMappingId) == 113) Status = 'Rectified';
-                    else if (parseInt(spnstatusActionsMappingId) == 48 || parseInt(spnstatusActionsMappingId) == 53) Status = 'Approved';
-                    else if (parseInt(spnstatusActionsMappingId) == 60) { tittle = "Closed Project"; Status = 'Closed'; }
-                    else if (parseInt(spnstatusActionsMappingId) == 68 || parseInt(spnstatusActionsMappingId) == 73 || parseInt(spnstatusActionsMappingId) == 63
-                        || parseInt(spnstatusActionsMappingId) == 78 || parseInt(spnstatusActionsMappingId) == 83 || parseInt(spnstatusActionsMappingId) == 88) Status = 'Completed';
-                    else if (parseInt(spnstatusActionsMappingId) == 26 || parseInt(spnstatusActionsMappingId) == 31 || parseInt(spnstatusActionsMappingId) == 37) Status = 'Approved';
+                listitem +=
 
-                    if (parseInt(spnstatusActionsMappingId) == 0) {
-                        Swal.fire({ icon: "error", title: "Oops...", text: "Data Not Found!" });
-                    } else {
-                        $('#CertName').html("Cert&Att");
-                       
-                        if (spnstatusId == 2 || spnstatusId == 3 || spnstatusId == 22) {
+                    '<div class="cd-' + cd +
+                    ' col-12 col-sm-6 col-md-4 col-lg-1 db-card-box">';
 
-                        } else if (parseInt(spnstatusId) == 44 || parseInt(spnstatusId) == 46 ) {
-                          
-                            $('#ProjectApprovedTittleBisag').html(tittle);
-                            $('#BISAG-N').modal('show');
-                            getProjBisagN(spnstatusId, spnstatusActionsMappingId);
-                        } else if (spnstatusId == 21) {
-                          
-                            $('#IPAProjectApprovedTittle').html(tittle);
-                            $('#IPAProjApproved').modal('show');
 
-                            getProjApproved(spnstatusId, spnstatusActionsMappingId);
-                        } else if (spnstatusActionsMappingId == 26 || spnstatusActionsMappingId == 31 || spnstatusActionsMappingId == 37) {
-                         
-                            $('#ProjectApprovedTittle').html(tittleIPA);
-                            $('#ProjApproved').modal('show');
-                            getProjApproved(spnstatusId, spnstatusActionsMappingId);
+
+                cd = cd === 1 ? 2 : 1;
+
+
+
+                var tot = 0;
+
+                var peding = 0;
+
+                var sent = 0;
+
+                var pendingComment = 0;
+
+                var sentComment = 0;
+
+
+
+
+                var statusIdInt =
+                    parseInt(header.statusId);
+
+
+
+
+                var isCombinedStage =
+
+                    statusIdInt === 2 ||
+                    statusIdInt === 3 ||
+                    statusIdInt === 22 ||
+                    statusIdInt === 31 ||
+                    statusIdInt === 37;
+
+
+
+
+                if (isCombinedStage) {
+
+
+
+                    var forAction = [];
+
+
+
+                    if (statusIdInt === 2) {
+
+
+                        forAction =
+                            dTODashboardCountlstForAction.filter(function(e) {
+
+                                return e.actionId == 10;
+
+                            });
+
+
+                    }
+
+
+                    else if (statusIdInt === 3) {
+
+
+                        forAction =
+                            dTODashboardCountlstForAction.filter(function(e) {
+
+                                return e.actionId == 11;
+
+                            });
+
+
+                    }
+
+
+                    else if (statusIdInt === 22) {
+
+
+                        forAction =
+                            dTODashboardCountlstForAction.filter(function(e) {
+
+                                return e.actionId == 3 &&
+                                    e.stagesId == 2;
+
+                            });
+
+
+                    }
+
+
+                    else if (statusIdInt === 31) {
+
+
+                        forAction =
+                            dTODashboardCountlstForAction.filter(function(e) {
+
+                                return e.actionId == 3 &&
+                                    e.stagesId == 3;
+
+                            });
+
+
+                    }
+
+
+                    else if (statusIdInt === 37) {
+
+
+                        forAction =
+                            dTODashboardCountlstForAction.filter(function(e) {
+
+                                return e.actionId == 3 &&
+                                    e.stagesId == 1;
+
+                            });
+
+                    }
+
+
+
+
+
+                    for (var j = 0; j < forAction.length; j++) {
+
+
+
+                        tot += forAction[j].tot;
+
+
+
+                        if (forAction[j].isComplete === false) {
+
+                            peding += forAction[j].tot;
+
                         }
 
+
+
+                        if (forAction[j].isComplete === true) {
+
+                            sent += forAction[j].tot;
+
+                        }
+
+
+                    }
+
+
+
+                }
+
+                else {
+
+
+
+                    var dashboardCount =
+
+                        dtoDashboardCountlst.filter(function(element) {
+
+
+                            return element.stagesId == header.stageId &&
+                                element.statusId == header.statusId;
+
+
+                        });
+
+
+
+
+                    if (dashboardCount.length > 0) {
+
+
+                        peding =
+                            dashboardCount[0].pendingTot || 0;
+
+
+
+                        sent =
+                            dashboardCount[0].sentTot || 0;
+
+
+
+                        tot =
+                            peding + sent;
+
+
+
+                        pendingComment =
+                            dashboardCount[0].pendingCommentTot || 0;
+
+
+
+                        sentComment =
+                            dashboardCount[0].sentCommentTot || 0;
+
+
+                    }
+
+                }
+
+                /*
+                    ICON + APPROVED COUNT SECTION
+                */
+
+
+                listitem +=
+
+                    '<div class="icon-container ApprovedProj cursorpointer">' +
+
+                    '<span class="d-none" id="spnstatusId">' +
+                    header.statusId +
+                    '</span>';
+
+
+
+
+                if (isCombinedStage) {
+
+
+
+                    if (statusIdInt === 3) {
+
+
+                        listitem +=
+
+                            '<img src="/assets/images/icons/prog.png" ' +
+                            'class="db-icon-25" ' +
+                            'data-toggle="tooltip" ' +
+                            'title="Total No of proj approved at this stage">';
+
+
+                    }
+                    else {
+
+
+                        listitem +=
+
+                            '<img src="/assets/images/icons/rejec.png" ' +
+                            'class="db-icon-25">';
+
+
+                    }
+
+
+
+                    listitem +=
+
+                        '<h5 class="db-h5-mt25"></h5>';
+
+
+
+                }
+
+                else {
+
+
+
+                    listitem +=
+
+                        '<img src="/assets/images/icons/prog.png" ' +
+                        'class="db-icon-25" ' +
+                        'data-toggle="tooltip" ' +
+                        'title="Total No of proj approved at this stage">';
+
+
+
+                    var approvedcount =
+                        dTOApprovedCountlst.filter(function(element) {
+
+
+                            if (statusIdInt == 55) {
+
+
+                                return element.statusId == 55 &&
+                                    element.is_AI_ML == true;
+
+
+                            }
+
+                            else if (statusIdInt == 1) {
+
+
+                                return element.statusId == 1 &&
+                                    element.is_AI_ML == false;
+
+
+                            }
+
+                            else {
+
+
+                                return element.statusId == header.statusId;
+
+
+                            }
+
+
+                        });
+
+
+
+
+                    if (approvedcount.length > 0) {
+
+
+
+                        var approvedTotal =
+
+                            approvedcount.reduce(function(sum, item) {
+
+
+                                return sum + (item.total || 0);
+
+
+                            }, 0);
+
+
+
+
+                        listitem +=
+
+                            '<span class="d-none" id="spnstatusActionsMappingId">' +
+                            approvedcount[0].statusActionsMappingId +
+                            '</span>' +
+
+
+                            '<h5 class="db-h5-mt8" ' +
+                            'data-toggle="tooltip" ' +
+                            'title="Total No of proj approved at this stage">' +
+                            approvedTotal +
+                            '</h5>';
+
+
+
+                    }
+
+                    else {
+
+
+
+                        listitem +=
+
+                            '<span class="d-none" id="spnstatusActionsMappingId">0</span>' +
+
+                            '<h5 class="db-h5-mt8">0</h5>';
+
+
+                    }
+
+
+                }
+
+
+
+                listitem +=
+
+                    '<div class="t-1 statusprojsummry d-none">' +
+                    header.status +
+                    '</div>';
+
+
+
+                listitem += '</div>';
+
+
+
+
+                /*
+                    STATUS NAME
+                */
+
+
+
+                listitem +=
+
+                    '<div class="cursorpointer btnGetsummay">' +
+
+                    '<span class="d-none" id="spnstatusId">' +
+                    header.statusId +
+                    '</span>' +
+
+                    '<div>';
+
+
+
+
+
+                var isNamedStatus =
+
+                    header.status.includes("BISAG-N") ||
+                    header.status.includes("Re-Whitelisting") ||
+                    header.status.includes("Foreclosed") ||
+                    header.status.includes("Obsn") ||
+                    header.status.includes("Fielded In Next STC");
+
+
+
+
+                if (isNamedStatus) {
+
+
+                    listitem +=
+
+                        '<div class="t-1 statusprojsummry db-status-pt7">' +
+                        header.status +
+                        '</div>';
+
+
+                }
+
+                else {
+
+
+                    listitem +=
+
+                        '<div class="t-1 statusprojsummry">' +
+                        header.status +
+                        '</div>';
+
+
+                }
+
+
+
+
+
+                /*
+                    COMMENTS STATUS
+                */
+
+
+                var isCommentStatus =
+
+                    dtoDashboardCountlst.filter(function(e) {
+
+
+                        return e.stagesId == header.stageId &&
+                            e.statusId == header.statusId &&
+                            e.iscomment == 1;
+
+
+                    }).length > 0;
+
+
+
+
+                var isCounterOnlyStatus =
+
+
+                    header.status.includes("BISAG-N") ||
+                    header.status.includes("Foreclosed") ||
+                    header.status.includes("Obsn") ||
+                    header.status.includes("Re-Whitelisting") ||
+                    header.status.includes("Fielded In Next STC");
+
+
+
+
+                if (isCommentStatus) {
+
+
+
+                    listitem +=
+
+
+                        '<span class="badge badge-light text-black db-badge-18">' +
+
+
+                        '<span class="badge bg-danger get_Pen_Sen_Comments count-up" ' +
+                        'data-commenttype="3" ' +
+                        'data-count="' + pendingComment + '" ' +
+                        'data-status-id="' + header.statusId + '" ' +
+                        'title="Pending Comments">' +
+                        pendingComment +
+                        '</span>' +
+
+
+                        ' / ' +
+
+
+
+                        '<span class="badge bg-success get_Pen_Sen_Comments count-up" ' +
+                        'data-commenttype="4" ' +
+                        'data-count="' + sentComment + '" ' +
+                        'data-status-id="' + header.statusId + '" ' +
+                        'title="Actioned Comments">' +
+                        sentComment +
+                        '</span>' +
+
+
+                        '</span>';
+
+
+
+                }
+
+
+                else {
+
+
+
+                    /*
+                        INBOX RED
+                        SENTBOX GREEN
+                    */
+                    if (!isNamedStatus) {
+
+                        listitem +=
+
+
+                            '<span class="badge badge-light text-black db-badge-18">' +
+
+
+
+                            '<span class="badge bg-danger send count-up" ' +
+                            'data-type="1" ' +
+                            'data-count="' + peding + '" ' +
+                            'data-status-id="' + header.statusId + '" ' +
+                            'title="Inbox">' +
+                            peding +
+                            '</span>' +
+
+
+
+                            ' / ' +
+
+
+
+                            '<span class="badge bg-success send count-up" ' +
+                            'data-type="2" ' +
+                            'data-count="' + sent + '" ' +
+                            'data-status-id="' + header.statusId + '" ' +
+                            'title="SentBox">' +
+                            sent +
+                            '</span>' +
+
+
+
+                            '</span>';
+
+                    }
+
+                }
+
+
+
+
+                /*
+                    TOTAL COUNT HIDDEN
+                */
+                var shototal =
+
+
+                    header.status.includes("Foreclosed") ||
+                    header.status.includes("Obsn");
+                 
+
+
+
+                if (shototal) {
+                    listitem +=
+
+
+                        '<div class="mb-2">' +
+
+
+                        '<span class="badge badge-primary mr-2 send db-badge-14 " ' +
+                        'data-count="' + tot + '" ' +
+                        'data-type="1" title="Total No of transaction at this stage" data-status-id="' + header.statusId + '">' +
+                        tot +
+                        '</span><div class="t-1 d-none statusprojsummry" > ' + header.status + '</div > ' +
+                        
+
+                        '</div>';
+
+                }
+
+
+                listitem += '</div>';
+
+                listitem += '</div>';
+
+                listitem += '</div>';
+
+
+
+
+                stageId = header.stageId;
+
+
+            }
+
+
+
+            $("#carddashboardcount").html(listitem);
+
+
+
+            $('.count-up').each(function() {
+
+                animateCount($(this));
+
+            });
+
+
+            // ================= APPROVED CLICK EVENT =================
+
+
+            $(document).on("click", ".ApprovedProj", function() {
+                debugger;
+                let spnstatusId = $(this).closest("div").find("#spnstatusId").html();
+
+                let spnstatusActionsMappingId = $(this).closest("div").find("#spnstatusActionsMappingId").html();
+
+                tittle =  $(this).closest("div").find(".statusprojsummry").html();
+                tittleIPA =  $(this).closest("div").find(".statusprojsummry").html() + " (Parallel Processing)";
+
+
+
+                let mappingId =
+                    parseInt(spnstatusActionsMappingId);
+
+
+
+                if (mappingId === 1)
+                    Status = "Accepted";
+
+                else if (mappingId === 9)
+                    Status = "obsn Raised";
+
+                else if (mappingId === 113)
+                    Status = "Rectified";
+
+                else if (mappingId === 48 || mappingId === 53)
+                    Status = "Approved";
+
+                else if (mappingId === 60) {
+
+                    tittle = "Closed Project";
+                    Status = "Closed";
+
+                }
+
+                else if ([68, 73, 63, 78, 83, 88].includes(mappingId))
+                    Status = "Completed";
+
+                else if ([26, 31, 37].includes(mappingId))
+                    Status = "Approved";
+
+
+
+
+                if (mappingId === 0) {
+
+
+                    Swal.fire({
+
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Data Not Found!"
+
+                    });
+
+
+                    return;
+
+                }
+                else {
+                    $('#CertName').html("Cert&Att");
+
+                    var spnstatusIdInt = parseInt(spnstatusId);
+                    var mappingIdInt = parseInt(spnstatusActionsMappingId);
+
+                    // Status: 2, 3, 22
+                    if ([2, 3, 22].includes(spnstatusIdInt)) {
+                        return;
+                    }
+
+                    // BISAG-N
+                    else if ([44, 46].includes(spnstatusIdInt)) {
+                        $('#ProjectApprovedTittleBisag').html(tittle);
+                        $('#BISAG-N').modal('show');
+
+                        getProjBisagN(
+                            spnstatusId,
+                            spnstatusActionsMappingId,
+                            
+                        );
+                    }
+
+                    // IPA
+                    else if (spnstatusIdInt === 21) {
+                        $('.IPAProjectApprovedTittle').html(tittle);
+                        $('#IPAProjApproved').modal('show');
+
+                        getProjApproved(
+                            spnstatusId,
+                            spnstatusActionsMappingId,1
+                        );
+                    }
+
+                    // Process Approved
+                    else if ([1, 55, 60].includes(spnstatusIdInt)) {
+                        $('.IPAProjectApprovedTittle').html(tittle);
+
+                        $('#ProcessApproved').modal('show');
+
+                        if (spnstatusIdInt === 60) {
+                            $('.btnaimltoggle').removeClass('d-none');
+                        }
+
+                        getProjApproved(
+                            spnstatusId,
+                            spnstatusActionsMappingId,
+                            1
+                        );
+                    }
+
+                    // Project Approved with IPA mapping
+                    else if ([26, 31, 37].includes(mappingIdInt)) {
+                        $('#ProjectApprovedTittle').html(tittleIPA);
+                        $('#ProjApproved').modal('show');
+
+                        $('.timestampheader').html('Approved Date');
+
+                        getProjApproved(
+                            spnstatusId,
+                            spnstatusActionsMappingId,
+                            1
+                        );
+                    }
+
+                    // Certificate / Normal Project
+                    else {
+                        const hascert = [24, 25, 26, 27, 28, 29].includes(spnstatusIdInt);
+
+                        if (hascert) {
+                            $('.IPAProjectApprovedTittle').html(tittle);
+                            $('#IPAProjApproved').modal('show');
+                        } else {
+                            $('#ProjectApprovedTittle').html(tittle);
+                            $('#ProjApproved').modal('show');
+
+                            $('.timestampheader').html('Approved Date');
+                        }
+
+                        getProjApproved(
+                            spnstatusId,
+                            spnstatusActionsMappingId,
+                            1
+                        );
+                    }
+                }
+                });
+
+
+
+
+
+
+            // ================= INBOX / SENTBOX CLICK =================
+
+
+            $(document)
+                .off("click", ".send")
+                .on("click", ".send", function() {
+
+                    debugger;
+
+                    var statusId =
+                        parseInt($(this).data("status-id"));
+
+
+
+                    var listType =
+                        parseInt($(this).data("type"));
+
+
+
+                    var total =
+                        parseInt($(this).data("count")) || 0;
+
+
+
+                    if (!statusId ||
+                        !listType ||
+                        total === 0) {
+
+
+                        return;
+
+                    }
+
+
+
+
+
+                    if (statusId !== 1041 &&
+                        statusId !== 44 &&
+                        statusId !== 46) {
+
+
+
+                        var status =
+                            $(this)
+                                .closest("div")
+                                .find(".statusprojsummry")
+                                .html();
+
+
+
+
+                        $("#ProjectSummaryTittle")
+                            .html(status);
+
+
+
+                        $("#IsNotduplicate")
+                            .prop("checked", false);
+
+
+
+
+                        if ([2, 3, 37, 22, 31].includes(statusId)) {
+
+
+                            $("#ProjGetsummayForClosed_Obsn")
+                                .modal("show");
+
+
+                        }
 
                         else {
 
-                            const hascert = [24, 25, 26, 27, 28, 29].includes(parseInt(spnstatusId));
 
-                            if (hascert) {
-                                $('#IPAProjectApprovedTittle').html(tittle);
-                                $('#IPAProjApproved').modal('show');
-                            } else {
-                                $('#ProjectApprovedTittle').html(tittle);
-                                $('#ProjApproved').modal('show');
-                            }
-                           
-                            getProjApproved(spnstatusId, spnstatusActionsMappingId);
+                            $("#ProjGetsummay")
+                                .modal("show");
+
+
                         }
+
+
+
+
+                        getProjGetsummay(
+                            statusId,
+                            listType
+                        );
+
+
                     }
+
+
                 });
 
-                $(document).on("click", ".btnGetsummay", function () {
 
-                    let spnstatusId = $(this).closest("div").find("#spnstatusId").html();
-                    if (spnstatusId != 1041 && parseInt(spnstatusId) != 44 && parseInt(spnstatusId) != 46) {
-                        $('#ProjGetsummay').modal('show');
-                        $('#ProjectSummaryTittle').html("Total Proj Movement: " + $(this).closest("div").find(".statusprojsummry").html());
-                        $('#IsNotduplicate').prop('checked', false);
-                        getProjGetsummay(spnstatusId, true);
+
+
+
+            // ================= COMMENTS CLICK =================
+
+
+            $(document)
+                .off("click", ".get_Pen_Sen_Comments")
+                .on("click", ".get_Pen_Sen_Comments", function() {
+
+
+
+                    var statusId =
+                        parseInt($(this).data("status-id"));
+
+
+
+                    var commentType =
+                        parseInt($(this).data("commenttype"));
+
+
+
+                    var total =
+                        parseInt($(this).data("count")) || 0;
+
+
+
+
+                    if (!statusId ||
+                        !commentType ||
+                        total === 0) {
+
+
+                        return;
+
                     }
+
+
+
+
+                    var status =
+                        $(this)
+                            .closest("div")
+                            .find(".statusprojsummry")
+                            .html();
+
+
+
+
+                    $("#ProjectSummaryTittle")
+                        .html(status);
+
+
+
+                    $("#ProjGetsummay")
+                        .modal("show");
+
+
+
+
+                    getProjGetsummay(
+                        statusId,
+                        commentType
+                    );
+
+
+
                 });
-            }
+
+
+
         },
-        error: function () {
+
+        error: function() {
+
+
             alert('Error fetching Count.');
+
+
         }
+
     });
+
 }
 
 
@@ -345,43 +1181,54 @@ function GetAllDashbaordCount() {
 
 
 
-function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
+function getProjApproved(spnstatusId, spnstatusActionsMappingId, IsAIML) {
 
     let listItem = "";
-    let table = new DataTable('#dashboardApproved');
+    var table = new DataTable('#dashboardApproved');
+    table.destroy();
+    var table = new DataTable('#IPAdashboardApproved');
+    table.destroy();
+    var table = new DataTable('#dashboardApprovedSTC');
     table.destroy();
 
-    
+
+
     $.ajax({
         url: '/Home/GetDashboardApproved',
         contentType: 'application/x-www-form-urlencoded',
         data: {
             StatusId: encryptData(spnstatusId),
-            statusActionsMappingId: encryptData(spnstatusActionsMappingId)
+            statusActionsMappingId: encryptData(spnstatusActionsMappingId),
+            projecttype: encryptData(IsAIML)
         },
         type: 'POST',
-        success: function (response) {
-
+        success: function(response) {
+            debugger;
             if (response != "null" && response != null) {
 
-                const hasIPA = response.some(item =>
-                    [53, 63, 68, 73, 78, 83, 88].includes(item.statusactionMappingid)
-                );
-
+                const hasIPA = Array.isArray(response) && response.some(item => [53, 63, 68, 73, 78, 83, 88].includes(item.statusactionMappingid));
+                var hasProccesedWithSTC = Array.isArray(response) && response.some(item => [21, 60, 159].includes(item.statusactionMappingid));
                 if (response == -1) {
                     Swal.fire({ text: "" });
                 } else if (response == 0) {
 
                     $('#DetailBodyApproved').empty();
+                    $('#DetailBodyApprovedWithSTCCheck').empty();
+
+                    $('#IPADetailBodyApproved').empty();
                     listItem += "<tr><td class='text-center' colspan='7'>No Record Found</td></tr>";
+
+
                     $("#DetailBodyApproved").html(listItem);
+                    $("#IPADetailBodyApproved").html(listItem);
+                    $("#DetailBodyApprovedWithSTCCheck").html(listItem);
                     $("#lblTotal").html(0);
 
                 } else {
                     let count = 1;
 
                     const unitId = $('#spndashboardUnitId').text().trim();
-                 
+
                     $('#DetailBodyApproved').empty();
                     $('#dashboardApproved').dataTable().fnClearTable();
                     $('#dashboardApproved').dataTable().fnDestroy();
@@ -406,7 +1253,7 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
 
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + DateFormateddMMyyyyhhmmss(response[i].timeStamp) + "</span></td>";
-                        listItem += "<td ><span class='badge badge-success' id='divName'>" + Status + "</span></td>";
+                        // listItem += "<td ><span class='badge badge-success' id='divName'>" + Status + "</span></td>";
 
                         if (response[i].statusactionMappingid == 53) {
                             if (response[i].approvedDt != null && response[i].approvedRemarks != null) {
@@ -441,8 +1288,48 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
     </a>
 </td>`;
                             }
+                           
                             else {
-                                listItem += `<td></td>`;
+                                listItem += `<td>No Attachemnts</td>`;
+                            }
+
+
+                        } else if (response[i].statusactionMappingid == 21 || response[i].statusactionMappingid == 60 || response[i].statusactionMappingid == 159) {
+                            if (unitId == 1 || unitId == 2) {
+                                listItem += `
+<td class="text-center noExport">   
+    <div class="toggle-container d-flex">
+        <span class="toggle-label text-danger mr-2">NO</span>
+
+        <div class="form-check form-switch">
+            <input class="form-check-input toggleSwitch"
+                   data-projid="${response[i].encyID}"
+                   type="checkbox"
+                   ${response[i].fieldInSTC ? 'checked' : ''}>
+            <label class="form-check-label"></label>
+        </div>
+
+        <span class="toggle-label text-success">YES</span>
+    </div>
+</td>`;
+                            }
+                            else {
+                                listItem += `
+<td class="text-center noExport">
+    <div class="toggle-container d-flex">
+        <span class="toggle-label text-danger mr-2">NO</span>
+
+        <div class="form-check form-switch">
+            <input class="form-check-input"
+                   data-projid="${response[i].encyID}"
+                   type="checkbox"
+                   ${response[i].fieldInSTC ? 'checked' : ''} disabled>
+            <label class="form-check-label"></label>
+        </div>
+
+        <span class="toggle-label text-success">YES</span>
+    </div>
+</td>`;
                             }
 
                         }
@@ -454,95 +1341,23 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
                     if (hasIPA) {
                         refreshDataTable('#IPAdashboardApproved');
                         $("#IPADetailBodyApproved").html(listItem);
-                        let table = $('#IPAdashboardApproved').DataTable({
-                            lengthChange: true,
-                            dom: 'lBfrtip',
-                            retrieve: true,
-                            destroy: true,
-                            pageLength: 25,
-                            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                            "order": [[0, "asc"]],
 
-                            buttons: [
-                                'copy',
-                                'excel',
-                                'csv',
-                            ],
-                            searchBuilder: {
-                                conditions: {
-                                    num: {
-                                        'MultipleOf': {
-                                            conditionName: 'Multiple Of',
-                                            init: function (that, fn, preDefined = null) {
-                                                const el = $('<input/>').on('input', function () { fn(that, this) });
+                        initializeDataTable('#IPAdashboardApproved')
 
-                                                if (preDefined !== null) {
-                                                    $(el).val(preDefined[0]);
-                                                }
+                    }
 
-                                                return el;
-                                            },
-                                            inputValue: function (el) {
-                                                return $(el[0]).val();
-                                            },
-                                            isInputValid: function (el, that) {
-                                                return $(el[0]).val().length !== 0;
-                                            },
-                                            search: function (value, comparison) {
-                                                return value % comparison === 0;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        });
-                    } else {
+                    else if (hasProccesedWithSTC) {
+
+                        $("#DetailBodyApprovedWithSTCCheck").html(listItem);
+                        initializeDataTable('#dashboardApprovedSTC');
+                    }
+                    else {
 
                         refreshDataTable('#dashboardApproved');
                         $("#DetailBodyApproved").html(listItem);
 
-                        let table = $('#dashboardApproved').DataTable({
-                            lengthChange: true,
-                            dom: 'lBfrtip',
-                            retrieve: true,
-                            destroy: true,
-                            pageLength: 25,
-                            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                            "order": [[0, "asc"]],
+                        initializeDataTable('#dashboardApproved')
 
-                            buttons: [
-                                'copy',
-                                'excel',
-                                'csv',
-                            ],
-                            searchBuilder: {
-                                conditions: {
-                                    num: {
-                                        'MultipleOf': {
-                                            conditionName: 'Multiple Of',
-                                            init: function (that, fn, preDefined = null) {
-                                                const el = $('<input/>').on('input', function () { fn(that, this) });
-
-                                                if (preDefined !== null) {
-                                                    $(el).val(preDefined[0]);
-                                                }
-
-                                                return el;
-                                            },
-                                            inputValue: function (el) {
-                                                return $(el[0]).val();
-                                            },
-                                            isInputValid: function (el, that) {
-                                                return $(el[0]).val().length !== 0;
-                                            },
-                                            search: function (value, comparison) {
-                                                return value % comparison === 0;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        });
                     }
                 }
             }
@@ -554,7 +1369,7 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId) {
 
             }
         },
-        error: function (result) {
+        error: function(result) {
             Swal.fire({ text: "" });
         }
     });
@@ -572,9 +1387,9 @@ document.addEventListener("click", function (e) {
 });
 
 function getProjGetsummay(spnstatusId, IsDuplicate) {
- 
+
     let listItem = "";
-   
+
     $("#spndashboardstatusId").html(spnstatusId);
     let userdata = {
         "StatusId": spnstatusId,
@@ -588,9 +1403,9 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
         contentType: 'application/x-www-form-urlencoded',
         data: { encrypted_payload: encrypted_payload },
         type: 'POST',
-        success: function (response) {
-           
-            
+        success: function(response) {
+
+            debugger;
             if (response != "null" && response != null) {
 
                 if (response == -1) {
@@ -602,16 +1417,22 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                     $("#DetailBodysummary1").html(listItem);
                     $("#lblTotal").html(0);
 
+                    $('#DetailBodysummary2').empty();
+                    listItem += "<tr><td class='text-center' colspan='8'>No Record Found</td></tr>";
+                    $("#DetailBodysummary2").html(listItem);
+                    $("#lblTotal").html(0);
+
 
                 } else {
                     let count = 1;
                     $('#dashboardDeatils').dataTable().fnClearTable();
                     $('#dashboardDeatils').dataTable().fnDestroy();
+                    $('#dashboardDeatilsforClosed').dataTable().fnClearTable();
+                    $('#dashboardDeatilsforClosed').dataTable().fnDestroy();
 
                     let unitId = $('#spndashboardUnitId').text().trim();
-                 
                     for (let i = 0; i < response.length; i++) {
-                        
+
                         let projName = response[i].projName;
                         let words = projName.split(" ");
                         let shortProjName = words.length > 6 ? words.slice(0, 6).join(" ") + "..." : projName;
@@ -622,17 +1443,20 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                             listItem += "<td class='align-middle'>" +
                                 "<a class='ProjName' title='" + projName + "' data-proj-id='" + response[i].projId + "' data-proj-name='" + projName + "' " +
                                 "href='/Projects/ProjHistory?EncyID=" + response[i].encyID + "&Type=XRDC'>" +
-                                shortProjName + "</a><span class='d-none'>" + projName +"</span></td>";
+                                shortProjName + "</a><span class='d-none'>" + projName + "</span></td>";
                         }
                         else {
                             listItem += "<td class='align-middle'><span id='ProjName' title='" + projName + "'>" + shortProjName + "</span></td>";
-                        }                       
+                        }
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stakeHolder + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].fromUnitName + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].toUnitName + "</span></td>";
                         listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].stage + "</span></td>";
-                        listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].status + "</span></td>";
-                        listItem += "<td class='align-middle'><span id='divName'>" + response[i].action + "</span></td>";
+                        if (![2, 3, 37, 22, 31].includes(parseInt(spnstatusId))) {
+
+                            listItem += "<td class='align-middle'><span id='ProjName'>" + response[i].status + "</span></td>";
+                            listItem += "<td class='align-middle'><span id='divName'>" + response[i].action + "</span></td>";
+                        }
                         if (parseInt(spnstatusId) === 1) {
 
                             listItem += "<td class='align-middle'><span id='divName'>" + DateFormateddMMyyyyhhmmss(response[i].initiatedDate) + "</span></td>";
@@ -640,87 +1464,79 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
 
                             listItem += "<td class='align-middle'><span id='divName'>" + DateFormateddMMyyyyhhmmss(response[i].dateTimeOfUpdate) + "</span></td>";
                         }
-                        
-                       
-                        if (response[i].isComplete) {
-                            
-                            if (response[i].stkStatusId == 2) {
-                                listItem += "<td ><span class='badge badge-warning' id='divName'>Obsn</span></td>";
-                            } else if (response[i].stkStatusId == 3) {
-                                listItem += "<td ><span class='badge badge-danger' id='divName'>Rejected</span></td>";
-                            }
-                            else if (response[i].stkStatusId == 5) {
-                                listItem += "<td ><span class='badge badge-success' id='divName'>Info</span></td>";
+
+                        if ([2, 3, 37, 22, 31].includes(parseInt(spnstatusId))) {
+
+
+
+                            listItem += `<td class="align-middle"><div id="divName" class="RefLetter-container" data-tooltip="${response[i].remarks}">
+                                <span class="short-text">${trimByChars(response[i].remarks, 20)}</span>
+                                <span class="RefLetter">${response[i].remarks}</span>
+                            </div ></td>`;
+                        }
+
+                        else {
+                            if (response[i].isComplete) {
+
+                                if (response[i].stkStatusId == 2) {
+                                    listItem += "<td ><span class='badge badge-warning' id='divName'>Obsn</span></td>";
+                                } else if (response[i].stkStatusId == 3) {
+                                    listItem += "<td ><span class='badge badge-danger' id='divName'>Rejected</span></td>";
+                                }
+                                else if (response[i].stkStatusId == 5) {
+                                    listItem += "<td ><span class='badge badge-success' id='divName'>Info</span></td>";
+                                }
+                                else if (response[i].stkStatusId == 6) {
+                                    listItem +=
+                                        "<td>" +
+                                        "<span class='badge bg-secondary' id='divName'>" +
+                                        "Not Applicable" +
+                                        "</span>" +
+                                        "</td>";
+                                }
+                                else {
+                                    listItem += `<td ><span class='badge badge-success' id='divName' title='Processed by ${response[i].toUnitName}'>${response[i].toUnitName}</span></td>`;
+                                }
                             }
                             else {
-                                listItem += `<td ><span class='badge badge-success' id='divName' title='Processed by ${response[i].toUnitName}'>${response[i].toUnitName}</span></td>`;
+                                if (response[i].stkStatusId == 2) {
+                                    listItem += "<td ><span class='badge badge-warning' id='divName'>Obsn</span></td>";
+                                } else if (response[i].stkStatusId == 3) {
+                                    listItem += "<td ><span class='badge badge-danger' id='divName'>Rejected</span></td>";
+                                }
+                                else if (response[i].stkStatusId == 5) {
+                                    listItem += "<td ><span class='badge badge-success' id='divName'>Info</span></td>";
+                                }
+                                else if (response[i].stkStatusId == 6) {
+                                    listItem +=
+                                        "<td >" +
+                                        "<span class='badge bg-secondary' id='divName'>" +
+                                        "Not Applicable" +
+                                        "</span>" +
+                                        "</td>";
+                                }
+                                else {
+                                    //listItem += "<td ><span class='badge badge-danger' id='divName'>Pending</span></td>";
+                                    listItem += `<td ><span class='badge badge-danger' id='divName' title='Pending with ${response[i].toUnitName}'>${response[i].toUnitName}</span></td>`;
+                                }
                             }
                         }
-                        else {
-                            if (response[i].stkStatusId == 2) {
-                                listItem += "<td ><span class='badge badge-warning' id='divName'>Obsn</span></td>";
-                            } else if (response[i].stkStatusId == 3) {
-                                listItem += "<td ><span class='badge badge-danger' id='divName'>Rejected</span></td>";
-                            }
-                            else if (response[i].stkStatusId == 5) {
-                                listItem += "<td ><span class='badge badge-success' id='divName'>Info</span></td>";
-                            } else {
-                                listItem += `<td ><span class='badge badge-danger' id='divName' title='Pending with ${response[i].toUnitName}'>${response[i].toUnitName}</span></td>`;
-                            }
-                        }
+
+
 
                         listItem += "</tr>";
                         count++;
                     }
+                    if ([2, 3, 37, 22, 31].includes(parseInt(spnstatusId))) {
 
-                    $("#DetailBodysummary1").html(listItem);
+                        $("#DetailBodysummary2").html(listItem);
+                        initializeDataTable('#dashboardDeatilsforClosed');
+                    } else {
 
+                        $("#DetailBodysummary1").html(listItem);
+                        initializeDataTable('#dashboardDeatils');
+                    }
 
-                    let table = $('#dashboardDeatils').DataTable({
-                        lengthChange: true,
-                        retrieve: true,
-                        bDestroy: true,
-                        destroy: true,
-                        searching: true,
-                        
-                        "order": [[0, "asc"]],
-                        "ordering": true,
-                        "paging": true,
-                        pageLength: 25,
-                        dom: 'lBfrtip',
-                        buttons: [
-                            'copy',
-                            'excel',
-                            'csv',
-                        ],
-                        searchBuilder: {
-                            conditions: {
-                                num: {
-                                    'MultipleOf': {
-                                        conditionName: 'Multiple Of',
-                                        init: function (that, fn, preDefined = null) {
-                                            let el = $('<input/>').on('input', function () { fn(that, this) });
-
-                                            if (preDefined !== null) {
-                                                $(el).val(preDefined[0]);
-                                            }
-
-                                            return el;
-                                        },
-                                        inputValue: function (el) {
-                                            return $(el[0]).val();
-                                        },
-                                        isInputValid: function (el, that) {
-                                            return $(el[0]).val().length !== 0;
-                                        },
-                                        search: function (value, comparison) {
-                                            return value % comparison === 0;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
 
                 }
             }
@@ -729,16 +1545,20 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
                 $('#DetailBodysummary1').empty();
                 listItem += "<tr><td class='text-center' colspan='10'>No Record Found</td></tr>";
                 $("#DetailBodysummary1").html(listItem);
+                $('#DetailBodysummary2').empty();
+                listItem += "<tr><td class='text-center' colspan='8'>No Record Found</td></tr>";
+                $("#DetailBodysummary2").html(listItem);
 
 
 
             }
         },
-        error: function (result) {
+        error: function(result) {
             Swal.fire({ text: "" });
         }
     });
 }
+
 
 function updatePieChart(data) {
     let titles = data.map(item => item.Status);
@@ -880,6 +1700,7 @@ function getProjBisagN(spnstatusId, spnstatusActionsMappingId) {
     let userdata = {
         "StatusId": spnstatusId,
         "statusActionsMappingId": spnstatusActionsMappingId,
+        "projecttype":1
     };
 
     $.ajax({
@@ -914,50 +1735,8 @@ function getProjBisagN(spnstatusId, spnstatusActionsMappingId) {
                     }
 
                     $("#DetailBodyBisagN").html(listItem);
-                    let table = $('#dashboardApprovedBisagN').DataTable({
-                        lengthChange: true,
-                        retrieve: true,
-                        bDestroy: true,
-                        searching: true,
-                        stateSave: true,
-                        "order": [[0, "asc"]],
-                        "ordering": true,
-                        "paging": true,
-                        dom: 'lBfrtip',
-                        buttons: [
-                            'copy',
-                            'excel',
-                            'csv',
-                        ],
-                        searchBuilder: {
-                            conditions: {
-                                num: {
-                                    'MultipleOf': {
-                                        conditionName: 'Multiple Of',
-                                        init: function (that, fn, preDefined = null) {
-                                            let el = $('<input/>').on('input', function () { fn(that, this) });
-
-                                            if (preDefined !== null) {
-                                                $(el).val(preDefined[0]);
-                                            }
-
-                                            return el;
-                                        },
-                                        inputValue: function (el) {
-                                            return $(el[0]).val();
-                                        },
-                                        isInputValid: function (el, that) {
-                                            return $(el[0]).val().length !== 0;
-                                        },
-                                        search: function (value, comparison) {
-                                            return value % comparison === 0;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-
+                    initializeDataTable('#dashboardApprovedBisagN');
+                 
                 }
             } else {
                 $('#DetailBodyBisagN').empty();
@@ -1242,6 +2021,163 @@ $(document).ready(function () {
 
 });
 
+function showPopup(segmentIndex) {
+
+    const popupOverlay = document.getElementById('popupOverlay');
+    const popupTitle = document.getElementById('popupTitle');
+    const projectList = document.getElementById('projectList');
+
+    let projects = [];
+    let title = '';
+    let statusActionsMappingId = 0;
+    if (segmentIndex === 0) {
+        statusActionsMappingId = 88;
+    }
+    else if (segmentIndex === 1) {
+        statusActionsMappingId = 880;
+    }
+    let userdata = {
+        "StatusId": 29,
+        "statusActionsMappingId": statusActionsMappingId,
+    };
+
+    $("#WhiteListedProjectDetail").modal("show");
+    if (segmentIndex === 0) {
+
+        title = `Whitelisted Projects`;
+    } else if (segmentIndex === 1) {
+
+        title = `Due for Re-vetting`;
+
+    }
+
+    $(".spnWhitelistedorDues").html(title);
+    GetwhilteListProject(statusActionsMappingId)
 
 
 
+}
+
+
+
+
+function closePopup() {
+    document.getElementById('popupOverlay').style.display = 'none';
+}
+
+// Close popup when clicking outside
+document.getElementById('popupOverlay').addEventListener('click', function (event) {
+    if (event.target === this) {
+        closePopup();
+    }
+});
+
+// Close popup with Escape key
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+        closePopup();
+    }
+});
+
+$(document).on('change', '.toggleSwitch', function () {
+
+    var checkbox = $(this);
+    var projId = checkbox.data('projid');
+
+    var isChecked = checkbox.is(':checked');
+
+    $.ajax({
+        url: '/Projects/UpdateFieldInSTC',
+        type: 'POST',
+        data: {
+            projId: projId,
+            fieldInSTC: isChecked
+        },
+        success: function (response) {
+
+            if (response.success) {
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: response.message,
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+                GetAllDashbaordCount();
+
+            } else {
+
+                checkbox.prop('checked', !isChecked);
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Update Failed',
+                    text: response.message
+                });
+            }
+        },
+        error: function () {
+
+            checkbox.prop('checked', !isChecked);
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Something went wrong. Please try again.'
+            });
+        }
+    });
+
+});
+// NOTE: now that the toggle re-fetches from the server via
+// getProjApproved(), the client-side filtering below (stcApprovedProjects /
+// renderApprovedSTCTable) is no longer on the toggle's code path — your
+// existing getProjApproved success handler is what re-renders the table
+// rows each time. Kept here only if you still want an initial render
+// helper; otherwise you can delete loadApprovedSTCTable/renderApprovedSTCTable.
+var stcApprovedProjects = [];
+var stcShowingAIML = false; // default view: regular (non-AI/ML) projects
+
+function setToggleButtonState(showingAIML) {
+    var $btn = $('#btnToggleAIML');
+    var $label = $btn.find('.btn-aiml-toggle-label');
+    var $icon = $btn.find('i');
+
+    $btn.attr('data-mode', showingAIML ? 'aiml' : 'regular');
+    $btn.attr('aria-pressed', showingAIML ? 'true' : 'false');
+
+    if (showingAIML) {
+        $label.text('Show Regular Projects');
+        $icon.removeClass('fa-microchip').addClass('fa-list');
+        $('#lblSTCTableMode').text('Showing: AI/ML Projects');
+    } else {
+        $label.text('Show AI/ML Projects');
+        $icon.removeClass('fa-list').addClass('fa-microchip');
+        $('#lblSTCTableMode').text('Showing:Auto Projects');
+
+    }
+}
+
+//$(document).on('click', '#btnToggleAIML', function () {
+//    stcShowingAIML = !stcShowingAIML;
+//    setToggleButtonState(stcShowingAIML);
+
+//    // Re-fetch from the server with the flag flipped each click:
+//    // 1st click -> true (AI/ML only), 2nd click -> false (regular), etc.
+//    // Adjust statusId/statusActionsMappingId to whatever this modal's
+//    // context actually needs.
+//    getProjApproved(60, 1, stcShowingAIML);
+//});
+
+$('#ProcessApproved').on('hidden.bs.modal', function () {
+    /*   setToggleButtonState(false);*/
+    $('.btnaimltoggle').addClass('d-none');
+});
+
+$(document).on("change", "#ddlProjectdashboardType", function () {
+    let projectSearchTypeId =
+        Number($("#ddlProjectdashboardType").val()) || 1;
+
+    getProjApproved(60, 1, projectSearchTypeId);
+});

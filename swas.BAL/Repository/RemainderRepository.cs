@@ -61,24 +61,41 @@ namespace swas.BAL.Repository
             return await _dbContext.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Provides data for the GetAllAsync operation.
+        /// <param name="projectSearchTypeId">The value used by the operation.</param>
+        /// <returns>The result produced by the operation.</returns>
+        /// </summary>
         public async Task<List<RemainderDisplayDto>> GetAllAsync()
         {
             Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
+
             try
             {
+                int unitId = Logins.unitid ?? 0;
+
                 var ret = await (from rem in _dbContext.TrnRemainders
                                  join proj in _dbContext.Projects
                                      on rem.Projid equals proj.ProjId
+
                                  join fromUnit in _dbContext.tbl_mUnitBranch
                                      on rem.FromUnitId equals fromUnit.unitid into fromUnitJoin
                                  from fromUnit in fromUnitJoin.DefaultIfEmpty()
+
                                  join toUnit in _dbContext.tbl_mUnitBranch
                                      on rem.Tounitid equals toUnit.unitid into toUnitJoin
                                  from toUnit in toUnitJoin.DefaultIfEmpty()
+
                                  join stakeholder in _dbContext.tbl_mUnitBranch
-                                 on proj.StakeHolderId equals stakeholder.unitid
-                                 where rem.Tounitid == Logins.unitid
-                               || rem.FromUnitId == Logins.unitid
+                                     on proj.StakeHolderId equals stakeholder.unitid
+
+                                 where (rem.Tounitid == unitId || rem.FromUnitId == unitId)
+                                    //&& (
+                                    //       projectSearchTypeId == 1
+                                    //    || (projectSearchTypeId == 2 && proj.Is_AI_ML != true)
+                                    //    || (projectSearchTypeId == 3 && proj.Is_AI_ML == true)
+                                    //   )
+
                                  select new
                                  {
                                      rem.ReadDate,
@@ -87,32 +104,50 @@ namespace swas.BAL.Repository
                                      rem.Projid,
                                      rem.Psmid,
                                      ProjName = proj.ProjName,
-                                     unitName = stakeholder.UnitName,
-                                   
-                                     Domain = proj.Sponsor, // Adjust if there's a specific Domain field
+                                     UnitName = stakeholder.UnitName,
+                                     IsAI_ML = proj.Is_AI_ML,
+                                     Sponsor = proj.Sponsor,
                                      FromUnitName = fromUnit != null ? fromUnit.UnitName : "N/A",
                                      ToUnitName = toUnit != null ? toUnit.UnitName : "N/A",
                                      rem.UserDetails,
                                      rem.SendDate
                                  })
-                  .GroupBy(x => x.ProjName)
-                  .Select(g => new RemainderDisplayDto
-                  {
-                      ReadOn = g.OrderByDescending(x => x.SendDate).First().ReadDate ?? "-",
-                      Psmid = g.First().Psmid,
-                      projid = g.First().Projid,
-                      ProjName = g.Key,
-                      unitName = g.First().unitName,
-                      Domain = g.First().UserDetails,
-                      Remarks = g.OrderByDescending(x => x.SendDate).First().Remarks, // Latest Remarks
-                      Sponsor = g.First().Domain,
-                      FromUnit = g.OrderByDescending(x => x.SendDate).First().FromUnitName,
-                      ToUnit = g.OrderByDescending(x => x.SendDate).First().ToUnitName,
-                      SentOn = g.Max(x => x.SendDate),// Latest SendDate
-                      EncyID = _dataProtector.Protect(g.First().Projid.ToString())
-                  })
-                  .OrderByDescending(x => x.SentOn)
-                  .ToListAsync();
+                                .GroupBy(x => x.Projid)   // Group by Projid (safer than ProjName)
+                                .Select(g => new RemainderDisplayDto
+                                {
+                                    // Take the latest reminder (by SendDate) for each project
+                                    ReadOn = g.OrderByDescending(x => x.SendDate)
+                                              .Select(x => x.ReadDate)
+                                              .FirstOrDefault() ?? "-",
+
+                                    Psmid = g.First().Psmid,
+                                    projid = g.Key,                          // Projid
+                                    aiml = g.First().IsAI_ML ?? false,
+                                    ProjName = g.First().ProjName,
+                                    unitName = g.First().UnitName,
+
+                                    // Correct mapping
+                                    Sponsor = g.First().Sponsor,
+                                    Domain = g.First().UserDetails,          // if you still need Domain for something
+
+                                    Remarks = g.OrderByDescending(x => x.SendDate)
+                                               .Select(x => x.Remarks)
+                                               .FirstOrDefault(),
+
+                                    FromUnit = g.OrderByDescending(x => x.SendDate)
+                                                .Select(x => x.FromUnitName)
+                                                .FirstOrDefault(),
+
+                                    ToUnit = g.OrderByDescending(x => x.SendDate)
+                                              .Select(x => x.ToUnitName)
+                                              .FirstOrDefault(),
+
+                                    SentOn = g.Max(x => x.SendDate),
+
+                                    EncyID = _dataProtector.Protect(g.Key.ToString())
+                                })
+                                .OrderByDescending(x => x.SentOn)
+                                .ToListAsync();
 
                 return ret;
             }
@@ -121,7 +156,6 @@ namespace swas.BAL.Repository
                 throw;
             }
         }
-
 
 
 
