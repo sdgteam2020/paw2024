@@ -114,29 +114,7 @@ function buildProjectRow(project, StatusProjectlst, MovProjectlst, count) {
 
     return html;
 }
-function buildStatusCell(project, statusItem, MovProjectlst) {
 
-    const match = MovProjectlst.filter(function (element) {
-        return element.statusId == statusItem.statusId &&
-            element.projId == project.projId;
-    });
-
-    if (match.length != 0) {
-
-        const time = DateFormateddMMyyyyhhmmss(match[0].timeStamp);
-
-        return '<td class="align-middle text-center" data-toggle="tooltip" data-placement="top" title="' + time + '">' +
-            '<div class="pws-ok-dot">✔</div>' +
-            '<span class="d-none">' + time + '</span>' +
-            '</td>';
-    }
-    else {
-
-        return '<td class="align-middle text-center">' +
-            '<img src="/assets/images/icons/Cross_red_circle.png" width="22" height="22" alt="Readed">' +
-            '</td>';
-    }
-}
 function buildProjectRow(project, StatusProjectlst, MovProjectlst, count) {
 
     let html = `
@@ -164,8 +142,25 @@ function buildProjectRow(project, StatusProjectlst, MovProjectlst, count) {
 
     return html;
 }
+
+function isDgisAiMlProject(projectId, MovProjectlst) {
+    return (MovProjectlst || []).some(function(movement) {
+        return Number(movement.projId) === Number(projectId) &&
+            Number(movement.statusId) === 55;
+    });
+}
 function isValidStatus(status) {
-    return status !== "BISAG-N" && status !== "Re-Vetting";
+    const hiddenStatuses = [
+        "BISAG-N",
+        "Re-Vetting",
+       
+        "Re-Whitelisting",
+        "Fielded In Next STC"
+    ];
+
+    return !hiddenStatuses.includes(
+        String(status ?? "").trim().toLowerCase()
+    );
 }
 function bindProjectClick() {
 
@@ -317,20 +312,91 @@ function buildProjRow(project, StatusProjectlst, MovProjectlst) {
 
     return html;
 }
+function isDgisAiMlProject(projectId, MovProjectlst) {
+    return (MovProjectlst || []).some(function(movement) {
+        return Number(movement.projId) === Number(projectId) &&
+            Number(movement.statusId) === 55;
+    });
+}
 
-function buildProjStatusCell(project, statusItem, MovProjectlst) {
+function renderNotApplicableCell() {
+    return `
+        <td class="align-middle text-center">
+            <span class="na-badge" title="Not applicable">N/A</span>
+        </td>
+    `;
+}
 
-    const match = MovProjectlst.filter(el =>
-        el.statusId === statusItem.statusId &&
-        el.projId === project.projId
-    );
+function buildStatusCell(project, statusItem, MovProjectlst) {
+    const statusId = Number(statusItem.statusId);
+    const isAiMlProject = isDgisAiMlProject(project.projId, MovProjectlst);
 
-    if (match.length) {
+    // AI/ML project: DDGIT is not applicable.
+    if (statusId === 1 && isAiMlProject) {
+        return renderNotApplicableCell();
+    }
+
+    // Non-AI/ML project: HQ DGIS AI/ML is not applicable.
+    if (statusId === 55 && !isAiMlProject) {
+        return renderNotApplicableCell();
+    }
+
+    const match = MovProjectlst.filter(function(element) {
+        return Number(element.statusId) === statusId &&
+            Number(element.projId) === Number(project.projId);
+    });
+
+    if (match.length !== 0) {
         const time = DateFormateddMMyyyyhhmmss(match[0].timeStamp);
 
         return `
-            <td data-toggle="tooltip" data-placement="top" title="${time}">
-                <div class="d-flex d-flex justify-content-between">
+            <td class="align-middle text-center"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="${time}">
+                <div class="pws-ok-dot">✔</div>
+                <span class="d-none">${time}</span>
+            </td>
+        `;
+    }
+
+    return `
+        <td class="align-middle text-center">
+            <img src="/assets/images/icons/Cross_red_circle.png"
+                 width="22"
+                 height="22"
+                 alt="Readed">
+        </td>
+    `;
+}
+
+function buildProjStatusCell(project, statusItem, MovProjectlst) {
+    const statusId = Number(statusItem.statusId);
+    const isAiMlProject = isDgisAiMlProject(project.projId, MovProjectlst);
+
+    // AI/ML project: DDGIT is not applicable.
+    if (statusId === 1 && isAiMlProject) {
+        return renderNotApplicableCell();
+    }
+
+    // Non-AI/ML project: HQ DGIS AI/ML is not applicable.
+    if (statusId === 55 && !isAiMlProject) {
+        return renderNotApplicableCell();
+    }
+
+    const match = MovProjectlst.filter(function(element) {
+        return Number(element.statusId) === statusId &&
+            Number(element.projId) === Number(project.projId);
+    });
+
+    if (match.length !== 0) {
+        const time = DateFormateddMMyyyyhhmmss(match[0].timeStamp);
+
+        return `
+            <td data-toggle="tooltip"
+                data-placement="top"
+                title="${time}">
+                <div class="d-flex justify-content-between">
                     <span class="pws-ok-dot d-flex">✔</span>
                     <span class="nowrap">${time}</span>
                 </div>
@@ -341,16 +407,26 @@ function buildProjStatusCell(project, statusItem, MovProjectlst) {
     return `
         <td class="align-middle text-center">
             <img src="/assets/images/icons/Cross_red_circle.png"
-                 width="22" height="22" alt="Readed">
+                 width="22"
+                 height="22"
+                 alt="Readed">
         </td>
     `;
 }
 
 function isValidStatus(status) {
-    return status !== "BISAG-N" && status !== "Re-Vetting" && status !== "AI/ML";
+    const hiddenStatuses = [
+        "bisag-n",
+        "re-vetting",
+        
+        "re-whitelisting",
+        "fielded in next stc"
+    ];
+
+    return !hiddenStatuses.includes(
+        String(status ?? "").trim().toLowerCase()
+    );
 }
-
-
 
 
 

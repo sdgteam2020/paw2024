@@ -1,5 +1,6 @@
 ﻿let current = 1;
-$(document).ready(function () {
+$(document).ready(function() {
+    updateButtonText();
     $(function () {
         $(".datepicker1").datepicker({ dateFormat: 'dd-mm-yy' });
     });
@@ -72,74 +73,74 @@ $(document).ready(function () {
     $("#draftUpload").click(function () {
         ProjectSaveAsDraft($(this));
     });
-    $("#submitUpload").click(function () {
+    // $("#submitUpload").click(function () {
         
 
-        let requiredFields = $('#tablebasic').find('.requiredField');
-        let allFieldsComplete = true;
-        requiredFields.each(function (index) {
-            if (this.value.length == 0) {
+    //     let requiredFields = $('#tablebasic').find('.requiredField');
+    //     let allFieldsComplete = true;
+    //     requiredFields.each(function (index) {
+    //         if (this.value.length == 0) {
                 
-                $(this).addClass('is-invalid');
-                allFieldsComplete = false;
-            } else {
-                $(this).removeClass('is-invalid');
-            }
-        });
+    //             $(this).addClass('is-invalid');
+    //             allFieldsComplete = false;
+    //         } else {
+    //             $(this).removeClass('is-invalid');
+    //         }
+    //     });
 
        
 
-        let lengtherr = true;
-        $('.char-limit').each(function () {
+    //     let lengtherr = true;
+    //     $('.char-limit').each(function () {
 
-            let inputField = $(this);
-            let maxLength = parseInt(inputField.data('maxlength'));
-            let errorMsg = inputField.closest('div').find('.charErrorMsg');
-
-           
-                let value = inputField.val();
-
-                // Stop typing after max length
-                if (value.length > maxLength) {
-                    //inputField.val(value.substring(0, maxLength + 1));
-                    errorMsg.removeClass('d-none');
-                    lengtherr = false;
-                } else {
-                    errorMsg.addClass('d-none');
-                }
+    //         let inputField = $(this);
+    //         let maxLength = parseInt(inputField.data('maxlength'));
+    //         let errorMsg = inputField.closest('div').find('.charErrorMsg');
 
            
+    //             let value = inputField.val();
 
-        });
+    //             // Stop typing after max length
+    //             if (value.length > maxLength) {
+    //                 //inputField.val(value.substring(0, maxLength + 1));
+    //                 errorMsg.removeClass('d-none');
+    //                 lengtherr = false;
+    //             } else {
+    //                 errorMsg.addClass('d-none');
+    //             }
 
-        if (!lengtherr) {
+           
 
-            Swal.fire({
-                title: 'Error!',
-                text: 'Please Check the Length',
-                icon: 'error',
-                showConfirmButton: true,
+    //     });
+
+    //     if (!lengtherr) {
+
+    //         Swal.fire({
+    //             title: 'Error!',
+    //             text: 'Please Check the Length',
+    //             icon: 'error',
+    //             showConfirmButton: true,
                 
-            })
-            return false;
-        }
+    //         })
+    //         return false;
+    //     }
 
-        if (!allFieldsComplete) {
+    //     if (!allFieldsComplete) {
 
-            Swal.fire({
-                title: 'Error!',
-                text: 'Please complete all required fields',
-                icon: 'error',
-                showConfirmButton: false,
-                timer: 1000
-            })
-        }
-        else {
-            AddProject(this);
-        }
+    //         Swal.fire({
+    //             title: 'Error!',
+    //             text: 'Please complete all required fields',
+    //             icon: 'error',
+    //             showConfirmButton: false,
+    //             timer: 1000
+    //         })
+    //     }
+    //     else {
+    //         AddProject(this);
+    //     }
 
 
-    });
+    // });
     $(".previous").click(function () {
         
         const fieldset = $("#0");  // jQuery object
@@ -174,7 +175,7 @@ $(document).ready(function () {
         $("#ProjName").val("New Project" + number);
         $("#InitiatedDate").val(predate);
         $("#CompletionDate").val(todaydate);
-        $("#IsWhitelisted").val("YES" + number);
+        // $("#IsWhitelisted").val("YES" + number);
         $("#InitialRemark").val("Remarks" + number);
         $("#AimScope").val("AimScope" + number);
         $("#HQandITinfraReqd").val("HQandITinfraReqd" + number);
@@ -346,7 +347,7 @@ $(document).ready(function () {
     $("#ProjName").on("keyup", function () {
         
         let query = $(this).val();
-        if ($("#IsWhitelisted").val() === "Re-Vetted" && query.length >= 3) {
+        if ($("#ProposalId ").val() === "3" && query.length >= 3) {
           
             filterProjectNames(query);
         }
@@ -427,17 +428,72 @@ $(document).ready(function () {
     }
 
 
-    $("#IsWhitelisted").change(function () {
-        
+    $(".ProposalId").change(function() {
+
         let selectedStatus = $(this).val();
-        if (selectedStatus === "Re-Vetted") {
-            
+
+        // Keep both dropdowns in sync
+        $(".ProposalId").val(selectedStatus);
+
+        // ==========================================
+        // Proposal 7 & 8 - Special Field Set
+        // ==========================================
+        if (selectedStatus == "7" || selectedStatus == "8") {
+
+            // Hide Normal Form + Disable its inputs
+            $("#normalProjectFieldSet").addClass("d-none");
+            $("#normalProjectFieldSet").find("input, select, textarea").prop("disabled", true);
+
+            // Show Special Form + Enable its inputs
+            $("#agendaCotsFieldSet").removeClass("d-none");
+            $("#agendaCotsFieldSet").find("input, select, textarea").prop("disabled", false);
+
+        } else {
+
+            // Show Normal Form + Enable its inputs
+            $("#normalProjectFieldSet").removeClass("d-none");
+            $("#normalProjectFieldSet").find("input, select, textarea").prop("disabled", false);
+
+            // Hide Special Form + Disable its inputs
+            $("#agendaCotsFieldSet").addClass("d-none");
+            $("#agendaCotsFieldSet").find("input, select, textarea").prop("disabled", true);
+        }
+
+
+        // ==========================================
+        // Existing Re-Vetting Logic - Proposal 3
+        // ==========================================
+        if (selectedStatus == "3") {
+
             $('#ProjName').addClass('col-md-8');
+
             Swal.fire({
                 title: 'Re-Vetting Project will be added as per details of Appx C to SOP , Also before filling the form, ensure that you have all the docus(PDF) ready as per SOP on Whitelisting of Sw Appl in IA',
                 html: `
-      <div class=text-left><div><ol><li><h5 class=p-2>Upload 02 x PDF Documents Before Submitting</h5><ul class=text-left><div><strong>(a) ACG Clearance Certificate </strong></div><div><strong>(b) DDGIT Whitelisted Clearance Certificate</strong></div></ul></li><li><h5 class=p-2>Declaration</h5><p class=text-left>I declare that all the information which I will be providing is correct to the best of my knowledge.</p></li></ol>
-    `,
+                <div class="text-left">
+                    <div>
+                        <ol>
+                            <li>
+                                <h5 class="p-2">Upload 02 x PDF Documents Before Submitting</h5>
+                                <ul class="text-left">
+                                    <div>
+                                        <strong>(a) ACG Clearance Certificate </strong>
+                                    </div>
+                                    <div>
+                                        <strong>(b) DDGIT Whitelisted Clearance Certificate</strong>
+                                    </div>
+                                </ul>
+                            </li>
+                            <li>
+                                <h5 class="p-2">Declaration</h5>
+                                <p class="text-left">
+                                    I declare that all the information which I will be providing is correct to the best of my knowledge.
+                                </p>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            `,
                 icon: 'warning',
                 confirmButtonColor: '#072697',
                 confirmButtonText: '<i class="fa fa-check-circle"></i> Proceed',
@@ -446,18 +502,24 @@ $(document).ready(function () {
                 }
             });
 
-
             $("#ProjName").prop("disabled", false);
             $("#projectNameDropdown").show();
             $("#reVettedTag").removeClass("d-none");
+
         } else {
-            let currentval = $("#ProjName").val();
-            let cleanval = currentval.replace(/\s*Re-Vetted\s*\d+/i, "").trim();
-            $("#ProjName").val(cleanval)
+
+            let currentval = $("#ProjName").val() || "";
+            let cleanval = currentval
+                .replace(/\s*Re-WhiteListing\s*\d+/i, "")
+                .trim();
+
+            $("#ProjName").val(cleanval);
+
             $('#ProjName').removeClass('col-md-8');
             $("#projectNameDropdown").hide();
             $("#reVettedTag").addClass("d-none");
         }
+
     });
 
 
@@ -489,326 +551,326 @@ $(document).ready(function () {
         });
     });
 });
-function AddProject(thistag) {
+// function AddProject(thistag) {
    
-    const $btn = $(thistag);
+//     const $btn = $(thistag);
 
-    // Prevent double click / duplicate submit
-    if ($btn.data("submitting") === true) {
-        return;
-    }
+//     // Prevent double click / duplicate submit
+//     if ($btn.data("submitting") === true) {
+//         return;
+//     }
 
-    $btn.data("submitting", true);
-    $btn.prop("disabled", true);
+//     $btn.data("submitting", true);
+//     $btn.prop("disabled", true);
 
-    fetchServerDate()
-        .then(function (S) {
+//     fetchServerDate()
+//         .then(function (S) {
 
-            const token = $('input[name="__RequestVerificationToken"]').val();
+//             const token = $('input[name="__RequestVerificationToken"]').val();
 
-            if (!token) {
-                Swal.fire({
-                    title: "Error!",
-                    text: "Security token missing. Please refresh the page and try again.",
-                    icon: "error"
-                });
-                return;
-            }
+//             if (!token) {
+//                 Swal.fire({
+//                     title: "Error!",
+//                     text: "Security token missing. Please refresh the page and try again.",
+//                     icon: "error"
+//                 });
+//                 return;
+//             }
 
-            const initialDate = $.trim($('#InitiatedDate').val());
-            const completionDate = $.trim($('#CompletionDate').val());
+//             const initialDate = $.trim($('#InitiatedDate').val());
+//             const completionDate = $.trim($('#CompletionDate').val());
 
-            if (!initialDate) {
-                Swal.fire({
-                    title: "Error!",
-                    text: "Please select Initiated Date.",
-                    icon: "error"
-                });
-                return;
-            }
+//             if (!initialDate) {
+//                 Swal.fire({
+//                     title: "Error!",
+//                     text: "Please select Initiated Date.",
+//                     icon: "error"
+//                 });
+//                 return;
+//             }
 
-            if (!completionDate) {
-                Swal.fire({
-                    title: "Error!",
-                    text: "Please select Completion Date.",
-                    icon: "error"
-                });
-                return;
-            }
+//             if (!completionDate) {
+//                 Swal.fire({
+//                     title: "Error!",
+//                     text: "Please select Completion Date.",
+//                     icon: "error"
+//                 });
+//                 return;
+//             }
 
-            if (!S || !S.todayDateTime) {
-                Swal.fire({
-                    title: "Error!",
-                    text: "Unable to fetch server date. Please try again.",
-                    icon: "error"
-                });
-                return;
-            }
+//             if (!S || !S.todayDateTime) {
+//                 Swal.fire({
+//                     title: "Error!",
+//                     text: "Unable to fetch server date. Please try again.",
+//                     icon: "error"
+//                 });
+//                 return;
+//             }
 
-            const currentDate = new Date(S.todayDateTime);
+//             const currentDate = new Date(S.todayDateTime);
 
-            if (isNaN(currentDate.getTime())) {
-                Swal.fire({
-                    title: "Error!",
-                    text: "Invalid server date received. Please try again.",
-                    icon: "error"
-                });
-                return;
-            }
+//             if (isNaN(currentDate.getTime())) {
+//                 Swal.fire({
+//                     title: "Error!",
+//                     text: "Invalid server date received. Please try again.",
+//                     icon: "error"
+//                 });
+//                 return;
+//             }
 
-            const currentTime = currentDate.toLocaleTimeString('en-US', {
-                hour12: false
-            });
+//             const currentTime = currentDate.toLocaleTimeString('en-US', {
+//                 hour12: false
+//             });
 
-            const InitiatedDate = initialDate + ' ' + currentTime;
-            const CompletionDate = completionDate + ' ' + currentTime;
+//             const InitiatedDate = initialDate + ' ' + currentTime;
+//             const CompletionDate = completionDate + ' ' + currentTime;
 
-            if (InitiatedDate > CompletionDate) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Validation Error',
-                    text: 'Completion Date must be greater than Initiation Date',
-                    confirmButtonColor: '#d33',
-                    confirmButtonText: 'OK'
-                });
-                return;
-            }
+//             if (InitiatedDate > CompletionDate) {
+//                 Swal.fire({
+//                     icon: 'error',
+//                     title: 'Validation Error',
+//                     text: 'Completion Date must be greater than Initiation Date',
+//                     confirmButtonColor: '#d33',
+//                     confirmButtonText: 'OK'
+//                 });
+//                 return;
+//             }
           
-            $.ajax({
-                url: '/Projects/AddProject',
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    "ProjId": $("#ProjId").val(),
-                    "ProjName": $("#ProjName").val(),
-                    "Is_AI_ML": $("#Is_AI_ML").val(),
-                    "InitiatedDate": InitiatedDate,
-                    "CompletionDate": CompletionDate,
-                    "IsWhitelisted": $("#IsWhitelisted").val(),
-                    "Security_Classification": $("#Security_Classification").val(),
-                    "AsconNo": $("#AsconNo").val(),
-                    "InitialRemark": $("#InitialRemark").val(),
-                    "StakeHolderId": $("#ddlStakeHolderId").val(),
+//             $.ajax({
+//                 url: '/Projects/AddProject',
+//                 type: 'POST',
+//                 dataType: 'json',
+//                 data: {
+//                     "ProjId": $("#ProjId").val(),
+//                     "ProjName": $("#ProjName").val(),
+//                     "Is_AI_ML": $("#Is_AI_ML").val(),
+//                     "InitiatedDate": InitiatedDate,
+//                     "CompletionDate": CompletionDate,
+//                     "IsWhitelisted": $("#IsWhitelisted").val(),
+//                     "Security_Classification": $("#Security_Classification").val(),
+//                     "AsconNo": $("#AsconNo").val(),
+//                     "InitialRemark": $("#InitialRemark").val(),
+//                     "StakeHolderId": $("#ddlStakeHolderId").val(),
                    
-                    "HQandITinfraReqd": $("#HQandITinfraReqd").val(),
-                    "HostTypeID": $("#ddlHostTypeID").val(),
-                    "ContentofSWApp": $("#ContentofSWApp").val(),
-                    "ReqmtJustification": $("#ReqmtJustification").val(),
-                    "UsabilityofProposedAppln": $("#UsabilityofProposedAppln").val(),
-                    "Apptype": $("#ddlApptype").val(),
-                    "DetlsofUserBase": $("#DetlsofUserBase").val(),
-                    "EnvisagedCost": $("#EnvisagedCost").val(),
-                    "NWBandWidthReqmt": $("#NWBandWidthReqmt").val(),
-                    "MajTimeLines": $("#MajTimeLines").val(),
-                    "TechStackProposed": $("#TechStackProposed").val(),
-                    "DataSecurity_backup": $("#DataSecurity_backup").val(),
-                    "TypeofSW": $("#TypeofSW").val(),
-                    "BeingDevpInhouse": $("#BeingDevpInhouse").val(),
-                    "EndorsmentbyHeadof": $("#EndorsmentbyHeadof").val(),
-                    "CurrentPslmId": $("#CurrentPslmId").val(),
-                    "ProjCode": $("#ProjCode").val(),
-                    "Sponsor": $("#sponsorNameInput").val(),
+//                     "HQandITinfraReqd": $("#HQandITinfraReqd").val(),
+//                     "HostTypeID": $("#ddlHostTypeID").val(),
+//                     "ContentofSWApp": $("#ContentofSWApp").val(),
+//                     "ReqmtJustification": $("#ReqmtJustification").val(),
+//                     "UsabilityofProposedAppln": $("#UsabilityofProposedAppln").val(),
+//                     "Apptype": $("#ddlApptype").val(),
+//                     "DetlsofUserBase": $("#DetlsofUserBase").val(),
+//                     "EnvisagedCost": $("#EnvisagedCost").val(),
+//                     "NWBandWidthReqmt": $("#NWBandWidthReqmt").val(),
+//                     "MajTimeLines": $("#MajTimeLines").val(),
+//                     "TechStackProposed": $("#TechStackProposed").val(),
+//                     "DataSecurity_backup": $("#DataSecurity_backup").val(),
+//                     "TypeofSW": $("#TypeofSW").val(),
+//                     "BeingDevpInhouse": $("#BeingDevpInhouse").val(),
+//                     "EndorsmentbyHeadof": $("#EndorsmentbyHeadof").val(),
+//                     "CurrentPslmId": $("#CurrentPslmId").val(),
+//                     "ProjCode": $("#ProjCode").val(),
+//                     "Sponsor": $("#sponsorNameInput").val(),
 
-                    "Detlsof_OS": $("#Detlsof_OS").val(),
-                    "ProposedDB_Engine": $("#ProposedDB_Engine").val(),
-                    "DetlsofSw_Architecture": $("#DetlsofSw_Architecture").val(),
-                    "DetlsofProposed_Architecture": $("#DetlsofProposed_Architecture").val(),
-                    "DetlsPki_IAM": $("#DetlsPki_IAM").val(),
-                    "Technology_dependencies": $("#Technology_dependencies").val(),
-                    "Database_reqmts": $("#Database_reqmts").val(),
-                    "Enhancement_upgradation": $("#Enhancement_upgradation").val(),
-                    "Details_licensing": $("#Details_licensing").val(),
-                    "OldPsmid": parseInt($("#spanOldPslmId").html(), 10) || 0,
-                    "Date_type": $('input[name="mcalender_dates"]:checked').val(),
-                    "RequestRemarks": $("#RequestRemarks").val(),
-                    "MobileNo": $("#MobileNo").val(),
-                    "Devlopment_Language": $("#Devlopment_Language").val(),
-                    "operation_system_hosting_env": $("#operation_system_hosting_env").val(),
+//                     "Detlsof_OS": $("#Detlsof_OS").val(),
+//                     "ProposedDB_Engine": $("#ProposedDB_Engine").val(),
+//                     "DetlsofSw_Architecture": $("#DetlsofSw_Architecture").val(),
+//                     "DetlsofProposed_Architecture": $("#DetlsofProposed_Architecture").val(),
+//                     "DetlsPki_IAM": $("#DetlsPki_IAM").val(),
+//                     "Technology_dependencies": $("#Technology_dependencies").val(),
+//                     "Database_reqmts": $("#Database_reqmts").val(),
+//                     "Enhancement_upgradation": $("#Enhancement_upgradation").val(),
+//                     "Details_licensing": $("#Details_licensing").val(),
+//                     "OldPsmid": parseInt($("#spanOldPslmId").html(), 10) || 0,
+//                     "Date_type": $('input[name="mcalender_dates"]:checked').val(),
+//                     "RequestRemarks": $("#RequestRemarks").val(),
+//                     "MobileNo": $("#MobileNo").val(),
+//                     "Devlopment_Language": $("#Devlopment_Language").val(),
+//                     "operation_system_hosting_env": $("#operation_system_hosting_env").val(),
 
-                    "Additional_Ports": $("#Additional_Ports").val(),
-                    "Concurrent_users": $("#Concurrent_users").val(),
-                    "API_Initegration": $("#API_Initegration").val(),
-                    "Mission_Critical_appl_justif": $("#Mission_Critical_appl_justif").val(),
+//                     "Additional_Ports": $("#Additional_Ports").val(),
+//                     "Concurrent_users": $("#Concurrent_users").val(),
+//                     "API_Initegration": $("#API_Initegration").val(),
+//                     "Mission_Critical_appl_justif": $("#Mission_Critical_appl_justif").val(),
 
-                    "Aim": $("#Aim").val(),
-                    "Scope": $("#Scope").val(),
-                    "Puropose": $("#Puropose").val()
-                },
-                headers: {
-                    'RequestVerificationToken': token
-                },
-                success: function (result) {
+//                     "Aim": $("#Aim").val(),
+//                     "Scope": $("#Scope").val(),
+//                     "Puropose": $("#Puropose").val()
+//                 },
+//                 headers: {
+//                     'RequestVerificationToken': token
+//                 },
+//                 success: function (result) {
                    
-                    if (result === -2) {
-                        Swal.fire({
-                            title: "Success!",
-                            text: "User has been Updated!",
-                            icon: "success"
-                        });
-                        return;
-                    }
+//                     if (result === -2) {
+//                         Swal.fire({
+//                             title: "Success!",
+//                             text: "User has been Updated!",
+//                             icon: "success"
+//                         });
+//                         return;
+//                     }
 
-                    if (result === -3) {
-                        Swal.fire({
-                            title: "Error!",
-                            text: "Project Name Already Exists!",
-                            icon: "error"
-                        });
-                        return;
-                    }
+//                     if (result === -3) {
+//                         Swal.fire({
+//                             title: "Error!",
+//                             text: "Project Name Already Exists!",
+//                             icon: "error"
+//                         });
+//                         return;
+//                     }
 
-                    if (result === -4) {
-                        Swal.fire({
-                            title: "Error!",
-                            text: "Incorrect Data!",
-                            icon: "error"
-                        });
-                        return;
-                    }
+//                     if (result === -4) {
+//                         Swal.fire({
+//                             title: "Error!",
+//                             text: "Incorrect Data!",
+//                             icon: "error"
+//                         });
+//                         return;
+//                     }
 
-                    if (result === -5) {
-                        Swal.fire({
-                            title: "Error!",
-                            text: "Incorrect Selection. Click again on Edit!",
-                            icon: "error"
-                        });
-                        return;
-                    }
+//                     if (result === -5) {
+//                         Swal.fire({
+//                             title: "Error!",
+//                             text: "Incorrect Selection. Click again on Edit!",
+//                             icon: "error"
+//                         });
+//                         return;
+//                     }
 
-                    if (result && result.projId) {
+//                     if (result && result.projId) {
 
-                        const projid = result.projId;
+//                         const projid = result.projId;
 
-                        $("#spanProjectId").html(projid);
-                        $("#spanCurrentPslmId").html(result.currentPslmId || 0);
+//                         $("#spanProjectId").html(projid);
+//                         $("#spanCurrentPslmId").html(result.currentPslmId || 0);
 
-                        const creatid = "PROJECT ID : " + projid;
-                        $("#projectId").html(creatid);
+//                         const creatid = "PROJECT ID : " + projid;
+//                         $("#projectId").html(creatid);
 
-                        if (typeof AttechHistory === "function") {
-                            AttechHistory();
-                        }
+//                         if (typeof AttechHistory === "function") {
+//                             AttechHistory();
+//                         }
 
-                        const current_fs = $btn.closest("fieldset");
-                        const next_fs = current_fs.next("fieldset");
+//                         const current_fs = $btn.closest("fieldset");
+//                         const next_fs = current_fs.next("fieldset");
 
-                        if (next_fs.length === 0) {
-                            Swal.fire({
-                                title: "Success!",
-                                text: "Project saved successfully.",
-                                icon: "success"
-                            });
-                            return;
-                        }
+//                         if (next_fs.length === 0) {
+//                             Swal.fire({
+//                                 title: "Success!",
+//                                 text: "Project saved successfully.",
+//                                 icon: "success"
+//                             });
+//                             return;
+//                         }
 
-                        $("#progressbar li")
-                            .eq($("fieldset").index(next_fs))
-                            .addClass("active");
+//                         $("#progressbar li")
+//                             .eq($("fieldset").index(next_fs))
+//                             .addClass("active");
 
-                        next_fs.show();
+//                         next_fs.show();
 
-                        current_fs.animate(
-                            { opacity: 0 },
-                            {
-                                step: function (now) {
-                                    const opacity = 1 - now;
+//                         current_fs.animate(
+//                             { opacity: 0 },
+//                             {
+//                                 step: function (now) {
+//                                     const opacity = 1 - now;
 
-                                    current_fs.css({
-                                        'display': 'none',
-                                        'position': 'relative'
-                                    });
+//                                     current_fs.css({
+//                                         'display': 'none',
+//                                         'position': 'relative'
+//                                     });
 
-                                    next_fs.css({
-                                        'opacity': opacity
-                                    });
-                                },
-                                duration: 600
-                            }
-                        );
+//                                     next_fs.css({
+//                                         'opacity': opacity
+//                                     });
+//                                 },
+//                                 duration: 600
+//                             }
+//                         );
 
-                        return;
-                    }
+//                         return;
+//                     }
 
-                    Swal.fire({
-                        title: "Error!",
-                        text: "Unexpected response received from server.",
-                        icon: "error"
-                    });
-                },
-                error: function (xhr) {
+//                     Swal.fire({
+//                         title: "Error!",
+//                         text: "Unexpected response received from server.",
+//                         icon: "error"
+//                     });
+//                 },
+//                 error: function (xhr) {
 
-                    let message = "Something went wrong. Please try again.";
+//                     let message = "Something went wrong. Please try again.";
 
-                    // ✅ Handle ModelState validation errors from ASP.NET Core
-                    if (xhr.status === 400 && xhr.responseJSON) {
+//                     // ✅ Handle ModelState validation errors from ASP.NET Core
+//                     if (xhr.status === 400 && xhr.responseJSON) {
 
-                        if (xhr.responseJSON.errors) {
+//                         if (xhr.responseJSON.errors) {
 
-                            let validationMessages = [];
+//                             let validationMessages = [];
 
-                            $.each(xhr.responseJSON.errors, function (key, errors) {
-                                if (Array.isArray(errors)) {
-                                    errors.forEach(function (err) {
-                                        validationMessages.push(err);
-                                    });
-                                }
-                            });
+//                             $.each(xhr.responseJSON.errors, function (key, errors) {
+//                                 if (Array.isArray(errors)) {
+//                                     errors.forEach(function (err) {
+//                                         validationMessages.push(err);
+//                                     });
+//                                 }
+//                             });
 
-                            if (validationMessages.length > 0) {
-                                Swal.fire({
-                                    title: "Validation Error!",
-                                    html: validationMessages.join("<br>"),
-                                    icon: "error"
-                                });
-                                return;
-                            }
-                        }
+//                             if (validationMessages.length > 0) {
+//                                 Swal.fire({
+//                                     title: "Validation Error!",
+//                                     html: validationMessages.join("<br>"),
+//                                     icon: "error"
+//                                 });
+//                                 return;
+//                             }
+//                         }
 
-                        if (xhr.responseJSON.message) {
-                            message = xhr.responseJSON.message;
-                        } else {
-                            message = "Invalid submitted data. Please check required fields.";
-                        }
-                    }
-                    else if (xhr.status === 401) {
-                        message = "Session expired. Please login again.";
-                    }
-                    else if (xhr.status === 403) {
-                        message = "Request blocked. Please refresh the page and try again.";
-                    }
-                    else if (xhr.status === 404) {
-                        message = "Requested project was not found.";
-                    }
-                    else if (xhr.status === 500) {
-                        message = "Server error occurred. Please try again later.";
-                    }
+//                         if (xhr.responseJSON.message) {
+//                             message = xhr.responseJSON.message;
+//                         } else {
+//                             message = "Invalid submitted data. Please check required fields.";
+//                         }
+//                     }
+//                     else if (xhr.status === 401) {
+//                         message = "Session expired. Please login again.";
+//                     }
+//                     else if (xhr.status === 403) {
+//                         message = "Request blocked. Please refresh the page and try again.";
+//                     }
+//                     else if (xhr.status === 404) {
+//                         message = "Requested project was not found.";
+//                     }
+//                     else if (xhr.status === 500) {
+//                         message = "Server error occurred. Please try again later.";
+//                     }
 
-                    Swal.fire({
-                        title: "Error!",
-                        text: message,
-                        icon: "error"
-                    });
-                },
-                complete: function () {
-                    $btn.data("submitting", false);
-                    $btn.prop("disabled", false);
-                }
-            });
-        })
-        .catch(function (error) {
+//                     Swal.fire({
+//                         title: "Error!",
+//                         text: message,
+//                         icon: "error"
+//                     });
+//                 },
+//                 complete: function () {
+//                     $btn.data("submitting", false);
+//                     $btn.prop("disabled", false);
+//                 }
+//             });
+//         })
+//         .catch(function (error) {
 
-            console.error("fetchServerDate error:", error);
+//             console.error("fetchServerDate error:", error);
 
-            Swal.fire({
-                title: "Error!",
-                text: "Unable to fetch server date. Please try again.",
-                icon: "error"
-            });
+//             Swal.fire({
+//                 title: "Error!",
+//                 text: "Unable to fetch server date. Please try again.",
+//                 icon: "error"
+//             });
 
-            $btn.data("submitting", false);
-            $btn.prop("disabled", false);
-        });
-}
+//             $btn.data("submitting", false);
+//             $btn.prop("disabled", false);
+//         });
+// }
 function FwdProjConfirm(thisdata) {
    
     $.ajax({
@@ -1106,4 +1168,413 @@ $('#RequestRemarks').on('input', function () {
         errorMsg.addClass('d-none');
         $(this).removeClass('is-invalid');
     }
+});
+
+
+// On Save button click
+$('#submitUpload').on('click', function() {
+
+    if (validateBeforeSave()) {
+        AddProject(this);
+    }
+
+});
+// Character Limit + Required Field Validation
+function validateBeforeSave() {
+
+    let lengtherr = true;
+    let allFieldsComplete = true;
+
+    // 1. Character Limit Validation
+    $('.char-limit:visible').each(function() {
+        let inputField = $(this);
+        let maxLength = parseInt(inputField.data('maxlength')) || 0;
+        let errorMsg = inputField.closest('.input-container').find('.charErrorMsg');
+        let value = inputField.val() || "";
+
+        if (maxLength > 0 && value.length > maxLength) {
+            errorMsg.removeClass('d-none');
+            lengtherr = false;
+        } else {
+            errorMsg.addClass('d-none');
+        }
+    });
+
+    // 2. Required Field Validation (only visible + enabled fields)
+    $('.requiredField:visible').each(function() {
+        let inputField = $(this);
+
+        // Skip disabled fields
+        if (inputField.prop('disabled')) {
+            return;
+        }
+
+        let value = $.trim(inputField.val() || "");
+
+        let isEmpty = false;
+
+        if (inputField.is('select')) {
+            isEmpty = (value === "" || value === "0" || value === null);
+        } else {
+            isEmpty = (value === "");
+        }
+
+        if (isEmpty) {
+            inputField.addClass('is-invalid');
+            allFieldsComplete = false;
+        } else {
+            inputField.removeClass('is-invalid');
+        }
+    });
+
+    // Show errors
+    if (!lengtherr) {
+        Swal.fire({
+            title: 'Error!',
+            text: 'Please check the character length of the fields.',
+            icon: 'error',
+            showConfirmButton: true
+        });
+        return false;
+    }
+
+    if (!allFieldsComplete) {
+        Swal.fire({
+            title: 'Error!',
+            text: 'Please complete all required fields.',
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 1500
+        });
+        return false;
+    }
+
+    return true; // Everything is valid
+}
+function AddProject(thistag) {
+
+    const $btn = $(thistag);
+
+    // Prevent double click
+    if ($btn.data("submitting") === true) {
+        return;
+    }
+
+    $btn.data("submitting", true);
+    $btn.prop("disabled", true);
+
+    fetchServerDate()
+        .then(function(S) {
+
+            const token = $('input[name="__RequestVerificationToken"]').val();
+
+            if (!token) {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Security token missing. Please refresh the page and try again.",
+                    icon: "error"
+                });
+                resetButton($btn);
+                return;
+            }
+            // ====================== NORMAL FORM ======================
+            const initialDate = $.trim($('#InitiatedDate').val());
+            const completionDate = $.trim($('#CompletionDate').val());
+
+            if (!initialDate) {
+                Swal.fire({ title: "Error!", text: "Please select Initiated Date.", icon: "error" });
+                resetButton($btn);
+                return;
+            }
+
+            if (!completionDate) {
+                Swal.fire({ title: "Error!", text: "Please select Completion Date.", icon: "error" });
+                resetButton($btn);
+                return;
+            }
+
+            if (!S || !S.todayDateTime) {
+                Swal.fire({ title: "Error!", text: "Unable to fetch server date. Please try again.", icon: "error" });
+                resetButton($btn);
+                return;
+            }
+
+            const currentDate = new Date(S.todayDateTime);
+
+            if (isNaN(currentDate.getTime())) {
+                Swal.fire({ title: "Error!", text: "Invalid server date received. Please try again.", icon: "error" });
+                resetButton($btn);
+                return;
+            }
+
+            const currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false });
+            const InitiatedDate = initialDate + ' ' + currentTime;
+            const CompletionDate = completionDate + ' ' + currentTime;
+
+            if (InitiatedDate > CompletionDate) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    text: 'Completion Date must be greater than Initiation Date',
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: 'OK'
+                });
+                resetButton($btn);
+                return;
+            }
+
+
+            // Get currently selected ProposalId
+            var proposalId = $(".ProposalId:visible").val();
+         
+            // ====================== SPECIAL FORM (Proposal 7 or 8) ======================
+            if (proposalId == "7" || proposalId == "8") {
+            
+                var data = {
+                    "ProposalId": proposalId,
+                    "ProjName": $("#agendaCotsFieldSet").find(".ProjName").val() || $("#agendaCotsFieldSet").find("[name='ProjName']").val(),
+                    "Background": $("#agendaCotsFieldSet").find("[name='Background']").val(),
+                    "DecisionSoughtWayForward": $("#agendaCotsFieldSet").find("[name='DecisionSoughtWayForward']").val(),
+                    "MobileNo": $("#agendaCotsFieldSet").find(".MobileNo").val(),
+                    "AsconNo": $("#agendaCotsFieldSet").find(".AsconNo").val(),
+                    "InitialRemark": $("#agendaCotsFieldSet").find("[name='InitialRemark']").val(),
+                    "ProjId": $("#ProjId").val() || 0,
+                    "Proposal_for_title": $("#agendaCotsFieldSet").find("[name='Proposal_for_title']").val(),
+                    "Sponsor": $("#sponsorNameInput").val(),
+                    "CurrentPslmId": $("#CurrentPslmId").val(),
+                    "InitiatedDate": InitiatedDate,
+                    "CompletionDate": CompletionDate,
+                };
+               
+                submitProject(data, token, $btn);
+                return;
+            }
+
+            
+            var data = {
+                "ProjId": $("#ProjId").val(),
+                "ProjName": $("#normalProjectFieldSet").find("[name='ProjName']").val(),
+                "Is_AI_ML": $("#Is_AI_ML").val(),
+                "InitiatedDate": InitiatedDate,
+                "CompletionDate": CompletionDate,
+                "IsWhitelisted": $("#IsWhitelisted").val(),
+                "Security_Classification": $("#Security_Classification").val(),
+                "AsconNo": $("#normalProjectFieldSet").find(".AsconNo").val(),
+                "InitialRemark": $("#normalProjectFieldSet").find("[name='InitialRemark']").val(),
+                "StakeHolderId": $("#ddlStakeHolderId").val(),
+                "HQandITinfraReqd": $("#HQandITinfraReqd").val(),
+                "HostTypeID": $("#ddlHostTypeID").val(),
+                "ContentofSWApp": $("#ContentofSWApp").val(),
+                "ReqmtJustification": $("#ReqmtJustification").val(),
+                "UsabilityofProposedAppln": $("#UsabilityofProposedAppln").val(),
+                "Apptype": $("#ddlApptype").val(),
+                "DetlsofUserBase": $("#DetlsofUserBase").val(),
+                "EnvisagedCost": $("#EnvisagedCost").val(),
+                "NWBandWidthReqmt": $("#NWBandWidthReqmt").val(),
+                "MajTimeLines": $("#MajTimeLines").val(),
+                "TechStackProposed": $("#TechStackProposed").val(),
+                "DataSecurity_backup": $("#DataSecurity_backup").val(),
+                "TypeofSW": $("#TypeofSW").val(),
+                "BeingDevpInhouse": $("#BeingDevpInhouse").val(),
+                "EndorsmentbyHeadof": $("#EndorsmentbyHeadof").val(),
+                "CurrentPslmId": $("#CurrentPslmId").val(),
+                "ProjCode": $("#ProjCode").val(),
+                "Sponsor": $("#sponsorNameInput").val(),
+                "Detlsof_OS": $("#Detlsof_OS").val(),
+                "ProposedDB_Engine": $("#ProposedDB_Engine").val(),
+                "DetlsofSw_Architecture": $("#DetlsofSw_Architecture").val(),
+                "DetlsofProposed_Architecture": $("#DetlsofProposed_Architecture").val(),
+                "DetlsPki_IAM": $("#DetlsPki_IAM").val(),
+                "Technology_dependencies": $("#Technology_dependencies").val(),
+                "Database_reqmts": $("#Database_reqmts").val(),
+                "Enhancement_upgradation": $("#Enhancement_upgradation").val(),
+                "Details_licensing": $("#Details_licensing").val(),
+                "OldPsmid": parseInt($("#spanOldPslmId").html(), 10) || 0,
+                "Date_type": $('input[name="mcalender_dates"]:checked').val(),
+                "RequestRemarks": $("#RequestRemarks").val(),
+                "MobileNo": $("#normalProjectFieldSet").find(".MobileNo").val(),
+                "Devlopment_Language": $("#Devlopment_Language").val(),
+                "operation_system_hosting_env": $("#operation_system_hosting_env").val(),
+                "Additional_Ports": $("#Additional_Ports").val(),
+                "Concurrent_users": $("#Concurrent_users").val(),
+                "API_Initegration": $("#API_Initegration").val(),
+                "Mission_Critical_appl_justif": $("#Mission_Critical_appl_justif").val(),
+                "Aim": $("#Aim").val(),
+                "Scope": $("#Scope").val(),
+                "Puropose": $("#Puropose").val(),
+                "ProposalId": proposalId
+            };
+
+            submitProject(data, token, $btn);
+        })
+        .catch(function(error) {
+            console.error("fetchServerDate error:", error);
+            Swal.fire({
+                title: "Error!",
+                text: "Unable to fetch server date. Please try again.",
+                icon: "error"
+            });
+            resetButton($btn);
+        });
+}
+
+// Helper function
+function submitProject(data, token, $btn) {
+    $.ajax({
+        url: '/Projects/AddProject',
+        type: 'POST',
+        dataType: 'json',
+        data: data,
+        headers: {
+            'RequestVerificationToken': token
+        },
+        success: function(result) {
+            // Keep your existing success logic here
+            if (result === -2) {
+                Swal.fire({ title: "Success!", text: "User has been Updated!", icon: "success" });
+                return;
+            }
+            if (result === -3) {
+                Swal.fire({ title: "Error!", text: "Project Name Already Exists!", icon: "error" });
+                return;
+            }
+            if (result === -4) {
+                Swal.fire({ title: "Error!", text: "Incorrect Data!", icon: "error" });
+                return;
+            }
+            if (result === -5) {
+                Swal.fire({ title: "Error!", text: "Incorrect Selection. Click again on Edit!", icon: "error" });
+                return;
+            }
+            if (result && result.projId) {
+                const projid = result.projId;
+                $("#spanProjectId").html(projid);
+                $("#spanCurrentPslmId").html(result.currentPslmId || 0);
+                const creatid = "PROJECT ID : " + projid;
+                $("#projectId").html(creatid);
+
+                if (typeof AttechHistory === "function") {
+                    AttechHistory();
+                }
+
+                const current_fs = $btn.closest("fieldset");
+                const next_fs = current_fs.next("fieldset");
+
+                if (next_fs.length === 0) {
+                    Swal.fire({ title: "Success!", text: "Project saved successfully.", icon: "success" });
+                    return;
+                }
+
+                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                next_fs.show();
+
+                current_fs.animate({ opacity: 0 }, {
+                    step: function(now) {
+                        const opacity = 1 - now;
+                        current_fs.css({ 'display': 'none', 'position': 'relative' });
+                        next_fs.css({ 'opacity': opacity });
+                    },
+                    duration: 600
+                });
+                return;
+            }
+
+            Swal.fire({ title: "Error!", text: "Unexpected response received from server.", icon: "error" });
+        },
+        error: function(xhr) {
+            let message = "Something went wrong. Please try again.";
+
+            if (xhr.status === 400 && xhr.responseJSON) {
+                if (xhr.responseJSON.errors) {
+                    let validationMessages = [];
+                    $.each(xhr.responseJSON.errors, function(key, errors) {
+                        if (Array.isArray(errors)) {
+                            errors.forEach(function(err) {
+                                validationMessages.push(err);
+                            });
+                        }
+                    });
+                    if (validationMessages.length > 0) {
+                        Swal.fire({ title: "Validation Error!", html: validationMessages.join("<br>"), icon: "error" });
+                        return;
+                    }
+                }
+                message = xhr.responseJSON.message || "Invalid submitted data. Please check required fields.";
+            }
+            else if (xhr.status === 401) message = "Session expired. Please login again.";
+            else if (xhr.status === 403) message = "Request blocked. Please refresh the page and try again.";
+            else if (xhr.status === 404) message = "Requested project was not found.";
+            else if (xhr.status === 500) message = "Server error occurred. Please try again later.";
+
+            Swal.fire({ title: "Error!", text: message, icon: "error" });
+        },
+        complete: function() {
+            resetButton($btn);
+        }
+    });
+}
+
+function resetButton($btn) {
+    $btn.data("submitting", false);
+    $btn.prop("disabled", false);
+}
+
+   
+
+    // Update whenever the dropdown changes
+    $("#Is_AI_ML").on("change", function() {
+        debugger;
+        updateButtonText();
+    });
+
+
+
+function updateButtonText() {
+    debugger;
+    var isAIML = $("#Is_AI_ML").val();
+
+    if (isAIML === "true") {
+        $("#finalupload").val("Submit to HQ DGIS");
+    } else {
+        $("#finalupload").val("Submit to DDGIT");
+    }
+}
+
+
+$(document).ready(function() {
+
+    // ========== Function to toggle forms ==========
+    function toggleProjectForms() {
+        var selectedStatus = $(".ProposalId:visible").val() || $(".ProposalId").first().val();
+
+        if (selectedStatus == "7" || selectedStatus == "8") {
+            // Show Special Form
+            $("#normalProjectFieldSet").addClass("d-none");
+            $("#normalProjectFieldSet").find("input, select, textarea").prop("disabled", true);
+
+            $("#agendaCotsFieldSet").removeClass("d-none");
+            $("#agendaCotsFieldSet").find("input, select, textarea").prop("disabled", false);
+        } else {
+            // Show Normal Form
+            $("#agendaCotsFieldSet").addClass("d-none");
+            $("#agendaCotsFieldSet").find("input, select, textarea").prop("disabled", true);
+
+            $("#normalProjectFieldSet").removeClass("d-none");
+            $("#normalProjectFieldSet").find("input, select, textarea").prop("disabled", false);
+        }
+    }
+
+    // ========== On page load (Edit mode) ==========
+    // This will automatically hide/show correct fields when Edit is clicked
+    setTimeout(function() {
+        toggleProjectForms();
+    }, 300);
+
+    // ========== On Proposal Type change ==========
+    $(document).on("change", ".ProposalId", function() {
+        var val = $(this).val();
+        $(".ProposalId").val(val);   // keep both dropdowns in sync
+        toggleProjectForms();
+    });
+
 });

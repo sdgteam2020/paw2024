@@ -13,6 +13,8 @@
 @{
     int projIdFromViewBag = Convert.ToInt32(ViewBag.Projid);
     Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor?.HttpContext?.Session, "User");
+    var project = Model.FirstOrDefault()?.ProjectDetl?[1];
+    var isSpecialForm = project?.ProposalId == 7 || project?.ProposalId == 8;
 }
 
 
@@ -40,175 +42,180 @@
         </div>
     </div>
     <div class="col-12 col-lg-12 col-xl-4 d-flex">
-
-
-        <div class="card-border cursor-box  help card radius-10 w-100">
-            <div class=" card-body">
+        <div class="card-border cursor-box help card radius-10 w-100">
+            <div class="card-body">
                 <div class="mb-3 header-container text-center text-white">
                     Proj Details
-
                 </div>
+
                 <div class="table-responsive">
-                    <table>
+                    <table class="table table-borderless mb-0">
+
                         <tr>
                             <td class="new-proj-table">Project Id</td>
-                            <td class="long-text">@Model[0].ProjectDetl[1].ProjId</td>
-
+                            <td class="long-text">@(project?.ProjId ?? 0)</td>
                         </tr>
-
 
                         <tr>
                             <td class="new-proj-table">Proj Name</td>
-
                             <td id="projectNameCell" class="long-text">
-                                <span id="spnprojname">@Model.FirstOrDefault()?.ProjName</span>
-                                <span id="spniswhite" class="d-none">@Model.FirstOrDefault()?.ProjectDetl[1].IsWhitelisted</span>
-                                <span class="ProjectcommentprojId d-none">
-                                    @Model.FirstOrDefault()?.ProjId
-                                </span>
+                                <span id="spnprojname">@(Model.FirstOrDefault()?.ProjName ?? "N/A")</span>
+                                <span id="spniswhite" class="d-none">@(project?.IsWhitelisted ?? "N/A")</span>
+                                <span class="ProjectcommentprojId d-none">@(Model.FirstOrDefault()?.ProjId ?? 0)</span>
                             </td>
-
                         </tr>
 
                         <tr>
-                            <td class="new-proj-table">Name of Sponsor</td>
-                            <td>@Model.FirstOrDefault()?.InitiatedBy</td>
-
-
+                            <td class="new-proj-table">Proposal Type</td>
+                            <td>@(project?.Proposal?.ProposalType ?? "N/A")</td>
                         </tr>
-                        <tr>
-                            <td class="new-proj-table">Mobile No</td>
-                            <td>@Model[0].ProjectDetl[1].MobileNo</td>
 
-                        </tr>
-                        <tr>
-                            <td class="new-proj-table">Ascon No</td>
-                            <td>@Model[0].ProjectDetl[1].AsconNo</td>
-
-                        </tr>
+                        @if (isSpecialForm)
+                        {
+                            <!-- Special Form Fields (Proposal 7 & 8) -->
+                            <tr>
+                                <td class="new-proj-table">Background</td>
+                                <td class="long-text">@(project?.Background ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <td class="new-proj-table">Decision Sought / Way Forward</td>
+                                <td class="long-text">@(project?.DecisionSoughtWayForward ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <td class="new-proj-table">Remarks</td>
+                                <td class="long-text">@(project?.InitialRemark ?? "N/A")</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <!-- Normal Form Fields -->
+                            <tr>
+                                <td class="new-proj-table">Aim</td>
+                                <td class="long-text">@(project?.Aim ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <td class="new-proj-table">Scope</td>
+                                <td class="long-text">@(project?.Scope ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <td class="new-proj-table">Is AI/ML Proj?</td>
+                                <td>@(project?.Is_AI_ML == true ? "Yes" : "No")</td>
+                            </tr>
+                            <tr>
+                                <td class="new-proj-table">Name of Sponsor</td>
+                                <td>@(Model.FirstOrDefault()?.InitiatedBy ?? "N/A")</td>
+                            </tr>
+                        }
 
                     </table>
-
                 </div>
             </div>
         </div>
-
     </div>
 
 
-    <!--Sponsor Details-->
-    <div class="col-12 col-lg-12 col-xl-4 d-flex">
+    <!-- ====================== TECH DETAILS ====================== -->
+    @if (!isSpecialForm)
+    {
+        <div class="col-12 col-lg-12 col-xl-4 d-flex">
+            <div class="card-border cursor-box help card radius-10 w-100">
+                <div class="card-body">
+                    <div class="mb-3 header-container text-center text-white">
+                        Tech Details
+                    </div>
 
-        <div class="card-border cursor-box  help card radius-10 w-100">
+                    <div class="table-responsive">
+                        <table class="table table-borderless mb-0">
+                            <tr>
+                                <td class="new-proj-table">Proposed Tech Stack</td>
+                                <td class="tooltip-container">
+                                    <span class="short-text">@truncateText(project?.TechStackProposed ?? "N/A", 6)</span>
+                                    <span class="tooltip tooltip-text">@(project?.TechStackProposed ?? "N/A")</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="new-proj-table">Type of Software</td>
+                                <td>@(project?.TypeofSW ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <td class="new-proj-table">NW Bandwidth Reqmt</td>
+                                <td>@(project?.NWBandWidthReqmt ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <td class="new-proj-table">Deployment Type</td>
+                                <td>@(Model[0].AppDesc ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <td class="new-proj-table">Being Devp In House?</td>
+                                <td>@(project?.BeingDevpInhouse ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <td class="new-proj-table">Hosted On</td>
+                                <td>@(Model[0].HostedOn ?? "N/A")</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+    <!-- ====================== OTHER DETAILS ====================== -->
+    <div class="col-12 col-lg-12 col-xl-4 d-flex">
+        <div class="card-border cursor-box help card radius-10 w-100">
             <div class="card-body">
-
-                <div class=" mb-3 header-container text-center text-white">
-                    Tech Details
-                </div>
-                <div class="table-responsive">
-                    <table>
-                        <tr>
-                            <td class="new-proj-table">Tech Stack</td>
-
-
-
-                            <td class="tooltip-container">
-                                <span class="short-text">@truncateText(Model[0].ProjectDetl[1].TechStackProposed, 6)</span>
-                                <span class="tooltip tooltip-text">@Model[0].ProjectDetl[1].TechStackProposed</span>
-                            </td>
-
-                        </tr>
-
-                        @*  <tr>
-                            <td class="new-proj-table">Usage</td>
-
-                            <td class="tooltip-container">
-                                <span class="short-text">@truncateText(Model[0].ProjectDetl[1].UsabilityofProposedAppln, 6)</span>
-                                <span class="tooltip tooltip-text">@Model[0].ProjectDetl[1].UsabilityofProposedAppln</span>
-                            </td>
-
-						</tr> *@
-                        <tr>
-                            <td class="new-proj-table">Type of SW</td>
-                            <td>@Model[0].ProjectDetl[1].TypeofSW</td>
-                        </tr>
-                        @* <tr>
-                            <td class="new-proj-table">Bandwidth</td>
-                            <td>@Model[0].ProjectDetl[1].NWBandWidthReqmt</td>
-
-                        </tr> *@
-                        <tr>
-                            <td class="new-proj-table">Hosted On</td>
-                            <td>@Model[0].HostedOn</td> 
-
-                        </tr>
-
-                        <tr>
-                            <td class="new-proj-table">Likely Cost(Rs)</td>
-                            <td>@Model[0].ProjectDetl[1].EnvisagedCost</td>
-
-                        </tr>
-
-                        <tr>
-                            <td class="new-proj-table">Dply Type</td>
-                            <td>@Model[0].AppDesc</td>
-
-                        </tr>
-
-
-
-
-
-                    </table>
-
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-
-    <div class="col-12 col-lg-12 col-xl-4 d-flex">
-
-
-        <div class="card-border cursor-box  help card radius-10 w-100">
-            <div class=" card-body">
                 <div class="mb-3 header-container text-center text-white">
                     Other Details
-
                 </div>
+
                 <div class="table-responsive">
-                    <table>
-                        <tr>
-                            <td class="new-proj-table">Aim & Scope</td>
-                            <td class="long-text">@Model[0].ProjectDetl[1].Aim</td>
+                    <table class="table table-borderless mb-0">
 
-                        </tr>
-                        <tr>
-                            <td class="new-proj-table"></td>
-                            <td class="long-text"></td>
-
-                        </tr>
-                        <tr>
-                            <td class="new-proj-table">Devp</td>
-                            <td>@Model[0].ProjectDetl[1].BeingDevpInhouse</td>
-
-                        </tr>
-                        <tr>
-                            <td class="new-proj-table">Security Classification</td>
-                            <td class="long-text">@Model[0].ProjectDetl[1].Security_Classification</td>
-
-                        </tr>
-
-                       
-
+                        @if (isSpecialForm)
+                        {
+                            <!-- Only show relevant fields for Proposal 7 & 8 -->
+                            <tr>
+                                <td class="new-proj-table">Civil Tele</td>
+                                <td>@(project?.MobileNo?.ToString() ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <td class="new-proj-table">Tele Mil</td>
+                                <td>@(project?.AsconNo?.ToString() ?? "N/A")</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <!-- Normal Form Fields -->
+                            <tr>
+                                <td class="new-proj-table">Envisaged Cost (Rs)</td>
+                                <td class="long-text">@(project?.EnvisagedCost ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <td class="new-proj-table">Major Timeline</td>
+                                <td class="long-text">@(project?.MajTimeLines ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <td class="new-proj-table">Civil Tele</td>
+                                <td>@(project?.MobileNo?.ToString() ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <td class="new-proj-table">Tele Mil</td>
+                                <td>@(project?.AsconNo?.ToString() ?? "N/A")</td>
+                            </tr>
+                            <tr>
+                                <td class="new-proj-table">Usability of Proposed Appln</td>
+                                <td class="tooltip-container long-text">
+                                    <span class="short-text">@truncateText(project?.UsabilityofProposedAppln ?? "N/A", 6)</span>
+                                    <span class="tooltip tooltip-text">@(project?.UsabilityofProposedAppln ?? "N/A")</span>
+                                </td>
+                            </tr>
+                        }
 
                     </table>
-
                 </div>
             </div>
         </div>
-
     </div>
 
 
@@ -263,7 +270,7 @@
                 <div class="content">
                     <div class="col-4">
                         <div id="checklist" class="ph-section-title">
-                            @Model.FirstOrDefault()?.ProjName : CHECKLIST
+                            @(Model.FirstOrDefault()?.ProjName ?? "Project") : CHECKLIST
                         </div>
 
                         <table id="htmlTopdf" class="ph-pdf-table">
@@ -274,8 +281,9 @@
                                     <th class="ph-pdf-th">Description</th>
                                 </tr>
                             </thead>
-
                             <tbody>
+
+                                <!-- Common Fields (always show) -->
                                 <tr class="ph-pdf-tr">
                                     <td class="ph-pdf-td-center-5">1.</td>
                                     <td class="ph-pdf-td-left-30">Proj Name</td>
@@ -287,167 +295,213 @@
                                 <tr class="ph-pdf-tr">
                                     <td class="ph-pdf-td-center-5">2.</td>
                                     <td class="ph-pdf-td-left-30">Name of Sponsor</td>
-                                    <td class="ph-pdf-td-left Sponsoroftheproject">@Model.FirstOrDefault()?.InitiatedBy</td>
-                                </tr>
-
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">3.</td>
-                                    <td class="ph-pdf-td-left-30">Typeof SW (Bespoke/COTS/Customised)</td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].TypeofSW</td>
-                                </tr>
-
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">4.</td>
-                                    <td class="ph-pdf-td-left-30">Brief justification on reqmt for devp of SW appl:</td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].ReqmtJustification</td>
-                                </tr>
-
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">5.</td>
-                                    <td class="ph-pdf-td-left-30">Aim & Scope (Purpose incl utility,beneficiaries and tgt users):</td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].Aim</td>
-                                </tr>
-
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">6.</td>
-                                    <td class="ph-pdf-td-left-30">
-                                        To be hosted on Internet/ADN with brief Desc:
-                                    </td>
-                                    <td class="ph-pdf-td-left">@Model[0].HostedOn</td>
-                                </tr>
-
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">7.</td>
-                                    <td class="ph-pdf-td-left-30">Being devp in house or through IT funds</td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].BeingDevpInhouse</td>
-                                </tr>
-
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">8.</td>
-                                    <td class="ph-pdf-td-left-30">
-                                        Usability of proposed appl by other arms/service/org/ est
-                                    </td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].UsabilityofProposedAppln</td>
-                                </tr>
-
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">9.</td>
-                                    <td class="ph-pdf-td-left-30">HW and IT infrastructure reqd :</td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].HQandITinfraReqd</td>
-                                </tr>
-
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">10.</td>
-                                    <td class="ph-pdf-td-left-30">Brief details of content of the proposed SW appl:</td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].ContentofSWApp</td>
-                                </tr>
-
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-subheading" colspan="3">
-                                        Addl Details (Optional in Pre Apvl Stg: Mandatory in Post Apvl Stg)
+                                    <td class="ph-pdf-td-left Sponsoroftheproject">
+                                        @(Model.FirstOrDefault()?.InitiatedBy ?? "N/A")
                                     </td>
                                 </tr>
 
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">13.</td>
-                                    <td class="ph-pdf-td-left-30">
-                                        Envisage cost of entire proj incl license fees and maint ;
-                                    </td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].EnvisagedCost</td>
-                                </tr>
+                                @if (isSpecialForm)
+                                {
+                                    <!-- ====================== SPECIAL FORM (Proposal 7 & 8) ====================== -->
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">3.</td>
+                                        <td class="ph-pdf-td-left-30">Proposal Type</td>
+                                        <td class="ph-pdf-td-left">
+                                            @(project?.Proposal?.ProposalType ?? "N/A")
+                                        </td>
+                                    </tr>
 
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">14.</td>
-                                    <td class="ph-pdf-td-left-30">Project dt of completion incl maj timelines :</td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].MajTimeLines</td>
-                                </tr>
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">4.</td>
+                                        <td class="ph-pdf-td-left-30">Background</td>
+                                        <td class="ph-pdf-td-left">
+                                            @(project?.Background ?? "N/A")
+                                        </td>
+                                    </tr>
 
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">15.</td>
-                                    <td class="ph-pdf-td-left-30">
-                                        Brief details of SW platform and tech stack proposed for devp of appl incl op sys dependencies (if any):
-                                    </td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].TechStackProposed</td>
-                                </tr>
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">5.</td>
+                                        <td class="ph-pdf-td-left-30">Decision Sought / Way Forward</td>
+                                        <td class="ph-pdf-td-left">
+                                            @(project?.DecisionSoughtWayForward ?? "N/A")
+                                        </td>
+                                    </tr>
 
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">16.</td>
-                                    <td class="ph-pdf-td-left-30">Brief details of proposed network and bandwidth reqmts;</td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].NWBandWidthReqmt</td>
-                                </tr>
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">6.</td>
+                                        <td class="ph-pdf-td-left-30">Remarks</td>
+                                        <td class="ph-pdf-td-left">
+                                            @(project?.InitialRemark ?? "N/A")
+                                        </td>
+                                    </tr>
 
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">17.</td>
-                                    <td class="ph-pdf-td-left-30">Brief details of OS & Sys software reqmts :</td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].Detlsof_OS</td>
-                                </tr>
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">7.</td>
+                                        <td class="ph-pdf-td-left-30">Civil Tele</td>
+                                        <td class="ph-pdf-td-left">
+                                            @(project?.MobileNo?.ToString() ?? "N/A")
+                                        </td>
+                                    </tr>
 
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">18.</td>
-                                    <td class="ph-pdf-td-left-30">
-                                        Brief details of proposed data security measures incl backup of data
-                                    </td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].DataSecurity_backup</td>
-                                </tr>
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">8.</td>
+                                        <td class="ph-pdf-td-left-30">Tele Mil (Ascon No)</td>
+                                        <td class="ph-pdf-td-left">
+                                            @(project?.AsconNo?.ToString() ?? "N/A")
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <!-- ====================== NORMAL FORM ====================== -->
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">3.</td>
+                                        <td class="ph-pdf-td-left-30">Typeof SW (Bespoke/COTS/Customised)</td>
+                                        <td class="ph-pdf-td-left">@(project?.TypeofSW ?? "N/A")</td>
+                                    </tr>
 
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">19.</td>
-                                    <td class="ph-pdf-td-left-30">Brief details of proposed DB Engine to be Used in the Appl.</td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].ProposedDB_Engine</td>
-                                </tr>
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">4.</td>
+                                        <td class="ph-pdf-td-left-30">Brief justification on reqmt for devp of SW appl:</td>
+                                        <td class="ph-pdf-td-left">@(project?.ReqmtJustification ?? "N/A")</td>
+                                    </tr>
 
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">20.</td>
-                                    <td class="ph-pdf-td-left-30">Detls of Sw Architecture and COTS Sw proposed to be utilised</td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].DetlsofSw_Architecture</td>
-                                </tr>
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">5.</td>
+                                        <td class="ph-pdf-td-left-30">Aim & Scope (Purpose incl utility,beneficiaries and tgt users):</td>
+                                        <td class="ph-pdf-td-left">@(project?.Aim ?? "N/A")</td>
+                                    </tr>
 
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">21.</td>
-                                    <td class="ph-pdf-td-left-30">Detls of proposed architecture</td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].DetlsofProposed_Architecture</td>
-                                </tr>
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">6.</td>
+                                        <td class="ph-pdf-td-left-30">To be hosted on Internet/ADN with brief Desc:</td>
+                                        <td class="ph-pdf-td-left">@(Model[0].HostedOn ?? "N/A")</td>
+                                    </tr>
 
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">22.</td>
-                                    <td class="ph-pdf-td-left-30">
-                                        Brief details of proposed utilisation of Public Key Infra(PKI) and Iden and Access Mgt(IAM)
-                                    </td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].DetlsPki_IAM</td>
-                                </tr>
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">7.</td>
+                                        <td class="ph-pdf-td-left-30">Being devp in house or through IT funds</td>
+                                        <td class="ph-pdf-td-left">@(project?.BeingDevpInhouse ?? "N/A")</td>
+                                    </tr>
 
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">23.</td>
-                                    <td class="ph-pdf-td-left-30">Technology dependencies(if any)</td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].Technology_dependencies</td>
-                                </tr>
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">8.</td>
+                                        <td class="ph-pdf-td-left-30">Usability of proposed appl by other arms/service/org/ est</td>
+                                        <td class="ph-pdf-td-left">@(project?.UsabilityofProposedAppln ?? "N/A")</td>
+                                    </tr>
 
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">24.</td>
-                                    <td class="ph-pdf-td-left-30">Database reqmts</td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].Database_reqmts</td>
-                                </tr>
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">9.</td>
+                                        <td class="ph-pdf-td-left-30">HW and IT infrastructure reqd :</td>
+                                        <td class="ph-pdf-td-left">@(project?.HQandITinfraReqd ?? "N/A")</td>
+                                    </tr>
 
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">25.</td>
-                                    <td class="ph-pdf-td-left-30">Enhancement/upgradation(incl patch mgt/Sw updt procedure and mechanism)</td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].Enhancement_upgradation</td>
-                                </tr>
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">10.</td>
+                                        <td class="ph-pdf-td-left-30">Brief details of content of the proposed SW appl:</td>
+                                        <td class="ph-pdf-td-left">@(project?.ContentofSWApp ?? "N/A")</td>
+                                    </tr>
 
-                                <tr class="ph-pdf-tr">
-                                    <td class="ph-pdf-td-center-5">26.</td>
-                                    <td class="ph-pdf-td-left-30">Details of licensing(if any)</td>
-                                    <td class="ph-pdf-td-left">@Model[0].ProjectDetl[1].Details_licensing</td>
-                                </tr>
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-subheading" colspan="3">
+                                            Addl Details (Optional in Pre Apvl Stg: Mandatory in Post Apvl Stg)
+                                        </td>
+                                    </tr>
+
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">13.</td>
+                                        <td class="ph-pdf-td-left-30">Envisage cost of entire proj incl license fees and maint ;</td>
+                                        <td class="ph-pdf-td-left">@(project?.EnvisagedCost ?? "N/A")</td>
+                                    </tr>
+
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">14.</td>
+                                        <td class="ph-pdf-td-left-30">Project dt of completion incl maj timelines :</td>
+                                        <td class="ph-pdf-td-left">@(project?.MajTimeLines ?? "N/A")</td>
+                                    </tr>
+
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">15.</td>
+                                        <td class="ph-pdf-td-left-30">Brief details of SW platform and tech stack proposed for devp of appl incl op sys dependencies (if any):</td>
+                                        <td class="ph-pdf-td-left">@(project?.TechStackProposed ?? "N/A")</td>
+                                    </tr>
+
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">16.</td>
+                                        <td class="ph-pdf-td-left-30">Brief details of proposed network and bandwidth reqmts;</td>
+                                        <td class="ph-pdf-td-left">@(project?.NWBandWidthReqmt ?? "N/A")</td>
+                                    </tr>
+
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">17.</td>
+                                        <td class="ph-pdf-td-left-30">Brief details of OS & Sys software reqmts :</td>
+                                        <td class="ph-pdf-td-left">@(project?.Detlsof_OS ?? "N/A")</td>
+                                    </tr>
+
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">18.</td>
+                                        <td class="ph-pdf-td-left-30">Brief details of proposed data security measures incl backup of data</td>
+                                        <td class="ph-pdf-td-left">@(project?.DataSecurity_backup ?? "N/A")</td>
+                                    </tr>
+
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">19.</td>
+                                        <td class="ph-pdf-td-left-30">Brief details of proposed DB Engine to be Used in the Appl.</td>
+                                        <td class="ph-pdf-td-left">@(project?.ProposedDB_Engine ?? "N/A")</td>
+                                    </tr>
+
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">20.</td>
+                                        <td class="ph-pdf-td-left-30">Detls of Sw Architecture and COTS Sw proposed to be utilised</td>
+                                        <td class="ph-pdf-td-left">@(project?.DetlsofSw_Architecture ?? "N/A")</td>
+                                    </tr>
+
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">21.</td>
+                                        <td class="ph-pdf-td-left-30">Detls of proposed architecture</td>
+                                        <td class="ph-pdf-td-left">@(project?.DetlsofProposed_Architecture ?? "N/A")</td>
+                                    </tr>
+
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">22.</td>
+                                        <td class="ph-pdf-td-left-30">Brief details of proposed utilisation of Public Key Infra(PKI) and Iden and Access Mgt(IAM)</td>
+                                        <td class="ph-pdf-td-left">@(project?.DetlsPki_IAM ?? "N/A")</td>
+                                    </tr>
+
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">23.</td>
+                                        <td class="ph-pdf-td-left-30">Technology dependencies(if any)</td>
+                                        <td class="ph-pdf-td-left">@(project?.Technology_dependencies ?? "N/A")</td>
+                                    </tr>
+
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">24.</td>
+                                        <td class="ph-pdf-td-left-30">Database reqmts</td>
+                                        <td class="ph-pdf-td-left">@(project?.Database_reqmts ?? "N/A")</td>
+                                    </tr>
+
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">25.</td>
+                                        <td class="ph-pdf-td-left-30">Enhancement/upgradation(incl patch mgt/Sw updt procedure and mechanism)</td>
+                                        <td class="ph-pdf-td-left">@(project?.Enhancement_upgradation ?? "N/A")</td>
+                                    </tr>
+
+                                    <tr class="ph-pdf-tr">
+                                        <td class="ph-pdf-td-center-5">26.</td>
+                                        <td class="ph-pdf-td-left-30">Details of licensing(if any)</td>
+                                        <td class="ph-pdf-td-left">@(project?.Details_licensing ?? "N/A")</td>
+                                    </tr>
+                                }
+
                             </tbody>
                         </table>
                     </div>
 
+                    <!-- Movement & Comments section remains same -->
                     <div class="col-8">
                         <div id="movment" class="section-title ph-section-title">
-                            @Model.FirstOrDefault()?.ProjName : MOVEMENT
+                            @(Model.FirstOrDefault()?.ProjName ?? "Project") : MOVEMENT
                         </div>
-
                         <table class="ph-pdf-table">
                             <thead>
                                 <tr>
@@ -461,11 +515,8 @@
                                     <th class="ph-pdf-th">Remarks</th>
                                 </tr>
                             </thead>
-
                             <tbody>
-                                @{
-                                    int snoa3 = 0;
-                                }
+                               
                                 @foreach (var history in ((IEnumerable<dynamic>)ViewBag.ProjMovementHist).OrderBy(x => x.Date))
                                 {
                                     <tr>
@@ -474,9 +525,7 @@
                                                 snoa++;
                                             }
                                             @snoa
-                                          
                                         </td>
-
                                         <td class="ph-pdf-th">@history.Date</td>
                                         <td class="ph-pdf-th">@history.FromUnitName</td>
                                         <td class="ph-pdf-th">@history.ToUnitName</td>
@@ -484,7 +533,7 @@
                                         <td class="ph-pdf-th">
                                             @if (history.IsComment == true)
                                             {
-                                                <spna>@history.ToUnitName for Comments</spna>
+                                                <span>@history.ToUnitName for Comments</span>
                                             }
                                             else
                                             {
@@ -499,9 +548,8 @@
                         </table>
 
                         <div id="comments" class="section-title ph-section-title">
-                            @Model.FirstOrDefault()?.ProjName : Comments
+                            @(Model.FirstOrDefault()?.ProjName ?? "Project") : Comments
                         </div>
-
                         <div id="ChatBoxPDF" class="ph-pdf-table">
                             <input type="hidden" id="hiddenPsmId" value="" />
                         </div>

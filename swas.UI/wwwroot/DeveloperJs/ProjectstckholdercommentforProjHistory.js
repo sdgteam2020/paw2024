@@ -174,39 +174,39 @@ function GetAllComments2() {
     });
 }
 
-
 function GetAllComments1() {
-    let user_ids =
-    {
+    let user_ids = {
         "PsmId": 0,
-
         "ProjId": $(".ProjectcommentprojId").html()
-    }
+    };
 
-    let encrypted_ids = encryptData(user_ids)
+    let encrypted_ids = encryptData(user_ids);
+
     $.ajax({
         type: "POST",
         url: '/Projects/GetAllCommentBypsmId_UnitId',
         data: {
             encrypted_ids: encrypted_ids
         },
-        success: function (data) {
+        success: function(data) {
 
-            let tableHTML = '<table class="comments-table">';
-            tableHTML += '<thead>';
-            tableHTML += '<tr>';
-            tableHTML += '<th class="ser-no">Ser No</th>';
-            tableHTML += '<th>Stakeholder</th>';
-            tableHTML += '<th>Datetime</th>';
-            tableHTML += '<th>Comment</th>';
-            tableHTML += '<th>Status</th>';
-            tableHTML += '</tr>';
-            tableHTML += '</thead>';
-            tableHTML += '<tbody>';
+            let tableHTML = `
+                <div class="table-responsive">
+                    <table class="table table-bordered comments-table">
+                        <thead>
+                            <tr>
+                                <th class="col-ser-no">Ser No</th>
+                                <th>Stakeholder</th>
+                                <th class="col-datetime">Datetime</th>
+                                <th>Comment</th>
+                                <th class="col-status">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
 
-            if (data != null) {
+            if (data && data.length > 0) {
                 for (let i = 0; i < data.length; i++) {
-
                     let date = new Date(data[i].date);
                     let formattedDate =
                         ("0" + date.getDate()).slice(-2) + '-' +
@@ -216,38 +216,48 @@ function GetAllComments1() {
                         ("0" + date.getMinutes()).slice(-2) + ':' +
                         ("0" + date.getSeconds()).slice(-2);
 
-                    tableHTML += '<tr>';
-                    tableHTML += '<td>' + (i + 1) + '</td>';
-                    tableHTML += '<td>' + data[i].stakeholder + '</td>';
-                    tableHTML += '<td>' + formattedDate + '</td>';
-                    tableHTML += '<td>' + data[i].comments + '</td>';
-
-                    if (data[i].status == "Accepted")
-                        tableHTML += '<td><span class="badge badge-success text-white">' + data[i].status + '</span></td>';
-                    else
-                        tableHTML += '<td><span class="badge badge-danger text-white">' + data[i].status + '</span></td>';
-
-                    tableHTML += '</tr>';
+                    tableHTML += `
+                        <tr>
+                            <td class="text-center">${i + 1}</td>
+                            <td>${data[i].stakeholder || '-'}</td>
+                            <td>${formattedDate}</td>
+                            <td>${data[i].comments || '-'}</td>
+                            <td class="text-center">${data[i].status || '-'}</td>
+                        </tr>
+                    `;
                 }
+            } else {
+                tableHTML += `
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">No comments found</td>
+                    </tr>
+                `;
             }
 
-            tableHTML += '</tbody>';
-            tableHTML += '</table>';
+            tableHTML += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
 
             $('#ChatBoxPDF').empty().html(tableHTML);
 
-            $('#ChatBoxPDF .comments-table').DataTable({
-                paging: false,
-                ordering: false,
-                info: false
-            });
+            // Optional: keep DataTable only for screen view
+            if (data && data.length > 0) {
+                $('#ChatBoxPDF .comments-table').DataTable({
+                    paging: false,
+                    ordering: false,
+                    info: false,
+                    searching: false,
+                    autoWidth: false
+                });
+            }
         },
-        error: function () {
-            alert('Error fetching comments.5');
+        error: function() {
+            alert('Error fetching comments.');
         }
     });
 }
-
 
 
 $(document).ready(function () {
@@ -435,21 +445,63 @@ $(".btn-FwdFromMOv").on('click', function () {
         alert("Text Copied");
     })
 
-$('.PrintDiv').on('click', function () {
- 
-    PrintDiv();
-})
 
 
-function PrintDiv() {
+
+// function PrintDiv() {
   
-    const projectName =
-        document.getElementById('projectNameCell')?.innerText.trim() || 'Print';
+//     const projectName =
+//         document.getElementById('projectNameCell')?.innerText.trim() || 'Print';
 
+//     const divToPrint = document.getElementById('widget-content');
+//     const ipText = $('.IpAddress').text() || '';
+   
+//     const popupWin = window.open('', '_blank', 'width=800,height=800');
+//     popupWin.document.open();
+
+//     popupWin.document.write(`
+//         <!DOCTYPE html>
+//         <html>
+//         <head>
+//             <title>${projectName}</title>
+
+//             <!-- Load SAME CSS file -->
+//             <link rel="stylesheet" href="/css/projhistory.css">
+   
+//         </head>
+//         <body>
+//             <div id="print-container">
+//                 ${divToPrint.innerHTML}
+//             </div>
+
+//             <div class="print-watermark">
+//                 ${ipText}
+//             </div>
+
+//             <script src="/js/print.js"></script>
+//         </body>
+//         </html>
+//     `);
+
+//     popupWin.document.close();
+// }
+
+
+    //let projectid = $(".ProjectcommentprojId").html();
+  
+
+$('#btnGenerateAndOpenAppxC').on('click', function() {
+
+    var $btn = $(this);
+    var documentTypeId = $btn.data('document-id');
+    var projid = $btn.data('projid');
+
+    const projectName = document.getElementById('projectNameCell')?.innerText.trim() || 'Print';
     const divToPrint = document.getElementById('widget-content');
     const ipText = $('.IpAddress').text() || '';
-   
-    const popupWin = window.open('', '_blank', 'width=800,height=800');
+
+    // Open one popup
+    const popupWin = window.open('', '_blank', 'width=1100,height=900');
     popupWin.document.open();
 
     popupWin.document.write(`
@@ -457,30 +509,133 @@ function PrintDiv() {
         <html>
         <head>
             <title>${projectName}</title>
-
-            <!-- Load SAME CSS file -->
             <link rel="stylesheet" href="/css/projhistory.css">
-   
+            <style>
+                body { margin: 20px; font-family: Arial, sans-serif; }
+                .section-title { 
+                    background: #072697; 
+                    color: white; 
+                    padding: 10px; 
+                    margin-top: 30px;
+                    font-size: 16px;
+                    border-radius: 4px;
+                }
+                #generatedSection, #uploadedSection {
+                    margin-bottom: 40px;
+                }
+                #Certificatepreview, #UploadedPdfPreview {
+                    margin-top: 15px;
+                }
+            </style>
         </head>
         <body>
-            <div id="print-container">
-                ${divToPrint.innerHTML}
+            <!-- ==================== GENERATED CHECKLIST ==================== -->
+            <div id="generatedSection">
+                <div class="section-title">Generated Checklist</div>
+                <div id="print-container">
+                    ${divToPrint.innerHTML}
+                </div>
+                <div class="print-watermark">${ipText}</div>
             </div>
 
-            <div class="print-watermark">
-                ${ipText}
+            <!-- ==================== UPLOADED PDF ==================== -->
+            <div id="uploadedSection">
+                <div class="section-title">Uploaded Appx C</div>
+                <div id="UploadedPdfPreview">
+                    <p>Loading uploaded document...</p>
+                </div>
             </div>
 
             <script src="/js/print.js"></script>
+            <!-- Make sure pdf.js is available if renderPdfToCanvases needs it -->
         </body>
         </html>
     `);
 
     popupWin.document.close();
+
+    // ========== Fetch Uploaded PDF and Render like Certificate ==========
+    $.ajax({
+        type: "GET",
+        url: "/Projects/GetUploadedDocument",
+        data: {
+            projid: projid,
+            DocumentTypeId: documentTypeId
+        },
+        success: function(response) {
+
+            if (response.success && response.filePath) {
+
+                // Fetch the actual PDF file as ArrayBuffer
+                fetch("/uploads/" + response.filePath)
+                    .then(res => res.arrayBuffer())
+                    .then(arrayBuffer => {
+
+                        // Convert to Uint8Array (same as your certificate code)
+                        const byteNumbers = new Uint8Array(arrayBuffer);
+
+                        // Clear loading text
+                        const previewDiv = popupWin.document.getElementById('UploadedPdfPreview');
+                        previewDiv.innerHTML = ''; // clear "Loading..."
+
+                        // Create a container inside popup for canvases
+                        const canvasContainer = popupWin.document.createElement('div');
+                        canvasContainer.id = 'UploadedPdfCanvasContainer';
+                        previewDiv.appendChild(canvasContainer);
+
+                        // ========== Render using same method ==========
+                        // Option 1: If renderPdfToCanvases can accept a target container
+                        renderPdfToCanvasesInPopup(byteNumbers.buffer, canvasContainer, popupWin);
+
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        popupWin.document.getElementById('UploadedPdfPreview').innerHTML =
+                            `<p style="color:red;">Failed to load PDF file.</p>`;
+                    });
+
+            } else {
+                popupWin.document.getElementById('UploadedPdfPreview').innerHTML =
+                    `<p style="color:red;">Uploaded document not available.</p>`;
+            }
+        },
+        error: function() {
+            popupWin.document.getElementById('UploadedPdfPreview').innerHTML =
+                `<p style="color:red;">Error while fetching document.</p>`;
+        }
+    });
+});
+function renderPdfToCanvasesInPopup(arrayBuffer, container, popupWindow) {
+
+    // You need to adapt your existing renderPdfToCanvases logic here
+    // Example structure (adjust according to your actual function):
+
+    pdfjsLib.getDocument({ data: arrayBuffer }).promise.then(function(pdf) {
+
+        container.innerHTML = ''; // clear
+
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+
+            pdf.getPage(pageNum).then(function(page) {
+
+                const scale = 1.5;
+                const viewport = page.getViewport({ scale: scale });
+
+                const canvas = popupWindow.document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                canvas.style.display = 'block';
+                canvas.style.marginBottom = '20px';
+                canvas.style.border = '1px solid #ccc';
+
+                container.appendChild(canvas);
+
+                page.render({
+                    canvasContext: context,
+                    viewport: viewport
+                });
+            });
+        }
+    });
 }
-
-
-    //let projectid = $(".ProjectcommentprojId").html();
-  
-
-            

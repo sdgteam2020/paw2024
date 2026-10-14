@@ -311,3 +311,75 @@ table {
 .add-comment-btn {
    display:none;
 }
+/* ========== Screen Styles ========== */
+.ph-pdf-table .comments-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 0;
+}
+
+    .ph-pdf-table .comments-table th,
+    .ph-pdf-table .comments-table td {
+        border: 1px solid #333;
+        padding: 8px 10px;
+        vertical-align: middle;
+    }
+
+    .ph-pdf-table .comments-table thead th {
+        background-color: #f2f2f2;
+        font-weight: 600;
+        text-align: center;
+    }
+
+.ph-pdf-table .col-ser-no {
+    width: 70px;
+    text-align: center;
+}
+
+.ph-pdf-table .col-datetime {
+    width: 150px;
+}
+
+.ph-pdf-table .col-status {
+    width: 120px;
+    text-align: center;
+}
+
+/* ========== Print / PDF Styles ========== */
+@media print {
+    .ph-pdf-table .comments-table {
+        font-size: 12px;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        .ph-pdf-table .comments-table th,
+        .ph-pdf-table .comments-table td {
+            border: 1px solid #000 !important;
+            padding: 6px 8px;
+            color: #000;
+            background: transparent !important;
+        }
+
+        .ph-pdf-table .comments-table thead th {
+            background-color: #eaeaea !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .ph-pdf-table .comments-table td {
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+    /* Hide DataTables extra elements if any */
+    .dataTables_wrapper .dataTables_info,
+    .dataTables_wrapper .dataTables_paginate,
+    .dataTables_wrapper .dataTables_filter,
+    .dataTables_wrapper .dataTables_length {
+        display: none !important;
+    }
+}

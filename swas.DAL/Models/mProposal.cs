@@ -20,6 +20,7 @@ namespace swas.DAL.Models
 
 
         public int? CreatedBy { get; set; }
+        public int? OrderBy { get; set; }
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 

@@ -129,10 +129,10 @@
     });
 
 
-    $(document).on("click", "#tabCC",function () {
+    // $(document).on("click", "#tabCC",function () {
 
-        GetCCProject();
-    });
+    //     GetCCProject();
+    // });
 });
 
 
@@ -459,100 +459,100 @@ function IsReadInbox(psmId) {
     });
 }
 
-function GetCCProject() {
+// function GetCCProject() {
 
-    let listitem = "";
+//     let listitem = "";
 
-    $.ajax({
-        url: '/Projects/GetActCcProject',
-        type: 'POST',
+//     $.ajax({
+//         url: '/Projects/GetActCcProject',
+//         type: 'POST',
 
-        success: function (response) {
-            if (response != null) {
-                let count = 0;
+//         success: function (response) {
+//             if (response != null) {
+//                 let count = 0;
 
-                for (let i = 0; i < response.length; i++) {
-                    count++;
+//                 for (let i = 0; i < response.length; i++) {
+//                     count++;
 
-                    listitem += '<tr>';
+//                     listitem += '<tr>';
 
-                    listitem += '<td><div class="d-flex">' + count;
+//                     listitem += '<td><div class="d-flex">' + count;
 
-                    if (response[i].isRead == false)
-                        listitem += '<svg xmlns="" width="16" height="16" class="icon-green" fill="currentColor" viewBox="0 0 16 16">' +
-                            '<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />' +
-                            '</svg>';
-                    else
-                        listitem += '<svg xmlns="" viewBox="0 0 448 512" width="16" height="16" class="icon-green" fill="currentColor">' +
-                            '<path d="M342.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l80 80c12.5 12.5 32.8 12.5 45.3 0l160-160zm96 128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 402.7 54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l256-256z" />' +
-                            '</svg>';
+//                     if (response[i].isRead == false)
+//                         listitem += '<svg xmlns="" width="16" height="16" class="icon-green" fill="currentColor" viewBox="0 0 16 16">' +
+//                             '<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />' +
+//                             '</svg>';
+//                     else
+//                         listitem += '<svg xmlns="" viewBox="0 0 448 512" width="16" height="16" class="icon-green" fill="currentColor">' +
+//                             '<path d="M342.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l80 80c12.5 12.5 32.8 12.5 45.3 0l160-160zm96 128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 402.7 54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l256-256z" />' +
+//                             '</svg>';
 
-                    listitem += '</div></td>';
+//                     listitem += '</div></td>';
 
-                    listitem += '<td>' +
-                        '<span class="d-none noExport" id="SpnCurrentccProjId">' + response[i].projId + '</span>' +
-                        '<a data-proj-name="' + response[i].projName + '" data-proj-id="' + response[i].projId + '" href="/Projects/ProjHistory?EncyID=' + response[i].encyID + '&amp;Type=XR12">' +
-                        '<div class="RefLetter-container" data-tooltip="' + response[i].projName + '">' +
-                        '<span id="projNamecc">' + trimByChars(response[i].projName, 20) + '</span>' +
-                        '<span class="RefLetter noExport">' + breakLinesByWords(response[i].projName, 4) + '</span>' +
-                        '</div></a></td>';
+//                     listitem += '<td>' +
+//                         '<span class="d-none noExport" id="SpnCurrentccProjId">' + response[i].projId + '</span>' +
+//                         '<a data-proj-name="' + response[i].projName + '" data-proj-id="' + response[i].projId + '" href="/Projects/ProjHistory?EncyID=' + response[i].encyID + '&amp;Type=XR12">' +
+//                         '<div class="RefLetter-container" data-tooltip="' + response[i].projName + '">' +
+//                         '<span id="projNamecc">' + trimByChars(response[i].projName, 20) + '</span>' +
+//                         '<span class="RefLetter noExport">' + breakLinesByWords(response[i].projName, 4) + '</span>' +
+//                         '</div></a></td>';
 
-                    listitem += '<td class="RefLetter-container">' + response[i].unitName +
-                        '<div class="RefLetter noExport">' + breakLinesByWords(response[i].sponsor, 3) + '</div></td>';
+//                     listitem += '<td class="RefLetter-container">' + response[i].unitName +
+//                         '<div class="RefLetter noExport">' + breakLinesByWords(response[i].sponsor, 3) + '</div></td>';
 
-                    listitem += '<td class="RefLetter-container">' + response[i].fromUnitUserDetail +
-                        '<div class="RefLetter noExport">' + breakLinesByWords(response[i].fromUnitName, 4) + '</div></td>';
+//                     listitem += '<td class="RefLetter-container">' + response[i].fromUnitUserDetail +
+//                         '<div class="RefLetter noExport">' + breakLinesByWords(response[i].fromUnitName, 4) + '</div></td>';
 
-                    listitem += '<td>' + DateFormateddMMyyyyhhmmss(response[i].timeStamp) + '</td>';
+//                     listitem += '<td>' + DateFormateddMMyyyyhhmmss(response[i].timeStamp) + '</td>';
 
-                    let user = response[i].userDetails;
-                    listitem += '<td class="RefLetter-container"><div class="noExport">' + trimByWords(user, 2) + '</div>';
+//                     let user = response[i].userDetails;
+//                     listitem += '<td class="RefLetter-container"><div class="noExport">' + trimByWords(user, 2) + '</div>';
 
-                    if (user != "")
-                        listitem += '<div class="RefLetter">' + breakLinesByWords(user, 4) + '</div>';
+//                     if (user != "")
+//                         listitem += '<div class="RefLetter">' + breakLinesByWords(user, 4) + '</div>';
 
-                    listitem += '</td>';
+//                     listitem += '</td>';
 
-                    if (response[i].userDetails != "")
-                        listitem += '<td>' + DateFormateddMMyyyyhhmmss(response[i].readDate) + '</td>';
-                    else
-                        listitem += '<td></td>';
+//                     if (response[i].userDetails != "")
+//                         listitem += '<td>' + DateFormateddMMyyyyhhmmss(response[i].readDate) + '</td>';
+//                     else
+//                         listitem += '<td></td>';
 
-                    listitem += '<td>' + response[i].stage + '</td>';
-                    listitem += '<td>' + response[i].status + '</td>';
+//                     listitem += '<td>' + response[i].stage + '</td>';
+//                     listitem += '<td>' + response[i].status + '</td>';
 
-                    listitem += '<td>' +
-                        '<div class="RefLetter-container btn btn-warning p-2 cc-btn">' +
-                        '<span>Cc</span>' +
-                        '<div class="RefLetter noExport">' + response[i].ccUnitName + '</div>' +
-                        '</div></td>';
+//                     listitem += '<td>' +
+//                         '<div class="RefLetter-container btn btn-warning p-2 cc-btn">' +
+//                         '<span>Cc</span>' +
+//                         '<div class="RefLetter noExport">' + response[i].ccUnitName + '</div>' +
+//                         '</div></td>';
 
-                    listitem += '<td><div class="row d-flex">' +
-                        '<div class="col-md-2">' +
-                        '<button type="button" class="btn btn-success btn-FwdHistoryCcc btn-history" title="History">' +
-                        '<i class="fa-solid fa-timeline"></i></button>' +
-                        '</div></div></td>';
+//                     listitem += '<td><div class="row d-flex">' +
+//                         '<div class="col-md-2">' +
+//                         '<button type="button" class="btn btn-success btn-FwdHistoryCcc btn-history" title="History">' +
+//                         '<i class="fa-solid fa-timeline"></i></button>' +
+//                         '</div></div></td>';
 
-                    listitem += '</tr>';
-                }
+//                     listitem += '</tr>';
+//                 }
 
-                $("#cctblData").html(listitem);
-                initializeDataTable("#CCtable");
+//                 $("#cctblData").html(listitem);
+//                 initializeDataTable("#CCtable");
 
-                $(document).on('click', ".btn-FwdHistoryCcc", function () {
+//                 $(document).on('click', ".btn-FwdHistoryCcc", function () {
 
-                    let projName = $(this).closest("tr").find("#projNamecc").html();
-                    let finalTitle = "Mov History: " + projName;
+//                     let projName = $(this).closest("tr").find("#projNamecc").html();
+//                     let finalTitle = "Mov History: " + projName;
 
-                    $('#ProjFwdHistory').modal('show');
-                    $('.lblHistory').text(finalTitle);
+//                     $('#ProjFwdHistory').modal('show');
+//                     $('.lblHistory').text(finalTitle);
 
-                    GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentccProjId").html());
-                });
-            }
-        }
-    });
-}
+//                     GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentccProjId").html());
+//                 });
+//             }
+//         }
+//     });
+// }
 
 
 
@@ -907,125 +907,122 @@ $(document).ready(function () {
 
 
 
-$("#tabParked").click(function () {
 
-    GetParkedProject();
-});
 
-function GetParkedProject() {
+// function GetParkedProject() {
     
-    $.ajax({
-        url: '/Projects/GetActParkedProject',
-        type: 'GET',
-        success: function (response) {
-            $("#parkedtblData").html("");
+//     $.ajax({
+//         url: '/Projects/GetActParkedProject',
+//         type: 'GET',
+//         success: function (response) {
+//             $("#parkedtblData").html("");
 
-            if (response != null && response.length > 0) {
-                let listitem = "";
-                let count = 0;
-                let prjname = response[0].projName;
+//             if (response != null && response.length > 0) {
+//                 let listitem = "";
+//                 let count = 0;
+//                 let prjname = response[0].projName;
               
-                response.forEach(function (project) {
+//                 response.forEach(function (project) {
                    
-                    count++;
+//                     count++;
 
-                    listitem += '<tr>';
-                    listitem += `<td><div class="d-flex">${count}</div></td>`;
-                    listitem += `
-                        <td>
-                            <span class="d-none noExport" id="SpnCurrentParkedProjId">${project.projId}</span>
-                            <span id="spnCurrentPsmid" class="d-none noExport">${project.psmIds}</span>
-                            <a data-proj-name="${project.projName}" data-proj-id="${project.projId}" href="/Projects/ProjHistory?EncyID=${project.encyID}&amp;Type=XR12">
-                                <div class="RefLetter-container" data-tooltip="${project.projName}">
-                                    <span>${trimByChars(project.projName, 20)}</span>
-                                    <span class="RefLetter noExport" >${breakLinesByWords(project.projName, 4)}</span>
-                                    <span class="noExport d-none"  id="projNamecc">${project.projName}</span>
-                                </div>
-                            </a>
-                        </td>`;
-                    listitem += `
-                        <td class="RefLetter-container">
-                            ${project.unitName}
-                            <div class="RefLetter noExport">${breakLinesByWords(project.sponsor, 3)}</div>
-                        </td>`;
-                    listitem += `
-                        <td class="RefLetter-container">
-                            ${project.fromUnitUserDetail}
-                            <div class="RefLetter noExport">${breakLinesByWords(project.fromUnitName, 4)}</div>
-                        </td>`;
-                    listitem += `<td>${DateFormateddMMyyyyhhmmss(project.timeStamp)}</td>`;
-                    listitem += `<td>${project.stage}</td>`;
-                    listitem += `<td>${project.subStage ?? project.status ?? ""}</td>`;
-                    listitem += `
-                        <td>
-                            <div class="btn btn-warning p-2">
-                                <span>Parked</span>
-                            </div>
-                        </td>`;
-                    listitem += `
-                        <td>
-                            <div class="row d-flex align-items-center">
-                                <div class="col-auto p-0 me-1">
-                                    <button type="button" class="btn btn-success btn-FwdHistoryParked" data-proj-name="${project.projName}" title="History">
-                                        <i class="fa-solid fa-timeline"></i>
-                                    </button>
-                                </div>
-                                <div class="col-auto p-0">
-                                    <button class="btn btn-danger btn_unparked">Send to Inbox</button>
-                                </div>
-                            </div>
-                        </td>`;
+//                     listitem += '<tr>';
+//                     listitem += `<td><div class="d-flex">${count}</div></td>`;
+//                     listitem += `
+//                         <td>
+//                             <span class="d-none noExport" id="SpnCurrentParkedProjId">${project.projId}</span>
+//                             <span id="spnCurrentPsmid" class="d-none noExport">${project.psmIds}</span>
+//                             <a data-proj-name="${project.projName}" data-proj-id="${project.projId}" href="/Projects/ProjHistory?EncyID=${project.encyID}&amp;Type=XR12">
+//                                 <div class="RefLetter-container" data-tooltip="${project.projName}">
+//                                     <span>${trimByChars(project.projName, 20)}</span>
+//                                     <span class="RefLetter noExport" >${breakLinesByWords(project.projName, 4)}</span>
+//                                     <span class="noExport d-none"  id="projNamecc">${project.projName}</span>
+//                                 </div>
+//                             </a>
+//                         </td>`;
+//                     listitem += `
+//                         <td class="RefLetter-container">
+//                             ${project.unitName}
+//                             <div class="RefLetter noExport">${breakLinesByWords(project.sponsor, 3)}</div>
+//                         </td>`;
+//                     listitem += `
+//                         <td class="RefLetter-container">
+//                             ${project.fromUnitUserDetail}
+//                             <div class="RefLetter noExport">${breakLinesByWords(project.fromUnitName, 4)}</div>
+//                         </td>`;
+//                     listitem += `<td>${DateFormateddMMyyyyhhmmss(project.timeStamp)}</td>`;
+//                     listitem += `<td>${project.stage}</td>`;
+//                     listitem += `<td>${project.subStage ?? project.status ?? ""}</td>`;
+//                     listitem += `
+//                         <td>
+//                             <div class="btn btn-warning p-2">
+//                                 <span>Parked</span>
+//                             </div>
+//                         </td>`;
+//                     listitem += `
+//                         <td>
+//                             <div class="row d-flex align-items-center">
+//                                 <div class="col-auto p-0 me-1">
+//                                     <button type="button" class="btn btn-success btn-FwdHistoryParked" data-proj-name="${project.projName}" title="History">
+//                                         <i class="fa-solid fa-timeline"></i>
+//                                     </button>
+//                                 </div>
+//                                 <div class="col-auto p-0">
+//                                     <button class="btn btn-danger btn_unparked">Send to Inbox</button>
+//                                 </div>
+//                             </div>
+//                         </td>`;
 
-                    listitem += '</tr>';
-                });
+//                     listitem += '</tr>';
+//                 });
 
-                $("#parkedtblData").html(listitem);
-            }
+//                 $("#parkedtblData").html(listitem);
+//             }
 
-            initializeDataTable("#parkedtable");
-            $(".btn-FwdHistoryParked").off('click').on('click', function () {
+//             initializeDataTable("#parkedtable");
+//             $(".btn-FwdHistoryParked").off('click').on('click', function () {
               
-                let projName = $(this).closest("tr").find("#projNamecc").html();
-                $('.lblHistory').text(`Mov History: ${projName}`);
-                $('#ProjFwdHistory').modal('show');
+//                 let projName = $(this).closest("tr").find("#projNamecc").html();
+//                 $('.lblHistory').text(`Mov History: ${projName}`);
+//                 $('#ProjFwdHistory').modal('show');
 
-                GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentParkedProjId").html());
-            });
-            $(".btn_unparked").off('click').on('click', function () {
-                let psmid = $(this).closest("tr").find('#spnCurrentPsmid').text();
+//                 GetProjectMovHistory($(this).closest("tr").find("#SpnCurrentParkedProjId").html());
+//             });
+//             $(".btn_unparked").off('click').on('click', function () {
+//                 let psmid = $(this).closest("tr").find('#spnCurrentPsmid').text();
             
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "Do you want to send this project to Inbox.",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Unparkedbypsmid(psmid);
-                    }
+//                 Swal.fire({
+//                     title: "Are you sure?",
+//                     text: "Do you want to send this project to Inbox.",
+//                     icon: "warning",
+//                     showCancelButton: true,
+//                     confirmButtonColor: "#3085d6",
+//                     cancelButtonColor: "#d33",
+//                     confirmButtonText: "Yes"
+//                 }).then((result) => {
+//                     if (result.isConfirmed) {
+//                         Unparkedbypsmid(psmid);
+//                     }
 
-                });
+//                 });
                            
-            });
-        },
-        error: function (xhr, status, error) {
-            console.error("Error fetching parked projects:", status, error);
-            if ($.fn.DataTable.isDataTable("#parkedtable")) {
-                $("#parkedtable").DataTable().destroy();
-            }
-            $("#parkedtblData").html("");
-            $("#parkedtable").DataTable({
-                language: {
-                    emptyTable: "Error loading data. Please try again later."
-                },
-                destroy: true
-            });
-        }
-    });
-}
+//             });
+//         },
+//         error: function (xhr, status, error) {
+//             console.error("Error fetching parked projects:", status, error);
+//             if ($.fn.DataTable.isDataTable("#parkedtable")) {
+//                 $("#parkedtable").DataTable().destroy();
+//             }
+//             $("#parkedtblData").html("");
+//             $("#parkedtable").DataTable({
+//                 language: {
+//                     emptyTable: "Error loading data. Please try again later."
+//                 },
+//                 destroy: true
+//             });
+//         }
+//     });
+// }
 
 
 
@@ -1373,6 +1370,45 @@ function SendForecloseToInbox(psmId) {
 let currentUnitId = parseInt($('#hdnInboxUnitId').val());
 
 //FORECLOSED TAB
+let allInboxData = [];
+let allSentData = [];
+let allCompletedData = [];
+let allRemainderData = [];
+let allCCData = [];
+
+
+
+$(document).on("change", "#ddlProjectProjdetailsType", function () {
+  debugger;
+    const selectedType =
+        Number($("#ddlProjectProjdetailsType").val()) || 1;
+
+    switch (currentProjectTab) {
+
+        case "Inbox":
+            filterInboxByProjectType(selectedType);
+            break;
+
+        case "Sent":
+            filterSentByProjectType(selectedType);
+            break;
+
+        case "Completed":
+            filterCompletedByProjectType(selectedType);
+            break;
+
+        case "Remainder":
+            filterRemainderByProjectType(selectedType);
+            break;
+
+        case "CarbonCopy":
+            filterCCByProjectType(selectedType);
+            break;
+        case "Parkedproject":
+            filterParkedByProjectType(selectedType);
+            break;
+    }
+});
 
 
 
@@ -1418,6 +1454,21 @@ $(document).on("click", "#tabRemainder", function(e) {
     currentProjectTab = "Remainder";
     GetRemainderData();
 });
+
+$(document).on("click", "#tabCC", function(e) {
+    e.preventDefault();
+
+    currentProjectTab = "CarbonCopy";
+    GetCCProject();
+});
+
+$(document).on("click", "#tabParked", function(e) {
+    e.preventDefault();
+    debugger;
+    currentProjectTab = "Parkedproject";
+    GetParkedProject();
+});
+
 function GetInboxData() {
 
     $.ajax({
@@ -1520,41 +1571,51 @@ function renderInboxRow(project, sno) {
                 ${renderNotificationBlock(project)}
             </td>
 
-            <td class="col-w-150">${project.projId}</td>
+            <td class="col-w-150">${project.projId || ""}</td>
 
             <td class="f-12">
-                <span class="d-none noExport SpnCurrentProjId">${project.projId}</span>
-                <span class="d-none noExport SpnEncryptedProjId">${project.encyID}</span>
-                <span class="d-none noExport SpnCurrentpsmId">${project.psmIds}</span>
-                <span class="d-none noExport SpnStakeHolderId">${project.stakeHolderId}</span>
+                <span class="d-none noExport SpnCurrentProjId">${project.projId || ""}</span>
+                <span class="d-none noExport SpnEncryptedProjId">${project.encyID || ""}</span>
+                <span class="d-none noExport SpnCurrentpsmId">${project.psmIds || ""}</span>
+                <span class="d-none noExport SpnStakeHolderId">${project.stakeHolderId || ""}</span>
                 <span class="d-none noExport" id="LatestActionType">${project.latestActionType ?? ""}</span>
 
-                <span class="d-none noExport SpnTimeStampId">${project.timeStamp}</span>
-                <span class="d-none noExport" id="SpnStageId">${project.stageId}</span>
-                <span class="d-none noExport" id="SpnTimeStatusId">${project.statusId}</span>
-                <span class="d-none noExport" id="SpnWhiteListed">${project.isWhitelisted}</span>
+                <span class="d-none noExport SpnTimeStampId">${project.timeStamp || ""}</span>
+                <span class="d-none noExport" id="SpnStageId">${project.stageId ?? ""}</span>
+                <span class="d-none noExport" id="SpnTimeStatusId">${project.statusId ?? ""}</span>
+                <span class="d-none noExport" id="SpnWhiteListed">${project.isWhitelisted ?? ""}</span>
 
-                <span class="d-none noExport SpnprojectIsProcess">${project.isProcess}</span>
-                <span class="d-none noExport" id="SpnTimeActionId">${project.actionId}</span>
-                <span class="d-none noExport" id="SpnTimeToUnitId">${project.toUnitId}</span>
-                <span class="d-none noExport" id="SpnTimeFromUnitId">${project.fromUnitId}</span>
-                <span class="d-none noExport" id="SpnDate_type">${project.date_type}</span>
-                <span class="d-none noExport" id="SpnApprove">${project.adminApprovalStatus}</span>
+                <span class="d-none noExport SpnprojectIsProcess">${project.isProcess ?? ""}</span>
+                <span class="d-none noExport" id="SpnTimeActionId">${project.actionId ?? ""}</span>
+                <span class="d-none noExport" id="SpnTimeToUnitId">${project.toUnitId ?? ""}</span>
+                <span class="d-none noExport" id="SpnTimeFromUnitId">${project.fromUnitId ?? ""}</span>
+                <span class="d-none noExport" id="SpnDate_type">${project.date_type ?? ""}</span>
+                <span class="d-none noExport" id="SpnApprove">${project.adminApprovalStatus ?? ""}</span>
 
-                <a data-proj-name="${project.projName}" id="ProjectName" class="ProjName"
-                   data-proj-id="${project.projId}"
-                   href="/Projects/ProjHistory?EncyID=${project.encyID}&Type=XRDC&psmid=${project.psmIds}">
-                    <div class="tooltip-container" data-tooltip="${project.projName}">
-                        <span class="short-text noExport">${project.projName && project.projName.length > 17 ? project.projName.substring(0, 17) + "..." : (project.projName || "")}</span>
-                        <span class="tooltip tooltip-text">${project.projName}</span>
+                <a data-proj-name="${project.projName || ""}"
+                   id="ProjectName"
+                   class="ProjName"
+                   data-proj-id="${project.projId || ""}"
+                   href="/Projects/ProjHistory?EncyID=${project.encyID || ""}&Type=XRDC&psmid=${project.psmIds || ""}">
+                    <div class="RefLetter-container" data-tooltip="${project.projName || ""}">
+                        <span class="short-text noExport">
+                            ${trimByChars(project.projName || "", 17)}
+                        </span>
+                        <span class="RefLetter noExport">
+                            ${breakLinesByWords(project.projName || "", 4)}
+                        </span>
                     </div>
                 </a>
             </td>
 
             <td class="RefLetter-container">
-                <div class="tooltip-container" data-tooltip="${project.sponsor}">
-                    <span class="short-text noExport">${trimByWords(project.unitName, 2)}</span>
-                    <span class="tooltip tooltip-text">${project.sponsor}</span>
+                <div class="RefLetter-container" data-tooltip="${project.sponsor || ""}">
+                    <span class="short-text noExport">
+                        ${trimByWords(project.unitName || "", 2)}
+                    </span>
+                    <span class="RefLetter noExport">
+                        ${breakLinesByWords(project.sponsor || "", 3)}
+                    </span>
                 </div>
             </td>
 
@@ -1562,9 +1623,13 @@ function renderInboxRow(project, sno) {
                 <div class="d-flex">
                     <div class="col-md-8">
                         <div class="RefLetter-container">
-                            <div class="tooltip-container" data-tooltip="${project.fromUnitName}">
-                                <span class="short-text noExport">${trimByWords(project.fromUnitUserDetail, 2)}</span>
-                                <span class="tooltip tooltip-text">${project.fromUnitName}</span>
+                            <div class="RefLetter-container" data-tooltip="${project.fromUnitName || ""}">
+                                <span class="short-text noExport">
+                                    ${trimByWords(project.fromUnitUserDetail || "", 2)}
+                                </span>
+                                <span class="RefLetter noExport">
+                                    ${breakLinesByWords(project.fromUnitName || "", 4)}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -1572,10 +1637,13 @@ function renderInboxRow(project, sno) {
                 </div>
             </td>
 
-            <td class="TimeStampForcheckdate col-w-190">${DateTimeFormatedd_mm_yyyy(project.timeStamp)}</td>
-            <td class="col-w-150">${project.stage}</td>
-            <td class="col-w-190">${project.status}</td>
-            <td class="col-w-150">${project.action}</td>
+            <td class="TimeStampForcheckdate col-w-190">
+                ${DateTimeFormatedd_mm_yyyy(project.timeStamp)}
+            </td>
+
+            <td class="col-w-150">${project.stage || ""}</td>
+            <td class="col-w-190">${project.status || ""}</td>
+            <td class="col-w-150">${project.action || ""}</td>
 
             <td class="noExport">
                 <div class="row">
@@ -1592,23 +1660,33 @@ function renderInboxRow(project, sno) {
             : ""}
                         </div>
 
-                        <div class="col-md-4">
-                            <button type="button" class="btn btn-success btn-FwdHistory btn-mt-1" data-proj-name="${project.projName}" title="History"><i class="fa-solid fa-timeline"></i></button>
+                        <div class="col-md-4 d-flex justify-content-end ms-auto">
+                            <button type="button"
+                                    class="btn btn-success btn-FwdHistory btn-mt-1"
+                                    data-proj-name="${project.projName || ""}"
+                                    title="History">
+                                <i class="fa-solid fa-timeline"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
             </td>
 
-            <td>
-                <div class="row d-flex align-items-center">
-                    <div class="col-auto p-0 me-1">
-                        ${renderDateActionCell(project)}
-                    </div>
-                    <div class="col-auto p-0 parkedProj">
-                        <button class="btn btn-success" title="Click here to Park the project in parked tab">Park</button>
-                    </div>
-                </div>
-            </td>
+           <td>
+    <div class="d-flex align-items-center w-100">
+        <div class="me-1">
+            ${renderDateActionCell(project)}
+        </div>
+
+        <div class="parkedProj ms-auto">
+            <button type="button"
+                    class="btn btn-success"
+                    title="Click here to Park the project in parked tab">
+                Park
+            </button>
+        </div>
+    </div>
+</td>
         </tr>`;
 }
 
@@ -1849,7 +1927,6 @@ function bindSentTable(sentList) {
 }
 
 
-let allSentData = [];
 let snosent = 0;
 
 /**
@@ -1857,7 +1934,14 @@ let snosent = 0;
  */
 function renderSentRow(project, sno) {
     const projName = project.projName || "";
-    const shortName = projName.length > 17 ? projName.substring(0, 17) + "..." : projName;
+    const shortName =
+        projName.length > 17
+            ? projName.substring(0, 17) + "..."
+            : projName;
+
+    const sponsor = project.sponsor || "";
+    const unitName = project.unitName || "";
+    const toUnitName = project.toUnitName || "";
 
     return `
         <tr>
@@ -1869,41 +1953,52 @@ function renderSentRow(project, sno) {
                 </div>
             </td>
 
-            <td>${project.projId}</td>
+            <td>${project.projId || ""}</td>
 
             <td class="f-12">
-                <span class="d-none noExport SpnCurrentProjId">${project.projId}</span>
-                <span class="d-none noExport SpnEncProjId">${project.encyID}</span>
-                <span class="d-none noExport SpnCurrentpsmId">${project.psmIds}</span>
-                <span class="d-none noExport SpnStakeHolderId">${project.stakeHolderId}</span>
+                <span class="d-none noExport SpnCurrentProjId">${project.projId || ""}</span>
+                <span class="d-none noExport SpnEncProjId">${project.encyID || ""}</span>
+                <span class="d-none noExport SpnCurrentpsmId">${project.psmIds || ""}</span>
+                <span class="d-none noExport SpnStakeHolderId">${project.stakeHolderId || ""}</span>
 
-                <span class="d-none noExport SpnTimeStampId">${project.timeStamp}</span>
-                <span class="d-none noExport SpnprojectIsProcess">${project.isProcess}</span>
-                <span class="d-none noExport" id="SpnprojectStageId">${project.stageId}</span>
-                <span class="d-none noExport" id="SpnprojectToUnitId">${project.toUnitId}</span>
+                <span class="d-none noExport SpnTimeStampId">${project.timeStamp || ""}</span>
+                <span class="d-none noExport SpnprojectIsProcess">${project.isProcess ?? ""}</span>
+                <span class="d-none noExport" id="SpnprojectStageId">${project.stageId ?? ""}</span>
+                <span class="d-none noExport" id="SpnprojectToUnitId">${project.toUnitId ?? ""}</span>
 
-                <a data-proj-name="${projName}" data-proj-id="${project.projId}"
-                   href="/Projects/ProjHistory?EncyID=${project.encyID}&Type=XR12">
-                    <div class="tooltip-container" data-tooltip="${projName}">
+                <a data-proj-name="${projName}"
+                   data-proj-id="${project.projId || ""}"
+                   href="/Projects/ProjHistory?EncyID=${project.encyID || ""}&Type=XR12">
+                    <div class="RefLetter-container" data-tooltip="${projName}">
                         <span class="short-text noExport">${shortName}</span>
-                        <span class="tooltip tooltip-text">${projName}</span>
+                        <span class="RefLetter noExport">
+                            ${breakLinesByWords(projName, 4)}
+                        </span>
                     </div>
                 </a>
             </td>
 
             <td class="f-12">
-                <div class="tooltip-container" data-tooltip="${project.sponsor}">
-                    <span class="short-text noExport">${trimByWords(project.unitName, 2)}</span>
-                    <span class="tooltip tooltip-text">${project.sponsor}</span>
+                <div class="RefLetter-container" data-tooltip="${sponsor}">
+                    <span class="short-text noExport">
+                        ${trimByWords(unitName, 2)}
+                    </span>
+                    <span class="RefLetter noExport">
+                        ${breakLinesByWords(sponsor, 3)}
+                    </span>
                 </div>
             </td>
 
             <td class="RefLetter-container">
                 <div class="d-flex">
                     <div class="col-md-10">
-                        <div class="tooltip-container" data-tooltip="${project.toUnitName}">
-                            <span class="short-text noExport">${trimByWords(project.toUnitName, 2)}</span>
-                            <span class="tooltip tooltip-text">${project.toUnitName}</span>
+                        <div class="RefLetter-container" data-tooltip="${toUnitName}">
+                            <span class="short-text noExport">
+                                ${trimByWords(toUnitName, 2)}
+                            </span>
+                            <span class="RefLetter noExport">
+                                ${breakLinesByWords(toUnitName, 4)}
+                            </span>
                         </div>
                     </div>
                     ${renderCcBlockSent(project)}
@@ -1911,15 +2006,20 @@ function renderSentRow(project, sno) {
             </td>
 
             <td>${DateTimeFormatedd_mm_yyyy(project.timeStamp)}</td>
-            <td>${project.stage}</td>
-            <td>${project.status}</td>
-            <td>${project.action}</td>
+            <td>${project.stage || ""}</td>
+            <td>${project.status || ""}</td>
+            <td>${project.action || ""}</td>
 
             <td>
                 <div class="row d-flex">
                     ${renderPullBackBlock(project)}
                     <div class="col-md-2">
-                        <button type="button" class="btn btn-success btn-FwdHistorySent btn-mt-1" data-proj-name="${projName}" title="History"><i class="fa-solid fa-timeline"></i></button>
+                        <button type="button"
+                                class="btn btn-success btn-FwdHistorySent btn-mt-1"
+                                data-proj-name="${projName}"
+                                title="History">
+                            <i class="fa-solid fa-timeline"></i>
+                        </button>
                     </div>
                 </div>
             </td>
@@ -2111,7 +2211,7 @@ function bindCompletedTable(completedList) {
  * Builds a single Completed table row HTML.
  */
 // declare at the top of the file (allCompletedData was an implicit global before)
-let allCompletedData = [];
+
 
 
 /**
@@ -2119,32 +2219,38 @@ let allCompletedData = [];
  */
 function renderCompletedRow(project, sno) {
     const projName = project.projName || "";
-    const shortName = projName.length > 17 ? projName.substring(0, 17) + "..." : projName;
+    const shortName =
+        projName.length > 17
+            ? projName.substring(0, 17) + "..."
+            : projName;
 
     return `
         <tr>
             <td>${sno}</td>
 
             <td>
-                <span class="d-none SpnCurrentProjId">${project.projId}</span>
-                ${project.projId}
+                <span class="d-none SpnCurrentProjId">${project.projId || ""}</span>
+                ${project.projId || ""}
             </td>
 
             <td>
-                <a data-proj-name="${projName}" data-proj-id="${project.projId}"
-                   href="/Projects/ProjHistory?EncyID=${project.encyID}&Type=XR">
-                    <div class="tooltip-container" data-tooltip="${projName}">
+                <a data-proj-name="${projName}"
+                   data-proj-id="${project.projId || ""}"
+                   href="/Projects/ProjHistory?EncyID=${project.encyID || ""}&Type=XR">
+                    <div class="RefLetter-container" data-tooltip="${projName}">
                         <span class="short-text noExport">${shortName}</span>
-                        <span class="tooltip tooltip-text">${projName}</span>
+                        <span class="RefLetter noExport">
+                            ${breakLinesByWords(projName, 4)}
+                        </span>
                     </div>
                 </a>
             </td>
 
-            <td>${project.stakeHolder}</td>
-            <td>${project.recdFmUser}</td>
+            <td>${project.stakeHolder || ""}</td>
+            <td>${project.recdFmUser || ""}</td>
             <td>${DateTimeFormatedd_mm_yyyy(project.dateTimeOfUpdate)}</td>
-            <td>${project.status}</td>
-            <td>${project.action}</td>
+            <td>${project.status || ""}</td>
+            <td>${project.action || ""}</td>
         </tr>`;
 }
 
@@ -2281,17 +2387,17 @@ function renderRemainderRow(project, sno) {
             <td class="RefLetter-container">
                 <a data-proj-name="${projName}" class="ProjName" data-proj-id="${project.projid}"
                    href="/Projects/ProjHistory?EncyID=${project.encyID}&Type=XRDC">
-                    <div class="tooltip-container" data-tooltip="${projName}">
+                    <div class="RefLetter-container" data-tooltip="${projName}">
                         <span class="short-text">${shortName}</span>
-                        <span class="tooltip tooltip-text noExport">${projName}</span>
+                        <span class="RefLetter noExport">${projName}</span>
                     </div>
                 </a>
             </td>
 
             <td class="RefLetter-container">
-                <div class="tooltip-container" data-tooltip="${project.sponsor ?? ""}">
+                <div class="RefLetter-container" data-tooltip="${project.sponsor ?? ""}">
                     <span class="short-text">${trimByWords(project.unitName, 3)}</span>
-                    <span class="tooltip tooltip-text noExport">${project.sponsor ?? ""}</span>
+                    <span class="RefLetter noExport">${project.sponsor ?? ""}</span>
                 </div>
             </td>
 
@@ -2301,9 +2407,9 @@ function renderRemainderRow(project, sno) {
             <td>${DateTimeFormatedd_mm_yyyy(project.readOn)}</td>
 
             <td class="RefLetter-container">
-                <div class="tooltip-container" data-tooltip="${fullRemarks}">
+                <div class="RefLetter-container" data-tooltip="${fullRemarks}">
                     <span class="short-text noExport">${shortRemarks}</span>
-                    <span class="tooltip tooltip-text">${fullRemarks}</span>
+                    <span class="RefLetter">${fullRemarks}</span>
                 </div>
             </td>
 
@@ -2315,6 +2421,268 @@ function renderRemainderRow(project, sno) {
         </tr>`;
 }
 
+// =========================================================================
+// CARBON COPY (CC) TAB – DATA FETCH, FILTER & RENDER FUNCTIONS
+// All functions related to loading, filtering and rendering the CC table.
+// =========================================================================
+
+/**
+ * Fetches CC (Carbon Copy) data from server and applies current project-type filter.
+ */
+function GetCCProject() {
+
+    $.ajax({
+        url: '/Projects/GetTabData',
+        type: 'GET',
+        data: {
+            type: "tabCc",
+            projectSearchTypeId: 1
+        },
+
+        success: function(response) {
+
+            allCCData = response || [];
+
+            const selectedType =
+                Number($("#ddlProjectProjdetailsType").val()) || 1;
+
+            filterCCByProjectType(selectedType);
+        },
+
+        error: function(xhr, status, error) {
+            console.error("GetCCProject failed:", status, error);
+        }
+    });
+}
+/**
+ * Filters CC data by project type and rebinds table.
+ */
+function filterCCByProjectType(selectedType) {
+
+    let filteredData = allCCData;
+
+    if (selectedType === 2) {
+
+        filteredData = allCCData.filter(function(project) {
+            return project.aiml === false ||
+                project.aiml === 0 ||
+                project.aiml === "0";
+        });
+
+    } else if (selectedType === 3) {
+
+        filteredData = allCCData.filter(function(project) {
+            return project.aiml === true ||
+                project.aiml === 1 ||
+                project.aiml === "1";
+        });
+    }
+
+
+
+    bindCCProject(filteredData);
+}
+/**
+ * Builds and binds the full CC table HTML (including history button handlers).
+ */
+function bindCCProject(response) {
+
+    let listitem = "";
+    let count = 0;
+
+    for (let i = 0; i < response.length; i++) {
+
+        count++;
+
+        listitem += '<tr>';
+
+        listitem += '<td><div class="d-flex">' + count;
+
+        if (response[i].isRead == false) {
+
+            listitem +=
+                '<svg xmlns="http://www.w3.org/2000/svg" ' +
+                'width="16" height="16" style="color:#18bb6b" ' +
+                'fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">' +
+                '<path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />' +
+                '</svg>';
+
+        } else {
+
+            listitem +=
+                '<svg xmlns="http://www.w3.org/2000/svg" ' +
+                'viewBox="0 0 448 512" width="16" ' +
+                'style="color:#18bb6b" height="16" fill="currentColor">' +
+                '<path d="M342.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 178.7l-57.4-57.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l80 80c12.5 12.5 32.8 12.5 45.3 0l160-160zm96 128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 402.7 54.6 297.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l256-256z" />' +
+                '</svg>';
+        }
+
+        listitem += '</div></td>';
+
+        listitem +=
+            '<td>' +
+            '<span class="d-none noExport SpnCurrentccProjId">' +
+            response[i].projId +
+            '</span>' +
+
+            '<a data-proj-name="' + response[i].projName + '" ' +
+            'data-proj-id="' + response[i].projId + '" ' +
+            'href="/Projects/ProjHistory?EncyID=' +
+            response[i].encyID +
+            '&amp;Type=XR12" target="_blank">' +
+
+            '<div class="RefLetter-container" ' +
+            'data-tooltip="' + response[i].projName + '">' +
+
+            '<span class="noExport">' +
+            trimByChars(response[i].projName, 40) +
+            '</span>' +
+
+            '<span class="RefLetter noExport">' +
+            breakLinesByWords(response[i].projName, 4) +
+            '</span>' +
+
+            '<span class="d-none projNamecc">' +
+            response[i].projName +
+            '</span>' +
+
+            '</div>' +
+            '</a>' +
+            '</td>';
+
+        listitem +=
+            '<td class="RefLetter-container">' +
+            response[i].unitName +
+            '<div class="RefLetter noExport">' +
+            breakLinesByWords(response[i].sponsor, 3) +
+            '</div>' +
+            '</td>';
+
+        listitem +=
+            '<td class="RefLetter-container">' +
+            response[i].fromUnitUserDetail +
+            '<div class="RefLetter noExport">' +
+            breakLinesByWords(response[i].fromUnitName, 4) +
+            '</div>' +
+            '</td>';
+
+        listitem +=
+            '<td>' +
+            DateFormateddMMyyyyhhmmss(response[i].timeStamp) +
+            '</td>';
+
+        var user = response[i].userDetails || "";
+
+        listitem +=
+            '<td class="RefLetter-container">' +
+            '<div class="noExport">' +
+            trimByChars(user, 8) +
+            '</div>';
+
+        if (user !== "") {
+
+            listitem +=
+                '<div class="RefLetter">' +
+                breakLinesByWords(user, 4) +
+                '</div>';
+        }
+
+        listitem += '</td>';
+
+        if (response[i].userDetails != "") {
+
+            listitem +=
+                '<td>' +
+                DateFormateddMMyyyyhhmmss(response[i].readDate) +
+                '</td>';
+
+        } else {
+
+            listitem += '<td></td>';
+        }
+
+        listitem +=
+            '<td>' +
+            response[i].stage +
+            '</td>';
+
+        listitem +=
+            '<td>' +
+            response[i].status +
+            '</td>';
+
+        listitem +=
+            '<td>' +
+            '<div class="RefLetter-container btn btn-warning p-2" ' +
+            'style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">' +
+
+            '<span>Cc</span>' +
+
+            '<div class="RefLetter noExport">' +
+            response[i].ccUnitName +
+            '</div>' +
+
+            '</div>' +
+            '</td>';
+
+        listitem +=
+            '<td>' +
+            '<div class="row d-flex">' +
+            '<div class="col-md-2">' +
+
+            '<button type="button" ' +
+            'class="btn btn-success btn-FwdHistoryCcc" ' +
+            'title="History" ' +
+            'style="margin-top: 1px;">' +
+
+            '<i class="fa-solid fa-timeline"></i>' +
+
+            '</button>' +
+            '</div>' +
+            '</div>' +
+            '</td>';
+
+        listitem += '</tr>';
+    }
+
+
+    // IMPORTANT:
+    // Destroy DataTable BEFORE changing tbody HTML
+    if ($.fn.DataTable.isDataTable("#CCtable")) {
+        $("#CCtable").DataTable().clear().destroy();
+    }
+
+
+    // Now put filtered rows into tbody
+    $("#cctblData").html(listitem);
+
+
+    // Reinitialize after new rows are inserted
+    initializeDataTable("#CCtable");
+
+
+    $(".btn-FwdHistoryCcc")
+        .off("click")
+        .on("click", function() {
+
+            var row = $(this).closest("tr");
+
+            var projName =
+                row.find(".projNamecc").html();
+
+            var finalTitle =
+                "Mov History: " + projName;
+
+            $('.lblHistory').text(finalTitle);
+
+            $('#ProjFwdHistory').modal('show');
+
+            var projectId =
+                row.find(".SpnCurrentccProjId").html();
+
+            GetProjectMovHistory(projectId);
+        });
+}
 /**
  * Formats SentOn date to "dd-MM-yyyy:hh:mm:ss" (12-hour, matching original .NET format).
  */
@@ -2355,4 +2723,200 @@ function buildShortRemarks(rawRemarks) {
         return remarkWords.slice(0, 4).join(" ") + "...";
     }
     return remarks;
+}
+
+let allParkedData = [];
+
+
+/**
+ * Fetches parked projects.
+ */
+function GetParkedProject() {
+    $.ajax({
+        url: "/Projects/GetActParkedProject",
+        type: "GET",
+
+        success: function(response) {
+            debugger;
+            allParkedData = response || [];
+
+            const selectedType =
+                Number($("#ddlProjectProjdetailsType").val()) || 1;
+
+            filterParkedByProjectType(selectedType);
+        },
+
+        error: function(xhr, status, error) {
+            console.error("GetParkedProject failed:", status, error);
+        }
+    });
+}
+function filterParkedByProjectType(selectedType) {
+    let filteredData = allParkedData;
+
+    if (selectedType === 2) {
+        filteredData = allParkedData.filter(function(project) {
+            return project.aiml === false ||
+                project.aiml === 0 ||
+                project.aiml === "0";
+        });
+    } else if (selectedType === 3) {
+        filteredData = allParkedData.filter(function(project) {
+            return project.aiml === true ||
+                project.aiml === 1 ||
+                project.aiml === "1";
+        });
+    }
+
+    bindParkedProject(filteredData);
+}
+
+/**
+ * Builds and binds the parked projects table.
+ */
+function bindParkedProject(response) {
+    let listitem = "";
+
+    for (let i = 0; i < response.length; i++) {
+        const project = response[i] || {};
+        const projectName = project.projName || "";
+        const subStage = project.subStage ?? project.status ?? "";
+        const psmIds = project.psmIds || "";
+
+        listitem += "<tr>";
+
+        listitem +=
+            '<td><div class="d-flex">' +
+            (i + 1) +
+            "</div></td>";
+
+        listitem +=
+            '<td>' +
+            '<span class="d-none noExport parkedProjId">' +
+            (project.projId || "") +
+            "</span>" +
+            '<span class="d-none noExport parkedPsmIds">' +
+            psmIds +
+            "</span>" +
+            '<a data-proj-name="' + projectName + '" ' +
+            'data-proj-id="' + (project.projId || "") + '" ' +
+            'href="/Projects/ProjHistory?EncyID=' +
+            (project.encyID || "") +
+            '&amp;Type=XR12">' +
+            '<div class="RefLetter-container" data-tooltip="' +
+            projectName + '">' +
+            "<span>" +
+            trimByChars(projectName, 20) +
+            "</span>" +
+            '<span class="RefLetter noExport">' +
+            breakLinesByWords(projectName, 4) +
+            "</span>" +
+            '<span class="d-none noExport parkedProjName">' +
+            projectName +
+            "</span>" +
+            "</div>" +
+            "</a>" +
+            "</td>";
+
+        listitem +=
+            '<td class="RefLetter-container">' +
+            (project.unitName || "") +
+            '<div class="RefLetter noExport">' +
+            breakLinesByWords(project.sponsor || "", 3) +
+            "</div>" +
+            "</td>";
+
+        listitem +=
+            '<td class="RefLetter-container">' +
+            (project.fromUnitUserDetail || "") +
+            '<div class="RefLetter noExport">' +
+            breakLinesByWords(project.fromUnitName || "", 4) +
+            "</div>" +
+            "</td>";
+
+        listitem +=
+            "<td>" +
+            DateFormateddMMyyyyhhmmss(project.timeStamp) +
+            "</td>";
+
+        listitem +=
+            "<td>" +
+            (project.stage || "") +
+            "</td>";
+
+        listitem +=
+            "<td>" +
+            subStage +
+            "</td>";
+
+        listitem +=
+            '<td><div class="btn btn-warning p-2">' +
+            "<span>Parked</span>" +
+            "</div></td>";
+
+        listitem +=
+            '<td>' +
+            '<div class="row d-flex align-items-center">' +
+            '<div class="col-auto p-0 me-1">' +
+            '<button type="button" ' +
+            'class="btn btn-success btn-FwdHistoryParked" ' +
+            'title="History">' +
+            '<i class="fa-solid fa-timeline"></i>' +
+            "</button>" +
+            "</div>" +
+            '<div class="col-auto p-0">' +
+            '<button type="button" class="btn btn-danger btn_unparked">' +
+            "Send to Inbox" +
+            "</button>" +
+            "</div>" +
+            "</div>" +
+            "</td>";
+
+        listitem += "</tr>";
+    }
+
+    // Destroy DataTable before changing the tbody.
+    if ($.fn.DataTable.isDataTable("#parkedtable")) {
+        $("#parkedtable").DataTable().clear().destroy();
+    }
+
+    $("#parkedtblData").html(listitem);
+
+    initializeDataTable("#parkedtable");
+
+    $(".btn-FwdHistoryParked")
+        .off("click")
+        .on("click", function() {
+            const row = $(this).closest("tr");
+            const projectName = row.find(".parkedProjName").text();
+            const projectId = row.find(".parkedProjId").text();
+
+            $(".lblHistory").text("Mov History: " + projectName);
+            $("#ProjFwdHistory").modal("show");
+
+            GetProjectMovHistory(projectId);
+        });
+
+    $(".btn_unparked")
+        .off("click")
+        .on("click", function() {
+            const psmid = $(this)
+                .closest("tr")
+                .find(".parkedPsmIds")
+                .text();
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Do you want to send this project to Inbox.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes"
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    Unparkedbypsmid(psmid);
+                }
+            });
+        });
 }

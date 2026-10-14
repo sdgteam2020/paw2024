@@ -108,6 +108,27 @@
 			</li>
 			
 					}
+			<li class="project-type-tab-filter">
+				<div class="col-md-12 d-flex justify-content-md-end mb-3">
+
+					<div class="d-flex flex-column flex-sm-row align-items-sm-center gap-2 p-2 bg-white border rounded-3 shadow-sm w-100"
+						>
+
+						<label for="ddlProjectType"
+							   class="form-label fw-semibold text-dark mb-0 text-nowrap">
+							Project Type
+						</label>
+
+						<select id="ddlProjectProjdetailsType"
+								class="form-select form-select-sm border-success"
+								asp-items="ViewBag.ProjectTypeOptions">
+						</select>
+
+					</div>
+
+				</div>
+			</li>
+
 		</ul>
 			
 		@{

@@ -73,7 +73,7 @@ namespace swas.DAL
         public DbSet<ProjectForeclose> ProjectForecloses { get; set; }
         public DbSet<AuditLog> AuditLog { get; set; }
         public DbSet<MstProjectSearchType> MstProjectSearchTypes { get; set; }
-
+        public DbSet<mProposal> mProposals { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
            

@@ -23,6 +23,10 @@ namespace swas.DAL.Models
         [Display(Name = "Project Name")]
         public string? ProjName { get; set; }
 
+
+        public int ProposalId { get; set; }
+        [ForeignKey(nameof(ProposalId))]
+        public virtual mProposal? Proposal { get; set; }
         // Form: readonly input, populated by sponsor lookup — no regex, just length
         [Column(TypeName = "nvarchar(201)")]
         [StringLength(201, ErrorMessage = "Sponsor name cannot exceed 200 characters.")]
@@ -76,7 +80,7 @@ namespace swas.DAL.Models
 
         // Form: DropDownListFor from ViewBag.WhitelistOptions, required
         // "Re-Vetted" must be included — business logic branches on it
-        [Required(ErrorMessage = "Whitelisted status is required.")]
+    
         [Column(TypeName = "varchar(200)")]
         [Display(Name = "Already Whitelisted")]
         [RegularExpression(@"^(Yes|No|Re-Vetted)$",
@@ -99,11 +103,10 @@ namespace swas.DAL.Models
         // Form: type="number", data_maxlength="10", required
         // Digits only, max 10 digits — matches form data_maxlength="10"
         [Required(ErrorMessage = "Mobile Number is required.")]
-        [MaxLength(10)]
+        [Range(1L, 9999999999L,
+       ErrorMessage = "Mobile Number must be a positive number up to 10 digits.")]
         [Display(Name = "Mobile Number (Tele No)")]
-        [RegularExpression(@"^\d{1,10}$",
-            ErrorMessage = "Mobile Number must be numeric and cannot exceed 10 digits.")]
-        public int? MobileNo { get; set; }
+        public long? MobileNo { get; set; }
 
         // Form: type="number", data_maxlength="5", required
         [Required(ErrorMessage = "Ascon Number is required.")]
@@ -186,7 +189,7 @@ namespace swas.DAL.Models
         [Display(Name = "Aim")]
         [StringLength(3001, ErrorMessage = "Aim cannot exceed 500 Words.")]
         public string? Aim { get; set; } 
-        [Required(ErrorMessage = "Puropose is required.")]
+        //[Required(ErrorMessage = "Puropose is required.")]
         [Display(Name = "Puropose")]
         [StringLength(601, ErrorMessage = "Puropose cannot exceed 100 Words.")]
         public string? Puropose { get; set; } 
@@ -253,7 +256,7 @@ namespace swas.DAL.Models
         public string? MajTimeLines { get; set; }
 
         // Form: TextAreaFor, data_maxlength="500", required
-        [Required(ErrorMessage = "Software Platform & Tech Stack is required.")]
+        //[Required(ErrorMessage = "Software Platform & Tech Stack is required.")]
         [Display(Name = "Software Platform & Tech Stack (incl. OS Dependencies)")]
         [StringLength(601, ErrorMessage = "Tech Stack details cannot exceed 50 words.")]
         public string? TechStackProposed { get; set; }
@@ -271,7 +274,7 @@ namespace swas.DAL.Models
         public string? InitialRemark { get; set; }
 
         // Form: TextAreaFor, data_maxlength="500", required
-        [Required(ErrorMessage = "No of Virtaul Machines required at data centre for hosting is required.")]
+        //[Required(ErrorMessage = "No of Virtaul Machines required at data centre for hosting is required.")]
         [Display(Name = "No of Virtaul Machines required at data centre for hosting")]
         [StringLength(301, ErrorMessage = "OS details cannot exceed 50 Words.")]
         public string? Detlsof_OS { get; set; }
@@ -329,6 +332,21 @@ namespace swas.DAL.Models
         [Display(Name = "Operation system of hosting environment")]
         [StringLength(301, ErrorMessage = "OS of hosting environment cannot exceed 50 Words.")]
         public string? operation_system_hosting_env { get; set; }
+        [Required(ErrorMessage = "Background is required.")]
+        [MaxLength(301)]
+        [Display(Name = "Background")]
+        [StringLength(301, ErrorMessage = "Background  cannot exceed 50 Words.")]
+        public string? Background { get; set; }
+        [Required(ErrorMessage = "Proposal for title is required.")]
+        [MaxLength(301)]
+        [Display(Name = "Proposal for title")]
+        [StringLength(301, ErrorMessage = "Proposal for title cannot exceed 50 Words.")]
+        public string? Proposal_for_title { get; set; }
+        [Required(ErrorMessage = "Decision sought way forward is required.")]
+        [MaxLength(301)]
+        [Display(Name = "Decision sought way forward")]
+        [StringLength(301, ErrorMessage = "Decision sought way forward cannot exceed 50 Words.")]
+        public string? DecisionSoughtWayForward { get; set; }
 
 
         [Display(Name = "Field in STC")]

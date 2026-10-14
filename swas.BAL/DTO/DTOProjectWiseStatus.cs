@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,8 @@ namespace swas.BAL.DTO
     {
         public int ProjId { get; set; }
         public int StatusId { get; set; }
+        [NotMapped]
+        public bool aiml { get; set; }
         public string? ProjName { get; set; }
         public DateTime? TimeStamp { get; set; }
     }

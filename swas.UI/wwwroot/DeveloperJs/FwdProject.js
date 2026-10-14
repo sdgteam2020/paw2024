@@ -62,7 +62,7 @@ $(document).ready(function () {
 
         }
     });
-    $(".btn-Undo").click(function () {
+    $(document).on("click", ".btn-Undo",function () {
         
         let projectName = $(this).closest("tr").find("a").data("proj-name");
         IsReadInbox($(this).closest("tr").find(".SpnCurrentpsmId").html());

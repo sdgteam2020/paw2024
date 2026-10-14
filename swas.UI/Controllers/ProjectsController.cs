@@ -228,10 +228,33 @@ namespace swas.UI.Controllers
                     .Get<NotificationContent>();
                 ViewBag.NotificationContent = notificationContent;
 
-                if (Logins.unitid != null)
-                    ViewBag.unitid = Logins.unitid;
+                var projectTypes = await _projectsRepository.GetProjectSearchTypesAsync();
 
-                
+                var Projoptions = projectTypes
+ .Select(x => new SelectListItem
+ {
+     Text = x.ProjectSearchTypeName,
+     Value = x.ProjectSearchTypeId.ToString(),
+     Selected = x.ProjectSearchTypeCode == "ALL"
+ })
+ .ToList();
+
+                Projoptions.Insert(0, new SelectListItem
+                {
+                    Text = "--Select--",
+                    Value = "",
+                    Disabled = true,
+                    Selected = false
+                });
+
+                ViewBag.ProjectTypeOptions = Projoptions;
+
+                if (Logins != null && Logins.unitid != null)
+                {
+                    ViewBag.unitid = Logins.unitid;
+                }
+
+
 
                 return View();
             }
@@ -286,12 +309,65 @@ namespace swas.UI.Controllers
                     .GetSection("NotificationContent")
                     .Get<NotificationContent>();
 
+                var proposalTypes = _dbContext.mProposals
+                    .Where(x => x.IsActive)
+                    .OrderBy(x => x.OrderBy)
+                    .Select(x => new SelectListItem
+                    {
+                        Value = x.ProposalId.ToString(),
+                        Text = x.ProposalType
+                    })
+                    .ToList();
+
+                proposalTypes.Insert(0, new SelectListItem
+                {
+                    Value = "",
+                    Text = "-- Select --",
+                    Disabled = true,
+                    Selected = true
+                });
+
+                ViewBag.ProposalTypes = proposalTypes;
+
                 if (id != null)
                 {
                     string decryptedValue = _dataProtector.Unprotect(id);
                     int ids = int.Parse(decryptedValue);
 
                     tbl_Projects proj = await _projectsRepository.GetProjectByPsmIdAsync(ids);
+
+                    // ===============================
+                    // Safety: Handle null values
+                    // ===============================
+                    if (proj != null)
+                    {
+                        // These fields can be null for Proposal 7 & 8
+                        proj.Aim ??= string.Empty;
+                        proj.Scope ??= string.Empty;
+                        proj.Puropose ??= string.Empty;
+                        proj.ReqmtJustification ??= string.Empty;
+                        proj.DetlsofUserBase ??= string.Empty;
+                        proj.EnvisagedCost ??= string.Empty;
+                        proj.TechStackProposed ??= string.Empty;
+                        proj.NWBandWidthReqmt ??= string.Empty;
+                        proj.Detlsof_OS ??= string.Empty;
+                        proj.ProposedDB_Engine ??= string.Empty;
+                        proj.operation_system_hosting_env ??= string.Empty;
+                        proj.Additional_Ports ??= string.Empty;
+                        proj.Concurrent_users ??= string.Empty;
+                        proj.API_Initegration ??= string.Empty;
+                        proj.Mission_Critical_appl_justif ??= string.Empty;
+                        proj.Technology_dependencies ??= string.Empty;
+                        proj.InitialRemark ??= string.Empty;
+                        proj.Background ??= string.Empty;
+                        proj.DecisionSoughtWayForward ??= string.Empty;
+                        proj.Sponsor ??= string.Empty;
+                        proj.ProjName ??= string.Empty;
+
+                        // Optional: Set a flag for JavaScript
+                        ViewBag.IsSpecialForm = (proj.ProposalId == 7 || proj.ProposalId == 8);
+                    }
+
                     ViewBag.ProjectEncyId = id;
                     ViewBag.Projects = await _projectsRepository.GetMyProjects();
                     return View(proj);
@@ -305,6 +381,8 @@ namespace swas.UI.Controllers
                     return Redirect("/Identity/Account/login");
 
                 ViewBag.Projects = await _projectsRepository.GetMyProjects();
+                ViewBag.IsSpecialForm = false;   // new project → normal form by default
+
                 return View(new tbl_Projects());
             }
             catch (Exception ex)
@@ -371,7 +449,7 @@ namespace swas.UI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-      
+
 
         public async Task<IActionResult> AddProject(tbl_Projects Data, string? RequestRemarks)
         {
@@ -380,18 +458,66 @@ namespace swas.UI.Controllers
                 if (Data == null)
                     return BadRequest(new { success = false, message = "Invalid project data." });
 
-                // Cross-field validation
-                if (Data.CompletionDate.HasValue && Data.InitiatedDate.HasValue
-                    && Data.CompletionDate.Value < Data.InitiatedDate.Value)
+                // Cross-field validation (only for Normal form)
+                if (Data.ProposalId != 7 && Data.ProposalId != 8)
                 {
-                    ModelState.AddModelError(
-                        nameof(Data.CompletionDate),
-                        "Completion Date cannot be earlier than the Initiated Date.");
+                    if (Data.CompletionDate.HasValue && Data.InitiatedDate.HasValue
+                        && Data.CompletionDate.Value < Data.InitiatedDate.Value)
+                    {
+                        ModelState.AddModelError(
+                            nameof(Data.CompletionDate),
+                            "Completion Date cannot be earlier than the Initiated Date.");
+                    }
+                }
+
+                // =====================================================
+                // Clear Required validation for Special Form (Proposal 7 & 8)
+                // =====================================================
+                if (Data.ProposalId == 7 || Data.ProposalId == 8)
+                {
+                    string[] fieldsToIgnore = new[]
+                    {
+                nameof(Data.InitiatedDate),
+                nameof(Data.CompletionDate),
+                nameof(Data.Is_AI_ML),
+                nameof(Data.Security_Classification),
+                nameof(Data.TypeofSW),
+                nameof(Data.BeingDevpInhouse),
+                nameof(Data.Apptype),
+                nameof(Data.HostTypeID),
+                nameof(Data.EnvisagedCost),
+                nameof(Data.Aim),
+                nameof(Data.Puropose),
+                nameof(Data.Scope),
+                nameof(Data.ReqmtJustification),
+                nameof(Data.DetlsofUserBase),
+                nameof(Data.TechStackProposed),
+                nameof(Data.Detlsof_OS),
+                nameof(Data.ProposedDB_Engine),
+                nameof(Data.DetlsofSw_Architecture),
+                nameof(Data.operation_system_hosting_env),
+                nameof(Data.Additional_Ports),
+                nameof(Data.Concurrent_users),
+                nameof(Data.API_Initegration),
+                nameof(Data.Mission_Critical_appl_justif),
+                nameof(Data.Technology_dependencies),
+                nameof(Data.NWBandWidthReqmt)
+            };
+
+                    foreach (var field in fieldsToIgnore)
+                    {
+                        ModelState.Remove(field);
+                    }
+                }
+                else
+                {
+                    ModelState.Remove(nameof(Data.Background));
+                    ModelState.Remove(nameof(Data.DecisionSoughtWayForward));
+                    ModelState.Remove(nameof(Data.Proposal_for_title));
                 }
 
                 if (!ModelState.IsValid)
                 {
-                    // Log field errors server-side only; do NOT expose raw exception messages to client
                     foreach (var item in ModelState)
                     {
                         foreach (var error in item.Value.Errors)
@@ -424,6 +550,61 @@ namespace swas.UI.Controllers
                 if (Logins == null)
                     return Unauthorized(new { success = false, message = "Session expired. Please login again." });
 
+                // =====================================================
+                // Handle Special Form (Proposal 7 & 8) - Set unwanted fields to "N/A"
+                // =====================================================
+                if (Data.ProposalId == 7 || Data.ProposalId == 8)
+                {
+                    // Keep only special form fields
+                    // Force all normal form fields to "N/A"
+                    Data.Aim = "N/A";
+                    Data.Scope = "N/A";
+                    Data.Puropose = "N/A";
+                    Data.ReqmtJustification = "N/A";
+                    Data.DetlsofUserBase = "N/A";
+                    Data.EnvisagedCost = "N/A";
+                    Data.TechStackProposed = "N/A";
+                    Data.NWBandWidthReqmt = "N/A";
+                    Data.Detlsof_OS = "N/A";
+                    Data.ProposedDB_Engine = "N/A";
+                    Data.operation_system_hosting_env = "N/A";
+                    Data.Additional_Ports = "N/A";
+                    Data.Concurrent_users = "N/A";
+                    Data.API_Initegration = "N/A";
+                    Data.Mission_Critical_appl_justif = "N/A";
+                    Data.Technology_dependencies = "N/A";
+                    Data.Security_Classification = "N/A";
+                    Data.TypeofSW = "N/A";
+                    Data.BeingDevpInhouse = "N/A";
+                    Data.HQandITinfraReqd = "N/A";
+                    Data.ContentofSWApp = "N/A";
+                    Data.UsabilityofProposedAppln = "N/A";
+                    Data.MajTimeLines = "N/A";
+                    Data.DataSecurity_backup = "N/A";
+                    Data.EndorsmentbyHeadof = "N/A";
+                    Data.DetlsofSw_Architecture = "N/A";
+                    Data.DetlsofProposed_Architecture = "N/A";
+                    Data.DetlsPki_IAM = "N/A";
+                    Data.Database_reqmts = "N/A";
+                    Data.Enhancement_upgradation = "N/A";
+                    Data.Details_licensing = "N/A";
+
+                    // Value type / nullable fields
+                    Data.Is_AI_ML = false;
+                    Data.HostTypeID = 1;
+                    Data.Apptype = 1;
+                    Data.InitiatedDate = DateTime.Now;
+                    Data.CompletionDate = DateTime.Now;
+                }
+                else
+                {
+                    // Normal Form → Special fields should be "N/A"
+                    Data.Background = "N/A";
+                    Data.DecisionSoughtWayForward = "N/A";
+                    Data.Proposal_for_title = "N/A";
+                    
+                }
+
                 // Populate audit / ownership fields
                 Data.StakeHolderId = Logins.unitid ?? 0;
                 Data.IsActive = true;
@@ -440,7 +621,10 @@ namespace swas.UI.Controllers
                 }
                 else
                 {
-                    Data.InitiatedDate = DateTime.Now;
+                    // Only set current date if it's Normal form
+                  
+                        Data.InitiatedDate = DateTime.Now;
+                   
                     Data.DateTimeOfUpdate = DateTime.Now;
                 }
 
@@ -448,7 +632,7 @@ namespace swas.UI.Controllers
 
                 if (!isEdit)
                 {
-                    if (Data.IsWhitelisted == "Re-Vetted")
+                    if (Data.ProposalId == 3)
                         Data.ProjName = await GetReVettedProjectName(Data);
 
                     if (await _projectsRepository.ProjectNameExists(Data))
@@ -462,24 +646,19 @@ namespace swas.UI.Controllers
 
                     _dbContext.Entry(existingProject).State = EntityState.Detached;
 
-                    if (Data.IsWhitelisted == "Re-Vetted" && existingProject.IsWhitelisted != "Re-Vetted")
+                    // Case 1: Converting a normal project → ProposalId = 3 (Re-WhiteListing)
+                    if (Data.ProposalId == 3 && existingProject.ProposalId != 3)
                     {
                         Data.ProjName = await GetReVettedProjectName(Data);
+
                         if (await _projectsRepository.ProjectNameExists(Data))
                             return Json(-3);
                     }
-                    else if (Data.IsWhitelisted == "Re-Vetted"
-                             && existingProject.IsWhitelisted == "Re-Vetted"
-                             && (!string.IsNullOrWhiteSpace(Data.ProjName)
-                                 && !Data.ProjName.Contains("Re-Vetted")))
+                    // Case 2: Already a ProposalId = 3 project, but name is empty
+                    else if (Data.ProposalId == 3 && existingProject.ProposalId == 3)
                     {
-                        return Json(-5);
-                    }
-                    else if (Data.IsWhitelisted == "Re-Vetted"
-                             && existingProject.IsWhitelisted == "Re-Vetted"
-                             && string.IsNullOrWhiteSpace(Data.ProjName))
-                    {
-                        return Json(-5);
+                        if (string.IsNullOrWhiteSpace(Data.ProjName))
+                            return Json(-5);
                     }
                 }
 
@@ -938,14 +1117,16 @@ namespace swas.UI.Controllers
                 bool legacy = _dbContext.DateApproval?.Find(ProjId)?.DDGIT_approval == true;
 
                 // IDOR protection — only unit 1 may call ProcessMail
-                if (login.unitid != 1)
+                if (login.unitid is not (1 or 2))
+                {
                     return Forbid();
+                }
 
                 unitid = project.StakeHolderId;
 
-                int[] statusIds = { 26, 31, 37, 21, 21, 2016, 2021, 2026 };
-                int[] unitIds = { 4, 3, 5, 1, unitid, 2, 4105, 4106, };
-                int[] skipUnitIds = { 4, 3, 5, 1, 2, 4105, 4106 };
+                int[] statusIds = { 26, 31, 37, 21, 21, 144, 149, 154 };
+                int[] unitIds = { 4, 3, 5, 1, unitid, 2, 2255, 2256 }; 
+                int[] skipUnitIds = { 4, 3, 5, 1, 2, 2255, 2256 };
 
                 for (int i = 0; i < statusIds.Length; i++)
                 {
@@ -2014,7 +2195,7 @@ namespace swas.UI.Controllers
                 swas.BAL.Utility.Error.ExceptionHandle(ex.Message);
                 return Redirect("/Home/Error");
             }
-        }
+            }
 
         #endregion
 
@@ -2650,24 +2831,28 @@ namespace swas.UI.Controllers
             string baseName = originalName;
             int currentCount = 0;
 
-            var reVettedPattern = new System.Text.RegularExpressions.Regex(
-                @"(.*)\sRe-Vetted\s(\d+)$",
+            // Support both old "Re-Vetted" and new "Re-WhiteListing"
+            var reWhiteListingPattern = new System.Text.RegularExpressions.Regex(
+                @"(.*)\sRe-(?:Vetted|WhiteListing)\s(\d+)$",
                 System.Text.RegularExpressions.RegexOptions.IgnoreCase);
 
-            var match = reVettedPattern.Match(originalName);
+            var match = reWhiteListingPattern.Match(originalName);
             if (match.Success)
             {
                 baseName = match.Groups[1].Value.Trim();
                 currentCount = int.Parse(match.Groups[2].Value);
             }
 
+            // Count existing projects with either old or new naming
             var count = await _dbContext.Projects
                 .Where(i => i.ProjName.Trim().ToUpper().StartsWith(baseName.ToUpper())
-                         && i.ProjName.Contains("Re-Vetted"))
+                         && (i.ProjName.Contains("Re-Vetted") || i.ProjName.Contains("Re-WhiteListing")))
                 .CountAsync();
 
             int newCount = Math.Max(count, currentCount) + 1;
-            return $"{baseName} Re-Vetted {newCount}";
+
+            // Always return with new naming
+            return $"{baseName} Re-WhiteListing {newCount}";
         }
 
         // ═════════════════════════════════════════════════════════════════════════

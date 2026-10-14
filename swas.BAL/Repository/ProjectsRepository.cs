@@ -95,6 +95,7 @@ namespace swas.BAL.Repository
                                     result.MovProjectlst.Add(new MovProject
                                     {
                                         ProjId = reader.GetInt32(reader.GetOrdinal("ProjId")),
+                                        aiml = reader.GetBoolean(reader.GetOrdinal("Is_AI_ML")),
                                         ProjName = reader.GetString(reader.GetOrdinal("ProjName")),
                                         TimeStamp = reader.GetDateTime(reader.GetOrdinal("TimeStamp")),
                                         StatusId = reader.GetInt32(reader.GetOrdinal("StatusId"))
@@ -594,10 +595,21 @@ namespace swas.BAL.Repository
                 }
 
                     psmove.ProjId = project.ProjId;
-                psmove.StatusActionsMappingId = 1; //21  //ajayupdate
+             //21  //ajayupdate
                 psmove.Remarks = project.InitialRemark;
                 psmove.FromUnitId = Logins.unitid ?? 0;
-                psmove.ToUnitId = 1; //  
+                if(project.Is_AI_ML ==true)
+                {
+                    psmove.StatusActionsMappingId = 159; //21  //ajayupdate
+                    psmove.ToUnitId = 2; //  
+                }
+                else
+                {
+                    psmove.StatusActionsMappingId = 1;
+                    psmove.ToUnitId = 1; //  
+
+                }
+              
                 psmove.UserDetails = Helper1.LoginDetails(Logins);
                 psmove.UpdatedByUserId = Logins.unitid; // change with userid
                 
@@ -994,7 +1006,7 @@ namespace swas.BAL.Repository
                                     HasRemainder = reader["HasRemainder"] != DBNull.Value && Convert.ToBoolean(reader["HasRemainder"]),
                                     IsCc = (bool)reader["IsCc"],
                                     HideReminderIcon = reader["PullbackAction"] != DBNull.Value && Convert.ToBoolean(reader["PullbackAction"]),
-
+                                    AIML = (bool)reader["Is_AI_ML"],
                                     CCUnitName = reader["CCUnitName"]?.ToString()
 
                                 };
@@ -1147,84 +1159,7 @@ namespace swas.BAL.Repository
 
             return projects;
         }
-        //public async Task<List<tbl_Projects>> GetMyProjectsAsync()
-        //{
-        //    Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
 
-        //    if (Logins != null)
-        //    {
-
-        //        int stkholder = Logins.unitid.HasValue ? Logins.unitid.Value : 0;
-
-        //        string username = Logins.UserName;
-
-        //        var querys = from a in _dbContext.ProjStakeHolderMov
-        //                     join b in _dbContext.Projects on a.PsmId equals b.CurrentPslmId
-        //                     join c in _dbContext.tbl_mUnitBranch on a.ToUnitId equals c.unitid into currentStakeHolder
-        //                     from current in currentStakeHolder.DefaultIfEmpty()
-        //                     join m in _DBContext.tbl_mUnitBranch on b.StakeHolderId equals m.unitid into stakehold
-        //                     from stk in stakehold.DefaultIfEmpty()
-        //                     join d in _dbContext.tbl_mUnitBranch on a.ToUnitId equals d.unitid into toStakeHolder
-        //                     from to in toStakeHolder.DefaultIfEmpty()
-        //                     join e in _dbContext.tbl_mUnitBranch on a.FromUnitId equals e.unitid into fromStakeHolder
-        //                     from fromStake in fromStakeHolder.DefaultIfEmpty()
-        //                     join f in _dbContext.Comment on a.PsmId equals f.PsmId into fs
-        //                     from eWithComment in fs.DefaultIfEmpty()
-        //                     join actm in _dbContext.TrnStatusActionsMapping on a.StatusActionsMappingId equals actm.StatusActionsMappingId
-        //                     join h in _dbContext.mStatus on actm.StatusId equals h.StatusId into hs
-        //                     from eWithStatus in hs.DefaultIfEmpty()
-        //                     join j in _dbContext.mStages on eWithStatus.StageId equals j.StagesId into js
-        //                     from eWithStages in js.DefaultIfEmpty()
-        //                     join k in _dbContext.mActions on actm.ActionsId equals k.ActionsId into ks
-        //                     from eWithAction in ks.DefaultIfEmpty()
-        //                     where b.StakeHolderId == Logins.unitid
-
-        //                     select new tbl_Projects
-
-        //                     {
-        //                         ProjId = b.ProjId,
-        //                         ProjName = b.ProjName,
-        //                         StakeHolderId = b.StakeHolderId,
-
-        //                         CurrentPslmId = b.CurrentPslmId,
-        //                         InitiatedDate = b.InitiatedDate,
-        //                         CompletionDate = b.CompletionDate,
-        //                         IsWhitelisted = b.IsWhitelisted,
-        //                         InitialRemark = b.InitialRemark,
-        //                         EditDeleteBy = a.EditDeleteBy,
-        //                         EditDeleteDate = a.EditDeleteDate,
-        //                         UpdatedByUserId = a.UpdatedByUserId,
-        //                         DateTimeOfUpdate = a.DateTimeOfUpdate,
-        //                         ProjCode = b.ProjCode,
-        //                         RecdFmUser = fromStake != null ? fromStake.UnitName : null,
-        //                         FwdtoUser = current != null ? current.UnitName : null,
-
-        //                         FwdBy = fromStake != null ? fromStake.UnitName : null,
-
-        //                         AdRemarks = a.Remarks,
-        //                         Comments = eWithComment.Comment,
-        //                         FwdtoDate = a.TimeStamp,
-        //                         Status = eWithStatus.Status,
-        //                         Stages = eWithStages.Stages,
-        //                         StakeHolder = stk.UnitName,
-        //                         Action = eWithAction.Actions,
-        //                         TotalDays = EF.Functions.DateDiffDay(a.EditDeleteDate, a.TimeStamp) ?? 0,
-
-        //                         AttCnt = _dbContext.AttHistory.Count(f => f.PsmId == b.CurrentPslmId),
-        //                         HostTypeID = b.HostTypeID,
-        //                         EncyID = _dataProtector.Protect(b.CurrentPslmId.ToString()),
-        //                         ActionId = actm.ActionsId
-        //                     };
-
-        //        var projectsWithDetails = await querys.ToListAsync();
-
-        //        return projectsWithDetails;
-        //    }
-        //    else
-        //    {
-        //        return null;
-        //    }
-        //}
 
 
         public async Task<List<AddNewProject>> GetMyProjects()
@@ -1257,7 +1192,9 @@ namespace swas.BAL.Repository
             try
             {
 
-            return await _dbContext.Projects.FindAsync(projectId);
+                return await _dbContext.Projects
+                     .Include(x => x.Proposal)
+                     .FirstOrDefaultAsync(x => x.ProjId == projectId);
             }
             catch(Exception ex)
             {
@@ -1396,8 +1333,15 @@ namespace swas.BAL.Repository
         }
         public async Task<tbl_Projects> GetProjectByPsmIdAsync(int psmId)
         {
-            return await _dbContext.Projects.FirstOrDefaultAsync(a => a.CurrentPslmId == psmId);
+            try
+            {
 
+            return await _dbContext.Projects.FirstOrDefaultAsync(a => a.CurrentPslmId == psmId);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public Task<List<tbl_Projects>> GetStatusProjAsync(int statusid)
@@ -1505,26 +1449,38 @@ namespace swas.BAL.Repository
                     await _dbContext.SaveChangesAsync();
 
                         var existpsmid = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == project.CurrentPslmId);
-                    if(project.Date_type ==1)
+                    if (existpsmid != null)
                     {
 
-                        if (existpsmid != null)
+                        if (project.Is_AI_ML == true)
                         {
-                            existpsmid.TimeStamp = project.InitiatedDate;
-                            _dbContext.ProjStakeHolderMov.Update(existpsmid);
-                            _dbContext.SaveChanges();
+
+                            existpsmid.StatusActionsMappingId = 159; //21  //arbaz tomer
+                            existpsmid.ToUnitId = 2; //  
                         }
-                    }
-                    else
-                    {
-                        if (existpsmid != null)
+                        else
+                        {
+                            existpsmid.StatusActionsMappingId = 1; //21  //Arbaztomer
+                            existpsmid.ToUnitId = 1; //  
+
+                        }
+
+
+                        if (project.Date_type == 1)
+                        {
+
+                            existpsmid.TimeStamp = project.InitiatedDate;
+                        }
+                        else
                         {
                             existpsmid.TimeStamp = DateTime.Now;
-                            _dbContext.ProjStakeHolderMov.Update(existpsmid);
-                            _dbContext.SaveChanges();
+
                         }
+                        _dbContext.ProjStakeHolderMov.Update(existpsmid);
+                        _dbContext.SaveChanges();
                     }
-                        return true;
+                    return true;
+                    
                 }
                 else
                 {
@@ -2066,10 +2022,10 @@ namespace swas.BAL.Repository
 									IsCc = reader["IsCc"] != DBNull.Value && Convert.ToBoolean(reader["IsCc"]),
 									CCUnitName = reader["CCUnitName"]?.ToString(),
 									ReadDate = reader["ReadDate"] != DBNull.Value ? Convert.ToDateTime(reader["ReadDate"]) : DateTime.MinValue,
-									UserDetails = reader["UserDetails"]?.ToString()
+									UserDetails = reader["UserDetails"]?.ToString(),
+                                    AIML = (bool)reader["Is_AI_ML"],
 
-									
-								};
+                                };
 
 								lst.Add(dto);
 							}
