@@ -1132,141 +1132,139 @@ $(document).on('click', ".parkedProj",function () {
 
     //FORECLOSED TAB
 
-$(".btnPresentClosed").click(function () {
-    let ClosedType = 1;
+// Event handlers
+$(".btnPresentClosed").click(function() {
+    currentProjectTab = "Closed";
+    GetCloseProjects(1);
+});
 
-    GetCloseProjects(ClosedType);
+$("#btnPastClosed").click(function() {
+    GetCloseProjects(2);
 });
-$("#btnPastClosed").click(function () {
-    let ClosedType = 2;
-    GetCloseProjects(ClosedType);
-});
+
+let allInboxData = [];
+let allSentData = [];
+let allCompletedData = [];
+let allRemainderData = [];
+let allCCData = [];
+let allClosedData = [];
+
 function GetCloseProjects(Type) {
-    let type = encryptData(Type)
+    currentClosedType = Type;               // store for later use in bindClosedProject
+    currentUnitId = getUnitIdFromSession(); // refresh unit id
+
+    let type = encryptData(Type);
+
     $.ajax({
         url: '/Projects/GetForecloseitems',
         type: 'GET',
         data: { Type: type },
+        success: function(result) {
+            allClosedData = result.data || [];
 
-        success: function (data) {
+            const selectedType =
+                Number($("#ddlProjectProjdetailsType").val()) || 1;
 
-            let response = data.data || [];
-            console.log(response);
-            if ($.fn.DataTable.isDataTable("#foreclosetable")) {
-                $("#foreclosetable").DataTable().destroy();
-            }
-
-            $("#Foreclosedata").html("");
-
-            if (response.length > 0) {
-
-                let listitem = "";
-                let count = 0;
-
-                response.forEach(function (project) {
-
-                    count++;
-
-                    listitem += `<tr>`;
-
-                    listitem += `<td><div class="d-flex">${count}</div></td>`;
-
-                    listitem += `
-                        <td>
-                            <span class="d-none noExport" id="SpnforcloseProjId">
-                                ${project.projid}
-                            </span>
-
-                            <a data-proj-name="${project.projName}" 
-                               data-proj-id="${project.projid}" 
-                               href="/Projects/ProjHistory?EncyID=${project.encyID}&Type=XR12">
-
-                                <div class="RefLetter-container" 
-                                     data-tooltip="${project.projName ?? ""}">
-
-                                    <span>${trimByChars(project.projName ?? "", 20)}</span>
-
-                                    <span class="RefLetter noExport">
-                                        ${breakLinesByWords(project.projName ?? "", 4)}
-                                    </span>
-
-                                    <span class="noExport d-none" id="projNamecc">
-                                        ${project.projName ?? ""}
-                                    </span>
-                                </div>
-                            </a>
-                        </td>`;
-
-                    listitem += `
-                        <td class="RefLetter-container">
-                            ${project.sponsor ?? ""}
-                            <div class="RefLetter noExport">
-                                ${breakLinesByWords(project.sponsor ?? "", 3)}
-                            </div>
-                        </td>`;
-
-                    listitem += `
-                        <td class="RefLetter-container">
-                            ${project.approved_By ?? ""}
-                            <div class="RefLetter noExport">
-                                ${breakLinesByWords(project.approved_By ?? "", 4)}
-                            </div>
-                        </td>`;
-
-                    listitem += `
-                        <td>
-                            ${project.timeStamp
-                            ? DateFormateddMMyyyyhhmmss(project.timeStamp)
-                            : ""}
-                        </td>`;
-
-                    listitem += `<td>${project.stages ?? ""}</td>`;
-                    listitem += `<td>${project.status ?? ""}</td>`;
-                    if (Type == 1) {
-                        actionButton = `
-        <button type="button"
-                class="btn btn-sm btn-primary btnSendToInbox"
-                data-psmid="${project.psmId}">
-            Send to Inbox
-        </button>`;
-                    } else {
-                        actionButton = `
-    <button type="button"
-            class="btn btn-sm btn-danger btnCloseAgain"
-            data-psmid="${project.psmId}">
-        Close Again
-    </button>`;
-                    }
-
-                    listitem += `<td>${actionButton}</td>`;
-
-                    listitem += `</tr>`;
-                });
-
-                $("#Foreclosedata").html(listitem);
-            }
-
-            initializeDataTable("#foreclosetable");
+            filterClosedByProjectType(selectedType);
         },
-
-        error: function (xhr, status, error) {
-
-            console.error("Error fetching foreclosed projects:", status, error);
-
-            if ($.fn.DataTable.isDataTable("#foreclosetable")) {
-                $("#foreclosetable").DataTable().destroy();
-            }
-
-            $("#Foreclosedata").html("");
-
-            $("#foreclosetable").DataTable({
-                language: {
-                    emptyTable: "Error loading data. Please try again later."
-                },
-                destroy: true
-            });
+        error: function(xhr, status, err) {
+            console.error("GetCloseProjects failed:", status, err);
         }
     });
+}
+function bindClosedProject(data) {
+    let response = data || [];
+    console.log(response);
+
+    if ($.fn.DataTable.isDataTable("#foreclosetable")) {
+        $("#foreclosetable").DataTable().destroy();
+    }
+
+    $("#Foreclosedata").html("");
+
+    if (response.length > 0) {
+        let listitem = "";
+        let count = 0;
+
+        response.forEach(function(project) {
+            count++;
+
+            let actionButton = "";
+
+            if (currentUnitId == 1) {
+                if (currentClosedType == 1) {
+                    actionButton = `
+                        <button type="button"
+                                class="btn btn-sm btn-primary btnSendToInbox"
+                                data-psmid="${project.psmId}">
+                            Open Project
+                        </button>`;
+                } else {
+                    actionButton = `
+                        <button type="button"
+                                class="btn btn-sm btn-danger btnCloseAgain"
+                                data-psmid="${project.psmId}">
+                            Close Again
+                        </button>`;
+                }
+            } else {
+                // Other units
+                if (currentClosedType == 1) {
+                    actionButton = `<span class="text-warning fw-bold">For Open Project contact DDGIT</span>`;
+                } else {
+                    actionButton = `<span class="text-muted">Closed by DDGIT</span>`;
+                }
+            }
+
+            listitem += `
+                <tr>
+                    <td><div class="d-flex">${count}</div></td>
+                    <td>
+                        <span class="d-none noExport" id="SpnforcloseProjId">
+                            ${project.projid}
+                        </span>
+                        <a data-proj-name="${project.projName}"
+                           data-proj-id="${project.projid}"
+                           href="/Projects/ProjHistory?EncyID=${project.encyID}&Type=XR12">
+                            <div class="RefLetter-container"
+                                 data-tooltip="${project.projName ?? ""}">
+                                <span>${trimByChars(project.projName ?? "", 20)}</span>
+                                <span class="RefLetter noExport">
+                                    ${breakLinesByWords(project.projName ?? "", 4)}
+                                </span>
+                                <span class="noExport d-none" id="projNamecc">
+                                    ${project.projName ?? ""}
+                                </span>
+                            </div>
+                        </a>
+                    </td>
+                    <td class="RefLetter-container">
+                        ${project.sponsor ?? ""}
+                        <div class="RefLetter noExport">
+                            ${breakLinesByWords(project.sponsor ?? "", 3)}
+                        </div>
+                    </td>
+                    <td class="RefLetter-container">
+                        ${project.approved_By ?? ""}
+                        <div class="RefLetter noExport">
+                            ${breakLinesByWords(project.approved_By ?? "", 4)}
+                        </div>
+                    </td>
+                    <td>
+                        ${project.timeStamp
+                    ? DateFormateddMMyyyyhhmmss(project.timeStamp)
+                    : ""}
+                    </td>
+                    <td>${project.stages ?? ""}</td>
+                    <td>${project.status ?? ""}</td>
+                    <td>${actionButton}</td>
+                </tr>`;
+        });
+
+        $("#Foreclosedata").html(listitem);
+    }
+
+    initializeDataTable("#foreclosetable");
 }
 $(document).on("click", ".btnSendToInbox", function () {
    
@@ -1370,11 +1368,7 @@ function SendForecloseToInbox(psmId) {
 let currentUnitId = parseInt($('#hdnInboxUnitId').val());
 
 //FORECLOSED TAB
-let allInboxData = [];
-let allSentData = [];
-let allCompletedData = [];
-let allRemainderData = [];
-let allCCData = [];
+
 
 
 
@@ -1407,6 +1401,9 @@ $(document).on("change", "#ddlProjectProjdetailsType", function () {
         case "Parkedproject":
             filterParkedByProjectType(selectedType);
             break;
+        case "Closed":
+            filterClosedByProjectType(selectedType);
+            break;
     }
 });
 
@@ -1428,6 +1425,12 @@ $(window).on("load", function() {
 /**
  * Tab click handlers – switch current tab and load corresponding data.
  */
+$(document).on("click", "#btnPresentClosed ", function(e) {
+    e.preventDefault();
+
+    currentProjectTab = "Closed ";
+   GetCloseProjects()
+});
 $(document).on("click", "#tabinbox", function(e) {
     e.preventDefault();
 
@@ -2769,6 +2772,29 @@ function filterParkedByProjectType(selectedType) {
     }
 
     bindParkedProject(filteredData);
+}
+function filterClosedByProjectType(selectedType) {
+    debugger;
+    let filteredData = allClosedData;
+
+    if (selectedType === 2) {
+        // Non-AI/ML projects
+        filteredData = allClosedData.filter(function(project) {
+            debugger;
+            return project.is_ai_ml === false ||
+                project.is_ai_ml === 0 ||
+                project.is_ai_ml === "0";
+        });
+    } else if (selectedType === 3) {
+        // AI/ML projects
+        filteredData = allClosedData.filter(function(project) {
+            return project.is_ai_ml === true ||
+                project.is_ai_ml === 1 ||
+                project.is_ai_ml === "1";
+        });
+    }
+
+    bindClosedProject(filteredData);
 }
 
 /**

@@ -324,20 +324,19 @@ app.Use(async (ctx, next) =>
 // ===============================
 // ERROR / HSTS
 // ===============================
-if (!app.Environment.IsDevelopment())
-{
+
     app.UseExceptionHandler("/Home/Error");
     //app.UseHsts();
-}
+
 
 // ===============================
 // HTTPS / STATIC FILES
 // ===============================
+app.UseStaticFiles();
 app.UseHttpsRedirection();
 
 app.UseMiddleware<SecurityHeadersMiddleware>();
 
-app.UseStaticFiles();
 
 app.UseCookiePolicy();
 
@@ -349,8 +348,8 @@ app.UseCors("AllowArmyApp");
 app.UseSession();
 
 // Add your custom session validation middleware here
-app.UseMiddleware<SessionValidationMiddleware>();
 app.UseAuthentication();
+app.UseMiddleware<SessionValidationMiddleware>();
 app.UseAuthorization();
 
 // ===============================

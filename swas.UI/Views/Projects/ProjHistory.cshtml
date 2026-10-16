@@ -137,10 +137,10 @@
                                 <td class="new-proj-table">Type of Software</td>
                                 <td>@(project?.TypeofSW ?? "N/A")</td>
                             </tr>
-                            <tr>
+                            @* <tr>
                                 <td class="new-proj-table">NW Bandwidth Reqmt</td>
                                 <td>@(project?.NWBandWidthReqmt ?? "N/A")</td>
-                            </tr>
+                            </tr> *@
                             <tr>
                                 <td class="new-proj-table">Deployment Type</td>
                                 <td>@(Model[0].AppDesc ?? "N/A")</td>
@@ -191,10 +191,10 @@
                                 <td class="new-proj-table">Envisaged Cost (Rs)</td>
                                 <td class="long-text">@(project?.EnvisagedCost ?? "N/A")</td>
                             </tr>
-                            <tr>
+                           @*  <tr>
                                 <td class="new-proj-table">Major Timeline</td>
                                 <td class="long-text">@(project?.MajTimeLines ?? "N/A")</td>
-                            </tr>
+                            </tr> *@
                             <tr>
                                 <td class="new-proj-table">Civil Tele</td>
                                 <td>@(project?.MobileNo?.ToString() ?? "N/A")</td>

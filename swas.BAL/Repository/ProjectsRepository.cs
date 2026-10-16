@@ -2116,26 +2116,48 @@ namespace swas.BAL.Repository
 
             try
             {
+                // 1. Get the movement
                 var movement = await _dbContext.ProjStakeHolderMov
-                    .Where(x => x.PsmId == Psmid && x.ForeClosed == true)
-                    .OrderByDescending(x => x.PsmId)
-                    .FirstOrDefaultAsync();
+                    .FirstOrDefaultAsync(x => x.PsmId == Psmid && x.IsActive == true && x.IsDeleted == false);
 
                 if (movement == null)
                     return false;
 
+                // 2. Make it active again so it can come in Inbox
                 movement.ForeClosed = false;
+                movement.IsComplete = false;          // Very important for Inbox
+                                                      // movement.StatusActionsMappingId = ???  // Optional: change to an active status if needed
 
+                // 3. Handle tbl_project_foreclose
                 var foreclose = await _dbContext.ProjectForecloses
-                    .Where(x => x.Psmid == Psmid && x.IsOpened == false)
+                    .Where(x => x.Psmid == Psmid)
                     .OrderByDescending(x => x.ForecloseId)
                     .FirstOrDefaultAsync();
 
-                 if (foreclose != null)
+                if (foreclose != null)
                 {
+                    // Already has record → mark as Past Close
                     foreclose.IsPresentClosed = false;
                     foreclose.IsOpened = true;
                     foreclose.OpenedDate = DateTime.Now;
+                    // foreclose.OpenedByUserId = currentUserId;   // recommended
+                    // foreclose.OpenRemarks = "Sent to Inbox by DDGit";
+                }
+                else
+                {
+                    // No record exists → create one as Past Close
+                    var newForeclose = new ProjectForeclose
+                    {
+                        Psmid = Psmid,
+                        IsPresentClosed = false,
+                        IsOpened = true,
+                        OpenedDate = DateTime.Now,
+                        // ClosedDate = DateTime.Now,           // optional
+                        // ClosedByUserId = currentUserId,
+                        // OpenedByUserId = currentUserId
+                    };
+
+                    await _dbContext.ProjectForecloses.AddAsync(newForeclose);
                 }
 
                 await _dbContext.SaveChangesAsync();
@@ -2151,34 +2173,69 @@ namespace swas.BAL.Repository
         }
         public async Task<bool> CloseProjectAgain(int psmId)
         {
-            var movement = await _dbContext.ProjStakeHolderMov
-                .FirstOrDefaultAsync(x => x.PsmId == psmId);
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
 
-            if (movement == null)
-                return false;
-
-            movement.ForeClosed = true;
-
-            var foreclose = await _dbContext.ProjectForecloses
-                .Where(x => x.Psmid == movement.PsmId)
-                .OrderByDescending(x => x.ForecloseId)
-                .FirstOrDefaultAsync();
-
-            if (foreclose != null)
+            try
             {
-                foreclose.IsPresentClosed = true;
-                foreclose.IsOpened = false;
-                foreclose.OpenedDate = null;
-                foreclose.OpenedByUserId = null;
-                foreclose.OpenRemarks = null;
-                foreclose.ClosedDate = DateTime.Now;
+                // 1. Get active movement
+                var movement = await _dbContext.ProjStakeHolderMov
+                    .FirstOrDefaultAsync(x => x.PsmId == psmId
+                                           && x.IsActive == true
+                                           && x.IsDeleted == false);
+
+                if (movement == null)
+                    return false;
+
+                // 2. Mark as closed again
+                movement.ForeClosed = true;
+                movement.IsComplete = true;          // Important
+
+                // 3. Handle tbl_project_foreclose
+                var foreclose = await _dbContext.ProjectForecloses
+                    .Where(x => x.Psmid == psmId)
+                    .OrderByDescending(x => x.ForecloseId)
+                    .FirstOrDefaultAsync();
+
+                if (foreclose != null)
+                {
+                    // Update existing record → back to Present Close
+                    foreclose.IsPresentClosed = true;
+                    foreclose.IsOpened = false;
+                    foreclose.ClosedDate = DateTime.Now;
+                    // foreclose.ClosedByUserId = currentUserId;     // recommended
+                    // foreclose.CloseRemarks = "Closed again by DDGit";
+
+                    // Optional: clear open info
+                    foreclose.OpenedDate = null;
+                    foreclose.OpenedByUserId = null;
+                    foreclose.OpenRemarks = null;
+                }
+                else
+                {
+                    // No record exists → create new Present Close record
+                    var newForeclose = new ProjectForeclose
+                    {
+                        Psmid = psmId,
+                        IsPresentClosed = true,
+                        IsOpened = false,
+                        ClosedDate = DateTime.Now
+                        // ClosedByUserId = currentUserId
+                    };
+
+                    await _dbContext.ProjectForecloses.AddAsync(newForeclose);
+                }
+
+                await _dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return true;
             }
-
-            await _dbContext.SaveChangesAsync();
-
-            return true;
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
-
         /// <summary>
         /// Provides data for the UpdateFieldInSTCAsync operation.
         /// <param name="projId">The value used by the operation.</param>

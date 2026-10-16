@@ -366,7 +366,7 @@ namespace swas.Areas.Identity.Pages.Account
                     user.Offr_Name = Input.OfficerName;
                     user.Tele_Army = Input.Tele_Army;
                     user.CreatedDate = DateTime.Now;
-
+                    user.Flag = true;
                     await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                     await _emailStore.SetEmailAsync(user, Input.UserName, CancellationToken.None);
 
@@ -377,7 +377,7 @@ namespace swas.Areas.Identity.Pages.Account
                     {
                         _logger.LogInformation("User created a new account with password.");
 
-                        await _userManager.AddToRoleAsync(user, role.Name);
+                        await _userManager.AddToRoleAsync(user, "Unit");
 
                         var userId = await _userManager.GetUserIdAsync(user);
 

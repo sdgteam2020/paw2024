@@ -12,6 +12,8 @@ namespace swas.BAL.DTO
         public int projid { get; set; }
         public int PsmId { get; set; }
 
+        public int is_ai_ml { get; set; }
+
 
         [NotMapped]
         public string? EncyID { get; set; }

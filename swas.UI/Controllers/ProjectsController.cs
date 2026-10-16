@@ -3298,7 +3298,7 @@ namespace swas.UI.Controllers
 
                 var proj = await _projectsRepository.GetForecloseitems(closetype);
 
-                return Json(new
+                    return Json(new
                 {
                     success = true,
                     data = proj

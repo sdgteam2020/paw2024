@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
     
     
 
@@ -522,3 +523,25 @@ function animateCount($element) {
     requestAnimationFrame(update);
 }
 
+
+function getUnitIdFromSession() {
+    // This works if you have set UnitId in session via backend
+    // and exposed it to frontend (common pattern)
+
+    let unitId = null;
+
+    // Method 1: From a hidden field (most common & safe)
+    unitId = $("#hdnInboxUnitId").val();
+
+    // Method 2: From a global JS variable set in layout
+    if (!unitId && typeof currentUnitId !== "undefined") {
+        unitId = currentUnitId;
+    }
+
+    // Method 3: From localStorage (if you saved it after login)
+    if (!unitId) {
+        unitId = localStorage.getItem("UnitId");
+    }
+
+    return unitId ? parseInt(unitId) : null;
+}

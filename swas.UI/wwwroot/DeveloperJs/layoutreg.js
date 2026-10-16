@@ -19,14 +19,13 @@
 /**
  * Your preventBack logic moved from inline.
  */
-(function () {
+(function() {
     function preventBack() {
         window.history.forward();
     }
     window.setTimeout(preventBack, 0);
-    window.onunload = function () { return null; };
+    window.onunload = function() { return null; };
 })();
-
 /**
  * Your ValInData(input) function moved from inline.
  * Keep global because you might be calling it from HTML: oninput="ValInData(this)"

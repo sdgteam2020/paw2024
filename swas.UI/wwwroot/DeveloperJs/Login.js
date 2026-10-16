@@ -27,13 +27,14 @@ function encryptData(text, cryptoKey) {
     return CryptoJS.AES.encrypt(text, cryptoKey).toString();
 }
 
-$('#account').on('submit', function (e) {
+$('#account').on('submit', function(e) {
     e.preventDefault();
 
+    const form = this;
     const cryptoKey = $('#loginCryptoKey').val();
 
-    const username = $('#Input_UserName').val().trim();
-    const password = $('input[name="Input.Password"]').val().trim();
+    const username = $('#Input_UserName').val()?.trim();
+    const password = $('input[name="Input.Password"]').val()?.trim();
 
     if (!cryptoKey) {
         Swal.fire({
@@ -53,13 +54,15 @@ $('#account').on('submit', function (e) {
         return;
     }
 
+    // Encrypt
     const encUser = encryptData(username, cryptoKey);
     const encPass = encryptData(password, cryptoKey);
 
     $('#Input_UserName').val(encUser);
     $('input[name="Input.Password"]').val(encPass);
 
-    this.submit();
+    // Use native submit so the jQuery handler is not called again
+    form.submit();
 });
 $('.form-control').keypress(function (e) {
     let keyCode = e.which;
