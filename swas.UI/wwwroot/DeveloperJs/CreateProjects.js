@@ -429,7 +429,7 @@ $(document).ready(function() {
 
 
     $(".ProposalId").change(function() {
-
+        debugger;
         let selectedStatus = $(this).val();
 
         // Keep both dropdowns in sync
@@ -438,7 +438,7 @@ $(document).ready(function() {
         // ==========================================
         // Proposal 7 & 8 - Special Field Set
         // ==========================================
-        if (selectedStatus == "7" || selectedStatus == "8") {
+        if ( selectedStatus == "5" || selectedStatus == "7" || selectedStatus == "8" ) {
 
             // Hide Normal Form + Disable its inputs
             $("#normalProjectFieldSet").addClass("d-none");
@@ -474,7 +474,7 @@ $(document).ready(function() {
                     <div>
                         <ol>
                             <li>
-                                <h5 class="p-2">Upload 02 x PDF Documents Before Submitting</h5>
+                                <h5 class="p-2">Upload 06 x PDF Documents Before Submitting</h5>
                                 <ul class="text-left">
                                     <div>
                                         <strong>(a) ACG Clearance Certificate </strong>
@@ -482,6 +482,19 @@ $(document).ready(function() {
                                     <div>
                                         <strong>(b) DDGIT Whitelisted Clearance Certificate</strong>
                                     </div>
+                                    <div>
+                                        <strong>(c) Appx “C”</strong>
+                                    </div>
+                                    <div>
+                                        <strong>(d) SOC</strong>
+                                    </div>
+                                    <div>
+                                        <strong>(e) Annex I & II</strong>
+                                    </div>
+                                    <div>
+                                        <strong>(f) HOD Approval</strong>
+                                    </div>
+                                  
                                 </ul>
                             </li>
                             <li>
@@ -506,7 +519,8 @@ $(document).ready(function() {
             $("#projectNameDropdown").show();
             $("#reVettedTag").removeClass("d-none");
 
-        } else {
+        }
+        else {
 
             let currentval = $("#ProjName").val() || "";
             let cleanval = currentval
@@ -1328,7 +1342,7 @@ function AddProject(thistag) {
             var proposalId = $(".ProposalId:visible").val();
          
             // ====================== SPECIAL FORM (Proposal 7 or 8) ======================
-            if (proposalId == "7" || proposalId == "8") {
+            if (proposalId == "7" || proposalId == "8" || proposalId == "5") {
             
                 var data = {
                     "ProposalId": proposalId,
@@ -1547,7 +1561,7 @@ $(document).ready(function() {
     function toggleProjectForms() {
         var selectedStatus = $(".ProposalId:visible").val() || $(".ProposalId").first().val();
 
-        if (selectedStatus == "7" || selectedStatus == "8") {
+        if (selectedStatus == "7" || selectedStatus == "8" ||selectedStatus == "5") {
             // Show Special Form
             $("#normalProjectFieldSet").addClass("d-none");
             $("#normalProjectFieldSet").find("input, select, textarea").prop("disabled", true);

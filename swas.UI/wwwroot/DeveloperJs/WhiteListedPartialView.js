@@ -2,72 +2,82 @@
 
 
 function GetwhilteListProject(TypeId) {
-    let listItem = '';
-    let userdata = {
-        "TypeId": TypeId
-    };
+    const encryptedPayload = encryptData({ TypeId: TypeId });
 
-    let encrypted_payload = encryptData(userdata);
     $.ajax({
         type: "POST",
         url: "/Home/GetWhiteListedActionProj",
-        contentType: 'application/x-www-form-urlencoded',
-        data: {encrypted_payload: encrypted_payload
-    },
+        dataType: "json",
+        data: { encrypted_payload: encryptedPayload },
+
         success: function (data) {
-          
-            if (data != null) {
-                let count = 1;
-                let listItem = '';
+            const items = Array.isArray(data)
+                ? data
+                : Array.isArray(data?.data)
+                    ? data.data
+                    : Object.values(data || {});
 
-                Object.values(data).forEach(function (item) {
-                    listItem += '<tr>';
-                    listItem += '<td class="s-no-column">' + count++ + '</td>';
+            const escapeHtml = function (value) {
+                return $("<div>").text(value == null ? "" : String(value)).html();
+            };
 
-                    let shortName = item.projName || "";
-                    if (shortName.length > 10) {
-                        shortName = item.projName.slice(0, 10) + "....";
+            const truncate = function (value, length) {
+                value = value == null ? "" : String(value);
+                return value.length > length ? value.slice(0, length) + "...." : value;
+            };
+
+            const formatDate = function (value) {
+                if (!value) return "";
+
+                const date = new Date(value);
+                return Number.isNaN(date.getTime()) ? "" : escapeHtml(DateFormated(date));
+            };
+
+            let rows = "";
+
+            items.forEach(function (item, index) {
+                const projectName = item.projName || "";
+                const remarks = item.remarks || "";
+
+                let validUpto = "";
+                if (item.clearence) {
+                    const clearanceDate = new Date(item.clearence);
+
+                    if (!Number.isNaN(clearanceDate.getTime())) {
+                        clearanceDate.setFullYear(clearanceDate.getFullYear() + 3);
+                        validUpto = formatDate(clearanceDate);
                     }
-                    listItem += '<td class="RefLetter-container WhitelistedTable-width8">' +
-                        '<div class="noExport">' + shortName + '</div>' +
-                        '<div class="RefLetter">' + item.projName + '</div>' +
-                        '</td>';
-
-                    listItem += '<td class="WhitelistedTable-width8">' + item.hostedOn + '</td>';
-                    listItem += '<td>' + item.appt + '</td>';
-                    listItem += '<td>' + item.fmn + '</td>';
-                    listItem += '<td class="col-width6">' + item.contactNo + '</td>';
-                    listItem += '<td class="WhitelistedTable-width6">' + DateFormated(item.clearence) + '</td>';
-                    listItem += '<td class="WhitelistedTable-width15">' + item.certNo + '</td>';
-
-                    if (item.clearence != null) {
-                        let clearenceDate = new Date(item.clearence);
-                        let afterThreeYears = new Date(clearenceDate.setFullYear(clearenceDate.getFullYear() + 3));
-                    listItem += '<td class="col-width6">' + DateFormated(afterThreeYears) + '</td>';
-                    }
-
-
-                    let shortRemarks = item.remarks || "";
-                    if (shortRemarks.length > 10) {
-                        shortRemarks = item.remarks.slice(0, 10) + "....";
-                    }
-                    listItem += '<td class="RefLetter-container">' + shortRemarks;
-                    if (shortRemarks != "") {
-                        listItem += '<div class="RefLetter">' + item.remarks + '</div>';
-                    }
-                    listItem += '</td>';
-
-                    listItem += '</tr>';
-                });
-
-                if ($.fn.DataTable.isDataTable("#WhitelistedTable")) {
-                    $("#WhitelistedTable").DataTable().clear().destroy();
                 }
 
-                $("#WhitelistedTableData").html(listItem);
-                initializeDataTable("#WhitelistedTable");
+                rows += `
+                    <tr>
+                        <td class="s-no-column">${index + 1}</td>
+                        <td class="RefLetter-container WhitelistedTable-width8">
+                            <div class="noExport">${escapeHtml(truncate(projectName, 10))}</div>
+                            <div class="RefLetter">${escapeHtml(projectName)}</div>
+                        </td>
+                        <td class="WhitelistedTable-width8">${escapeHtml(item.hostedOn)}</td>
+                        <td>${escapeHtml(item.appt)}</td>
+                        <td>${escapeHtml(item.fmn)}</td>
+                        <td class="col-width6">${escapeHtml(item.contactNo)}</td>
+                        <td class="WhitelistedTable-width6">${formatDate(item.clearence)}</td>
+                        <td class="WhitelistedTable-width15">${escapeHtml(item.certNo)}</td>
+                        <td class="col-width6">${validUpto}</td>
+                        <td class="RefLetter-container">
+                            ${escapeHtml(truncate(remarks, 10))}
+                            ${remarks ? `<div class="RefLetter">${escapeHtml(remarks)}</div>` : ""}
+                        </td>
+                    </tr>`;
+            });
+
+            if ($.fn.DataTable.isDataTable("#WhitelistedTable")) {
+                $("#WhitelistedTable").DataTable().clear().destroy();
             }
+
+            $("#WhitelistedTableData").html(rows);
+            initializeDataTable("#WhitelistedTable");
         },
+
         error: function (xhr, status, error) {
             console.error("Error loading white list projects:", error);
         }

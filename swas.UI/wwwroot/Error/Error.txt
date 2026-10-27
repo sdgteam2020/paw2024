@@ -1,70 +1,4 @@
 -----------------------------------------------------------------------------
-Date : 29-04-2026 12:56:36
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2026 12:56:36
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2026 12:56:44
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2026 12:56:44
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2026 12:57:00
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2026 12:57:00
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2026 12:57:18
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2026 12:57:18
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2026 12:57:32
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2026 12:57:33
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2026 14:14:38
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2026 14:14:38
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2026 14:15:16
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2026 14:15:16
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2026 14:15:48
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2026 14:15:48
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2026 14:46:23
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2026 14:46:23
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2026 14:54:17
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2026 14:54:17
-Request failed & Status Code : 200
------------------------------------------------------------------------------
-Date : 29-04-2026 15:02:13
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
-Date : 29-04-2026 15:02:13
-Request failed & Status Code : 200
------------------------------------------------------------------------------
 Date : 29-04-2026 15:07:46
 Data is Null. This method or property cannot be called on Null values.
 -----------------------------------------------------------------------------
@@ -898,3 +832,69 @@ Data is Null. This method or property cannot be called on Null values.
 -----------------------------------------------------------------------------
 Date : 14-10-2026 18:57:32
 Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 19-10-2026 10:36:48
+Error while Fetching Closeitems : Unable to cast object of type 'System.Boolean' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 19-10-2026 10:36:58
+Error while Fetching Closeitems : Unable to cast object of type 'System.Boolean' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 22-10-2026 12:05:18
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 22-10-2026 12:05:18
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 22-10-2026 12:05:23
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 22-10-2026 12:05:23
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 22-10-2026 12:06:07
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 22-10-2026 12:06:07
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 22-10-2026 12:06:23
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 22-10-2026 12:06:24
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 22-10-2026 12:08:07
+Data is Null. This method or property cannot be called on Null values.
+-----------------------------------------------------------------------------
+Date : 22-10-2026 12:08:07
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 22-10-2026 12:09:54
+Request failed & Status Code : 200
+-----------------------------------------------------------------------------
+Date : 26-10-2026 15:40:00
+Error while Fetching Closeitems : Unable to cast object of type 'System.Boolean' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 26-10-2026 15:40:02
+Error while Fetching Closeitems : Unable to cast object of type 'System.Boolean' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 26-10-2026 15:40:04
+Error while Fetching Closeitems : Unable to cast object of type 'System.Boolean' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 26-10-2026 15:40:05
+Error while Fetching Closeitems : Unable to cast object of type 'System.Boolean' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 26-10-2026 15:40:22
+Error while Fetching Closeitems : Unable to cast object of type 'System.Boolean' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 26-10-2026 16:07:26
+Error while Fetching Closeitems : Unable to cast object of type 'System.Boolean' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 26-10-2026 16:08:51
+Error while Fetching Closeitems : Unable to cast object of type 'System.Boolean' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 26-10-2026 16:09:07
+Error while Fetching Closeitems : Unable to cast object of type 'System.Boolean' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 26-10-2026 16:09:33
+Error while Fetching Closeitems : Unable to cast object of type 'System.Boolean' to type 'System.Int32'.

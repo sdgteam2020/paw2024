@@ -28,7 +28,7 @@ using Superpower.Model;
 using swas.BAL.DTO;
 using swas.BAL.Helpers;
 using swas.BAL.Interfaces;
-using swas.BAL.Repository;
+using swas.BAL.Repository;  
 using swas.BAL.Utility;
 using swas.DAL;
 using swas.DAL.Models;
@@ -333,9 +333,11 @@ namespace swas.UI.Controllers
                 {
                     string decryptedValue = _dataProtector.Unprotect(id);
                     int ids = int.Parse(decryptedValue);
+                    tbl_Projects tbl_Projects = new tbl_Projects();
 
                     tbl_Projects proj = await _projectsRepository.GetProjectByPsmIdAsync(ids);
 
+                    ViewBag.issubmit = tbl_Projects?.IsSubmited == true;
                     // ===============================
                     // Safety: Handle null values
                     // ===============================
@@ -459,7 +461,7 @@ namespace swas.UI.Controllers
                     return BadRequest(new { success = false, message = "Invalid project data." });
 
                 // Cross-field validation (only for Normal form)
-                if (Data.ProposalId != 7 && Data.ProposalId != 8)
+                if (Data.ProposalId != 7 && Data.ProposalId != 8 && Data.ProposalId != 5)
                 {
                     if (Data.CompletionDate.HasValue && Data.InitiatedDate.HasValue
                         && Data.CompletionDate.Value < Data.InitiatedDate.Value)
@@ -473,7 +475,7 @@ namespace swas.UI.Controllers
                 // =====================================================
                 // Clear Required validation for Special Form (Proposal 7 & 8)
                 // =====================================================
-                if (Data.ProposalId == 7 || Data.ProposalId == 8)
+                if (Data.ProposalId == 7 || Data.ProposalId == 8|| Data.ProposalId == 5)
                 {
                     string[] fieldsToIgnore = new[]
                     {
@@ -553,7 +555,7 @@ namespace swas.UI.Controllers
                 // =====================================================
                 // Handle Special Form (Proposal 7 & 8) - Set unwanted fields to "N/A"
                 // =====================================================
-                if (Data.ProposalId == 7 || Data.ProposalId == 8)
+                if (Data.ProposalId == 7 || Data.ProposalId == 8|| Data.ProposalId == 5)
                 {
                     // Keep only special form fields
                     // Force all normal form fields to "N/A"
@@ -611,6 +613,7 @@ namespace swas.UI.Controllers
                 Data.EditDeleteDate = DateTime.Now;
                 Data.EditDeleteBy = 0;
                 Data.IsDeleted = false;
+                Data.Field_In_STC = false;
                 Data.IsSubmited = false;
                 Data.UpdatedByUserId = Logins.UserIntId;
                 Data.Comments = Data.InitialRemark;
@@ -1912,7 +1915,7 @@ namespace swas.UI.Controllers
             try
             {
                 
-                var result = await _projectsRepository.ProcessProjectCommentAsync(uploadfile, Comments, stkStatusId, projectId, psmIdInt, commentDateTime, Helper.LoginDetails(Logins));
+                var result = await _projectsRepository.ProcessProjectCommentAsync(uploadfile, Comments.Trim('"'), stkStatusId, projectId, psmIdInt, commentDateTime, Helper.LoginDetails(Logins));
                 return Json(result);
             }
             catch (Exception ex)

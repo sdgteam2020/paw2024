@@ -14,24 +14,36 @@ $(document).ready(function () {
         applyDateLogic(S.today);
     });
     function applyDateLogic(today) {
-   
+        debugger;
         let selectedMode = $('input[name="mcalender_dates"]:checked').val();
 
 
-        if (selectedMode == "0") {
-           
+        if (selectedMode === "0") {
+          
             $('input[type="date"]').attr('min', today);
             $('input[type="date"]').removeAttr('max');
             $("#InitiatedDate").val(today);
             $('#CompletionDate').val(today);
-            //$('#InitiatedDate').attr('readonly', true);
-            $("#RequestRemarks").attr('disabled', true);
+            //$('#InitiatedDate').attr('readonly', true);   
+        $("#RequestRemarks")
+    .prop("disabled", true)
+    .css({
+        "pointer-events": "none",
+        "background-color": "#e9ecef",
+        "opacity": "1"
+    });
         } else {
             $('input[type="date"]').attr('max', today);
             $('input[type="date"]').removeAttr('min');
             //$('#InitiatedDate').attr('readonly', false);
-            $("#RequestRemarks").removeAttr('disabled');
-
+          
+    $("#RequestRemarks")
+        .prop("disabled", false)
+        .css({
+            "pointer-events": "",
+            "background-color": "",
+            "opacity": ""
+        });
 
             $('#CompletionDate').attr('min', $("#InitiatedDate").val());
             $('#CompletionDate').removeAttr('max');

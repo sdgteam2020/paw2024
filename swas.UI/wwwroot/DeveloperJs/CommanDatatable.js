@@ -2,13 +2,22 @@
 //    // Allow only letters, numbers, space, underscore, comma and dot
 //    return value.replace(/[^a-zA-Z0-9 _.,]/g, '');
 //}
+// Strict – only for the DataTables search box
 function cleanDataTableInput(value) {
     if (!value) return "";
+    return String(value)
+        .replace(/[^a-zA-Z0-9 ]/g, "")
+        .replace(/\s{2,}/g, " ")
+        .trimStart();
+}
 
-    return value
-        .replace(/[^a-zA-Z0-9 ]/g, "") // Allow only letters, numbers and space
-        .replace(/\s{2,}/g, " ")       // Remove multiple spaces
-        .trimStart();                  // Prevent leading spaces
+// Mild – for Excel / CSV / PDF cells (preserves dates, times, etc.)
+function cleanExportText(value) {
+    if (value === null || value === undefined) return "";
+    return String(value)
+        .replace(/[\x00-\x1F\x7F]/g, "")   // control chars
+        .replace(/\s{2,}/g, " ")
+        .trim();
 }
 function escapeHtml(value) {
     if (value === null || value === undefined) return '';
@@ -113,17 +122,16 @@ function initializeDataTable(tableSelector) {
                     columns: ':visible:not(:last-child)',
                     format: {
                         body: function (data, row, column, node) {
-                            if (typeof data === 'string' && data.indexOf('<') >= 0) {
-                                let el = $('<div>' + data + '</div>');
-                                el.find('.noExport').remove();
-
+                            if (typeof data === "string" && data.indexOf("<") >= 0) {
+                                let el = $("<div>" + data + "</div>");
+                                el.find(".noExport").remove();
                                 let cleanText = el.text().trim();
-                                cleanText = cleanDataTableInput(cleanText);
-
+                                cleanText = cleanExportText(cleanText);   // ← changed
                                 return column === 0 ? row + 1 : cleanText;
                             }
-
-                            return column === 0 ? row + 1 : cleanDataTableInput(String(data ?? ''));
+                            return column === 0
+                                ? row + 1
+                                : cleanExportText(String(data ?? ""));     // ← changed
                         }
                     }
                 }
@@ -134,17 +142,16 @@ function initializeDataTable(tableSelector) {
                     columns: ':visible:not(:last-child)',
                     format: {
                         body: function (data, row, column, node) {
-                            if (typeof data === 'string' && data.indexOf('<') >= 0) {
-                                let el = $('<div>' + data + '</div>');
-                                el.find('.noExport').remove();
-
+                            if (typeof data === "string" && data.indexOf("<") >= 0) {
+                                let el = $("<div>" + data + "</div>");
+                                el.find(".noExport").remove();
                                 let cleanText = el.text().trim();
-                                cleanText = cleanDataTableInput(cleanText);
-
+                                cleanText = cleanExportText(cleanText);   // ← changed
                                 return column === 0 ? row + 1 : cleanText;
                             }
-
-                            return column === 0 ? row + 1 : cleanDataTableInput(String(data ?? ''));
+                            return column === 0
+                                ? row + 1
+                                : cleanExportText(String(data ?? ""));     // ← changed
                         }
                     }
                 }
@@ -194,6 +201,23 @@ function initializeDataTable(tableSelector) {
     });
 }
 
+function getPdfCellText(cellData) {
+    if (cellData === null || cellData === undefined) return '';
+
+    const template = document.createElement('template');
+    template.innerHTML = String(cellData);
+
+    template.content.querySelectorAll('.noExport').forEach(element => {
+        element.remove();
+    });
+
+    template.content.querySelectorAll('br').forEach(br => {
+        br.replaceWith(document.createTextNode('\n'));
+    });
+
+    return template.content.textContent.trim();
+}
+
 function PdfDiv(tableSelector, watermarkSelector = ".IpAddress") {
 
     const table = $(tableSelector).DataTable();
@@ -208,7 +232,7 @@ function PdfDiv(tableSelector, watermarkSelector = ".IpAddress") {
 
     table.columns(':visible').header().each(function (header, index) {
         if (!$(header).hasClass('noExport') && index !== table.columns().count()) {
-            headers.push(cleanDataTableInput($(header).text().trim()));
+            headers.push($(header).text().trim());
         }
     });
 
@@ -225,20 +249,19 @@ function PdfDiv(tableSelector, watermarkSelector = ".IpAddress") {
 
             let cellData = filteredData[i][j];
 
-            if (typeof cellData === 'string' && cellData.indexOf('<') >= 0) {
-                let $html = $('<div>' + cellData + '</div>');
-                $html.find('.noExport').remove();
+            if (typeof cellData === "string" && cellData.indexOf("<") >= 0) {
+                let $html = $("<div>" + cellData + "</div>");
+                $html.find(".noExport").remove();
 
                 let cleanText = $html.html()
-                    .replace(/<br\s*\/?>/gi, '\n')
+                    .replace(/<br\s*\/?>/gi, "\n")
                     .replace(/<\/?[^>]+(>|$)/g, "")
                     .trim();
 
-                cleanText = cleanDataTableInput(cleanText);
-
+                cleanText = cleanExportText(cleanText);   // ← changed
                 rowData.push(j === 0 ? i + 1 : cleanText);
             } else {
-                rowData.push(j === 0 ? i + 1 : cleanDataTableInput(String(cellData ?? '')));
+                rowData.push(j === 0 ? i + 1 : cleanExportText(String(cellData ?? "")));  // ← changed
             }
         }
 

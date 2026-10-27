@@ -23,11 +23,16 @@
     int calendarMode = Context.Session.GetInt32("CalendarMode") ?? 0;
     var ProjEncryId = ViewBag.ProjectEncyId;
     var selectedvalue = Model?.Date_type ?? 0;
-}
 
-@{
+	
+	bool isSubbmit = ViewBag.issubmit == true;
+
+
+	bool isdisabled = Model?.IsSubmited == true && Model?.IsProcess == false;
     var today = DateTime.Now.ToString("yyyy-MM-ddTHH:mm");
 }
+
+
 
 
 <link href="~/assets/css/tooltip.css" rel="stylesheet" />
@@ -212,17 +217,34 @@
 													<div class="row g-3 mb-3">
 														<div class="col-md-4">
 															<div class="input-container">
-																@Html.TextBoxFor(model => model.InitiatedDate, "{0:yyyy-MM-dd}",
-																	new { @class = "form-control requiredField w-100p", type = "date", required = "required" })
-																<label for="@Html.IdFor(model => model.InitiatedDate)">Project Start Date<font class="paw-red-font"><b>*</b></font></label>
+																@if (isdisabled)
+																	{
+																	<input type="datetime" value="@Model?.InitiatedDate" disabled title="You cannot change date after Submittion of the project" />
+																	<input hidden asp-for="InitiatedDate" />
+																			}
+																	else
+																	{
+																	@Html.TextBoxFor(model => model.InitiatedDate, "{0:yyyy-MM-dd}", new { @class = "form-control requiredField w-100p", type = "date", required = "required" })
+
+																	}
+																	<label for="@Html.IdFor(model => model.InitiatedDate)">Project Start Date<font class="paw-red-font"><b>*</b></font></label>
 																<div class="invalid-feedback">Initiation Date Required</div>
 															</div>
 														</div>
 														<div class="col-md-4">
 															<div class="input-container">
-																@Html.TextBoxFor(model => model.CompletionDate, "{0:yyyy-MM-dd}",
-																	new { @class = "form-control requiredField w-100p", type = "date", required = "required" })
-																<label for="@Html.IdFor(model => model.CompletionDate)">Probable Date of Completion<font class="paw-red-font"><b>*</b></font></label>
+																@if (isdisabled)
+																	{
+																	<input type="datetime" value="@Model?.CompletionDate" disabled title="You cannot change date after Submittion of the project" />
+																	<input hidden asp-for="CompletionDate" />
+																		}
+																	else
+																	{
+																		
+																	@Html.TextBoxFor(model => model.CompletionDate, "{0:yyyy-MM-dd}", new { @class = "form-control requiredField w-100p", type = "date", required = "required" })
+
+																	}
+																	<label for="@Html.IdFor(model => model.CompletionDate)">Probable Date of Completion<font class="paw-red-font"><b>*</b></font></label>
 																<div class="invalid-feedback">Completion Date Required</div>
 															</div>
 														</div>

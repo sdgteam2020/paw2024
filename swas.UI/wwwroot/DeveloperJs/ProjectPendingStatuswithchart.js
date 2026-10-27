@@ -238,9 +238,12 @@
 }
 let projHoldChart;
 function bindProjHoldChart(labels, totals, totalsForlabel, colors) {
+    // If chart already exists, destroy it before creating new
     if (projHoldChart) {
         projHoldChart.destroy();
     }
+
+    // Create new chart
     projHoldChart = new Chart(document.getElementById('ProjHoldHistoryChart'), {
         type: 'bar',
         data: {
@@ -253,10 +256,24 @@ function bindProjHoldChart(labels, totals, totalsForlabel, colors) {
             }]
         },
         options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function (value) {
+
+                            var days = Math.floor(value / (24 * 60));
+                            var hours = Math.floor((value % (24 * 60)) / 60);
+
+                            return days + "d " + hours + "h";
+                        }
+                    }
+                }
+            },
             plugins: {
                 title: {
                     display: true,
-                    
+                    /*text: 'Project Hold History (in Hours.Minute)'*/
                 },
                 legend: { display: false },
                 datalabels: {
@@ -267,6 +284,7 @@ function bindProjHoldChart(labels, totals, totalsForlabel, colors) {
                     font: {
                         weight: 'bold'
                     }, formatter: function (value, context) {
+                        // Use value from holdLabels array by index
                         return totalsForlabel[context.dataIndex];
                     }
                 }
@@ -277,9 +295,13 @@ function bindProjHoldChart(labels, totals, totalsForlabel, colors) {
 }
 let projHoldChartcomment;
 function bindProjHoldCommentsChart(labels, totals, totalsForlabel, colors) {
+
+    // If chart already exists, destroy it before creating new
     if (projHoldChartcomment) {
         projHoldChartcomment.destroy();
     }
+
+    // Create new chart
     projHoldChartcomment = new Chart(document.getElementById('ProjHoldHistoryCommentChart'), {
         type: 'bar',
         data: {
@@ -291,11 +313,38 @@ function bindProjHoldCommentsChart(labels, totals, totalsForlabel, colors) {
                 barThickness: 50,
             }]
         },
+
         options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+
+                    title: {
+                        display: true,
+                        text: "Duration (Days and Hours)"
+                    },
+
+                    ticks: {
+                        callback: function (value) {
+
+                            var totalHours = Number(value) || 0;
+
+                            var days = Math.floor(totalHours / 24);
+                            var hours = Math.floor(totalHours % 24);
+
+                            if (days > 0) {
+                                return days + "d " + hours + "h";
+                            }
+
+                            return hours + "h";
+                        }
+                    }
+                }
+            },
             plugins: {
                 title: {
                     display: true,
-                    
+                    /*text: 'Project Hold History (in Hours.Minute)'*/
                 },
                 legend: { display: false },
                 datalabels: {
@@ -308,6 +357,7 @@ function bindProjHoldCommentsChart(labels, totals, totalsForlabel, colors) {
                     },
                     textAlign: "center",
                     formatter: function (value, context) {
+                        // Use value from holdLabels array by index
                         return totalsForlabel[context.dataIndex];
                     }
                 }
@@ -317,29 +367,32 @@ function bindProjHoldCommentsChart(labels, totals, totalsForlabel, colors) {
     });
 }
 function calculateTotalTime(response) {
-    let result = {};
+    const result = {};
+
     response.forEach(entry => {
-        const { tounitId, tounit, timeStampfrom, timeStampTo } = entry;
-        const from = new Date(timeStampfrom);
-        const to = new Date(timeStampTo);
-        const timeSpent = (to - from) / 1000 / 60; // Difference in minutes
-        const key = `${tounitId}_${tounit}`;
-        if (!result[key]) {
-            result[key] = 0;
+        const fromMs = new Date(entry.timeStampfrom).getTime();
+        const toMs = entry.timeStampTo
+            ? new Date(entry.timeStampTo).getTime()
+            : Date.now();
+
+        if (!Number.isFinite(fromMs) || !Number.isFinite(toMs)) {
+            return;
         }
-        result[key] += timeSpent;
+
+        const timeSpent = Math.max(0, (toMs - fromMs) / 60000);
+        const key = `${entry.tounitId}_${entry.tounit}`;
+
+        result[key] = (result[key] || 0) + timeSpent;
     });
-    const groupedResult = Object.keys(result).map(key => {
+
+    return Object.entries(result).map(([key, totalTimeSpent]) => {
         const [tounitId, tounit] = key.split('_');
         return {
-            tounitId: parseInt(tounitId),
-            tounit: tounit,
-
-            totalTimeSpent: result[key]
+            tounitId: Number(tounitId),
+            tounit,
+            totalTimeSpent
         };
     });
-
-    return groupedResult;
 }
 function convertMinutesToAgo(minutes) {
     if (minutes == null || isNaN(minutes) || minutes < 0) {

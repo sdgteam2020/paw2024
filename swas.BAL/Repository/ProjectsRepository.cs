@@ -54,6 +54,7 @@ namespace swas.BAL.Repository
             _psmRepository = psmRepository;
             _configuration = configuration;
             _stkCommentRepository = stkCommentRepository;
+            _environment = environment;
         }
         public async Task<DTOProjectWiseStatus> GetProjectWiseStatus(int? Projid)
         {
