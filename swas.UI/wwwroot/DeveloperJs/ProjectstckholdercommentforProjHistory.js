@@ -265,8 +265,8 @@ $(document).ready(function () {
     let TeamDetailPostBackURL = '/Projects/AttDetails';
     $(function () {
         
-        $(".anchorDetail").on("click", function () {
-          
+        $(document).on("click",".anchorDetail", function () {
+      
             let $buttonClicked = $(this);
             let id = $buttonClicked.attr('data-id');
             let options = { "backdrop": "static", keyboard: true };

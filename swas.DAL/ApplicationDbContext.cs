@@ -46,7 +46,6 @@ namespace swas.DAL
         public DbSet<Notification> Notification { get; set; }
         public DbSet<StkStatus> StkStatus { get; set; }
      
-        public DbSet<mWhiteListedHeader> mWhiteListedHeader { get; set; }
         public DbSet<trnWhiteListed> trnWhiteListed { get; set; }
         public DbSet<TrnUnitStatusMapping> TrnUnitStatusMapping { get; set; }
         public DbSet<TrnStatusActionsMapping> TrnStatusActionsMapping { get; set; }

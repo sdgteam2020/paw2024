@@ -16,20 +16,21 @@ namespace swas.DAL.Models
 
         public int Psmid { get; set; }
 
+        public int Projid { get; set; }
+
         public int ClosedByUserId { get; set; }
 
         public DateTime ClosedDate { get; set; } = DateTime.Now;
 
-        public string? CloseRemarks { get; set; }
+   
 
         public bool IsPresentClosed { get; set; } = true;
 
         public bool IsOpened { get; set; } = false;
 
-        public int? OpenedByUserId { get; set; }
+       
 
         public DateTime? OpenedDate { get; set; }
 
-        public string? OpenRemarks { get; set; }
     }
 }

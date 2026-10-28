@@ -38,7 +38,7 @@ namespace swas.BAL.Interfaces
         Task<tbl_ProjStakeHolderMov> GettXNByPsmIdAsync(int psmId);
         Task<tbl_ProjStakeHolderMov> GettXNByPsmIdwithUnitId(int psmId,int unitid);
         Task<int> GetIsCommentPsmiId(int? ProjId, int? StackHolderId);
-        Task<List<DToWhiteListeds>> GetWhiteListedActionProj(int TypeId);
+        Task<List<DAL.Models.DToWhiteListeds>> GetWhiteListedActionProj(int TypeId);
 
         Task<List<DTOUnderProcessProj>> GetHoldActionProj();
         Task<List<tbl_Projects>> GetProcProjAsync();
@@ -75,8 +75,8 @@ namespace swas.BAL.Interfaces
         Task<List<DTOProjectsFwd>> GetActParkedItemsAsync();
         Task<List<DTOForeClose>> GetForecloseitems(int closetype);
         Task<List<SelectListItem>> GetDropdown(string categoryName);
-        Task<bool> SendForecloseToInbox(int psmId);
-        Task<bool> CloseProjectAgain(int psmId);
+        Task<bool> SendForecloseToInbox(int psmId, int projId);
+        Task<bool> CloseProjectAgain(int psmId, int projId);
 
         Task<bool> UpdateFieldInSTCAsync(int projId, bool fieldInSTC);
 

@@ -481,6 +481,7 @@ $(document).ready(function () {
 
     let TeamDetailPostBackURL = '/Projects/AttDetails';
     $(document).on('click', '.anchorDetail', function () {
+        
         let $buttonClicked = $(this);
         let id = $buttonClicked.attr('data-id');
 
@@ -513,7 +514,7 @@ $(document).ready(function () {
 
 let TeamDetailPostBackURL = '/Projects/AttDetails';
 $(document).on('click', '.anchorDetail', function () {
-
+ 
 
     let $buttonClicked = $(this);
     let id = $buttonClicked.attr('data-id');

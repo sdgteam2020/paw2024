@@ -1174,7 +1174,7 @@ function GetCloseProjects(Type) {
 }
 function bindClosedProject(data) {
     let response = data || [];
-    console.log(response);
+  
 
     if ($.fn.DataTable.isDataTable("#foreclosetable")) {
         $("#foreclosetable").DataTable().destroy();
@@ -1196,14 +1196,14 @@ function bindClosedProject(data) {
                     actionButton = `
                         <button type="button"
                                 class="btn btn-sm btn-primary btnSendToInbox"
-                                data-psmid="${project.psmId}">
+                                data-psmid="${project.psmId}" data-projid="${project.projid}">
                             Open Project
                         </button>`;
                 } else {
                     actionButton = `
                         <button type="button"
                                 class="btn btn-sm btn-danger btnCloseAgain"
-                                data-psmid="${project.psmId}">
+                                data-psmid="${project.psmId}" data-projid="${project.projid}">
                             Close Again
                         </button>`;
                 }
@@ -1269,7 +1269,9 @@ function bindClosedProject(data) {
 $(document).on("click", ".btnSendToInbox", function () {
    
     let psmId = $(this).data("psmid");
-    alert(psmId);
+    let projId = $(this).data("projid");
+    
+
     Swal.fire({
         title: "Are you sure?",
         text: "Do you want to send this project back to Inbox?",
@@ -1280,7 +1282,7 @@ $(document).on("click", ".btnSendToInbox", function () {
     }).then((result) => {
 
         if (result.isConfirmed) {
-            SendForecloseToInbox(psmId);
+            SendForecloseToInbox(psmId, projId);
         }
 
     });
@@ -1290,6 +1292,7 @@ $(document).on("click", ".btnSendToInbox", function () {
 $(document).on("click", ".btnCloseAgain", function () {
 
     let psmId = $(this).data("psmid");
+    let projId = $(this).data("projid");
 
     Swal.fire({
         title: "Are you sure?",
@@ -1301,18 +1304,18 @@ $(document).on("click", ".btnCloseAgain", function () {
     }).then((result) => {
 
         if (result.isConfirmed) {
-            CloseProjectAgain(psmId);
+            CloseProjectAgain(psmId, projId);
         }
 
     });
 });
 
-function CloseProjectAgain(psmId) {
+function CloseProjectAgain(psmId, projId) {
 
     $.ajax({
         url: '/Projects/CloseProjectAgain',
         type: 'POST',
-        data: { psmId: psmId },
+        data: { psmId: psmId, projId: projId },
 
         success: function (response) {
 
@@ -1329,12 +1332,12 @@ function CloseProjectAgain(psmId) {
         }
     });
 }
-function SendForecloseToInbox(psmId) {
+function SendForecloseToInbox(psmId, projId) {
  
     $.ajax({
         url: '/Projects/SendForecloseToInbox',
         type: 'POST',
-        data: { Psmid: psmId },
+        data: { Psmid: psmId, ProjId: projId },
 
         success: function (response) {
 

@@ -1005,10 +1005,12 @@ namespace swas.UI.Controllers
                 using var pdfDoc = new PdfDocument(new PdfReader(filePath), new PdfWriter(memoryStream));
                 using var doc = new Document(pdfDoc);
 
-                var font = PdfFontFactory.CreateFont(FontProgramFactory.CreateFont(StandardFonts.HELVETICA));
+                var font = PdfFontFactory.CreateFont(
+     StandardFonts.TIMES_ROMAN
+ );
                 var paragraph = new Paragraph($"{ip} {DateTime.Now}")
                     .SetFont(font)
-                    .SetFontSize(30);
+                    .SetFontSize(50);
 
                 var gs1 = new PdfExtGState().SetFillOpacity(0.2f);
 
@@ -3329,11 +3331,11 @@ namespace swas.UI.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> SendForecloseToInbox(int Psmid)
+        public async Task<IActionResult> SendForecloseToInbox(int Psmid, int projid)
         {
             try
             {
-                var result = await _projectsRepository.SendForecloseToInbox(Psmid);
+                var result = await _projectsRepository.SendForecloseToInbox(Psmid, projid);
 
                 return Json(new
                 {
@@ -3355,9 +3357,9 @@ namespace swas.UI.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> CloseProjectAgain(int psmId)
+        public async Task<IActionResult> CloseProjectAgain(int psmId, int projid)
         {
-            var result = await _projectsRepository.CloseProjectAgain(psmId);
+            var result = await _projectsRepository.CloseProjectAgain(psmId, projid);
 
             return Json(new
             {

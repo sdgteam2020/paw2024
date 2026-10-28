@@ -1,0 +1,362 @@
+DEPENDENCY AUDIT REPORT
+=======================
+
+Workspace: E:\VersionControl\PAW2.0\
+Solution: swas.sln
+Audit type: Read-only dependency audit
+Target framework: .NET 9.0
+Projects: swas.UI, swas.DAL, swas.BAL
+
+IMPORTANT
+---------
+No project files, package versions, DLLs, frontend assets, or application files were intentionally modified, deleted, uninstalled, upgraded, or removed during the audit.
+
+The repository already contained unrelated uncommitted changes before the audit. They were not altered.
+
+EXECUTIVE SUMMARY
+-----------------
+The main findings are:
+
+1. Multiple duplicated frontend library trees exist under swas.UI\wwwroot.
+2. Several direct NuGet packages appear unused based on source/configuration searches.
+3. Grpc.Core is declared in all three projects but only unused using directives were found.
+4. DotNetEnv is declared but no environment-file loading API was found.
+5. ClosedXML, MessagePack formatter, and Swashbuckle APIs were not found in application source.
+6. iText and SAML dependencies are actively used and must not be removed without testing.
+7. Vulnerable transitive dependencies are present in the UI dependency graph.
+8. Many historical publish profiles target old local or IIS deployment locations.
+9. No central package-management or legacy NuGet manifest files were found.
+
+FINDING COUNTS
+--------------
+Strong removal candidates: 5 package candidates, subject to verification
+Duplicate/consolidation groups: 8 major groups
+Outdated package observations: 14
+Vulnerable transitive package families: 8
+Non-generated DLLs: 1
+
+PROJECT STRUCTURE
+-----------------
+Project                         Target       Project references
+swas.UI                         net9.0       swas.BAL, swas.DAL
+swas.BAL                        net9.0       swas.DAL
+swas.DAL                        net9.0       None
+
+DEPENDENCY MANIFESTS
+--------------------
+Found:
+- swas.sln
+- swas.UI\swas.UI.csproj
+- swas.DAL\swas.DAL.csproj
+- swas.BAL\swas.BAL.csproj
+- swas.UI\libman.json
+- swas.UI\Properties\PublishProfiles\*.pubxml
+
+Not found:
+- Directory.Build.props
+- Directory.Packages.props
+- packages.config
+- packages.lock.json
+- NuGet.config
+
+Package versions are therefore declared independently in each project.
+
+DIRECT PACKAGE INVENTORY
+------------------------
+SWAS.UI:
+- Alphacloud.MessagePack.AspNetCore.Formatters 4.1.0
+- bootstrap 5.3.0
+- BouncyCastle.NetCore 2.2.1
+- ClosedXML 0.105.0
+- Dapper 2.1.79
+- DotNetEnv 3.2.0
+- Grpc.Core 2.46.6
+- itext.bouncy-castle-adapter 8.0.2
+- itext7 8.0.2
+- itext7.bouncy-castle-adapter 8.0.2
+- Microsoft.AspNetCore.Antiforgery 2.3.11
+- Swashbuckle.AspNetCore 6.5.0
+- Microsoft.EntityFrameworkCore 9.0.0
+- Microsoft.EntityFrameworkCore.SqlServer 9.0.0
+- Microsoft.EntityFrameworkCore.Tools 9.0.0 (PrivateAssets=all)
+- Microsoft.EntityFrameworkCore.Design 9.0.0 (PrivateAssets=all)
+- Microsoft.AspNetCore.Identity.EntityFrameworkCore 9.0.0
+- Microsoft.VisualStudio.Web.CodeGeneration.Design 9.0.0
+
+SWAS.DAL:
+- Grpc.Core 2.46.6
+- Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore 9.0.0
+- Microsoft.AspNetCore.Identity.EntityFrameworkCore 9.0.0
+- Microsoft.EntityFrameworkCore.Design 9.0.0 (PrivateAssets=all)
+- Microsoft.EntityFrameworkCore.SqlServer 9.0.0
+- Microsoft.EntityFrameworkCore.Tools 9.0.0 (PrivateAssets=all)
+- Newtonsoft.Json 13.0.3
+
+SWAS.BAL:
+- Dapper 2.1.79
+- Grpc.Core 2.46.6
+- itext7 8.0.2
+- Microsoft.AspNetCore.Mvc.NewtonsoftJson 9.0.0
+
+A. SAFE OR STRONG REMOVAL CANDIDATES
+------------------------------------
+These are recommendations only. They must pass the verification steps before removal.
+
+1. Alphacloud.MessagePack.AspNetCore.Formatters 4.1.0
+   Location: swas.UI\swas.UI.csproj
+   Evidence: No MessagePack formatter or package API usage was found in application source.
+   Security relevance: Introduces MessagePack 2.5.108, which has advisories.
+   Recommendation: Remove if no hidden serialization/configuration dependency exists.
+   Impact: Could affect runtime serialization or SignalR/API behavior.
+   Verification: Search configuration/startup/deployment files and test serialization and SignalR functionality.
+
+2. ClosedXML 0.105.0
+   Location: swas.UI\swas.UI.csproj
+   Evidence: No ClosedXML or XLWorkbook usage was found.
+   Recommendation: Remove if no Excel/reporting feature uses it indirectly.
+   Impact: Could break Excel export if used through reflection or external code.
+   Verification: Search all source/configuration files and test all reporting/export features.
+
+3. DotNetEnv 3.2.0
+   Location: swas.UI\swas.UI.csproj
+   Evidence: Only using DotNetEnv directives were found. No Env.Load or equivalent API was found.
+   Recommendation: Remove after verifying that .env files are not used by deployment scripts.
+   Impact: Could affect hidden environment bootstrap logic.
+   Verification: Search for .env files, Env.Load calls, startup scripts, and deployment documentation.
+
+4. Grpc.Core 2.46.6
+   Locations: swas.UI, swas.DAL, swas.BAL
+   Evidence: Grpc.Core appears as using directives only; no gRPC APIs or .proto files were found.
+   Recommendation: Remove or consolidate after runtime-loading verification.
+   Impact: Could break hidden plugin/reflection-based gRPC code.
+   Verification: Search all files, deployment scripts, reflection loading, and production configuration.
+
+5. Swashbuckle.AspNetCore 6.5.0
+   Location: swas.UI\swas.UI.csproj
+   Evidence: No AddSwaggerGen, UseSwagger, UseSwaggerUI, or Swagger configuration was found.
+   Recommendation: Remove if Swagger is not a deployment requirement.
+   Impact: Swagger documentation/UI would no longer be available.
+   Verification: Confirm /swagger is not used by operations, testing, monitoring, or deployment.
+
+6. Microsoft.VisualStudio.Web.CodeGeneration.Design 9.0.0
+   Location: swas.UI\swas.UI.csproj
+   Evidence: Development/scaffolding package; no runtime usage found.
+   Recommendation: Remove if scaffolding is no longer part of development workflow.
+   Impact: Visual Studio scaffolding may stop working.
+   Verification: Confirm team development procedures do not require scaffolding.
+
+7. Explicit Microsoft.AspNetCore.Antiforgery 2.3.11
+   Location: swas.UI\swas.UI.csproj
+   Evidence: Antiforgery is actively used, but the explicit package is much older than the .NET 9 target and ASP.NET Core shared framework supplies this feature.
+   Recommendation: Investigate removing the explicit reference rather than removing antiforgery functionality.
+   Impact: Form validation behavior could change if the old package is overriding framework assets.
+   Verification: Test all MVC and Razor Pages POST forms, login, registration, and authorization flows.
+
+B. OUTDATED PACKAGES AND RECOMMENDED UPDATES
+--------------------------------------------
+NuGet reported the following newer versions:
+
+Package                                           Current   Reported latest
+bootstrap                                         5.3.0     5.3.8
+ClosedXML                                         0.105.0   0.105.1
+Dapper                                            2.1.79    2.1.89
+Newtonsoft.Json                                   13.0.3   13.0.4
+Microsoft.EntityFrameworkCore                     9.0.0     10.0.14
+Microsoft.EntityFrameworkCore.SqlServer           9.0.0     10.0.14
+Microsoft.EntityFrameworkCore.Design              9.0.0     10.0.14
+Microsoft.EntityFrameworkCore.Tools               9.0.0     10.0.14
+Microsoft.AspNetCore.Identity.EntityFrameworkCore 9.0.0     10.0.14
+Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore 9.0.0  10.0.14
+Microsoft.AspNetCore.Mvc.NewtonsoftJson           9.0.0     10.0.14
+Microsoft.VisualStudio.Web.CodeGeneration.Design  9.0.0     10.0.2
+Microsoft.AspNetCore.Antiforgery                  2.3.11    2.3.13
+Swashbuckle.AspNetCore                             6.5.0     10.3.1
+itext7 and adapters                              8.0.2     9.8.0
+
+Recommendations:
+- Dapper 2.1.79 to 2.1.89: low-risk update after repository tests.
+- Newtonsoft.Json 13.0.3 to 13.0.4: low-risk update.
+- Bootstrap 5.3.0 to 5.3.8: update only after selecting one canonical frontend tree.
+- ClosedXML 0.105.0 to 0.105.1: update only if retained.
+- EF Core/ASP.NET Core 9.x to 10.x: do not perform independently; requires a .NET 10 migration.
+- iText 8.0.2 to 9.8.0: planned migration only; requires PDF/signing and licensing review.
+- Swashbuckle 6.5.0 to 10.3.1: remove if unused or perform a separate major-version migration.
+
+C. DUPLICATE LIBRARIES AND VERSIONS
+-----------------------------------
+NuGet/project duplication:
+
+- EF Core packages are declared in both UI and DAL.
+- Identity EF Core is declared in both UI and DAL.
+- EF Core Design and Tools are declared in both UI and DAL.
+- Dapper is declared in UI and BAL.
+- iText7 is declared in UI and BAL.
+- Grpc.Core is declared in all three projects.
+- Both itext.bouncy-castle-adapter and itext7.bouncy-castle-adapter are declared in UI.
+- Package versions are independently maintained because central package management is not configured.
+
+Frontend duplication:
+
+- wwwroot\lib\bootstrap
+- wwwroot\lib\lib\bootstrap
+- wwwroot\assets\css\bootstrap.min.css
+- wwwroot\assets\js\bootstrap.min.js
+- wwwroot\assets\js\bootstrap.bundle.min.js
+- wwwroot\js\bootstrap.min.js
+- wwwroot\lib\bootstrap\dist\js\bootstrap.min.js
+- wwwroot\lib\lib\bootstrap\dist\js\bootstrap.min.js
+
+jQuery appears under:
+
+- wwwroot\assets\js
+- wwwroot\assets\js\dataTable\js
+- wwwroot\js
+- wwwroot\jquery
+- wwwroot\Content
+- wwwroot\lib\jquery
+- wwwroot\lib\lib\jquery
+
+DataTables CSS/JS is duplicated under assets\dataTable and assets\js\dataTable.
+Font Awesome is present under wwwroot\font-awesome and wwwroot\assets\css\font-awesome.
+Validation libraries are duplicated under wwwroot\lib and wwwroot\lib\lib.
+
+Exact duplicate files were confirmed by SHA-256 comparison, including files under:
+- wwwroot\lib\jquery and wwwroot\lib\lib\jquery
+- wwwroot\lib\bootstrap and wwwroot\lib\lib\bootstrap
+- wwwroot\assets\dataTable and wwwroot\assets\js\dataTable
+
+Important: Identity validation pages currently reference both ~/lib/... and ~/lib/lib/... paths in Development. Do not remove either tree until those references are consolidated and tested.
+
+D. SECURITY VULNERABILITIES
+---------------------------
+The UI vulnerability scan reported:
+
+Package                         Version   Introduced through                         Severity
+BouncyCastle.Cryptography      2.2.1     itext.bouncy-castle-adapter               Moderate
+MessagePack                    2.5.108   Alphacloud.MessagePack formatter           Moderate/High
+Microsoft.Build                17.10.4   Web code generation/scaffolding           High
+NuGet.Packaging                6.11.0    Web code generation/scaffolding           Low
+NuGet.Protocol                 6.11.0    Web code generation/scaffolding           Low
+System.Net.Http                4.3.0     Legacy transitive dependency               High
+System.Security.Cryptography.Pkcs 8.0.1  NuGet/cryptographic dependency chain      High/Moderate
+System.Security.Cryptography.Xml 8.0.3   Data protection/cryptographic chain        High
+
+No vulnerable packages were reported for swas.DAL or swas.BAL when scanned separately.
+
+Security recommendations:
+- Remove Alphacloud.MessagePack formatter if unused.
+- Remove Web Code Generation packages if scaffolding is not required.
+- Review and update iText/Bouncy Castle through a supported package combination.
+- Do not independently remove or upgrade cryptographic packages.
+- Test SAML signature verification and PDF signing after every cryptographic change.
+
+E. REQUIRED LIBRARIES THAT MUST REMAIN
+--------------------------------------
+The following are actively used or operationally important:
+
+- Microsoft.EntityFrameworkCore
+- Microsoft.EntityFrameworkCore.SqlServer
+- Microsoft.AspNetCore.Identity.EntityFrameworkCore
+- Dapper, pending final project-level usage confirmation
+- Newtonsoft.Json
+- itext7
+- Required iText cryptographic adapter
+- SAMLSignatureVerification.dll
+- Used Bootstrap, jQuery, DataTables, Font Awesome, validation, Select2, Chart.js, SweetAlert, PDF.js, and flatpickr assets
+
+SAMLSignatureVerification.dll details:
+- Location: swas.UI\SAMLSignatureVerification.dll
+- Assembly version: 1.0.0.0
+- Public key token: none
+- Explicit HintPath reference in swas.UI.csproj
+- Used by swas.UI\Saml\Saml.cs
+
+This DLL is not an unused-DLL candidate.
+
+F. UNCERTAIN DEPENDENCIES REQUIRING MANUAL VERIFICATION
+-------------------------------------------------------
+1. itext.bouncy-castle-adapter versus itext7.bouncy-castle-adapter
+   Verify resolved assemblies and PDF signing behavior before changing.
+
+2. Microsoft.AspNetCore.Antiforgery 2.3.11
+   Verify shared-framework behavior after removing only the explicit reference.
+
+3. Microsoft.VisualStudio.Web.CodeGeneration.Design
+   Confirm whether Visual Studio scaffolding is still needed.
+
+4. Historical publish profiles
+   Identify current production, staging, rollback, and emergency profiles.
+
+5. wwwroot\Download, Uploads, temp, and PDF folders
+   These may be application data rather than dependencies. Verify IIS and retention requirements.
+
+6. Controllers.zip and MPC_src.rar
+   Confirm approved backup/source-control coverage before removal.
+
+7. wwwroot\lib\lib
+   Update Razor references and test Development and Production validation behavior first.
+
+8. Static library variants
+   File names alone do not prove versions. Inspect headers/package metadata before consolidation.
+
+REQUIRED RETENTION OF DEPLOYMENT FILES
+--------------------------------------
+The project contains approximately 69 publish profiles, including FolderProfile.pubxml through FolderProfile67.pubxml and Pow Publish.pubxml.
+
+They target historical locations such as:
+- C:\inetpub\wwwroot\...
+- C:\Users\Administrator\Desktop\...
+- C:\PAWPUB
+- D:\Release\publish
+- Temporary and legacy folders
+
+Do not remove profiles until ownership, last use, rollback use, and current deployment documentation are confirmed.
+
+Generated build trees were also found:
+- swas.UI\bin and swas.UI\obj
+- swas.DAL\bin and swas.DAL\obj
+- swas.BAL\bin and swas.BAL\obj
+
+These are generated artifacts and should be handled separately from source dependency cleanup.
+
+RECOMMENDED CLEANUP PLAN
+------------------------
+1. Create a cleanup branch and preserve the current working tree.
+2. Confirm production, staging, rollback, and emergency publish profiles.
+3. Confirm that Controllers.zip and MPC_src.rar are backed up elsewhere.
+4. Remove or consolidate one suspected unused NuGet package at a time.
+5. Restore and build all projects after each package group.
+6. Test authentication, Identity, antiforgery, EF Core, SQL Server, Dapper, SignalR, SAML, PDF generation, PDF signing, uploads, downloads, and IIS deployment.
+7. Select one canonical frontend asset tree.
+8. Update Razor references to canonical paths.
+9. Test Development and Production validation scripts.
+10. Preserve license files and compare assets by hash before consolidation.
+11. Publish to a disposable IIS test site.
+12. Compare test output with the current production deployment.
+13. Run the vulnerability scan again.
+14. Remove only approved obsolete profiles, archives, and generated artifacts.
+15. Document the purpose, version, source, and owner of every retained dependency.
+
+FINAL RECOMMENDATION
+--------------------
+The first cleanup phase should focus on packages with no observed application usage:
+
+- Alphacloud.MessagePack.AspNetCore.Formatters
+- ClosedXML
+- DotNetEnv
+- Grpc.Core
+- Swashbuckle.AspNetCore
+
+The second phase should address frontend consolidation, especially the duplicated wwwroot\lib\lib tree and repeated jQuery/DataTables/Bootstrap assets.
+
+The following should not be removed without targeted testing:
+
+- SAMLSignatureVerification.dll
+- iText packages and cryptographic adapters
+- EF Core and Identity packages
+- Newtonsoft.Json
+- Dapper
+- IIS publish profiles
+- Upload, PDF, Download, and temp directories
+
+The project should remain on .NET 9 and the EF Core 9 package line unless a separately planned .NET 10 migration is approved.

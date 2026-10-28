@@ -1555,7 +1555,7 @@ namespace swas.BAL.Repository
                 throw;
             }
         }
-        public async Task<List<DToWhiteListeds>> GetWhiteListedActionProj(int TypeId)
+        public async Task<List<DAL.Models.DToWhiteListeds>> GetWhiteListedActionProj(int TypeId)
         {
             try
             {   
@@ -2111,51 +2111,52 @@ namespace swas.BAL.Repository
             }
         }
 
-        public async Task<bool> SendForecloseToInbox(int Psmid)
+        public async Task<bool> SendForecloseToInbox(int Psmid, int ProjId)
         {
             using var transaction = await _dbContext.Database.BeginTransactionAsync();
 
             try
             {
-                // 1. Get the movement
+                // 1. Fetch the latest active movement for this project
                 var movement = await _dbContext.ProjStakeHolderMov
-                    .FirstOrDefaultAsync(x => x.PsmId == Psmid && x.IsActive == true && x.IsDeleted == false);
+                    .Where(x =>
+                        x.ProjId == ProjId &&
+                        x.IsActive &&
+                        !x.IsDeleted)
+                    .OrderByDescending(x => x.PsmId)
+                    .FirstOrDefaultAsync();
+
 
                 if (movement == null)
                     return false;
 
-                // 2. Make it active again so it can come in Inbox
                 movement.ForeClosed = false;
-                movement.IsComplete = false;          // Very important for Inbox
-                                                      // movement.StatusActionsMappingId = ???  // Optional: change to an active status if needed
+            
 
-                // 3. Handle tbl_project_foreclose
+                // Check by ProjId to prevent duplicate project records
                 var foreclose = await _dbContext.ProjectForecloses
-                    .Where(x => x.Psmid == Psmid)
+                    .Where(x => x.Projid == ProjId)
                     .OrderByDescending(x => x.ForecloseId)
                     .FirstOrDefaultAsync();
 
                 if (foreclose != null)
                 {
-                    // Already has record → mark as Past Close
+                    // Update existing record
+                    foreclose.Psmid = Psmid;
                     foreclose.IsPresentClosed = false;
                     foreclose.IsOpened = true;
                     foreclose.OpenedDate = DateTime.Now;
-                    // foreclose.OpenedByUserId = currentUserId;   // recommended
-                    // foreclose.OpenRemarks = "Sent to Inbox by DDGit";
                 }
                 else
                 {
-                    // No record exists → create one as Past Close
+                    // Insert only when no record exists for this project
                     var newForeclose = new ProjectForeclose
                     {
                         Psmid = Psmid,
+                        Projid = ProjId,
                         IsPresentClosed = false,
                         IsOpened = true,
-                        OpenedDate = DateTime.Now,
-                        // ClosedDate = DateTime.Now,           // optional
-                        // ClosedByUserId = currentUserId,
-                        // OpenedByUserId = currentUserId
+                        OpenedDate = DateTime.Now
                     };
 
                     await _dbContext.ProjectForecloses.AddAsync(newForeclose);
@@ -2172,55 +2173,55 @@ namespace swas.BAL.Repository
                 throw;
             }
         }
-        public async Task<bool> CloseProjectAgain(int psmId)
+        public async Task<bool> CloseProjectAgain(int psmId, int projId)
         {
             using var transaction = await _dbContext.Database.BeginTransactionAsync();
 
             try
             {
-                // 1. Get active movement
+                // 1. Fetch the latest active movement for this project
                 var movement = await _dbContext.ProjStakeHolderMov
-                    .FirstOrDefaultAsync(x => x.PsmId == psmId
-                                           && x.IsActive == true
-                                           && x.IsDeleted == false);
+                    .Where(x =>
+                        x.ProjId == projId &&
+                        x.IsActive &&
+                        !x.IsDeleted)
+                    .OrderByDescending(x => x.PsmId)
+                    .FirstOrDefaultAsync();
+
 
                 if (movement == null)
                     return false;
 
-                // 2. Mark as closed again
                 movement.ForeClosed = true;
-                movement.IsComplete = true;          // Important
+               
 
-                // 3. Handle tbl_project_foreclose
+                // Check whether a foreclose record already exists for this project
                 var foreclose = await _dbContext.ProjectForecloses
-                    .Where(x => x.Psmid == psmId)
+                    .Where(x => x.Projid == projId)
                     .OrderByDescending(x => x.ForecloseId)
                     .FirstOrDefaultAsync();
 
                 if (foreclose != null)
                 {
-                    // Update existing record → back to Present Close
+                    // Update existing record
+                    foreclose.Psmid = psmId;
                     foreclose.IsPresentClosed = true;
                     foreclose.IsOpened = false;
                     foreclose.ClosedDate = DateTime.Now;
-                    // foreclose.ClosedByUserId = currentUserId;     // recommended
-                    // foreclose.CloseRemarks = "Closed again by DDGit";
 
-                    // Optional: clear open info
-                    foreclose.OpenedDate = null;
-                    foreclose.OpenedByUserId = null;
-                    foreclose.OpenRemarks = null;
+               
+                   
                 }
                 else
                 {
-                    // No record exists → create new Present Close record
+                    // Insert only when no record exists for this project
                     var newForeclose = new ProjectForeclose
                     {
                         Psmid = psmId,
+                        Projid = projId,
                         IsPresentClosed = true,
                         IsOpened = false,
                         ClosedDate = DateTime.Now
-                        // ClosedByUserId = currentUserId
                     };
 
                     await _dbContext.ProjectForecloses.AddAsync(newForeclose);

@@ -1,7 +1,4 @@
 -----------------------------------------------------------------------------
-Date : 29-04-2026 15:07:46
-Data is Null. This method or property cannot be called on Null values.
------------------------------------------------------------------------------
 Date : 29-04-2026 15:07:47
 Request failed & Status Code : 200
 -----------------------------------------------------------------------------
@@ -898,3 +895,6 @@ Error while Fetching Closeitems : Unable to cast object of type 'System.Boolean'
 -----------------------------------------------------------------------------
 Date : 26-10-2026 16:09:33
 Error while Fetching Closeitems : Unable to cast object of type 'System.Boolean' to type 'System.Int32'.
+-----------------------------------------------------------------------------
+Date : 28-10-2026 12:16:05
+The data types int and int encrypted with (encryption_type = 'DETERMINISTIC', encryption_algorithm_name = 'AEAD_AES_256_CBC_HMAC_SHA_256', column_encryption_key_name = 'AlwaysEncrypted_new', column_encryption_key_database_name = 'paw10_06_26_Latest') are incompatible in the equal to operator.
