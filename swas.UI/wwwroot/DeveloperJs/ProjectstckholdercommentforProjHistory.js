@@ -540,7 +540,7 @@ $('#btnGenerateAndOpenAppxC').on('click', function() {
 
             <!-- ==================== UPLOADED PDF ==================== -->
             <div id="uploadedSection">
-                <div class="section-title">Uploaded Appx C</div>
+                <div class="section-title ph-section-title">Uploaded Appx C</div>
                 <div id="UploadedPdfPreview">
                     <p>Loading uploaded document...</p>
                 </div>

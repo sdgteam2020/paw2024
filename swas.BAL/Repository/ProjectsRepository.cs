@@ -1361,138 +1361,138 @@ namespace swas.BAL.Repository
                .FirstOrDefaultAsync(a => a.PsmId == psmId && a.ToUnitId == UnitID);
         }
 
-        public async Task<bool> UpdateProjectAsync(tbl_Projects project, string Remarks)
+        public async Task<bool> UpdateProjectAsync(tbl_Projects project, string Remarks, bool datesLocked = false)
         {
             try
             {
                 Login Logins = SessionHelper.GetObjectFromJson<Login>(_httpContextAccessor.HttpContext.Session, "User");
-                if (Logins != null)
-                {
-
-                    if (project.Date_type == 1 && project.IsSubmited == true && Remarks != "1")
-                    {
-
-                       
-                        var dateApp = _dbContext.DateApproval
-                            .Where(x => x.ProjId == project.ProjId)
-                            .OrderByDescending(x => x.ProjId) // Ideally use a DateTime or Id field
-                            .FirstOrDefault();
-
-                        if (dateApp == null)
-                        {
-                            dateApp = new DateApproval
-                            {
-                                ProjId = project.ProjId,
-                                UnitId = Logins.unitid,
-                                Request_Date = DateTime.Now,
-                                UserRequest = true,
-                                User = Helper1.LoginDetails(Logins),
-                                IsRead = false,
-                                RequestType = 1
-                            };
-                            _dbContext.DateApproval.Add(dateApp);
-                        }
-                        else
-                        {
-                            dateApp.ProjId = project.ProjId;
-                            dateApp.UnitId = Logins.unitid;
-                            dateApp.Request_Date = DateTime.Now;
-                            dateApp.UserRequest = true;
-                            dateApp.User = Helper1.LoginDetails(Logins);
-                            dateApp.IsRead = false;
-                            dateApp.RequestType = 1;
-
-                            _dbContext.DateApproval.Update(dateApp);
-                        }
-
-                        _dbContext.SaveChanges();
-                        var legacyHistory = _dbContext.LegacyHistory
-                            .Where(x => x.ProjectId == project.ProjId)
-                            .OrderByDescending(x => x.ProjectId)
-                            .FirstOrDefault();
-
-                        if (legacyHistory == null)
-                        {
-                            legacyHistory = new LegacyHistory
-                            {
-                                ProjectId = project.ProjId,
-                                UnitId = Logins.unitid,
-                                FromUnit = Logins.unitid,
-                                ActionBy = Logins.Rank + " " + Logins.Offr_Name,
-                                ActionType = (LegacyHistory.ActionTypeEnum)1,
-                                Remarks = Remarks ?? "No Remarks",
-                                ActionDate = DateTime.Now,
-                                Userdetails = Helper1.LoginDetails(Logins)
-                            };
-                            _dbContext.LegacyHistory.Add(legacyHistory);
-                        }
-                        else
-                        {
-                            legacyHistory.ProjectId = project.ProjId;
-                            legacyHistory.UnitId = Logins.unitid;
-                            legacyHistory.FromUnit = Logins.unitid;
-                            legacyHistory.ActionBy = Logins.Rank + " " + Logins.Offr_Name;
-                            legacyHistory.ActionType = (LegacyHistory.ActionTypeEnum)1;
-                            legacyHistory.Remarks = Remarks ?? "No Remarks";
-                            legacyHistory.ActionDate = DateTime.Now;
-                            legacyHistory.Userdetails = Helper1.LoginDetails(Logins);
-
-                            _dbContext.LegacyHistory.Update(legacyHistory);
-
-                            _dbContext.SaveChanges();
-                        }
-
-                    }
-
-
-                    _dbContext.Entry(project).State = EntityState.Modified;
-
-                    await _dbContext.SaveChangesAsync();
-
-                        var existpsmid = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == project.CurrentPslmId);
-                    if (existpsmid != null)
-                    {
-
-                        if (project.Is_AI_ML == true)
-                        {
-
-                            existpsmid.StatusActionsMappingId = 159; //21  //arbaz tomer
-                            existpsmid.ToUnitId = 2; //  
-                        }
-                        else
-                        {
-                            existpsmid.StatusActionsMappingId = 1; //21  //Arbaztomer
-                            existpsmid.ToUnitId = 1; //  
-
-                        }
-
-
-                        if (project.Date_type == 1)
-                        {
-
-                            existpsmid.TimeStamp = project.InitiatedDate;
-                        }
-                        else
-                        {
-                            existpsmid.TimeStamp = DateTime.Now;
-
-                        }
-                        _dbContext.ProjStakeHolderMov.Update(existpsmid);
-                        _dbContext.SaveChanges();
-                    }
-                    return true;
-                    
-                }
-                else
-                {
+                if (Logins == null)
                     return false;
-                }
-            }
-            catch(Exception ex) {
 
-                throw ex;
+                var existpsmid = _dbContext.ProjStakeHolderMov.FirstOrDefault(x => x.PsmId == project.CurrentPslmId);
+
+                // Date-change approval request: only when dates are editable
+                if (!datesLocked && project.Date_type == 1 && project.IsSubmited == true && Remarks != "1")
+                {
+                    var dateApp = _dbContext.DateApproval
+                        .Where(x => x.ProjId == project.ProjId)
+                        .OrderByDescending(x => x.ProjId)
+                        .FirstOrDefault();
+
+                    if (dateApp == null)
+                    {
+                        dateApp = new DateApproval
+                        {
+                            ProjId = project.ProjId,
+                            UnitId = Logins.unitid,
+                            Request_Date = DateTime.Now,
+                            UserRequest = true,
+                            User = Helper1.LoginDetails(Logins),
+                            IsRead = false,
+                            RequestType = 1
+                        };
+                        _dbContext.DateApproval.Add(dateApp);
+                    }
+                    else
+                    {
+                        dateApp.ProjId = project.ProjId;
+                        dateApp.UnitId = Logins.unitid;
+                        dateApp.Request_Date = DateTime.Now;
+                        dateApp.UserRequest = true;
+                        dateApp.User = Helper1.LoginDetails(Logins);
+                        dateApp.IsRead = false;
+                        dateApp.RequestType = 1;
+                        _dbContext.DateApproval.Update(dateApp);
+                    }
+                    _dbContext.SaveChanges();
+
+                    var legacyHistory = _dbContext.LegacyHistory
+                        .Where(x => x.ProjectId == project.ProjId)
+                        .OrderByDescending(x => x.ProjectId)
+                        .FirstOrDefault();
+
+                    if (legacyHistory == null)
+                    {
+                        legacyHistory = new LegacyHistory
+                        {
+                            ProjectId = project.ProjId,
+                            UnitId = Logins.unitid,
+                            FromUnit = Logins.unitid,
+                            ActionBy = Logins.Rank + " " + Logins.Offr_Name,
+                            ActionType = (LegacyHistory.ActionTypeEnum)1,
+                            Remarks = Remarks ?? "No Remarks",
+                            ActionDate = DateTime.Now,
+                            Userdetails = Helper1.LoginDetails(Logins)
+                        };
+                        _dbContext.LegacyHistory.Add(legacyHistory);
+                    }
+                    else
+                    {
+                        legacyHistory.ProjectId = project.ProjId;
+                        legacyHistory.UnitId = Logins.unitid;
+                        legacyHistory.FromUnit = Logins.unitid;
+                        legacyHistory.ActionBy = Logins.Rank + " " + Logins.Offr_Name;
+                        legacyHistory.ActionType = (LegacyHistory.ActionTypeEnum)1;
+                        legacyHistory.Remarks = Remarks ?? "No Remarks";
+                        legacyHistory.ActionDate = DateTime.Now;
+                        legacyHistory.Userdetails = Helper1.LoginDetails(Logins);
+                        _dbContext.LegacyHistory.Update(legacyHistory);
+                    }
+                    _dbContext.SaveChanges();
+                }
+
+                // ---------- Update project ----------
+                var entry = _dbContext.Entry(project);
+                entry.State = EntityState.Modified;
+
+                if (datesLocked)
+                {
+                    entry.Property(x => x.InitiatedDate).IsModified = false;
+                    entry.Property(x => x.CompletionDate).IsModified = false;
+                    entry.Property(x => x.DateTimeOfUpdate).IsModified = false;
+                }
+
+                await _dbContext.SaveChangesAsync();
+
+                // ---------- Movements ----------
+                if (existpsmid != null)
+                {
+                    int newToUnit = project.Is_AI_ML == true ? 2 : 1;
+
+                    // Movement 1 (current)
+                    existpsmid.StatusActionsMappingId = project.Is_AI_ML == true ? 159 : 1;
+                    existpsmid.ToUnitId = newToUnit;
+
+                    if (!datesLocked)
+                    {
+                        existpsmid.TimeStamp = project.Date_type == 1
+                            ? (project.InitiatedDate ?? DateTime.Now)
+                            : DateTime.Now;
+                    }
+
+                    _dbContext.ProjStakeHolderMov.Update(existpsmid);
+
+                    // Movement 2: only the ONE movement right after movement 1
+                    var nextMovement = _dbContext.ProjStakeHolderMov
+                        .Where(x => x.ProjId == project.ProjId && x.PsmId > existpsmid.PsmId)
+                        .OrderBy(x => x.PsmId)
+                        .FirstOrDefault();
+
+                    if (nextMovement != null)
+                    {
+                        nextMovement.FromUnitId = newToUnit;
+                        _dbContext.ProjStakeHolderMov.Update(nextMovement);
+                    }
+
+                    _dbContext.SaveChanges();
+                }
+
+                return true;
             }
-           
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<bool> UpdateTxnAsync(tbl_ProjStakeHolderMov psmov)

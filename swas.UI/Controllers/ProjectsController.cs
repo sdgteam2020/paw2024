@@ -460,56 +460,51 @@ namespace swas.UI.Controllers
                 if (Data == null)
                     return BadRequest(new { success = false, message = "Invalid project data." });
 
-                // Cross-field validation (only for Normal form)
-                if (Data.ProposalId != 7 && Data.ProposalId != 8 && Data.ProposalId != 5)
+                bool isSpecialForm = Data.ProposalId == 7 || Data.ProposalId == 8 || Data.ProposalId == 5;
+                bool isEdit = Data.ProjId != 0;
+                bool datesLocked = false;
+                tbl_Projects? existingProject = null;
+
+                if (isEdit)
                 {
-                    if (Data.CompletionDate.HasValue && Data.InitiatedDate.HasValue
-                        && Data.CompletionDate.Value < Data.InitiatedDate.Value)
-                    {
-                        ModelState.AddModelError(
-                            nameof(Data.CompletionDate),
-                            "Completion Date cannot be earlier than the Initiated Date.");
-                    }
+                    existingProject = await _projectsRepository.GetProjectByIdAsync(Data.ProjId);
+                    if (existingProject == null)
+                        return NotFound(new { success = false, message = "Project not found." });
+
+                    _dbContext.Entry(existingProject).State = EntityState.Detached;
+
+                    Data.IsSubmited = existingProject.IsSubmited;
+                    Data.IsProcess = existingProject.IsProcess;
+
+                    datesLocked = existingProject.IsSubmited == true && existingProject.IsProcess != true;
+                }
+                else
+                {
+                    Data.IsSubmited = false;
                 }
 
-                // =====================================================
-                // Clear Required validation for Special Form (Proposal 7 & 8)
-                // =====================================================
-                if (Data.ProposalId == 7 || Data.ProposalId == 8|| Data.ProposalId == 5)
+                if (datesLocked)
+                {
+                    ModelState.Remove(nameof(Data.InitiatedDate));
+                    ModelState.Remove(nameof(Data.CompletionDate));
+                }
+
+                if (isSpecialForm)
                 {
                     string[] fieldsToIgnore = new[]
                     {
-                nameof(Data.InitiatedDate),
-                nameof(Data.CompletionDate),
-                nameof(Data.Is_AI_ML),
-                nameof(Data.Security_Classification),
-                nameof(Data.TypeofSW),
-                nameof(Data.BeingDevpInhouse),
-                nameof(Data.Apptype),
-                nameof(Data.HostTypeID),
-                nameof(Data.EnvisagedCost),
-                nameof(Data.Aim),
-                nameof(Data.Puropose),
-                nameof(Data.Scope),
-                nameof(Data.ReqmtJustification),
-                nameof(Data.DetlsofUserBase),
-                nameof(Data.TechStackProposed),
-                nameof(Data.Detlsof_OS),
-                nameof(Data.ProposedDB_Engine),
-                nameof(Data.DetlsofSw_Architecture),
-                nameof(Data.operation_system_hosting_env),
-                nameof(Data.Additional_Ports),
-                nameof(Data.Concurrent_users),
-                nameof(Data.API_Initegration),
-                nameof(Data.Mission_Critical_appl_justif),
-                nameof(Data.Technology_dependencies),
+                nameof(Data.InitiatedDate), nameof(Data.CompletionDate), nameof(Data.Is_AI_ML),
+                nameof(Data.Security_Classification), nameof(Data.TypeofSW), nameof(Data.BeingDevpInhouse),
+                nameof(Data.Apptype), nameof(Data.HostTypeID), nameof(Data.EnvisagedCost), nameof(Data.Aim),
+                nameof(Data.Puropose), nameof(Data.Scope), nameof(Data.ReqmtJustification),
+                nameof(Data.DetlsofUserBase), nameof(Data.TechStackProposed), nameof(Data.Detlsof_OS),
+                nameof(Data.ProposedDB_Engine), nameof(Data.DetlsofSw_Architecture),
+                nameof(Data.operation_system_hosting_env), nameof(Data.Additional_Ports),
+                nameof(Data.Concurrent_users), nameof(Data.API_Initegration),
+                nameof(Data.Mission_Critical_appl_justif), nameof(Data.Technology_dependencies),
                 nameof(Data.NWBandWidthReqmt)
             };
-
-                    foreach (var field in fieldsToIgnore)
-                    {
-                        ModelState.Remove(field);
-                    }
+                    foreach (var field in fieldsToIgnore) ModelState.Remove(field);
                 }
                 else
                 {
@@ -521,16 +516,11 @@ namespace swas.UI.Controllers
                 if (!ModelState.IsValid)
                 {
                     foreach (var item in ModelState)
-                    {
                         foreach (var error in item.Value.Errors)
                         {
-                            var msg = string.IsNullOrWhiteSpace(error.ErrorMessage)
-                                ? "(exception)"
-                                : error.ErrorMessage;
-                            _logger.LogWarning("AddProject ModelState error — Field: {Field}, Error: {Error}",
-                                item.Key, msg);
+                            var msg = string.IsNullOrWhiteSpace(error.ErrorMessage) ? "(exception)" : error.ErrorMessage;
+                            _logger.LogWarning("AddProject ModelState error — Field: {Field}, Error: {Error}", item.Key, msg);
                         }
-                    }
 
                     return BadRequest(new
                     {
@@ -538,9 +528,7 @@ namespace swas.UI.Controllers
                         message = "Invalid submitted data.",
                         errors = ModelState
                             .Where(x => x.Value != null && x.Value.Errors.Count > 0)
-                            .ToDictionary(
-                                x => x.Key,
-                                x => x.Value!.Errors.Select(e => e.ErrorMessage).ToArray())
+                            .ToDictionary(x => x.Key, x => x.Value!.Errors.Select(e => e.ErrorMessage).ToArray())
                     });
                 }
 
@@ -552,46 +540,21 @@ namespace swas.UI.Controllers
                 if (Logins == null)
                     return Unauthorized(new { success = false, message = "Session expired. Please login again." });
 
-                // =====================================================
-                // Handle Special Form (Proposal 7 & 8) - Set unwanted fields to "N/A"
-                // =====================================================
-                if (Data.ProposalId == 7 || Data.ProposalId == 8|| Data.ProposalId == 5)
+                if (isSpecialForm)
                 {
-                    // Keep only special form fields
-                    // Force all normal form fields to "N/A"
-                    Data.Aim = "N/A";
-                    Data.Scope = "N/A";
-                    Data.Puropose = "N/A";
-                    Data.ReqmtJustification = "N/A";
-                    Data.DetlsofUserBase = "N/A";
-                    Data.EnvisagedCost = "N/A";
-                    Data.TechStackProposed = "N/A";
-                    Data.NWBandWidthReqmt = "N/A";
-                    Data.Detlsof_OS = "N/A";
-                    Data.ProposedDB_Engine = "N/A";
-                    Data.operation_system_hosting_env = "N/A";
-                    Data.Additional_Ports = "N/A";
-                    Data.Concurrent_users = "N/A";
-                    Data.API_Initegration = "N/A";
-                    Data.Mission_Critical_appl_justif = "N/A";
-                    Data.Technology_dependencies = "N/A";
-                    Data.Security_Classification = "N/A";
-                    Data.TypeofSW = "N/A";
-                    Data.BeingDevpInhouse = "N/A";
-                    Data.HQandITinfraReqd = "N/A";
-                    Data.ContentofSWApp = "N/A";
-                    Data.UsabilityofProposedAppln = "N/A";
-                    Data.MajTimeLines = "N/A";
-                    Data.DataSecurity_backup = "N/A";
-                    Data.EndorsmentbyHeadof = "N/A";
-                    Data.DetlsofSw_Architecture = "N/A";
-                    Data.DetlsofProposed_Architecture = "N/A";
-                    Data.DetlsPki_IAM = "N/A";
-                    Data.Database_reqmts = "N/A";
-                    Data.Enhancement_upgradation = "N/A";
+                    Data.Aim = "N/A"; Data.Scope = "N/A"; Data.Puropose = "N/A";
+                    Data.ReqmtJustification = "N/A"; Data.DetlsofUserBase = "N/A"; Data.EnvisagedCost = "N/A";
+                    Data.TechStackProposed = "N/A"; Data.NWBandWidthReqmt = "N/A"; Data.Detlsof_OS = "N/A";
+                    Data.ProposedDB_Engine = "N/A"; Data.operation_system_hosting_env = "N/A";
+                    Data.Additional_Ports = "N/A"; Data.Concurrent_users = "N/A"; Data.API_Initegration = "N/A";
+                    Data.Mission_Critical_appl_justif = "N/A"; Data.Technology_dependencies = "N/A";
+                    Data.Security_Classification = "N/A"; Data.TypeofSW = "N/A"; Data.BeingDevpInhouse = "N/A";
+                    Data.HQandITinfraReqd = "N/A"; Data.ContentofSWApp = "N/A"; Data.UsabilityofProposedAppln = "N/A";
+                    Data.MajTimeLines = "N/A"; Data.DataSecurity_backup = "N/A"; Data.EndorsmentbyHeadof = "N/A";
+                    Data.DetlsofSw_Architecture = "N/A"; Data.DetlsofProposed_Architecture = "N/A";
+                    Data.DetlsPki_IAM = "N/A"; Data.Database_reqmts = "N/A"; Data.Enhancement_upgradation = "N/A";
                     Data.Details_licensing = "N/A";
 
-                    // Value type / nullable fields
                     Data.Is_AI_ML = false;
                     Data.HostTypeID = 1;
                     Data.Apptype = 1;
@@ -600,39 +563,57 @@ namespace swas.UI.Controllers
                 }
                 else
                 {
-                    // Normal Form → Special fields should be "N/A"
                     Data.Background = "N/A";
                     Data.DecisionSoughtWayForward = "N/A";
                     Data.Proposal_for_title = "N/A";
-                    
                 }
 
-                // Populate audit / ownership fields
                 Data.StakeHolderId = Logins.unitid ?? 0;
                 Data.IsActive = true;
                 Data.EditDeleteDate = DateTime.Now;
                 Data.EditDeleteBy = 0;
                 Data.IsDeleted = false;
                 Data.Field_In_STC = false;
-                Data.IsSubmited = false;
                 Data.UpdatedByUserId = Logins.UserIntId;
                 Data.Comments = Data.InitialRemark;
 
-                if (Data.Date_type == 1)
+                // ---------- Dates ----------
+                if (datesLocked)
                 {
-                    Data.DateTimeOfUpdate = Data.InitiatedDate;
+                    Data.InitiatedDate = existingProject!.InitiatedDate;
+                    Data.CompletionDate = existingProject.CompletionDate;
+                    Data.DateTimeOfUpdate = existingProject.DateTimeOfUpdate;
+                    Data.Date_type = existingProject.Date_type;
                 }
                 else
                 {
-                    // Only set current date if it's Normal form
-                  
+                    if (Data.Date_type == 1)
+                    {
+                        Data.DateTimeOfUpdate = Data.InitiatedDate;
+                    }
+                    else
+                    {
                         Data.InitiatedDate = DateTime.Now;
-                   
-                    Data.DateTimeOfUpdate = DateTime.Now;
+                        Data.DateTimeOfUpdate = DateTime.Now;
+                    }
+
+                    if (!isSpecialForm)
+                    {
+                        if (!Data.InitiatedDate.HasValue || !Data.CompletionDate.HasValue)
+                            return Json(-7);
+
+                        if (Data.CompletionDate.Value.Date < Data.InitiatedDate.Value.Date)
+                            return Json(-6);
+
+                        bool completionChanged = !isEdit
+                            || existingProject!.CompletionDate?.Date != Data.CompletionDate.Value.Date;
+
+                        if (completionChanged && Data.CompletionDate.Value.Date < DateTime.Today)
+                            return Json(-8);
+                    }
                 }
 
-                bool isEdit = Data.ProjId != 0;
-
+                // ---------- Name / re-vetting checks ----------
                 if (!isEdit)
                 {
                     if (Data.ProposalId == 3)
@@ -643,28 +624,20 @@ namespace swas.UI.Controllers
                 }
                 else
                 {
-                    var existingProject = await _projectsRepository.GetProjectByIdAsync(Data.ProjId);
-                    if (existingProject == null)
-                        return NotFound(new { success = false, message = "Project not found." });
-
-                    _dbContext.Entry(existingProject).State = EntityState.Detached;
-
-                    // Case 1: Converting a normal project → ProposalId = 3 (Re-WhiteListing)
-                    if (Data.ProposalId == 3 && existingProject.ProposalId != 3)
+                    if (Data.ProposalId == 3 && existingProject!.ProposalId != 3)
                     {
                         Data.ProjName = await GetReVettedProjectName(Data);
-
                         if (await _projectsRepository.ProjectNameExists(Data))
                             return Json(-3);
                     }
-                    // Case 2: Already a ProposalId = 3 project, but name is empty
-                    else if (Data.ProposalId == 3 && existingProject.ProposalId == 3)
+                    else if (Data.ProposalId == 3 && existingProject!.ProposalId == 3)
                     {
                         if (string.IsNullOrWhiteSpace(Data.ProjName))
                             return Json(-5);
                     }
                 }
 
+                // ---------- Save ----------
                 int projid;
 
                 if (Data.ProjId == 0)
@@ -679,14 +652,14 @@ namespace swas.UI.Controllers
                 else
                 {
                     Data.EditDeleteDate = DateTime.Now;
-                    await _projectsRepository.UpdateProjectAsync(Data, RequestRemarks);
+                    await _projectsRepository.UpdateProjectAsync(Data, RequestRemarks, datesLocked);
                     Data = await _projectsRepository.GetProjectByIdAsync(Data.ProjId);
 
                     if (Data == null)
                         return StatusCode(500, new { success = false, message = "Project was updated but could not be retrieved." });
                 }
 
-                // Copy old attachments when re-vetted project links to an old PSM id
+                // ---------- Copy old attachments (re-vetted) ----------
                 if (Data.OldPsmid != 0)
                 {
                     var oldAttachments = await _dbContext.AttHistory
@@ -714,7 +687,6 @@ namespace swas.UI.Controllers
                                 DateTimeOfUpdate = old.DateTimeOfUpdate
                             });
                         }
-
                         await _dbContext.SaveChangesAsync();
                     }
                 }
@@ -724,15 +696,10 @@ namespace swas.UI.Controllers
             catch (Exception ex)
             {
                 var eventId = new EventId(DateTime.UtcNow.Ticks.GetHashCode(), "AddProjectError");
-                _logger.LogError(eventId, ex,
-                    "An error occurred while adding/updating a project in ProjectsController.");
+                _logger.LogError(eventId, ex, "An error occurred while adding/updating a project in ProjectsController.");
                 Error.ExceptionHandle("Add Project failed in ProjectsController.");
 
-                return StatusCode(500, new
-                {
-                    success = false,
-                    message = "Unable to add project at this time. Please try again later."
-                });
+                return StatusCode(500, new { success = false, message = "Unable to add project at this time. Please try again later." });
             }
         }
 
@@ -767,6 +734,11 @@ namespace swas.UI.Controllers
             try
             {
                 var project = await _projectsRepository.GetProjectByIdAsync(projid);
+                if (project == null)
+                    return Json(-1);
+
+                // Read BEFORE IsSubmited is changed
+                bool datesLocked = project.IsSubmited == true && project.IsProcess != true;
 
                 if (type == 1)
                 {
@@ -795,7 +767,7 @@ namespace swas.UI.Controllers
                     project.IsSubmited = false;
                 }
 
-                await _projectsRepository.UpdateProjectAsync(project, Remarks);
+                await _projectsRepository.UpdateProjectAsync(project, Remarks, datesLocked);
                 return Json(project.ProjId);
             }
             catch (Exception ex)

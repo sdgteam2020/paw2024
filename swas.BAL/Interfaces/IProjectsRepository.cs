@@ -20,8 +20,8 @@ namespace swas.BAL.Interfaces
         Task<bool> ProjectNameExists(tbl_Projects project);
         Task<tbl_Projects> GetProjectByIdAsync(int projectId);
 
-		Task<bool> UpdateProjectAsync(tbl_Projects project, string Remarks);
-		Task<List<tbl_Projects>> GetAllProjectsAsync();
+        Task<bool> UpdateProjectAsync(tbl_Projects project, string Remarks, bool datesLocked = false);
+        Task<List<tbl_Projects>> GetAllProjectsAsync();
         Task<bool> DeleteProjectAsync(int projectId);
         Task<List<DTOProjectsFwd>> GetDashboardStatusDetails(int StatuId,int UnitId, int IsDuplicate);
         Task<List<DTOProjectsFwd>> GetDashboardApproved(int StatuId,int statusActionsMappingId,int projecttype);

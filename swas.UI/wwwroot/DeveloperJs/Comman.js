@@ -13,60 +13,66 @@ $(document).ready(function () {
     fetchServerDate().then(function (S) {
         applyDateLogic(S.today);
     });
-    function applyDateLogic(today) {
-        debugger;
-        let selectedMode = $('input[name="mcalender_dates"]:checked').val();
+ 
+function applyDateLogic(today) {
 
+    let selectedMode = $('input[name="mcalender_dates"]:checked').val();
 
-        if (selectedMode === "0") {
-          
-            $('input[type="date"]').attr('min', today);
-            $('input[type="date"]').removeAttr('max');
-            $("#InitiatedDate").val(today);
-            $('#CompletionDate').val(today);
-            //$('#InitiatedDate').attr('readonly', true);   
-        $("#RequestRemarks")
-    .prop("disabled", true)
-    .css({
-        "pointer-events": "none",
-        "background-color": "#e9ecef",
-        "opacity": "1"
-    });
-        } else {
-            $('input[type="date"]').attr('max', today);
-            $('input[type="date"]').removeAttr('min');
-            //$('#InitiatedDate').attr('readonly', false);
-          
-    $("#RequestRemarks")
-        .prop("disabled", false)
-        .css({
-            "pointer-events": "",
-            "background-color": "",
-            "opacity": ""
-        });
+    if (selectedMode === "0") {
 
-            $('#CompletionDate').attr('min', $("#InitiatedDate").val());
-            $('#CompletionDate').removeAttr('max');
+        $('input[type="date"]').attr('min', today);
+        $('input[type="date"]').removeAttr('max');
+
+        // Set default date only if empty (Add scenario)
+        if (!$('#InitiatedDate').val()) {
+            $('#InitiatedDate').val(today);
         }
+
+        if (!$('#CompletionDate').val()) {
+            $('#CompletionDate').val(today);
+        }
+
+        $("#RequestRemarks")
+            .prop("disabled", true)
+            .css({
+                "pointer-events": "none",
+                "background-color": "#e9ecef",
+                "opacity": "1"
+            });
+
+    } else {
+
+        $('input[type="date"]').attr('max', today);
+        $('input[type="date"]').removeAttr('min');
+
+        $("#RequestRemarks")
+            .prop("disabled", false)
+            .css({
+                "pointer-events": "",
+                "background-color": "",
+                "opacity": ""
+            });
+
+        $('#CompletionDate').attr('min', $("#InitiatedDate").val());
+        $('#CompletionDate').removeAttr('max');
     }
+}
 
+fetchServerDate().then(function (S) {
+    applyDateLogic(S.today);
+});
 
+$('input[name="mcalender_dates"]').on('change', function () {
     fetchServerDate().then(function (S) {
         applyDateLogic(S.today);
     });
-    $('input[name="mcalender_dates"]').on('change', function () {
-        fetchServerDate().then(function (S) {
+});
 
-            applyDateLogic(S.today);
-        });
-    });
+$('#InitiatedDate').on('change', function () {
+    let initiatedDate = $(this).val();
+    $('#CompletionDate').attr('min', initiatedDate);
+});
 
-    $('#InitiatedDate').on('change', function () {
-
-        let initiatedDate = $(this).val();
-        $('#CompletionDate').attr('min', initiatedDate);
-
-    });
 
     $('input[name="mcalender_dates"]').change(function () {
 
