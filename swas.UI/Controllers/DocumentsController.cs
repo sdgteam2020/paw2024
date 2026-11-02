@@ -21,7 +21,7 @@ using iText.Kernel.Pdf;
 using iText.Layout;
 using iText;
 using iText.Layout.Element;
-using Grpc.Core;
+
 using Microsoft.Extensions.Hosting.Internal;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;

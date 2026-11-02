@@ -1508,7 +1508,7 @@ function GetInboxData() {
 * Filters Inbox data by project type (1=All, 2=STC Auto, 3=STC AI/ML) and rebinds table.
 */
 function filterInboxByProjectType(selectedType) {
-    debugger;
+
     let filteredData = allInboxData;
 
     // 1 = All Projects

@@ -1,0 +1,91 @@
+[1mdiff --git a/swas.UI/Controllers/MasterController.cs b/swas.UI/Controllers/MasterController.cs[m
+[1mindex f641a4f..68556e9 100644[m
+[1m--- a/swas.UI/Controllers/MasterController.cs[m
+[1m+++ b/swas.UI/Controllers/MasterController.cs[m
+[36m@@ -5,7 +5,7 @@[m [musing Microsoft.AspNetCore.Authorization;[m
+ using Microsoft.AspNetCore.Mvc;[m
+ using Microsoft.CodeAnalysis;[m
+ using Newtonsoft.Json;[m
+[31m-using Superpower.Model;[m
+[32m+[m
+ using swas.BAL;[m
+ using swas.BAL.DTO;[m
+ using swas.BAL.Helpers;[m
+[1mdiff --git a/swas.UI/Controllers/ProjectsController.cs b/swas.UI/Controllers/ProjectsController.cs[m
+[1mindex 3a3a439..4ffe22a 100644[m
+[1m--- a/swas.UI/Controllers/ProjectsController.cs[m
+[1m+++ b/swas.UI/Controllers/ProjectsController.cs[m
+[36m@@ -24,7 +24,6 @@[m [musing Microsoft.Extensions.Logging;[m
+ using Microsoft.Extensions.Options;[m
+ using Newtonsoft.Json;[m
+ using Newtonsoft.Json.Linq;[m
+[31m-using Superpower.Model;[m
+ using swas.BAL.DTO;[m
+ using swas.BAL.Helpers;[m
+ using swas.BAL.Interfaces;[m
+[36m@@ -33,6 +32,7 @@[m [musing swas.BAL.Utility;[m
+ using swas.DAL;[m
+ using swas.DAL.Models;[m
+ using swas.UI.Helpers;[m
+[32m+[m
+ using swas.UI.Models;[m
+ using swas.UI.Services;[m
+ using static iText.StyledXmlParser.Jsoup.Select.Evaluator;[m
+[1mdiff --git a/swas.UI/Middleware/SecurityHeadersMiddleware.cs b/swas.UI/Middleware/SecurityHeadersMiddleware.cs[m
+[1mindex a69542c..f5d2889 100644[m
+[1m--- a/swas.UI/Middleware/SecurityHeadersMiddleware.cs[m
+[1m+++ b/swas.UI/Middleware/SecurityHeadersMiddleware.cs[m
+[36m@@ -1,4 +1,4 @@[m
+[31m-﻿using DotNetEnv;[m
+[32m+[m[32m﻿[m
+ [m
+ namespace swas.UI.NewFolder[m
+ {[m
+[1mdiff --git a/swas.UI/Program.cs b/swas.UI/Program.cs[m
+[1mindex 1846c64..f6e4b33 100644[m
+[1m--- a/swas.UI/Program.cs[m
+[1m+++ b/swas.UI/Program.cs[m
+[36m@@ -7,7 +7,7 @@[m [musing Microsoft.EntityFrameworkCore;[m
+ using Microsoft.Extensions.Hosting.Internal;[m
+ using swas.DAL;[m
+ using swas.BAL;[m
+[31m-using DotNetEnv;[m
+[32m+[m
+ using swas.BAL.Interfaces;[m
+ using swas.Exceptions;[m
+ using swas.UI.Controllers;[m
+[1mdiff --git a/swas.UI/swas.UI.csproj b/swas.UI/swas.UI.csproj[m
+[1mindex 958bdee..c05282b 100644[m
+[1m--- a/swas.UI/swas.UI.csproj[m
+[1m+++ b/swas.UI/swas.UI.csproj[m
+[36m@@ -35,14 +35,15 @@[m
+ 	  <PackageReference Include="Alphacloud.MessagePack.AspNetCore.Formatters" Version="4.1.0" />[m
+ 	  <PackageReference Include="bootstrap" Version="5.3.0" />[m
+ 	  <PackageReference Include="BouncyCastle.NetCore" Version="2.2.1" />[m
+[31m-	  <PackageReference Include="ClosedXML" Version="0.105.0" />[m
+[32m+[m
+ 	  <PackageReference Include="Dapper" Version="2.1.79" />[m
+[31m-	  <PackageReference Include="DotNetEnv" Version="3.2.0" />[m
+[32m+[m
+ 	  <PackageReference Include="Grpc.Core" Version="2.46.6" />[m
+ 	  <PackageReference Include="itext.bouncy-castle-adapter" Version="8.0.2" />[m
+ 	  <PackageReference Include="itext7" Version="8.0.2" />[m
+ 	  <PackageReference Include="itext7.bouncy-castle-adapter" Version="8.0.2" />[m
+ 	  <PackageReference Include="Microsoft.AspNetCore.Antiforgery" Version="2.3.11" />[m
+[32m+[m	[32m  <PackageReference Include="Superpower" Version="3.0.0" />[m
+ 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />[m
+ [m
+ 	  <!-- Entity Framework Core 9 -->[m
+[1mdiff --git a/swas.UI/swas.UI.csproj.user b/swas.UI/swas.UI.csproj.user[m
+[1mindex 70dfc23..13139bf 100644[m
+[1m--- a/swas.UI/swas.UI.csproj.user[m
+[1m+++ b/swas.UI/swas.UI.csproj.user[m
+[36m@@ -2,7 +2,7 @@[m
+ <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">[m
+   <PropertyGroup>[m
+     <NameOfLastUsedPublishProfile>E:\VersionControl\PAW2.0\swas.UI\Properties\PublishProfiles\FolderProfile67.pubxml</NameOfLastUsedPublishProfile>[m
+[31m-    <ActiveDebugProfile>IIS Express</ActiveDebugProfile>[m
+[32m+[m[32m    <ActiveDebugProfile>SWAS</ActiveDebugProfile>[m
+     <Controller_SelectedScaffolderID>MvcControllerEmptyScaffolder</Controller_SelectedScaffolderID>[m
+     <Controller_SelectedScaffolderCategoryPath>root/Common/MVC/Controller</Controller_SelectedScaffolderCategoryPath>[m
+     <View_SelectedScaffolderID>RazorViewEmptyScaffolder</View_SelectedScaffolderID>[m

@@ -40,8 +40,7 @@ using swas.BAL.Repository;
 using Org.BouncyCastle.Utilities;
 using iText.Commons.Actions.Contexts;
 
-using iText.StyledXmlParser.Jsoup.Nodes;
-using Grpc.Core;
+
 using static swas.DAL.Models.LegacyHistory;
 using swas.UI.Helpers;
 using iText.Kernel.XMP.Impl;

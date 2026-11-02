@@ -24,7 +24,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Superpower.Model;
 using swas.BAL.DTO;
 using swas.BAL.Helpers;
 using swas.BAL.Interfaces;
@@ -33,6 +32,7 @@ using swas.BAL.Utility;
 using swas.DAL;
 using swas.DAL.Models;
 using swas.UI.Helpers;
+
 using swas.UI.Models;
 using swas.UI.Services;
 using static iText.StyledXmlParser.Jsoup.Select.Evaluator;

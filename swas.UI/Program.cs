@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting.Internal;
 using swas.DAL;
 using swas.BAL;
-using DotNetEnv;
+
 using swas.BAL.Interfaces;
 using swas.Exceptions;
 using swas.UI.Controllers;
