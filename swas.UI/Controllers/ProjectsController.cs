@@ -8,9 +8,12 @@ using iText.IO.Font;
 using iText.IO.Font.Constants;
 using iText.Kernel.Events;
 using iText.Kernel.Font;
+using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Annot;
 using iText.Kernel.Pdf.Canvas;
 using iText.Kernel.Pdf.Extgstate;
+using iText.Kernel.Pdf.Xobject;
 using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
@@ -973,31 +976,198 @@ namespace swas.UI.Controllers
         {
             try
             {
+                /*
+                ============================================================
+                OLD CODE
+                This writes directly into the existing page content and may
+                invalidate the original digital signature.
+                ============================================================
+
                 using var memoryStream = new MemoryStream();
-                using var pdfDoc = new PdfDocument(new PdfReader(filePath), new PdfWriter(memoryStream));
+
+                using var pdfDoc = new PdfDocument(
+                    new PdfReader(filePath),
+                    new PdfWriter(memoryStream));
+
                 using var doc = new Document(pdfDoc);
 
                 var font = PdfFontFactory.CreateFont(
-     StandardFonts.TIMES_ROMAN
- );
-                var paragraph = new Paragraph($"{ip} {DateTime.Now}")
+                    StandardFonts.TIMES_ROMAN);
+
+                var paragraph = new Paragraph(
+                    $"{ip} {DateTime.Now}")
                     .SetFont(font)
                     .SetFontSize(50);
 
-                var gs1 = new PdfExtGState().SetFillOpacity(0.2f);
+                var gs1 = new PdfExtGState()
+                    .SetFillOpacity(0.2f);
 
                 for (int i = 1; i <= pdfDoc.GetNumberOfPages(); i++)
                 {
                     var pdfPage = pdfDoc.GetPage(i);
+
                     var over = new PdfCanvas(pdfPage);
+
                     over.SaveState();
                     over.SetExtGState(gs1);
-                    doc.ShowTextAligned(paragraph, 297, 450, i,
-                        TextAlignment.CENTER, VerticalAlignment.MIDDLE, 45);
+
+                    doc.ShowTextAligned(
+                        paragraph,
+                        297,
+                        450,
+                        i,
+                        TextAlignment.CENTER,
+                        VerticalAlignment.MIDDLE,
+                        45);
+
                     over.RestoreState();
                 }
 
                 doc.Close();
+
+                return memoryStream.ToArray();
+                */
+
+
+                /*
+                ============================================================
+                NEW CODE
+                Adds the watermark as a Stamp annotation in append mode.
+                ============================================================
+                */
+
+                using var memoryStream = new MemoryStream();
+
+                using var reader = new PdfReader(filePath);
+                using var writer = new PdfWriter(memoryStream);
+
+                using var pdfDoc = new PdfDocument(
+                    reader,
+                    writer,
+                    new StampingProperties().UseAppendMode());
+
+                string watermarkText =
+                    $"{ip} {DateTime.Now:yyyy-MM-dd HH:mm:ss}";
+
+                PdfFont font = PdfFontFactory.CreateFont(
+                    StandardFonts.TIMES_ROMAN);
+
+                const float fontSize = 80;
+                const float appearanceSize = 700;
+
+                /*
+                 * Create the visual watermark appearance.
+                 */
+                var watermarkAppearance = new PdfFormXObject(
+                    new Rectangle(
+                        appearanceSize,
+                        appearanceSize));
+
+                var appearanceCanvas = new PdfCanvas(
+                    watermarkAppearance,
+                    pdfDoc);
+
+                double angle = Math.PI / 4;
+
+                float cos = (float)Math.Cos(angle);
+                float sin = (float)Math.Sin(angle);
+
+                float textWidth = font.GetWidth(
+                    watermarkText,
+                    fontSize);
+
+                appearanceCanvas.SaveState();
+
+                appearanceCanvas.SetExtGState(
+                    new PdfExtGState()
+                        .SetFillOpacity(0.20f));
+
+                appearanceCanvas.BeginText();
+
+                appearanceCanvas.SetFontAndSize(
+                    font,
+                    fontSize);
+
+                /*
+                 * Rotate the watermark by 45 degrees.
+                 */
+                appearanceCanvas.ConcatMatrix(
+                    cos,
+                    sin,
+                    -sin,
+                    cos,
+                    appearanceSize / 2,
+                    appearanceSize / 2);
+
+                appearanceCanvas.MoveText(
+                    -textWidth / 2,
+                    0);
+
+                appearanceCanvas.ShowText(
+                    watermarkText);
+
+                appearanceCanvas.EndText();
+
+                appearanceCanvas.RestoreState();
+
+                /*
+                 * Add the watermark annotation on every page.
+                 */
+                for (int pageNumber = 1;
+                     pageNumber <= pdfDoc.GetNumberOfPages();
+                     pageNumber++)
+                {
+                    PdfPage page = pdfDoc.GetPage(pageNumber);
+
+                    Rectangle pageSize = page.GetPageSize();
+
+                    float annotationSize =
+                        Math.Min(
+                            pageSize.GetWidth(),
+                            pageSize.GetHeight()) * 0.70f;
+
+                    float x =
+                        (pageSize.GetWidth() - annotationSize) / 2;
+
+                    float y =
+                        (pageSize.GetHeight() - annotationSize) / 2;
+
+                    var annotationRectangle = new Rectangle(
+                        x,
+                        y,
+                        annotationSize,
+                        annotationSize);
+
+                    var watermarkAnnotation =
+                        new PdfStampAnnotation(
+                            annotationRectangle);
+
+                    watermarkAnnotation.SetStampName(
+                        new PdfName("IP_WATERMARK"));
+
+                    /*
+                     * Do not use SetContents().
+                     * It creates a message/comment box in the viewer.
+                     */
+
+                    watermarkAnnotation.SetFlags(
+                        PdfAnnotation.PRINT |
+                        PdfAnnotation.READ_ONLY |
+                        PdfAnnotation.NO_ZOOM |
+                        PdfAnnotation.NO_ROTATE);
+
+                    /*
+                     * Attach the Form XObject directly.
+                     */
+                    watermarkAnnotation.SetNormalAppearance(
+                        watermarkAppearance.GetPdfObject());
+
+                    page.AddAnnotation(
+                        watermarkAnnotation);
+                }
+
+                pdfDoc.Close();
+
                 return memoryStream.ToArray();
             }
             catch (Exception ex)
@@ -1006,7 +1176,6 @@ namespace swas.UI.Controllers
                 return null;
             }
         }
-
         // ═════════════════════════════════════════════════════════════════════════
         // PROJECT MOVEMENT — PROCESS / FORWARD / PULLBACK
         // ═════════════════════════════════════════════════════════════════════════
