@@ -493,3 +493,5 @@ AppPackages/
 /swas.UI/wwwroot/Error
 /swas.UI/wwwroot/SOP
 /swas.UI/.env.txt
+/dependency-audit-report.txt
+/OUTDATED_LIBRARIES_COMPATIBILITY_REVIEW.txt
