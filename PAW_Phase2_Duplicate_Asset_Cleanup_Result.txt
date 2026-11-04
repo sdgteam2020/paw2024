@@ -1,0 +1,47 @@
+PAW PHASE 2 DUPLICATE ASSET CLEANUP - EXECUTION RESULT
+Repository: E:\VersionControl\PAW2.0
+Solution: swas.sln
+Approval: Explicitly approved; only the 12 report-listed files were deleted.
+
+DELETED FILES
+1. swas.UI/wwwroot/css/jquery.dataTables.min.css
+2. swas.UI/wwwroot/css/dataTables.bootstrap4.min.css
+3. swas.UI/wwwroot/css/buttons.bootstrap4.min.css
+4. swas.UI/wwwroot/css/buttons.dataTables.min.css
+5. swas.UI/wwwroot/css/dataTables.dateTime.min.css
+6. swas.UI/wwwroot/css/responsive.bootstrap4.min.css
+7. swas.UI/wwwroot/js/buttons.bootstrap4.min.js
+8. swas.UI/wwwroot/js/buttons.colVis.min.js
+9. swas.UI/wwwroot/js/buttons.html5.min.js
+10. swas.UI/wwwroot/js/buttons.print.min.js
+11. swas.UI/wwwroot/js/fnMultiFilter.js
+12. swas.UI/wwwroot/js/vfs_fonts.js
+
+No canonical assets were modified or deleted. No Razor views, layouts, JavaScript, CSS, business logic, or configuration files were changed.
+
+REFERENCE VALIDATION
+- Exact repository-wide search for the deleted root paths: NO_DELETED_ROOT_PATH_REFERENCES.
+- All 12 canonical assets/dataTable replacements were confirmed present.
+- Remaining references use canonical assets/dataTable paths only.
+- No remaining root /js/vfs_fonts.js references were found.
+
+BUILD RESULT
+Command: dotnet build swas.sln
+Result: Build succeeded.
+Errors: 0.
+Warnings: 851 existing warnings.
+Elapsed time: 24.1 seconds.
+
+The warnings were not introduced by the approved asset deletions. The build output included existing MVC1000/MVC1004 warnings, including synchronous Html.Partial usage and model-binding name conflicts.
+
+SAVINGS
+- Deleted files total: 963,910 bytes.
+- Approximate size: 941.3 KiB, or 0.964 MB decimal.
+- This is package/disk savings for unused duplicate files; no canonical asset request paths were changed.
+
+REMAINING RISKS / TEST REQUIREMENTS
+- No automated tests were run; this cleanup only removes unused static duplicates.
+- Browser smoke testing is recommended for DataTables export, print, column visibility, responsive tables, and pages using the shared export partial.
+- Retained variants intentionally include jszip and pdfMake because their hashes differed from assets/dataTable copies.
+- Certificate, logo, favicon, and role-specific image assets were retained because matching hashes alone do not prove interchangeable semantic usage.
+- No additional cleanup was performed.

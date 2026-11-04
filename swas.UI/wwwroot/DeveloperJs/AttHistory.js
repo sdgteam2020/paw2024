@@ -132,7 +132,7 @@ function AttOnFWD() {
 }
 
 //function sendPDFToServer(pdfpath, thumbprint) {
-//    debugger;
+//    
 
 //    $.ajax({
 //        url: 'https://dgisapp.army.mil:55102/Temporary_Listen_Addresses/ByteDigitalSignAsync',
@@ -149,7 +149,7 @@ function AttOnFWD() {
 //        }]),
 //        skipAntiForgery: true,
 //        success: function (response) {
-//            debugger;
+//            
 //            $('.uploadLoader').addClass('d-none')
 //            if (response.Message != '') {
 //                Swal.fire({
@@ -252,7 +252,7 @@ function AttOnFWD() {
 //}
 function sendPDFToServer(pdfpath, thumbprint) {
 
-    debugger;
+    
     $.ajax({
         url: 'https://dgisapp.army.mil:55102/Temporary_Listen_Addresses/ByteDigitalSignAsync',
         type: 'POST',
@@ -268,7 +268,7 @@ function sendPDFToServer(pdfpath, thumbprint) {
         }]),
         skipAntiForgery: true,
         success: function (response) {
-            debugger;
+            
             $('.uploadLoader').addClass('d-none')
             if (!response) {
                 Swal.fire({ icon: "error", title: "Oops...", text: "Certificate not Generated" });

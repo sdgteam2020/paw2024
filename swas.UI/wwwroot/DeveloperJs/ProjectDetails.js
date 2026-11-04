@@ -714,7 +714,7 @@ $(document).on('click', '.btnRemainder', function () {
 });
 
 function SendRemainder(projid, remarks) {
-    debugger;
+    
     $.ajax({
         url: '/Projects/SendRemainder',
         type: 'POST',
@@ -1376,7 +1376,7 @@ let currentUnitId = parseInt($('#hdnInboxUnitId').val());
 
 
 $(document).on("change", "#ddlProjectProjdetailsType", function () {
-  debugger;
+  
     const selectedType =
         Number($("#ddlProjectProjdetailsType").val()) || 1;
 
@@ -1470,7 +1470,7 @@ $(document).on("click", "#tabCC", function(e) {
 
 $(document).on("click", "#tabParked", function(e) {
     e.preventDefault();
-    debugger;
+    
     currentProjectTab = "Parkedproject";
     GetParkedProject();
 });
@@ -2109,7 +2109,7 @@ function renderPullBackBlock(project) {
  * Filters Sent data by project type and rebinds table.
  */
 function filterSentByProjectType(selectedType) {
-    debugger;
+    
     let filteredData = allSentData;
 
     // 1 = All Projects
@@ -2743,7 +2743,7 @@ function GetParkedProject() {
         type: "GET",
 
         success: function(response) {
-            debugger;
+            
             allParkedData = response || [];
 
             const selectedType =
@@ -2777,13 +2777,13 @@ function filterParkedByProjectType(selectedType) {
     bindParkedProject(filteredData);
 }
 function filterClosedByProjectType(selectedType) {
-    debugger;
+    
     let filteredData = allClosedData;
 
     if (selectedType === 2) {
         // Non-AI/ML projects
         filteredData = allClosedData.filter(function(project) {
-            debugger;
+            
             return project.is_ai_ml === false ||
                 project.is_ai_ml === 0 ||
                 project.is_ai_ml === "0";

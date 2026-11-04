@@ -315,7 +315,7 @@ function Deleteattechment(AttechId) {
     });
 }
 function GetProjectMovement(ProjectId) {
-    debugger;
+  
     $.ajax({
         url: '/Projects/GetProjectMov',
         type: 'POST',

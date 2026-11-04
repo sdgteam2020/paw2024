@@ -136,7 +136,7 @@ function DateFormateyyy_mm_dd(date) {
     }
 }
 function DateFormateddMMyyyyhhmmss(date) {
-    debugger;
+  
     let todaysDate = new Date();
     let datef1 = new Date(date);
     let datef2 = date ? new Date(date) : new Date();

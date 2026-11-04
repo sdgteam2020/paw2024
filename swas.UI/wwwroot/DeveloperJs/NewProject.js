@@ -31,7 +31,7 @@ $(document).ready(function () {
 
     $('#WhitelistedTable tbody').on('click', '.EditWhiteListedProj', function (e) {
         e.preventDefault();
-        debugger;
+       
         let id = $(this).data('id');
         let encrypteid = encryptData(id);
       

@@ -104,7 +104,7 @@ $(document).ready(function () {
         $(document)
         .off("change", "#ddlProjectType")
         .on("change", "#ddlProjectType", function () {
-            debugger;
+           
             const selectedType =
                 Number($(this).val()) || 1;
 

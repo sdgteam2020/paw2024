@@ -83,7 +83,7 @@ namespace swas.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
 
         }
-
+       
         [AllowAnonymous]
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
@@ -316,14 +316,13 @@ namespace swas.Areas.Identity.Pages.Account
 
                 if (existingUser == null)
                 {
-                    TempData["UserName"] = Input.UserName;
+                    Input.UserName = string.Empty;
+                    Input.Password = string.Empty;
 
-                    HttpContext.Session.SetString(
-                        "UserName",
-                        Input.UserName
-                    );
+                    ModelState.Clear();
+                    ModelState.AddModelError(string.Empty, "Invalid username or password.");
 
-                    return RedirectToAction("Register", "Account");
+                    return PageWithFreshKey();
                 }
 
                 // Invalid password
@@ -367,15 +366,16 @@ namespace swas.Areas.Identity.Pages.Account
                     _logger.LogError(logEx, "Could not write login diagnostic file");
                 }
 
-                ModelState.AddModelError(
-                    "",
-                    "An unexpected error occurred during login."
-                );
-
-                return Page();
+                Input.Password = string.Empty;
+                ModelState.AddModelError(string.Empty, "An unexpected error occurred during login. Please try again.");
+                return PageWithFreshKey();
             }
         }
 
-
+        private IActionResult PageWithFreshKey()
+        {
+            LoginCryptoKey = _loginCryptoKeyService.EnsureLoginCryptoKey(HttpContext);
+            return Page();
+        }
     }
 }
