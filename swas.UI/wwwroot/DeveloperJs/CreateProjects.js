@@ -1,6 +1,6 @@
 ﻿let current = 1;
 $(document).ready(function() {
-debugger;
+
 
 
     updateButtonText();
@@ -365,7 +365,7 @@ debugger;
 
 
     $(".ProposalId").change(function() {
-        debugger;
+        
         let selectedStatus = $(this).val();
 
         // Keep both dropdowns in sync
@@ -1205,7 +1205,7 @@ $('#CompletionDate').on('change input', function () {
     console.log("CompletionDate updated:", this.value);
 });
 function AddProject(thistag) {
-    debugger;
+    
 
 
     const $btn = $(thistag);
@@ -1478,14 +1478,14 @@ function resetButton($btn) {
 
     // Update whenever the dropdown changes
     $("#Is_AI_ML").on("change", function() {
-        debugger;
+        
         updateButtonText();
     });
 
 
 
 function updateButtonText() {
-    debugger;
+    
     var isAIML = $("#Is_AI_ML").val();
 
     if (isAIML === "true") {

@@ -759,7 +759,7 @@ function GetAllDashbaordCount() {
 
 
             $(document).on("click", ".ApprovedProj", function() {
-                debugger;
+                
                 let spnstatusId = $(this).closest("div").find("#spnstatusId").html();
 
                 let spnstatusActionsMappingId = $(this).closest("div").find("#spnstatusActionsMappingId").html();
@@ -917,7 +917,7 @@ function GetAllDashbaordCount() {
                 .off("click", ".send")
                 .on("click", ".send", function() {
 
-                    debugger;
+                    
 
                     var statusId =
                         parseInt($(this).data("status-id"));
@@ -1203,7 +1203,7 @@ function getProjApproved(spnstatusId, spnstatusActionsMappingId, IsAIML) {
         },
         type: 'POST',
         success: function(response) {
-            debugger;
+            
             if (response != "null" && response != null) {
 
                 const hasIPA = Array.isArray(response) && response.some(item => [53, 63, 68, 73, 78, 83, 88].includes(item.statusactionMappingid));
@@ -1405,7 +1405,7 @@ function getProjGetsummay(spnstatusId, IsDuplicate) {
         type: 'POST',
         success: function(response) {
 
-            debugger;
+            
             if (response != "null" && response != null) {
 
                 if (response == -1) {

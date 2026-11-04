@@ -1,0 +1,212 @@
+PAW STATIC ASSET SIZE INVESTIGATION
+===================================
+
+Status
+------
+This is an analysis-only report. No application source, UI, business logic, API call, route, or database operation was modified.
+
+Project: swas.UI (.NET 9)
+Build status at the time of analysis: successful
+
+Important distinction
+---------------------
+The complete wwwroot directory is not the same as a browser page payload. It includes downloads, uploaded PDFs, alternate library builds, source maps, development files, and assets for unrelated routes.
+
+The exact individual artifact exceeding 7 MB is:
+
+  swas.UI/wwwroot/PDF/SOP on Whitelisitng of Appl Sw in IA dt 28 May 24.pdf
+  Size: 7.59 MB
+
+If this PDF is downloaded or embedded by the target page, it alone exceeds the 7 MB threshold. A page target below 4 MB therefore requires that it not be part of the initial page payload, or that it be replaced/compressed separately.
+
+Overall wwwroot inventory
+-------------------------
+Total files: approximately 90.23 MB
+
+Category                 Files       Size
+--------                 -----       ----
+JavaScript               171         19.05 MB
+PNG images               167         19.04 MB
+PDF files                 46         19.94 MB
+GIF images                15         12.28 MB
+Source maps and text     various      4.77 MB maps alone
+CSS                      150          3.54 MB
+JPG images                14           3.75 MB
+SVG files                  7           3.50 MB
+
+Top-level wwwroot directory totals
+----------------------------------
+Directory                Files       Size
+---------                -----       ----
+assets                   819         43.16 MB
+PDF                        4         12.15 MB
+lib                       63          9.90 MB
+font-awesome              43          8.97 MB
+Uploads                   30          6.95 MB
+js                        14          2.87 MB
+static                     5          1.96 MB
+css                       89          1.15 MB
+jquery                     4          0.71 MB
+DeveloperJs               76          0.70 MB
+temp                       8          0.55 MB
+Content                    3          0.42 MB
+
+Largest individual files
+------------------------
+Size       File
+----       ----
+7.59 MB    PDF/SOP on Whitelisitng of Appl Sw in IA dt 28 May 24.pdf
+4.32 MB    assets/images/icons/question-unscreen.gif
+4.00 MB    PDF/SOP on Whitelisting of Appl Sw in IA dt 19 Jul 2022.pdf
+3.10 MB    lib/pdfjs/pdf.worker.js
+2.23 MB    assets/images/icons/notification-unscreen.gif
+1.52 MB    font-awesome/js/all.js
+1.42 MB    assets/images/icons/hostory.gif
+1.42 MB    font-awesome/js/all.min.js
+1.37 MB    assets/dataTable/js/pdfmake.min.js
+1.37 MB    js/pdfmake.min.js
+1.31 MB    assets/images/authentication/au-reset-password-cover.png
+1.20 MB    assets/images/icons/createproj.gif
+1.14 MB    assets/images/logo1.png
+1.03 MB    static/download7.png
+0.94 MB    assets/images/icons/mail.gif
+0.89 MB    static/favicon.png
+0.89 MB    assets/images/favicon.png
+0.83 MB    assets/dataTable/js/vfs_fonts.js
+
+Shared Razor layout payload
+---------------------------
+Views/Shared/_Layout.cshtml directly references approximately 6.52 MB uncompressed, before page-specific resources are added.
+
+The largest globally loaded assets are:
+
+  lib/pdfjs/pdf.worker.js                              3.10 MB
+  assets/dataTable/js/vfs_fonts.js                     0.83 MB
+  lib/pdfjs/pdf.js                                     0.56 MB
+  assets/plugins/chartjs/chart.min.js                  0.22 MB
+  assets/css/bootstrap.min.css                         0.26 MB
+  assets/dataTable/css/bootstrap.css                   0.20 MB
+  assets/js/bootstrap.bundle.min.js                    0.08 MB
+  assets/dataTable/js/jszip.min.js                     0.11 MB
+
+PDF.js and its worker are loaded globally. This creates a large initial payload even on pages that do not display a PDF.
+
+Duplicate libraries and assets
+------------------------------
+Bootstrap appears under multiple locations:
+
+  wwwroot/lib/bootstrap
+  wwwroot/assets/css/bootstrap.min.css
+  wwwroot/assets/dataTable/css/bootstrap.css
+  NuGet Bootstrap content files
+
+The shared layout loads both assets/dataTable/css/bootstrap.css and assets/css/bootstrap.min.css. Their functional overlap should be reviewed before removing either one.
+
+jQuery appears in multiple locations:
+
+  wwwroot/assets/js/jquery.min.js
+  wwwroot/Content/jquery-3.6.0.min.js
+  wwwroot/lib/jquery/dist/jquery.min.js
+  wwwroot/jquery
+
+DataTables-related files are duplicated between wwwroot/assets/dataTable, wwwroot/css, and wwwroot/js.
+
+PDF export files are duplicated:
+
+  assets/dataTable/js/pdfmake.min.js
+  js/pdfmake.min.js
+  assets/dataTable/js/vfs_fonts.js
+  js/vfs_fonts.js
+
+The two vfs_fonts.js files are identical and together occupy approximately 1.66 MB.
+
+Font Awesome contains multiple full CSS, JavaScript, sprite, SVG, font, LESS, and SCSS variants under both font-awesome and assets/css/font-awesome.
+
+Source maps and development assets
+----------------------------------
+The repository contains approximately 4.77 MB of source maps. These include Bootstrap and jQuery maps. Source maps normally should not be published in production unless production debugging requires them.
+
+Other production candidates include:
+
+  - unminified JavaScript and CSS library builds
+  - Bootstrap RTL and ESM builds not used by the application
+  - Font Awesome LESS and SCSS source files
+  - alternate library variants
+  - the 511 country-flag HTML files
+
+Large image and GIF candidates
+------------------------------
+The following assets should be checked against their rendered dimensions and actual route usage:
+
+  assets/images/icons/question-unscreen.gif       4.32 MB
+  assets/images/icons/notification-unscreen.gif   2.23 MB
+  assets/images/icons/hostory.gif                 1.42 MB
+  assets/images/authentication/au-reset-password-cover.png  1.31 MB
+  assets/images/icons/createproj.gif              1.20 MB
+  assets/images/logo1.png                         1.14 MB
+  static/download7.png                             1.03 MB
+  static/favicon.png                               0.89 MB
+  assets/images/favicon.png                        0.89 MB
+
+The two favicon files are byte-identical duplicates.
+
+Unused asset limitations
+------------------------
+A definitive unused-asset list cannot be established from static inspection alone because Razor views and JavaScript may build URLs dynamically, uploaded PDFs may be referenced by database values, and authorization can change which assets are requested.
+
+The following are strong candidates for runtime verification:
+
+  - duplicate Bootstrap builds
+  - duplicate jQuery builds
+  - duplicate DataTables files
+  - duplicate pdfmake and vfs_fonts files
+  - source maps
+  - Font Awesome source files and unused icon families
+  - unused RTL and ESM builds
+  - PDF.js assets on non-PDF pages
+  - country-flag HTML assets
+  - old or oversized GIF animations
+  - demo/template images under cards, carousel, products, and similar-products
+
+Recommended safe optimization plan
+-----------------------------------
+No optimization was applied during this investigation.
+
+Recommended order after approval:
+
+  1. Capture the actual browser Network request list for the target route.
+  2. Separate initial page resources from lazy-loaded resources and downloads.
+  3. Load PDF.js only on pages that display PDFs instead of loading it in the shared layout.
+  4. Load Chart.js, DataTables export, JSZip, and PDFMake only on pages that use them.
+  5. Remove only verified duplicate files after source and runtime coverage checks.
+  6. Exclude source maps and development-only assets from production publishing.
+  7. Optimize large GIF and PNG files after checking displayed dimensions and visual quality.
+  8. Enable Brotli or gzip compression for HTML, CSS, JavaScript, SVG, and JSON.
+  9. Keep large PDFs as downloads or lazy-loaded resources rather than initial page resources.
+ 10. Repeat the same browser capture and verify the resulting page is below 4 MB.
+
+Safety constraints
+------------------
+The proposed work can be limited to static asset delivery and production publishing. It must not change:
+
+  - existing functionality
+  - UI behavior
+  - business logic
+  - API calls
+  - routes
+  - database operations
+
+Before/after comparison
+-----------------------
+No before/after optimization comparison exists because no optimization has been approved or applied.
+
+Current measured baseline:
+
+  Entire wwwroot:                 90.23 MB
+  Shared layout referenced files:  6.52 MB uncompressed
+  Largest individual artifact:     7.59 MB PDF
+  Build status:                    successful
+
+Conclusion
+----------
+The exact 7 MB artifact is the 7.59 MB PDF named above. The page-level payload is also inflated by globally loading PDF.js, its 3.10 MB worker, PDFMake fonts, Chart.js, DataTables extensions, and several duplicated libraries. The most likely path to below 4 MB is route-specific loading plus removal of verified duplicate/development assets, image optimization, and HTTP compression. No application code was changed during this analysis.

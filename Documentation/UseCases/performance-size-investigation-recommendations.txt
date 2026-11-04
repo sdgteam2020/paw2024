@@ -1,0 +1,254 @@
+PAW STATIC ASSET PERFORMANCE RECOMMENDATIONS
+============================================
+
+Status
+------
+Analysis-only recommendations. No application source, UI, business logic, API, route, or database operation has been modified.
+
+Project: swas.UI (.NET 9)
+Target: Reduce initial browser page payload from 7+ MB to below 4 MB.
+
+IMPORTANT SCOPE
+---------------
+The complete wwwroot directory is not the same as the initial browser page payload. It contains downloads, uploaded PDFs, alternate library builds, source maps, development files, and assets for unrelated routes.
+
+The 7.59 MB PDF identified in the investigation must not be part of the initial page payload. It should remain a download or be loaded only after an explicit user action.
+
+CURRENT FINDINGS
+----------------
+The shared layout is:
+
+  swas.UI/Views/Shared/_Layout.cshtml
+
+It directly references approximately 6.52 MB uncompressed before page-specific resources are added.
+
+Largest shared-layout assets:
+
+  lib/pdfjs/pdf.worker.js                       approximately 3.10 MB
+  lib/pdfjs/pdf.js                              approximately 0.56 MB
+  assets/dataTable/js/vfs_fonts.js              approximately 0.83 MB
+  assets/plugins/chartjs/chart.min.js           approximately 0.22 MB
+  assets/dataTable/js/jszip.min.js              approximately 0.11 MB
+  Bootstrap CSS and JavaScript                  approximately 0.34 MB
+
+PROPOSED CHANGES AND ESTIMATED SAVINGS
+--------------------------------------
+
+1. Make PDF.js page-specific
+
+Current global references in _Layout.cshtml:
+
+  ~/lib/pdfjs/pdf.js
+  ~/lib/pdfjs/pdf.worker.js
+
+PDF.js is used by:
+
+  DeveloperJs/FwdProject.js
+	- Uses pdfjsLib.
+	- Configures /lib/pdfjs/pdf.worker.js.
+	- Is loaded through _ProjectFWDPopup.cshtml.
+
+  DeveloperJs/ProjectstckholdercommentforProjHistory.js
+	- Uses pdfjsLib.
+	- Is used by project history/status partials.
+
+Recommendation:
+
+  Remove PDF.js from the global layout only after moving its references to the PDF-dependent page or partial. Preserve execution order:
+
+	pdf.js
+	PDF-dependent application script
+	worker configuration/use
+
+Estimated initial-payload reduction on non-PDF pages: up to 3.66 MB uncompressed.
+Risk: Low after affected PDF pages are verified.
+
+2. Make Chart.js page-specific
+
+Current global reference:
+
+  ~/assets/plugins/chartjs/chart.min.js
+
+Chart usage was found in:
+
+  DeveloperJs/Dashboard.js
+	- Used by Views/Home/Index.cshtml.
+
+  DeveloperJs/Home_StratgicAnalysis.js
+	- Used by Views/Home/StratgicAnalysis.cshtml.
+
+  DeveloperJs/ProjectPendingStatuswithchart.js
+	- Used by _ProjectPendingStatus.cshtml.
+
+  _ProjectPendingStatus.cshtml also references:
+
+	~/js/chart.js
+
+Recommendation:
+
+  Load the correct Chart.js build only on dashboard, strategic-analysis, project-status, and report pages. Do not delete either chart build until their compatibility and usage are confirmed.
+
+Estimated initial-payload reduction: approximately 0.22 MB uncompressed for the layout Chart.js file.
+Risk: Low after chart pages are verified.
+
+3. Make DataTables export dependencies page-specific
+
+The layout currently loads DataTables core, Bootstrap integration, Buttons, JSZip, vfs_fonts, HTML5 export, print export, column visibility, responsive, DateTime, SearchBuilder, and multi-filter files.
+
+Pages with explicit DataTables or export references include:
+
+  Views/Home/NewProject.cshtml
+  Views/Home/AllProjectDetails.cshtml
+  Views/Home/ProjectWiseReport.cshtml
+  Views/Home/Index.cshtml
+  Views/Home/DateApproval.cshtml
+  Views/Projects/ProjDetails.cshtml
+  Views/Projects/ProjComments.cshtml
+  Several shared partials
+
+Recommendation:
+
+  Keep only the minimum common DataTables functionality in the shared layout. Load export dependencies only on pages that provide export buttons:
+
+	jszip
+	pdfmake
+	vfs_fonts
+	buttons.html5
+	buttons.print
+
+  Load SearchBuilder, DateTime, Responsive, and Column Visibility only where their controls or APIs are used.
+
+Preserve dependency order:
+
+  jQuery
+  DataTables core
+  Bootstrap integration
+  Buttons core
+  JSZip/pdfMake/vfs_fonts
+  HTML5/print/ColVis extensions
+  Responsive and other extensions
+  Page-specific initialization
+
+Estimated initial-payload reduction: approximately 1.0 to 1.4 MB or more, depending on the page.
+Risk: Low to medium; export and report pages require verification.
+
+4. Remove only verified duplicate assets
+
+Verified byte-identical duplicate:
+
+  wwwroot/assets/dataTable/js/vfs_fonts.js
+  wwwroot/js/vfs_fonts.js
+
+Both files are 870,289 bytes and have the same SHA-256 hash.
+
+Current Razor references found use:
+
+  ~/assets/dataTable/js/vfs_fonts.js
+
+Recommendation:
+
+  Keep the assets/dataTable copy and remove the other copy only after checking dynamically generated URLs and testing all PDF export pages.
+
+Potential published-output reduction: approximately 0.83 MB.
+
+Do not remove these files yet:
+
+  assets/dataTable/js/pdfmake.min.js
+  js/pdfmake.min.js
+
+They are close in size but are not byte-identical. Their hashes differ and their sizes differ by two bytes.
+
+Bootstrap files are also not proven duplicates:
+
+  assets/css/bootstrap.min.css
+  assets/dataTable/css/bootstrap.css
+  lib/bootstrap/dist/css/bootstrap.min.css
+
+The layout currently loads both assets/css/bootstrap.min.css and assets/dataTable/css/bootstrap.css. Compare rules, versions, and runtime usage before removing either file.
+
+The jQuery copies are not proven duplicates:
+
+  assets/js/jquery.min.js
+  Content/jquery-3.6.0.min.js
+  lib/jquery/dist/jquery.min.js
+  jquery/*
+
+The layout currently uses assets/js/jquery.min.js. Other copies require reference verification before removal.
+
+5. Optimize large images and GIFs
+
+Candidates identified in the investigation:
+
+  assets/images/icons/question-unscreen.gif          4.32 MB
+  assets/images/icons/notification-unscreen.gif      2.23 MB
+  assets/images/icons/hostory.gif                    1.42 MB
+  assets/images/authentication/au-reset-password-cover.png 1.31 MB
+  assets/images/icons/createproj.gif                 1.20 MB
+  assets/images/logo1.png                            1.14 MB
+  static/download7.png                               1.03 MB
+  static/favicon.png                                  0.89 MB
+  assets/images/favicon.png                            0.89 MB
+
+Recommendations:
+
+  - Verify route usage and rendered dimensions first.
+  - Preserve displayed dimensions and visual appearance.
+  - Use lossless optimization where possible.
+  - Consider WebP or AVIF only where browser compatibility and fallback behavior are acceptable.
+  - Optimize animated GIFs only after confirming their animation and visual behavior.
+  - Compare the two favicon files before keeping one reference and removing the other.
+
+Image savings are route-dependent. These files should not be changed solely because they are large; only images included in the target route's initial network requests affect the stated target.
+
+6. Exclude development-only assets from production publishing
+
+The repository contains approximately 4.77 MB of source maps. Source maps normally do not need to be published in production unless production debugging requires them.
+
+Other production candidates for exclusion after usage verification:
+
+  - Unminified JavaScript and CSS builds
+  - Bootstrap RTL and ESM builds not used by the application
+  - Font Awesome LESS and SCSS source files
+  - Alternate library variants
+  - Unused flag HTML files
+
+This mainly reduces the published asset footprint and accidental downloads. It does not automatically reduce the initial page payload unless those files are requested.
+
+EXPECTED RESULT
+---------------
+For a normal non-PDF, non-report page, the estimated uncompressed reduction is:
+
+  PDF.js and worker                         up to approximately 3.66 MB
+  Chart.js                                   approximately 0.22 MB
+  DataTables export dependencies             approximately 1.0 to 1.4 MB
+
+Combined estimated reduction: approximately 4.9 MB or more uncompressed.
+
+This should make a current approximately 6.52 MB shared-layout payload capable of reaching below 4 MB. Actual transferred savings depend on Brotli/gzip compression, browser caching, and the selected route.
+
+VALIDATION PLAN
+---------------
+
+Before implementation:
+
+  1. Capture the target route in the browser Network panel with cache disabled.
+  2. Record request URL, initiator, resource size, transferred size, and whether each request is initial, page-specific, lazy, or a download.
+  3. Confirm that the 7.59 MB PDF is not loaded during initial page rendering.
+
+After each phase:
+
+  1. Build the solution.
+  2. Capture the same route with the same browser conditions.
+  3. Compare before and after asset sizes.
+  4. Check browser console errors.
+  5. Verify affected dashboard, report, DataTables export, PDF rendering, project history, and project forwarding pages.
+
+IMPLEMENTATION ORDER
+--------------------
+
+  Phase 1: Shared-layout dependency loading
+  Phase 2: Verified duplicate cleanup
+  Phase 3: Image and static-asset optimization
+  Phase 4: Production publishing validation
+
+No application source files have been modified by this recommendation document.

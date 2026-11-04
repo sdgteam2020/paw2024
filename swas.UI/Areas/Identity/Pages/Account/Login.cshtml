@@ -51,8 +51,19 @@
 
                                             @Html.AntiForgeryToken()
                                             <input type="hidden" id="loginCryptoKey" value="@Model.LoginCryptoKey" />
-                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+                                           @if (!ViewData.ModelState.IsValid && ViewData.ModelState[string.Empty]?.Errors.Count > 0)
+{
+    <div class="col-12">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            @foreach (var error in ViewData.ModelState[string.Empty].Errors)
+            {
+                <div>@error.ErrorMessage</div>
+            }
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+}
                                             
                                             <div class="col-12">
 

@@ -160,7 +160,7 @@ function DeletePermission(id) {
 }
 
 function loadTargets() {
-    debugger;
+ 
     let permissionFor = $('#PermissionFor').val();
 
     $('#TargetId').empty().append('<option value="">-- Select --</option>');
