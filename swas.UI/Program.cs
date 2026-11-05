@@ -324,15 +324,15 @@ app.Use(async (ctx, next) =>
 // ===============================
 // ERROR / HSTS
 // ===============================
+app.UseExceptionHandler("/Home/Error");
+//app.UseHsts();
 
-    app.UseExceptionHandler("/Home/Error");
-    //app.UseHsts();
-
+//app.UseResponseCompression();
 
 // ===============================
 // HTTPS / STATIC FILES
 // ===============================
-app.UseStaticFiles();
+app.UseStaticFiles();   
 app.UseHttpsRedirection();
 
 app.UseMiddleware<SecurityHeadersMiddleware>();
