@@ -1206,7 +1206,7 @@ $('#CompletionDate').on('change input', function () {
 });
 function AddProject(thistag) {
     
-
+    debugger;
 
     const $btn = $(thistag);
 
@@ -1290,13 +1290,13 @@ function AddProject(thistag) {
 
             
 var data = {
-    "Additional_Ports": $("#Additional_Ports").val(),
+
     "Aim": $("#Aim").val(),
-    "API_Initegration": $("#API_Initegration").val(),
+   
     "Apptype": $("#ddlApptype").val(),
     "AsconNo": $("#normalProjectFieldSet").find(".AsconNo").val(),
     "BeingDevpInhouse": $("#BeingDevpInhouse").val(),
-    "Concurrent_users": $("#Concurrent_users").val(),
+    
     "ContentofSWApp": $("#ContentofSWApp").val(),
     "CurrentPslmId": $("#CurrentPslmId").val(),
     "DataSecurity_backup": $("#DataSecurity_backup").val(),
@@ -1317,7 +1317,7 @@ var data = {
     "Is_AI_ML": $("#Is_AI_ML").val(),
     "IsWhitelisted": $("#IsWhitelisted").val(),
     "MajTimeLines": $("#MajTimeLines").val(),
-    "Mission_Critical_appl_justif": $("#Mission_Critical_appl_justif").val(),
+    
     "MobileNo": $("#normalProjectFieldSet").find(".MobileNo").val(),
     "NWBandWidthReqmt": $("#NWBandWidthReqmt").val(),
     "OldPsmid": parseInt($("#spanOldPslmId").html(), 10) || 0,
@@ -1328,7 +1328,7 @@ var data = {
     "ProjName": $("#normalProjectFieldSet").find("[name='ProjName']").val(),
     "ProposedDB_Engine": $("#ProposedDB_Engine").val(),
     "ProposalId": proposalId,
-    "Puropose": $("#Puropose").val(),
+  
     "ReqmtJustification": $("#ReqmtJustification").val(),
     "RequestRemarks": $("#RequestRemarks").val(),
     "Scope": $("#Scope").val(),

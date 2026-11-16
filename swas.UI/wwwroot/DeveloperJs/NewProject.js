@@ -1,6 +1,26 @@
 ﻿
 $(document).ready(function () {
- 
+
+    $('#appt').select2({
+        placeholder: '-- Select Appointment --',
+        allowClear: true,
+        width: '100%',
+        minimumResultsForSearch: 0,
+        dropdownParent: $('#appt').closest('.modal').length
+            ? $('#appt').closest('.modal')
+            : $(document.body)
+    });
+    $('#edit_Appt').select2({
+        placeholder: '-- Select Appointment --',
+        allowClear: true,
+        width: '100%',
+        minimumResultsForSearch: 0,
+        dropdownParent: $('#edit_Appt').closest('.modal').length
+            ? $('#edit_Appt').closest('.modal')
+            : $(document.body)
+    });
+
+
    
     initializeDataTable('#WhitelistedTable');
     const requestIncrementWithDomainId = {
@@ -66,7 +86,11 @@ $(document).ready(function () {
                             }
                         });
                     }
-                    $('#edit_Appt').val(data.appt);
+                 $('#edit_Appt').val(
+    $('#edit_Appt option').filter(function () {
+        return $(this).text().trim() === data.appt;
+    }).val()
+).trigger('change');
                     $('#edit_Sponser').val(data.fmn);
                     $('#edit_TelNo').val(data.contactNo);
                     $('#edit_Clearance').val(data.clearence ? data.clearence.substring(0, 10) : '');
@@ -285,10 +309,11 @@ $("#hostedOn,  #certNo, #remarks, #appt").on("input", function () {
 
 $("#btn_Save").on('click', function (e) {
     e.preventDefault();
+
     let formData = {
         ProjName: $('#swName').val(),
         mHostTypeId: $('#hostedOn').val(),
-        appt: $('#appt').val(),
+        appt: $('#appt option:selected').text(),
         Fmn: $('#sponsor').val(),
         ContactNo: $('#telNo').val(),
         Clearence: $('#clearanceDate').val(),

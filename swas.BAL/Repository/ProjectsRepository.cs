@@ -665,9 +665,34 @@ namespace swas.BAL.Repository
 
                 return project.ProjId;
             }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine("========== DB UPDATE ERROR ==========");
+
+                Console.WriteLine("Message: " + ex.Message);
+
+                Console.WriteLine("Inner Exception: " + ex.InnerException?.Message);
+
+                Console.WriteLine("Base Exception: " + ex.GetBaseException().Message);
+
+                foreach (var entry in ex.Entries)
+                {
+                    Console.WriteLine("Entity: " + entry.Metadata.ClrType.Name);
+                    Console.WriteLine("State: " + entry.State);
+
+                    foreach (var property in entry.Properties)
+                    {
+                        Console.WriteLine(
+                            $"{property.Metadata.Name} = {property.CurrentValue}");
+                    }
+                }
+
+                throw;
+            }
             catch (Exception ex)
             {
-                return nmum.Exception;
+                Console.WriteLine(ex.ToString());
+                throw;
             }
         }
 

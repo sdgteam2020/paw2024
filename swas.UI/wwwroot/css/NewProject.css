@@ -80,3 +80,7 @@ border-bottom-right-radius: .3rem;
 }
 
 
+.table thead th {
+    --bs-table-bg: var(--bs-primary);
+    --bs-table-color: #fff;
+}

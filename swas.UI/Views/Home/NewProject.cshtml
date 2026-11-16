@@ -42,42 +42,43 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
+    <!-- CSS -->
     <link href="~/css/newpage.css" rel="stylesheet" />
-    <link href="~/css/sweetalert2.min.css" rel="stylesheet">
+    <link href="~/css/sweetalert2.min.css" rel="stylesheet" />
     <link href="~/css/NewProject.css" rel="stylesheet" />
     <link href="~/assets/css/tooltip.css" rel="stylesheet" />
-
-    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/select2.min.css" rel="stylesheet" />
     <link href="~/assets/css/font-awesome/fonts/font-awesome.min.css" rel="stylesheet" />
-
     <link href="~/css/paw-whitelist-page.css" rel="stylesheet" asp-append-version="true" />
 
+    <!-- Core JS -->
     <script src="~/assets/js/jquery.min.js"></script>
     <script src="~/assets/js/bootstrap.min.js"></script>
-
     <script src="~/assets/js/main.js"></script>
 
+    <!-- DataTables -->
     <script src="~/assets/dataTable/js/jquery.dataTables.min.js"></script>
     <script src="~/assets/dataTable/js/dataTables.bootstrap4.min.js"></script>
     <script src="~/assets/dataTable/js/dataTables.buttons.min.js"></script>
     <script src="~/assets/dataTable/js/buttons.bootstrap4.min.js"></script>
-    <script src="~/assets/dataTable/js/jszip.min.js"></script>
-    <script src="~/js/pdfmake.min.js"></script>
-    <script src="~/assets/dataTable/js/vfs_fonts.js"></script>
-    <script src="~/assets/dataTable/js/buttons.html5.min.js"></script>
-    <script src="~/assets/dataTable/js/buttons.print.min.js"></script>
-    <script src="~/assets/dataTable/js/buttons.colVis.min.js"></script>
     <script src="~/assets/dataTable/js/dataTables.responsive.min.js"></script>
     <script src="~/assets/dataTable/js/responsive.bootstrap4.min.js"></script>
 
+    <!-- DataTables Export Dependencies -->
+   
+
+    <!-- Other Libraries -->
     <script src="~/js/sweetalert2.min.js"></script>
     <script src="~/DeveloperJs/ddlSanal.js"></script>
     <script src="~/assets/datatable/js/select2.min.js"></script>
+
 </head>
+
 
 <body
     data-flag="@flag"
@@ -410,10 +411,23 @@
                         </div>
 
                         <div class="row mb-3">
+
                             <div class="col-md-6">
                                 <label for="edit_Appt" class="form-label">Appt</label>
-                                <input type="text" id="edit_Appt" name="Appt" class="form-control" />
+
+                                <select id="edit_Appt"
+                                        name="Appt"
+                                        class="form-control"
+                                        required>
+                                    <option value="">-- Select Appointment --</option>
+
+                                    @foreach (var item in (IEnumerable<SelectListItem>)ViewData["AppointmentList"])
+                                    {
+                                        <option value="@item.Text">@item.Text</option>
+                                    }
+                                </select>
                             </div>
+
                             <div class="col-md-6">
                                 <label for="edit_Sponser" class="form-label">Sponsor</label>
                                 <select class="form-control" id="edit_Sponser" name="Fmn" data-mdb-select-init>
@@ -633,11 +647,31 @@
                                 <div class="invalid-feedback paw-invalid-red">This field is required.</div>
                             </div>
 
-                            <div class="col-md-4 mb-2">
+                            @* <div class="col-md-4 mb-2">
                                 <label for="appt" class="form-label">Appt<span class="required-star">*</span></label>
                                 <input type="text" class="form-control" id="appt" name="appt" required placeholder="Enter Appointment" />
                                 <div class="invalid-feedback paw-invalid-red">This field is required.</div>
+                            </div> *@
+                            
+                            <div class="col-md-4 mb-2">
+                                <label for="appt" class="form-label">
+                                    Appt<span class="required-star">*</span>
+                                </label>
+
+                                <select class="form-control select2-appointment"
+                                        id="appt" name="appt" required>
+                                    <option value="">-- Select Appointment --</option>
+                                    @foreach (var item in (IEnumerable<SelectListItem>)ViewData["AppointmentList"])
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                </select>
+
+                                <div class="invalid-feedback paw-invalid-red">
+                                    Please select an appointment.
+                                </div>
                             </div>
+
                         </div>
 
                         <div class="row">
@@ -700,7 +734,7 @@
 
     <script src="~/developerjs/Tooltip.js"></script>
     <script src="~/developerjs/newproject.js"></script>
-    @* <script src="~/developerjs/CommanDatatable.js"></script>     *@
+    <script src="~/developerjs/CommanDatatable.js"></script>    
  
     <script src="~/developerjs/Comman.js"></script>
 

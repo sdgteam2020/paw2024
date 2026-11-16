@@ -2,12 +2,27 @@
 
 $(document).ready(function () {
     populateddlUnit();
+  const $susNo = $('#UnitSusNo');
+
+    if ($susNo.length && !$susNo.hasClass('select2-hidden-accessible')) {
+        $susNo.select2({
+            placeholder: '-- Select Sus No --',
+            allowClear: true,
+            minimumResultsForSearch: 0,
+            width: '100%',
+            dropdownParent: $susNo.closest('.modal').length
+                ? $susNo.closest('.modal')
+                : $(document.body)
+        });
+    }
     $("#btn-close").click(function () {
 
         let signUpUrl = '/Identity/Account/Login';
         window.location.href = signUpUrl;
     });
     $('.dropdownsearch').select2();
+    $('#Input_appointment').select2();
+
 
         $(document).on('click', '.plus', function () {
           

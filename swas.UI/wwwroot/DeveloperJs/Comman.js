@@ -1,7 +1,7 @@
 ﻿
 $(document).ready(function () {
     
-    
+    pdfsizevalidation();
 
     const requestStartdomainId = {
         method: "POST",
@@ -433,7 +433,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('.char-limit').each(function () {
-        
+       
         let inputField = $(this);
 
         let maxLength = parseInt(inputField.data('maxlength'));
@@ -563,3 +563,487 @@ function getUnitIdFromSession() {
 
     return unitId ? parseInt(unitId) : null;
 }
+
+/**
+* InputGuard: client-side input cleaning + request blocking.
+* Usability layer only. The server (SanitizeActionFilter) is the real protection.
+*
+* - Removes ONLY the unsafe part of a value (mode "strip"), or clears the whole field (mode "clear").
+* - Never trims or changes text while the user is typing, except removing the unsafe part.
+* - Blocks form submit, form.submit(), $.ajax/$.post, fetch(), XMLHttpRequest if a value is unsafe.
+* - Opt out with data-ig-skip on a field, a wrapper, or a form (e.g. rich-text editors).
+* - Per-field mode: data-ig-mode="clear"   Global mode: InputGuard.mode = "clear"
+* - Skip one request with ignoreInputGuard: true in $.ajax / fetch options.
+*
+* Load order: jQuery -> inputguard.js -> your page scripts.
+*/
+/**
+ * InputGuard: client-side input cleaning + request blocking.
+ * Usability layer only. The server (SanitizeActionFilter) is the real protection.
+ *
+ * - XSS: removes ONLY the unsafe part (mode "strip"), or clears the whole field (mode "clear").
+ * - SQL: any SQL match clears the whole field (a half-removed query is never left behind).
+ * - Blocks form submit, form.submit(), $.ajax/$.post, fetch(), XMLHttpRequest if a value is unsafe.
+ * - Opt out with data-ig-skip on a field, a wrapper, or a form (e.g. rich-text editors, code boxes).
+ * - Per-field mode: data-ig-mode="clear"   Global mode: InputGuard.mode = "clear"
+ * - Skip one request with ignoreInputGuard: true in $.ajax / fetch options.
+ *
+ * Load order: jQuery -> inputguard.js -> your page scripts.
+ */
+(function (window, document, $) {
+    "use strict";
+
+    var MAX_DEPTH = 8;
+    var MAX_FINDINGS = 20;
+    var NOTICE_MS = 3500;
+    var SQL = "SQL injection pattern";
+    var SKIP_NAMES = ["__requestverificationtoken"];
+
+    var FIELD_SELECTOR = [
+        "input:not([type])",
+        "input[type='text']",
+        "input[type='email']",
+        "input[type='search']",
+        "input[type='url']",
+        "input[type='tel']",
+        "textarea"
+    ].join(",");
+
+    var HANDLERS = "(?:error|load|click|dblclick|mouse\\w+|key\\w+|focus\\w*|blur|change|submit|toggle|input|pointer\\w+|animation\\w+|begin|end)";
+
+    // ---------- detection rules (same as server): [reason, pattern] ----------
+    var RULES = [
+        // XSS
+        ["script tag", /<\s*\/?\s*script\b/i],
+        ["javascript:/vbscript: URL", /\b(?:java|vb)script\s*:/i],
+        ["data:text/html URL", /data\s*:\s*text\/html/i],
+        ["HTML tag with event handler", /<[^>]*\bon[a-z]+\s*=/i],
+        ["event handler attribute", new RegExp("(?:^|[\"'\\s/])on" + HANDLERS + "\\s*=", "i")],
+        ["dangerous HTML tag", /<\s*(?:iframe|object|embed|svg|math|meta|link|base|form|style)\b/i],
+        ["CSS expression()", /expression\s*\(/i],
+
+        // SQL
+        [SQL, /\bunion\b\s+(?:all\s+)?select\b/i],
+        [SQL, /;\s*(?:drop|truncate|delete|insert|update|alter|create|shutdown|exec|execute|waitfor|declare)\b/i],
+        [SQL, /['"]\s*(?:or|and)\s+['"(]?\w+['"]?\s*(?:=|like|<|>)\s*['"(]?\w+/i],
+        [SQL, /['"]\s*(?:--|#|\/\*)/],
+        [SQL, /\b(?:or|and)\s+\d+\s*=\s*\d+/i],
+        [SQL, /\bwaitfor\s+delay\b/i],
+        [SQL, /\bexec(?:ute)?\s*\(|\bexec(?:ute)?\s+(?:sp_|xp_)/i],
+        [SQL, /\b(?:xp_cmdshell|sp_executesql|sp_oacreate|openrowset|information_schema|sysobjects|syscolumns)\b|@@version/i],
+        [SQL, /\b(?:drop|truncate)\s+(?:table|database|view|procedure|proc|index)\b|\balter\s+(?:table|database)\b/i],
+        [SQL, /\bselect\s+\*\s+from\b/i],
+        [SQL, /\bselect\s+(?:top\s+\d+\s+)?[\w.\[\]]+(?:\s*,\s*[\w.\[\]]+)*\s+from\s+[\w.\[\]]+\s+where\b/i],
+        [SQL, /\binsert\s+into\b|\bdelete\s+from\b|\bupdate\s+[\w.\[\]]+\s+set\b/i],
+        [SQL, /['"]\s*\+\s*\w+\s*\+\s*['"]/],
+        [SQL, /\brequest\s*(?:\.|\()\s*(?:form|querystring|params)\b/i],
+        [SQL, /--\s*['"]?\s*$/]
+    ];
+
+    // ---------- removal rules (XSS only): delete just the unsafe fragment ----------
+    var STRIP_RULES = [
+        /<\s*script\b[^>]*>[\s\S]*?<\s*\/\s*script\s*>/gi,                      // <script>...</script> with content
+        /<\s*\/?\s*script\b[^>]*>?/gi,                                          // stray script tags
+        /<\s*\/?\s*(?:iframe|object|embed|svg|math|meta|link|base|form|style)\b[^>]*>?/gi,
+        new RegExp("<[^>]*\\bon" + HANDLERS + "\\s*=[^>]*>?", "gi"),            // whole tag with an event handler
+        new RegExp("\\bon" + HANDLERS + "\\s*=\\s*(?:\"[^\"]*\"|'[^']*'|[^\\s>]*)", "gi"), // loose onerror=... attribute
+        /\b(?:java|vb)script\s*:/gi,
+        /data\s*:\s*text\/html/gi,
+        /expression\s*\(/gi
+    ];
+
+    // ---------- detection ----------
+
+    var decoder = document.createElement("textarea");
+
+    function htmlDecode(s) {
+        decoder.innerHTML = s;          // textarea content is inert, nothing executes
+        return decoder.value;
+    }
+
+    function variants(input) {
+        var list = [input];
+        var current = input;
+        for (var i = 0; i < 2; i++) {
+            var next = current;
+            try { next = decodeURIComponent(next); } catch (e) { /* keep as is */ }
+            next = htmlDecode(next).replace(/\u0000/g, "");
+            if (next === current) break;
+            current = next;
+            list.push(current);
+        }
+        return list;
+    }
+
+    // Returns the reason (string) or null
+    function detect(value) {
+        if (typeof value !== "string" || !value.trim()) return null;
+        var list = variants(value);
+        for (var v = 0; v < list.length; v++) {
+            for (var r = 0; r < RULES.length; r++) {
+                if (RULES[r][1].test(list[v])) return RULES[r][0];
+            }
+        }
+        return null;
+    }
+
+    // Returns true if ANY variant matches an SQL rule (even when an XSS rule matched first)
+    function hasSql(value) {
+        var list = variants(value);
+        for (var v = 0; v < list.length; v++) {
+            for (var r = 0; r < RULES.length; r++) {
+                if (RULES[r][0] === SQL && RULES[r][1].test(list[v])) return true;
+            }
+        }
+        return false;
+    }
+
+    // XSS: removes only the unsafe fragments, repeating until stable (defeats <scr<script>ipt>).
+    // SQL: clears everything. Anything still unsafe afterwards is cleared too.
+    function strip(value) {
+        if (typeof value !== "string" || !detect(value)) return value;
+        if (hasSql(value)) return "";
+
+        var current = value;
+        for (var pass = 0; pass < 5; pass++) {
+            var before = current;
+            for (var i = 0; i < STRIP_RULES.length; i++) {
+                current = current.replace(STRIP_RULES[i], "");
+            }
+            if (current === before) break;
+        }
+        return detect(current) ? "" : current;
+    }
+
+    // Control characters and edge whitespace. Used on blur/submit only, not while typing.
+    function normalize(value, multiline) {
+        value = value.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "");
+        value = multiline ? value.replace(/\r\n?/g, "\n") : value.replace(/[\r\n]+/g, " ");
+        return value.trim();
+    }
+
+    // ---------- field UI ----------
+
+    function shouldSkip($f) {
+        var name = ($f.attr("name") || "").toLowerCase();
+        return $f.prop("disabled") ||
+            SKIP_NAMES.indexOf(name) > -1 ||
+            $f.closest("[data-ig-skip]").length > 0;
+    }
+
+    function showNotice($f, text) {
+        var $msg = $f.data("igMsg");
+        if (!$msg) {
+            $msg = $("<div class='invalid-feedback d-block ig-msg' role='alert'></div>");
+            var $anchor = $f.parent().hasClass("input-group") ? $f.parent() : $f;
+            $anchor.after($msg);
+            $f.data("igMsg", $msg);
+        }
+        $msg.text(text);                                                    // .text(), never .html()
+        $f.addClass("is-invalid").attr("aria-invalid", "true").data("igFlag", true);
+
+        clearTimeout($f.data("igTimer"));
+        $f.data("igTimer", setTimeout(function () { clearNotice($f); }, NOTICE_MS));
+    }
+
+    function clearNotice($f) {
+        if (!$f.data("igFlag")) return;      // only clear what this script set
+        clearTimeout($f.data("igTimer"));
+        var $msg = $f.data("igMsg");
+        if ($msg) $msg.remove();
+        $f.removeData("igMsg").removeData("igFlag").removeData("igTimer")
+            .removeClass("is-invalid").removeAttr("aria-invalid");
+    }
+
+    // Cleans one field in place. Returns true if something was removed.
+    function cleanField($f) {
+        if (shouldSkip($f)) return false;
+
+        var el = $f[0];
+        var oldValue = el.value;
+        var reason = detect(oldValue);
+        if (!reason) return false;
+
+        var mode = $f.attr("data-ig-mode") || InputGuard.mode;
+        var newValue = mode === "clear" ? "" : strip(oldValue);
+
+        var pos = null;
+        try { pos = el.selectionStart; } catch (e) { /* e.g. type=email has no selection API */ }
+
+        el.value = newValue;
+
+        if (pos !== null) {
+            var np = Math.max(0, Math.min(newValue.length, pos - (oldValue.length - newValue.length)));
+            try { el.setSelectionRange(np, np); } catch (e) { }
+        }
+
+        showNotice($f, newValue === ""
+            ? "Unsafe input (" + reason + ") was removed."
+            : "Unsafe part (" + reason + ") was removed from this field.");
+        return true;
+    }
+
+    // Returns true when the form is clean. If anything was removed, returns false once
+    // so the user can see the cleaned values, then the next submit goes through.
+    function validateForm(formOrSelector) {
+        var $form = $(formOrSelector);
+        if ($form.closest("[data-ig-skip]").length) return true;
+
+        var firstChanged = null;
+        $form.find(FIELD_SELECTOR).each(function () {
+            var $f = $(this);
+            if (shouldSkip($f)) return;
+            var cleaned = normalize($f.val(), $f.is("textarea"));
+            if (cleaned !== $f.val()) $f.val(cleaned);
+            if (cleanField($f) && !firstChanged) firstChanged = $f;
+        });
+
+        if (firstChanged) firstChanged.trigger("focus");
+        return !firstChanged;
+    }
+
+    // ---------- scanning plain data (AJAX payloads) ----------
+
+    function check(name, value, out) {
+        if (out.length >= MAX_FINDINGS) return;
+        if (SKIP_NAMES.indexOf(String(name).toLowerCase()) > -1) return;
+        var reason = detect(value);
+        if (reason) out.push({ field: String(name), reason: reason });
+    }
+
+    function collect(value, path, out, depth) {
+        if (value == null || depth > MAX_DEPTH || out.length >= MAX_FINDINGS) return;
+        if (typeof value === "string") { check(path, value, out); return; }
+        if (typeof value !== "object") return;
+        if (typeof File !== "undefined" && value instanceof File) return;
+
+        if (Array.isArray(value)) {
+            value.forEach(function (v, i) { collect(v, path + "[" + i + "]", out, depth + 1); });
+            return;
+        }
+        Object.keys(value).forEach(function (k) {
+            check(path + "." + k + " (name)", k, out);
+            collect(value[k], path + "." + k, out, depth + 1);
+        });
+    }
+
+    function scan(data, root) {
+        var out = [];
+        collect(data, root || "payload", out, 0);
+        return out;
+    }
+
+    // Scans any request body: FormData, URLSearchParams, JSON string,
+    // query-string string, or a plain object.
+    function scanBody(body, contentType) {
+        var out = [];
+        if (!body) return out;
+
+        if (typeof FormData !== "undefined" && body instanceof FormData) {
+            body.forEach(function (v, k) {
+                check(k + " (name)", k, out);
+                if (typeof v === "string") check(k, v, out);
+            });
+        } else if (typeof URLSearchParams !== "undefined" && body instanceof URLSearchParams) {
+            body.forEach(function (v, k) {
+                check(k + " (name)", k, out);
+                check(k, v, out);
+            });
+        } else if (typeof body === "string") {
+            var isJson = (contentType || "").toLowerCase().indexOf("json") > -1;
+            var parsed = null;
+            if (isJson || /^\s*[\[{]/.test(body)) {
+                try { parsed = JSON.parse(body); } catch (e) { parsed = null; }
+            }
+            if (parsed !== null) {
+                collect(parsed, "payload", out, 0);
+            } else {
+                new URLSearchParams(body).forEach(function (v, k) {
+                    check(k + " (name)", k, out);
+                    check(k, v, out);
+                });
+            }
+        } else if (typeof body === "object") {
+            collect(body, "payload", out, 0);
+        }
+        return out;
+    }
+
+    // ---------- public API ----------
+
+    var InputGuard = {
+        mode: "strip",                   // "strip" = remove only unsafe XSS part, "clear" = empty the field
+        detect: detect,
+        strip: strip,
+        scan: scan,                      // InputGuard.scan(obj) -> [{field, reason}]
+        cleanField: cleanField,
+        validateForm: validateForm,
+        // Override to show your own toast/modal
+        onBlocked: function (problems) {
+            var text = problems.map(function (p) {
+                return "'" + p.field + "' contains " + p.reason;
+            }).join("\n");
+            console.warn("InputGuard blocked a request:\n" + text);
+            window.alert("Invalid input detected:\n" + text);
+        }
+    };
+    window.InputGuard = InputGuard;
+
+    // ---------- wiring: fields ----------
+
+    var composing = false;               // IME typing (Hindi, Chinese, ...): wait until it finishes
+
+    $(document).on("compositionstart", FIELD_SELECTOR, function () { composing = true; });
+    $(document).on("compositionend", FIELD_SELECTOR, function () {
+        composing = false;
+        cleanField($(this));
+    });
+
+    // Typing and pasting: clean immediately, keep the cursor position.
+    $(document).on("input", FIELD_SELECTOR, function () {
+        if (composing) return;
+        var $f = $(this);
+        if (!cleanField($f)) clearNotice($f);
+    });
+
+    // Leaving the field: tidy whitespace/control chars, then clean.
+    $(document).on("change focusout", FIELD_SELECTOR, function () {
+        var $f = $(this);
+        if (shouldSkip($f)) return;
+        var cleaned = normalize($f.val(), $f.is("textarea"));
+        if (cleaned !== $f.val()) $f.val(cleaned);
+        cleanField($f);
+    });
+
+    // ---------- wiring: blocking requests ----------
+
+    // 1) Normal submit button / Enter key / requestSubmit().
+    document.addEventListener("submit", function (e) {
+        if (!e.target || e.target.tagName !== "FORM") return;
+        if (!validateForm(e.target)) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+        }
+    }, true);
+
+    // 2) Programmatic form.submit() and $('#form').submit()
+    var nativeSubmit = HTMLFormElement.prototype.submit;
+    HTMLFormElement.prototype.submit = function () {
+        if (!validateForm(this)) return;
+        return nativeSubmit.apply(this, arguments);
+    };
+
+    // 3) $.ajax / $.post with a body
+    $.ajaxPrefilter(function (options, original, jqXHR) {
+        var method = (options.type || "GET").toUpperCase();
+        if (method === "GET" || method === "HEAD" || options.ignoreInputGuard) return;
+
+        var problems = scanBody(options.data, options.contentType);
+        if (problems.length) {
+            InputGuard.onBlocked(problems);
+            jqXHR.abort();
+        }
+    });
+
+    // 4) fetch()
+    var nativeFetch = window.fetch;
+    if (nativeFetch) {
+        window.fetch = function (input, init) {
+            init = init || {};
+            var method = String(init.method || (input && input.method) || "GET").toUpperCase();
+            if (method !== "GET" && method !== "HEAD" && init.body && !init.ignoreInputGuard) {
+                var headers = init.headers || {};
+                var ct = (typeof headers.get === "function")
+                    ? headers.get("Content-Type")
+                    : (headers["Content-Type"] || headers["content-type"]);
+                var problems = scanBody(init.body, ct);
+                if (problems.length) {
+                    InputGuard.onBlocked(problems);
+                    return Promise.reject(new DOMException("Blocked by InputGuard", "AbortError"));
+                }
+            }
+            return nativeFetch.apply(this, arguments);
+        };
+    }
+
+    // 5) Raw XMLHttpRequest (axios, plugins)
+    var nativeOpen = XMLHttpRequest.prototype.open;
+    var nativeSend = XMLHttpRequest.prototype.send;
+    var nativeSetHeader = XMLHttpRequest.prototype.setRequestHeader;
+
+    XMLHttpRequest.prototype.open = function (method) {
+        this._igMethod = String(method || "GET").toUpperCase();
+        this._igContentType = "";
+        return nativeOpen.apply(this, arguments);
+    };
+    XMLHttpRequest.prototype.setRequestHeader = function (name, value) {
+        if (String(name).toLowerCase() === "content-type") this._igContentType = value;
+        return nativeSetHeader.apply(this, arguments);
+    };
+    XMLHttpRequest.prototype.send = function (body) {
+        if (this._igMethod !== "GET" && this._igMethod !== "HEAD" && body) {
+            var problems = scanBody(body, this._igContentType);
+            if (problems.length) {
+                InputGuard.onBlocked(problems);
+                this.abort();
+                return;
+            }
+        }
+        return nativeSend.apply(this, arguments);
+    };
+
+})(window, document, jQuery);
+
+
+function pdfsizevalidation()
+{
+      const pdfFileInput = document.getElementById('pdfFileInput');
+
+        pdfFileInput.addEventListener('change', function (event) {
+            debugger;
+        const file = event.target.files[0];
+
+        if (file) {
+
+
+            const maxSizeInBytes = 10 * 1024 * 1024;
+            if (file.size > maxSizeInBytes) {
+
+                pdfFileInput.value = '';
+                Swal.fire({
+                    title: 'File Size Exceeded',
+                    text: 'Please select a file smaller than 10MB.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+
+
+            const reader = new FileReader();
+            reader.onloadend = function () {
+                const bytes = new Uint8Array(reader.result);
+                const pdfHeader = new Uint8Array([37, 80, 68, 70, 45]); // %PDF-
+                const isPDF = compareArrays(bytes.slice(0, 5), pdfHeader);
+                if (isPDF) {
+
+                    console.log('PDF file is valid. Proceed with upload.');
+                } else {
+
+                    Swal.fire({
+                        title: 'Invalid File ....!',
+                        text: 'Invalid PDF file. Please select a valid PDF file.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+
+                    pdfFileInput.value = '';
+                }
+            };
+
+
+            reader.readAsArrayBuffer(file);
+        }
+    });
+}
+ 

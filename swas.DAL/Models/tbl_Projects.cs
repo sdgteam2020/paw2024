@@ -188,7 +188,7 @@ namespace swas.DAL.Models
         [Required(ErrorMessage = "Aim is required.")]
         [Display(Name = "Aim")]
         [StringLength(3001, ErrorMessage = "Aim cannot exceed 500 Words.")]
-        public string? Aim { get; set; } 
+        public string? Aim { get; set; }
         //[Required(ErrorMessage = "Puropose is required.")]
         [Display(Name = "Puropose")]
         [StringLength(601, ErrorMessage = "Puropose cannot exceed 100 Words.")]
@@ -231,21 +231,21 @@ namespace swas.DAL.Models
 
 
 
-         [Display(Name = "Additional_Ports")]
-        [StringLength(601, ErrorMessage = "Additional_Ports details cannot exceed 501 characters.")]
-        public string? Additional_Ports { get; set; } 
+        // [Display(Name = "Additional_Ports")]
+        //[StringLength(601, ErrorMessage = "Additional_Ports details cannot exceed 501 characters.")]
+        //public string? Additional_Ports { get; set; } 
 
-         [Display(Name = "Concurrent_users")]
-        [StringLength(301, ErrorMessage = "Concurrent_users details cannot exceed 50 Words.")]
-        public string? Concurrent_users { get; set; } 
-         [Display(Name = "API_Initegration")]
-        [StringLength(301, ErrorMessage = "API_Initegrationdetails cannot exceed 50 characters.")]
-        public string? API_Initegration { get; set; } 
+        // [Display(Name = "Concurrent_users")]
+        //[StringLength(301, ErrorMessage = "Concurrent_users details cannot exceed 50 Words.")]
+        //public string? Concurrent_users { get; set; } 
+        // [Display(Name = "API_Initegration")]
+        //[StringLength(301, ErrorMessage = "API_Initegrationdetails cannot exceed 50 characters.")]
+        //public string? API_Initegration { get; set; } 
 
 
-         [Display(Name = "Mission_Critical_appl_justif")]
-        [StringLength(301, ErrorMessage = "Mission_Critical_appl_justif details cannot exceed 50 Words.")]
-        public string? Mission_Critical_appl_justif { get; set; } 
+        // [Display(Name = "Mission_Critical_appl_justif")]
+        //[StringLength(301, ErrorMessage = "Mission_Critical_appl_justif details cannot exceed 50 Words.")]
+        //public string? Mission_Critical_appl_justif { get; set; } 
         
         
      

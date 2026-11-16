@@ -18,6 +18,8 @@
     var units = (List<UnitDtl>)ViewData["Unit"];
     var Rank = (List<mRank>)ViewData["rank"];
 
+   
+    ViewData["SusNoList"] = Model.SusNoList;
 
 
     Login Logins = SessionHelper.GetObjectFromJson<Login>(HttpContextAccessor.HttpContext.Session, "User");
@@ -113,7 +115,7 @@
                                     </td>
                                 </tr>
 
-                                <tr>
+                               @*  <tr>
                                     <td>
                                         <label asp-for="Input.appointment" class="label control-label reg-label-m5">Appointment</label>
                                     </td>
@@ -122,6 +124,26 @@
                                                required placeholder="Appointment" />
                                         <span class="charErrorMsg d-none paw-red-font">Cannot exceed more than 20 characters!</span>
                                         <span asp-validation-for="Input.appointment" class="text-danger"></span>
+                                    </td>
+                                </tr> *@
+                                <tr>
+                                    <td>
+                                        <label asp-for="Input.appointment"
+                                               class="label control-label reg-label-m5">
+                                            Appointment
+                                        </label>
+                                    </td>
+
+                                    <td colspan="2">
+                                        <select asp-for="Input.appointment"
+                                                asp-items="Model.AppointmentList"
+                                                class="form-control"
+                                                required>
+                                            <option value="">-- Select Appointment --</option>
+                                        </select>
+
+                                        <span asp-validation-for="Input.appointment"
+                                              class="text-danger"></span>
                                     </td>
                                 </tr>
 

@@ -1,4 +1,8 @@
 ﻿
+.table thead th {
+    --bs-table-bg: var(--bs-primary);
+    --bs-table-color: #fff;
+}
 
 
 .header {

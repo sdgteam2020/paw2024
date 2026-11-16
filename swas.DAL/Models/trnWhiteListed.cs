@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,8 @@ namespace swas.DAL.Models
         public string? ProjName { get; set; }
         public string? Fmn { get; set; }
         public string? Appt { get; set; }
+        [Column(TypeName = "nvarchar(50)")]
+        [MaxLength(50)]
         public string? ContactNo { get; set; }
         public DateTime? Clearence { get; set; }
         public string? CertNo { get; set; }

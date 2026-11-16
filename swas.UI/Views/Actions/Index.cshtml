@@ -64,10 +64,13 @@
                             <div class="card-body">
                                 <input hidden class="form-control" type="text" id="ActionsId" name="ActionsId" value="0">
                                 <div class="form-row">
-                                    <div class="form-group col-md-6 ProjectsFwd">
+                                    <div class="form-group col-md-6 ProjectsFwd input-group">
                                         <label for="ActionName">Action</label>
-                                        <input class="form-control" type="text" id="ActionName" name="ActionName">
+                                        <input class="form-control char-limit" type="text" id="ActionName" name="ActionName" maxlength="20" data-maxlength="20">
                                     </div>
+                                    <span class="charErrorMsg d-none paw-red-font">
+                                        Cannot exceed 200 characters!
+                                    </span>
                                     <div class="form-group col-md-12">
                                         <button class="btn btn-submit custom-btn-save" type="button" id="btnsave">Save</button>
                                     </div>

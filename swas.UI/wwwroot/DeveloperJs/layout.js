@@ -110,32 +110,42 @@
         }
     }
     function bindEditUserModal() {
-        $(document).on("click", ".edit-user-btn", function () {
-            let username = $(this).data("username");
-            let rankid = $(this).data("rankid");
-            let rolename = $(this).data("rolename");
+        $(document).off("click", ".edit-user-btn")          // stops duplicate handlers if this runs twice
+            .on("click", ".edit-user-btn", function (e) {
+                e.preventDefault();                          // needed only if you keep <a href="#">
 
-            const payload = {
-                UserName: username,
-                RankId: rankid,
-                RoleName: rolename
-            };
-            $.ajax({
-                url: "/Account/GetUserEditPartial",
-                type: "GET",
-                data: {
-                    payload: encryptData(payload)
-                },
-                success: function (result) {
-                    $("#editUserModalBody").html(result);
-                    $("#editUserModal").modal("show");
-                    if ($.fn.select2) $(".dropdownsearch").select2({ dropdownParent: $("#editUserModal") });
-                },
-                error: function () {
-                    alert("Error loading form.");
-                }
+                const payload = {
+                    UserName: $(this).data("username"),
+                    RankId: $(this).data("rankid"),
+                    RoleName: $(this).data("rolename")
+                };
+
+                $.ajax({
+                    url: "/Account/GetUserEditPartial",
+                    type: "GET",
+                    data: { payload: encryptData(payload) },
+                    success: function (result) {
+                        $("#editUserModalBody").html(result);
+
+                        $("#editUserModal").one("shown.bs.modal", function () {
+                            $("#editUserModalBody .dropdownsearch").each(function () {
+                                if ($(this).hasClass("select2-hidden-accessible")) {
+                                    $(this).select2("destroy");            // avoid a second init on the same select
+                                }
+                                $(this).select2({
+                                    dropdownParent: $("#editUserModal"),
+                                    width: "100%"
+                                });
+                            });
+                        });
+
+                        $("#editUserModal").modal("show");
+                    }, 
+                    error: function () {
+                        alert("Error loading form.");
+                    }
+                });
             });
-        });
     }
 
     function bindPolicyCorner() {

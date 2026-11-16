@@ -219,7 +219,7 @@ function GetProjCommentsByUnitId(statusId) {
         type: 'POST',
         data: { "StatusId": statusId },
         success: function (response) {
-            
+          
             if (response == null || response === "null") {
 
                 commentDataCache[statusId] = [];

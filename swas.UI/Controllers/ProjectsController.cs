@@ -358,10 +358,8 @@ namespace swas.UI.Controllers
                         proj.Detlsof_OS ??= string.Empty;
                         proj.ProposedDB_Engine ??= string.Empty;
                         proj.operation_system_hosting_env ??= string.Empty;
-                        proj.Additional_Ports ??= string.Empty;
-                        proj.Concurrent_users ??= string.Empty;
-                        proj.API_Initegration ??= string.Empty;
-                        proj.Mission_Critical_appl_justif ??= string.Empty;
+                      
+                      
                         proj.Technology_dependencies ??= string.Empty;
                         proj.InitialRemark ??= string.Empty;
                         proj.Background ??= string.Empty;
@@ -502,9 +500,8 @@ namespace swas.UI.Controllers
                 nameof(Data.Puropose), nameof(Data.Scope), nameof(Data.ReqmtJustification),
                 nameof(Data.DetlsofUserBase), nameof(Data.TechStackProposed), nameof(Data.Detlsof_OS),
                 nameof(Data.ProposedDB_Engine), nameof(Data.DetlsofSw_Architecture),
-                nameof(Data.operation_system_hosting_env), nameof(Data.Additional_Ports),
-                nameof(Data.Concurrent_users), nameof(Data.API_Initegration),
-                nameof(Data.Mission_Critical_appl_justif), nameof(Data.Technology_dependencies),
+                nameof(Data.operation_system_hosting_env),
+               nameof(Data.Technology_dependencies),
                 nameof(Data.NWBandWidthReqmt)
             };
                     foreach (var field in fieldsToIgnore) ModelState.Remove(field);
@@ -549,8 +546,8 @@ namespace swas.UI.Controllers
                     Data.ReqmtJustification = "N/A"; Data.DetlsofUserBase = "N/A"; Data.EnvisagedCost = "N/A";
                     Data.TechStackProposed = "N/A"; Data.NWBandWidthReqmt = "N/A"; Data.Detlsof_OS = "N/A";
                     Data.ProposedDB_Engine = "N/A"; Data.operation_system_hosting_env = "N/A";
-                    Data.Additional_Ports = "N/A"; Data.Concurrent_users = "N/A"; Data.API_Initegration = "N/A";
-                    Data.Mission_Critical_appl_justif = "N/A"; Data.Technology_dependencies = "N/A";
+                   
+                    Data.Technology_dependencies = "N/A";
                     Data.Security_Classification = "N/A"; Data.TypeofSW = "N/A"; Data.BeingDevpInhouse = "N/A";
                     Data.HQandITinfraReqd = "N/A"; Data.ContentofSWApp = "N/A"; Data.UsabilityofProposedAppln = "N/A";
                     Data.MajTimeLines = "N/A"; Data.DataSecurity_backup = "N/A"; Data.EndorsmentbyHeadof = "N/A";

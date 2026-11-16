@@ -22,8 +22,8 @@ namespace ASPNetCoreIdentityCustomFields.Data
         [Required]
         public int unitid { get; set; }
 
-        [StringLength(20, ErrorMessage = "Appointment cannot exceed 20 characters")]
-        public string? appointment { get; set; }
+        //[StringLength(20, ErrorMessage = "Appointment cannot exceed 20 characters")]
+        public int? appointment { get; set; }
 
         [StringLength(20, ErrorMessage = "IC No cannot exceed 20 characters")]
         public string? Icno { get; set; }

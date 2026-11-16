@@ -161,7 +161,7 @@ ion-icon {
 
 .projectheading {
     background: #044c92;
-    margin-bottom: 0px;
+    margin-bottom: 5px;
     text-align: center;
     margin-top: -14px;
     margin-left: -15px;
@@ -2535,3 +2535,4 @@ ul.categories-list li {
     }
 }
 
+/* Example for your table header */

@@ -46,7 +46,9 @@
     overflow-x: auto;
     -webkit-overflow-scrolling: touch; 
 }
-
+.cc-pill {
+    cursor: default !important; /* removes the hand cursor */
+}
 
 .tabs__head {
     list-style: none;

@@ -1,23 +1,24 @@
-﻿using ASPNetCoreIdentityCustomFields.Data;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using swas.Areas.Identity.Pages.Account;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using swas.DAL.Models;
-using swas.DAL;
-using swas.BAL.Helpers;
-using swas.BAL.DTO;
-using swas.BAL.Interfaces;
-using OneLogin.Saml;    
+﻿using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using System.Security.Cryptography;
 using System.Text;
 using System.Web;
-using Newtonsoft.Json;
+using ASPNetCoreIdentityCustomFields.Data;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using OneLogin.Saml;    
+using swas.Areas.Identity.Pages.Account;
+using swas.BAL.DTO;
+using swas.BAL.Helpers;
+using swas.BAL.Interfaces;
+using swas.DAL;
+using swas.DAL.Models;
+using swas.UI.Helpers;
 
 
 
@@ -39,8 +40,8 @@ namespace swas.UI.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUserRepository _userRepository;
         private readonly IConfiguration _configuration;
-       
-        public AccountController(Microsoft.AspNetCore.Identity.IUserStore<ApplicationUser> userStore, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager,
+        private readonly Appointmentservice _appointmentservice;
+        public AccountController(Appointmentservice appointmentservice,Microsoft.AspNetCore.Identity.IUserStore<ApplicationUser> userStore, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, ApplicationDbContext context, IUnitRepository unitRepository, ILogger<LoginModel> logger, IRankRepository rankRepository, IUserRepository userRepository,
         IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
@@ -57,6 +58,7 @@ namespace swas.UI.Controllers
                 _userRepository = userRepository;
                 _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
+            _appointmentservice = appointmentservice;
 
         }
 
@@ -671,52 +673,64 @@ namespace swas.UI.Controllers
 
 
 
-        public async Task<IActionResult> UserDelete(string UserName, string RoleName)
+       
+//[HttpPost]
+//[ValidateAntiForgeryToken]
+public async Task<IActionResult> UserDelete(string UserName, string RoleName)
+{
+    try
+    {
+        var user = await userManager.FindByNameAsync(UserName);
+
+        if (user == null)
         {
-            try
-            {
-                var user = await userManager.FindByNameAsync(UserName);
-
-                if (user == null)
-                {
-                    return NotFound();
-                }
-
-                var result1 = await userManager.RemoveFromRoleAsync(user, RoleName);
-
-                var result = await userManager.DeleteAsync(user);
-                if (result.Succeeded)
-                {
-
-                    TempData["SuccessMessage"] = "User Delete successfully!";
-                    return RedirectToAction("GetsAllUsers", "Account");
-                }
-                else
-                {
-                    TempData["FailureMessage"] = "Not Deleted";
-                    return RedirectToAction("GetsAllUsers", "Account");
-                }
-            }
-            catch (Exception ex)
-            {
-                int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
-                var eventId = new EventId(dynamicEventId, "UserDelete");
-
-                // Log full exception details on server
-                _logger.LogError(eventId, ex, "Error in UserDelete (AccountConfirmed).");
-
-                // Provide a non-sensitive id the user/admin can reference
-                var errorId = HttpContext?.TraceIdentifier ?? dynamicEventId.ToString();
-
-                // Return generic error (no ex.Message)
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    message = "An unexpected error occurred. Please try again or contact the administrator.",
-                    errorId
-                });
-            }
-
+            return NotFound();
         }
+
+        // Get currently logged-in user
+        var loggedInUser = await userManager.GetUserAsync(User);
+
+        // Prevent admin from deleting their own account
+        if (loggedInUser != null && loggedInUser.unitid == user.unitid)
+        {
+            TempData["FailureMessage"] =
+                "You cannot delete your own account. To delete this account, please contact ASDC.";
+
+            return RedirectToAction("GetsAllUsers", "Account");
+        }
+     
+
+        // Delete the selected user
+        var result = await userManager.DeleteAsync(user);
+
+        if (result.Succeeded)
+        {
+            TempData["SuccessMessage"] = "User deleted successfully!";
+        }
+        else
+        {
+            TempData["FailureMessage"] =
+                string.Join(", ", result.Errors.Select(e => e.Description));
+        }
+
+        return RedirectToAction("GetsAllUsers", "Account");
+    }
+    catch (Exception ex)
+    {
+        int dynamicEventId = DateTime.UtcNow.Ticks.GetHashCode();
+        var eventId = new EventId(dynamicEventId, "UserDelete");
+
+        _logger.LogError(eventId, ex, "Error in UserDelete.");
+
+        var errorId = HttpContext?.TraceIdentifier ?? dynamicEventId.ToString();
+
+        return StatusCode(StatusCodes.Status500InternalServerError, new
+        {
+            message = "An unexpected error occurred. Please try again or contact the administrator.",
+            errorId
+        });
+    }
+}
 
 
         public async Task<IActionResult> AllUsersEdit(string UserName, string RoleName, int RankId)
@@ -724,7 +738,7 @@ namespace swas.UI.Controllers
             var user = userManager.Users.FirstOrDefault(u => u.UserName == UserName);
 
             List<mRank> ranks = new List<mRank>();
-
+            
             ranks = (List<mRank>)await _rankRepository.GetAll();
 
             ViewData["Rank"] = ranks.ToList();
@@ -763,7 +777,7 @@ namespace swas.UI.Controllers
 
             var userunit = udtl.FirstOrDefault(d => d.unitid == user?.unitid);
             var unitsus = udtl.FirstOrDefault(x => x.unitid == user.unitid).UnitSusNo;
-
+            ViewData["AppointmentList"] = await _appointmentservice.LoadAppointments();
             var userunitname = userunit?.UnitName;
 
             ViewData["Unit"] = udtl.ToList();
@@ -783,7 +797,7 @@ namespace swas.UI.Controllers
             };
             users.UserName = user.UserName.Trim();
             users.OfficerName = user.Offr_Name.Trim();
-            users.appointment = user.appointment.Trim();
+            users.appointment = user.appointment;
             users.Tele_Army = user.Tele_Army.Trim();
             return View(users);
         }
@@ -840,7 +854,7 @@ namespace swas.UI.Controllers
                 Id = user.Id,
                 UserName = user.UserName.Trim(),
                 OfficerName = user.Offr_Name.Trim(),
-                appointment = user.appointment.Trim(),
+                appointment = user.appointment,
                 RoleName = user.RoleName,
                 Tele_Army = user.Tele_Army.Trim(),
                 RankId = RankId,
@@ -860,7 +874,7 @@ namespace swas.UI.Controllers
 
             input.UserName = input.UserName?.Trim();
             input.OfficerName = input.OfficerName?.Trim();
-            input.appointment = input.appointment?.Trim();
+            input.appointment = input.appointment;
             input.Tele_Army = input.Tele_Army?.Trim();
             
             var userName = Environment.GetEnvironmentVariable("CommonUserNamePass__userName")??"";

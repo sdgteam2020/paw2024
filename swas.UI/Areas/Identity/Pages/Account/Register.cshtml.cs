@@ -2,28 +2,30 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Configuration;
+using System.Linq.Expressions;
+using System.Security.Cryptography;
+using System.Text;
 using ASPNetCoreIdentityCustomFields.Data;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using swas.BAL.Helpers;
-using swas.DAL;
-using swas.BAL.Utility;
-using swas.DAL.Models;
-using swas.BAL.DTO;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Utilities;
+using swas.BAL;
+using swas.BAL.DTO;
+using swas.BAL.Helpers;
 using swas.BAL.Interfaces;
 using swas.BAL.Repository;
-using Microsoft.AspNetCore.DataProtection;
-using System.Linq.Expressions;
-using swas.BAL;
-using System.Text;
-using System.Security.Cryptography;
-using Org.BouncyCastle.Utilities;
-using System.Configuration;
+using swas.BAL.Utility;
+using swas.DAL;
+using swas.DAL.Models;
+using swas.UI.Helpers;
 
 
 namespace swas.Areas.Identity.Pages.Account
@@ -44,8 +46,8 @@ namespace swas.Areas.Identity.Pages.Account
         private readonly IDdlRepository _DdlRepostory;
         private readonly IUnitStatusMapping _unitStatusMapping;
         private readonly IConfiguration _configuration;
-
-        public RegisterModel(
+        private readonly Appointmentservice _appointmentservice;
+        public RegisterModel(Appointmentservice appointmentservice,
             Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager,
             Microsoft.AspNetCore.Identity.IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
@@ -67,6 +69,8 @@ namespace swas.Areas.Identity.Pages.Account
             _DdlRepostory = ddlRepository;
             _unitStatusMapping = unitStatusMapping;
             _configuration = configuration;
+            _appointmentservice = appointmentservice;
+
         }
 
         [BindProperty]
@@ -82,6 +86,8 @@ namespace swas.Areas.Identity.Pages.Account
 
         [NotMapped]
         public string Corps { get; set; }
+        public List<SelectListItem> AppointmentList { get; set; } = new();
+        public List<SelectListItem> SusNoList { get; set; } = new();
         [AllowAnonymous]
         public class InputModel
         {
@@ -122,10 +128,11 @@ namespace swas.Areas.Identity.Pages.Account
             [Display(Name = "Unit")]
             public int unitId { get; set; }
 
-            [RegularExpression(@"^[a-zA-Z0-9\s]*$", ErrorMessage = "Appointment should contain only letters and numbers.")]
+            //[RegularExpression(@"^[a-zA-Z0-9\s]*$", ErrorMessage = "Appointment should contain only letters and numbers.")]
             [Display(Name = "Appointment")]
-            public string appointment { get; set; }
+            public int appointment { get; set; }
 
+    
 
             [Required(ErrorMessage = "Rank is required.")]
             [RegularExpression(@"^[a-zA-Z]*$", ErrorMessage = "Rank should contain only letters.")]
@@ -171,6 +178,8 @@ namespace swas.Areas.Identity.Pages.Account
                 }
                 ViewData["unitdtl"] = _context.tbl_mUnitBranch.ToList();
                 ViewData["Unit"] = _context.tbl_mUnitBranch.ToList();
+                await LoadAppointments();
+                SusNoList = await _appointmentservice.LoadSusNo();
                 Input = new InputModel();
 
                 ViewData["IAMUser"] = tasks.ToList();
@@ -288,7 +297,7 @@ namespace swas.Areas.Identity.Pages.Account
             ViewData["unitdtl"] = _context.tbl_mUnitBranch.ToList();
             ViewData["Command"] = _context.mCommand.ToList();
             ViewData["Corps"] = _context.mCorps.ToList();
-
+            await LoadAppointments();
             ViewData["roles"] = _roleManager.Roles
                 .Where(a => a.Name == "Unit" || a.Name == "Dte")
                 .Select(a => a)
@@ -403,6 +412,19 @@ namespace swas.Areas.Identity.Pages.Account
                 return LocalRedirect("~/Identity/Account/Register");
             }
             
+        }
+
+        private async Task LoadAppointments()
+        {
+            AppointmentList = await _context.MAppointments
+                .Where(x => x.IsActive)
+                .OrderBy(x => x.AppointmentName)
+                .Select(x => new SelectListItem
+                {
+                    Value = x.ApptId.ToString(),
+                    Text = x.AppointmentName
+                })
+                .ToListAsync();
         }
         [AllowAnonymous]
         private ApplicationUser CreateUser()

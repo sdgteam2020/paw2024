@@ -85,7 +85,7 @@ builder.Services.AddScoped<IWatermarkRepository, WatermarkRepository>();
 builder.Services.AddScoped<ICertificateService, CertificateService>();
 builder.Services.AddScoped<PdfCertificateBuilder>();
 builder.Services.AddScoped<LoginCryptoKeyService>();
-
+builder.Services.AddScoped<Appointmentservice>();
 
 builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
@@ -153,6 +153,7 @@ builder.Services.Configure<FormOptions>(options =>
 // ===============================
 // MVC + FILTERS
 // ===============================
+builder.Services.AddScoped<SanitizeActionFilter>();
 builder.Services.AddControllersWithViews(options =>
 {
     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
@@ -320,6 +321,15 @@ app.Use(async (ctx, next) =>
 
     await next();
 });
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
 
 // ===============================
 // ERROR / HSTS

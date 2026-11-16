@@ -73,6 +73,8 @@ namespace swas.DAL
         public DbSet<AuditLog> AuditLog { get; set; }
         public DbSet<MstProjectSearchType> MstProjectSearchTypes { get; set; }
         public DbSet<mProposal> mProposals { get; set; }
+        public DbSet<MAppointment> MAppointments { get; set; }
+        public DbSet<MSusNo> MSusNo { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
            
@@ -104,6 +106,10 @@ namespace swas.DAL
             modelBuilder.Entity<ApplicationUser>()
         .Property(e => e.appointment)
         .HasColumnType("nvarchar(max)");
+            modelBuilder.Entity<trnWhiteListed>()
+    .Property(x => x.ContactNo)
+    .HasColumnType("nvarchar(50)")
+   .HasMaxLength(50);
 
 
             modelBuilder.Entity<DateApproval>().ToTable("DateApproval");
@@ -112,6 +118,8 @@ namespace swas.DAL
             modelBuilder.Entity<MstProjectSearchType>().ToTable("MstProjectSearchType");
             modelBuilder.Entity<mProposal>().ToTable("mProposal");
             modelBuilder.Entity<tbl_mCertificateContent>().ToTable("tbl_mCertificateContent");
+            modelBuilder.Entity<MAppointment>().ToTable("MAppointment");
+            modelBuilder.Entity<MSusNo>().ToTable("MSusNo");
 
             modelBuilder.Entity<AddNewProject>().HasNoKey(); // Mark as keyless entity
             modelBuilder.Entity<DTOForeClose>().HasNoKey(); // Mark as keyless entity

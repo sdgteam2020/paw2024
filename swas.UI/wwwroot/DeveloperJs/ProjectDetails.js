@@ -723,9 +723,9 @@ function SendRemainder(projid, remarks) {
             Remarks: encryptData(remarks) // if you want to send remarks to backend
         },
         success: function (response) {
-            ;
-            console.log(response);
+          
             if (response > 0) {
+                GetSentData();
                 Swal.fire("Success", "Reminder sent successfully", "success");
             } else {
                 Swal.fire("Error", "Something went wrong", "error");
@@ -2073,12 +2073,12 @@ function renderCcBlockSent(project) {
     }
 
     return `
-        <div class="btn btn-warning p-2 cc-pill">
-            <div class="tooltip-container" data-tooltip="${project.ccUnitName}">
-                <span class="short-text IsccForRemoveRow">Cc</span>
-                <span class="tooltip tooltip-text">${project.ccUnitName}</span>
-            </div>
-        </div>`;
+        <div class="badge bg-warning text-dark p-2 cc-pill">
+    <div class="tooltip-container" data-tooltip="${project.ccUnitName}">
+        <span class="short-text IsccForRemoveRow">Cc</span>
+        <span class="tooltip tooltip-text">${project.ccUnitName}</span>
+    </div>
+</div>`;
 }
 
 /**
@@ -2619,7 +2619,7 @@ function bindCCProject(response) {
 
         listitem +=
             '<td>' +
-            '<div class="RefLetter-container btn btn-warning p-2" ' +
+            '<div class="RefLetter-container p-2" ' +
             'style="padding: 1px !important;font-size: 13px !important;margin-top: 1px;">' +
 
             '<span>Cc</span>' +
@@ -2879,9 +2879,7 @@ function bindParkedProject(response) {
             "</td>";
 
         listitem +=
-            '<td><div class="btn btn-warning p-2">' +
-            "<span>Parked</span>" +
-            "</div></td>";
+            '<td><div class="p-2">parked</div></td>';
 
         listitem +=
             '<td>' +

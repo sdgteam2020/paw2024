@@ -84,7 +84,7 @@ namespace swas.BAL.DTO
         public int? Comdid { get; set; }
         public int? Corpsid { get; set; }
         public string? Iamuserid { get; set; }
-        public string? Appontment { get; set; }
+        public int? Appontment { get; set; }
         public string? ActualUserName { get; set; }
         public int? unitid { get; set; }
         public int? totmsgin { get; set; }
@@ -397,7 +397,7 @@ namespace swas.BAL.DTO
         public int unitId { get; set; }
 
         [Display(Name = "Appointment")]
-        public string? appointment { get; set; }
+        public int? appointment { get; set; }
 
 
         [Required(ErrorMessage = "Rank is required.")]

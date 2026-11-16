@@ -86,7 +86,8 @@ namespace swas.UI.Controllers
         private readonly ILegacyHistoryRepository _legacyHistoryRepository;
         private readonly IWatermarkRepository _watermarkRepo;
         private readonly IConfiguration _configuration;
-        public HomeController(IWatermarkRepository watermark, IConfiguration configuration, IProjectsRepository projectsRepository, ICommentRepository commentRepository, SignInManager<ApplicationUser> signInManager, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IDdlRepository dlRepository, ApplicationDbContext context, IUnitRepository unitRepository, IProjStakeHolderMovRepository stkholdmove, IChartService chartService, IWebHostEnvironment _webHostEnvironment, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, IDataProtectionProvider dataProtector, IActionsRepository actionsRepository, IAttHistoryRepository attHistoryRepository, ILogger<HomeController> logger, IDateApprovalRepository repo, ILegacyHistoryRepository legacyHistoryRepository)
+        private readonly Appointmentservice _appointmentservice;
+        public HomeController(Appointmentservice appointmentservice, IWatermarkRepository watermark, IConfiguration configuration, IProjectsRepository projectsRepository, ICommentRepository commentRepository, SignInManager<ApplicationUser> signInManager, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager, IDdlRepository dlRepository, ApplicationDbContext context, IUnitRepository unitRepository, IProjStakeHolderMovRepository stkholdmove, IChartService chartService, IWebHostEnvironment _webHostEnvironment, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager, IDataProtectionProvider dataProtector, IActionsRepository actionsRepository, IAttHistoryRepository attHistoryRepository, ILogger<HomeController> logger, IDateApprovalRepository repo, ILegacyHistoryRepository legacyHistoryRepository)
         {
             _configuration = configuration;
             _projectsRepository = projectsRepository;
@@ -109,6 +110,7 @@ namespace swas.UI.Controllers
             _repo = repo;
             _legacyHistoryRepository = legacyHistoryRepository;
             _watermarkRepo = watermark;
+            _appointmentservice = appointmentservice;
         }
 
         [HttpGet]
@@ -598,6 +600,7 @@ s.IsDashboard,
 
                     ViewBag.LoggedInUserName = Logins.UserName;
                     ViewBag.Units = await _unitRepository.GetAllUnitAsync();
+                    ViewData["AppointmentList"] = await _appointmentservice.LoadAppointments();
                     var typeo = _context.mHostType.Select(x => new { x.HostTypeID, x.HostingDesc }).ToList();
                     ViewBag.hosttype = typeo;
 
@@ -1935,14 +1938,13 @@ s.IsDashboard,
                 await _context.SaveChangesAsync();  // Ensure the changes are saved asynchronously
                 message = "Whitelisted entry saved successfully!";
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
-                _logger.LogError(ex, "Unhandled exception occurred while processing request.");
+                var error = ex.GetBaseException().Message;
 
-                return StatusCode(500, new
-                {
-                    message = "An unexpected error occurred. Please try again later."
-                });
+                System.Diagnostics.Debug.WriteLine(error);
+
+                throw;
             }
 
 

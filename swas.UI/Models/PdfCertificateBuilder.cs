@@ -314,7 +314,7 @@ namespace swas.UI.Models
                 .SetMargin(0)
                 .SetFixedPosition(textX, textY - 20, 150));
 
-            document.Add(new Paragraph(logins.Appontment.Trim())
+            document.Add(new Paragraph(logins.Appontment?.ToString())
                 .SetFontSize(10)
                 .SetMargin(0)
                 .SetFixedPosition(textX, textY - 40, 150));

@@ -81,12 +81,23 @@
 
                             <tr>
                                 <td>
-                                    <label asp-for="appointment" class="label control-label up-label-m5">Appointment</label>
+                                    <label asp-for="appointment"
+                                           class="label control-label up-label-m5">
+                                        Appointment
+                                    </label>
                                 </td>
+
                                 <td>
-                                    <input asp-for="appointment" class="form-control alphanumeric-only" maxlength="35"
-                                           aria-required="true" placeholder="Appointment" />
-                                    <span asp-validation-for="appointment" class="text-danger"></span>
+                                    <select asp-for="appointment"
+                                            asp-items="@(ViewData["AppointmentList"] as List<SelectListItem>)"
+                                            class="form-control select2-appointment"
+                                            aria-required="true"
+                                            id="appointment">
+                                        <option value="">-- Select Appointment --</option>
+                                    </select>
+
+                                    <span asp-validation-for="appointment"
+                                          class="text-danger"></span>
                                 </td>
                             </tr>
 
@@ -207,9 +218,4 @@
     </div>
 </div>
 <script src="~/DeveloperJs/AllUsersEdit.js"></script>
-
-
-
-
-
 

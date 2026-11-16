@@ -1,7 +1,4 @@
-﻿//function cleanDataTableInput(value) {
-//    // Allow only letters, numbers, space, underscore, comma and dot
-//    return value.replace(/[^a-zA-Z0-9 _.,]/g, '');
-//}
+﻿
 // Strict – only for the DataTables search box
 function cleanDataTableInput(value) {
     if (!value) return "";
@@ -31,6 +28,11 @@ function escapeHtml(value) {
 }
 
 function initializeDataTable(tableSelector) {
+     // Destroy previous DataTable instance on every call
+    if ($.fn.DataTable.isDataTable(tableSelector)) {
+        $(tableSelector).DataTable().clear().destroy();
+    }
+
 
     const Initialorder = (tableSelector === "#Comment") ? [[1, 'asc']] : [];
 
@@ -64,7 +66,7 @@ function initializeDataTable(tableSelector) {
                 let cleanValue = cleanDataTableInput(this.value);
 
                 if (this.value !== cleanValue) {
-                    this.value = cleanValue;
+                    this.value = cleanValue; 
                     this.setSelectionRange(cursorPos - 1, cursorPos - 1);
                 }
 
